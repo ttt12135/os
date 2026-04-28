@@ -18,30 +18,42 @@ client=OpenAI(
     base_url="https://api.deepseek.com"
 )
 
+#创建保存对话记录的地点
+messages = [
+    {
+        "role":"system",
+        "content":"你是一个帮助新手理解代码仓库和操作系统比赛项目的AI助手"
+    }
+]
 
 def chat_with_ai(user_input):
-    #函数用途：把用户的话发给DeepSeek
+#函数用途：把用户的话发给DeepSeek
+
+#加入对话历史
+    messages.append(
+        {
+            "role":"user",
+            "content":user_input
+        }
+    )
     response = client.chat.completions.create(
         model="deepseek-chat",
-        messages=[
-            #上下文
-            {
-                "role":"system",
-                "content":"你是一个帮助新手理解代码仓库和操作系统比赛项目的AI助手"
-            },
-            {
-                "role":"user",
-                "content":user_input
-            }
-        ],
+        messages=messages,
         stream=False
     )
-
+#提取AI第一个回答
     ai_reply = response.choices[0].message.content
+#把回答添加进对话信息
+    messages.append(
+        {
+            "role":"assistant",
+            "content":ai_reply
+        }
+    )
     return ai_reply
 
 def main():
-    print("OS agent 接入deepseek")
+    print("OS agent 接入deepseek,加入上下文记忆")
     print("输入exit退出")
     print("-"*30)
 
