@@ -1,6 +1,7 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from src.repo_reader import build_file_tree
+from src.file_reader import collect_important_files, format_files_content
 import os
 
 #读取.env文件
@@ -23,7 +24,7 @@ client=OpenAI(
 messages = [
     {
         "role":"system",
-        "content":"你是一个帮助新手理解代码仓库和操作系统比赛项目的AI助手"
+        "content":"你是一个帮助新手理解代码仓库和操作系统比赛项目的AI助手,回答的时候要清楚简单"
     }
 ]
 
@@ -54,30 +55,40 @@ def chat_with_ai(user_input):
     return ai_reply
 
 def analyze_repo(repo_path):
-    #读取本地的repo文件
+    #读取本地的repo文件和关键文件的内容（有一定的优先度）
 
     file_tree = build_file_tree(repo_path)
 
+    important_files = collect_important_files(repo_path)
+    files_content = format_files_content(important_files)
+
     #AI提示词模块，首次接触加深学习
     prompt = f"""
-    下面是一个代码仓库的文件结构：
+下面是一个代码仓库的文件结构：
+一、仓库的文件结构
+{file_tree}
 
-    {file_tree}
+二、仓库的关键文件内容
 
-    请你认真的解释这个代码仓库。
-    要求如下：
-    1、说明这个仓库目前有哪些主要文件和目录；
-    2、解释每个重要文件的作用；
-    3、给出阅读这个仓库的顺序；
-    4、如果这个仓库有可优化的地方，指出后续如何拓展。
-    """
+{files_content}
+
+
+请你认真的解释这个代码仓库结构和文件内容，认真分析这个代码仓库。
+要求如下：
+1. 说明这个仓库当前已经实现了什么功能；
+2. 解释主要文件分别负责什么；
+3. 分析程序的大致运行流程；
+4. 指出当前实现的不足；
+5. 给出下一步适合迭代的方向；
+6. 回答要适合初学者理解，不要写得太抽象。
+"""
     ai_reply = chat_with_ai(prompt)
 
-    return file_tree, ai_reply
+    return file_tree, files_content, ai_reply
      
 
 def main():
-    print("OS agent 接入deepseek,加入上下文记忆，加入repo")
+    print("OS agent 接入deepseek,加入上下文记忆，加入repo，可读取关键文件的内容")
     print("-"*30)
 
     while True:
@@ -97,10 +108,13 @@ def main():
 
         elif user_input == "repo":
             repo_path = input("请输入本地仓库路径：")
-            file_tree, ai_reply = analyze_repo(repo_path)
+            file_tree, file_content, ai_reply = analyze_repo(repo_path)
 
             print("\n仓库文件结构：")
             print(file_tree)
+
+            print("\n关键文件内容：")
+            print(file_content)
 
             print("\nAI 分析: ")
             print(ai_reply)
