@@ -1,6 +1,5 @@
 import os
 
-
 def build_file_tree(root_path, max_depth=3):
     #函数作用：读取一个目录文件的结构，并返回字符串形式的目录树
     #root_path:仓库路径

@@ -1,7 +1,7 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from src.repo_reader import build_file_tree
-from src.file_reader import collect_important_files, format_files_content
+from src.file_reader import collect_important_files, format_files_content, format_file_scores
 import os
 
 #读取.env文件
@@ -60,6 +60,7 @@ def analyze_repo(repo_path):
     file_tree = build_file_tree(repo_path)
 
     important_files = collect_important_files(repo_path)
+    file_scores = format_file_scores(important_files)
     files_content = format_files_content(important_files)
 
     #AI提示词模块，首次接触加深学习
@@ -68,7 +69,11 @@ def analyze_repo(repo_path):
 一、仓库的文件结构
 {file_tree}
 
-二、仓库的关键文件内容
+二、文件重要性评分结果：
+
+{file_scores}
+
+三、高评分关键文件内容：
 
 {files_content}
 
@@ -84,7 +89,7 @@ def analyze_repo(repo_path):
 """
     ai_reply = chat_with_ai(prompt)
 
-    return file_tree, files_content, ai_reply
+    return file_tree,file_scores, files_content, ai_reply
      
 
 def main():
@@ -108,13 +113,17 @@ def main():
 
         elif user_input == "repo":
             repo_path = input("请输入本地仓库路径：")
-            file_tree, file_content, ai_reply = analyze_repo(repo_path)
 
+            file_tree, file_scores, files_content, ai_reply = analyze_repo(repo_path)
+            """
             print("\n仓库文件结构：")
             print(file_tree)
+            """
+            print("\n文件重要性评分:")
+            print(file_scores)
 
             print("\n关键文件内容：")
-            print(file_content)
+            print(files_content)
 
             print("\nAI 分析: ")
             print(ai_reply)
