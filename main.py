@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from src.repo_reader import build_file_tree
 from src.file_reader import collect_important_files, format_files_content, format_file_scores
 from src.report_writer import save_markdown_report
+from src.batch_analyzer import find_repos_in_folder, format_batch_summary
 import os
 
 #读取.env文件
@@ -188,12 +189,51 @@ def generate_repo_description(repo_path):
 
     return report_path,report_content
 
+
+
+def batch_generate_history_reports(history_folder_path):
+    """
+    可以直接批量分析os作品文件夹
+    这是非常令人激动的一步
+    因为这是真正可以贴合赛题第一个要求的第一步
+    现在是5.10一点十五分，版本v0.7
+    """
+
+    repo_paths = find_repos_in_folder(history_folder_path)
+
+    results = []
+
+    if not len(repo_paths):
+        return results
+
+    for repo_path in repo_paths:
+        repo_name = os.path.basename(os.path.normpath(repo_path))
+
+        print()
+        print(f"正在分析历史仓库：{repo_name}")
+        print(f"仓库路径：{repo_path}")
+
+        report_path,report_content = generate_repo_description(repo_path)
+
+        results.append(
+            {
+            "repo_name":repo_name,
+            "repo_path":repo_path,
+            "report_path":report_path
+            }
+        )
+
+    return results
+
+
+
+
 def main():
-    print("OS agent v0.6,接入deepseek,可生成文件报告")
+    print("OS agent v0.7,接入deepseek,可生成文件报告")
     print("-"*30)
 
     while True:
-        user_input = input("请选择模式(chat/repo/report/exit):")
+        user_input = input("请选择模式(chat/repo/report/batch/exit):")
 
         if user_input == "exit":
             print("程序退出")
@@ -236,6 +276,16 @@ def main():
 
             print("\n报告内容预览:")
             print(report_content)
+            print("-" * 30)
+
+        elif user_input == "batch":
+            history_folder_path = input("请输入历史作品总文件夹路径: ")
+
+            results = batch_generate_history_reports(history_folder_path)
+            summary = format_batch_summary(results)
+
+            print("\n批量分析结果:")
+            print(summary)
             print("-" * 30)
 
         else:
