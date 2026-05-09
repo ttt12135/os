@@ -2,6 +2,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from src.repo_reader import build_file_tree
 from src.file_reader import collect_important_files, format_files_content, format_file_scores
+from src.report_writer import save_markdown_report
 import os
 
 #读取.env文件
@@ -92,12 +93,107 @@ def analyze_repo(repo_path):
     return file_tree,file_scores, files_content, ai_reply
      
 
+def generate_repo_description(repo_path):
+    """
+    函数用途是生成单个os仓库的描述文档
+    """
+
+    file_tree = build_file_tree(repo_path)
+
+    important_files = collect_important_files(repo_path)
+    file_scores = format_file_scores(important_files)
+    file_content = format_files_content(important_files)
+
+    prompt = f"""
+你先在要为一个操作系统比赛作品生成一份“人类友好的描述文档”
+
+下面是该仓库的信息。
+
+一、仓库文件的结构树：
+{file_tree}
+
+二、文件重要性评分结果：
+{file_scores}
+
+三、高评分关键文件：
+{file_content}
+
+请你生成一份Markdown格式的仓库描述报告。
+
+标题为：
+#os仓库描述报告
+
+报告需包含一下几个部分：
+
+##一、项目基本信息
+
+说明这个项目是什么类型的项目。
+若无法确定项目名称、编程语言或运行平台，请如实说明
+
+##二、仓库结构概览
+
+根据仓库文件树解释主要目录和文件的作用
+
+##三、关键性文件分析
+
+结合文件重要性评分，解释高分文件为什么重要。
+
+##四、核心模块推测
+
+从以下角度分析仓库可能包含哪些模块：
+
+1.启动模块
+2.内核初始化模块
+3.内存管理模块
+4.进程或人物管理模块
+5.中断或异常处理模块
+6.系统调用模块
+7.文件系统或驱动模块
+8.构建与运行模块
+
+如果某些模块没有明显体现，请明确说明“当前仓库中未发现明显证据”
+
+##五、程序运行流程推测
+
+根据当前代码内容，推测项目的大致运行流程。
+可以合理进行推测，不要过度编造，只能基于已有文件和代码进行合理推测。
+
+##六、项目特点总结
+
+总结这个os作品的特点、可能优势和当前完成度。
+
+##七、当前不足与不确定的信息
+
+说明当前分析可能存在的不确定性。例如读取文件数量有限、未运行项目、未完整分析全部代码等。
+
+##八、后续比较建议
+说明如果要和历史os作品比较，后续应该重点比较哪些维度。
+
+输出要求：
+1.面向评审和初学者，语言清楚；
+2.不要写成普通聊天，要写成正式报告；
+3.不要编造没有代码依据的内容；
+4.遇到不确定内容要明确标注；
+5.输出必须是完整的 Markdown 文档。
+    """
+
+
+    report_content = chat_with_ai(prompt)
+
+    report_path = save_markdown_report(
+        repo_path=repo_path,
+        report_content=report_content,
+        report_type="description"
+    )
+
+    return report_path,report_content
+
 def main():
-    print("OS agent 接入deepseek,加入上下文记忆，加入repo，可读取关键文件的内容")
+    print("OS agent v0.6,接入deepseek,可生成文件报告")
     print("-"*30)
 
     while True:
-        user_input = input("请选择模式（chat/repo/exit）: ")
+        user_input = input("请选择模式(chat/repo/report/exit):")
 
         if user_input == "exit":
             print("程序退出")
@@ -128,6 +224,19 @@ def main():
             print("\nAI 分析: ")
             print(ai_reply)
             print("-"*30)    
+
+
+        elif user_input == "report":
+            repo_path = input("请输入本地仓库路径: ")
+
+            report_path, report_content = generate_repo_description(repo_path)
+
+            print("\n描述文档已生成:")
+            print(report_path)
+
+            print("\n报告内容预览:")
+            print(report_content)
+            print("-" * 30)
 
         else:
             print("未知命令，请输入chat、repo 或 exit")
