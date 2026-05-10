@@ -40,3 +40,23 @@ def save_markdown_report(repo_path,report_content,report_type="description"):
         file.write(report_content)
 
     return file_path
+
+
+def save_comparison_report(target_repo_path, report_content):
+    """
+    保存新作品和历史作品的对比报告
+    """
+
+    reports_dir = "reports"
+    ensure_dir(reports_dir)
+
+    repo_name = get_repo_name(target_repo_path)
+
+    file_name = f"{repo_name}_comparison.md"
+
+    file_path = os.path.join(reports_dir,file_name)
+
+    with open(file_path, "w", encoding="utf-8") as file:
+        file.write(report_content)
+
+    return file_path

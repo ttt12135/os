@@ -2,8 +2,9 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from src.repo_reader import build_file_tree
 from src.file_reader import collect_important_files, format_files_content, format_file_scores
-from src.report_writer import save_markdown_report
+from src.report_writer import save_markdown_report, save_comparison_report
 from src.batch_analyzer import find_repos_in_folder, format_batch_summary
+from src.comparator import find_history_description_reports, format_history_reports, read_markdown_file
 import os
 
 #读取.env文件
@@ -56,6 +57,36 @@ def chat_with_ai(user_input):
     )
     return ai_reply
 
+
+def ask_ai_once(prompt):
+    """
+    单次调用 AI。
+    不保存上下文，适合生成报告、批量分析、对比分析。
+
+    这样做的原因：
+    报告内容通常很长，如果全部塞进 messages 历史记录里，
+    后续请求会越来越长，容易超过上下文长度。
+    """
+
+    response = client.chat.completions.create(
+        model="deepseek-chat",
+        messages=[
+            {
+                "role": "system",
+                "content": "你是一个专业的操作系统比赛作品分析助手。你的任务是基于代码材料生成准确、清楚、少幻觉的描述和比较报告。"
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        stream=False
+    )
+
+    return response.choices[0].message.content
+
+
+
 def analyze_repo(repo_path):
     #读取本地的repo文件和关键文件的内容（有一定的优先度）
 
@@ -89,7 +120,7 @@ def analyze_repo(repo_path):
 5. 给出下一步适合迭代的方向；
 6. 回答要适合初学者理解，不要写得太抽象。
 """
-    ai_reply = chat_with_ai(prompt)
+    ai_reply = ask_ai_once(prompt)
 
     return file_tree,file_scores, files_content, ai_reply
      
@@ -179,7 +210,7 @@ def generate_repo_description(repo_path):
     """
 
 
-    report_content = chat_with_ai(prompt)
+    report_content = ask_ai_once(prompt)
 
     report_path = save_markdown_report(
         repo_path=repo_path,
@@ -227,46 +258,166 @@ def batch_generate_history_reports(history_folder_path):
 
 
 
+def generate_comparison_report(target_repo_path,reports_dir="reports"):
+    """
+    生成新提交作品与历史作品的对比报告
+
+    流程
+    1、先给新提交作品生成描述报告；
+    2、再读取reports目录下已有的历史作品报告；
+    3、让AI基于这些报告生成对比文档；
+    4、保存对比报告
+    """
+
+    print("\n正在生成新提交作品的描述报告")
+    target_report_path, target_report_content = generate_repo_description(target_repo_path)
+
+
+    history_report_paths = find_history_description_reports(
+        reports_dir = reports_dir,
+        exclude_report_path=target_report_path
+    )
+
+    history_reports_content = format_history_reports(history_report_paths)
+
+    prompt = f"""
+你现在要完成操作系统比赛作品的 “新旧作品对比分析”
+
+下面是新提交作品的描述报告：
+
+{target_report_content}
+
+下面是历史操作系统比赛作品的描述报告资料：
+
+{history_reports_content}
+
+请你基于以上内容，生成一份 Markdown 格式的“新提交作品与历史作品对比报告”。
+
+报告标题请使用：
+#os作品对比报告
+
+报告必须包含一下部分：
+
+##一、对比对象说明：
+
+说明本次对比的新提交作品是什么，历史作品资料来自哪些报告。
+如果历史报告数量不足，要明确说明。
+
+##二、新提交作品概览
+
+简要概括新提交作品的仓库结构、主要模块和当前完成度
+
+##三、历史作品概览
+
+总结历史作品中常见的结构特点、技术路线和核心模块。
+
+##四、核心模块对比
+
+请从一下维度进行对比：
+
+1. 启动模块
+2. 内核初始化模块
+3. 内存管理模块
+4. 进程或任务管理模块
+5. 中断或异常处理模块
+6. 系统调用模块
+7. 文件系统或驱动模块
+8. 构建与运行模块
+
+要求：
+1、如果新作品或历史作品某个模块证据不足，要明确说明。
+2、不能把没有证据的内容写成确定的结论。
+
+## 五、技术路线差异分析
+
+比较新提交作品与历史作品在编程语言、目录组织、模块划分、构建方式上的差异。
+
+## 六、完成度与复杂度对比
+
+从代码结构完整性、模块覆盖范围、工程组织复杂度等角度进行比较。
+
+## 七、可能创新点分析
+
+分析新提交作品相比历史作品可能有哪些新特点或创新点。
+如果无法判断创新点，要明确说明依据不足。
+
+## 八、不确定信息与风险
+
+说明本次对比的限制，例如：
+1. 只读取了部分高评分文件；
+2. 没有实际编译运行；
+3. 历史作品描述报告数量有限；
+4. 可能存在代码未被读取导致判断不完整。
+
+## 九、总结评价
+
+用简洁清楚的语言总结：
+1. 新作品目前大致处在什么水平；
+2. 和历史作品相比主要差异是什么；
+3. 后续如果继续完善，应该重点补强哪些方面。
+
+写作要求：
+1. 面向评审和初学者；
+2. 语言正式、清楚；
+3. 尽量基于已有报告，不要凭空编造；
+4. 对不确定内容必须明确标注；
+5. 输出必须是完整 Markdown 文档。
+"""
+    comparison_content = ask_ai_once(prompt)
+
+    comparison_report_path = save_comparison_report(
+        target_repo_path=target_repo_path,
+        report_content=comparison_content
+    )
+
+    return target_report_path, comparison_report_path, comparison_content
+
+
 
 def main():
-    print("OS agent v0.7,接入deepseek,可生成文件报告")
-    print("-"*30)
+    print("OS Agent v0.8 - 新提交作品与历史作品对比版")
+    print("输入 chat：普通聊天")
+    print("输入 repo：分析本地仓库")
+    print("输入 report：生成单个 OS 仓库描述文档")
+    print("输入 batch：批量分析历史 OS 作品")
+    print("输入 compare：生成新作品与历史作品对比报告")
+    print("输入 exit：退出程序")
+    print("-" * 30)
 
     while True:
-        user_input = input("请选择模式(chat/repo/report/batch/exit):")
+        command = input("请选择模式(chat/repo/report/batch/compare/exit): ")
 
-        if user_input == "exit":
+        if command == "exit":
             print("程序退出")
             break
-        
-        elif user_input == "chat":
-            user_input=input("用户： ")
+
+        elif command == "chat":
+            user_input = input("用户: ")
             ai_reply = chat_with_ai(user_input)
 
-            print("AI: ")
+            print("AI:")
             print(ai_reply)
-            print("-"*30)
+            print("-" * 30)
 
-        elif user_input == "repo":
-            repo_path = input("请输入本地仓库路径：")
+        elif command == "repo":
+            repo_path = input("请输入本地仓库路径: ")
 
             file_tree, file_scores, files_content, ai_reply = analyze_repo(repo_path)
-            """
-            print("\n仓库文件结构：")
+
+            print("\n仓库文件结构:")
             print(file_tree)
-            """
+
             print("\n文件重要性评分:")
             print(file_scores)
 
-            print("\n关键文件内容：")
+            print("\n关键文件内容:")
             print(files_content)
 
-            print("\nAI 分析: ")
+            print("\nAI 分析:")
             print(ai_reply)
-            print("-"*30)    
+            print("-" * 30)
 
-
-        elif user_input == "report":
+        elif command == "report":
             repo_path = input("请输入本地仓库路径: ")
 
             report_path, report_content = generate_repo_description(repo_path)
@@ -278,7 +429,7 @@ def main():
             print(report_content)
             print("-" * 30)
 
-        elif user_input == "batch":
+        elif command == "batch":
             history_folder_path = input("请输入历史作品总文件夹路径: ")
 
             results = batch_generate_history_reports(history_folder_path)
@@ -288,8 +439,27 @@ def main():
             print(summary)
             print("-" * 30)
 
+        elif command == "compare":
+            target_repo_path = input("请输入新提交作品仓库路径: ")
+
+            target_report_path, comparison_report_path, comparison_content = generate_comparison_report(
+                target_repo_path=target_repo_path,
+                reports_dir="reports"
+            )
+
+            print("\n新提交作品描述报告:")
+            print(target_report_path)
+
+            print("\n对比报告已生成:")
+            print(comparison_report_path)
+
+            print("\n对比报告内容预览:")
+            print(comparison_content)
+            print("-" * 30)
+
         else:
-            print("未知命令，请输入chat、repo 或 exit")
+            print("未知命令，请输入 chat、repo、report、batch、compare 或 exit。")
+
 
 if __name__ == "__main__":
     main()
