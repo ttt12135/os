@@ -5,6 +5,7 @@ from src.file_reader import collect_important_files, format_files_content, forma
 from src.report_writer import save_markdown_report, save_comparison_report
 from src.batch_analyzer import find_repos_in_folder, format_batch_summary
 from src.comparator import find_history_description_reports, format_history_reports, read_markdown_file
+from src.code_splitter import collect_code_blocks, format_code_blocks
 import os
 
 #读取.env文件
@@ -373,19 +374,29 @@ def generate_comparison_report(target_repo_path,reports_dir="reports"):
     return target_report_path, comparison_report_path, comparison_content
 
 
+def split_repo_code(repo_path):
+    """
+    对仓库中的代码文件进行代码块切分。
+    """
+
+    blocks = collect_code_blocks(repo_path)
+    formatted_blocks = format_code_blocks(blocks)
+
+    return blocks, formatted_blocks
+
 
 def main():
-    print("OS Agent v0.8 - 新提交作品与历史作品对比版")
+    print("OS Agent v0.9 - 代码切片版")
     print("输入 chat：普通聊天")
     print("输入 repo：分析本地仓库")
     print("输入 report：生成单个 OS 仓库描述文档")
     print("输入 batch：批量分析历史 OS 作品")
     print("输入 compare：生成新作品与历史作品对比报告")
+    print("输入 split：切分仓库代码块")
     print("输入 exit：退出程序")
-    print("-" * 30)
 
     while True:
-        command = input("请选择模式(chat/repo/report/batch/compare/exit): ")
+        command = input("请选择模式(chat/repo/report/batch/compare/split/exit): ")
 
         if command == "exit":
             print("程序退出")
@@ -455,6 +466,16 @@ def main():
 
             print("\n对比报告内容预览:")
             print(comparison_content)
+            print("-" * 30)
+
+        elif command == "split":
+            repo_path = input("请输入本地仓库路径: ")
+
+            blocks, formatted_blocks = split_repo_code(repo_path)
+
+            print(f"\n共提取到 {len(blocks)} 个代码块。")
+            print("\n代码块预览:")
+            print(formatted_blocks)
             print("-" * 30)
 
         else:
