@@ -1,0 +1,2849 @@
+{
+  "repo_name": "tianjindaxue",
+  "created_at": "2026-05-31 17:45:58",
+  "function_count": 20,
+  "ai_edge_count": 65,
+  "regex_edge_count": 211,
+  "merged_edge_count": 233,
+  "edges": [
+    {
+      "caller": "set_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "LIBC_PATH.lock",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_1",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "get_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "unknown",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_2",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "get_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "unknown",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_2",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "set_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "GLIBC_PATH.lock",
+      "caller_module": "unknown",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_3",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "GLIBC_PATH.lock",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_4",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_4",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "set_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "DYN_PATH.lock()",
+      "caller_module": "filesystem",
+      "evidence": "函数名set_dyn_path暗示设置动态路径，路径通常与文件系统相关；代码中操作全局变量DYN_PATH，该变量名称包含'dyn_path'，结合initproc.rs文件路径，该变量可能在进程初始化时用于指定动态链接库搜索路径或其他文件系统相关路径。",
+      "source_block_id": "block_5",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "get_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "DYN_PATH.lock",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "get_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "String::clone",
+      "caller_module": "process",
+      "evidence": "代码中使用了DYN_PATH.lock()，说明DYN_PATH是一个静态Mutex，同时clone()返回String，表明该函数用于获取动态路径字符串。通常路径管理属于进程或任务初始化模块。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "clear",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "DebugConsole::putchar",
+      "caller_module": "driver",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_7",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "TASK_MAP.lock",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "task.upgrade",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "x.get_task_type",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "x.exit",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "File::open",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "current_task",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "UserTask::new",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "UserTask::before_run",
+      "caller_module": "process",
+      "evidence": "代码通过打开文件、创建UserTask、调用exec_with_process和thread::spawn来启动用户进程，涉及进程管理和执行，核心是exec_with_process。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "exec_with_process",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "thread::spawn",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "user_entry",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "tid2task",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "task.exit_code",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "release_task",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "yield_now",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "core::sync::atomic::fence",
+      "caller_module": "process",
+      "evidence": "代码通过打开文件、创建UserTask、调用exec_with_process和thread::spawn来启动用户进程，涉及进程管理和执行，核心是exec_with_process。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "kill_all_tasks",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_10",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "command",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_10",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "set_libc_path",
+      "caller_module": "build",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "set_dyn_path",
+      "caller_module": "build",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "command",
+      "caller_module": "build",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "run_ltp_tests",
+      "caller_module": "build",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "command_iperf",
+      "caller_module": "build",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "run_musl_tests",
+      "caller_module": "build",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "shutdown",
+      "caller_module": "build",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "run_ltp_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "command",
+      "caller_module": "report_generation",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_12",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "run_musl_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "command",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_13",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "run_musl_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "PathBuf::clone",
+      "caller_module": "process",
+      "evidence": "该函数定义在 kernel\\src\\tasks\\initproc.rs 中，initproc 通常与进程初始化相关；函数名 run_musl_tests 表明它用于运行 musl 兼容性测试；内部调用 command 函数异步执行外部程序，属于进程创建和任务调度范畴。",
+      "source_block_id": "block_13",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "run_musl_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "alloc::format",
+      "caller_module": "process",
+      "evidence": "该函数定义在 kernel\\src\\tasks\\initproc.rs 中，initproc 通常与进程初始化相关；函数名 run_musl_tests 表明它用于运行 musl 兼容性测试；内部调用 command 函数异步执行外部程序，属于进程创建和任务调度范畴。",
+      "source_block_id": "block_13",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "run_glibc_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "command",
+      "caller_module": "unknown",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_14",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.heap()",
+      "caller_module": "syscall",
+      "evidence": "函数名sys_brk与Linux的brk系统调用对应，代码中根据addr是否为0分别执行查询或修改堆顶操作，符合brk语义。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.sbrk(addr)",
+      "caller_module": "syscall",
+      "evidence": "函数名sys_brk与Linux的brk系统调用对应，代码中根据addr是否为0分别执行查询或修改堆顶操作，符合brk语义。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "alignup",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "MapFlags::from_bits_truncate",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "MmapProt::from_bits_truncate",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "flags.contains",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.get_fd",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.get_last_free_addr",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "VirtAddr::from",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "VirtAddr::new",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.pcb.lock().memset.overlapping",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.pcb.lock().memset.sub_area",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.pcb.lock().memset.push",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.map_frames",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.frame_alloc",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.map",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "MemArea::new (?)",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "UserRef::from(...).slice_mut_with_len",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "file.readat",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.page_table",
+      "caller_module": "memory",
+      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_munmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.inner_map",
+      "caller_module": "memory",
+      "evidence": "代码中使用了 memset.sub_area 处理内存区域，且函数名 sys_munmap 与取消内存映射的系统调用对应，涉及内存管理模块",
+      "source_block_id": "block_18",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_munmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "pcb.memset.sub_area",
+      "caller_module": "memory",
+      "evidence": "代码中使用了 memset.sub_area 处理内存区域，且函数名 sys_munmap 与取消内存映射的系统调用对应，涉及内存管理模块",
+      "source_block_id": "block_18",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_mprotect",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "ProtFlags::from_bits_truncate",
+      "caller_module": "memory",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "sys_mprotect",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "debug!",
+      "caller_module": "memory",
+      "evidence": "函数使用 ProtFlags 用于内存保护标志，处理的内存地址范围，属于内存管理系统调用；但实现是空壳仅返回成功，未涉及任何内存修改操作。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "sys_msync",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "MSyncFlags::from_bits_truncate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_20",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "set_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_1",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "LIBC_PATH.lock",
+      "caller_module": "unknown",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_2",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "set_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "unknown",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_3",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "set_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "DYN_PATH.lock",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_5",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "set_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_5",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "clear",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "putchar",
+      "caller_module": "driver",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "File::open",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "Vec::new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "cmd.split",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args.drain",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "filename.into",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args_extend.extend",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args.into_iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "task.exit_code",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "values",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "into_iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "for_each",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "upgrade",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "inspect",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "get_task_type",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "exit",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "command",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "split",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "filter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "collect",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "drain",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "last",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "unwrap",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "open",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "into",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "extend",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "add_user_task",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "tid2task",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "exit_code",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "is_some",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "release_task",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "yield_now",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "syscall",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "expect",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "Vec::new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "String::new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "Weak::new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "String::from",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "atomic::fence",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "cmd.chars",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "current_arg.push",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "current_arg.is_empty",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args.push",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "current_arg.clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "current_arg.clear",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args.iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "s.as_str",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args_str.is_empty",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args_extend.extend",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "remaining_args.iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "work_dir.clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "task.before_run",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "task.clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "args_extend.into_iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "curr_task.before_run",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "task.get_task_id",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "chars",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "push",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "is_empty",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clear",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "map",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "as_str",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "collect",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "open",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "into",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "extend",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "copied",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "before_run",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "from",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "into_iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "get_task_id",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "spawn",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "unwrap",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "exit_code",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "is_some",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "fence",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "atomic::fence",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "hint::spin_loop",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "work_dir.clone",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "fence",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "spin_loop",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "command_iperf",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "scheduler",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "PathBuf::from",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "home_dir.clone",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "glibc_home_dir.clone",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "x.upgrade",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "x.get_task_type",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "cfg",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "not",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "to_string",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "from",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "values",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "find",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "upgrade",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "map",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "get_task_type",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "unwrap_or",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "is_none",
+      "caller_module": "build",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_ltp_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "home_dir.clone",
+      "caller_module": "report_generation",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_ltp_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "tests",
+      "caller_module": "report_generation",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_ltp_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "report_generation",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_musl_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "home_dir.clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_musl_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_musl_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "iter",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_musl_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "any",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_glibc_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "glibc_home_dir.clone",
+      "caller_module": "unknown",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_glibc_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "unknown",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_glibc_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "iter",
+      "caller_module": "unknown",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "run_glibc_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "any",
+      "caller_module": "unknown",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.heap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_16",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.sbrk",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_16",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "heap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_16",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sbrk",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_16",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "usize::from",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.get_fd",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.get_last_free_addr",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "addr.into",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "addr.raw",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "pcb.lock",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "memset.sub_area",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.map_frames",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "file.get_bare_file",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "prot.into",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "len.div_ceil",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "file.is_some",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "memset.push",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "from_bits_truncate",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "contains",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "get_fd",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "get_last_free_addr",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "from",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "new",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "into",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "cfg",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "raw",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "lock",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "overlapping",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sub_area",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "map_frames",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "get_bare_file",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "frame_alloc",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "div_ceil",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "ok_or",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "map",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "is_some",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "push",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "slice_mut_with_len",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "readat",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_munmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.inner_map",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_18",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_munmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "inner_map",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_18",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_munmap",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sub_area",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_18",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_mprotect",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "from_bits_truncate",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "sys_msync",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "from_bits_truncate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_20",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    }
+  ]
+}

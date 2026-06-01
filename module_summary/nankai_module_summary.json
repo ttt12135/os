@@ -1,0 +1,133 @@
+{
+  "repo_name": "nankai",
+  "created_at": "2026-05-31 17:35:45",
+  "module_count": 3,
+  "modules": [
+    {
+      "module_name": "process",
+      "module_summary": "该模块是操作系统中的进程管理系统，负责处理进程创建、退出、等待、获取进程信息等核心系统调用。它通过一系列函数与任务调度器、进程控制块（TCB）交互，管理进程的生命周期和父子关系。",
+      "key_functions": [
+        {
+          "name": "sys_exit",
+          "role": "处理进程退出系统调用，记录退出码并调用 exit_current_and_run_next 终止当前进程，切换到下一个就绪进程，此函数不会返回。"
+        },
+        {
+          "name": "sys_exit_group",
+          "role": "实现退出当前进程组（或线程组）的系统调用，记录退出码并调用 exit_current_and_run_next 终止当前进程，但可能未完全实现进程组退出逻辑。"
+        },
+        {
+          "name": "sys_settidaddr",
+          "role": "设置当前任务的 clear_child_tid 字段为传入的地址，并返回当前任务的线程ID，用于子线程退出时清理TID空间以通知其他进程。"
+        },
+        {
+          "name": "sys_getppid",
+          "role": "获取当前进程的父进程ID（PPID），通过当前任务控制块获取父进程弱引用并升级为强引用，返回父进程PID，如果父进程不存在则返回错误。"
+        },
+        {
+          "name": "sys_clone",
+          "role": "实现 clone 系统调用，根据标志位和栈指针等参数创建新任务，调用 clone_task 创建任务后通过 add_task 添加至调度器，返回新任务PID。"
+        },
+        {
+          "name": "sys_wait4",
+          "role": "等待子进程状态变化，支持阻塞（WNOHANG未设置时挂起当前进程并让出CPU）和非阻塞模式，检测子进程是否为僵尸态，收集退出码和资源使用数据，返回子进程PID和状态码。"
+        },
+        {
+          "name": "impl Processor",
+          "role": "定义Processor结构体的实现，可能包含处理器相关的任务管理方法，但当前代码块为空，具体功能未定义。"
+        }
+      ],
+      "call_flow_summary": "模块内部存在较清晰的调用链：sys_exit 和 sys_exit_group 均直接调用 exit_current_and_run_next 来终止当前进程；sys_settidaddr 依次调用 current_task、inner_exclusive_access 和 sys_gettid；sys_getppid 调用 current_task 和 inner_exclusive_access 并操作父进程引用；sys_clone 调用 current_task、clone_task 和 add_task；sys_wait4 通过循环调用 current_task、inner_exclusive_access 检查子进程状态，必要时调用 suspend_current_and_run_next 挂起当前进程。这些函数共同依赖任务与调度器基础设施。",
+      "evidence": [
+        "sys_exit 调用 exit_current_and_run_next，返回类型 ! 表明不会返回。",
+        "sys_exit_group 调用 exit_current_and_run_next 并执行 unreachable!() 宏。",
+        "sys_settidaddr 使用 current_task().unwrap() 和 task.inner_exclusive_access() 修改 clear_child_tid 字段。",
+        "sys_getppid 通过 current_task 获取父进程弱引用并调用 upgrade 强引用。",
+        "sys_clone 调用 CloneFlags::from_bits、current_task().clone_task 和 add_task。",
+        "sys_wait4 调用 current_task、inner_exclusive_access、is_zombie、add_child_time、put_data 和 suspend_current_and_run_next。",
+        "函数调用关系列表提供了具体的调用来源和置信度。"
+      ],
+      "uncertainty": "1. sys_exit_group 实际调用的是 exit_current_and_run_next 而非注释中提及的 exit_current_group_and_run_next，不确定是否已完全实现进程组退出逻辑。2. clear_child_tid 字段的完整用途在材料中未详细说明。3. sys_wait4 的 put_data 函数未给出定义，仅能推测为跨地址空间写内存函数。4. sys_clone 中 clone_task 和 add_task 的具体实现细节未展示。5. impl Processor 代码块为空，无法确定任何具体实现。"
+    },
+    {
+      "module_name": "scheduler",
+      "module_summary": "该模块负责操作系统的任务调度与切换，包括提供系统调用接口让当前任务主动让出CPU，并管理处理器的当前任务状态和空闲任务上下文，以实现任务间的上下文切换和调度决策。",
+      "key_functions": [
+        {
+          "name": "sys_yield",
+          "role": "系统调用接口函数，实现sys_yield功能，用于主动让出CPU，通过调用suspend_current_and_run_next挂起当前任务并切换到下一个就绪任务。"
+        },
+        {
+          "name": "Processor",
+          "role": "进程处理器结构，管理当前正在运行的任务控制块和空闲任务的内核上下文，是任务调度和上下文切换的核心数据结构。"
+        }
+      ],
+      "call_flow_summary": "存在明显的调用链：sys_yield函数会调用suspend_current_and_run_next函数（虽然该函数的具体实现未在提供材料中展示，但调用关系已由证据确认），而Processor结构作为调度器底层状态容器，其字段被suspend_current_and_run_next等调度相关函数使用。整体流程为：用户或内核通过sys_yield发起主动让权，经由suspend_current_and_run_next执行实际的任务切换，切换过程中依赖于Processor维护的当前任务信息和空闲上下文。",
+      "evidence": [
+        "sys_yield函数定义中明确调用了suspend_current_and_run_next，并记录了trace日志。",
+        "Processor结构定义在os/src/task/processor.rs，包含current和idle_task_cx字段，与任务调度和空闲状态管理直接相关。",
+        "调用关系证据显示sys_yield -> suspend_current_and_run_next，置信度0.9。"
+      ],
+      "uncertainty": "未提供suspend_current_and_run_next函数的具体实现代码，因此无法确认其调度算法（如优先级、时间片轮转等）以及底层上下文切换细节；Processor结构仅展示了字段定义，未给出方法实现，无法确定它如何与suspend_current_and_run_next交互或具体的调度逻辑。"
+    },
+    {
+      "module_name": "syscall",
+      "module_summary": "该模块主要处理与进程管理相关的系统调用，包括进程ID获取、用户/组ID获取、进程组ID设置、执行新程序、设置鲁棒链表以及关机等功能。其中多数ID获取类函数为伪实现，仅返回固定值（0或1）并记录日志；实际工作函数如sys_exec和sys_set_robust_list则完成了部分核心逻辑。",
+      "key_functions": [
+        {
+          "name": "sys_set_robust_list",
+          "role": "设置当前进程的robust list头指针，用于支持robust futex机制；检查参数长度后存入任务控制块。"
+        },
+        {
+          "name": "sys_setpgid",
+          "role": "伪实现，仅输出日志并返回Ok(0)，未实际设置进程组ID。"
+        },
+        {
+          "name": "sys_getpgid",
+          "role": "伪实现，固定返回1，未真正获取进程组ID。"
+        },
+        {
+          "name": "sys_getpid",
+          "role": "返回当前任务的进程ID，通过调用current_task获取pid字段。"
+        },
+        {
+          "name": "sys_getuid",
+          "role": "伪实现，返回UID=0，未真正获取用户ID。"
+        },
+        {
+          "name": "sys_geteuid",
+          "role": "伪实现，返回有效用户ID=0，仅记录日志。"
+        },
+        {
+          "name": "sys_getgid",
+          "role": "伪实现，返回组ID=0，仅记录日志。"
+        },
+        {
+          "name": "sys_getegid",
+          "role": "伪实现，返回有效组ID=0，仅记录日志。"
+        },
+        {
+          "name": "sys_gettid",
+          "role": "返回当前线程ID，通过current_task获取pid.0。"
+        },
+        {
+          "name": "sys_exec",
+          "role": "执行新程序：解析路径、参数和环境变量，处理.sh脚本启动，读取可执行文件数据并调用task.exec加载程序。"
+        },
+        {
+          "name": "sys_shutdown",
+          "role": "触发系统关机，调用shutdown函数执行关机操作。"
+        }
+      ],
+      "call_flow_summary": "模块内部函数大多是独立系统调用处理程序，相互之间无直接调用链。每个函数仅调用辅助函数（如current_task、trace!、warn!、translated_str等）和内核服务（如open、read_all、task.exec、shutdown）。sys_exec是调用链最复杂的函数，涉及内存翻译、文件操作和任务执行等多个步骤。其余函数逻辑简单，无深层嵌套调用关系。",
+      "evidence": [
+        "所有函数均定义在os/src/syscall/process.rs文件中，属于syscall模块。",
+        "大部分ID获取函数（sys_getuid、sys_geteuid、sys_getgid、sys_getegid、sys_getpgid、sys_setpgid）均通过trace!和warn!宏记录伪实现日志并返回固定值。",
+        "sys_exec函数内部调用了current_user_token、translated_str、translated_ref、current_task、get_abs_path、open、read_all和task.exec等辅助函数，存在多步调用链。",
+        "sys_set_robust_list调用了current_task和task.inner_exclusive_access来操作任务控制块。",
+        "sys_getpid和sys_gettid通过current_task获取任务控制块并提取pid字段。",
+        "sys_shutdown仅调用trace!和shutdown函数。"
+      ],
+      "uncertainty": "多个伪实现函数（sys_setpgid、sys_getpgid、sys_getuid、sys_geteuid、sys_getgid、sys_getegid）未实际完成预期的系统调用功能，未来是否会实现或仅用于测试暂不确定。sys_exec中调用的辅助函数（如current_user_token、translated_str、open、task.exec等）的具体实现细节未给出，其正确性和可靠性依赖于其他模块。sys_set_robust_list未校验head地址的有效性，可能存在未定义行为。sys_getpid和sys_gettid使用了unwrap()，若current_task返回None将导致panic。"
+    }
+  ]
+}

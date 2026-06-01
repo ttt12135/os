@@ -1,0 +1,1160 @@
+{
+  "created_at": "2026-05-31 20:21:33",
+  "profile_count": 7,
+  "profiles": [
+    {
+      "repo_name": "jilindaxue",
+      "repo_path": "D:\\os\\history\\jilindaxue",
+      "created_at": "2026-05-31 17:31:00",
+      "function_analysis_summary": {
+        "analysis_count": 20,
+        "module_distribution": {
+          "filesystem": 12,
+          "unknown": 1,
+          "interrupt": 1,
+          "process": 5,
+          "scheduler": 1
+        }
+      },
+      "call_graph_summary": {
+        "edge_count": 48,
+        "high_confidence_edge_count": 36
+      },
+      "module_summary": {
+        "module_count": 5,
+        "module_names": [
+          "filesystem",
+          "interrupt",
+          "process",
+          "scheduler",
+          "unknown"
+        ],
+        "modules": [
+          {
+            "module_name": "filesystem",
+            "module_summary": "该模块实现了procfs（进程文件系统）的核心功能，主要用于向用户空间提供内核中断统计信息的只读访问。它注册procfs文件系统到内核，定义了文件操作回调（打开、关闭、读取、写入、删除、重命名），但当前仅支持对/proc/interrupts单个文件的操作，其他路径操作均返回-1表示不支持。模块内部通过分派函数根据路径将调用委托给对应的处理函数。",
+            "key_functions": [
+              {
+                "name": "init_procfs",
+                "role": "将procfs文件系统结构体注册到内核的文件系统列表中，完成模块初始化。"
+              },
+              {
+                "name": "procfs_read、procfs_write、procfs_unlink、procfs_rename、procfs_close",
+                "role": "作为procfs文件系统的通用VFS操作接口，根据文件路径（/proc/interrupts）将请求分派给对应的具体函数，对其他路径统一返回-1表示操作不支持。"
+              },
+              {
+                "name": "proc_interrupts_read",
+                "role": "实现/proc/interrupts文件的读取逻辑：遍历中断计数数组intrcnt，找出最大非零向量索引作为文件结束位置，格式化所有非零中断信息到缓冲区，并通过copyout写入用户空间，同时更新文件位置fpos。"
+              },
+              {
+                "name": "proc_interrupts_write、proc_interrupts_close、proc_interrupts_rename、proc_interrupts_unlink",
+                "role": "这些函数对/proc/interrupts文件执行特定操作时被调用，但当前实现均直接返回-1（写入、重命名、取消链接）或返回0（关闭），表明该文件是只读且不可删除、不可重命名的特殊文件。"
+              },
+              {
+                "name": "proc_interrupts_open",
+                "role": "打开/proc/interrupts文件时被调用，将文件类型设置为FD_SPEC（特殊文件类型），表示该文件不是普通磁盘文件，返回0表示打开成功。"
+              }
+            ],
+            "call_flow_summary": "模块的调用流程分为两个层次：上层是procfs提供的通用VFS操作接口（如procfs_read），下层是具体文件的操作处理函数（如proc_interrupts_read）。每个通用接口内部先通过strcmp比较路径是否为/proc/interrupts，若是则调用对应的具体处理函数（如proc_interrupts_read），否则直接返回-1。在proc_interrupts_read内部，进一步调用kmalloc、sprintf、copyout、kfree、Warn、Log等内核函数执行数据读取和用户态复制。其他操作（写入、删除、重命名）的具体处理函数均直接返回错误码或空成功码。",
+            "evidence": [
+              "函数init_procfs仅调用register_fs(&procfs)完成注册。",
+              "函数procfs_read、procfs_write、procfs_unlink、procfs_rename、procfs_close均通过strcmp判断路径是否为/proc/interrupts，然后分派给对应proc_interrupts_*函数。",
+              "函数proc_interrupts_open将文件类型设为FD_SPEC。",
+              "函数proc_interrupts_read遍历intrcnt数组、调用sprintf格式化和copyout复制数据。",
+              "函数proc_interrupts_write、proc_interrupts_rename、proc_interrupts_unlink均直接返回-1，proc_interrupts_close直接返回0。",
+              "调用关系显示procfs_read等调用strcmp和对应的proc_interrupts_*函数；proc_interrupts_read调用kmalloc、sprintf、copyout、kfree、Warn、Log。"
+            ],
+            "uncertainty": "无法确认intrcnt数组和MAXINTR的具体定义位置，以及register_fs、copyout、Warn、Log等内核辅助函数的具体实现。此外，代码仅针对/proc/interrupts一个文件实现了完整操作，不确定模块未来是否计划支持/proc下其他文件。函数proc_interrupts_read中调用了myproc（置信度较低），但其作用未在描述中体现，可能用于获取当前进程以进行权限或上下文检查。"
+          },
+          {
+            "module_name": "interrupt",
+            "module_summary": "该模块负责记录系统中断的发生情况，通过一个简单的计数器数组统计各中断号对应的中断次数，为系统性能分析和调试提供基础数据。",
+            "key_functions": [
+              {
+                "name": "record_intr",
+                "role": "根据传入的中断号检查有效性，若有效则递增对应中断号的计数器，用于中断计数统计。"
+              }
+            ],
+            "call_flow_summary": "目前仅有一个函数record_intr，未提供其他相关函数或调用关系，因此不存在内部函数之间的调用链。该函数可通过外部模块调用，以记录中断发生次数。",
+            "evidence": [
+              "函数record_intr位于kernel/fs/procfs.c文件，通过比较MAXINTR检查中断号有效性，并对全局数组intrcnt对应元素执行自增操作。",
+              "函数名record_intr明确表明其记录中断的功能。"
+            ],
+            "uncertainty": "不确定intrcnt数组和MAXINTR的具体定义位置及初始值；没有提供其他中断相关函数（如处理函数、初始化函数），模块的完整边界和中断处理流程不明确。"
+          },
+          {
+            "module_name": "process",
+            "module_summary": "该模块负责操作系统中进程/线程控制块（PCB/TCB）的初始化、管理、分配和生命周期操作，包括进程ID分配、进程表初始化、父子进程关系维护以及线程内核栈的映射。",
+            "key_functions": [
+              {
+                "name": "allocpid",
+                "role": "原子性地分配新的全局唯一进程ID，返回递增后的PID值。"
+              },
+              {
+                "name": "procinit",
+                "role": "初始化整个进程表，包括所有进程队列（空闲、就绪等）、每个PCB的锁、状态、栈地址等，并将所有PCB放入空闲队列。"
+              },
+              {
+                "name": "delete_child",
+                "role": "从父进程的子进程链表中移除指定的子进程，并更新父进程的first_child指针。"
+              },
+              {
+                "name": "append_child",
+                "role": "将一个子进程添加到父进程的子进程链表中，若父进程尚无子进程则设为第一个，否则插入链表尾部。"
+              },
+              {
+                "name": "thread_mapstacks",
+                "role": "为所有线程分配并映射内核栈到给定的页表，每个线程分配KSTACK_PAGE个物理页，并映射到从KSTACK(线程索引)开始的虚拟地址空间。"
+              }
+            ],
+            "call_flow_summary": "函数之间存在间接调用关系：procinit会调用KSTACK、INIT_LIST_HEAD、queue_push_back_atomic等；thread_mapstacks会调用KSTACK。allocpid可能被forkret、freeproc、wait等函数调用（置信度较低）。delete_child和append_child调用了nosibling/nochildren、firstchild、list_del_reinit/list_add_tail等辅助函数。模块内无明显的直接函数间调用链，但procinit和thread_mapstacks共享KSTACK宏。",
+            "evidence": [
+              "证据1：allocpid函数体为return atomic_inc_return(&nextpid);，直接证明其分配唯一PID。",
+              "证据2：procinit代码遍历进程数组，设置每个proc的state为UNUSED，初始化锁和栈，并调用queue_push_back_atomic加入unused_p_q。",
+              "证据3：delete_child和append_child的代码中明确使用nosibling/nochildren、firstchild、list_del_reinit/list_add_tail操作父子进程链表。",
+              "证据4：thread_mapstacks代码中循环KSTACK_PAGE次调用kzalloc分配物理页，再调用mappages映射到内核页表。",
+              "证据5：调用关系列表显示allocpid可能被forkret等调用，但置信度仅为0.6。"
+            ],
+            "uncertainty": "nextpid变量的具体定义未在提供的材料中展示，但根据上下文推断为全局整数。delete_child中的nosibling、firstchild、nextsibling、list_del_reinit以及append_child中的nochildren、firstchild的具体实现未给出，仅通过函数名和常见设计推断其功能。allocpid与forkret、freeproc、wait等函数的调用关系置信度较低（0.6），可能由regex匹配产生，不一定可靠。thread_mapstacks中条件宏(__ARCH_RISCV或其它)的具体值未提供。"
+          },
+          {
+            "module_name": "scheduler",
+            "module_summary": "该模块是操作系统的调度器（scheduler），负责在多核环境下管理和调度进程或线程。它通过获取当前 CPU 的核心 ID 来支持多核调度逻辑，例如在哪个核心上运行哪个进程。",
+            "key_functions": [
+              {
+                "name": "cpuid",
+                "role": "获取当前 CPU 的核心 ID，用于标识当前代码在哪个 CPU 核心上执行，以便调度器进行核心相关的决策（如负载均衡、亲和性绑定等）。"
+              }
+            ],
+            "call_flow_summary": "该模块内部仅有一个函数 cpuid，它依赖于 r_tp 函数（未在此模块定义）来读取线程指针寄存器。因此目前不涉及模块内函数之间的调用链，调用关系为 cpuid → r_tp。",
+            "evidence": [
+              "函数 cpuid 通过调用 r_tp() 获取当前 CPU 的标识符，函数注释表明返回值用于获取当前 CPU 的 cpu struct。",
+              "cpuid 文件位于 kernel/sched/proc.c，属于调度器模块的进程管理部分。",
+              "调用关系图显示 cpuid 调用了 r_tp，且置信度较高（0.9）。"
+            ],
+            "uncertainty": "r_tp 函数的具体实现未在本代码块中给出，其精确行为（如是否直接返回 hart ID 或通过其他数据结构间接获取）不明确。此外，模块中可能还有其他关键函数（如调度算法主函数、进程切换函数）未在本分析材料中提供。"
+          },
+          {
+            "module_name": "unknown",
+            "module_summary": "{\n  \"module_name\": \"unknown\",\n  \"module_summary\": \"该模块是procfs文件系统的一部分，用于实现/proc虚拟文件系统的打开操作。当前已知功能是提供一个打开文件的回调函数procfs_open，通过路径匹配来支持/proc/interrupts文件的访问，该文件通常用于展示系统中断信息。\",\n  \"key_functions\": [\n    {\n      \"name\": \"procfs_open\",\n      \"role\": \"procfs文件系统的打开回调函数，负责检查传入路径是否匹配/proc/interrupts，若匹配则调用proc_interrupts_open完成打开操作，否则返回-1表示失败。\"\n    }\n  ],\n  \"call_flow_summary\": \"当前仅识别出一个函数procfs_open，其执行流程为：首先比较path参数与字符串\"/proc/interrupts\"（通过strcmp实现），若相等则调用proc_interrupts_open函数；否则直接返回-1。procfs_open与proc_interrupts_open之间存在明确的调用关系，但proc_interrupts_open的具体实现未提供。\",\n  \"evidence\": [\n    \"函数procfs_open的logic_steps描述了路径比较和调用proc_interrupts_open的逻辑。\",\n    \"函数调用关系显示procfs_open调用strcmp和proc_interrupts_open，置信度均为0.6。\",\n    \"文件路径为kernel\\\\fs\\\\procfs.c，与procfs文件系统模块一致。\"\n  ],\n  \"uncertainty\": \"尚不清楚/proc下其他路径的处理逻辑；proc_interrupts_open的具体实现细节未知，仅从命名推测其与中断信息展示相关；函数procfs_open内未展示其他/proc路径的匹配和回调调用逻辑。\"\n}",
+            "key_functions": [],
+            "call_flow_summary": "",
+            "evidence": [],
+            "uncertainty": "AI 返回内容不是标准 JSON，已保存为 module_summary。"
+          }
+        ]
+      },
+      "uncertainty": [
+        "当前仓库画像基于静态分析结果生成，尚未实际编译运行项目。",
+        "函数切片和调用关系提取可能受到宏、泛型、条件编译和跨语言调用影响。",
+        "模块总结依赖已分析的代码块，未深度分析的代码可能暂未覆盖。"
+      ],
+      "source_profile": "repo_profiles/history/jilindaxue_repo_profile.json"
+    },
+    {
+      "repo_name": "nankai",
+      "repo_path": "D:\\os\\history\\nankai",
+      "created_at": "2026-05-31 17:35:45",
+      "function_analysis_summary": {
+        "analysis_count": 20,
+        "module_distribution": {
+          "process": 7,
+          "syscall": 11,
+          "scheduler": 2
+        }
+      },
+      "call_graph_summary": {
+        "edge_count": 131,
+        "high_confidence_edge_count": 33
+      },
+      "module_summary": {
+        "module_count": 3,
+        "module_names": [
+          "process",
+          "scheduler",
+          "syscall"
+        ],
+        "modules": [
+          {
+            "module_name": "process",
+            "module_summary": "该模块是操作系统中的进程管理系统，负责处理进程创建、退出、等待、获取进程信息等核心系统调用。它通过一系列函数与任务调度器、进程控制块（TCB）交互，管理进程的生命周期和父子关系。",
+            "key_functions": [
+              {
+                "name": "sys_exit",
+                "role": "处理进程退出系统调用，记录退出码并调用 exit_current_and_run_next 终止当前进程，切换到下一个就绪进程，此函数不会返回。"
+              },
+              {
+                "name": "sys_exit_group",
+                "role": "实现退出当前进程组（或线程组）的系统调用，记录退出码并调用 exit_current_and_run_next 终止当前进程，但可能未完全实现进程组退出逻辑。"
+              },
+              {
+                "name": "sys_settidaddr",
+                "role": "设置当前任务的 clear_child_tid 字段为传入的地址，并返回当前任务的线程ID，用于子线程退出时清理TID空间以通知其他进程。"
+              },
+              {
+                "name": "sys_getppid",
+                "role": "获取当前进程的父进程ID（PPID），通过当前任务控制块获取父进程弱引用并升级为强引用，返回父进程PID，如果父进程不存在则返回错误。"
+              },
+              {
+                "name": "sys_clone",
+                "role": "实现 clone 系统调用，根据标志位和栈指针等参数创建新任务，调用 clone_task 创建任务后通过 add_task 添加至调度器，返回新任务PID。"
+              },
+              {
+                "name": "sys_wait4",
+                "role": "等待子进程状态变化，支持阻塞（WNOHANG未设置时挂起当前进程并让出CPU）和非阻塞模式，检测子进程是否为僵尸态，收集退出码和资源使用数据，返回子进程PID和状态码。"
+              },
+              {
+                "name": "impl Processor",
+                "role": "定义Processor结构体的实现，可能包含处理器相关的任务管理方法，但当前代码块为空，具体功能未定义。"
+              }
+            ],
+            "call_flow_summary": "模块内部存在较清晰的调用链：sys_exit 和 sys_exit_group 均直接调用 exit_current_and_run_next 来终止当前进程；sys_settidaddr 依次调用 current_task、inner_exclusive_access 和 sys_gettid；sys_getppid 调用 current_task 和 inner_exclusive_access 并操作父进程引用；sys_clone 调用 current_task、clone_task 和 add_task；sys_wait4 通过循环调用 current_task、inner_exclusive_access 检查子进程状态，必要时调用 suspend_current_and_run_next 挂起当前进程。这些函数共同依赖任务与调度器基础设施。",
+            "evidence": [
+              "sys_exit 调用 exit_current_and_run_next，返回类型 ! 表明不会返回。",
+              "sys_exit_group 调用 exit_current_and_run_next 并执行 unreachable!() 宏。",
+              "sys_settidaddr 使用 current_task().unwrap() 和 task.inner_exclusive_access() 修改 clear_child_tid 字段。",
+              "sys_getppid 通过 current_task 获取父进程弱引用并调用 upgrade 强引用。",
+              "sys_clone 调用 CloneFlags::from_bits、current_task().clone_task 和 add_task。",
+              "sys_wait4 调用 current_task、inner_exclusive_access、is_zombie、add_child_time、put_data 和 suspend_current_and_run_next。",
+              "函数调用关系列表提供了具体的调用来源和置信度。"
+            ],
+            "uncertainty": "1. sys_exit_group 实际调用的是 exit_current_and_run_next 而非注释中提及的 exit_current_group_and_run_next，不确定是否已完全实现进程组退出逻辑。2. clear_child_tid 字段的完整用途在材料中未详细说明。3. sys_wait4 的 put_data 函数未给出定义，仅能推测为跨地址空间写内存函数。4. sys_clone 中 clone_task 和 add_task 的具体实现细节未展示。5. impl Processor 代码块为空，无法确定任何具体实现。"
+          },
+          {
+            "module_name": "scheduler",
+            "module_summary": "该模块负责操作系统的任务调度与切换，包括提供系统调用接口让当前任务主动让出CPU，并管理处理器的当前任务状态和空闲任务上下文，以实现任务间的上下文切换和调度决策。",
+            "key_functions": [
+              {
+                "name": "sys_yield",
+                "role": "系统调用接口函数，实现sys_yield功能，用于主动让出CPU，通过调用suspend_current_and_run_next挂起当前任务并切换到下一个就绪任务。"
+              },
+              {
+                "name": "Processor",
+                "role": "进程处理器结构，管理当前正在运行的任务控制块和空闲任务的内核上下文，是任务调度和上下文切换的核心数据结构。"
+              }
+            ],
+            "call_flow_summary": "存在明显的调用链：sys_yield函数会调用suspend_current_and_run_next函数（虽然该函数的具体实现未在提供材料中展示，但调用关系已由证据确认），而Processor结构作为调度器底层状态容器，其字段被suspend_current_and_run_next等调度相关函数使用。整体流程为：用户或内核通过sys_yield发起主动让权，经由suspend_current_and_run_next执行实际的任务切换，切换过程中依赖于Processor维护的当前任务信息和空闲上下文。",
+            "evidence": [
+              "sys_yield函数定义中明确调用了suspend_current_and_run_next，并记录了trace日志。",
+              "Processor结构定义在os/src/task/processor.rs，包含current和idle_task_cx字段，与任务调度和空闲状态管理直接相关。",
+              "调用关系证据显示sys_yield -> suspend_current_and_run_next，置信度0.9。"
+            ],
+            "uncertainty": "未提供suspend_current_and_run_next函数的具体实现代码，因此无法确认其调度算法（如优先级、时间片轮转等）以及底层上下文切换细节；Processor结构仅展示了字段定义，未给出方法实现，无法确定它如何与suspend_current_and_run_next交互或具体的调度逻辑。"
+          },
+          {
+            "module_name": "syscall",
+            "module_summary": "该模块主要处理与进程管理相关的系统调用，包括进程ID获取、用户/组ID获取、进程组ID设置、执行新程序、设置鲁棒链表以及关机等功能。其中多数ID获取类函数为伪实现，仅返回固定值（0或1）并记录日志；实际工作函数如sys_exec和sys_set_robust_list则完成了部分核心逻辑。",
+            "key_functions": [
+              {
+                "name": "sys_set_robust_list",
+                "role": "设置当前进程的robust list头指针，用于支持robust futex机制；检查参数长度后存入任务控制块。"
+              },
+              {
+                "name": "sys_setpgid",
+                "role": "伪实现，仅输出日志并返回Ok(0)，未实际设置进程组ID。"
+              },
+              {
+                "name": "sys_getpgid",
+                "role": "伪实现，固定返回1，未真正获取进程组ID。"
+              },
+              {
+                "name": "sys_getpid",
+                "role": "返回当前任务的进程ID，通过调用current_task获取pid字段。"
+              },
+              {
+                "name": "sys_getuid",
+                "role": "伪实现，返回UID=0，未真正获取用户ID。"
+              },
+              {
+                "name": "sys_geteuid",
+                "role": "伪实现，返回有效用户ID=0，仅记录日志。"
+              },
+              {
+                "name": "sys_getgid",
+                "role": "伪实现，返回组ID=0，仅记录日志。"
+              },
+              {
+                "name": "sys_getegid",
+                "role": "伪实现，返回有效组ID=0，仅记录日志。"
+              },
+              {
+                "name": "sys_gettid",
+                "role": "返回当前线程ID，通过current_task获取pid.0。"
+              },
+              {
+                "name": "sys_exec",
+                "role": "执行新程序：解析路径、参数和环境变量，处理.sh脚本启动，读取可执行文件数据并调用task.exec加载程序。"
+              },
+              {
+                "name": "sys_shutdown",
+                "role": "触发系统关机，调用shutdown函数执行关机操作。"
+              }
+            ],
+            "call_flow_summary": "模块内部函数大多是独立系统调用处理程序，相互之间无直接调用链。每个函数仅调用辅助函数（如current_task、trace!、warn!、translated_str等）和内核服务（如open、read_all、task.exec、shutdown）。sys_exec是调用链最复杂的函数，涉及内存翻译、文件操作和任务执行等多个步骤。其余函数逻辑简单，无深层嵌套调用关系。",
+            "evidence": [
+              "所有函数均定义在os/src/syscall/process.rs文件中，属于syscall模块。",
+              "大部分ID获取函数（sys_getuid、sys_geteuid、sys_getgid、sys_getegid、sys_getpgid、sys_setpgid）均通过trace!和warn!宏记录伪实现日志并返回固定值。",
+              "sys_exec函数内部调用了current_user_token、translated_str、translated_ref、current_task、get_abs_path、open、read_all和task.exec等辅助函数，存在多步调用链。",
+              "sys_set_robust_list调用了current_task和task.inner_exclusive_access来操作任务控制块。",
+              "sys_getpid和sys_gettid通过current_task获取任务控制块并提取pid字段。",
+              "sys_shutdown仅调用trace!和shutdown函数。"
+            ],
+            "uncertainty": "多个伪实现函数（sys_setpgid、sys_getpgid、sys_getuid、sys_geteuid、sys_getgid、sys_getegid）未实际完成预期的系统调用功能，未来是否会实现或仅用于测试暂不确定。sys_exec中调用的辅助函数（如current_user_token、translated_str、open、task.exec等）的具体实现细节未给出，其正确性和可靠性依赖于其他模块。sys_set_robust_list未校验head地址的有效性，可能存在未定义行为。sys_getpid和sys_gettid使用了unwrap()，若current_task返回None将导致panic。"
+          }
+        ]
+      },
+      "uncertainty": [
+        "当前仓库画像基于静态分析结果生成，尚未实际编译运行项目。",
+        "函数切片和调用关系提取可能受到宏、泛型、条件编译和跨语言调用影响。",
+        "模块总结依赖已分析的代码块，未深度分析的代码可能暂未覆盖。"
+      ],
+      "source_profile": "repo_profiles/history/nankai_repo_profile.json"
+    },
+    {
+      "repo_name": "qinghuadaxue",
+      "repo_path": "D:\\os\\history\\qinghuadaxue",
+      "created_at": "2026-05-31 17:44:03",
+      "function_analysis_summary": {
+        "analysis_count": 20,
+        "module_distribution": {
+          "process": 1,
+          "filesystem": 5,
+          "unknown": 1,
+          "interrupt": 10,
+          "memory": 3
+        }
+      },
+      "call_graph_summary": {
+        "edge_count": 127,
+        "high_confidence_edge_count": 23
+      },
+      "module_summary": {
+        "module_count": 5,
+        "module_names": [
+          "filesystem",
+          "interrupt",
+          "memory",
+          "process",
+          "unknown"
+        ],
+        "modules": [
+          {
+            "module_name": "filesystem",
+            "module_summary": "该模块（位于api/src/core/fs/imp/proc1目录下）是操作系统procfs（进程文件系统）的组成部分，负责在/proc目录下动态呈现进程信息。它提供了按PID访问进程详细信息的目录结构，支持列出所有进程并返回每个进程的cmdline、stat、status和maps等伪文件内容，用于用户态程序读取运行中进程的状态信息。",
+            "key_functions": [
+              {
+                "name": "process_info_builder",
+                "role": "核心构建函数，接收进程数据和文件系统引用，生成一个包含cmdline、stat、status、maps四个条目（伪文件）的动态目录（DirMaker）；其中cmdline、stat使用真实进程数据构造，status和maps使用假数据填充。"
+              },
+              {
+                "name": "ProcessInfoDir",
+                "role": "进程信息目录的结构体，持有Arc<DynamicFs>引用，代表一个由文件系统实例支持的进程目录节点，用于在/proc文件系统中承载进程相关的动态内容。"
+              },
+              {
+                "name": "new (ProcessInfoDir)",
+                "role": "构造函数，传入Arc<DynamicFs>文件系统引用并保存到结构体中，完成ProcessInfoDir的初始化。"
+              },
+              {
+                "name": "impl PseudoDirOps for ProcessInfoDir",
+                "role": "实现PseudoDirOps trait的迭代器方法，负责遍历系统中所有进程并返回每个进程的PID字符串列表，供上层浏览/proc目录时列出子目录名（即PID）。"
+              },
+              {
+                "name": "get_child",
+                "role": "将/proc下以PID命名的子目录名称解析为进程ID，调用process_info_builder构建对应的进程信息动态目录，并封装为DynNodeOps返回给文件系统，完成从字符串名称到文件系统节点的映射。"
+              }
+            ],
+            "call_flow_summary": "主要调用链：当用户访问/proc/PID时，get_child被调用，其内部先解析名称得到PID，然后调用process_info_builder。process_info_builder内部调用get_process_data获取进程数据，使用DynamicDir::builder创建目录构建器，依次调用SimpleFile::new、WithResult、root.add等添加cmdline、stat、status、maps四个伪文件，最后root.build生成DirMaker并转换为DynNodeOps返回。同时，impl PseudoDirOps for ProcessInfoDir的迭代器方法会调用get_all_processes和get_pid来生成所有PID列表。",
+            "evidence": [
+              "函数roles描述中明确指出process_info_builder、ProcessInfoDir、get_child等函数位于api/src/core/fs/imp/proc1/process.rs文件，属于文件系统模块的proc1子目录。",
+              "调用关系显示process_info_builder调用了get_process_data、DynamicDir::builder、SimpleFile::new、TaskStat::from_process等，表明其构建动态目录的过程。",
+              "impl PseudoDirOps for ProcessInfoDir调用了get_all_processes和get_pid，表明该实现用于列出进程PID。",
+              "get_child调用了process_info_builder并返回DynNodeOps，表明其将PID字符串映射为文件系统节点。"
+            ],
+            "uncertainty": "不确定get_all_processes和TaskStat::from_process的实现细节（是否仅访问进程管理器或模拟数据）；DUMMY_STATUS和DUMMY_MAPS的具体内容未知（根据命名推测为假数据）；DynNodeOps的完整转换方式未在材料中说明；ProcessInfoDir的其他方法或字段不在提供信息范围内。"
+          },
+          {
+            "module_name": "interrupt",
+            "module_summary": "该模块是arceos操作系统内核中负责中断和异常处理的模块，覆盖AArch64和LoongArch64两种架构。它提供了从硬件异常/中断捕获、类型分发、中断屏蔽管理、到用户态陷阱检测以及异常处理的完整流程。核心功能包括同步异常（系统调用、缺页、断点）和异步中断（IRQ）的识别与处理，以及在异常前后正确恢复/禁用中断使能状态。",
+            "key_functions": [
+              {
+                "name": "is_from_user",
+                "role": "判断当前陷阱是否来自用户态（较低异常级别），用于决定陷阱后处理策略。"
+              },
+              {
+                "name": "invalid_exception",
+                "role": "处理未预期的无效异常，通过panic输出异常信息并终止系统，提供调试依据。"
+              },
+              {
+                "name": "handle_irq_exception (AArch64)",
+                "role": "处理AArch64架构下的IRQ异步中断，调用handle_trap!宏记录中断，并在中断处理后执行后陷阱回调。"
+              },
+              {
+                "name": "handle_sync_exception (AArch64)",
+                "role": "处理AArch64架构下的同步异常（系统调用、指令/数据异常、断点），根据异常类别分发，并在处理前后管理中断使能状态。"
+              },
+              {
+                "name": "unmask_irqs (AArch64 & LoongArch64)",
+                "role": "根据异常发生前的中断使能状态，选择性地恢复中断使能，若之前中断已禁用则仅打印调试信息。"
+              },
+              {
+                "name": "mask_irqs (AArch64 & LoongArch64)",
+                "role": "屏蔽所有中断请求，调用disable_irqs函数实现中断禁用。"
+              },
+              {
+                "name": "handle_breakpoint (LoongArch64)",
+                "role": "处理断点异常，通过跳过当前断点指令（era寄存器加4字节）使程序继续执行。"
+              },
+              {
+                "name": "loongarch64_trap_handler (LoongArch64)",
+                "role": "LoongArch64架构的中央中断/异常分发函数，读取异常原因，分发给系统调用、缺页异常、断点或IRQ处理函数，并在前后管理中断状态。"
+              }
+            ],
+            "call_flow_summary": "模块内部存在清晰的调用链。对于AArch64架构：handle_sync_exception首先调用unmask_irqs恢复中断，然后根据ESR异常类别分发至handle_syscall、handle_instruction_abort、handle_data_abort等具体处理函数；处理完成后执行post_trap_callback，最后调用mask_irqs恢复中断屏蔽。handle_irq_exception则直接调用handle_trap!和post_trap_callback。对于LoongArch64架构：loongarch64_trap_handler读取ESTAT寄存器，判断异常类型后先调用unmask_irqs，然后按系统调用、缺页、断点或IRQ分发，各分支处理完成后调用post_trap_callback和mask_irqs。unmask_irqs和mask_irqs均依赖super::enable_irqs和disable_irqs等底层中断控制函数。",
+            "evidence": [
+              "函数名与文件路径明确属于中断/异常处理模块，如trap.rs、loongarch64_trap_handler等。",
+              "函数逻辑中涉及ESR、SPSR、ESTAT等架构专用寄存器与中断状态位操作。",
+              "调用关系显示handle_sync_exception -> unmask_irqs/mask_irqs，且unmask_irqs依赖super::enable_irqs。",
+              "loongarch64_trap_handler中直接调用handle_page_fault、handle_breakpoint、handle_trap等明确的中断处理函数。"
+            ],
+            "uncertainty": "部分函数的具体实现未包含在提供的代码片段中，例如：handle_trap!宏的内部处理、handle_syscall、handle_instruction_abort、handle_data_abort、handle_page_fault、post_trap_callback、enable_irqs、disable_irqs等函数的具体代码未展现，因此无法确定它们内部的详细逻辑。此外，AArch64的impl TrapSource块仅开始，无具体方法，其完整定义未知。以上总结仅基于现有函数理解和调用关系，部分结论结合了架构常识。"
+          },
+          {
+            "module_name": "memory",
+            "module_summary": "该模块负责处理AArch64和LoongArch64架构下的内存访问异常，具体包括指令异常、数据异常和页错误。它通过解析异常信息（如故障虚拟地址、访问类型和权限标志）并调用通用的页错误处理机制（通过handle_trap!宏分发到PAGE_FAULT处理函数）来尝试修复异常；若处理失败，则触发内核恐慌。模块是操作系统中虚拟内存管理和异常处理的重要组成部分，直接与MMU（内存管理单元）产生的各类页错误相关。",
+            "key_functions": [
+              {
+                "name": "handle_instruction_abort",
+                "role": "处理AArch64架构下的指令异常（Instruction Abort），包括转换错误和权限错误。函数从ISS解析访问标志，从FAR_EL1获取故障虚拟地址，并调用handle_trap!宏处理页错误；若无法处理则触发内核恐慌。"
+              },
+              {
+                "name": "handle_data_abort",
+                "role": "处理ARMv8架构的数据异常中断，根据ISS字段判断读写类型和缓存操作，构造合适的访问权限标志，从FAR_EL1获取故障虚拟地址，并调用handle_trap!宏处理页错误；若无法处理则触发内核恐慌。"
+              },
+              {
+                "name": "handle_page_fault",
+                "role": "处理LoongArch64架构下的页错误异常。函数根据is_user判断是否来自用户态，读取badv寄存器获取错误虚拟地址，调用handle_trap!宏处理页错误；处理失败时触发内核恐慌并输出详细错误信息。"
+              }
+            ],
+            "call_flow_summary": "模块内部存在明确的调用链：三个异常处理函数（handle_instruction_abort、handle_data_abort、handle_page_fault）都会调用handle_trap!宏以分发PAGE_FAULT处理。此外，handle_instruction_abort和handle_data_abort均调用va!宏和FAR_EL1.get；handle_page_fault调用badv::read。整体上，异常处理函数负责从特定架构寄存器获取异常信息，然后将控制流转至统一的页错误处理路径（通过handle_trap!宏）；若处理失败则直接panic。",
+            "evidence": [
+              "函数handle_instruction_abort、handle_data_abort、handle_page_fault均被明确标注为处理页故障类型（PAGE_FAULT或类页错误），并通过handle_trap!宏调用异常分发。",
+              "handle_instruction_abort从FAR_EL1寄存器获取故障虚拟地址；handle_data_abort从FAR_EL1获取故障虚拟地址；handle_page_fault读取badv寄存器。",
+              "所有函数都根据ISS或is_user参数构造MappingFlags（EXECUTE/USER/READ/WRITE），表明它们区分访问类型和特权级。",
+              "函数handle_instruction_abort和handle_data_abort编码在arceos/modules/axhal/src/arch/aarch64/trap.rs中，handle_page_fault编码在arceos/modules/axhal/src/arch/loongarch64/trap.rs中，均为操作系统的辅助模块。"
+            ],
+            "uncertainty": "handle_trap!宏的具体展开未知，因此无法确定PAGE_FAULT处理函数的精确名称或内部实现细节。va!宏、FAR_EL1.get和badv::read的具体定义未提供，可能存在其他间接调用。handle_page_fault中调用的badv::read是否返回有效的虚拟地址存在不确定性，但基于常规架构设计合理。函数间的调用关系置信度较低，部分通过AI推断，正则分析也可能产生误匹配。此外，未提供AArch64和LoongArch64处理逻辑之间的协调或共享机制，可能存在其他未被发现的页错误处理函数。"
+          },
+          {
+            "module_name": "process",
+            "module_summary": "该模块主要负责进程退出功能，提供进程终止的系统调用接口，调用底层API终止当前进程执行。",
+            "key_functions": [
+              {
+                "name": "exit",
+                "role": "终止当前进程，通过调用 arceos_api 的 ax_terminate 函数实现进程退出，函数不返回。"
+              }
+            ],
+            "call_flow_summary": "模块内部仅有一个关键函数 exit，其直接调用底层 API（arceos_api::sys::ax_terminate），无额外内部函数调用链。",
+            "evidence": [
+              "函数 exit 名称和返回值类型 ! 表示进程退出且不会返回。",
+              "函数内部直接调用 arceos_api::sys::ax_terminate() 完成终止。",
+              "调用关系显示 exit -> arceos_api::sys::ax_terminate（置信度0.7）、exit -> sys::ax_terminate（置信度0.6）、exit -> ax_terminate（置信度0.6）。"
+            ],
+            "uncertainty": "exit 函数接收 _exit_code 参数但未使用，具体退出码传递逻辑由底层 ax_terminate 实现，此处不明确；模块只提供了 exit 单一函数，无其他进程管理功能（如创建、调度等）证据，无法确认模块是否包含其他未列出的函数。"
+          },
+          {
+            "module_name": "unknown",
+            "module_summary": "该模块可能涉及操作系统进程信息目录（ProcessInfoDir）的相关实现，但根据提供的函数理解，当前代码仅有一个空的 impl 块，没有任何具体方法或逻辑，因此无法确定其真实功能。",
+            "key_functions": [
+              {
+                "name": "impl ProcessInfoDir",
+                "role": "目前为空实现，未定义任何方法或关联函数，无法判断其在模块中的具体作用。"
+              }
+            ],
+            "call_flow_summary": "由于该模块内仅有一个空的 impl 块且调用关系为空，无法推断出任何内部的调用流程或执行顺序。",
+            "evidence": [
+              "提供的函数理解显示该 impl 块内容为空，仅包含 'impl ProcessInfoDir {' 语句。",
+              "该模块相关的函数调用关系为空，没有提供任何调用链信息。"
+            ],
+            "uncertainty": "该模块缺少具体实现内容，无法分析其实际逻辑、调用的函数及所属模块；甚至不能确认该模块是否为完整的代码片段，或仅是一个未完成的部分。"
+          }
+        ]
+      },
+      "uncertainty": [
+        "当前仓库画像基于静态分析结果生成，尚未实际编译运行项目。",
+        "函数切片和调用关系提取可能受到宏、泛型、条件编译和跨语言调用影响。",
+        "模块总结依赖已分析的代码块，未深度分析的代码可能暂未覆盖。"
+      ],
+      "source_profile": "repo_profiles/history/qinghuadaxue_repo_profile.json"
+    },
+    {
+      "repo_name": "tianjindaxue",
+      "repo_path": "D:\\os\\history\\tianjindaxue",
+      "created_at": "2026-05-31 17:46:31",
+      "function_analysis_summary": {
+        "analysis_count": 20,
+        "module_distribution": {
+          "process": 6,
+          "unknown": 3,
+          "filesystem": 1,
+          "driver": 1,
+          "scheduler": 1,
+          "build": 1,
+          "report_generation": 1,
+          "syscall": 3,
+          "memory": 3
+        }
+      },
+      "call_graph_summary": {
+        "edge_count": 233,
+        "high_confidence_edge_count": 43
+      },
+      "module_summary": {
+        "module_count": 8,
+        "module_names": [
+          "build",
+          "driver",
+          "filesystem",
+          "memory",
+          "process",
+          "report_generation",
+          "scheduler",
+          "syscall"
+        ],
+        "modules": [
+          {
+            "module_name": "build",
+            "module_summary": "该模块是操作系统比赛作品中的构建与测试执行模块，主要负责系统初始进程的启动逻辑，根据不同的CPU架构（LoongArch64或其它）执行系统初始化、文件系统准备（创建目录、复制busybox、设置符号链接和权限）、以及执行多项测试套件（包括basic、LTP、iperf、lmbench、iozone、libcbench、busybox、lua、musl libc测试等），最终在测试完成后进行关机或清理。",
+            "key_functions": [
+              {
+                "name": "initproc",
+                "role": "模块的核心函数，作为系统初始进程的入口，执行架构判断、环境配置、测试调用的串联以及关机逻辑。"
+              }
+            ],
+            "call_flow_summary": "initproc函数内部按顺序调用多个子函数和命令来完成整个启动与测试流程：先调用set_libc_path和set_dyn_path设置库路径，然后根据架构（LoongArch64或非LoongArch64）选择执行路径：非LoongArch64架构下直接启动busybox shell；LoongArch64架构下依次调用command（与busybox交互创建目录、复制文件、设置链接）、run_ltp_tests、command_iperf、run_musl_tests等执行多个测试函数，最后切换至glibc环境并重复部分测试，最终调用shutdown函数关机。整个执行流程是顺序展开的，没有明显的分支循环，属于典型的线性调用链。",
+            "evidence": [
+              "函数initproc中根据架构条件进行了分支处理，例如'cfg!(target_arch = \"loongarch64\")'条件判断。",
+              "函数内部调用了set_libc_path、set_dyn_path、command、run_ltp_tests、command_iperf、run_musl_tests、shutdown等函数。",
+              "代码中执行了多个测试脚本（如run-all.sh、run_ltp_tests、iperf_testcode.sh等）并输出测试分组标记（如'OS COMP TEST GROUP START basic-musl'）。",
+              "函数最后通过任务映射检查是否存在非BlankKernel类型的任务，并根据结果决定是否再次调用shutdown。"
+            ],
+            "uncertainty": "代码中调用的command、run_ltp_tests、command_iperf、run_musl_tests等函数的具体实现在当前材料中未给出，仅能根据调用上下文推断其功能为执行shell命令或运行测试脚本；shutdown函数的具体实现也未提供。部分路径和命令（如/glibc/busybox）依赖于文件系统预置，其部署方式未在材料中说明。"
+          },
+          {
+            "module_name": "driver",
+            "module_summary": "driver模块负责提供底层驱动程序接口，当前可见部分包含终端控制功能，通过向DebugConsole串口发送ANSI转义序列实现屏幕清空操作。",
+            "key_functions": [
+              {
+                "name": "clear",
+                "role": "clear函数是驱动模块中用于清除终端屏幕的函数，通过调用DebugConsole::putchar发送ANSI转义序列（光标归位和清屏），实现清屏效果。"
+              }
+            ],
+            "call_flow_summary": "模块内部存在明确定义的调用链：clear函数调用DebugConsole::putchar（置信度0.9）以及可能直接调用putchar（置信度0.6）。基于高置信度证据，主要执行流程为clear依次发送多个字符到DebugConsole。",
+            "evidence": [
+              "函数clear通过连续调用DebugConsole::putchar发送字节序列0x1b 0x5b 0x48（ESC [ H）和0x1b 0x5b 0x32 0x4a（ESC [ 2 J），对应ANSI控制码。",
+              "调用关系显示clear->DebugConsole::putchar（来源：ai, regex，置信度0.9）和clear->putchar（来源：regex，置信度0.6）。"
+            ],
+            "uncertainty": "当前只有clear一个函数被理解，模块中可能还有其他驱动函数未被分析；调用关系中clear->putchar的置信度较低（0.6），无法完全确认是否存在单独的putchar函数被调用；另外DebugConsole::putchar是否为模块内部实现尚不确定。"
+          },
+          {
+            "module_name": "filesystem",
+            "module_summary": "该模块（filesystem）主要负责与文件系统相关的路径管理功能，具体体现在通过set_dyn_path函数设置一个全局动态路径，该路径可能用于指定动态链接库搜索路径或根文件系统路径等文件系统相关用途。但由于上下文不足，该模块的具体职责尚存不确定性。",
+            "key_functions": [
+              {
+                "name": "set_dyn_path",
+                "role": "设置全局动态路径，通过获取全局锁保护的静态变量DYN_PATH的互斥锁，并将传入的path字符串赋值给该变量，从而为文件系统相关操作（如动态库加载或路径解析）提供路径配置。"
+              }
+            ],
+            "call_flow_summary": "目前仅有一个函数set_dyn_path，其内部调用顺序为：先获取静态变量DYN_PATH的锁（通过lock()方法），然后设置路径值。不存在多个函数之间的调用链。",
+            "evidence": [
+              "AI模型分析set_dyn_path函数时指出：该函数通过获取全局锁保护的静态变量DYN_PATH的锁，并赋值path，可能用于动态链接库搜索路径或其他文件系统相关路径。",
+              "调用关系表明set_dyn_path内部调用了DYN_PATH.lock()（来源：ai，置信度0.7）以及DYN_PATH.lock和lock方法（来源：regex，置信度0.6），说明函数依赖全局锁机制。",
+              "文件路径为kernel/src/tasks/initproc.rs，表明该函数与进程初始化相关，可能涉及文件系统路径的初始化设置。"
+            ],
+            "uncertainty": "由于未提供DYN_PATH的定义和完整上下文，无法确认该动态路径的具体用途（如是否为动态链接库路径、根文件系统路径或其他文件系统相关路径），且模块中只识别出这一个函数，缺乏更多函数和调用关系，因此模块整体功能和角色推测性较强，可能不完整或存在其他未分析的函数。"
+          },
+          {
+            "module_name": "memory",
+            "module_summary": "该模块实现了与内存管理相关的三个核心系统调用：mmap（内存映射）、munmap（取消内存映射）和mprotect（修改内存保护属性）。它负责在用户空间虚拟地址空间中分配、释放和调整内存区域，包括处理匿名/文件映射、私有/共享映射、地址对齐、页表映射、重叠检测以及数据读取等操作。模块通过操作当前任务的进程控制块（PCB）、内存区域描述结构（memset）和页表来完成具体的内存管理任务。",
+            "key_functions": [
+              {
+                "name": "sys_mmap",
+                "role": "实现mmap系统调用，根据参数在用户空间分配或映射内存区域，支持多种映射类型，处理地址对齐、范围检查、重叠区域移除、页表映射以及从文件读取数据等步骤，返回映射的起始地址。"
+              },
+              {
+                "name": "sys_munmap",
+                "role": "实现munmap系统调用，通过调用PCB的sub_area方法取消指定虚拟地址范围的内存映射，返回成功标志0。"
+              },
+              {
+                "name": "sys_mprotect",
+                "role": "实现mprotect系统调用，解析保护标志参数并记录调试信息，但当前实现为空壳，仅返回成功（Ok(0)），未实际修改内存保护属性。"
+              }
+            ],
+            "call_flow_summary": "sys_mmap内部存在较长的调用链：首先调用alignup、from_bits_truncate等辅助函数解析参数，然后通过self.task获取当前任务的空闲地址和PCB锁，进一步调用memset.overlapping检测重叠、memset.sub_area移除重叠区域、memset.push添加新区域，以及map_frames、frame_alloc、map等函数进行页表映射和物理帧分配，最后在文件映射场景下调用file.readat和UserRef读取数据。sys_munmap直接调用task.inner_map进入PCB上下文，再调用memset.sub_area取消映射。sys_mprotect仅解析ProtFlags并输出日志，无进一步调用。三个函数分别独立，彼此之间没有直接调用关系。",
+            "evidence": [
+              "函数理解中明确sys_mmap需要处理地址对齐、页表映射、保护标志等，并调用了memset.sub_area、map_frames、file.readat等函数",
+              "函数理解中sys_munmap通过self.task.inner_map调用pcb.memset.sub_area",
+              "函数理解中sys_mprotect仅解析ProtFlags并返回Ok(0)，未调用其他内存操作函数",
+              "调用关系中列出了sys_mmap调用的大量内存和文件相关函数，sys_munmap调用inner_map和sub_area，sys_mprotect仅调用from_bits_truncate和debug!"
+            ],
+            "uncertainty": "部分内部函数的具体实现细节未给出，例如sub_area、map_frames、MemArea构造方式、ProtFlags定义来源等；sys_mprotect的ProtFlags是否为bitflags宏生成的未知；inner_map的确切作用未在材料中明确说明，可能为加锁访问PCB的封装；文件读取操作file.readat可能依赖块设备驱动，但代码未详细展开；所有置信度低于1.0的调用关系均基于AI或正则推断，实际源码可能有所不同。"
+          },
+          {
+            "module_name": "process",
+            "module_summary": "该模块负责操作系统内核中的进程管理功能，包括进程初始化、路径配置、任务终止、命令执行和测试运行。模块位于kernel/src/tasks/initproc.rs，主要处理用户进程的启动、路径设置（如libc、glibc、动态库路径）、终止所有任务，以及执行musl兼容性测试。",
+            "key_functions": [
+              {
+                "name": "set_libc_path",
+                "role": "设置全局libc路径，将传入的字符串存入互斥锁保护的静态变量中，用于进程初始化时的库路径配置。"
+              },
+              {
+                "name": "get_glibc_path",
+                "role": "获取全局glibc路径的字符串克隆值，通过互斥锁实现原子访问，用于获取GNU C库路径。"
+              },
+              {
+                "name": "get_dyn_path",
+                "role": "获取动态路径的字符串克隆值，通过互斥锁访问全局变量，可能用于动态链接库路径或工作目录。"
+              },
+              {
+                "name": "kill_all_tasks",
+                "role": "遍历所有任务，对MonolithicTask类型的任务调用exit(100)强制终止，用于系统清理或关闭时的任务销毁。"
+              },
+              {
+                "name": "command",
+                "role": "解析命令字符串并执行外部程序，支持引号和转义符，通过文件系统打开文件后创建用户进程执行，是模块中的核心执行函数。"
+              },
+              {
+                "name": "run_musl_tests",
+                "role": "执行musl测试集，定义静态和动态测试列表，排除指定项后调用command函数运行每个测试程序，用于检验musl库兼容性。"
+              }
+            ],
+            "call_flow_summary": "模块内部存在明确的调用关系：run_musl_tests函数会调用command函数来执行每个测试程序；command函数内部调用多个底层函数（如File::open、UserTask::new、exec_with_process、thread::spawn等）；其他函数（set_libc_path、get_glibc_path、get_dyn_path、kill_all_tasks）相对独立，无相互调用证据。kill_all_tasks的调用关系中剔除了错误关联（如File::open等），实际上主要调用TASK_MAP.lock、task.upgrade、get_task_type和exit。",
+            "evidence": [
+              "run_musl_tests通过command函数运行每个测试项（调用关系22）",
+              "command内部调用File::open、UserTask::new、exec_with_process、thread::spawn等（调用关系10-21）",
+              "set_libc_path、get_glibc_path、get_dyn_path、kill_all_tasks函数均独立操作全局变量或任务映射",
+              "kill_all_tasks遍历TASK_MAP并调用get_task_type和exit（调用关系6-9）",
+              "所有函数位于同一文件kernel/src/tasks/initproc.rs，属于进程管理模块"
+            ],
+            "uncertainty": "不确定信息：具体全局变量（LIBC_PATH、GLIBC_PATH、DYN_PATH、TASK_MAP）的初始化位置和默认值未提供；command函数中exec_with_process和user_entry的具体实现未体现；kill_all_tasks中exit(100)的退出码含义不明确；run_musl_tests的exclude列表中test_dir参数是否有效存在冗余可能性。"
+          },
+          {
+            "module_name": "report_generation",
+            "module_summary": "该模块负责在操作系统启动时，通过运行一系列LTP（Linux Test Project）测试用例来验证系统功能，并输出每个测试的执行结果（包括运行提示与失败信息），其行为较为简单，侧重于测试的批量执行与结果打印，而非结果收集或统计。",
+            "key_functions": [
+              {
+                "name": "run_ltp_tests",
+                "role": "核心函数，定义待运行的LTP测试用例列表，依次执行每个测试，并打印运行提示（RUN）和固定失败提示（FAIL），作为测试流程的主要驱动者。"
+              }
+            ],
+            "call_flow_summary": "模块内部调用流程线性且简单：run_ltp_tests遍历预定义的测试名称列表，对每个名称依次调用command函数执行三个shell命令——首先输出运行提示，然后运行指定路径下的测试可执行文件，最后输出失败提示。未发现其他函数间的复杂调用链或分支逻辑。",
+            "evidence": [
+              "函数run_ltp_tests中维护了一个包含多个LTP测试用例名称的字符串向量，并通过for循环遍历执行。",
+              "循环体内连续调用command执行固定格式的命令：echo RUN LTP CASE {test_name}、/musl/ltp/testcases/bin/{test_name}、echo FAIL LTP CASE {test_name} : 0。",
+              "调用关系显示run_ltp_tests调用了command，置信度为0.9，佐证了执行shell命令的行为。"
+            ],
+            "uncertainty": "command函数的定义不在提供材料中，其具体实现（如如何执行命令、处理返回码、设置环境等）不确定；所有测试运行后均输出失败信息，但实际是否成功不影响该模块行为，该设计可能是简化或占位逻辑，尚未确认其真实意图。"
+          },
+          {
+            "module_name": "scheduler",
+            "module_summary": "该模块主要负责任务管理和环境清理，具体表现为在iperf测试前后通过强制杀死所有任务和同步操作来确保测试环境的隔离性与状态一致性。",
+            "key_functions": [
+              {
+                "name": "command_iperf",
+                "role": "是模块的核心函数，用于执行iperf测试，并在测试前后进行强制任务清理和内存同步，以保证测试环境干净且无残留任务干扰。"
+              }
+            ],
+            "call_flow_summary": "command_iperf 函数首先调用 kill_all_tasks 清理现有任务，然后执行内存屏障（fence）和自旋等待（spin_loop）进行同步，接着调用 command 执行 iperf 测试，测试结束后再次调用 kill_all_tasks 清理任务，并再次执行同步等待。函数内部形成了明确的调用链：kill_all_tasks → fence → spin_loop → command → kill_all_tasks → fence → spin_loop。",
+            "evidence": [
+              "函数 command_iperf 中多次调用 kill_all_tasks() 来清理任务，这表明模块涉及任务调度与管理。",
+              "使用 atomic::fence 和 hint::spin_loop 进行内存同步和自旋等待，确保清理状态在全核间可见。",
+              "调用关系图显示 command_iperf 直接调用了 kill_all_tasks、command、fence、spin_loop 等函数。"
+            ],
+            "uncertainty": "kill_all_tasks 和 command 函数的具体实现未给出，无法确定其内部逻辑和对调度器的具体影响；此外，模块中仅有一个关键函数被描述，可能存在其他未包含在分析材料中的函数。"
+          },
+          {
+            "module_name": "syscall",
+            "module_summary": "该模块实现了操作系统中的系统调用功能，主要用于内存管理相关的系统调用，包括调整进程堆（brk）和同步内存映射文件（msync）的部分逻辑，但msync当前仅提供占位实现。",
+            "key_functions": [
+              {
+                "name": "impl UserTaskContainer",
+                "role": "定义了UserTaskContainer的实现块，但具体方法缺失，无法确定其详细功能，推测与系统调用中任务的内存管理相关。"
+              },
+              {
+                "name": "sys_brk",
+                "role": "实现brk系统调用，用于调整进程堆的结束地址：当传入地址为0时返回当前堆地址，否则通过任务的sbrk方法更新堆地址并返回新地址。"
+              },
+              {
+                "name": "sys_msync",
+                "role": "处理msync系统调用，用于同步内存映射到文件。当前为占位实现，仅解析标志位并返回成功，未执行真正的同步操作。"
+              }
+            ],
+            "call_flow_summary": "模块内部调用关系有限：sys_brk依赖于self.task.heap()和self.task.sbrk()方法；sys_msync依赖于MSyncFlags::from_bits_truncate进行标志解析。两函数之间没有直接调用关系。",
+            "evidence": [
+              "sys_brk函数中根据addr是否为0，分别调用self.task.heap()返回当前堆地址，或调用self.task.sbrk(addr)设置新地址并返回结果。",
+              "sys_msync函数中调用了MSyncFlags::from_bits_truncate(flags)解析标志，并打印调试日志，然后返回Ok(0)，注释表明为临时实现。",
+              "调用关系证据显示sys_brk对self.task.heap()和self.task.sbrk(addr)的调用来自多个来源（AI、正则匹配），置信度在0.6-0.7之间。",
+              "sys_msync对MSyncFlags::from_bits_truncate的调用来自AI和正则匹配，置信度0.9。"
+            ],
+            "uncertainty": "UserTaskContainer的实现块内容缺失，无法分析其具体方法和逻辑；self.task.heap()和self.task.sbrk()的内部实现细节未知（例如是否真正分配/释放内存）；sys_msync的addr和len参数在代码中未实际使用。"
+          }
+        ]
+      },
+      "uncertainty": [
+        "当前仓库画像基于静态分析结果生成，尚未实际编译运行项目。",
+        "函数切片和调用关系提取可能受到宏、泛型、条件编译和跨语言调用影响。",
+        "模块总结依赖已分析的代码块，未深度分析的代码可能暂未覆盖。"
+      ],
+      "source_profile": "repo_profiles/history/tianjindaxue_repo_profile.json"
+    },
+    {
+      "repo_name": "tianjingongye",
+      "repo_path": "D:\\os\\history\\tianjingongye",
+      "created_at": "2026-05-31 17:48:49",
+      "function_analysis_summary": {
+        "analysis_count": 20,
+        "module_distribution": {
+          "filesystem": 8,
+          "interrupt": 10,
+          "process": 1,
+          "memory": 1
+        }
+      },
+      "call_graph_summary": {
+        "edge_count": 86,
+        "high_confidence_edge_count": 11
+      },
+      "module_summary": {
+        "module_count": 4,
+        "module_names": [
+          "filesystem",
+          "interrupt",
+          "memory",
+          "process"
+        ],
+        "modules": [
+          {
+            "module_name": "filesystem",
+            "module_summary": "该模块实现了一个名为 ProcInterruptsFile 的虚拟文件系统节点，用于模拟 /proc/interrupts 文件。它只定义了空结构体和占位实现，仅有获取属性、只读读取和拒绝写入/截断操作的功能，其他方法为空或未完成。",
+            "key_functions": [
+              {
+                "name": "ProcInterruptsFile（结构体定义）",
+                "role": "定义了一个单元结构体，作为虚拟文件节点的类型标识，当前未携带任何字段或方法。"
+              },
+              {
+                "name": "impl ProcInterruptsFile （空实现块）",
+                "role": "为结构体提供空的实现块，未定义任何方法，可能为预留接口。"
+              },
+              {
+                "name": "new",
+                "role": "返回 Self 的占位函数，未执行实际构造逻辑，仅用于满足编译要求。"
+              },
+              {
+                "name": "impl VfsNodeOps for ProcInterruptsFile （空实现块）",
+                "role": "为结构体实现 VfsNodeOps trait，但实现块内容为空，未提供具体方法逻辑。"
+              },
+              {
+                "name": "get_attr",
+                "role": "获取虚拟文件的 VFS 属性（权限、类型、大小），利用 get_current_content 获取内容长度，文件权限设为只读，类型为 File。"
+              },
+              {
+                "name": "read_at",
+                "role": "从 get_current_content 获取内容，并从中复制指定偏移和数据长度到缓冲区，实现只读读取操作。"
+              },
+              {
+                "name": "write_at",
+                "role": "拒绝任何写入操作，直接返回 PermissionDenied 错误，确保该节点为只读。"
+              },
+              {
+                "name": "truncate",
+                "role": "拒绝任何截断操作，直接返回 PermissionDenied 错误，确保该节点不支持调整大小。"
+              }
+            ],
+            "call_flow_summary": "该模块内部存在明确的调用链：get_attr 和 read_at 都调用了 get_current_content（但 get_current_content 的具体实现未在提供的信息中给出，仅能从名称推断存在）；write_at 和 truncate 直接返回固定错误，不调用其他函数。除此之外，各函数之间没有其他相互调用关系。",
+            "evidence": [
+              "函数 1 定义了 ProcInterruptsFile 结构体，函数 2、3、4 涉及空实现或占位代码，说明模块尚不完整。",
+              "函数 5 (get_attr) 描述中调用了 from_bits_truncate、get_current_content、VfsNodeAttr::new、len 等。",
+              "函数 6 (read_at) 描述中调用了 get_current_content，并使用了 min、copy_from_slice 等操作。",
+              "函数 7 (write_at) 返回 PermissionDenied，函数 8 (truncate) 同样返回 PermissionDenied。",
+              "调用关系摘要中列出多次 get_attr -> get_current_content 和 read_at -> get_current_content，置信度为 0.6-0.9。"
+            ],
+            "uncertainty": "get_current_content 的具体实现未提供，其来源和逻辑只能推断；函数 2、3、4 的实现块内容为空，不确定原本应包含的功能；new 函数仅返回占位符，不确定完整构造逻辑；模块中缺少文件创建、删除、目录操作等常见 VFS 方法，是否在其他地方补充无法确认。"
+          },
+          {
+            "module_name": "interrupt",
+            "module_summary": "该模块主要负责处理操作系统中的中断和异常，包括ARM64和LoongArch64架构下的陷阱（trap）处理、中断统计信息获取、中断屏蔽/使能控制，以及同步异常（如系统调用、页错误）的分发和处理。",
+            "key_functions": [
+              {
+                "name": "get_current_content",
+                "role": "获取并格式化显示当前所有中断的统计信息，以字节序列形式返回，用于用户态查看中断状态。"
+              },
+              {
+                "name": "TrapSource (impl块)",
+                "role": "为ARM64架构下的陷阱来源枚举提供空实现，可能预留用于后续扩展功能。"
+              },
+              {
+                "name": "is_from_user",
+                "role": "判断陷阱是否来自用户态（AArch64或AArch32用户态），用于区分异常来源级别。"
+              },
+              {
+                "name": "invalid_exception",
+                "role": "处理无效异常，当遇到未预期的异常时触发内核恐慌（panic），终止执行。"
+              },
+              {
+                "name": "handle_irq_exception",
+                "role": "处理ARM64下的IRQ异常，调用内核中断处理宏并执行陷阱后回调。"
+              },
+              {
+                "name": "handle_instruction_abort",
+                "role": "处理ARM64下的指令异常（翻译或权限错误），尝试通过页错误处理恢复，失败则触发panic。"
+              },
+              {
+                "name": "handle_sync_exception",
+                "role": "处理ARM64下的同步异常，包括系统调用、指令/数据中止和调试断点，协调中断使能/禁用并分发异常。"
+              },
+              {
+                "name": "unmask_irqs",
+                "role": "根据异常发生时的SPSR寄存器状态，有条件地重新启用中断（IRQ），用于异常处理过程中恢复中断。"
+              },
+              {
+                "name": "mask_irqs",
+                "role": "禁用中断，用于异常处理前后关闭中断以保护临界区。"
+              },
+              {
+                "name": "handle_breakpoint",
+                "role": "处理LoongArch64架构下的断点异常，记录地址并跳过当前指令以继续执行。"
+              }
+            ],
+            "call_flow_summary": "模块内部存在明显的调用关系：在ARM64同步异常入口函数handle_sync_exception中，会依次调用unmask_irqs（使能中断）、根据异常类型分发到handle_syscall、handle_instruction_abort或handle_data_abort，处理完成后调用post_trap_callback和mask_irqs（禁用中断）。handle_instruction_abort内部会读取系统寄存器并调用handle_trap!宏处理页错误，失败时调用panic!。handle_irq_exception也通过handle_trap!宏和post_trap_callback进行处理。is_from_user被post_trap_callback调用以判断来源。mask_irqs和unmask_irqs分别简单封装了disable_irqs和enable_irqs。get_current_content独立调用axhal::irq_stats::get_all_irq_stats获取统计信息。handle_breakpoint属于LoongArch64独立处理，未发现与其他函数的直接调用关系。此外，impl TrapSource块为空，无实际调用。",
+            "evidence": [
+              "get_current_content 调用 axhal::irq_stats::get_all_irq_stats (来源: ai, 置信度0.7; regex, 置信度0.6)",
+              "handle_sync_exception 调用 unmask_irqs (来源: ai, regex, 置信度0.9)",
+              "handle_sync_exception 调用 handle_instruction_abort (来源: ai, regex, 置信度0.9)",
+              "handle_sync_exception 调用 mask_irqs (来源: ai, regex, 置信度0.9)",
+              "handle_sync_exception 调用 crate::trap::post_trap_callback (来源: ai, 置信度0.7; regex, 置信度0.6)",
+              "handle_irq_exception 调用 handle_trap! (来源: ai, 置信度0.7) 和 crate::trap::post_trap_callback (来源: ai, 置信度0.7)",
+              "handle_instruction_abort 调用 handle_trap! (来源: ai, 置信度0.7) 和 panic! (来源: ai, 置信度0.7)",
+              "unmask_irqs 调用 super::enable_irqs (来源: ai, regex, 置信度0.9)",
+              "mask_irqs 调用 disable_irqs (来源: ai, regex, 置信度0.9)",
+              "is_from_user 用于 post_trap_callback (来源: regex, 置信度0.6)",
+              "handle_breakpoint 属于 LoongArch64 架构，无跨架构调用 (来源: ai, 置信度0.7)"
+            ],
+            "uncertainty": "1. handle_trap!宏的具体实现未给出，无法确认其内部行为。2. post_trap_callback的具体作用依赖于外部定义，仅知它接受陷阱帧和用户态标识。3. handle_data_abort函数未被详细分析，但其被handle_sync_exception调用。4. impl TrapSource块为空，无法推断其原本意图。5. 部分调用关系来源为regex，置信度较低（0.6），可能包含文本匹配误差。"
+          },
+          {
+            "module_name": "memory",
+            "module_summary": "该模块是AArch64架构下内存管理子系统的组成部分，主要负责处理数据中止异常（Data Abort）。通过解析异常综合状态寄存器（ISS）和故障地址寄存器（FAR_EL1），判断异常类型（翻译错误或权限错误），并触发页错误处理流程。该模块是操作系统虚拟内存管理和异常处理的关键环节。",
+            "key_functions": [
+              {
+                "name": "handle_data_abort",
+                "role": "处理AArch64架构的数据中止异常，从ISS和FAR_EL1提取故障信息，判断是否为翻译或权限错误，并调用页错误处理宏进行内存访问修复，否则触发panic。"
+              }
+            ],
+            "call_flow_summary": "当前模块内部仅包含一个关键函数handle_data_abort。该函数内部调用FAR_EL1.get获取故障虚拟地址，并使用va!宏和handle_trap!宏进行地址处理和页错误响应。函数之间不存在复杂调用链，但存在向低级寄存器读取和宏展开的内部调用。",
+            "evidence": [
+              "函数handle_data_abort从ISS寄存器提取WnR和CM位以确定访问类型（读/写），并设置USER标志。",
+              "函数从FAR_EL1寄存器读取故障虚拟地址。",
+              "函数检查ISS的低6位（DFSC/IFSC）是否为翻译错误（0b0100）或权限错误（0b1100），以决定是否触发PAGE_FAULT处理。",
+              "调用关系证据显示handle_data_abort调用va!宏、handle_trap!宏、FAR_EL1.get、get和unsafe操作。"
+            ],
+            "uncertainty": "va!宏和handle_trap!宏的具体实现未提供，无法确认其内部逻辑细节；仅能根据函数名称和上下文推断它们用于虚拟地址转换和页错误事件分发。此外，该模块仅有一个公开函数，其他辅助操作（如get、unsafe）的具体作用未明确，可能涉及寄存器读取或低级内存操作，但缺乏完整验证依据。"
+          },
+          {
+            "module_name": "process",
+            "module_summary": "该模块主要负责提供进程退出功能，通过调用底层系统接口终止当前进程的执行。目前仅包含一个退出函数 exit，没有其他进程管理功能（如创建、挂起、唤醒等）的明显证据。",
+            "key_functions": [
+              {
+                "name": "exit",
+                "role": "终止当前进程。接收退出码（但当前未使用），并调用 ax_terminate 系统接口实现进程退出，且该函数声明为永不返回（! 类型）。"
+              }
+            ],
+            "call_flow_summary": "模块内部仅包含 exit 函数，该函数直接调用 arceos_api::sys::ax_terminate 系统函数。不存在多个函数之间的复杂调用链。",
+            "evidence": [
+              "函数 exit 位于 arceos/ulib/axstd/src/process.rs，通过调用 arceos_api::sys::ax_terminate 实现退出功能",
+              "返回类型为 !，表明该函数不会返回，符合进程退出的语义",
+              "调用关系显示 exit -> ax_terminate（来源：AI 及正则匹配，置信度均 ≥0.6）"
+            ],
+            "uncertainty": "exit 函数未使用传入的退出码 _exit_code，但 ax_terminate 内部是否处理退出码不明确；目前仅有一个退出函数，该模块是否还包含其他进程管理函数（如 fork、exec、wait）缺乏证据。"
+          }
+        ]
+      },
+      "uncertainty": [
+        "当前仓库画像基于静态分析结果生成，尚未实际编译运行项目。",
+        "函数切片和调用关系提取可能受到宏、泛型、条件编译和跨语言调用影响。",
+        "模块总结依赖已分析的代码块，未深度分析的代码可能暂未覆盖。"
+      ],
+      "source_profile": "repo_profiles/history/tianjingongye_repo_profile.json"
+    },
+    {
+      "repo_name": "tongjidaxue",
+      "repo_path": "D:\\os\\history\\tongjidaxue",
+      "created_at": "2026-05-31 17:50:07",
+      "function_analysis_summary": {
+        "analysis_count": 20,
+        "module_distribution": {
+          "process": 17,
+          "unknown": 3
+        }
+      },
+      "call_graph_summary": {
+        "edge_count": 63,
+        "high_confidence_edge_count": 7
+      },
+      "module_summary": {
+        "module_count": 2,
+        "module_names": [
+          "process",
+          "unknown"
+        ],
+        "modules": [
+          {
+            "module_name": "process",
+            "module_summary": "该模块定义了操作系统中进程管理的核心数据结构与相关功能，包括进程控制块（Process）、等待队列（WaitList）、等待条目（Entry）、批量通知（NotifyBatch）、已退出进程处理（DrainExited），以及等待标识（WaitId）和等待类型（WaitType）的转换与状态码生成。模块主要负责进程的创建/克隆（通过 ProcessBuilder 和 clone_from 函数）、进程等待/退出状态管理（WaitList、Entry、DrainExited）以及系统调用中 wait/waitpid/waitid 的参数解析和状态码生成（from_type_and_id、from_id、to_wstatus、to_status_code 等）。",
+            "key_functions": [
+              {
+                "name": "ProcessBuilder",
+                "role": "构建器模式的结构体，用于逐步配置和创建进程实例，包含内存列表、退出信号、父进程等可选字段。"
+              },
+              {
+                "name": "Process",
+                "role": "进程核心结构体，定义进程标识、父子关系、线程管理、信号、共享内存、进程组与会话等字段，是进程控制块的主要表示。"
+              },
+              {
+                "name": "WaitList",
+                "role": "等待队列结构体，使用自旋锁和条件变量管理等待对象（WaitObject），用于进程同步与唤醒。"
+              },
+              {
+                "name": "NotifyBatch",
+                "role": "批量通知结构体，持有等待队列守卫、进程引用和条件变量引用，用于一次性唤醒多个等待的进程。"
+              },
+              {
+                "name": "Entry",
+                "role": "等待队列中的条目结构体，存储进程等待上下文，包括等待队列引用、进程列表引用、条件变量引用以及控制标志（want_stop、want_continue）和等待ID。"
+              },
+              {
+                "name": "DrainExited",
+                "role": "用于遍历并消费已退出进程的等待对象，包装受自旋锁保护的 VecDeque<WaitObject>，便于清理退出状态。"
+              },
+              {
+                "name": "from_type_and_id",
+                "role": "根据 id_type 和 id 参数将 Linux waitid 系统调用中的类型转换为内部 WaitId 枚举（Any、Pid、Pgid），不支持 P_PIDFD 时 panic，无效类型返回错误。"
+              },
+              {
+                "name": "from_id",
+                "role": "根据传入的 id 值和当前线程信息，将 id 转换为 WaitId 变体：id=-1 表示任意子进程，id=0 表示同组进程，正数表示特定 PID，负数表示特定 PGID。"
+              },
+              {
+                "name": "WaitObject",
+                "role": "等待对象结构体，包含进程 ID（pid）和等待类型（WaitType），用于在等待队列中记录等待项。"
+              },
+              {
+                "name": "impl WaitType",
+                "role": "WaitType 类型的空实现块，当前未定义任何方法，可能用于未来扩展。"
+              },
+              {
+                "name": "to_wstatus",
+                "role": "将 WaitType 枚举转换为 Linux 兼容的 wait 状态码（wstatus），处理 Exited、Signaled、Stopped、Continued 四种事件，符合 waitpid 返回规范。"
+              },
+              {
+                "name": "to_status_code",
+                "role": "将 WaitType 转换为状态码二元组（退出码/信号值和 CLD_* 事件常量），用于返回给父进程，支持 CLD_EXITED、CLD_DUMPED、CLD_KILLED、CLD_STOPPED、CLD_CONTINUED。"
+              },
+              {
+                "name": "stopped",
+                "role": "判断 WaitType 是否为 Stopped 变体，若是则返回对应的停止信号（Signal），否则返回 None。"
+              },
+              {
+                "name": "is_continue",
+                "role": "判断 WaitType 是否为 Continued 状态，返回布尔值。"
+              },
+              {
+                "name": "new",
+                "role": "为 Process 结构体创建一个所有字段均为 None 的空占位实例。"
+              },
+              {
+                "name": "clone_from",
+                "role": "根据克隆参数（clone_args）克隆进程：根据 CLONE_VM 标志决定共享或复制内存空间，设置退出信号、内存列表、父进程，用于进程创建（如 fork）。"
+              },
+              {
+                "name": "exit_signal",
+                "role": "设置进程的退出信号（Signal），并返回修改后的自身，用于配置进程退出时向父进程发送的信号。"
+              }
+            ],
+            "call_flow_summary": "模块内部存在明显的调用链：1) 进程等待状态处理链：from_type_and_id 和 from_id 根据系统调用参数生成 WaitId，可能用于后续与 WaitObject 的匹配；2) WaitList 与 WaitObject 配合管理等待队列，DrainExited 用于遍历已退出进程的等待项，Entry 表示等待上下文，NotifyBatch 用于批量唤醒；3) 状态码生成链：to_wstatus 和 to_status_code 均处理 WaitType 枚举，生成不同的状态表示（wstatus 或 CLD_* 事件），其中 to_wstatus 调用了 SIGNAL_COREDUMP! 宏和 into_raw，to_status_code 也调用了 SIGNAL_COREDUMP! 和 into_raw；4) 进程克隆链：clone_from 函数调用 new_shared 或 new_cloned（取决于 CLONE_VM 标志），并调用 exit_signal、mm_list、parent 方法完成进程构建；5) 进程结构体可通过 ProcessBuilder 进行构建，但当前未显示实现方法。此外，from_id 函数依赖 pgroup_rcu 方法获取进程组 ID。",
+            "evidence": [
+              "函数理解中明确描述了 ProcessBuilder、Process、WaitList 等结构体及其字段，与进程管理相关",
+              "from_type_and_id 和 from_id 函数涉及 P_ALL、P_PID、P_PGID、P_PIDFD 常量，与 Linux waitid 系统调用对应",
+              "to_wstatus 和 to_status_code 函数处理 WaitType 的四种变体（Exited、Signaled、Stopped、Continued），并生成标准状态码",
+              "clone_from 函数使用 CLONE_VM 标志和 exit_signal、mm_list、parent 方法，明显是进程克隆逻辑",
+              "调用关系图中显示了 from_id -> pgroup_rcu、clone_from -> new_shared/new_cloned 等具体依赖"
+            ],
+            "uncertainty": "部分函数（如 ProcessBuilder、Entry、DrainExited）仅展示了结构体定义，未提供方法实现，具体逻辑无法确认；SIGNAL_COREDUMP!() 宏的具体定义未知；to_wstatus 中 Stopped 分支的表达式中括号缺失可能导致计算语义不明确；CLD_TRAPPED 在 to_status_code 中被注释为 TODO，表明该功能未实现；new_shared 和 new_cloned 的具体实现细节未在代码中给出；WaitType 的具体定义（枚举还是结构体）及 WaitId 的完整定义未知；panic! 宏在 from_type_and_id 中的行为（终止任务还是线程）未说明。"
+          },
+          {
+            "module_name": "unknown",
+            "module_summary": "该模块位于 src/kernel/task/process.rs 文件中，从文件路径推测可能与操作系统中的任务/进程管理有关，但提供的函数理解和调用关系信息严重不足，无法确认模块的具体职责和功能范围。",
+            "key_functions": [
+              {
+                "name": "impl WaitId",
+                "role": "仅为 impl 块起始声明，缺乏方法实现，无法确定在进程管理中的实际作用，可能涉及等待某个ID相关的进程操作。"
+              },
+              {
+                "name": "impl WaitObject",
+                "role": "仅为 impl 块起始声明，缺乏方法实现，无法确定具体角色，可能与等待某个对象（如信号量、锁等）相关。"
+              },
+              {
+                "name": "impl ProcessBuilder",
+                "role": "仅为 impl 块起始声明，缺乏方法实现，但 ProcessBuilder 通常用于构造或初始化进程，推测其角色是提供创建进程所需的配置和构建接口。"
+              }
+            ],
+            "call_flow_summary": "由于所有函数均缺乏具体实现代码，且未提供任何函数调用关系信息，因此无法总结模块内部的调用链或执行流程。",
+            "evidence": [
+              "所有函数提供的代码材料均仅包含 impl 块起始声明（如 'impl WaitId {'），未包含任何方法定义或函数体。",
+              "模块归属的文件路径为 src/kernel/task/process.rs，暗示与任务/进程管理相关。",
+              "函数调用关系部分为空，无任何调用记录。"
+            ],
+            "uncertainty": "信息严重不足：各函数的具体实现、内部逻辑、参数、返回值及调用关系均未知；无法确认模块的准确名称和具体功能，所有推测仅基于文件名和类型名（如 ProcessBuilder、WaitId、WaitObject）的常见命名惯例。"
+          }
+        ]
+      },
+      "uncertainty": [
+        "当前仓库画像基于静态分析结果生成，尚未实际编译运行项目。",
+        "函数切片和调用关系提取可能受到宏、泛型、条件编译和跨语言调用影响。",
+        "模块总结依赖已分析的代码块，未深度分析的代码可能暂未覆盖。"
+      ],
+      "source_profile": "repo_profiles/history/tongjidaxue_repo_profile.json"
+    },
+    {
+      "repo_name": "yanshandaxue",
+      "repo_path": "D:\\os\\history\\yanshandaxue",
+      "created_at": "2026-05-31 17:51:32",
+      "function_analysis_summary": {
+        "analysis_count": 20,
+        "module_distribution": {
+          "process": 1,
+          "interrupt": 16,
+          "memory": 3
+        }
+      },
+      "call_graph_summary": {
+        "edge_count": 122,
+        "high_confidence_edge_count": 24
+      },
+      "module_summary": {
+        "module_count": 3,
+        "module_names": [
+          "interrupt",
+          "memory",
+          "process"
+        ],
+        "modules": [
+          {
+            "module_name": "interrupt",
+            "module_summary": "该模块负责处理操作系统在AArch64、LoongArch64和RISC-V架构下的异常与中断，是异常/中断处理的核心。它包含异常源识别、异常分发处理（如系统调用、缺页、断点、外部中断）、中断状态保存/恢复等关键功能，为上层提供统一的陷阱处理接口。",
+            "key_functions": [
+              {
+                "name": "TrapSource (AArch64)",
+                "role": "表示异常源类型，提供获取异常源类型和描述字符串的方法。"
+              },
+              {
+                "name": "is_from_user (AArch64)",
+                "role": "判断当前陷阱是否来自用户态。"
+              },
+              {
+                "name": "invalid_exception (AArch64)",
+                "role": "处理无效或无法识别的异常，调用 panic 导致系统崩溃并打印错误信息。"
+              },
+              {
+                "name": "handle_irq_exception (AArch64)",
+                "role": "处理AArch64架构下的中断异常，记录IRQ源并执行陷阱后回调。"
+              },
+              {
+                "name": "handle_data_abort (AArch64)",
+                "role": "处理数据中止异常，解析ISS字段获取访问类型和权限，尝试处理页错误，失败则panic。"
+              },
+              {
+                "name": "handle_sync_exception (AArch64)",
+                "role": "AArch64同步异常的主处理函数，根据异常类别分发至系统调用、指令/数据中止、断点等处理逻辑。"
+              },
+              {
+                "name": "unmask_irqs (AArch64, LoongArch64, RISC-V)",
+                "role": "根据陷阱帧中保存的中断屏蔽状态，在异常处理前恢复中断使能，支持嵌套中断。"
+              },
+              {
+                "name": "mask_irqs (AArch64, LoongArch64, RISC-V)",
+                "role": "在异常处理完成后屏蔽所有中断，为恢复执行做准备。"
+              },
+              {
+                "name": "handle_breakpoint (LoongArch64, RISC-V)",
+                "role": "处理断点异常，打印调试信息并跳过当前断点指令。"
+              },
+              {
+                "name": "loongarch64_trap_handler (LoongArch64)",
+                "role": "LoongArch64架构的异常/中断总入口，根据异常原因分发至系统调用、缺页、断点、外部中断等处理。"
+              },
+              {
+                "name": "riscv_trap_handler (RISC-V)",
+                "role": "RISC-V架构的陷阱总入口，根据陷阱原因分发至系统调用、缺页、断点、外部中断等处理。"
+              }
+            ],
+            "call_flow_summary": "模块内存在清晰的异常处理调用链：各架构的trap_handler（如riscv_trap_handler、loongarch64_trap_handler、handle_sync_exception）作为入口函数，读取异常/中断原因，然后根据原因调用对应的处理函数（如handle_page_fault、handle_data_abort、handle_breakpoint、handle_syscall），并在处理前后调用unmask_irqs和mask_irqs管理中断使能，最后调用post_trap_callback执行后处理。另外，handle_irq_exception和handle_sync_exception内部也调用了post_trap_callback和unmask_irqs/mask_irqs，形成标准化的异常处理流程。",
+            "evidence": [
+              "函数理解中明确指出各trap_handler负责分发和调度异常处理。",
+              "调用关系列表中展示了各trap_handler内部调用unmask_irqs、mask_irqs、handle_page_fault、handle_breakpoint、handle_syscall等函数。",
+              "多个架构下存在名称和功能相同的unmask_irqs和mask_irqs函数，用于统一的中断状态管理。"
+            ],
+            "uncertainty": "部分函数的具体实现细节未提供，例如handle_trap!宏、handle_page_fault、handle_instruction_abort、post_trap_callback、handle_syscall以及disable_irqs/enable_irqs的内部逻辑未知。此外，函数之间的调用关系部分基于正则表达式推断，置信度较低（如0.6），可能存在少量误报或漏报。"
+          },
+          {
+            "module_name": "memory",
+            "module_summary": "该模块负责处理不同CPU架构（AArch64、LoongArch64、RISC-V）下的内存访问异常，特别是缺页异常（Page Fault）和指令中止异常。模块通过读取故障原因和虚拟地址，调用通用陷阱处理机制尝试修复页面映射，若无法处理则触发内核恐慌并输出诊断信息。",
+            "key_functions": [
+              {
+                "name": "handle_instruction_abort",
+                "role": "处理AArch64架构内的指令中止异常，判断故障类型（翻译故障或权限故障），尝试通过页故障处理机制修复，失败则panic。"
+              },
+              {
+                "name": "handle_page_fault (LoongArch64)",
+                "role": "处理LoongArch64架构的页错误，根据是否用户态设置访问权限，读取故障虚拟地址，调用通用陷阱处理函数尝试修复，失败则panic输出错误详情。"
+              },
+              {
+                "name": "handle_page_fault (RISC-V)",
+                "role": "处理RISC-V架构的缺页异常，根据是否用户态添加USER权限标志，调用通用陷阱处理函数尝试修复，失败则panic输出异常类型、程序计数器及故障虚拟地址等信息。"
+              }
+            ],
+            "call_flow_summary": "模块内函数均作为异常入口点，各自独立处理特定架构的缺页/中止异常。每个函数先读取故障原因和虚拟地址（通过架构相关寄存器或宏，如FAR_EL1.get、badv::read、va!），然后调用 handle_trap! 宏执行通用缺页处理。若 handle_trap! 返回 false，则触发 panic!。模块内部未发现多个函数之间的直接调用链（跨架构函数相互独立）。",
+            "evidence": [
+              "handle_instruction_abort 从ISS寄存器提取IFSC位判断故障类型为翻译/权限故障，并调用 handle_trap!(PAGE_FAULT) 处理。",
+              "LoongArch64 的 handle_page_fault 根据 is_user 设置 USER 标志，通过 badv 寄存器读取虚拟地址，调用 handle_trap!。",
+              "RISC-V 的 handle_page_fault 同样依据 is_user 添加 USER 权限，调用 handle_trap!。",
+              "所有三个函数在 handle_trap! 返回 false 后均调用 panic! 输出详细信息。",
+              "调用关系显示 handle_instruction_abort 调用 FAR_EL1.get、matches!、handle_trap!；handle_page_fault 调用 badv::read、va!、handle_trap!、panic!。"
+            ],
+            "uncertainty": "handle_trap! 宏和 va! 宏的具体实现未在提供的代码片段中定义，无法确认其内部是否涉及进程切换、物理内存分配或具体页表操作。此外，函数间的调用关系仅限单个函数内部的顺序执行，未发现跨函数调用链（如一个handle_page_fault调用另一个）。"
+          },
+          {
+            "module_name": "process",
+            "module_summary": "该模块主要提供进程退出功能，通过调用底层系统接口终止当前进程的执行，确保进程退出后不再返回。",
+            "key_functions": [
+              {
+                "name": "exit",
+                "role": "接收退出码并调用底层终止接口来结束当前进程，函数返回类型为!表示永不返回。"
+              }
+            ],
+            "call_flow_summary": "模块内部仅有exit一个函数，它直接调用底层API ax_terminate来终止进程，不存在其他函数间的调用链。",
+            "evidence": [
+              "exit函数通过调用arceos_api::sys::ax_terminate实现进程终止，返回类型为!。",
+              "函数调用关系记录显示exit→arceos_api::sys::ax_terminate（置信度0.7），以及exit→sys::ax_terminate（置信度0.6）和exit→ax_terminate（置信度0.6）。"
+            ],
+            "uncertainty": "无法确定exit函数的退出码参数是否被底层API实际使用；ax_terminate的具体行为（如是否立即停止所有线程、是否允许清理资源）未在现有代码材料中体现。"
+          }
+        ]
+      },
+      "uncertainty": [
+        "当前仓库画像基于静态分析结果生成，尚未实际编译运行项目。",
+        "函数切片和调用关系提取可能受到宏、泛型、条件编译和跨语言调用影响。",
+        "模块总结依赖已分析的代码块，未深度分析的代码可能暂未覆盖。"
+      ],
+      "source_profile": "repo_profiles/history/yanshandaxue_repo_profile.json"
+    }
+  ]
+}

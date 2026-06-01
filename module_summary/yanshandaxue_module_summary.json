@@ -1,0 +1,107 @@
+{
+  "repo_name": "yanshandaxue",
+  "created_at": "2026-05-31 17:51:32",
+  "module_count": 3,
+  "modules": [
+    {
+      "module_name": "interrupt",
+      "module_summary": "该模块负责处理操作系统在AArch64、LoongArch64和RISC-V架构下的异常与中断，是异常/中断处理的核心。它包含异常源识别、异常分发处理（如系统调用、缺页、断点、外部中断）、中断状态保存/恢复等关键功能，为上层提供统一的陷阱处理接口。",
+      "key_functions": [
+        {
+          "name": "TrapSource (AArch64)",
+          "role": "表示异常源类型，提供获取异常源类型和描述字符串的方法。"
+        },
+        {
+          "name": "is_from_user (AArch64)",
+          "role": "判断当前陷阱是否来自用户态。"
+        },
+        {
+          "name": "invalid_exception (AArch64)",
+          "role": "处理无效或无法识别的异常，调用 panic 导致系统崩溃并打印错误信息。"
+        },
+        {
+          "name": "handle_irq_exception (AArch64)",
+          "role": "处理AArch64架构下的中断异常，记录IRQ源并执行陷阱后回调。"
+        },
+        {
+          "name": "handle_data_abort (AArch64)",
+          "role": "处理数据中止异常，解析ISS字段获取访问类型和权限，尝试处理页错误，失败则panic。"
+        },
+        {
+          "name": "handle_sync_exception (AArch64)",
+          "role": "AArch64同步异常的主处理函数，根据异常类别分发至系统调用、指令/数据中止、断点等处理逻辑。"
+        },
+        {
+          "name": "unmask_irqs (AArch64, LoongArch64, RISC-V)",
+          "role": "根据陷阱帧中保存的中断屏蔽状态，在异常处理前恢复中断使能，支持嵌套中断。"
+        },
+        {
+          "name": "mask_irqs (AArch64, LoongArch64, RISC-V)",
+          "role": "在异常处理完成后屏蔽所有中断，为恢复执行做准备。"
+        },
+        {
+          "name": "handle_breakpoint (LoongArch64, RISC-V)",
+          "role": "处理断点异常，打印调试信息并跳过当前断点指令。"
+        },
+        {
+          "name": "loongarch64_trap_handler (LoongArch64)",
+          "role": "LoongArch64架构的异常/中断总入口，根据异常原因分发至系统调用、缺页、断点、外部中断等处理。"
+        },
+        {
+          "name": "riscv_trap_handler (RISC-V)",
+          "role": "RISC-V架构的陷阱总入口，根据陷阱原因分发至系统调用、缺页、断点、外部中断等处理。"
+        }
+      ],
+      "call_flow_summary": "模块内存在清晰的异常处理调用链：各架构的trap_handler（如riscv_trap_handler、loongarch64_trap_handler、handle_sync_exception）作为入口函数，读取异常/中断原因，然后根据原因调用对应的处理函数（如handle_page_fault、handle_data_abort、handle_breakpoint、handle_syscall），并在处理前后调用unmask_irqs和mask_irqs管理中断使能，最后调用post_trap_callback执行后处理。另外，handle_irq_exception和handle_sync_exception内部也调用了post_trap_callback和unmask_irqs/mask_irqs，形成标准化的异常处理流程。",
+      "evidence": [
+        "函数理解中明确指出各trap_handler负责分发和调度异常处理。",
+        "调用关系列表中展示了各trap_handler内部调用unmask_irqs、mask_irqs、handle_page_fault、handle_breakpoint、handle_syscall等函数。",
+        "多个架构下存在名称和功能相同的unmask_irqs和mask_irqs函数，用于统一的中断状态管理。"
+      ],
+      "uncertainty": "部分函数的具体实现细节未提供，例如handle_trap!宏、handle_page_fault、handle_instruction_abort、post_trap_callback、handle_syscall以及disable_irqs/enable_irqs的内部逻辑未知。此外，函数之间的调用关系部分基于正则表达式推断，置信度较低（如0.6），可能存在少量误报或漏报。"
+    },
+    {
+      "module_name": "memory",
+      "module_summary": "该模块负责处理不同CPU架构（AArch64、LoongArch64、RISC-V）下的内存访问异常，特别是缺页异常（Page Fault）和指令中止异常。模块通过读取故障原因和虚拟地址，调用通用陷阱处理机制尝试修复页面映射，若无法处理则触发内核恐慌并输出诊断信息。",
+      "key_functions": [
+        {
+          "name": "handle_instruction_abort",
+          "role": "处理AArch64架构内的指令中止异常，判断故障类型（翻译故障或权限故障），尝试通过页故障处理机制修复，失败则panic。"
+        },
+        {
+          "name": "handle_page_fault (LoongArch64)",
+          "role": "处理LoongArch64架构的页错误，根据是否用户态设置访问权限，读取故障虚拟地址，调用通用陷阱处理函数尝试修复，失败则panic输出错误详情。"
+        },
+        {
+          "name": "handle_page_fault (RISC-V)",
+          "role": "处理RISC-V架构的缺页异常，根据是否用户态添加USER权限标志，调用通用陷阱处理函数尝试修复，失败则panic输出异常类型、程序计数器及故障虚拟地址等信息。"
+        }
+      ],
+      "call_flow_summary": "模块内函数均作为异常入口点，各自独立处理特定架构的缺页/中止异常。每个函数先读取故障原因和虚拟地址（通过架构相关寄存器或宏，如FAR_EL1.get、badv::read、va!），然后调用 handle_trap! 宏执行通用缺页处理。若 handle_trap! 返回 false，则触发 panic!。模块内部未发现多个函数之间的直接调用链（跨架构函数相互独立）。",
+      "evidence": [
+        "handle_instruction_abort 从ISS寄存器提取IFSC位判断故障类型为翻译/权限故障，并调用 handle_trap!(PAGE_FAULT) 处理。",
+        "LoongArch64 的 handle_page_fault 根据 is_user 设置 USER 标志，通过 badv 寄存器读取虚拟地址，调用 handle_trap!。",
+        "RISC-V 的 handle_page_fault 同样依据 is_user 添加 USER 权限，调用 handle_trap!。",
+        "所有三个函数在 handle_trap! 返回 false 后均调用 panic! 输出详细信息。",
+        "调用关系显示 handle_instruction_abort 调用 FAR_EL1.get、matches!、handle_trap!；handle_page_fault 调用 badv::read、va!、handle_trap!、panic!。"
+      ],
+      "uncertainty": "handle_trap! 宏和 va! 宏的具体实现未在提供的代码片段中定义，无法确认其内部是否涉及进程切换、物理内存分配或具体页表操作。此外，函数间的调用关系仅限单个函数内部的顺序执行，未发现跨函数调用链（如一个handle_page_fault调用另一个）。"
+    },
+    {
+      "module_name": "process",
+      "module_summary": "该模块主要提供进程退出功能，通过调用底层系统接口终止当前进程的执行，确保进程退出后不再返回。",
+      "key_functions": [
+        {
+          "name": "exit",
+          "role": "接收退出码并调用底层终止接口来结束当前进程，函数返回类型为!表示永不返回。"
+        }
+      ],
+      "call_flow_summary": "模块内部仅有exit一个函数，它直接调用底层API ax_terminate来终止进程，不存在其他函数间的调用链。",
+      "evidence": [
+        "exit函数通过调用arceos_api::sys::ax_terminate实现进程终止，返回类型为!。",
+        "函数调用关系记录显示exit→arceos_api::sys::ax_terminate（置信度0.7），以及exit→sys::ax_terminate（置信度0.6）和exit→ax_terminate（置信度0.6）。"
+      ],
+      "uncertainty": "无法确定exit函数的退出码参数是否被底层API实际使用；ax_terminate的具体行为（如是否立即停止所有线程、是否允许清理资源）未在现有代码材料中体现。"
+    }
+  ]
+}

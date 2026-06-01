@@ -1,0 +1,773 @@
+{
+  "repo_name": "tongjidaxue",
+  "created_at": "2026-05-31 17:49:52",
+  "function_count": 20,
+  "ai_edge_count": 18,
+  "regex_edge_count": 52,
+  "merged_edge_count": 63,
+  "edges": [
+    {
+      "caller": "WaitList",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Spin::new",
+      "caller_module": "process",
+      "evidence": "结构体定义中使用了 Spin（自旋锁）和 VecDeque（双端队列）以及 CondVar（条件变量），这些是操作系统进程或任务调度中实现等待队列的常见组件，因此与进程管理模块相关。",
+      "source_block_id": "block_3",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "WaitList",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "VecDeque::new",
+      "caller_module": "process",
+      "evidence": "结构体定义中使用了 Spin（自旋锁）和 VecDeque（双端队列）以及 CondVar（条件变量），这些是操作系统进程或任务调度中实现等待队列的常见组件，因此与进程管理模块相关。",
+      "source_block_id": "block_3",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "DrainExited<'waitlist>",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "可能调用 SpinGuard::new 或相关锁获取方法",
+      "caller_module": "process",
+      "evidence": "结构体位于进程管理模块 (task/process.rs)，其字段类型 SpinGuard 表明涉及并发保护，VecDeque<WaitObject> 是等待对象队列，用于进程同步和退出状态通知。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "DrainExited<'waitlist>",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "可能调用 VecDeque::pop_front 或类似方法迭代元素",
+      "caller_module": "process",
+      "evidence": "结构体位于进程管理模块 (task/process.rs)，其字段类型 SpinGuard 表明涉及并发保护，VecDeque<WaitObject> 是等待对象队列，用于进程同步和退出状态通知。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "from_type_and_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "panic!",
+      "caller_module": "process",
+      "evidence": "函数名和参数暗示与 wait 系统调用中的 ID 类型处理相关；代码中使用了 P_ALL、P_PID、P_PGID、P_PIDFD 这些在 Linux 中用作 waitid 系统调用的 idtype 常量；返回值 WaitId 枚举及其变体 Any、Pid、Pgid 直接对应等待子进程的不同方式。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "from_type_and_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Err(EINVAL)",
+      "caller_module": "process",
+      "evidence": "函数名和参数暗示与 wait 系统调用中的 ID 类型处理相关；代码中使用了 P_ALL、P_PID、P_PGID、P_PIDFD 这些在 Linux 中用作 waitid 系统调用的 idtype 常量；返回值 WaitId 枚举及其变体 Any、Pid、Pgid 直接对应等待子进程的不同方式。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "pgroup_rcu",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "cast_unsigned",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "SIGNAL_COREDUMP!()",
+      "caller_module": "process",
+      "evidence": "代码位于 process.rs，函数处理进程等待状态（WaitType），生成符合 POSIX wait status 规范的值，直接与进程退出/信号处理相关。匹配宏 SIGNAL_COREDUMP! 可能用于识别核心转储信号。",
+      "source_block_id": "block_12",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "signal.into_raw()",
+      "caller_module": "process",
+      "evidence": "代码位于 process.rs，函数处理进程等待状态（WaitType），生成符合 POSIX wait status 规范的值，直接与进程退出/信号处理相关。匹配宏 SIGNAL_COREDUMP! 可能用于识别核心转储信号。",
+      "source_block_id": "block_12",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Signal::into_raw",
+      "caller_module": "process",
+      "evidence": "函数名为 to_status_code，接收 WaitType 枚举，返回 (u32, u32) 作为状态码；处理了 Exited、Signaled、Stopped、Continued 等子进程状态变化，并映射到 CLD_* 系列常量。这些常量通常用于 waitid / waitpid 系统调用的信息返回，属于进程管理模块。",
+      "source_block_id": "block_13",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "SIGNAL_COREDUMP!() 宏调用",
+      "caller_module": "process",
+      "evidence": "函数名为 to_status_code，接收 WaitType 枚举，返回 (u32, u32) 作为状态码；处理了 Exited、Signaled、Stopped、Continued 等子进程状态变化，并映射到 CLD_* 系列常量。这些常量通常用于 waitid / waitpid 系统调用的信息返回，属于进程管理模块。",
+      "source_block_id": "block_13",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "is_continue",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "matches!",
+      "caller_module": "process",
+      "evidence": "函数体中使用了 matches!(self.code, WaitType::Continued)，其中 self.code 类型为 WaitType，该函数用于检测进程等待状态是否为 Continued。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "new_shared",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "new_cloned",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "exit_signal",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "mm_list",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "parent",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "ProcessBuilder",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "derive",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_1",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "Process",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "pub",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_2",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "Process",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "derive",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_2",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "DrainExited<'waitlist>",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "derive",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "DrainExited<'waitlist>",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Pid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "DrainExited<'waitlist>",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Pgid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_type_and_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitId::Pid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_type_and_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitId::Pgid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_type_and_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Pid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_type_and_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Pgid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitId::Pgid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitId::Pid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "process.pgroup_rcu",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "id.cast_unsigned",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Pgid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Pid",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "derive",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Exited",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Signaled",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "from_id",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Stopped",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitType::Exited",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitType::Signaled",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitType::Stopped",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "signal.into_raw",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Exited",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Signaled",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "into_raw",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_wstatus",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Stopped",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitType::Exited",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitType::Signaled",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitType::Stopped",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "signal.into_raw",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "SIGCONT.into_raw",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Exited",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Signaled",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "into_raw",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "to_status_code",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Stopped",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "stopped",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "WaitType::Stopped",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_15",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "stopped",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "Stopped",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_15",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "flags.contains",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "mm_list.new_shared",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "mm_list.new_cloned",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "self.exit_signal",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "self.mm_list",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "clone_from",
+      "caller_file": "src\\kernel\\task\\process.rs",
+      "callee": "contains",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    }
+  ]
+}

@@ -1,0 +1,1608 @@
+{
+  "repo_name": "nankai",
+  "repo_path": "D:\\os\\history\\nankai",
+  "created_at": "2026-05-31 17:34:40",
+  "block_count": 200,
+  "blocks": [
+    {
+      "block_id": "block_1",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_exit",
+      "content": "pub fn sys_exit(exit_code: i32) -> ! {\n    trace!(\"[sys_exit] called with exit_code={}\", exit_code);\n    exit_current_and_run_next(exit_code);\n    panic!(\"Unreachable in sys_exit!\");\n}"
+    },
+    {
+      "block_id": "block_2",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_exit_group",
+      "content": "pub fn sys_exit_group(exit_code: i32) -> SyscallRet {\n    trace!(\"[sys_exit_group] called with exit_code={}\", exit_code);\n    //exit_current_group_and_run_next(exit_code);\n    exit_current_and_run_next(exit_code);\n    unreachable!();\n}"
+    },
+    {
+      "block_id": "block_3",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_set_robust_list",
+      "content": "pub fn sys_set_robust_list(head: usize, len: usize) -> SyscallRet {\n    trace!(\n        \"[sys_set_robust_list] called with head={:#x}, len={}\",\n        head,\n        len\n    );\n    if len != crate::task::RobustList::HEAD_SIZE {\n        return Err(SysErrNo::EINVAL);\n    }\n    let task = current_task().unwrap();\n    let mut task_inner = task.inner_exclusive_access();\n    task_inner.robust_list.head = head;\n    //inner.robust_list.len = len;\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_4",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_settidaddr",
+      "content": "pub fn sys_settidaddr(tidptr: *mut usize) -> SyscallRet {\n    trace!(\n        \"[sys_settidaddr] called with tidptr=0x{:x} (pointer to store tid for cleanup)\",\n        tidptr as usize\n    );\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    inner.clear_child_tid = Some(tidptr as usize);\n    sys_gettid()\n}"
+    },
+    {
+      "block_id": "block_5",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_yield",
+      "content": "pub fn sys_yield() -> SyscallRet {\n    trace!(\"[sys_yield] called\");\n    suspend_current_and_run_next();\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_6",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_setpgid",
+      "content": "pub fn sys_setpgid(pid: usize, pgid: usize) -> SyscallRet {\n    trace!(\"[sys_setpgid] called with pid={}, pgid={}\", pid, pgid);\n    warn!(\n        \"[sys_setpgid] pseudo implementation called with pid={}, pgid={}\",\n        pid, pgid\n    );\n    // let task = current_task().unwrap();\n    // let mut inner = task.inner_exclusive_access();\n    // if pid == 0 {\n    //     inner.pgid = task.pid.0;\n    // } else {\n    //     inner.pgid = pgid;\n    // }\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_7",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_getpgid",
+      "content": "pub fn sys_getpgid(pid: usize) -> SyscallRet {\n    trace!(\"[sys_getpgid] called with pid={}\", pid);\n    warn!(\n        \"[sys_getpgid] pseudo implementation called with pid={}, returning pgid=0\",\n        pid\n    );\n    // let task = current_task().unwrap();\n    // let inner = task.inner_exclusive_access();\n    // if pid == 0 {\n    //     Ok(inner.pgid)\n    // } else if inner.pid.0 == pid {\n    //     Ok(inner.pgid)\n    // } else {\n    //     Err(SysErrNo::ESRCH)\n    // }\n    Ok(1)\n}"
+    },
+    {
+      "block_id": "block_8",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_getpid",
+      "content": "pub fn sys_getpid() -> SyscallRet {\n    trace!(\"[sys_getpid] called\");\n    Ok(current_task().unwrap().pid.0)\n}"
+    },
+    {
+      "block_id": "block_9",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_getppid",
+      "content": "pub fn sys_getppid() -> SyscallRet {\n    trace!(\"[sys_getppid] called\");\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let parent = inner.parent.as_ref().ok_or(SysErrNo::ESRCH)?;\n    Ok(parent.upgrade().unwrap().pid.0)\n}"
+    },
+    {
+      "block_id": "block_10",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_getuid",
+      "content": "pub fn sys_getuid() -> SyscallRet {\n    trace!(\"[sys_getuid] called\");\n    warn!(\"[sys_getuid] pseudo implementation called, returning uid=0\");\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_11",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_geteuid",
+      "content": "pub fn sys_geteuid() -> SyscallRet {\n    trace!(\"[sys_geteuid] called\");\n    warn!(\"[sys_geteuid] pseudo implementation called, returning euid=0\");\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_12",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_getgid",
+      "content": "pub fn sys_getgid() -> SyscallRet {\n    trace!(\"[sys_getgid] called\");\n    warn!(\"[sys_getgid] pseudo implementation called, returning gid=0\");\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_13",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_getegid",
+      "content": "pub fn sys_getegid() -> SyscallRet {\n    trace!(\"[sys_getegid] called\");\n    warn!(\"[sys_getegid] pseudo implementation called, returning egid=0\");\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_14",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_gettid",
+      "content": "pub fn sys_gettid() -> SyscallRet {\n    trace!(\"[sys_gettid] called\");\n    Ok(current_task().unwrap().pid.0)\n}"
+    },
+    {
+      "block_id": "block_15",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_clone",
+      "content": "pub fn sys_clone(flags: usize, stack: usize, ptid: usize, tls: usize, ctid: usize) -> SyscallRet {\n    let flags = CloneFlags::from_bits(flags as u32).ok_or_else(|| {\n        warn!(\"Invalid clone flags: {:#x}\", flags);\n        SysErrNo::EINVAL\n    })?;\n    trace!(\n        \"[sys_clone] called with flags={:?} (bits={:#x}), stack={:#x}, ptid={:#x}, tls={:#x}, ctid={:#x}\",\n        flags, flags.bits(), stack, ptid, tls, ctid\n    );\n    let current_task = current_task().unwrap();\n\n    let new_task = current_task.clone_task(flags, stack, ptid, tls, ctid);\n    info!(\"new task create end\");\n    let new_pid = new_task.pid.0;\n    add_task(new_task);\n    debug!(\"new pid:{}\", new_pid);\n    Ok(new_pid)\n}"
+    },
+    {
+      "block_id": "block_16",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_exec",
+      "content": "pub fn sys_exec(path: *const u8, mut args: *const usize, mut envp: *const usize) -> SyscallRet {\n    trace!(\n        \"[sys_exec] called with path={:p}, args={:p}, envp={:p}\",\n        path,\n        args,\n        envp\n    );\n    let token = current_user_token();\n    let mut path = translated_str(token, path);\n    debug!(\"[sys_exec] resolved path: {}\", path);\n    let mut env = Vec::<String>::new();\n    loop {\n        if envp.is_null() {\n            break;\n        }\n        let envp_ptr = *translated_ref(token, envp);\n        if envp_ptr == 0 {\n            break;\n        }\n        env.push(translated_str(token, envp_ptr as *const u8));\n        unsafe {\n            envp = envp.add(1);\n        }\n    }\n\n    env.push(\"PATH=/:/bin:\".to_string());\n    env.push(\"LD_LIBRARY_PATH=/:/lib:/usr/lib:\".to_string());\n\n    let mut args_vec: Vec<String> = Vec::new();\n\n    loop {\n        // trace!(\"task::process::sys_exec\");\n        if args.is_null() {\n            break;\n        }\n        let arg_str_ptr = *translated_ref(token, args);\n        if arg_str_ptr == 0 {\n            break;\n        }\n        debug!(\"str：{}\", translated_str(token, arg_str_ptr as *const u8));\n        args_vec.push(translated_str(token, arg_str_ptr as *const u8));\n\n        unsafe {\n            args = args.add(1);\n        }\n    }\n    if path.ends_with(\".sh\") {\n        //.sh文件不是可执行文件，需要用busybox的sh来启动\n        args_vec.insert(0, String::from(\"sh\"));\n        args_vec.insert(0, String::from(\"busybox\"));\n        path = String::from(\"/musl/busybox\");\n    }\n    let task = current_task().unwrap();\n    let abs_path = get_abs_path(\n        task.inner_exclusive_access().fsinfo.get_cwd().as_str(),\n        path.as_str(),\n    );\n    let app_inode = open(abs_path.as_str(), OpenFlags::O_RDONLY)?.file()?;\n    let all_data = app_inode.inode.read_all().unwrap();\n    let argc = args_vec.len();\n    task.exec(all_data.as_slice(), &args_vec, &mut env);\n    debug!(\"arg num:{}\", argc);\n    Ok(0)\n}\n/// If there is not a child process whose pid is same as given, return -1.\n/// Else if there is a child process but it is still running, return -2."
+    },
+    {
+      "block_id": "block_17",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_wait4",
+      "content": "pub fn sys_wait4(pid: isize, status_ptr: *mut i32, option: isize) -> SyscallRet {\n    trace!(\n        \"[sys_wait4] Enter: pid={}, status_ptr=0x{:x} (output pointer for exit status), option={}\",\n        pid,\n        status_ptr as usize,\n        option\n    );\n    // now we only finish option 0 and option 1\n\n    loop {\n        let task = current_task().unwrap();\n        let mut inner = task.inner_exclusive_access();\n        if !inner\n            .children\n            .iter()\n            .any(|p| pid == -1 || pid as usize == p.getpid())\n        {\n            info!(\"[sys_wait4] current task pid: {}\", task.pid.0);\n            warn!(\"[sys_wait4] No child process found with pid={}\", pid);\n            return Err(SysErrNo::ECHILD);\n            // ---- release current PCB\n        }\n        let pair = inner.children.iter().enumerate().find(|(_, p)| {\n            // ++++ temporarily access child PCB exclusively\n            p.inner_exclusive_access().is_zombie() && (pid == -1 || pid as usize == p.getpid())\n            // ++++ release child PCB\n        });\n        if let Some((idx, _)) = pair {\n            let child = inner.children.remove(idx);\n            // confirm that child will be deallocated after being removed from children list\n            assert_eq!(Arc::strong_count(&child), 1);\n            let found_pid = child.getpid();\n            // ++++ temporarily access child PCB exclusively\n            // println!{\n            //     \"Process {} exit with exit_code {} ...\\n\",\n            //     found_pid, childinner.exit_code\n            // };\n            let exit_code = child.inner_exclusive_access().exit_code;\n            let time_data = &child.inner_exclusive_access().time_data;\n            inner.time_data.add_child_time(time_data);\n            // ++++ release child PCB\n            if !status_ptr.is_null() {\n                //退出状态存储在 status 的高 8 位中\n                let status = exit_code << 8; // 将退出状态编码到高 8 位\n\n                // *translated_refmut(inner.memory_set.token(), status_ptr) = status;\n                put_data(inner.memory_set.token(), status_ptr, status);\n            }\n            return Ok(found_pid);\n        } else {\n            // If WNOHANG is specified, return 0 if no child has exited\n            if option & 0x01 != 0 {\n                return Ok(0);\n            }\n            // 未找到匹配子进程且未设置 `WNOHANG`，需要阻塞等待\n            drop(inner);\n            drop(task);\n            suspend_current_and_run_next();\n        }\n    }\n}"
+    },
+    {
+      "block_id": "block_18",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "file_score": 44,
+      "type": "function",
+      "name": "sys_shutdown",
+      "content": "pub fn sys_shutdown() -> SyscallRet {\n    trace!(\"[sys_shutdown] called\");\n    shutdown();\n}"
+    },
+    {
+      "block_id": "block_19",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "struct",
+      "name": "Processor",
+      "content": "pub struct Processor {\n    current: Option<Arc<TaskControlBlock>>,\n    idle_task_cx: KContext,\n}"
+    },
+    {
+      "block_id": "block_20",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "impl",
+      "name": "impl Processor {",
+      "content": "impl Processor {"
+    },
+    {
+      "block_id": "block_21",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "new",
+      "content": "pub fn new() -> Self {\n        Self {\n            current: None,\n            idle_task_cx: KContext::blank(),\n        }\n    }"
+    },
+    {
+      "block_id": "block_22",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "get_idle_task_cx_ptr",
+      "content": "fn get_idle_task_cx_ptr(&mut self) -> *mut KContext {\n        &mut self.idle_task_cx as *mut _\n    }"
+    },
+    {
+      "block_id": "block_23",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "take_current",
+      "content": "pub fn take_current(&mut self) -> Option<Arc<TaskControlBlock>> {\n        self.current.take()\n    }"
+    },
+    {
+      "block_id": "block_24",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "current",
+      "content": "pub fn current(&self) -> Option<Arc<TaskControlBlock>> {\n        self.current.as_ref().map(Arc::clone)\n    }\n}\n\nlazy_static! {\n    pub static ref PROCESSOR: UPSafeCell<Processor> = unsafe { UPSafeCell::new(Processor::new()) };\n}"
+    },
+    {
+      "block_id": "block_25",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "run_tasks",
+      "content": "pub fn run_tasks() {\n    trace!(\"os::task::processor::run_tasks\");\n    loop {\n        let mut processor = PROCESSOR.exclusive_access();\n        if let Some(task) = fetch_task() {\n            let idle_task_cx_ptr = processor.get_idle_task_cx_ptr();\n            // access coming task TCB exclusively\n            let mut task_inner = task.inner_exclusive_access();\n            let next_task_cx_ptr = &task_inner.task_cx as *const KContext;\n            task_inner.task_status = TaskStatus::Running;\n            // task_inner.memory_set.activate();\n            let token = task_inner.memory_set.token();\n            drop(task_inner);\n            // release coming task TCB manually\n            processor.current = Some(task);\n            // release processor manually\n            drop(processor);\n            // println!(\n            //     \"idle:{},next:{}\",\n            //     idle_task_cx_ptr as usize, next_task_cx_ptr as usize\n            // );\n            // from idel_task, switch to next task with next task's page table\n            unsafe { context_switch_pt(idle_task_cx_ptr, next_task_cx_ptr, token) }\n        }\n    }\n}\n///Take the current task,leaving a None in its place"
+    },
+    {
+      "block_id": "block_26",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "take_current_task",
+      "content": "pub fn take_current_task() -> Option<Arc<TaskControlBlock>> {\n    PROCESSOR.exclusive_access().take_current()\n}\n///Get running task"
+    },
+    {
+      "block_id": "block_27",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "current_task",
+      "content": "pub fn current_task() -> Option<Arc<TaskControlBlock>> {\n    // // trace!(\"os::task::processor::current_task\");\n    PROCESSOR.exclusive_access().current()\n}\n///Get token of the address space of current task"
+    },
+    {
+      "block_id": "block_28",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "current_user_token",
+      "content": "pub fn current_user_token() -> PageTable {\n    let task = current_task().unwrap();\n    let token = task.inner_exclusive_access().get_user_token();\n    token\n}\n\nstatic BOOT_PAGE_TABLE: LazyInit<PageTable> = LazyInit::new();"
+    },
+    {
+      "block_id": "block_29",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "schedule",
+      "content": "pub fn schedule(switched_task_cx_ptr: *mut KContext) {\n    let mut processor = PROCESSOR.exclusive_access();\n    let idle_task_cx_ptr = processor.get_idle_task_cx_ptr();\n    drop(processor);\n    unsafe {\n        context_switch_pt(switched_task_cx_ptr, idle_task_cx_ptr, *BOOT_PAGE_TABLE);\n    }\n}"
+    },
+    {
+      "block_id": "block_30",
+      "file_path": "os\\src\\task\\processor.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "init_kernel_page",
+      "content": "pub fn init_kernel_page() {\n    BOOT_PAGE_TABLE.init_once(PageTable::current());\n}"
+    },
+    {
+      "block_id": "block_31",
+      "file_path": "vendor\\itertools\\src\\process_results_impl.rs",
+      "file_score": 34,
+      "type": "struct",
+      "name": "ProcessResults<'a, I, E: 'a>",
+      "content": "pub struct ProcessResults<'a, I, E: 'a> {\n    error: &'a mut Result<(), E>,\n    iter: I,\n}\n\nimpl<'a, I, T, E> Iterator for ProcessResults<'a, I, E>\n    where I: Iterator<Item = Result<T, E>>\n{\n    type Item = T;"
+    },
+    {
+      "block_id": "block_32",
+      "file_path": "vendor\\itertools\\src\\process_results_impl.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "next",
+      "content": "fn next(&mut self) -> Option<Self::Item> {\n        match self.iter.next() {\n            Some(Ok(x)) => Some(x),\n            Some(Err(e)) => {\n                *self.error = Err(e);\n                None\n            }\n            None => None,\n        }\n    }"
+    },
+    {
+      "block_id": "block_33",
+      "file_path": "vendor\\itertools\\src\\process_results_impl.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "size_hint",
+      "content": "fn size_hint(&self) -> (usize, Option<usize>) {\n        let (_, hi) = self.iter.size_hint();\n        (0, hi)\n    }\n}\n\n/// “Lift” a function of the values of an iterator so that it can process\n/// an iterator of `Result` values instead.\n///\n/// `iterable` is an iterator or iterable with `Result<T, E>` elements, where\n/// `T` is the value type and `E` the error type.\n///\n/// `processor` is a closure that receives an adapted version of the iterable\n/// as the only argument — the adapted iterator produces elements of type `T`,\n/// as long as the original iterator produces `Ok` values.\n///\n/// If the original iterable produces an error at any point, the adapted\n/// iterator ends and the `process_results` function will return the\n/// error iself.\n///\n/// Otherwise, the return value from the closure is returned wrapped\n/// inside `Ok`.\n///\n/// # Example\n///\n/// ```\n/// use itertools::process_results;\n///\n/// type R = Result<i32, &'static str>;\n///\n/// let first_values: Vec<R> = vec![Ok(1), Ok(0), Ok(3)];\n/// let second_values: Vec<R> = vec![Ok(2), Ok(1), Err(\"overflow\")];\n///\n/// // “Lift” the iterator .max() method to work on the values in Results using process_results\n///\n/// let first_max = process_results(first_values, |iter| iter.max().unwrap_or(0));\n/// let second_max = process_results(second_values, |iter| iter.max().unwrap_or(0));\n///\n/// assert_eq!(first_max, Ok(3));\n/// assert!(second_max.is_err());\n/// ```\npub fn process_results<I, F, T, E, R>(iterable: I, processor: F) -> Result<R, E>\n    where I: IntoIterator<Item = Result<T, E>>,\n          F: FnOnce(ProcessResults<I::IntoIter, E>) -> R\n{\n    let iter = iterable.into_iter();\n    let mut error = Ok(());\n\n    let result = processor(ProcessResults { error: &mut error, iter });\n\n    error.map(|_| result)\n}"
+    },
+    {
+      "block_id": "block_34",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "struct",
+      "name": "MemorySet",
+      "content": "pub struct MemorySet {\n    pub inner: UPSafeCell<MemorySetInner>,\n}"
+    },
+    {
+      "block_id": "block_35",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "impl",
+      "name": "impl MemorySet {",
+      "content": "impl MemorySet {"
+    },
+    {
+      "block_id": "block_36",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "new",
+      "content": "pub fn new(memory_set: MemorySetInner) -> Self {\n        Self {\n            inner: unsafe { UPSafeCell::new(memory_set) },\n        }\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_37",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "inner_exclusive_access",
+      "content": "pub fn inner_exclusive_access(&self) -> RefMut<'_, MemorySetInner> {\n        self.inner.exclusive_access()\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_38",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "token",
+      "content": "pub fn token(&self) -> PageTable {\n        self.inner_exclusive_access().token()\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_39",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "lazy_page_fault",
+      "content": "pub fn lazy_page_fault(&self, vaddr: VirtAddr, trap_type: TrapType) -> bool {\n        self.inner_exclusive_access()\n            .lazy_page_fault(vaddr, trap_type)\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_40",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "cow_page_fault",
+      "content": "pub fn cow_page_fault(&self, vaddr: VirtAddr, trap_type: TrapType) -> bool {\n        self.inner_exclusive_access()\n            .cow_page_fault(vaddr, trap_type)\n    }\n    // #[inline(always)]\n    // pub fn push(&self, map_area: MapArea, offset: usize, data: Option<&[u8]>) {\n    //     self.inner_exclusive_access().push(map_area, offset, data)\n    // }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_41",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "mmap",
+      "content": "pub fn mmap(\n        &self,\n        addr: usize,\n        len: usize,\n        map_perm: MapPermission,\n        flags: MmapFlags,\n        file: Option<Arc<OSInode>>,\n        off: usize,\n    ) -> usize {\n        self.inner_exclusive_access()\n            .mmap(addr, len, map_perm, flags, file, off)\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_42",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "munmap",
+      "content": "pub fn munmap(&self, addr: VirtAddr, len: usize) -> SyscallRet {\n        self.inner_exclusive_access().munmap(addr, len)\n    }\n    /// Include sections in elf and trampoline and TrapContext and user stack,\n    /// also returns user_sp and entry point.\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_43",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "from_existed_user",
+      "content": "pub fn from_existed_user(user_space: &MemorySet) -> Self {\n        let inner = MemorySetInner::from_existed_user(&user_space.inner_exclusive_access());\n        Self::new(inner)\n    }\n    ///浅拷贝"
+    },
+    {
+      "block_id": "block_44",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "shallow_clone",
+      "content": "pub fn shallow_clone(&self) -> Self {\n        let inner = self.inner_exclusive_access().shallow_clone();\n        Self::new(inner)\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_45",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "shm",
+      "content": "pub fn shm(\n        &self,\n        addr: usize,\n        size: usize,\n        map_perm: MapPermission,\n        pages: Vec<Arc<FrameTracker>>,\n    ) -> usize {\n        self.inner_exclusive_access()\n            .shm(addr, size, map_perm, pages)\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_46",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "translate",
+      "content": "pub fn translate(&self, vaddr: VirtAddr) -> Option<(PhysAddr, MappingFlags)> {\n        self.inner_exclusive_access().translate(vaddr)\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_47",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "lazy_insert_framed_area_with_hint",
+      "content": "pub fn lazy_insert_framed_area_with_hint(\n        &self,\n        hint: usize,\n        size: usize,\n        map_perm: MapPermission,\n        area_type: MapAreaType,\n    ) -> (usize, usize) {\n        self.inner_exclusive_access()\n            .lazy_insert_framed_area_with_hint(hint, size, map_perm, area_type)\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_48",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "recycle_data_pages",
+      "content": "pub fn recycle_data_pages(&self) {\n        self.inner_exclusive_access().recycle_data_pages()\n    }\n    #[inline(always)]"
+    },
+    {
+      "block_id": "block_49",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "mprotect",
+      "content": "pub fn mprotect(&self, start_addr: VirtAddr, end_addr: VirtAddr, map_perm: MapPermission) {\n        self.inner_exclusive_access()\n            .mprotect(start_addr, end_addr, map_perm)\n    }\n}"
+    },
+    {
+      "block_id": "block_50",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "struct",
+      "name": "MemorySetInner",
+      "content": "pub struct MemorySetInner {\n    pub page_table: Arc<PageTableWrapper>,\n    pub areas: Vec<MapArea>,\n}"
+    },
+    {
+      "block_id": "block_51",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "impl",
+      "name": "impl MemorySetInner {",
+      "content": "impl MemorySetInner {\n    ///Create an empty `MemorySetInner`"
+    },
+    {
+      "block_id": "block_52",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "new_bare",
+      "content": "pub fn new_bare() -> Self {\n        Self {\n            page_table: Arc::new(PageTableWrapper::alloc()),\n            areas: Vec::new(),\n        }\n    }\n\n    ///Get pagetable `root_ppn`"
+    },
+    {
+      "block_id": "block_53",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "token",
+      "content": "pub fn token(&self) -> PageTable {\n        self.page_table.0\n    }"
+    },
+    {
+      "block_id": "block_54",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "lazy_page_fault",
+      "content": "pub fn lazy_page_fault(&mut self, vaddr: VirtAddr, trap_type: TrapType) -> bool {\n        if let Some((paddr, map_flags)) = self.translate(vaddr) {\n            warn!(\"[lazy_page_fault] vaddr, paddr:{:#x}\", paddr.raw());\n            return false;\n        }\n        if let Some(area) = self\n            .areas\n            .iter_mut()\n            .filter(|area| area.area_type == MapAreaType::Mmap)\n            .find(|area| {\n                let (start, end) = area.vaddr_range.range();\n                start <= vaddr && vaddr < end\n            })\n        {\n            match trap_type {\n                TrapType::LoadPageFault(_) => {\n                    mmap_read_page_fault(vaddr.into(), &mut self.page_table, area);\n                }\n                TrapType::StorePageFault(_) => {\n                    mmap_write_page_fault(vaddr.into(), &mut self.page_table, area);\n                }\n                _ => {\n                    warn!(\"unexpected trap_type: {:?}\", trap_type);\n                    return false;\n                }\n            }\n            return true;\n        }\n        if let Some(area) = self\n            .areas\n            .iter_mut()\n            .filter(|area| {\n                area.area_type == MapAreaType::Brk || area.area_type == MapAreaType::Stack\n            })\n            .find(|area| {\n                let (start, end) = area.vaddr_range.range();\n                start <= vaddr && vaddr < end\n            })\n        {\n            area.map_one(&self.page_table, vaddr);\n            true\n        } else {\n            false\n        }\n    }"
+    },
+    {
+      "block_id": "block_55",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "cow_page_fault",
+      "content": "pub fn cow_page_fault(&mut self, vaddr: VirtAddr, trap_type: TrapType) -> bool {\n        match trap_type {\n            TrapType::LoadPageFault(_) => {\n                warn!(\n                    \"cow page fault only for store page fault, trap_type: {:?}\",\n                    trap_type\n                );\n                return false;\n            }\n            _ => {}\n        }\n        let flags = self.if_vaddr_cow(vaddr);\n        // debug!(\n        //     \"[cow_page_fault] vaddr: {:#x}, flags: {:?}\",\n        //     vaddr.raw(),\n        //     flags\n        // );\n        //找到触发cow的段\n        if let Some(area) = self\n            .areas\n            .iter_mut()\n            .filter(|area| {\n                area.area_type == MapAreaType::Elf\n                    || area.area_type == MapAreaType::Brk\n                    || area.area_type == MapAreaType::Mmap\n            })\n            .find(|area| {\n                let (start, end) = area.vaddr_range.range();\n                start <= vaddr && vaddr < end\n            })\n        {\n            if let Some(flags) = flags {\n                cow_page_fault(vaddr.into(), flags, &self.page_table, area);\n                return true;\n            }\n        }\n        false\n    }"
+    },
+    {
+      "block_id": "block_56",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "push",
+      "content": "pub fn push(&mut self, mut map_area: MapArea, offset: usize, data: Option<&[u8]>) {\n        map_area.map(&self.page_table);\n        if let Some(data) = data {\n            map_area.copy_data(&self.page_table, offset, data);\n        }\n        self.areas.push(map_area);\n    }"
+    },
+    {
+      "block_id": "block_57",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "push_with_given_frames",
+      "content": "fn push_with_given_frames(&mut self, mut map_area: MapArea, frames: Vec<Arc<FrameTracker>>) {\n        map_area.map_given_frames(&mut self.page_table, frames);\n        self.areas.push(map_area);\n    }"
+    },
+    {
+      "block_id": "block_58",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "push_lazily",
+      "content": "pub fn push_lazily(&mut self, map_area: MapArea) {\n        self.areas.push(map_area);\n    }"
+    },
+    {
+      "block_id": "block_59",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "mmap",
+      "content": "pub fn mmap(\n        &mut self,\n        addr: usize,\n        len: usize,\n        map_perm: MapPermission,\n        flags: MmapFlags,\n        file: Option<Arc<OSInode>>,\n        off: usize,\n    ) -> usize {\n        if flags.contains(MmapFlags::MAP_FIXED) {\n            let start_vaddr = VirtAddr::from(addr).floor();\n            let end_vaddr = VirtAddr::from(addr + len).ceil();\n            let need_split = self.areas.iter().any(|area| {\n                let (l, r) = area.vaddr_range.range();\n                if l <= start_vaddr && end_vaddr <= r {\n                    !(l == start_vaddr && r == end_vaddr && map_perm == area.map_perm)\n                } else {\n                    false\n                }\n            });\n            if need_split {\n                self.mprotect(start_vaddr, end_vaddr, map_perm);\n            } else {\n                self.push_lazily(MapArea::new_mmap(\n                    VirtAddr::from(addr),\n                    VirtAddr::from(addr + len),\n                    MapType::Framed,\n                    map_perm,\n                    MapAreaType::Mmap,\n                    file,\n                    off,\n                    flags,\n                ));\n            }\n            return addr;\n        }\n        let addr = self.find_insert_addr(MMAP_TOP, len);\n        debug!(\n            \"[mmap] start_va:{:#x},end_va:{:#x}\",\n            VirtAddr::from(addr).raw(),\n            VirtAddr::from(addr + len).raw()\n        );\n        self.push_lazily(MapArea::new_mmap(\n            VirtAddr::from(addr),\n            VirtAddr::from(addr + len),\n            MapType::Framed,\n            map_perm,\n            MapAreaType::Mmap,\n            file,\n            off,\n            flags,\n        ));\n        addr\n    }"
+    },
+    {
+      "block_id": "block_60",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "munmap",
+      "content": "pub fn munmap(&mut self, addr: VirtAddr, len: usize) -> SyscallRet {\n        let start_vaddr = addr.floor();\n        if len == 0 {\n            return Ok(0);\n        }\n        let end_vaddr = (addr + len).ceil();\n        // 拆出需要解除的区段（只返回重叠部分，不再放回）\n        let overlapping = self.split_area_by_range(start_vaddr, end_vaddr);\n        if overlapping.is_empty() {\n            return Ok(0);\n        }\n        for mut area in overlapping {\n            // area 不再回插，Drop 自动处理 group\n            let is_file_shared = area.area_type == MapAreaType::Mmap\n                && area.mmap_file.file.is_some()\n                && area.mmap_flags.contains(MmapFlags::MAP_SHARED);\n            if is_file_shared {\n                let file = area.mmap_file.file.as_ref().unwrap();\n                // 收集已触碰页并按地址排序\n                let mut vaddrs: Vec<_> = area\n                    .data_frames\n                    .keys()\n                    .filter(|vaddr| self.translate((**vaddr).into()).is_some())\n                    .cloned()\n                    .collect();\n                vaddrs.sort_by_key(|vaddr| vaddr.raw());\n\n                // 合并相邻页面成连续范围\n                let mut write_ranges = Vec::new();\n                let mut current_start = None;\n                let mut current_end = None;\n\n                for vaddr in vaddrs {\n                    if current_start.is_none() {\n                        current_start = Some(vaddr);\n                        current_end = Some(VirtAddr::from(vaddr.raw() + PAGE_SIZE));\n                    } else if vaddr.raw() == current_end.unwrap().raw() {\n                        // 相邻页面，扩展范围\n                        current_end = Some(VirtAddr::from(vaddr.raw() + PAGE_SIZE));\n                    } else {\n                        // 不相邻，保存当前范围，开始新范围\n                        write_ranges.push((current_start.unwrap(), current_end.unwrap()));\n                        current_start = Some(vaddr);\n                        current_end = Some(VirtAddr::from(vaddr.raw() + PAGE_SIZE));\n                    }\n                }\n\n                if let (Some(start), Some(end)) = (current_start, current_end) {\n                    write_ranges.push((start, end));\n                }\n\n                // 按范围批量写回\n                for (start_vaddr, end_vaddr) in write_ranges {\n                    let file_off = area.mmap_file.offset\n                        + (start_vaddr.raw() - area.vaddr_range.get_start().raw());\n                    let size = end_vaddr.raw() - start_vaddr.raw();\n\n                    let _ = file.lseek(file_off as isize, SEEK_SET);\n                    file.write(UserBuffer {\n                        buffers: translated_byte_buffer(\n                            &self.page_table,\n                            start_vaddr.raw() as *mut u8,\n                            size,\n                        ),\n                    });\n                }\n            }\n            // 解除映射（仅对存在的帧）\n            let vaddrs: Vec<_> = area.data_frames.keys().cloned().collect();\n            for vaddr in vaddrs {\n                area.unmap_one(&self.page_table, vaddr);\n            }\n        }\n        TLB::flush_all();\n        Ok(0)\n    }"
+    },
+    {
+      "block_id": "block_61",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "remove_area",
+      "content": "pub fn remove_area(&mut self, start_vaddr: VirtAddr) {\n        // 找到匹配的 MapArea\n        if let Some(index) = self\n            .areas\n            .iter()\n            .position(|area| area.vaddr_range.get_start() == start_vaddr)\n        {\n            let mut area = self.areas.remove(index);\n            // 取消映射该区域\n            area.unmap(&self.page_table);\n        } else {\n            warn!(\n                \"Attempted to remove a non-existent area with start_vaddr: {:?}\",\n                start_vaddr\n            );\n        }\n    }"
+    },
+    {
+      "block_id": "block_62",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "find_free_area",
+      "content": "pub fn find_free_area(&self, size: usize) -> usize {\n        let mut current_addr = usize::from(VirtAddr::from(self.areas[0].vaddr_range.get_start())); // 假设从用户地址空间的基地址开始\n        for area in &self.areas {\n            debug!(\n                \"[find_free_area] Checking current_addr: 0x{:x}\",\n                current_addr\n            );\n            if current_addr + size <= usize::from(VirtAddr::from(area.vaddr_range.get_start())) {\n                return current_addr;\n            }\n            current_addr = usize::from(VirtAddr::from(area.vaddr_range.get_end()));\n        }\n        current_addr // 返回找到的空闲地址\n    }\n    /// Include sections in elf and trampoline and TrapContext and user stack,\n    /// also returns user_sp and entry point."
+    },
+    {
+      "block_id": "block_63",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "from_elf",
+      "content": "pub fn from_elf(elf_data: &[u8]) -> (Self, usize, usize, Vec<Aux>) {\n        let mut memory_set = Self::new_bare();\n        let mut auxv = Vec::new();\n        // map program headers of elf, with U flag\n        let elf = xmas_elf::ElfFile::new(elf_data).unwrap();\n        let elf_header = elf.header;\n        let magic = elf_header.pt1.magic;\n        assert_eq!(magic, [0x7f, 0x45, 0x4c, 0x46], \"invalid elf!\");\n        let ph_count = elf_header.pt2.ph_count();\n        let mut entry_point = elf.header.pt2.entry_point() as usize;\n        auxv.push(Aux::new(\n            AuxType::PHENT,\n            elf.header.pt2.ph_entry_size() as usize,\n        )); // ELF64 header 64bytes\n        auxv.push(Aux::new(AuxType::ENTRY, entry_point));\n        auxv.push(Aux::new(AuxType::PAGESZ, PAGE_SIZE as usize));\n        if let Some(interp_entry_point) = memory_set.load_dl_interp_if_needed(&elf) {\n            info!(\n                \"[from_elf] Loaded dynamic linker interpreter at entry point: {:#x}\",\n                interp_entry_point\n            );\n            auxv.push(Aux::new(AuxType::BASE, DL_INTERP_OFFSET));\n            entry_point = interp_entry_point;\n        } else {\n            auxv.push(Aux::new(AuxType::BASE, 0));\n        }\n        auxv.push(Aux::new(AuxType::UID, 0 as usize));\n        auxv.push(Aux::new(AuxType::EUID, 0 as usize));\n        auxv.push(Aux::new(AuxType::GID, 0 as usize));\n        auxv.push(Aux::new(AuxType::PHNUM, ph_count as usize));\n        auxv.push(Aux::new(AuxType::EGID, 0 as usize));\n        auxv.push(Aux::new(AuxType::PLATFORM, 0 as usize));\n        auxv.push(Aux::new(AuxType::HWCAP, 0 as usize));\n        auxv.push(Aux::new(AuxType::CLKTCK, 100 as usize));\n        auxv.push(Aux::new(AuxType::SECURE, 0 as usize));\n        auxv.push(Aux::new(AuxType::NOTELF, 0x112d as usize));\n\n        let mut max_end_va = VirtAddr::new(0);\n        let mut head_va = 0;\n        let mut lcsh = false;\n        for i in 0..ph_count {\n            let ph = elf.program_header(i).unwrap();\n            if ph.get_type().unwrap() == xmas_elf::program::Type::Load {\n                let start_va: VirtAddr = (ph.virtual_addr() as usize).into();\n                if !lcsh {\n                    lcsh = true;\n                    head_va = start_va.raw();\n                }\n                let end_va: VirtAddr = ((ph.virtual_addr() + ph.mem_size()) as usize).into();\n                let mut map_perm = MapPermission::U;\n                let ph_flags = ph.flags();\n                if ph_flags.is_read() {\n                    map_perm |= MapPermission::R;\n                }\n                if ph_flags.is_write() {\n                    map_perm |= MapPermission::W;\n                }\n                if ph_flags.is_execute() {\n                    map_perm |= MapPermission::X;\n                }\n                let map_area = MapArea::new(\n                    start_va,\n                    end_va,\n                    MapType::Framed,\n                    map_perm,\n                    MapAreaType::Elf,\n                );\n                let offset = start_va.raw() - start_va.floor().raw();\n                if end_va > max_end_va {\n                    max_end_va = end_va;\n                }\n                let data_slice =\n                    &elf.input[ph.offset() as usize..(ph.offset() + ph.file_size()) as usize];\n                // 打印数据的前16字节用于调试\n                let offset1 = 0x1634c8 - 0x162ff0; // 0x24c8\n                let offset2 = 0x1634d0 - 0x162ff0; // 0x24d0\n\n                memory_set.push(\n                    map_area,\n                    offset,\n                    Some(&elf.input[ph.offset() as usize..(ph.offset() + ph.file_size()) as usize]),\n                );\n                info!(\"map area from {:#x} to {:#x}\", start_va.raw(), end_va.raw());\n            }\n        }\n        let ph_head_addr = head_va + elf.header.pt2.ph_offset() as usize;\n        auxv.push(Aux {\n            aux_type: AuxType::PHDR,\n            value: ph_head_addr as usize,\n        });\n\n        let mut user_heap_bottom = max_end_va.ceil();\n        user_heap_bottom = user_heap_bottom + PAGE_SIZE;\n        let user_heap_top = user_heap_bottom;\n        memory_set.push_lazily(MapArea::new(\n            user_heap_bottom,\n            user_heap_top,\n            MapType::Framed,\n            MapPermission::R | MapPermission::W | MapPermission::U,\n            MapAreaType::Brk,\n        ));\n        (\n            memory_set,\n            // user_stack_top.into(),\n            user_heap_bottom.into(),\n            entry_point,\n            auxv,\n        )\n    }"
+    },
+    {
+      "block_id": "block_64",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "map_elf",
+      "content": "fn map_elf(&mut self, elf: &ElfFile, offset: VirtAddr) -> (VirtAddr, VirtAddr) {\n        let elf_header = elf.header;\n        let ph_count = elf_header.pt2.ph_count();\n\n        let mut max_end_vpn = offset.floor();\n        let mut header_va = 0;\n        let mut has_found_header_va = false;\n\n        for i in 0..ph_count {\n            let ph = elf.program_header(i).unwrap();\n            if ph.get_type().unwrap() == xmas_elf::program::Type::Load {\n                let start_va: VirtAddr = (ph.virtual_addr() as usize + offset.raw()).into();\n                let end_va: VirtAddr =\n                    ((ph.virtual_addr() + ph.mem_size()) as usize + offset.raw()).into();\n                if !has_found_header_va {\n                    header_va = start_va.raw();\n                    has_found_header_va = true;\n                }\n                let mut map_perm = MapPermission::U;\n                let ph_flags = ph.flags();\n                if ph_flags.is_read() {\n                    map_perm |= MapPermission::R;\n                }\n                if ph_flags.is_write() {\n                    map_perm |= MapPermission::W;\n                }\n                if ph_flags.is_execute() {\n                    map_perm |= MapPermission::X;\n                }\n                let map_area = MapArea::new(\n                    start_va,\n                    end_va,\n                    MapType::Framed,\n                    map_perm,\n                    MapAreaType::Elf,\n                );\n                let data_offset = start_va.raw() - start_va.floor().raw();\n                max_end_vpn = map_area.vaddr_range.get_end();\n                self.push(\n                    map_area,\n                    data_offset,\n                    Some(&elf.input[ph.offset() as usize..(ph.offset() + ph.file_size()) as usize]),\n                );\n            }\n        }\n        (max_end_vpn, header_va.into())\n    }"
+    },
+    {
+      "block_id": "block_65",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "from_existed_user",
+      "content": "pub fn from_existed_user(user_space: &MemorySetInner) -> MemorySetInner {\n        trace!(\"[from_existed_user]\");\n        let mut memory_set = Self::new_bare();\n        // copy data sections/trap_context/user_stack\n        for area in user_space.areas.iter() {\n            let mut new_area = MapArea::from_another(area);\n            // 根据区域类型选择不同的复制策略\n            // 栈（Stack）和堆（Brk）区域都是懒加载的，因此只复制已经映射的物理页\n            if area.area_type == MapAreaType::Stack {\n                trace!(\"[from_existed_user]: Stack area\");\n                // 对于懒加载区域，新的内存空间也应该是懒加载的\n                memory_set.push_lazily(new_area);\n                // 从高地址到低地址遍历，只复制已经存在的页面\n                for vaddr in area.vaddr_range.into_iter().rev() {\n                    // 检查源页面是否存在映射\n                    if let Some((src_paddr, _)) = user_space.translate(vaddr) {\n                        debug!(\n                            \"[from_existed_user] copy data from src_paddr: {:#x},vpn: {:#x}\",\n                            src_paddr.raw(),\n                            vaddr.raw()\n                        );\n                        // 源页面存在，为目标页面分配物理帧并建立映射\n                        let dst_area = memory_set\n                            .areas\n                            .iter_mut()\n                            .find(|a| a.vaddr_range.range() == area.vaddr_range.range())\n                            .unwrap();\n                        dst_area.map_one(&memory_set.page_table, vaddr);\n                        // 获取目标页面的物理地址\n                        let dst_paddr = memory_set.translate(vaddr).unwrap().0;\n                        // 复制数据\n                        unsafe {\n                            core::ptr::copy_nonoverlapping(\n                                src_paddr.get_ptr::<u8>(),\n                                dst_paddr.get_mut_ptr(),\n                                PAGE_SIZE,\n                            );\n                        }\n                    }\n                }\n            } else if area.area_type == MapAreaType::Brk || area.area_type == MapAreaType::Mmap {\n                new_area.data_frames = area.data_frames.clone();\n                for (vaddr, _) in area.data_frames.iter() {\n                    let (paddr, flags) = user_space.translate(*vaddr).unwrap();\n                    let mut new_flags = (flags & !MappingFlags::W);\n                    if flags.contains(MappingFlags::COW) || flags.contains(MappingFlags::W) {\n                        new_flags = new_flags | MappingFlags::COW;\n                    }\n                    user_space.page_table.update_page_flags(*vaddr, new_flags);\n                    memory_set\n                        .page_table\n                        .map_page(*vaddr, paddr, new_flags, MappingSize::Page4KB);\n                }\n                memory_set.push_lazily(new_area);\n                continue;\n            } else if area.area_type == MapAreaType::Elf {\n                for vaddr in area.vaddr_range {\n                    let (paddr, flags) = user_space.translate(vaddr).unwrap();\n                    let mut new_flags = (flags & !MappingFlags::W) | MappingFlags::COW;\n                    user_space.page_table.update_page_flags(vaddr, new_flags);\n                    memory_set\n                        .page_table\n                        .map_page(vaddr, paddr, new_flags, MappingSize::Page4KB);\n                }\n                new_area.data_frames = area.data_frames.clone();\n                memory_set.push_lazily(new_area);\n                continue;\n            } else {\n                debug!(\n                    \"[from_existed_user] other area_type: {:?}, vaddr_range: {:#x} - {:#x}\",\n                    area.area_type,\n                    area.vaddr_range.get_start().raw(),\n                    area.vaddr_range.get_end().raw()\n                );\n                // 对于其他区域（如代码段、数据段），它们是预先完全映射的，使用原有策略\n                memory_set.push(new_area, 0, None);\n                // 复制数据\n                for vaddr in area.vaddr_range {\n                    // if let Some((_, _)) = user_space.translate(vaddr) {\n                    // } else {\n                    //     debug!(\n                    //         \"[from_existed_user] vaddr {:#x} ,\n                    //         area.vaddr_range: {:#x} - {:#x},\n                    //         area_type: {:?}\",\n                    //         vaddr.raw(),\n                    //         area.vaddr_range.get_start().raw(),\n                    //         area.vaddr_range.get_end().raw(),\n                    //         area.area_type\n                    //     );\n                    //     continue;\n                    // }\n                    let src = user_space.translate(vaddr).unwrap().0;\n                    let dst = memory_set.translate(vaddr).unwrap().0;\n                    unsafe {\n                        core::ptr::copy_nonoverlapping(\n                            src.get_ptr::<u8>(),\n                            dst.get_mut_ptr(),\n                            PAGE_SIZE,\n                        );\n                    }\n                }\n            }\n        }\n        info!(\n            \"[from_existed_user]: memory_set created with {} areas\",\n            memory_set.areas.len()\n        );\n        memory_set\n    }\n    ///浅拷贝"
+    },
+    {
+      "block_id": "block_66",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "shallow_clone",
+      "content": "pub fn shallow_clone(&self) -> Self {\n        Self {\n            page_table: Arc::clone(&self.page_table), // 增加引用计数\n            areas: self.areas.iter().map(|area| area.shallow_clone()).collect(), // 浅拷贝 areas\n        }\n    }"
+    },
+    {
+      "block_id": "block_67",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "activate",
+      "content": "pub fn activate(&self) {\n        self.page_table.change();\n    }"
+    },
+    {
+      "block_id": "block_68",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "shm",
+      "content": "pub fn shm(\n        &mut self,\n        addr: usize,\n        size: usize,\n        map_perm: MapPermission,\n        pages: Vec<Arc<FrameTracker>>,\n    ) -> usize {\n        if addr == 0 {\n            let va = self.find_insert_addr(MMAP_TOP, size);\n            self.push_with_given_frames(\n                MapArea::new(\n                    va.into(),\n                    (va + size).into(),\n                    MapType::Framed,\n                    map_perm,\n                    MapAreaType::Shm,\n                ),\n                pages,\n            );\n            return va;\n        }\n        panic!(\"[shm_attach] unimplement attach addr\");\n    }"
+    },
+    {
+      "block_id": "block_69",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "translate",
+      "content": "pub fn translate(&self, vaddr: VirtAddr) -> Option<(PhysAddr, MappingFlags)> {\n        self.page_table\n            .translate(vaddr)\n            .map(|(pa, flags)| (pa.into(), flags))\n    }"
+    },
+    {
+      "block_id": "block_70",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "if_vaddr_cow",
+      "content": "pub fn if_vaddr_cow(&self, vaddr: VirtAddr) -> Option<MappingFlags> {\n        if let Some((_, flags)) = self.page_table.translate(vaddr) {\n            // debug!(\n            //     \"[if_vaddr_cow] vaddr: {:#x}, flags: {:?}\",\n            //     vaddr.raw(),\n            //     flags\n            // );\n            if flags.contains(MappingFlags::COW) {\n                return Some(flags);\n            }\n        }\n        None\n    }"
+    },
+    {
+      "block_id": "block_71",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "lazy_insert_framed_area_with_hint",
+      "content": "pub fn lazy_insert_framed_area_with_hint(\n        &mut self,\n        hint: usize,\n        size: usize,\n        map_perm: MapPermission,\n        area_type: MapAreaType,\n    ) -> (usize, usize) {\n        trace!(\n            \"[lazy_insert_framed_area_with_hint], hint: {:#x}, size: {:#x}\",\n            hint,\n            size\n        );\n        let start_va = self.find_insert_addr(hint, size);\n        let end_va = start_va + size;\n        self.lazy_insert_framed_area(\n            VirtAddr::from(start_va),\n            VirtAddr::from(end_va),\n            map_perm,\n            area_type,\n        );\n        (start_va, end_va)\n    }"
+    },
+    {
+      "block_id": "block_72",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "find_insert_addr",
+      "content": "pub fn find_insert_addr(&self, mut hint: usize, size: usize) -> usize {\n        loop {\n            let end_vaddr = VirtAddr::from(hint).floor();\n            let start_vaddr = VirtAddr::from(hint - size).floor();\n            let mut conflict = false;\n            for area in self.areas.iter() {\n                let (start, end) = area.vaddr_range.range();\n                if end_vaddr > start && start_vaddr < end {\n                    // 有冲突，调整 hint，继续循环\n                    hint = VirtAddr::from(start_vaddr).raw() - PAGE_SIZE;\n                    conflict = true;\n                    break;\n                }\n            }\n            if !conflict {\n                debug!(\n                    \"[find_insert_addr] found addr: {:#x} - {:#x}\",\n                    start_vaddr.raw(),\n                    end_vaddr.raw()\n                );\n                return VirtAddr::from(start_vaddr).raw();\n            }\n        }\n    }"
+    },
+    {
+      "block_id": "block_73",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "lazy_insert_framed_area",
+      "content": "pub fn lazy_insert_framed_area(\n        &mut self,\n        start_va: VirtAddr,\n        end_va: VirtAddr,\n        permission: MapPermission,\n        area_type: MapAreaType,\n    ) {\n        self.push_lazily(MapArea::new(\n            start_va,\n            end_va,\n            MapType::Framed,\n            permission,\n            area_type,\n        ));\n    }"
+    },
+    {
+      "block_id": "block_74",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "load_dl_interp_if_needed",
+      "content": "fn load_dl_interp_if_needed(&mut self, elf: &ElfFile) -> Option<usize> {\n        let elf_header = elf.header;\n        let ph_count = elf_header.pt2.ph_count();\n\n        // 1. 检查是否有 PT_INTERP 段\n        let mut has_interp = false;\n        for i in 0..ph_count {\n            let ph = elf.program_header(i).unwrap();\n            if ph.get_type().unwrap() == xmas_elf::program::Type::Interp {\n                has_interp = true;\n                break;\n            }\n        }\n\n        // 2. 检查 .dynamic 节是否有 DT_NEEDED 条目\n        let mut has_needed = false;\n        if let Some(dynamic_section) = elf.find_section_by_name(\".dynamic\") {\n            let data = dynamic_section.raw_data(elf);\n            let entry_size = 16;\n            let count = data.len() / entry_size;\n            for i in 0..count {\n                let offset = i * entry_size;\n                // d_tag: u64 at offset 0\n                let d_tag = u64::from_le_bytes([\n                    data[offset],\n                    data[offset + 1],\n                    data[offset + 2],\n                    data[offset + 3],\n                    data[offset + 4],\n                    data[offset + 5],\n                    data[offset + 6],\n                    data[offset + 7],\n                ]);\n                if d_tag == 1 {\n                    has_needed = true;\n                    break;\n                }\n            }\n        }\n\n        if has_interp && has_needed {\n            debug!(\"[load_dl] encounter a real dynamic linked elf\");\n            let section = elf.find_section_by_name(\".interp\").unwrap();\n            let mut interp = String::from_utf8(section.raw_data(&elf).to_vec()).unwrap();\n            interp = interp.strip_suffix(\"\\0\").unwrap_or(&interp).to_string();\n            debug!(\"[load_dl] interp {}\", interp);\n\n            let mut interps: Vec<String> = vec![interp.clone()];\n\n            debug!(\"interp {}\", interp);\n\n            if interp.eq(\"/lib/ld-musl-riscv64-sf.so.1\")\n                || interp.eq(\"/lib/ld-musl-riscv64.so.1\")\n                || interp.eq(\"/lib64/ld-musl-loongarch-lp64d.so.1\")\n                || interp.eq(\"/lib64ld-linux-loongarch-lp64d.so.1\")\n            {\n                interps.insert(0, \"ld-musl-riscv64.so.1\".to_string());\n            }\n            if interp.eq(\"/lib/ld-glibc-riscv64-sf.so.1\")\n                || interp.eq(\"/lib/ld-glibc-riscv64.so.1\")\n                || interp.eq(\"/lib64/ld-glibc-loongarch64-sf.so.1\")\n                || interp.eq(\"/lib64/ld-linux-loongarch-lp64d.so.1\")\n            {\n                interps.insert(0, \"/glibc/lib/libc.so.6\".to_string());\n            }\n\n            let mut interp_inode = None;\n            for interp in interps {\n                if let Ok(inode) = open(&interp, OpenFlags::O_RDONLY) {\n                    debug!(\"read interp from {}\", &interp);\n                    interp_inode = inode.file().ok();\n                    break;\n                }\n            }\n            let interp_file = interp_inode.unwrap();\n            let interp_elf_data = interp_file.inode.read_all().unwrap();\n            let interp_elf = xmas_elf::ElfFile::new(&interp_elf_data).unwrap();\n            self.map_elf(&interp_elf, DL_INTERP_OFFSET.into());\n\n            Some(interp_elf.header.pt2.entry_point() as usize + DL_INTERP_OFFSET)\n        } else {\n            debug!(\"[load_dl] static or pseudo-dynamic elf (no DT_NEEDED)\");\n            None\n        }\n    }"
+    },
+    {
+      "block_id": "block_75",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "recycle_data_pages",
+      "content": "pub fn recycle_data_pages(&mut self) {\n        //*self = Self::new_bare();\n        self.areas.clear();\n    }"
+    },
+    {
+      "block_id": "block_76",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "split_area_by_range",
+      "content": "pub fn split_area_by_range(\n        &mut self,\n        start_addr: VirtAddr,\n        end_addr: VirtAddr,\n    ) -> Vec<MapArea> {\n        let mut new_areas_to_add = Vec::new();\n        let mut overlapping = Vec::new();\n\n        // 1. 收集完全被包含的区域\n        let mut starts = Vec::new();\n        for area in self.areas.iter() {\n            let (start, end) = area.vaddr_range.range();\n            if start >= start_addr && end <= end_addr {\n                starts.push(start);\n            }\n        }\n        // 2. 移除这些区域并放入 overlapping\n        self.areas.retain(|area| {\n            if starts.contains(&area.vaddr_range.get_start()) {\n                overlapping.push(area.clone());\n                false\n            } else {\n                true\n            }\n        });\n\n        // 3. 处理部分重叠的区域（拆分）\n        for area in self.areas.iter_mut() {\n            let (start, end) = area.vaddr_range.range();\n            if end <= start_addr || start >= end_addr {\n                continue;\n            }\n            let is_file_mmap = area.area_type == MapAreaType::Mmap && area.mmap_file.file.is_some();\n            let old_start = start; // 保存旧起点\n            let old_offset = area.mmap_file.offset; // 保存旧 offset\n\n            // Case A: 尾部重叠  [area.....)\n            //                          [target...)\n            if start < start_addr && end > start_addr && end <= end_addr {\n                let mut overlapping_part = MapArea::from_another(area);\n                // 原区域缩成前半段，起点不变 -> offset 不变\n                area.vaddr_range = VAddrRange::new(start, start_addr);\n                // 重叠段起点 = start_addr\n                overlapping_part.vaddr_range = VAddrRange::new(start_addr, end);\n                if is_file_mmap {\n                    let delta = start_addr.raw() - old_start.raw();\n                    overlapping_part.mmap_file.offset = old_offset + delta;\n                }\n                // 迁移帧\n                let mut frames_to_move = BTreeMap::new();\n                area.data_frames.retain(|va, frame| {\n                    if *va >= start_addr {\n                        frames_to_move.insert(*va, frame.clone());\n                        false\n                    } else {\n                        true\n                    }\n                });\n                overlapping_part.data_frames = frames_to_move;\n                overlapping.push(overlapping_part);\n            // Case B: 头部重叠        [area.....)\n            //                 [target...) 剩余后半\n            } else if start >= start_addr && start < end_addr && end > end_addr {\n                let mut overlapping_part = MapArea::from_another(area);\n                // 重叠段 = 原起点到 end_addr\n                overlapping_part.vaddr_range = VAddrRange::new(start, end_addr);\n                // 原区域改成后半段，起点变为 end_addr，需要调整 offset\n                area.vaddr_range = VAddrRange::new(end_addr, end);\n                if is_file_mmap {\n                    // 原区域起点前移到后半段新起点，offset += (new_start - old_start)\n                    let new_start = area.vaddr_range.get_start();\n                    let delta_new = new_start.raw() - old_start.raw();\n                    area.mmap_file.offset = old_offset + delta_new;\n                    // 重叠段起点 = old_start -> offset 仍为 old_offset\n                    overlapping_part.mmap_file.offset = old_offset;\n                }\n                // 迁移帧（属于前半/重叠部分）\n                let mut frames_to_move = BTreeMap::new();\n                area.data_frames.retain(|va, frame| {\n                    if *va < end_addr {\n                        frames_to_move.insert(*va, frame.clone());\n                        false\n                    } else {\n                        true\n                    }\n                });\n                overlapping_part.data_frames = frames_to_move;\n                overlapping.push(overlapping_part);\n            // Case C: 包含 target   [   area (start..end)   ]\n            //                      [ target (start_addr..end_addr) ]\n            } else if start < start_addr && end > end_addr {\n                let mut overlapping_part = MapArea::from_another(area);\n                let mut back_part = MapArea::from_another(area);\n                // 原区域 -> 前段 [start, start_addr)\n                area.vaddr_range = VAddrRange::new(start, start_addr);\n                // 中段\n                overlapping_part.vaddr_range = VAddrRange::new(start_addr, end_addr);\n                // 后段\n                back_part.vaddr_range = VAddrRange::new(end_addr, end);\n                if is_file_mmap {\n                    // 前段起点未变 offset 不动\n                    // 中段 offset = old_offset + (start_addr - old_start)\n                    let delta_mid = start_addr.raw() - old_start.raw();\n                    overlapping_part.mmap_file.offset = old_offset + delta_mid;\n                    // 后段 offset = old_offset + (end_addr - old_start)\n                    let delta_back = end_addr.raw() - old_start.raw();\n                    back_part.mmap_file.offset = old_offset + delta_back;\n                }\n                // 分帧\n                let mut overlapping_frames = BTreeMap::new();\n                let mut back_frames = BTreeMap::new();\n                area.data_frames.retain(|va, frame| {\n                    if *va >= end_addr {\n                        back_frames.insert(*va, frame.clone());\n                        false\n                    } else if *va >= start_addr {\n                        overlapping_frames.insert(*va, frame.clone());\n                        false\n                    } else {\n                        true\n                    }\n                });\n                overlapping_part.data_frames = overlapping_frames;\n                back_part.data_frames = back_frames;\n                overlapping.push(overlapping_part);\n                new_areas_to_add.push(back_part);\n            }\n        }\n        // 4. 附加新的非重叠尾段\n        self.areas.append(&mut new_areas_to_add);\n        overlapping\n    }"
+    },
+    {
+      "block_id": "block_77",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "mprotect",
+      "content": "pub fn mprotect(&mut self, start_addr: VirtAddr, end_addr: VirtAddr, map_perm: MapPermission) {\n        let mut overlapping_areas = self.split_area_by_range(start_addr, end_addr);\n        for area in overlapping_areas.iter_mut() {\n            area.map_perm = map_perm;\n            self.areas.push(area.clone());\n            for vaddr in area.data_frames.keys() {\n                self.page_table.update_page_flags(*vaddr, map_perm.into());\n            }\n        }\n        TLB::flush_all();\n    }\n}\n\n#[derive(Copy, Clone, PartialEq, Debug)]\npub enum MapType {\n    //  Identical, not used now\n    Framed,\n}"
+    },
+    {
+      "block_id": "block_78",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "cow_page_fault",
+      "content": "pub fn cow_page_fault(\n    vaddr: VirtAddr,\n    flags: MappingFlags,\n    page_table: &Arc<PageTableWrapper>,\n    area: &mut MapArea,\n) {\n    debug!(\n        \"[cow_page_fault] vaddr: {:#x}, area: {:?}\",\n        vaddr.raw(),\n        area.vaddr_range\n    );\n    let frame = area.data_frames.get(&vaddr.into()).unwrap();\n    // 如果是唯一的引用，直接将 COW 标志位移除，并添加 W (可写) 标志位\n    let new_flags = (flags & !MappingFlags::COW) | MappingFlags::W;\n    if Arc::strong_count(frame) == 1 {\n        page_table.update_page_flags(vaddr, new_flags);\n        return;\n    }\n\n    let src_ptr = page_table.translate(vaddr).unwrap().0;\n    let src: &mut [u8] =\n        unsafe { core::slice::from_raw_parts_mut(src_ptr.get_mut_ptr(), PAGE_SIZE) };\n    area.unmap_one(page_table, vaddr);\n    area.map_one(page_table, vaddr);\n    let dst = &mut page_table\n        .translate(vaddr)\n        .unwrap()\n        .0\n        .slice_mut_with_len(PAGE_SIZE);\n    dst.copy_from_slice(src);\n    page_table.update_page_flags(vaddr, new_flags);\n}"
+    },
+    {
+      "block_id": "block_79",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "mmap_read_page_fault",
+      "content": "pub fn mmap_read_page_fault(va: VirtAddr, page_table: &Arc<PageTableWrapper>, area: &mut MapArea) {\n    let frame = GROUP_SHARE.lock().find(area.groupid, va);\n    if let Some(frame) = frame {\n        let mut flags = area.flags();\n        if flags.contains(MappingFlags::W) {\n            flags.remove(MappingFlags::W);\n            flags.insert(MappingFlags::COW);\n        }\n        page_table.update_page_flags(va, flags);\n        area.data_frames.insert(va, frame);\n    } else {\n        info!(\n            \"mmap_read_page_fault: no shared frame found for vaddr: {:#x}\",\n            va.raw()\n        );\n        mmap_write_page_fault(va, page_table, area);\n        GROUP_SHARE\n            .lock()\n            .add_frame(area.groupid, va, area.data_frames.get(&va).unwrap().clone());\n    }\n}"
+    },
+    {
+      "block_id": "block_80",
+      "file_path": "os\\src\\mm\\memory_set.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "mmap_write_page_fault",
+      "content": "pub fn mmap_write_page_fault(va: VirtAddr, page_table: &Arc<PageTableWrapper>, area: &mut MapArea) {\n    area.map_one(page_table, va);\n    let file = &area.mmap_file.file;\n    if file.is_none() {\n        return;\n    }\n    let file = file.as_ref().unwrap();\n    let old_offset = file.lseek(0, SEEK_CUR).unwrap();\n    let start = area.vaddr_range.get_start();\n    file.lseek(\n        (va.raw() - start.raw() + area.mmap_file.offset) as isize,\n        SEEK_SET,\n    )\n    .expect(\"[mmap_write_page_fault]: lseek failed\");\n    file.read(UserBuffer {\n        buffers: translated_byte_buffer(page_table, va.raw() as *mut u8, PAGE_SIZE),\n    });\n    let mut flags = area.flags();\n    if flags.contains(MappingFlags::W) {\n        flags.remove(MappingFlags::W);\n        flags.insert(MappingFlags::COW);\n    }\n    page_table.update_page_flags(va, flags);\n}"
+    },
+    {
+      "block_id": "block_81",
+      "file_path": "os\\src\\syscall\\mm.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "sys_shmget",
+      "content": "pub fn sys_shmget(key: i32, size: usize, flags: i32) -> SyscallRet {\n    trace!(\n        \"[sys_shmget] Enter: key=0x{:x}, size={}, flags=0x{:x}\",\n        key,\n        size,\n        flags\n    );\n    const IPC_PRIVATE: i32 = 0;\n    // 忽略权限位\n    let flags = ShmFlags::from_bits(flags & !0x1ff).unwrap();\n    match key {\n        IPC_PRIVATE => Ok(shm_create(size)),\n        key if key > 0 => {\n            if shm_find(key as usize) {\n                if flags.contains(ShmFlags::IPC_CREAT | ShmFlags::IPC_EXCL) {\n                    Err(SysErrNo::EEXIST)\n                } else {\n                    Ok(key as usize)\n                }\n            } else {\n                if flags.contains(ShmFlags::IPC_CREAT) {\n                    Ok(shm_create(size))\n                } else {\n                    Err(SysErrNo::ENOENT)\n                }\n            }\n        }\n        _ => Err(SysErrNo::ENOENT),\n    }\n}"
+    },
+    {
+      "block_id": "block_82",
+      "file_path": "os\\src\\syscall\\mm.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "sys_shmctl",
+      "content": "pub fn sys_shmctl(shmid: i32, cmd: i32, buf: usize) -> SyscallRet {\n    trace!(\n        \"[sys_shmctl] Enter: shmid={}, cmd={}, buf=0x{:x}\",\n        shmid,\n        cmd,\n        buf as usize\n    );\n    const IPC_RMID: i32 = 0;\n    match cmd {\n        IPC_RMID => {\n            shm_drop(shmid as usize);\n            Ok(0)\n        }\n        _ => {\n            panic!(\"[sys_shmctl] unsupport cmd\");\n        }\n    }\n}"
+    },
+    {
+      "block_id": "block_83",
+      "file_path": "os\\src\\syscall\\mm.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "sys_shmat",
+      "content": "pub fn sys_shmat(shmid: i32, shmaddr: usize, shmflag: i32) -> SyscallRet {\n    let mut permission = MapPermission::U | MapPermission::R;\n    if shmflag == 0 {\n        permission |= MapPermission::W | MapPermission::X\n    } else {\n        let shmflg = ShmFlags::from_bits(shmflag).unwrap();\n        if shmflg.contains(ShmFlags::SHM_EXEC) {\n            permission |= MapPermission::X;\n        }\n        if !shmflg.contains(ShmFlags::SHM_RDONLY) {\n            permission |= MapPermission::W;\n        }\n    }\n\n    match shmid {\n        key if key < 0 => Err(SysErrNo::EINVAL),\n        _ => shm_attach(shmid as usize, shmaddr, permission),\n    }\n}"
+    },
+    {
+      "block_id": "block_84",
+      "file_path": "os\\src\\syscall\\mm.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "sys_brk",
+      "content": "pub fn sys_brk(brk_addr: usize) -> SyscallRet {\n    trace!(\"[sys_brk] Enter: brk_addr=0x{:x}\", brk_addr);\n    // let task = current_task().unwrap();\n    // let mut task_inner = task.inner_exclusive_access();\n    let current_addr = current_task().unwrap().growproc(0) as usize;\n    debug!(\"[sys_brk] Current heap end: 0x{:x}\", current_addr);\n    if brk_addr == 0 {\n        debug!(\"[sys_brk] Querying current brk: 0x{:x}\", current_addr);\n        return Ok(current_addr);\n    }\n    let grow_size = (brk_addr - current_addr) as isize;\n    debug!(\n        \"[sys_brk] Growing heap by: {} bytes (0x{:x})\",\n        grow_size, grow_size\n    );\n    let result = current_task().unwrap().growproc(grow_size) as usize;\n    trace!(\"[sys_brk] return: result=0x{:x}\", result);\n    Ok(result)\n}"
+    },
+    {
+      "block_id": "block_85",
+      "file_path": "os\\src\\syscall\\mm.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "sys_munmap",
+      "content": "pub fn sys_munmap(addr: usize, len: usize) -> SyscallRet {\n    trace!(\"[sys_munmap] Enter: addr=0x{:x}, len=0x{:x}\", addr, len);\n    let task = current_task().unwrap();\n    let mut task_inner = task.inner_exclusive_access();\n    let len = page_round_up(len);\n    task_inner.memory_set.munmap(VirtAddr::from(addr), len)\n}"
+    },
+    {
+      "block_id": "block_86",
+      "file_path": "os\\src\\syscall\\mm.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "sys_mmap",
+      "content": "pub fn sys_mmap(\n    start: usize,\n    len: usize,\n    prot: usize,\n    flags: usize,\n    fd: usize,\n    offset: usize,\n) -> SyscallRet {\n    trace!(\"[sys_mmap] Enter: start=0x{:x}, len=0x{:x}, prot=0x{:x}, flags=0x{:x}, fd={}, offset=0x{:x}\",\n           start, len, prot, flags, fd, offset);\n    let mmap_prot = MapPermission::from(MmapProt::from_bits(prot as u32).unwrap());\n    let flags = MmapFlags::from_bits(flags as u32).unwrap();\n    if flags.contains(MmapFlags::MAP_FIXED) && start == 0 {\n        return Err(SysErrNo::EPERM);\n    }\n    let len = page_round_up(len);\n    let task = current_task().unwrap();\n    let mut task_inner = task.inner_exclusive_access();\n    if fd == usize::MAX {\n        if !flags.contains(MmapFlags::MAP_ANONYMOUS) {\n            return Err(SysErrNo::EBADF);\n        }\n        let rv = task_inner\n            .memory_set\n            .mmap(start, len, mmap_prot, flags, None, offset);\n        return Ok(rv);\n    }\n    debug!(\"[sys_mmap] Mapping file descriptor: {}\", fd);\n    if let Some(file) = &task_inner.fd_table.get_file(fd) {\n        let file = file.file().unwrap();\n        let addr = task_inner\n            .memory_set\n            .mmap(start, len, mmap_prot, flags, Some(file), offset);\n        info!(\"[sys_mmap] Successfully mapped at: 0x{:x}\", addr);\n        Ok(addr)\n    } else {\n        warn!(\"[sys_mmap] Invalid file descriptor: {}\", fd);\n        Err(SysErrNo::EPERM)\n    }\n}"
+    },
+    {
+      "block_id": "block_87",
+      "file_path": "os\\src\\syscall\\mm.rs",
+      "file_score": 33,
+      "type": "function",
+      "name": "sys_mprotect",
+      "content": "pub fn sys_mprotect(addr: usize, len: usize, prot: u32) -> SyscallRet {\n    trace!(\n        \"[sys_mprotect] Enter: addr=0x{:x}, len=0x{:x}, prot=0x{:x}\",\n        addr,\n        len,\n        prot\n    );\n\n    if (addr % PAGE_SIZE != 0) || (len % PAGE_SIZE != 0) {\n        return Err(SysErrNo::EINVAL);\n    } //检查页面对齐\n\n    let map_perm: MapPermission = MmapProt::from_bits(prot).unwrap().into();\n\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    let memory_set = &mut inner.memory_set;\n    let start_vpn = VirtAddr::from(addr).floor();\n    let end_vpn = VirtAddr::from(addr + len).ceil();\n\n    memory_set.mprotect(start_vpn, end_vpn, map_perm);\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_88",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "impl",
+      "name": "impl TryFrom<u32> for MmioVersion {",
+      "content": "impl TryFrom<u32> for MmioVersion {\n    type Error = MmioError;"
+    },
+    {
+      "block_id": "block_89",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "try_from",
+      "content": "fn try_from(version: u32) -> Result<Self, Self::Error> {\n        match version {\n            LEGACY_VERSION => Ok(Self::Legacy),\n            MODERN_VERSION => Ok(Self::Modern),\n            _ => Err(MmioError::UnsupportedVersion(version)),\n        }\n    }\n}"
+    },
+    {
+      "block_id": "block_90",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "impl",
+      "name": "impl From<MmioVersion> for u32 {",
+      "content": "impl From<MmioVersion> for u32 {"
+    },
+    {
+      "block_id": "block_91",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "from",
+      "content": "fn from(version: MmioVersion) -> Self {\n        match version {\n            MmioVersion::Legacy => LEGACY_VERSION,\n            MmioVersion::Modern => MODERN_VERSION,\n        }\n    }\n}\n\n/// An error encountered initialising a VirtIO MMIO transport.\n#[derive(Clone, Debug, Eq, Error, PartialEq)]\npub enum MmioError {\n    /// The header doesn't start with the expected magic value 0x74726976.\n    #[error(\"Invalid magic value {0:#010x} (expected 0x74726976)\")]\n    BadMagic(u32),\n    /// The header reports a version number that is neither 1 (legacy) nor 2 (modern).\n    #[error(\"Unsupported Virtio MMIO version {0}\")]\n    UnsupportedVersion(u32),\n    /// The header reports a device ID of 0.\n    #[error(\"Device ID was zero\")]\n    ZeroDeviceId,\n}\n\n/// MMIO Device Register Interface, both legacy and modern.\n///\n/// Ref: 4.2.2 MMIO Device Register Layout and 4.2.4 Legacy interface\n#[repr(C)]"
+    },
+    {
+      "block_id": "block_92",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "struct",
+      "name": "VirtIOHeader",
+      "content": "pub struct VirtIOHeader {\n    /// Magic value\n    magic: ReadOnly<u32>,\n\n    /// Device version number\n    ///\n    /// Legacy device returns value 0x1.\n    version: ReadOnly<u32>,\n\n    /// Virtio Subsystem Device ID\n    device_id: ReadOnly<u32>,\n\n    /// Virtio Subsystem Vendor ID\n    vendor_id: ReadOnly<u32>,\n\n    /// Flags representing features the device supports\n    device_features: ReadOnly<u32>,\n\n    /// Device (host) features word selection\n    device_features_sel: WriteOnly<u32>,\n\n    /// Reserved\n    __r1: [ReadOnly<u32>; 2],\n\n    /// Flags representing device features understood and activated by the driver\n    driver_features: WriteOnly<u32>,\n\n    /// Activated (guest) features word selection\n    driver_features_sel: WriteOnly<u32>,\n\n    /// Guest page size\n    ///\n    /// The driver writes the guest page size in bytes to the register during\n    /// initialization, before any queues are used. This value should be a\n    /// power of 2 and is used by the device to calculate the Guest address\n    /// of the first queue page (see QueuePFN).\n    legacy_guest_page_size: WriteOnly<u32>,\n\n    /// Reserved\n    __r2: ReadOnly<u32>,\n\n    /// Virtual queue index\n    ///\n    /// Writing to this register selects the virtual queue that the following\n    /// operations on the QueueNumMax, QueueNum, QueueAlign and QueuePFN\n    /// registers apply to. The index number of the first queue is zero (0x0).\n    queue_sel: WriteOnly<u32>,\n\n    /// Maximum virtual queue size\n    ///\n    /// Reading from the register returns the maximum size of the queue the\n    /// device is ready to process or zero (0x0) if the queue is not available.\n    /// This applies to the queue selected by writing to QueueSel and is\n    /// allowed only when QueuePFN is set to zero (0x0), so when the queue is\n    /// not actively used.\n    queue_num_max: ReadOnly<u32>,\n\n    /// Virtual queue size\n    ///\n    /// Queue size is the number of elements in the queue. Writing to this\n    /// register notifies the device what size of the queue the driver will use.\n    /// This applies to the queue selected by writing to QueueSel.\n    queue_num: WriteOnly<u32>,\n\n    /// Used Ring alignment in the virtual queue\n    ///\n    /// Writing to this register notifies the device about alignment boundary\n    /// of the Used Ring in bytes. This value should be a power of 2 and\n    /// applies to the queue selected by writing to QueueSel.\n    legacy_queue_align: WriteOnly<u32>,\n\n    /// Guest physical page number of the virtual queue\n    ///\n    /// Writing to this register notifies the device about location of the\n    /// virtual queue in the Guest’s physical address space. This value is\n    /// the index number of a page starting with the queue Descriptor Table.\n    /// Value zero (0x0) means physical address zero (0x00000000) and is illegal.\n    /// When the driver stops using the queue it writes zero (0x0) to this\n    /// register. Reading from this register returns the currently used page\n    /// number of the queue, therefore a value other than zero (0x0) means that\n    /// the queue is in use. Both read and write accesses apply to the queue\n    /// selected by writing to QueueSel.\n    legacy_queue_pfn: Volatile<u32>,\n\n    /// new interface only\n    queue_ready: Volatile<u32>,\n\n    /// Reserved\n    __r3: [ReadOnly<u32>; 2],\n\n    /// Queue notifier\n    queue_notify: WriteOnly<u32>,\n\n    /// Reserved\n    __r4: [ReadOnly<u32>; 3],\n\n    /// Interrupt status\n    interrupt_status: ReadOnly<u32>,\n\n    /// Interrupt acknowledge\n    interrupt_ack: WriteOnly<u32>,\n\n    /// Reserved\n    __r5: [ReadOnly<u32>; 2],\n\n    /// Device status\n    ///\n    /// Reading from this register returns the current device status flags.\n    /// Writing non-zero values to this register sets the status flags,\n    /// indicating the OS/driver progress. Writing zero (0x0) to this register\n    /// triggers a device reset. The device sets QueuePFN to zero (0x0) for\n    /// all queues in the device. Also see 3.1 Device Initialization.\n    status: Volatile<DeviceStatus>,\n\n    /// Reserved\n    __r6: [ReadOnly<u32>; 3],\n\n    // new interface only since here\n    queue_desc_low: WriteOnly<u32>,\n    queue_desc_high: WriteOnly<u32>,\n\n    /// Reserved\n    __r7: [ReadOnly<u32>; 2],\n\n    queue_driver_low: WriteOnly<u32>,\n    queue_driver_high: WriteOnly<u32>,\n\n    /// Reserved\n    __r8: [ReadOnly<u32>; 2],\n\n    queue_device_low: WriteOnly<u32>,\n    queue_device_high: WriteOnly<u32>,\n\n    /// Reserved\n    __r9: [ReadOnly<u32>; 21],\n\n    config_generation: ReadOnly<u32>,\n}"
+    },
+    {
+      "block_id": "block_93",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "impl",
+      "name": "impl VirtIOHeader {",
+      "content": "impl VirtIOHeader {\n    /// Constructs a fake VirtIO header for use in unit tests.\n    #[cfg(test)]"
+    },
+    {
+      "block_id": "block_94",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "make_fake_header",
+      "content": "pub fn make_fake_header(\n        version: u32,\n        device_id: u32,\n        vendor_id: u32,\n        device_features: u32,\n        queue_num_max: u32,\n    ) -> Self {\n        Self {\n            magic: ReadOnly::new(MAGIC_VALUE),\n            version: ReadOnly::new(version),\n            device_id: ReadOnly::new(device_id),\n            vendor_id: ReadOnly::new(vendor_id),\n            device_features: ReadOnly::new(device_features),\n            device_features_sel: WriteOnly::default(),\n            __r1: Default::default(),\n            driver_features: Default::default(),\n            driver_features_sel: Default::default(),\n            legacy_guest_page_size: Default::default(),\n            __r2: Default::default(),\n            queue_sel: Default::default(),\n            queue_num_max: ReadOnly::new(queue_num_max),\n            queue_num: Default::default(),\n            legacy_queue_align: Default::default(),\n            legacy_queue_pfn: Default::default(),\n            queue_ready: Default::default(),\n            __r3: Default::default(),\n            queue_notify: Default::default(),\n            __r4: Default::default(),\n            interrupt_status: Default::default(),\n            interrupt_ack: Default::default(),\n            __r5: Default::default(),\n            status: Volatile::new(DeviceStatus::empty()),\n            __r6: Default::default(),\n            queue_desc_low: Default::default(),\n            queue_desc_high: Default::default(),\n            __r7: Default::default(),\n            queue_driver_low: Default::default(),\n            queue_driver_high: Default::default(),\n            __r8: Default::default(),\n            queue_device_low: Default::default(),\n            queue_device_high: Default::default(),\n            __r9: Default::default(),\n            config_generation: Default::default(),\n        }\n    }\n}\n\n/// MMIO Device Register Interface.\n///\n/// Ref: 4.2.2 MMIO Device Register Layout and 4.2.4 Legacy interface\n#[derive(Debug)]"
+    },
+    {
+      "block_id": "block_95",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "struct",
+      "name": "MmioTransport",
+      "content": "pub struct MmioTransport {\n    header: NonNull<VirtIOHeader>,\n    version: MmioVersion,\n}"
+    },
+    {
+      "block_id": "block_96",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "impl",
+      "name": "impl MmioTransport {",
+      "content": "impl MmioTransport {\n    /// Constructs a new VirtIO MMIO transport, or returns an error if the header reports an\n    /// unsupported version.\n    ///\n    /// # Safety\n    /// `header` must point to a properly aligned valid VirtIO MMIO region, which must remain valid\n    /// for the lifetime of the transport that is returned.\n    pub unsafe fn new(header: NonNull<VirtIOHeader>) -> Result<Self, MmioError> {\n        let magic = volread!(header, magic);\n        if magic != MAGIC_VALUE {\n            return Err(MmioError::BadMagic(magic));\n        }\n        if volread!(header, device_id) == 0 {\n            return Err(MmioError::ZeroDeviceId);\n        }\n        let version = volread!(header, version).try_into()?;\n        Ok(Self { header, version })\n    }\n\n    /// Gets the version of the VirtIO MMIO transport."
+    },
+    {
+      "block_id": "block_97",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "version",
+      "content": "pub fn version(&self) -> MmioVersion {\n        self.version\n    }\n\n    /// Gets the vendor ID."
+    },
+    {
+      "block_id": "block_98",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "vendor_id",
+      "content": "pub fn vendor_id(&self) -> u32 {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe { volread!(self.header, vendor_id) }\n    }\n}\n\n// SAFETY: `header` is only used for MMIO, which can happen from any thread or CPU core.\nunsafe impl Send for MmioTransport {}\n\n// SAFETY: `&MmioTransport` only allows MMIO reads or getting the config space, both of which are\n// fine to happen concurrently on different CPU cores.\nunsafe impl Sync for MmioTransport {}"
+    },
+    {
+      "block_id": "block_99",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "impl",
+      "name": "impl Transport for MmioTransport {",
+      "content": "impl Transport for MmioTransport {"
+    },
+    {
+      "block_id": "block_100",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "device_type",
+      "content": "fn device_type(&self) -> DeviceType {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        let device_id = unsafe { volread!(self.header, device_id) };\n        device_id.into()\n    }"
+    },
+    {
+      "block_id": "block_101",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "read_device_features",
+      "content": "fn read_device_features(&mut self) -> u64 {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe {\n            volwrite!(self.header, device_features_sel, 0); // device features [0, 32)\n            let mut device_features_bits = volread!(self.header, device_features).into();\n            volwrite!(self.header, device_features_sel, 1); // device features [32, 64)\n            device_features_bits += (volread!(self.header, device_features) as u64) << 32;\n            device_features_bits\n        }\n    }"
+    },
+    {
+      "block_id": "block_102",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "write_driver_features",
+      "content": "fn write_driver_features(&mut self, driver_features: u64) {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe {\n            volwrite!(self.header, driver_features_sel, 0); // driver features [0, 32)\n            volwrite!(self.header, driver_features, driver_features as u32);\n            volwrite!(self.header, driver_features_sel, 1); // driver features [32, 64)\n            volwrite!(self.header, driver_features, (driver_features >> 32) as u32);\n        }\n    }"
+    },
+    {
+      "block_id": "block_103",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "max_queue_size",
+      "content": "fn max_queue_size(&mut self, queue: u16) -> u32 {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe {\n            volwrite!(self.header, queue_sel, queue.into());\n            volread!(self.header, queue_num_max)\n        }\n    }"
+    },
+    {
+      "block_id": "block_104",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "notify",
+      "content": "fn notify(&mut self, queue: u16) {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe {\n            volwrite!(self.header, queue_notify, queue.into());\n        }\n    }"
+    },
+    {
+      "block_id": "block_105",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "get_status",
+      "content": "fn get_status(&self) -> DeviceStatus {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe { volread!(self.header, status) }\n    }"
+    },
+    {
+      "block_id": "block_106",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "set_status",
+      "content": "fn set_status(&mut self, status: DeviceStatus) {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe {\n            volwrite!(self.header, status, status);\n        }\n    }"
+    },
+    {
+      "block_id": "block_107",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "set_guest_page_size",
+      "content": "fn set_guest_page_size(&mut self, guest_page_size: u32) {\n        match self.version {\n            MmioVersion::Legacy => {\n                // Safe because self.header points to a valid VirtIO MMIO region.\n                unsafe {\n                    volwrite!(self.header, legacy_guest_page_size, guest_page_size);\n                }\n            }\n            MmioVersion::Modern => {\n                // No-op, modern devices don't care.\n            }\n        }\n    }"
+    },
+    {
+      "block_id": "block_108",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "requires_legacy_layout",
+      "content": "fn requires_legacy_layout(&self) -> bool {\n        match self.version {\n            MmioVersion::Legacy => true,\n            MmioVersion::Modern => false,\n        }\n    }"
+    },
+    {
+      "block_id": "block_109",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "queue_set",
+      "content": "fn queue_set(\n        &mut self,\n        queue: u16,\n        size: u32,\n        descriptors: PhysAddr,\n        driver_area: PhysAddr,\n        device_area: PhysAddr,\n    ) {\n        match self.version {\n            MmioVersion::Legacy => {\n                assert_eq!(\n                    driver_area - descriptors,\n                    size_of::<Descriptor>() * size as usize\n                );\n                assert_eq!(\n                    device_area - descriptors,\n                    align_up(\n                        size_of::<Descriptor>() * size as usize\n                            + size_of::<u16>() * (size as usize + 3)\n                    )\n                );\n                let align = PAGE_SIZE as u32;\n                let pfn = (descriptors / PAGE_SIZE) as u32;\n                assert_eq!(pfn as usize * PAGE_SIZE, descriptors);\n                // Safe because self.header points to a valid VirtIO MMIO region.\n                unsafe {\n                    volwrite!(self.header, queue_sel, queue.into());\n                    volwrite!(self.header, queue_num, size);\n                    volwrite!(self.header, legacy_queue_align, align);\n                    volwrite!(self.header, legacy_queue_pfn, pfn);\n                }\n            }\n            MmioVersion::Modern => {\n                // Safe because self.header points to a valid VirtIO MMIO region.\n                unsafe {\n                    volwrite!(self.header, queue_sel, queue.into());\n                    volwrite!(self.header, queue_num, size);\n                    volwrite!(self.header, queue_desc_low, descriptors as u32);\n                    volwrite!(self.header, queue_desc_high, (descriptors >> 32) as u32);\n                    volwrite!(self.header, queue_driver_low, driver_area as u32);\n                    volwrite!(self.header, queue_driver_high, (driver_area >> 32) as u32);\n                    volwrite!(self.header, queue_device_low, device_area as u32);\n                    volwrite!(self.header, queue_device_high, (device_area >> 32) as u32);\n                    volwrite!(self.header, queue_ready, 1);\n                }\n            }\n        }\n    }"
+    },
+    {
+      "block_id": "block_110",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "queue_unset",
+      "content": "fn queue_unset(&mut self, queue: u16) {\n        match self.version {\n            MmioVersion::Legacy => {\n                // Safe because self.header points to a valid VirtIO MMIO region.\n                unsafe {\n                    volwrite!(self.header, queue_sel, queue.into());\n                    volwrite!(self.header, queue_num, 0);\n                    volwrite!(self.header, legacy_queue_align, 0);\n                    volwrite!(self.header, legacy_queue_pfn, 0);\n                }\n            }\n            MmioVersion::Modern => {\n                // Safe because self.header points to a valid VirtIO MMIO region.\n                unsafe {\n                    volwrite!(self.header, queue_sel, queue.into());\n\n                    volwrite!(self.header, queue_ready, 0);\n                    // Wait until we read the same value back, to ensure synchronisation (see 4.2.2.2).\n                    while volread!(self.header, queue_ready) != 0 {}\n\n                    volwrite!(self.header, queue_num, 0);\n                    volwrite!(self.header, queue_desc_low, 0);\n                    volwrite!(self.header, queue_desc_high, 0);\n                    volwrite!(self.header, queue_driver_low, 0);\n                    volwrite!(self.header, queue_driver_high, 0);\n                    volwrite!(self.header, queue_device_low, 0);\n                    volwrite!(self.header, queue_device_high, 0);\n                }\n            }\n        }\n    }"
+    },
+    {
+      "block_id": "block_111",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "queue_used",
+      "content": "fn queue_used(&mut self, queue: u16) -> bool {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe {\n            volwrite!(self.header, queue_sel, queue.into());\n            match self.version {\n                MmioVersion::Legacy => volread!(self.header, legacy_queue_pfn) != 0,\n                MmioVersion::Modern => volread!(self.header, queue_ready) != 0,\n            }\n        }\n    }"
+    },
+    {
+      "block_id": "block_112",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "ack_interrupt",
+      "content": "fn ack_interrupt(&mut self) -> bool {\n        // Safe because self.header points to a valid VirtIO MMIO region.\n        unsafe {\n            let interrupt = volread!(self.header, interrupt_status);\n            if interrupt != 0 {\n                volwrite!(self.header, interrupt_ack, interrupt);\n                true\n            } else {\n                false\n            }\n        }\n    }\n\n    fn read_config_space<T>(&self, offset: usize) -> Result<T, Error> {\n        assert!(align_of::<T>() <= 4,\n            \"Driver expected config space alignment of {} bytes, but VirtIO only guarantees 4 byte alignment.\",\n            align_of::<T>());\n        assert!(offset % align_of::<T>() == 0);\n\n        // SAFETY: The caller of `MmioTransport::new` guaranteed that the header pointer was valid,\n        // which includes the config space.\n        unsafe {\n            Ok(self\n                .header\n                .cast::<T>()\n                .byte_add(CONFIG_SPACE_OFFSET)\n                .byte_add(offset)\n                .read_volatile())\n        }\n    }\n\n    fn write_config_space<T>(&mut self, offset: usize, value: T) -> Result<(), Error> {\n        assert!(align_of::<T>() <= 4,\n            \"Driver expected config space alignment of {} bytes, but VirtIO only guarantees 4 byte alignment.\",\n            align_of::<T>());\n        assert!(offset % align_of::<T>() == 0);\n\n        // SAFETY: The caller of `MmioTransport::new` guaranteed that the header pointer was valid,\n        // which includes the config space.\n        unsafe {\n            self.header\n                .cast::<T>()\n                .byte_add(CONFIG_SPACE_OFFSET)\n                .byte_add(offset)\n                .write_volatile(value);\n        }\n        Ok(())\n    }\n}"
+    },
+    {
+      "block_id": "block_113",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "impl",
+      "name": "impl Drop for MmioTransport {",
+      "content": "impl Drop for MmioTransport {"
+    },
+    {
+      "block_id": "block_114",
+      "file_path": "patch\\virtio-drivers\\src\\transport\\mmio.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "drop",
+      "content": "fn drop(&mut self) {\n        // Reset the device when the transport is dropped.\n        self.set_status(DeviceStatus::empty())\n    }\n}"
+    },
+    {
+      "block_id": "block_115",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_getcwd",
+      "content": "pub fn sys_getcwd(buf: *mut u8, len: usize) -> SyscallRet {\n    trace!(\n        \"[sys_getcwd] called with buf=0x{:x} (output pointer for cwd string), len={}\",\n        buf as usize,\n        len\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n\n    // 获取当前工作目录\n    let cwd = inner.fsinfo.get_cwd();\n    drop(inner);\n    drop(task);\n    debug!(\"[sys_getcwd] current working directory: {}\", cwd);\n\n    // 检查缓冲区长度是否足够\n    if cwd.len() + 1 > len {\n        warn!(\n            \"[sys_getcwd] buffer too small: need {}, got {}\",\n            cwd.len() + 1,\n            len\n        );\n        return Err(SysErrNo::ERANGE); // 缓冲区不足\n    }\n\n    let mut user_buf = UserBuffer::new(translated_byte_buffer(&token, buf, len));\n\n    user_buf.write(cwd.as_bytes());\n    //user_buf.write(&[0]); // 写入字符串结束符 '\\0'\n\n    Ok(cwd.len()) // 返回写入的字节数（不包括 '\\0'）\n}"
+    },
+    {
+      "block_id": "block_116",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_dup",
+      "content": "pub fn sys_dup(fd: usize) -> SyscallRet {\n    trace!(\"[sys_dup] called with fd={}\", fd);\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let file = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    let new_fd = inner.alloc_fd();\n    inner.fd_table.set(new_fd, file);\n    Ok(new_fd)\n}"
+    },
+    {
+      "block_id": "block_117",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_dup3",
+      "content": "pub fn sys_dup3(old_fd: usize, new_fd: usize, flags: u32) -> SyscallRet {\n    let flags = OpenFlags::from_bits(flags).unwrap();\n    trace!(\n        \"[sys_dup3] called with old_fd={}, new_fd={}, flags={:?}\",\n        old_fd,\n        new_fd,\n        flags\n    );\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    if old_fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let mut file = inner.fd_table.get_file(old_fd).ok_or(SysErrNo::EBADF)?;\n    if old_fd == new_fd {\n        debug!(\"[sys_dup3] old_fd and new_fd are the same\");\n        return Ok(new_fd);\n    }\n    if new_fd >= inner.fd_table.len() {\n        inner.fd_table.resize(new_fd + 1);\n    }\n    // 如果 new_fd 已经被占用，先关闭它\n    if inner.fd_table.get_file(new_fd).is_some() {\n        debug!(\"[sys_dup3] closing existing new_fd {}\", new_fd);\n        inner.fd_table.remove(new_fd);\n    }\n    file.set_flags(flags);\n    inner.fd_table.set(new_fd, file);\n    Ok(new_fd)\n}"
+    },
+    {
+      "block_id": "block_118",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_fcntl",
+      "content": "pub fn sys_fcntl(fd: usize, cmd: usize, arg: usize) -> SyscallRet {\n    trace!(\n        \"[sys_fcntl] called with fd={}, cmd={:?}({}), arg={}\",\n        fd,\n        fcntl_cmd_name(cmd),\n        cmd,\n        arg\n    );\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let mut file = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    match cmd {\n        F_DUPFD => {\n            let new_fd = inner.fd_table.alloc_fd_larger(arg)?;\n            file.unset_cloexec();\n            inner.fd_table.set(new_fd, file);\n            // task_inner.fs_info.insert_with_glue(fd, fd_new);\n            Ok(new_fd)\n        }\n        F_DUPFD_CLOEXEC => {\n            let new_fd = inner.fd_table.alloc_fd_larger(arg)?;\n            file.set_cloexec();\n            inner.fd_table.set(new_fd, file);\n            // task_inner.fs_info.insert_with_glue(fd, fd_new);\n            Ok(new_fd)\n        }\n        F_GETFD => Ok(if file.cloexec() { 1 } else { 0 }),\n        F_SETFD => {\n            if arg & 1 != 0 {\n                file.set_cloexec();\n            } else {\n                file.unset_cloexec();\n            }\n            Ok(0)\n        }\n        F_GETFL => Ok(file.get_flags().bits() as usize),\n        _ => Err(SysErrNo::EINVAL),\n    }\n}"
+    },
+    {
+      "block_id": "block_119",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_ioctl",
+      "content": "pub fn sys_ioctl(_fd: usize, _cmd: usize, _arg: usize) -> SyscallRet {\n    warn!(\n        \"[sys_ioctl] pseudo implementation called with fd={}, cmd={}, arg={}\",\n        _fd, _cmd, _arg\n    );\n    // 伪实现\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_120",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_mkdirat",
+      "content": "pub fn sys_mkdirat(dirfd: isize, path: *const u8, _mode: usize) -> SyscallRet {\n    trace!(\"[sys_mkdirat] called with dirfd={}, path={:p}\", dirfd, path);\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    let path = translated_str(token, path);\n    debug!(\"[sys_mkdirat] path: {}\", path);\n    let abs_path = inner.get_abs_path(dirfd, &path)?;\n    debug!(\"[sys_mkdirat] absolute path: {}\", abs_path);\n    drop(inner);\n    drop(task);\n    let created = open(\n        abs_path.as_str(),\n        OpenFlags::O_DIRECTORY | OpenFlags::O_CREATE | OpenFlags::O_RDWR,\n    );\n    if created.is_ok() {\n        Ok(0)\n    } else {\n        Err(SysErrNo::EIO)\n    }\n}"
+    },
+    {
+      "block_id": "block_121",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_unlinkat",
+      "content": "pub fn sys_unlinkat(dirfd: isize, path: *const u8, flags: u32) -> SyscallRet {\n    let flags = UnlinkatFlags::from_bits_truncate(flags);\n    trace!(\n        \"[sys_unlinkat] called with dirfd={}, path={:p}, flags={:?} (bits={:#x})\",\n        dirfd,\n        path,\n        flags,\n        flags.bits()\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let path_str = translated_str(token, path);\n    debug!(\"[sys_unlinkat] path string: {}\", path_str);\n    let abs_path = inner.get_abs_path(dirfd, &path_str)?;\n    drop(inner);\n    drop(task);\n    debug!(\"[sys_unlinkat] absolute path: {}\", abs_path);\n    let inode = open(abs_path.as_str(), OpenFlags::O_RDONLY)?.file()?;\n    let link_cnt = inode.inode.link_cnt().unwrap_or(1);\n    if link_cnt == 1 {\n        inode.inode.delay();\n        remove_inode_idx(&abs_path.as_str());\n        info!(\"[sys_unlinkat] delayed and removed inode for {}\", abs_path);\n    } else {\n        inode.inode.unlink(&abs_path)?;\n        remove_inode_idx(&abs_path.as_str());\n        info!(\"[sys_unlinkat] unlinked and removed inode for {}\", abs_path);\n    }\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_122",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_linkat",
+      "content": "pub fn sys_linkat(\n    oldfd: isize,\n    oldpath: *const u8,\n    newfd: isize,\n    newpath: *const u8,\n    _flags: u32,\n) -> SyscallRet {\n    trace!(\"[sys_linkat] called with oldfd={}, newfd={}\", oldfd, newfd);\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    let oldpath = translated_str(token, oldpath);\n    let newpath = translated_str(token, newpath);\n    debug!(\"[sys_linkat] oldpath: {}, newpath: {}\", oldpath, newpath);\n\n    let old_abs = inner.get_abs_path(oldfd, &oldpath)?;\n    let new_abs = inner.get_abs_path(newfd, &newpath)?;\n    debug!(\"[sys_linkat] old_abs: {}, new_abs: {}\", old_abs, new_abs);\n    drop(inner);\n    drop(task);\n    // 检查 old_abs 是否存在\n    let src_inode = open(&old_abs, OpenFlags::O_RDONLY)?.file()?;\n\n    // 检查 new_abs 的父目录是否存在\n    let new_parent = match new_abs.rfind('/') {\n        Some(pos) if pos > 0 => &new_abs[..pos],\n        Some(_) => \"/\", // 根目录\n        None => return Err(SysErrNo::EINVAL),\n    };\n    open(new_parent, OpenFlags::O_RDONLY)?.file()?;\n\n    // TODO: 实现实际的 link 操作（硬链接），这里只是做了路径和存在性检查\n    todo!(\"[sys_linkat] link operation not implemented, checked paths ok\");\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_123",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_umount2",
+      "content": "pub fn sys_umount2(special: *const u8, flags: u32) -> SyscallRet {\n    trace!(\"[sys_umount2] called with flags={}\", flags);\n    let token = current_user_token();\n    let special = translated_str(token, special);\n    debug!(\"[sys_umount2] special device: {}\", special);\n\n    MNT_TABLE.lock().umount(special, flags)\n}"
+    },
+    {
+      "block_id": "block_124",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_mount",
+      "content": "pub fn sys_mount(\n    special: *const u8,\n    dir: *const u8,\n    ftype: *const u8,\n    flags: u32,\n    data: *const u8,\n) -> SyscallRet {\n    let flags_parsed = MountFlags::from_bits_truncate(flags);\n    trace!(\n        \"[sys_mount] called with flags={:?} (bits={:#x})\",\n        flags_parsed,\n        flags_parsed.bits()\n    );\n    let token = current_user_token();\n    let special = translated_str(token, special);\n    let dir = translated_str(token, dir);\n    let ftype = translated_str(token, ftype);\n    debug!(\n        \"[sys_mount] special: {}, dir: {}, ftype: {}\",\n        special, dir, ftype\n    );\n\n    if !data.is_null() {\n        let data = translated_str(token, data);\n        debug!(\"[sys_mount] mount data: {}\", data);\n        MNT_TABLE.lock().mount(special, dir, ftype, flags, data)\n    } else {\n        debug!(\"[sys_mount] no mount data provided\");\n        MNT_TABLE\n            .lock()\n            .mount(special, dir, ftype, flags, String::from(\"\"))\n    }\n}"
+    },
+    {
+      "block_id": "block_125",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_statfs",
+      "content": "pub fn sys_statfs(path: *const u8, buf: *mut u8) -> SyscallRet {\n    trace!(\n        \"[sys_statfs] called with path={:p}, buf=0x{:x}\",\n        path,\n        buf as usize\n    );\n    let token = current_user_token();\n    put_data(token, buf as *mut Statfs, fs_stat());\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_126",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_ftruncate",
+      "content": "pub fn sys_ftruncate(fd: usize, length: usize) -> SyscallRet {\n    trace!(\"[sys_ftruncate] called with fd={}, length={}\", fd, length);\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.file()?;\n    if !file.writable() {\n        return Err(SysErrNo::EBADF);\n    }\n    file.inode.truncate(length)?;\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_127",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_faccessat",
+      "content": "pub fn sys_faccessat(dirfd: isize, path: *const u8, _mode: u32, _flags: u32) -> SyscallRet {\n    trace!(\n        \"[sys_faccessat] called with dirfd={}, path={:p}, mode={:#o}, flags={:#x}\",\n        dirfd,\n        path,\n        _mode,\n        _flags\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let path = translated_str(token, path);\n    let abs_path = inner.get_abs_path(dirfd, &path)?;\n    drop(inner);\n    drop(task);\n    debug!(\"[sys_faccessat] path string: {}\", path);\n    open(&abs_path, OpenFlags::O_RDWR)?;\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_128",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_chdir",
+      "content": "pub fn sys_chdir(path: *const u8) -> SyscallRet {\n    trace!(\"[sys_chdir] called with path={:p}\", path);\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n\n    let path = translated_str(token, path);\n    debug!(\"[sys_chdir] path string: {}\", path);\n    let abs_path = inner.get_abs_path(AT_FDCWD as isize, &path)?;\n    debug!(\"[sys_chdir] absolute path: {}\", abs_path);\n\n    let inode = open(abs_path.as_str(), OpenFlags::O_RDONLY)?.file()?;\n    if !inode.is_dir() {\n        debug!(\"[sys_chdir] path is not a directory: {}\", abs_path);\n        return Err(SysErrNo::ENOTDIR);\n    }\n    info!(\n        \"[sys_chdir] changing directory from {} to {}\",\n        inner.fsinfo.get_cwd(),\n        abs_path\n    );\n    inner.fsinfo.set_cwd(abs_path.into());\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_129",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_openat",
+      "content": "pub fn sys_openat(dirfd: isize, path: *const u8, flags: u32, mode: u32) -> SyscallRet {\n    let flags = OpenFlags::from_bits(flags).unwrap();\n    trace!(\n        \"[sys_openat] called with dirfd={}, path=0x{:x}, flags={:?}, mode={:#o}\",\n        dirfd,\n        path as usize,\n        flags,\n        mode\n    );\n    let task = current_task().unwrap();\n    let token = current_user_token();\n    let path = translated_str(token, path);\n    debug!(\"[sys_openat] path string: {}\", path);\n    let mut inner = task.inner_exclusive_access();\n    let abs_path = inner.get_abs_path(dirfd, &path)?;\n    debug!(\"[sys_openat] absolute path: {}\", abs_path);\n\n    let fileclass = open(&abs_path, flags)?;\n    let fd = inner.alloc_fd();\n    inner\n        .fd_table\n        .set(fd, FileDescriptor::new(flags, fileclass));\n    info!(\"[sys_openat] opened file {} with fd {}\", abs_path, fd);\n    Ok(fd)\n}"
+    },
+    {
+      "block_id": "block_130",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_close",
+      "content": "pub fn sys_close(fd: usize) -> SyscallRet {\n    trace!(\"[sys_close] called with fd={}\", fd);\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    if inner.fd_table.get_file(fd).is_none() {\n        return Err(SysErrNo::EBADF);\n    }\n    // if fd <= 2 {\n    //     // 不能关闭标准输入、输出、错误\n    //     debug!(\"[sys_close] cannot close standard fd {}\", fd);\n    //     return Err(SysErrNo::EINVAL);\n    // }\n    inner.fd_table.remove(fd);\n    debug!(\"[sys_close] successfully closed fd {}\", fd);\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_131",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_pipe2",
+      "content": "pub fn sys_pipe2(pipe: *mut u32, flags: u32) -> SyscallRet {\n    let flags = Pipe2Flags::from_bits_truncate(flags);\n    trace!(\n        \"[sys_pipe2] called with pipe=0x{:x} (output pointer for fd array), flags={:?} (bits={:#x})\",\n        pipe as usize,\n        flags,\n        flags.bits()\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n\n    let read_fd = inner.alloc_fd();\n    let (pipe_read, pipe_write) = make_pipe();\n    inner\n        .fd_table\n        .set(read_fd, FileDescriptor::default(FileClass::Abs(pipe_read)));\n\n    let write_fd = inner.alloc_fd();\n    inner.fd_table.set(\n        write_fd,\n        FileDescriptor::default(FileClass::Abs(pipe_write)),\n    );\n    drop(inner);\n    drop(task);\n    put_data(token, pipe, read_fd as u32);\n    put_data(token, unsafe { pipe.add(1) }, write_fd as u32);\n    debug!(\n        \"[sys_pipe2] created pipe with read_fd={}, write_fd={}\",\n        read_fd, write_fd\n    );\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_132",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_getdents64",
+      "content": "pub fn sys_getdents64(fd: usize, buf: *mut u8, len: usize) -> SyscallRet {\n    trace!(\n        \"[sys_getdents64] called with fd={}, buf=0x{:x}, len={}\",\n        fd,\n        buf as usize,\n        len\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    let mut buffer = UserBuffer::new(translated_byte_buffer(&token, buf, len));\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.file()?;\n    if !file.readable() {\n        return Err(SysErrNo::EBADF);\n    }\n    if !file.is_dir() {\n        return Err(SysErrNo::ENOTDIR);\n    }\n    if buf.is_null() || len == 0 {\n        return Err(SysErrNo::EINVAL);\n    }\n    let off = file.lseek(0, SEEK_CUR)?;\n    let (de, off) = file\n        .inode\n        .read_dentry(off, len)\n        .map_err(|_| SysErrNo::EIO)?;\n    buffer.write(de.as_slice());\n    if off == -1 {\n        return Ok(0);\n    }\n    file.lseek(off, SEEK_SET);\n    Ok(de.len())\n}"
+    },
+    {
+      "block_id": "block_133",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_lseek",
+      "content": "pub fn sys_lseek(fd: usize, offset: isize, whence: u32) -> SyscallRet {\n    trace!(\n        \"[sys_lseek] called with fd={}, offset={}, whence={}\",\n        fd,\n        offset,\n        whence\n    );\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    match whence {\n        SEEK_SET | SEEK_CUR | SEEK_END => {}\n        _ => return Err(SysErrNo::EINVAL),\n    }\n    let file = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = file.file()?;\n    let result = file.lseek(offset, whence)?;\n    debug!(\"[sys_lseek] new file position: {}\", result);\n    Ok(result)\n}"
+    },
+    {
+      "block_id": "block_134",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_read",
+      "content": "pub fn sys_read(fd: usize, buf: *mut u8, len: usize) -> SyscallRet {\n    if fd != 0 {\n        trace!(\n            \"[sys_read] called with fd={}, buf=0x{:x}, len={}\",\n            fd,\n            buf as usize,\n            len\n        );\n    }\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        trace!(\"here\");\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    let file = filedesc.any();\n    if !file.readable() {\n        trace!(\"here\");\n        return Err(SysErrNo::EBADF);\n    }\n    // release current task TCB manually to avoid multi-borrow\n    drop(inner);\n    drop(task);\n    let bytes_read = file.read(UserBuffer::new(translated_byte_buffer(&token, buf, len)));\n    Ok(bytes_read)\n}"
+    },
+    {
+      "block_id": "block_135",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_write",
+      "content": "pub fn sys_write(fd: usize, buf: *mut u8, len: usize) -> SyscallRet {\n    if fd >= 3 {\n        trace!(\n            \"[sys_write] called with fd={}, buf=0x{:x}, len={}\",\n            fd,\n            buf as usize,\n            len\n        );\n    }\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.any();\n    if !file.writable() {\n        return Err(SysErrNo::EBADF);\n    }\n    let file = file.clone();\n    let bytes_written = file.write(UserBuffer::new(translated_byte_buffer(&token, buf, len)));\n    Ok(bytes_written)\n}"
+    },
+    {
+      "block_id": "block_136",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_readv",
+      "content": "pub fn sys_readv(fd: usize, iov: *const u8, iovcnt: usize) -> SyscallRet {\n    if fd >= 3 {\n        trace!(\n            \"[sys_readv] called with fd={}, iov=0x{:x}, iovcnt={}\",\n            fd,\n            iov as usize,\n            iovcnt\n        );\n    }\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.any();\n    if !file.readable() {\n        return Err(SysErrNo::EBADF);\n    }\n    let mut ret = 0;\n    for i in 0..iovcnt {\n        let iov_ptr = unsafe { iov.add(i * core::mem::size_of::<Iovec>()) };\n        let iov = unsafe { &*(iov_ptr as *const Iovec) };\n        let user_buf = UserBuffer::new(translated_byte_buffer(&token, iov.iov_base, iov.iov_len));\n        let read_bytes = file.read(user_buf);\n        ret += read_bytes;\n    }\n    Ok(ret)\n}"
+    },
+    {
+      "block_id": "block_137",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_writev",
+      "content": "pub fn sys_writev(fd: usize, iov: *const u8, iovcnt: usize) -> SyscallRet {\n    if fd >= 3 {\n        trace!(\n            \"[sys_writev] called with fd={}, iov=0x{:x}, iovcnt={}\",\n            fd,\n            iov as usize,\n            iovcnt\n        );\n    }\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.any();\n    if !file.writable() {\n        return Err(SysErrNo::EBADF);\n    }\n    let mut ret = 0;\n    for i in 0..iovcnt {\n        let iov_ptr = unsafe { iov.add(i * core::mem::size_of::<Iovec>()) };\n        let iov = unsafe { &*(iov_ptr as *const Iovec) };\n        let user_buf = UserBuffer::new(translated_byte_buffer(&token, iov.iov_base, iov.iov_len));\n        let written = file.write(user_buf);\n        ret += written;\n    }\n    Ok(ret)\n}"
+    },
+    {
+      "block_id": "block_138",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_pread64",
+      "content": "pub fn sys_pread64(fd: usize, buf: *mut u8, len: usize, offset: isize) -> SyscallRet {\n    trace!(\n        \"[sys_pread64] called with fd={}, buf=0x{:x}, len={}, offset={}\",\n        fd,\n        buf as usize,\n        len,\n        offset\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.file()?;\n    if !file.readable() {\n        return Err(SysErrNo::EBADF);\n    }\n    // release current task TCB manually to avoid multi-borrow\n    let current_offset = file.lseek(0, SEEK_CUR)?;\n    file.lseek(offset, SEEK_SET)?;\n    let bytes_read = file.read(UserBuffer::new(translated_byte_buffer(&token, buf, len)));\n    // 恢复原来的偏移量\n    file.lseek(current_offset as isize, SEEK_SET)?;\n\n    Ok(bytes_read)\n}"
+    },
+    {
+      "block_id": "block_139",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_pselect6",
+      "content": "pub fn sys_pselect6(\n    nfds: usize,\n    readfds: *const u8,\n    writefds: *const u8,\n    exceptfds: *const u8,\n    timeout: *const u8,\n    sigmask: *const u8,\n) -> SyscallRet {\n    trace!(\n        \"[sys_pselect6] called with nfds={}, readfds=0x{:x}, writefds=0x{:x}, exceptfds=0x{:x}, timeout=0x{:x}, sigmask=0x{:x}\",\n        nfds,\n        readfds as usize,\n        writefds as usize,\n        exceptfds as usize,\n        timeout as usize,\n        sigmask as usize\n    );\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    let token = current_user_token();\n\n    // debug!(\"[sys_pselect6] nfds is {}, readfds is {}, writefds is {}, exceptfds is {}, timeout is {}, sigmask is {}\",nfds,readfds,writefds,exceptfds,timeout,sigmask);\n\n    let old_mask = inner.signal_mask;\n    if sigmask as usize != 0 {\n        inner.signal_mask = get_data(token, sigmask as *const SignalFlags);\n    }\n\n    let nfds = min(nfds, inner.fd_table.get_soft_limit());\n    drop(inner);\n    drop(task);\n    let mut using_readfds = if readfds as usize != 0 {\n        Some(get_data(token, readfds as *mut FdSet))\n    } else {\n        None\n    };\n    let mut using_writefds = if writefds as usize != 0 {\n        Some(get_data(token, writefds as *mut FdSet))\n    } else {\n        None\n    };\n    let mut using_exceptfds = if exceptfds as usize != 0 {\n        Some(get_data(token, exceptfds as *mut FdSet))\n    } else {\n        None\n    };\n\n    // pselect 不会更新 timeout 的值，而 select 会\n    let waittime = if timeout as usize == 0 {\n        //为0则永远等待直到完成\n        -1\n    } else {\n        // let timespec = translated_ref(token, timeout as *const Timespec);\n        let timespec = get_data(token, timeout as *const Timespec);\n        // debug!(\n        //     \"[sys_pselect6] waittime is {} sec, {} nsec\",\n        //     timespec.tv_sec, timespec.tv_nsec\n        // );\n\n        (timespec.tv_sec * 1_000_000_000 + timespec.tv_nsec) as isize\n    };\n\n    let begin = get_time_ms() * 1_000_000;\n\n    //由于每次循环结束需要让出cpu，因此需要在每次循环时重新获得锁\n    trace!(\n        \"[sys_pselect6] entering main loop with waittime: {}\",\n        waittime\n    );\n    loop {\n        trace!(\"[sys_pselect6] into loop, waiting for events\");\n        let task = current_task().unwrap();\n        let mut inner = task.inner_exclusive_access();\n        let mut num = 0;\n\n        // 如果设置了监视是否可读的 fd\n        if let Some(readfds) = using_readfds.as_mut() {\n            for i in 0..nfds {\n                if readfds.got_fd(i) {\n                    if let Some(file) = &inner.fd_table.get_file(i) {\n                        let file: Arc<dyn File> = file.any();\n                        let event = file.poll(PollEvents::POLLIN);\n                        if !event.contains(PollEvents::POLLIN) {\n                            readfds.mark_fd(i, false);\n                        }\n                        num += 1;\n                    } else {\n                        readfds.mark_fd(i, false);\n                    }\n                }\n            }\n        }\n        // 如果设置了监视是否可写的 fd\n        if let Some(writefds) = using_writefds.as_mut() {\n            for i in 0..nfds {\n                if writefds.got_fd(i) {\n                    if let Some(file) = &inner.fd_table.get_file(i) {\n                        let file: Arc<dyn File> = file.any();\n                        let event = file.poll(PollEvents::POLLOUT);\n                        if !event.contains(PollEvents::POLLOUT) {\n                            writefds.mark_fd(i, false);\n                        }\n                        num += 1;\n                    } else {\n                        writefds.mark_fd(i, false);\n                    }\n                }\n            }\n        }\n\n        // 如果设置了监视异常的 fd\n        if let Some(exceptfds) = using_exceptfds.as_mut() {\n            for i in 0..nfds {\n                if exceptfds.got_fd(i) {\n                    if let Some(file) = &inner.fd_table.get_file(i) {\n                        let file: Arc<dyn File> = file.any();\n                        let event = file.poll(PollEvents::POLLERR | PollEvents::POLLHUP);\n                        if !event.contains(PollEvents::POLLERR)\n                            && !event.contains(PollEvents::POLLHUP)\n                        {\n                            exceptfds.mark_fd(i, false);\n                        }\n                        num += 1;\n                    } else {\n                        exceptfds.mark_fd(i, false);\n                    }\n                }\n            }\n        }\n\n        //如果有响应了则返回,或者如果时间是0，0（只监视一遍），也需要返回结果\n        if num > 0 || waittime == 0 {\n            // debug!(\"[sys_pselect6] ret for num:{},waittime:{}\", num, waittime);\n            if let Some(using_readfds) = using_readfds {\n                put_data(token, readfds as *mut FdSet, using_readfds);\n            }\n            if let Some(using_writefds) = using_writefds {\n                put_data(token, writefds as *mut FdSet, using_writefds);\n            }\n            if let Some(using_exceptfds) = using_exceptfds {\n                // debug!(\"[sys_pselect6] exceptfds is {:?}\", using_exceptfds);\n                put_data(token, exceptfds as *mut FdSet, using_exceptfds);\n            }\n            if sigmask as usize != 0 {\n                inner.signal_mask = old_mask;\n            }\n            return Ok(num);\n        }\n\n        //或者时间到了也可以返回\n        if waittime > 0 && get_time_ms() * 1000000 - begin >= waittime as usize {\n            // debug!(\"[sys_pselect6] ret for timeout\");\n            if sigmask as usize != 0 {\n                inner.signal_mask = old_mask;\n            }\n            return Ok(0);\n        }\n        drop(inner);\n        drop(task);\n        suspend_current_and_run_next();\n    }\n}"
+    },
+    {
+      "block_id": "block_140",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_ppoll",
+      "content": "pub fn sys_ppoll(fds: usize, nfds: usize, tmo_p: usize, sigmask: usize) -> SyscallRet {\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    if fds == 0 {\n        return Err(SysErrNo::EINVAL);\n    }\n    let mut fdsv = Vec::new();\n    let ptr = fds as *mut PollFd;\n    for i in 0..nfds {\n        fdsv.push(translated_refmut(\n            token,\n            (unsafe { ptr.add(i) } as *mut PollFd),\n        ));\n    }\n    let waittime = if tmo_p == 0 {\n        -1\n    } else {\n        let timespec = get_data(token, tmo_p as *const Timespec);\n        (timespec.tv_sec * 1_000_000_000 + timespec.tv_nsec) as isize\n    };\n    let begin = get_time_ms() * 1_000_000;\n\n    drop(inner);\n    drop(task);\n\n    loop {\n        let task = current_task().unwrap();\n        let inner = task.inner_exclusive_access();\n        let mut cnt = 0;\n        for fd in fdsv.iter_mut() {\n            if fd.fd < 0 {\n                fd.revents = PollEvents::empty();\n                continue;\n            }\n            if let Some(file) = inner.fd_table.get_file(fd.fd as usize) {\n                let revents = file.any().poll(fd.events);\n                if revents != PollEvents::empty() {\n                    fd.revents = revents;\n                    cnt += 1;\n                } else {\n                    fd.revents = PollEvents::empty();\n                }\n            } else {\n                fd.revents = PollEvents::empty();\n            }\n        }\n        if cnt > 0 {\n            return Ok(cnt);\n        }\n        if waittime >= 0 && (get_time_ms() * 1_000_000 - begin) as isize >= waittime {\n            debug!(\"[sys_ppoll] timeout reached\");\n            return Ok(0);\n        }\n        drop(inner);\n        drop(task);\n        suspend_current_and_run_next();\n    }\n}"
+    },
+    {
+      "block_id": "block_141",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_splice",
+      "content": "pub fn sys_splice(\n    fd_in: usize,\n    off_in: *mut u8,\n    fd_out: usize,\n    off_out: *mut u8,\n    len: usize,\n    _flags: u32,\n) -> SyscallRet {\n    trace!(\n        \"[sys_splice] called with fd_in={}, off_in=0x{:x}, fd_out={}, off_out=0x{:x}, len={}\",\n        fd_in,\n        off_in as usize,\n        fd_out,\n        off_out as usize,\n        len,\n    );\n\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n\n    // 参数检查\n    if fd_in >= inner.fd_table.len() || fd_out >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n\n    let mut buf = vec![0u8; len];\n    let mut inbufv = Vec::new();\n    unsafe {\n        inbufv.push(core::slice::from_raw_parts_mut(\n            buf.as_mut_slice().as_mut_ptr(),\n            buf.as_slice().len(),\n        ));\n    }\n    let inbuffer = UserBuffer::new(inbufv);\n    if let Ok(file_in) = inner.fd_table.get_file(fd_in).unwrap().file() {\n        if let Ok(file_out) = inner.fd_table.get_file(fd_out).unwrap().file() {\n            return Err(SysErrNo::EINVAL);\n        }\n        let file_out = inner.fd_table.get_file(fd_out).unwrap().abs()?;\n        if !file_in.readable() || !file_out.writable() {\n            return Err(SysErrNo::EBADF);\n        }\n        if off_in as usize == 0 || off_out as usize != 0 {\n            return Err(SysErrNo::EINVAL);\n        }\n        drop(inner);\n        drop(task);\n        splice_to_pipe(file_out, file_in, off_in as *const isize, len)\n    } else if let Ok(file_in) = inner.fd_table.get_file(fd_in).unwrap().abs() {\n        if let Ok(file_out) = inner.fd_table.get_file(fd_out).unwrap().abs() {\n            return Err(SysErrNo::EINVAL);\n        }\n        let file_out = inner.fd_table.get_file(fd_out).unwrap().file()?;\n        if !file_in.readable() || !file_out.writable() {\n            return Err(SysErrNo::EBADF);\n        }\n        if off_in as usize != 0 || off_out as usize == 0 {\n            return Err(SysErrNo::EINVAL);\n        }\n        drop(inner);\n        drop(task);\n        splice_from_pipe(file_in, file_out, off_out as *const isize, len)\n    } else {\n        Err(SysErrNo::EBADF)\n    }\n}"
+    },
+    {
+      "block_id": "block_142",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_readlinkat",
+      "content": "pub fn sys_readlinkat(dirfd: isize, path: *const u8, buf: *mut u8, bufsize: usize) -> SyscallRet {\n    trace!(\n        \"[sys_readlinkat] called with dirfd={}, path=0x{:x}, buf=0x{:x} (output pointer for link content), bufsize={}\",\n        dirfd,\n        path as usize,\n        buf as usize,\n        bufsize\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let path_str = translated_str(token, path);\n    debug!(\"[sys_readlinkat] path string: {}\", path_str);\n    if path_str == \"/proc/self/exe\" {\n        let size = inner.fsinfo.get_exe().len();\n        let mut buffer = UserBuffer::new(translated_byte_buffer(&token, buf, bufsize));\n        let res = buffer.write(inner.fsinfo.get_exe().as_bytes());\n        return Ok(res);\n    }\n    let abs_path = inner.get_abs_path(dirfd, &path_str)?;\n    drop(inner);\n    drop(task);\n    let mut linkbuf = vec![0; bufsize];\n    debug!(\"[sys_readlinkat] absolute path: {}\", abs_path);\n    let file = open(&abs_path, OpenFlags::O_RDONLY)?.file()?;\n    let readcnt = file.inode.read_link(&mut linkbuf, bufsize)?;\n    let mut buffer = UserBuffer::new(translated_byte_buffer(&token, buf, bufsize));\n    buffer.write(&linkbuf);\n    Ok(readcnt)\n    // TODO: implement symbolic link reading\n    // todo!(\"[sys_readlinkat] symbolic link reading not implemented yet\");\n}"
+    },
+    {
+      "block_id": "block_143",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_fstatat",
+      "content": "pub fn sys_fstatat(dirfd: isize, path_ptr: *const u8, kst: *mut u8, flags: usize) -> SyscallRet {\n    let flags = FstatatFlags::from_bits(flags as u32).unwrap_or(FstatatFlags::empty());\n    trace!(\n        \"[sys_fstatat] called with dirfd={}, path=0x{:x}, kst=0x{:x},flags:0x{:x} ({:?}) (output pointer for Kstat)\",\n        dirfd,\n        path_ptr as usize,\n        kst as usize,\n        flags.bits(),\n        flags\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let mut kst = UserBuffer::new(translated_byte_buffer(&token, kst, size_of::<Kstat>()));\n\n    let fileclass = if flags.contains(FstatatFlags::AT_EMPTY_PATH) {\n        debug!(\"[sys_fstatat] path is empty, using dirfd as file descriptor\");\n        // 直接用 dirfd 对应的已打开文件\n        let filedesc = inner\n            .fd_table\n            .get_file(dirfd as usize)\n            .ok_or(SysErrNo::EBADF)?;\n        FileClass::Abs(filedesc.any())\n    } else {\n        let path = translated_str(token, path_ptr);\n        debug!(\"[sys_fstatat] path string: {}\", path);\n        let abs_path = inner.get_abs_path(dirfd, &path)?;\n        drop(inner);\n        drop(task);\n        debug!(\"[sys_fstatat] absolute path: {}\", &abs_path);\n        open(&abs_path, OpenFlags::O_RDONLY)?\n    };\n    let kstat = fileclass.any().fstat();\n    kst.write(kstat.as_bytes());\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_144",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_fstat",
+      "content": "pub fn sys_fstat(fd: usize, kst: *mut u8) -> SyscallRet {\n    trace!(\n        \"[sys_fstat] called with fd={}, kst=0x{:x} (output pointer for Kstat)\",\n        fd,\n        kst as usize\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    let mut kst = UserBuffer::new(translated_byte_buffer(\n        &token,\n        kst,\n        core::mem::size_of::<Kstat>(),\n    ));\n\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.file()?;\n    let kstat = file.fstat();\n    kst.write(kstat.as_bytes());\n    debug!(\"[sys_fstat] successfully got file stats for fd {}\", fd);\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_145",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_fsync",
+      "content": "pub fn sys_fsync(fd: usize) -> SyscallRet {\n    trace!(\"[sys_fsync] called with fd={}\", fd);\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    if fd >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n    let filedesc = inner.fd_table.get_file(fd).ok_or(SysErrNo::EBADF)?;\n    drop(inner);\n    drop(task);\n    let file = filedesc.file()?;\n    file.inode.sync();\n    debug!(\"[sys_fsync] successfully synced fd {}\", fd);\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_146",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_utimesat",
+      "content": "pub fn sys_utimesat(dirfd: isize, path: *const u8, times: *const u8, flags: u32) -> SyscallRet {\n    trace!(\n        \"[sys_utimesat] called with dirfd={}, path=0x{:x}, times=0x{:x}, flags={:#x}\",\n        dirfd,\n        path as usize,\n        times as usize,\n        flags\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let path = translated_str(token, path);\n    debug!(\"[sys_utimesat] path string: {}\", path);\n    let abs_path = inner.get_abs_path(dirfd, &path)?;\n    debug!(\"[sys_utimesat] absolute path: {}\", abs_path);\n    drop(inner);\n    drop(task);\n    let now_time = (get_time_ms() / 1000) as u64;\n\n    let (mut atime, mut mtime);\n    if times as usize == 0 {\n        atime = Some(now_time);\n        mtime = Some(now_time);\n    } else {\n        let atime_spec = get_data(token, times as *const Timespec);\n        let mtime_spec = get_data(token, unsafe { (times as *const Timespec).add(1) });\n        match atime_spec.tv_nsec {\n            UTIME_OMIT => atime = None,\n            UTIME_NOW => atime = Some(now_time),\n            _ => atime = Some(atime_spec.tv_sec as u64),\n        }\n        match mtime_spec.tv_nsec {\n            UTIME_OMIT => mtime = None,\n            UTIME_NOW => mtime = Some(now_time),\n            _ => mtime = Some(mtime_spec.tv_sec as u64),\n        }\n    }\n\n    let osfile = open(&abs_path, OpenFlags::O_RDWR)?.file()?;\n    osfile.inode.set_timestamps(atime, mtime, None)?;\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_147",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_renameat2",
+      "content": "pub fn sys_renameat2(\n    olddirfd: isize,\n    oldpath: *const u8,\n    newdirfd: isize,\n    newpath: *const u8,\n    flags: u32,\n) -> SyscallRet {\n    trace!(\"sys_rename\");\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let oldpath = translated_str(token, oldpath);\n    let newpath = translated_str(token, newpath);\n    debug!(\"[sys_rename] oldpath:{},newpath:{}\", oldpath, newpath);\n    let old_abs_path = inner.get_abs_path(olddirfd, &oldpath).unwrap();\n    let new_abs_path = inner.get_abs_path(newdirfd, &newpath).unwrap();\n    drop(inner);\n    drop(task);\n    let osfile = open(&old_abs_path, OpenFlags::O_RDWR)?.file()?;\n    osfile.inode.rename(&old_abs_path, &new_abs_path)\n}"
+    },
+    {
+      "block_id": "block_148",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_copy_file_range",
+      "content": "pub fn sys_copy_file_range(\n    fd_in: usize,\n    off_in: *mut u8,\n    fd_out: usize,\n    off_out: *mut u8,\n    len: usize,\n    _flags: u32,\n) -> SyscallRet {\n    trace!(\n        \"[sys_copy_file_range] Enter: fd_in={}, off_in=0x{:x}, fd_out={}, off_out=0x{:x}, len={}, flags={}\",\n        fd_in, off_in as usize, fd_out, off_out as usize, len, _flags\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let mut inner = task.inner_exclusive_access();\n    if len == 0 {\n        return Ok(0); // 如果长度为0，直接返回0\n    }\n\n    if fd_in >= inner.fd_table.len() || fd_out >= inner.fd_table.len() {\n        return Err(SysErrNo::EBADF);\n    }\n\n    let file_in = inner.fd_table.get_file(fd_in).unwrap().file()?;\n    let file_out = inner.fd_table.get_file(fd_out).unwrap().file()?;\n    drop(inner);\n    drop(task);\n    let mut buf = vec![0u8; len];\n\n    if !file_in.readable() || !file_out.writable() {\n        return Err(SysErrNo::EBADF);\n    }\n\n    //输入缓冲池\n    let mut inbufv = Vec::new();\n    unsafe {\n        inbufv.push(core::slice::from_raw_parts_mut(\n            buf.as_mut_slice().as_mut_ptr(),\n            buf.as_slice().len(),\n        ));\n    }\n    let inbuffer = UserBuffer::new(inbufv);\n\n    let readcount;\n    if off_in as usize == 0 {\n        readcount = file_in.read(inbuffer);\n    } else {\n        let off_in_val = get_data(token, off_in as *const isize);\n        if off_in_val < 0 {\n            return Err(SysErrNo::EINVAL);\n        }\n        let cur_offset = file_in.lseek(0, SEEK_CUR)?;\n        file_in.lseek(off_in_val, SEEK_SET)?;\n        readcount = file_in.read(inbuffer);\n        file_in.lseek(cur_offset as isize, SEEK_SET)?;\n    }\n    info!(\"read completed, readcount={}\", readcount);\n    if readcount == 0 {\n        return Ok(0); // 如果没有读取到数据，直接返回0\n    }\n\n    //输出缓冲池\n    let mut outbufv = Vec::new();\n    unsafe {\n        outbufv.push(core::slice::from_raw_parts_mut(\n            buf.as_mut_slice().as_mut_ptr(),\n            readcount,\n        ));\n    }\n    let outbuffer = UserBuffer::new(outbufv);\n\n    let writecount;\n    if off_out as usize == 0 {\n        writecount = file_out.write(outbuffer);\n    } else {\n        let off_out_val = get_data(token, off_out as *const isize);\n        if off_out_val < 0 {\n            return Err(SysErrNo::EINVAL);\n        }\n        let cur_offset = file_out.lseek(0, SEEK_CUR)?;\n        file_out.lseek(off_out_val, SEEK_SET)?;\n        writecount = file_out.write(outbuffer);\n        file_out.lseek(cur_offset as isize, SEEK_SET)?;\n    }\n    if off_in as usize != 0 {\n        let new_offset = get_data(token, off_in as *mut isize) + readcount as isize;\n        put_data(token, off_in as *mut isize, new_offset);\n    }\n    if off_out as usize != 0 {\n        let new_offset = get_data(token, off_out as *mut isize) + writecount as isize;\n        put_data(token, off_out as *mut isize, new_offset);\n    }\n\n    Ok(writecount)\n}"
+    },
+    {
+      "block_id": "block_149",
+      "file_path": "os\\src\\syscall\\fs.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "sys_statx",
+      "content": "pub fn sys_statx(dirfd: isize, path_ptr: *const u8, flags: u32, kst: *mut u8) -> SyscallRet {\n    trace!(\n        \"[sys_statx] called with dirfd={}, path=0x{:x}, flags={:#x}, kst=0x{:x} (output pointer for Kstat)\",\n        dirfd,\n        path_ptr as usize,\n        flags,\n        kst as usize\n    );\n    let token = current_user_token();\n    let task = current_task().unwrap();\n    let inner = task.inner_exclusive_access();\n    let path = translated_str(token, path_ptr);\n    debug!(\"[sys_statx] path string: {}\", path);\n    let mut kst = UserBuffer::new(translated_byte_buffer(\n        &token,\n        kst,\n        core::mem::size_of::<Statx>(),\n    ));\n    let fileclass = if path_ptr as usize == 0 {\n        debug!(\"[sys_statx] path is empty, using dirfd as file descriptor\");\n        // 直接用 dirfd 对应的已打开文件\n        let filedesc = inner\n            .fd_table\n            .get_file(dirfd as usize)\n            .ok_or(SysErrNo::EBADF)?;\n        FileClass::Abs(filedesc.any())\n    } else {\n        let abs_path = inner.get_abs_path(dirfd, &path)?;\n        drop(inner);\n        drop(task);\n        debug!(\"[sys_statx] absolute path: {}\", &abs_path);\n        open(&abs_path, OpenFlags::O_RDONLY)?\n    };\n    let statx: Statx = fileclass.file()?.fstat().into();\n    kst.write(statx.as_bytes());\n    Ok(0)\n}"
+    },
+    {
+      "block_id": "block_150",
+      "file_path": "user\\src\\bin\\initproc.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "main",
+      "content": "fn main() -> i32 {\n    if fork() == 0 {\n        exec(\"bin/busybox\\0\", &[\"sh\\0\".as_ptr()]);\n    } else {\n        loop {\n            let mut exit_code: i32 = 0;\n            let pid = wait(&mut exit_code);\n            if pid == -1 {\n                yield_();\n                continue;\n            }\n            println!(\n                \"[initproc] Released a zombie process, pid={}, exit_code={}\",\n                pid, exit_code,\n            );\n        }\n    }\n    0\n}"
+    },
+    {
+      "block_id": "block_151",
+      "file_path": "vendor\\loongArch64\\src\\register\\mmu\\tlbrentry.rs",
+      "file_score": 30,
+      "type": "impl",
+      "name": "impl TlbREntry {",
+      "content": "impl TlbREntry {\n    /// Get the TLB refill entry."
+    },
+    {
+      "block_id": "block_152",
+      "file_path": "vendor\\loongArch64\\src\\register\\mmu\\tlbrentry.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "addr",
+      "content": "pub fn addr(&self) -> usize {\n        self.bits\n    }\n}\n/// Set the TLB refill entry.\n/// # Warning!\n/// The `val` must be page aligned."
+    },
+    {
+      "block_id": "block_153",
+      "file_path": "vendor\\loongArch64\\src\\register\\mmu\\tlbrentry.rs",
+      "file_score": 30,
+      "type": "function",
+      "name": "set_tlbrentry",
+      "content": "pub fn set_tlbrentry(addr: usize) {\n    assert_eq!(addr & 0xFFF, 0);\n    write_csr_loong!(0x88, addr);\n}"
+    },
+    {
+      "block_id": "block_154",
+      "file_path": "vendor\\aarch64-cpu\\src\\registers\\id_aa64mmfr0_el1.rs",
+      "file_score": 29,
+      "type": "struct",
+      "name": "Reg",
+      "content": "pub struct Reg;"
+    },
+    {
+      "block_id": "block_155",
+      "file_path": "vendor\\aarch64-cpu\\src\\registers\\id_aa64mmfr0_el1.rs",
+      "file_score": 29,
+      "type": "impl",
+      "name": "impl Readable for Reg {",
+      "content": "impl Readable for Reg {\n    type T = u64;\n    type R = ID_AA64MMFR0_EL1::Register;\n\n    sys_coproc_read_raw!(u64, \"ID_AA64MMFR0_EL1\", \"x\");\n}\n\npub const ID_AA64MMFR0_EL1: Reg = Reg {};"
+    },
+    {
+      "block_id": "block_156",
+      "file_path": "vendor\\aarch64-cpu\\src\\registers\\id_aa64mmfr1_el1.rs",
+      "file_score": 29,
+      "type": "struct",
+      "name": "Reg",
+      "content": "pub struct Reg;"
+    },
+    {
+      "block_id": "block_157",
+      "file_path": "vendor\\aarch64-cpu\\src\\registers\\id_aa64mmfr1_el1.rs",
+      "file_score": 29,
+      "type": "impl",
+      "name": "impl Readable for Reg {",
+      "content": "impl Readable for Reg {\n    type T = u64;\n    type R = ID_AA64MMFR1_EL1::Register;\n\n    sys_coproc_read_raw!(u64, \"ID_AA64MMFR1_EL1\", \"x\");\n}\n\npub const ID_AA64MMFR1_EL1: Reg = Reg;"
+    },
+    {
+      "block_id": "block_158",
+      "file_path": "vendor\\aarch64-cpu\\src\\registers\\id_aa64mmfr2_el1.rs",
+      "file_score": 29,
+      "type": "struct",
+      "name": "Reg",
+      "content": "pub struct Reg;"
+    },
+    {
+      "block_id": "block_159",
+      "file_path": "vendor\\aarch64-cpu\\src\\registers\\id_aa64mmfr2_el1.rs",
+      "file_score": 29,
+      "type": "impl",
+      "name": "impl Readable for Reg {",
+      "content": "impl Readable for Reg {\n    type T = u64;\n    type R = ID_AA64MMFR2_EL1::Register;\n\n    sys_coproc_read_raw!(u64, \"ID_AA64MMFR2_EL1\", \"x\");\n}\n\npub const ID_AA64MMFR2_EL1: Reg = Reg;"
+    },
+    {
+      "block_id": "block_160",
+      "file_path": "os\\src\\trap\\interrupts.rs",
+      "file_score": 28,
+      "type": "function",
+      "name": "inc_irq_count",
+      "content": "pub fn inc_irq_count(irq: usize) {\n    if irq < MAX_IRQ {\n        // warn!(\"Incrementing IRQ count for IRQ: {}\", irq);\n        let mut counts = IRQ_COUNTS.lock();\n        counts[irq] = counts[irq].saturating_add(1);\n    }\n}\n\n/// 获取所有中断计数的快照"
+    },
+    {
+      "block_id": "block_161",
+      "file_path": "os\\src\\trap\\interrupts.rs",
+      "file_score": 28,
+      "type": "function",
+      "name": "get_irq_counts",
+      "content": "pub fn get_irq_counts() -> [usize; MAX_IRQ] {\n    let counts = IRQ_COUNTS.lock();\n    *counts\n}"
+    },
+    {
+      "block_id": "block_162",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "function",
+      "name": "translated_byte_buffer",
+      "content": "pub fn translated_byte_buffer(\n    token: &PageTable,\n    ptr: *mut u8,\n    len: usize,\n) -> Vec<&'static mut [u8]> {\n    // trace!(\"translated_byte_buffer\");\n    let buffer = unsafe { core::slice::from_raw_parts_mut(ptr, len) };\n    vec![buffer]\n}"
+    },
+    {
+      "block_id": "block_163",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "function",
+      "name": "translated_str",
+      "content": "pub fn translated_str(token: PageTable, ptr: *const u8) -> String {\n    unsafe {\n        let len = str_len(ptr);\n        // println!(\"ptr:{:#x}\", ptr as usize);\n        from_utf8_unchecked(slice::from_raw_parts(ptr, len)).to_string()\n    }\n}\n\npub fn translated_ref<T>(token: PageTable, ptr: *const T) -> &'static T {\n    unsafe { ptr.as_ref().unwrap() }\n}\n\npub fn translated_refmut<T>(token: PageTable, ptr: *mut T) -> &'static mut T {\n    unsafe { ptr.as_mut().unwrap() }\n}\n\n/// 从用户虚拟地址直接读取数据\n/// 由于系统调用时使用用户页表，MMU会自动处理地址翻译和跨页访问\npub fn get_data<T: 'static + Copy>(token: PageTable, ptr: *const T) -> T {\n    unsafe { *ptr }\n}\n\n/// 向用户虚拟地址直接写入数据  \n/// 由于系统调用时使用用户页表，MMU会自动处理地址翻译和跨页访问\npub fn put_data<T: 'static>(token: PageTable, ptr: *mut T, data: T) {\n    unsafe {\n        *ptr = data;\n    }\n}\n///Array of u8 slice that user communicate with os"
+    },
+    {
+      "block_id": "block_164",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "struct",
+      "name": "UserBuffer",
+      "content": "pub struct UserBuffer {\n    ///U8 vec\n    pub buffers: Vec<&'static mut [u8]>,\n}"
+    },
+    {
+      "block_id": "block_165",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "impl",
+      "name": "impl UserBuffer {",
+      "content": "impl UserBuffer {\n    ///Create a `UserBuffer` by parameter"
+    },
+    {
+      "block_id": "block_166",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "function",
+      "name": "new",
+      "content": "pub fn new(buffers: Vec<&'static mut [u8]>) -> Self {\n        Self { buffers }\n    }\n    ///Length of `UserBuffer`"
+    },
+    {
+      "block_id": "block_167",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "function",
+      "name": "len",
+      "content": "pub fn len(&self) -> usize {\n        let mut total: usize = 0;\n        for b in self.buffers.iter() {\n            total += b.len();\n        }\n        total\n    }\n\n    /// 将一个缓冲区的数据写入用户缓冲区，返回实际写入的字节数。"
+    },
+    {
+      "block_id": "block_168",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "function",
+      "name": "write",
+      "content": "pub fn write(&mut self, buff: &[u8]) -> usize {\n        let len = self.len().min(buff.len()); // 确定要写入的总长度\n        let mut current = 0; // 当前已写入的字节数\n\n        // 遍历每个子缓冲区并填充数据\n        for sub_buff in self.buffers.iter_mut() {\n            let sblen = sub_buff.len(); // 当前子缓冲区的长度\n            for j in 0..sblen {\n                sub_buff[j] = buff[current]; // 将数据写入子缓冲区\n                current += 1; // 增加已写入计数\n\n                if current == len {\n                    // 如果已写入指定长度，提前返回\n                    return len;\n                }\n            }\n        }\n\n        len // 返回实际写入的总长度\n    }\n}"
+    },
+    {
+      "block_id": "block_169",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "impl",
+      "name": "impl IntoIterator for UserBuffer {",
+      "content": "impl IntoIterator for UserBuffer {\n    type Item = *mut u8;\n    type IntoIter = UserBufferIterator;"
+    },
+    {
+      "block_id": "block_170",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "function",
+      "name": "into_iter",
+      "content": "fn into_iter(self) -> Self::IntoIter {\n        UserBufferIterator {\n            buffers: self.buffers,\n            current_buffer: 0,\n            current_idx: 0,\n        }\n    }\n}\n/// Iterator of `UserBuffer`"
+    },
+    {
+      "block_id": "block_171",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "struct",
+      "name": "UserBufferIterator",
+      "content": "pub struct UserBufferIterator {\n    buffers: Vec<&'static mut [u8]>,\n    current_buffer: usize,\n    current_idx: usize,\n}"
+    },
+    {
+      "block_id": "block_172",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "impl",
+      "name": "impl Iterator for UserBufferIterator {",
+      "content": "impl Iterator for UserBufferIterator {\n    type Item = *mut u8;"
+    },
+    {
+      "block_id": "block_173",
+      "file_path": "os\\src\\mm\\page_table.rs",
+      "file_score": 27,
+      "type": "function",
+      "name": "next",
+      "content": "fn next(&mut self) -> Option<Self::Item> {\n        if self.current_buffer >= self.buffers.len() {\n            None\n        } else {\n            let r = &mut self.buffers[self.current_buffer][self.current_idx] as *mut _;\n            if self.current_idx + 1 == self.buffers[self.current_buffer].len() {\n                self.current_idx = 0;\n                self.current_buffer += 1;\n            } else {\n                self.current_idx += 1;\n            }\n            Some(r)\n        }\n    }\n}"
+    },
+    {
+      "block_id": "block_174",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "struct",
+      "name": "FrameTracker",
+      "content": "pub struct FrameTracker {\n    pub paddr: PhysAddr,\n}"
+    },
+    {
+      "block_id": "block_175",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "impl",
+      "name": "impl FrameTracker {",
+      "content": "impl FrameTracker {"
+    },
+    {
+      "block_id": "block_176",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "new",
+      "content": "pub fn new(paddr: PhysAddr) -> Self {\n        // page cleaning\n        paddr.clear_len(PAGE_SIZE);\n        Self { paddr }\n    }\n}"
+    },
+    {
+      "block_id": "block_177",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "impl",
+      "name": "impl Debug for FrameTracker {",
+      "content": "impl Debug for FrameTracker {"
+    },
+    {
+      "block_id": "block_178",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "fmt",
+      "content": "fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {\n        f.write_fmt(format_args!(\"FrameTracker:PA={:?}\", self.paddr))\n    }\n}"
+    },
+    {
+      "block_id": "block_179",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "impl",
+      "name": "impl Drop for FrameTracker {",
+      "content": "impl Drop for FrameTracker {"
+    },
+    {
+      "block_id": "block_180",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "drop",
+      "content": "fn drop(&mut self) {\n        // trace!(\"drop frame tracker: {:?}\", self.paddr);\n        frame_dealloc(self.paddr);\n    }\n}\n\npub static FRAME_ALLOCATOR: MutexNoIrq<FrameAllocator> = MutexNoIrq::new(FrameAllocator::new());"
+    },
+    {
+      "block_id": "block_181",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "add_frames_range",
+      "content": "pub fn add_frames_range(mm_start: usize, mm_end: usize) {\n    unsafe {\n        core::slice::from_raw_parts_mut(\n            pa!(mm_start).get_mut_ptr::<u128>(),\n            (mm_end - mm_start) / size_of::<u128>(),\n        )\n        .fill(0);\n    }\n    let start = (mm_start + 0xfff) / PAGE_SIZE;\n    FRAME_ALLOCATOR.lock().add_frame(start, mm_end / PAGE_SIZE);\n}"
+    },
+    {
+      "block_id": "block_182",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "frame_alloc",
+      "content": "pub fn frame_alloc() -> Option<Arc<FrameTracker>> {\n    let frame_num = FRAME_ALLOCATOR.lock().alloc(1)?;\n    let paddr = pa!(frame_num * PAGE_SIZE);\n\n    if paddr.raw() == 0 {\n        error!(\n            \"[frame_alloc] ERROR: Allocated frame number {} results in physical address 0x0!\",\n            frame_num\n        );\n        error!(\"[frame_alloc] This should not happen - frame 0 should be reserved!\");\n        return None;\n    }\n\n    // debug!(\n    //     \"[frame_alloc] Allocated frame {} -> paddr={:#x}\",\n    //     frame_num,\n    //     paddr.raw()\n    // );\n    let tracker = FrameTracker::new(paddr);\n    tracker.paddr.clear_len(PAGE_SIZE);\n    Some(Arc::new(tracker))\n}"
+    },
+    {
+      "block_id": "block_183",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "frames_alloc",
+      "content": "pub fn frames_alloc(count: usize) -> Option<Vec<Arc<FrameTracker>>> {\n    let start_frame_num = FRAME_ALLOCATOR.lock().alloc(count)?;\n    let start_paddr = pa!(start_frame_num * PAGE_SIZE);\n\n    if start_paddr.raw() == 0 {\n        // error!(\"[frames_alloc] ERROR: Allocated starting frame number {} results in physical address 0x0!\", start_frame_num);\n        // error!(\"[frames_alloc] This should not happen - frame 0 should be reserved!\");\n        return None;\n    }\n\n    // debug!(\n    //     \"[frames_alloc] Allocated {} frames starting from frame {} -> paddr={:#x}\",\n    //     count,\n    //     start_frame_num,\n    //     start_paddr.raw()\n    // );\n\n    let ret = (0..count)\n        .into_iter()\n        .map(|idx| {\n            let paddr = start_paddr + idx * PAGE_SIZE;\n            // debug!(\"[frames_alloc] Frame[{}]: paddr={:#x}\", idx, paddr.raw());\n            paddr\n        })\n        .map(FrameTracker::new)\n        .inspect(|x| x.paddr.clear_len(PAGE_SIZE))\n        .map(Arc::new)\n        .collect();\n    Some(ret)\n}"
+    },
+    {
+      "block_id": "block_184",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "frame_alloc_persist",
+      "content": "pub fn frame_alloc_persist() -> Option<PhysAddr> {\n    let frame_num = FRAME_ALLOCATOR.lock().alloc(1)?;\n    let paddr = pa!(frame_num * PAGE_SIZE);\n\n    if paddr.raw() == 0 {\n        error!(\"[frame_alloc_persist] ERROR: Allocated frame number {} results in physical address 0x0!\", frame_num);\n        error!(\"[frame_alloc_persist] This should not happen - frame 0 should be reserved!\");\n        return None;\n    }\n\n    // debug!(\n    //     \"[frame_alloc_persist] Allocated frame {} -> paddr={:#x}\",\n    //     frame_num,\n    //     paddr.raw()\n    // );\n    paddr.clear_len(PAGE_SIZE);\n    Some(paddr)\n}"
+    },
+    {
+      "block_id": "block_185",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "frame_dealloc",
+      "content": "pub fn frame_dealloc(paddr: PhysAddr) {\n    FRAME_ALLOCATOR.lock().dealloc(paddr.raw() / PAGE_SIZE, 1);\n}\n\n#[allow(unused)]\n/// a simple test for frame allocator"
+    },
+    {
+      "block_id": "block_186",
+      "file_path": "os\\src\\mm\\frame_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "frame_allocator_test",
+      "content": "pub fn frame_allocator_test() {\n    let mut v: Vec<Arc<FrameTracker>> = Vec::new();\n    for i in 0..5 {\n        let frame = frame_alloc().unwrap();\n        debug!(\"[frame_allocator_test] Allocated frame: {:?}\", frame);\n        v.push(frame);\n    }\n    v.clear();\n    for i in 0..5 {\n        let frame = frame_alloc().unwrap();\n        debug!(\"[frame_allocator_test] Re-allocated frame: {:?}\", frame);\n        v.push(frame);\n    }\n    drop(v);\n    info!(\"[frame_allocator_test] Frame allocator test passed!\");\n}"
+    },
+    {
+      "block_id": "block_187",
+      "file_path": "os\\src\\mm\\heap_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "handle_alloc_error",
+      "content": "pub fn handle_alloc_error(layout: core::alloc::Layout) -> ! {\n    panic!(\"Heap allocation error, layout = {:#x?}\", layout);\n}\n\nstatic mut HEAP_SPACE: [u8; KERNEL_HEAP_SIZE] = [0; KERNEL_HEAP_SIZE];"
+    },
+    {
+      "block_id": "block_188",
+      "file_path": "os\\src\\mm\\heap_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "init_heap",
+      "content": "pub fn init_heap() {\n    unsafe {\n        HEAP_ALLOCATOR\n            .lock()\n            .init(HEAP_SPACE.as_ptr() as usize, KERNEL_HEAP_SIZE);\n    }\n}\n\n#[allow(unused)]"
+    },
+    {
+      "block_id": "block_189",
+      "file_path": "os\\src\\mm\\heap_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "heap_test",
+      "content": "pub fn heap_test() {\n    use alloc::boxed::Box;\n    use alloc::vec::Vec;\n    extern \"C\" {"
+    },
+    {
+      "block_id": "block_190",
+      "file_path": "os\\src\\mm\\heap_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "sbss",
+      "content": "fn sbss();"
+    },
+    {
+      "block_id": "block_191",
+      "file_path": "os\\src\\mm\\heap_allocator.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "ebss",
+      "content": "fn ebss();\n    }\n    let bss_range = sbss as usize..ebss as usize;\n    let a = Box::new(5);\n    assert_eq!(*a, 5);\n    assert!(bss_range.contains(&(a.as_ref() as *const _ as usize)));\n    drop(a);\n    let mut v: Vec<usize> = Vec::new();\n    for i in 0..500 {\n        v.push(i);\n    }\n    for (i, val) in v.iter().take(500).enumerate() {\n        assert_eq!(*val, i);\n    }\n    assert!(bss_range.contains(&(v.as_ptr() as usize)));\n    drop(v);\n    info!(\"[heap_test] Heap allocator test passed!\");\n}"
+    },
+    {
+      "block_id": "block_192",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "struct",
+      "name": "OffsetPageTable<'a>",
+      "content": "pub struct OffsetPageTable<'a> {\n    inner: MappedPageTable<'a, PhysOffset>,\n}\n\nimpl<'a> OffsetPageTable<'a> {\n    /// Creates a new `OffsetPageTable` that uses the given offset for converting virtual\n    /// to physical addresses.\n    ///\n    /// The complete physical memory must be mapped in the virtual address space starting at\n    /// address `phys_offset`. This means that for example physical address `0x5000` can be\n    /// accessed through virtual address `phys_offset + 0x5000`. This mapping is required because\n    /// the mapper needs to access page tables, which are not mapped into the virtual address\n    /// space by default.\n    ///\n    /// ## Safety\n    ///\n    /// This function is unsafe because the caller must guarantee that the passed `phys_offset`\n    /// is correct. Also, the passed `level_4_table` must point to the level 4 page table\n    /// of a valid page table hierarchy. Otherwise this function might break memory safety, e.g.\n    /// by writing to an illegal memory location.\n    #[inline]\n    pub unsafe fn new(level_4_table: &'a mut PageTable, phys_offset: VirtAddr) -> Self {\n        let phys_offset = PhysOffset {\n            offset: phys_offset,\n        };\n        Self {\n            inner: unsafe { MappedPageTable::new(level_4_table, phys_offset) },\n        }\n    }\n\n    /// Returns an immutable reference to the wrapped level 4 `PageTable` instance."
+    },
+    {
+      "block_id": "block_193",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "level_4_table",
+      "content": "pub fn level_4_table(&self) -> &PageTable {\n        self.inner.level_4_table()\n    }\n\n    /// Returns a mutable reference to the wrapped level 4 `PageTable` instance."
+    },
+    {
+      "block_id": "block_194",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "level_4_table_mut",
+      "content": "pub fn level_4_table_mut(&mut self) -> &mut PageTable {\n        self.inner.level_4_table_mut()\n    }\n\n    /// Returns the offset used for converting virtual to physical addresses."
+    },
+    {
+      "block_id": "block_195",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "phys_offset",
+      "content": "pub fn phys_offset(&self) -> VirtAddr {\n        self.inner.page_table_frame_mapping().offset\n    }\n}\n\n#[derive(Debug)]"
+    },
+    {
+      "block_id": "block_196",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "struct",
+      "name": "PhysOffset",
+      "content": "struct PhysOffset {\n    offset: VirtAddr,\n}\n\nunsafe impl PageTableFrameMapping for PhysOffset {"
+    },
+    {
+      "block_id": "block_197",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "frame_to_pointer",
+      "content": "fn frame_to_pointer(&self, frame: PhysFrame) -> *mut PageTable {\n        let virt = self.offset + frame.start_address().as_u64();\n        virt.as_mut_ptr()\n    }\n}\n\n// delegate all trait implementations to inner"
+    },
+    {
+      "block_id": "block_198",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "impl",
+      "name": "impl Mapper<Size1GiB> for OffsetPageTable<'_> {",
+      "content": "impl Mapper<Size1GiB> for OffsetPageTable<'_> {\n    #[inline]\n    unsafe fn map_to_with_table_flags<A>(\n        &mut self,\n        page: Page<Size1GiB>,\n        frame: PhysFrame<Size1GiB>,\n        flags: PageTableFlags,\n        parent_table_flags: PageTableFlags,\n        allocator: &mut A,\n    ) -> Result<MapperFlush<Size1GiB>, MapToError<Size1GiB>>\n    where\n        A: FrameAllocator<Size4KiB> + ?Sized,\n    {\n        unsafe {\n            self.inner\n                .map_to_with_table_flags(page, frame, flags, parent_table_flags, allocator)\n        }\n    }\n\n    #[inline]"
+    },
+    {
+      "block_id": "block_199",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "unmap",
+      "content": "fn unmap(\n        &mut self,\n        page: Page<Size1GiB>,\n    ) -> Result<(PhysFrame<Size1GiB>, MapperFlush<Size1GiB>), UnmapError> {\n        self.inner.unmap(page)\n    }\n\n    #[inline]\n    unsafe fn update_flags(\n        &mut self,\n        page: Page<Size1GiB>,\n        flags: PageTableFlags,\n    ) -> Result<MapperFlush<Size1GiB>, FlagUpdateError> {\n        unsafe { self.inner.update_flags(page, flags) }\n    }\n\n    #[inline]\n    unsafe fn set_flags_p4_entry(\n        &mut self,\n        page: Page<Size1GiB>,\n        flags: PageTableFlags,\n    ) -> Result<MapperFlushAll, FlagUpdateError> {\n        unsafe { self.inner.set_flags_p4_entry(page, flags) }\n    }\n\n    #[inline]\n    unsafe fn set_flags_p3_entry(\n        &mut self,\n        page: Page<Size1GiB>,\n        flags: PageTableFlags,\n    ) -> Result<MapperFlushAll, FlagUpdateError> {\n        unsafe { self.inner.set_flags_p3_entry(page, flags) }\n    }\n\n    #[inline]\n    unsafe fn set_flags_p2_entry(\n        &mut self,\n        page: Page<Size1GiB>,\n        flags: PageTableFlags,\n    ) -> Result<MapperFlushAll, FlagUpdateError> {\n        unsafe { self.inner.set_flags_p2_entry(page, flags) }\n    }\n\n    #[inline]"
+    },
+    {
+      "block_id": "block_200",
+      "file_path": "vendor\\x86_64\\src\\structures\\paging\\mapper\\offset_page_table.rs",
+      "file_score": 26,
+      "type": "function",
+      "name": "translate_page",
+      "content": "fn translate_page(&self, page: Page<Size1GiB>) -> Result<PhysFrame<Size1GiB>, TranslateError> {\n        self.inner.translate_page(page)\n    }\n}"
+    }
+  ]
+}

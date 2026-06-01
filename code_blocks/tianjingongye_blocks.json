@@ -1,0 +1,1184 @@
+{
+  "repo_name": "tianjingongye",
+  "repo_path": "D:\\os\\history\\tianjingongye",
+  "created_at": "2026-05-31 17:47:39",
+  "block_count": 147,
+  "blocks": [
+    {
+      "block_id": "block_1",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "struct",
+      "name": "ProcInterruptsFile",
+      "content": "pub struct ProcInterruptsFile;"
+    },
+    {
+      "block_id": "block_2",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "impl",
+      "name": "impl ProcInterruptsFile {",
+      "content": "impl ProcInterruptsFile {"
+    },
+    {
+      "block_id": "block_3",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "new",
+      "content": "pub fn new() -> Self {\n        Self\n    }"
+    },
+    {
+      "block_id": "block_4",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "get_current_content",
+      "content": "fn get_current_content(&self) -> Vec<u8> {\n        let stats = axhal::irq_stats::get_all_irq_stats();\n        let mut result = Vec::new();\n\n        for (irq_num, count) in stats {\n            let line = format!(\"{}: {}\\n\", irq_num, count);\n            result.extend_from_slice(line.as_bytes());\n        }\n\n        result\n    }\n}"
+    },
+    {
+      "block_id": "block_5",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "impl",
+      "name": "impl VfsNodeOps for ProcInterruptsFile {",
+      "content": "impl VfsNodeOps for ProcInterruptsFile {"
+    },
+    {
+      "block_id": "block_6",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "get_attr",
+      "content": "fn get_attr(&self) -> VfsResult<VfsNodeAttr> {\n        let perm = axfs_vfs::VfsNodePerm::from_bits_truncate(0o444);\n        let content = self.get_current_content();\n        Ok(VfsNodeAttr::new(\n            perm,\n            axfs_vfs::VfsNodeType::File,\n            content.len() as u64,\n            0,\n        ))\n    }"
+    },
+    {
+      "block_id": "block_7",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "read_at",
+      "content": "fn read_at(&self, offset: u64, buf: &mut [u8]) -> VfsResult<usize> {\n        let content = self.get_current_content();\n        let start = content.len().min(offset as usize);\n        let end = content.len().min(offset as usize + buf.len());\n        let src = &content[start..end];\n        buf[..src.len()].copy_from_slice(src);\n        Ok(src.len())\n    }"
+    },
+    {
+      "block_id": "block_8",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "write_at",
+      "content": "fn write_at(&self, _offset: u64, _buf: &[u8]) -> VfsResult<usize> {\n        Err(AxError::PermissionDenied)\n    }"
+    },
+    {
+      "block_id": "block_9",
+      "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "truncate",
+      "content": "fn truncate(&self, _size: u64) -> VfsResult {\n        Err(AxError::PermissionDenied)\n    }\n\n    impl_vfs_non_dir_default! {}\n}"
+    },
+    {
+      "block_id": "block_10",
+      "file_path": "arceos\\ulib\\axstd\\src\\process.rs",
+      "file_score": 39,
+      "type": "function",
+      "name": "exit",
+      "content": "pub fn exit(_exit_code: i32) -> ! {\n    arceos_api::sys::ax_terminate();\n}"
+    },
+    {
+      "block_id": "block_11",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl TrapSource {",
+      "content": "impl TrapSource {"
+    },
+    {
+      "block_id": "block_12",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "is_from_user",
+      "content": "fn is_from_user(&self) -> bool {\n        matches!(self, TrapSource::LowerAArch64 | TrapSource::LowerAArch32)\n    }\n}\n\n#[unsafe(no_mangle)]"
+    },
+    {
+      "block_id": "block_13",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "invalid_exception",
+      "content": "fn invalid_exception(tf: &TrapFrame, kind: TrapKind, source: TrapSource) {\n    panic!(\n        \"Invalid exception {:?} from {:?}:\\n{:#x?}\",\n        kind, source, tf\n    );\n}\n\n#[unsafe(no_mangle)]"
+    },
+    {
+      "block_id": "block_14",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_irq_exception",
+      "content": "fn handle_irq_exception(tf: &mut TrapFrame, source: TrapSource) {\n    handle_trap!(IRQ, 0);\n    crate::trap::post_trap_callback(tf, source.is_from_user());\n}"
+    },
+    {
+      "block_id": "block_15",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_instruction_abort",
+      "content": "fn handle_instruction_abort(tf: &TrapFrame, iss: u64, is_user: bool) {\n    let mut access_flags = MappingFlags::EXECUTE;\n    if is_user {\n        access_flags |= MappingFlags::USER;\n    }\n    let vaddr = va!(FAR_EL1.get() as usize);\n\n    // Only handle Translation fault and Permission fault\n    if !matches!(iss & 0b111100, 0b0100 | 0b1100) // IFSC or DFSC bits\n        || !handle_trap!(PAGE_FAULT, vaddr, access_flags, is_user)\n    {\n        panic!(\n            \"Unhandled {} Instruction Abort @ {:#x}, fault_vaddr={:#x}, ISS={:#x} ({:?}):\\n{:#x?}\",\n            if is_user { \"EL0\" } else { \"EL1\" },\n            tf.elr,\n            vaddr,\n            iss,\n            access_flags,\n            tf,\n        );\n    }\n}"
+    },
+    {
+      "block_id": "block_16",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_data_abort",
+      "content": "fn handle_data_abort(tf: &TrapFrame, iss: u64, is_user: bool) {\n    let wnr = (iss & (1 << 6)) != 0; // WnR: Write not Read\n    let cm = (iss & (1 << 8)) != 0; // CM: Cache maintenance\n    let mut access_flags = if wnr & !cm {\n        MappingFlags::WRITE\n    } else {\n        MappingFlags::READ\n    };\n    if is_user {\n        access_flags |= MappingFlags::USER;\n    }\n    let vaddr = va!(FAR_EL1.get() as usize);\n\n    // Only handle Translation fault and Permission fault\n    if !matches!(iss & 0b111100, 0b0100 | 0b1100) // IFSC or DFSC bits\n        || !handle_trap!(PAGE_FAULT, vaddr, access_flags, is_user)\n    {\n        panic!(\n            \"Unhandled {} Data Abort @ {:#x}, fault_vaddr={:#x}, ISS=0b{:08b} ({:?}):\\n{:#x?}\",\n            if is_user { \"EL0\" } else { \"EL1\" },\n            tf.elr,\n            vaddr,\n            iss,\n            access_flags,\n            tf,\n        );\n    }\n}\n\n#[unsafe(no_mangle)]"
+    },
+    {
+      "block_id": "block_17",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_sync_exception",
+      "content": "fn handle_sync_exception(tf: &mut TrapFrame, source: TrapSource) {\n    let esr = ESR_EL1.extract();\n    let iss = esr.read(ESR_EL1::ISS);\n\n    unmask_irqs(tf);\n\n    match esr.read_as_enum(ESR_EL1::EC) {\n        #[cfg(feature = \"uspace\")]\n        Some(ESR_EL1::EC::Value::SVC64) => {\n            tf.r[0] = crate::trap::handle_syscall(tf, tf.r[8] as usize) as u64;\n        }\n        Some(ESR_EL1::EC::Value::InstrAbortLowerEL) => handle_instruction_abort(tf, iss, true),\n        Some(ESR_EL1::EC::Value::InstrAbortCurrentEL) => handle_instruction_abort(tf, iss, false),\n        Some(ESR_EL1::EC::Value::DataAbortLowerEL) => handle_data_abort(tf, iss, true),\n        Some(ESR_EL1::EC::Value::DataAbortCurrentEL) => handle_data_abort(tf, iss, false),\n        Some(ESR_EL1::EC::Value::Brk64) => {\n            debug!(\"BRK #{:#x} @ {:#x} \", iss, tf.elr);\n            tf.elr += 4;\n        }\n        _ => {\n            panic!(\n                \"Unhandled synchronous exception @ {:#x}: ESR={:#x} (EC {:#08b}, ISS {:#x})\",\n                tf.elr,\n                esr.get(),\n                esr.read(ESR_EL1::EC),\n                esr.read(ESR_EL1::ISS),\n            );\n        }\n    }\n    crate::trap::post_trap_callback(tf, source.is_from_user());\n    mask_irqs();\n}\n\n// Interrupt unmasking function for exception handling.\n// NOTE: It must be invoked after the switch to kernel mode has finished\n//\n// If interrupts were enabled before the exception (`I` bit in `SPSR` is unmask),\n// re-enable interrupts before handling the exception.\n//\n// On aarch64, when an exception occurs, the `CPSR` register value is stored in\n// `SPSR_EL1`, where the `I` bit records whether the interrupt is enabled or not.\n// `I::unmask` enable_irqs"
+    },
+    {
+      "block_id": "block_18",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "unmask_irqs",
+      "content": "fn unmask_irqs(tf: &TrapFrame) {\n    const I_MASK: u64 = 1 << 7;\n    if tf.spsr & I_MASK != I_MASK {\n        super::enable_irqs();\n    } else {\n        debug!(\"Interrupts were disabled before exception\");\n    }\n}"
+    },
+    {
+      "block_id": "block_19",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "mask_irqs",
+      "content": "fn mask_irqs() {\n    super::disable_irqs();\n}"
+    },
+    {
+      "block_id": "block_20",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_breakpoint",
+      "content": "fn handle_breakpoint(era: &mut usize) {\n    debug!(\"Exception(Breakpoint) @ {:#x} \", era);\n    *era += 4;\n}"
+    },
+    {
+      "block_id": "block_21",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_page_fault",
+      "content": "fn handle_page_fault(tf: &TrapFrame, mut access_flags: MappingFlags, is_user: bool) {\n    if is_user {\n        access_flags |= MappingFlags::USER;\n    }\n    let vaddr = va!(badv::read().raw());\n    if !handle_trap!(PAGE_FAULT, vaddr, access_flags, is_user) {\n        panic!(\n            \"Unhandled {} Page Fault @ {:#x}, fault_vaddr={:#x} ({:?}):\\n{:#x?}\",\n            if is_user { \"PLV3\" } else { \"PLV0\" },\n            tf.era,\n            vaddr,\n            access_flags,\n            tf,\n        );\n    }\n}\n\n#[unsafe(no_mangle)]"
+    },
+    {
+      "block_id": "block_22",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "loongarch64_trap_handler",
+      "content": "fn loongarch64_trap_handler(tf: &mut TrapFrame, from_user: bool) {\n    let estat = estat::read();\n    let trap = estat.cause();\n\n    if matches!(trap, Trap::Exception(_)) {\n        unmask_irqs(tf);\n    }\n\n    match trap {\n        #[cfg(feature = \"uspace\")]\n        Trap::Exception(Exception::Syscall) => {\n            tf.era += 4;\n            tf.regs.a0 = crate::trap::handle_syscall(tf, tf.regs.a7) as usize;\n        }\n        Trap::Exception(Exception::LoadPageFault)\n        | Trap::Exception(Exception::PageNonReadableFault) => {\n            handle_page_fault(tf, MappingFlags::READ, from_user)\n        }\n        Trap::Exception(Exception::StorePageFault)\n        | Trap::Exception(Exception::PageModifyFault) => {\n            handle_page_fault(tf, MappingFlags::WRITE, from_user)\n        }\n        Trap::Exception(Exception::FetchPageFault)\n        | Trap::Exception(Exception::PageNonExecutableFault) => {\n            handle_page_fault(tf, MappingFlags::EXECUTE, from_user);\n        }\n        Trap::Exception(Exception::Breakpoint) => handle_breakpoint(&mut tf.era),\n        Trap::Interrupt(_) => {\n            let irq_num: usize = estat.is().trailing_zeros() as usize;\n            handle_trap!(IRQ, irq_num);\n        }\n        _ => {\n            panic!(\n                \"Unhandled trap {:?} @ {:#x}:\\n{:#x?}\",\n                estat.cause(),\n                tf.era,\n                tf\n            );\n        }\n    }\n    crate::trap::post_trap_callback(tf, from_user);\n    mask_irqs();\n}\n\n// Interrupt unmasking function for exception handling.\n// NOTE: It must be invoked after the switch to kernel mode has finished\n//\n// If interrupts were enabled before the exception (`PIE` bit in `PRMD` is set),\n// re-enable interrupts before handling the exception.\n//\n// On loongarch64, when an exception is triggered, records the old value of\n// `IE` domain in `CSR.CRMD` in `PIE` domain in `PRMD`. When the `ERTN`\n// instruction is executed to return from the exception handler, the hardware\n// restores the value of the `PIE` domain to the `IE` domain of `CSR.CRMD`."
+    },
+    {
+      "block_id": "block_23",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "unmask_irqs",
+      "content": "fn unmask_irqs(tf: &TrapFrame) {\n    const PIE: usize = 1 << 2;\n    if tf.prmd & PIE == PIE {\n        super::enable_irqs();\n    } else {\n        debug!(\"Interrupts were disabled before exception\");\n    }\n}"
+    },
+    {
+      "block_id": "block_24",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "mask_irqs",
+      "content": "fn mask_irqs() {\n    super::disable_irqs();\n}"
+    },
+    {
+      "block_id": "block_25",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_breakpoint",
+      "content": "fn handle_breakpoint(sepc: &mut usize) {\n    debug!(\"Exception(Breakpoint) @ {:#x} \", sepc);\n    *sepc += 2\n}"
+    },
+    {
+      "block_id": "block_26",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_page_fault",
+      "content": "fn handle_page_fault(\n    tf: &TrapFrame,\n    vaddr: VirtAddr,\n    mut access_flags: MappingFlags,\n    is_user: bool,\n) {\n    if is_user {\n        access_flags |= MappingFlags::USER;\n    }\n    if !handle_trap!(PAGE_FAULT, vaddr, access_flags, is_user) {\n        panic!(\n            \"Unhandled {} Page Fault @ {:#x}, fault_vaddr={:#x} ({:?}):\\n{:#x?}\",\n            if is_user { \"User\" } else { \"Supervisor\" },\n            tf.sepc,\n            vaddr,\n            access_flags,\n            tf,\n        );\n    }\n}\n\n#[unsafe(no_mangle)]"
+    },
+    {
+      "block_id": "block_27",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "riscv_trap_handler",
+      "content": "fn riscv_trap_handler(tf: &mut TrapFrame, from_user: bool) {\n    let scause = scause::read();\n    if let Ok(cause) = scause.cause().try_into::<I, E>() {\n        // Interrupts modify the value of `stval`, which must be saved before the\n        // interrupt is enabled\n        let vaddr = va!(stval::read());\n        if scause.is_exception() {\n            unmask_irqs(tf);\n        }\n        match cause {\n            #[cfg(feature = \"uspace\")]\n            Trap::Exception(E::UserEnvCall) => {\n                tf.sepc += 4;\n                tf.regs.a0 = crate::trap::handle_syscall(tf, tf.regs.a7) as usize;\n            }\n            Trap::Exception(E::LoadPageFault) => {\n                handle_page_fault(tf, vaddr, MappingFlags::READ, from_user)\n            }\n            Trap::Exception(E::StorePageFault) => {\n                handle_page_fault(tf, vaddr, MappingFlags::WRITE, from_user)\n            }\n            Trap::Exception(E::InstructionPageFault) => {\n                handle_page_fault(tf, vaddr, MappingFlags::EXECUTE, from_user)\n            }\n            Trap::Exception(E::Breakpoint) => handle_breakpoint(&mut tf.sepc),\n            Trap::Interrupt(_) => {\n                handle_trap!(IRQ, scause.bits());\n            }\n            _ => {\n                panic!(\"Unhandled trap {:?} @ {:#x}:\\n{:#x?}\", cause, tf.sepc, tf);\n            }\n        }\n        crate::trap::post_trap_callback(tf, from_user);\n        mask_irqs();\n    } else {\n        panic!(\n            \"Unknown trap {:?} @ {:#x}:\\n{:#x?}\",\n            scause.cause(),\n            tf.sepc,\n            tf\n        );\n    }\n}\n\n// Interrupt unmasking function for exception handling.\n// NOTE: It must be invoked after the switch to kernel mode has finished\n//\n// If interrupts were enabled before the exception (the `SPIE` bit in the\n// `sstatus` register is set), re-enable interrupts before exception handling\n//\n// On riscv64, when an exception occurs, `sstatus.SIE` is set to zero to mask\n// the interrupt and the old value of `SIE` is stored in SPIE. Recover `SIE`\n// according to `SPIE` when using `sret`."
+    },
+    {
+      "block_id": "block_28",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "unmask_irqs",
+      "content": "fn unmask_irqs(tf: &TrapFrame) {\n    const PIE: usize = 1 << 5;\n    if tf.sstatus & PIE == PIE {\n        super::enable_irqs();\n    } else {\n        debug!(\"Interrupts were disabled before exception\");\n    }\n}"
+    },
+    {
+      "block_id": "block_29",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "mask_irqs",
+      "content": "fn mask_irqs() {\n    super::disable_irqs();\n}"
+    },
+    {
+      "block_id": "block_30",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\x86_64\\syscall.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "x86_syscall_handler",
+      "content": "fn x86_syscall_handler(tf: &mut TrapFrame) {\n    super::tls::switch_to_kernel_fs_base(tf);\n    #[cfg(target_os = \"none\")]\n    super::trap::unmask_irqs(tf);\n    handle_syscall(tf);\n    crate::trap::post_trap_callback(tf, true);\n    super::tls::switch_to_user_fs_base(tf);\n    #[cfg(target_os = \"none\")]\n    super::trap::mask_irqs();\n}\n\n/// Initializes syscall support and setups the syscall handler."
+    },
+    {
+      "block_id": "block_31",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\x86_64\\syscall.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "init_syscall",
+      "content": "pub fn init_syscall() {\n    unsafe extern \"C\" {"
+    },
+    {
+      "block_id": "block_32",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\x86_64\\syscall.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "syscall_entry",
+      "content": "fn syscall_entry();\n    }\n    unsafe {\n        LStar::write(VirtAddr::new(syscall_entry as usize as _));\n        Star::write(\n            GdtStruct::UCODE64_SELECTOR,\n            GdtStruct::UDATA_SELECTOR,\n            GdtStruct::KCODE64_SELECTOR,\n            GdtStruct::KDATA_SELECTOR,\n        )\n        .unwrap();\n        SFMask::write(\n            RFlags::TRAP_FLAG\n                | RFlags::INTERRUPT_FLAG\n                | RFlags::DIRECTION_FLAG\n                | RFlags::IOPL_LOW\n                | RFlags::IOPL_HIGH\n                | RFlags::NESTED_TASK\n                | RFlags::ALIGNMENT_CHECK,\n        ); // TF | IF | DF | IOPL | AC | NT (0x47700)\n        Efer::update(|efer| *efer |= EferFlags::SYSTEM_CALL_EXTENSIONS);\n        KernelGsBase::write(VirtAddr::new(0));\n    }\n}"
+    },
+    {
+      "block_id": "block_33",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\x86_64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "handle_page_fault",
+      "content": "fn handle_page_fault(tf: &TrapFrame) {\n    let access_flags = err_code_to_flags(tf.error_code)\n        .unwrap_or_else(|e| panic!(\"Invalid #PF error code: {:#x}\", e));\n    let vaddr = va!(unsafe { cr2() });\n    if !handle_trap!(PAGE_FAULT, vaddr, access_flags, tf.is_user()) {\n        panic!(\n            \"Unhandled {} #PF @ {:#x}, fault_vaddr={:#x}, error_code={:#x} ({:?}):\\n{:#x?}\",\n            if tf.is_user() { \"user\" } else { \"kernel\" },\n            tf.rip,\n            vaddr,\n            tf.error_code,\n            access_flags,\n            tf,\n        );\n    }\n}\n\n#[unsafe(no_mangle)]"
+    },
+    {
+      "block_id": "block_34",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\x86_64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "x86_trap_handler",
+      "content": "fn x86_trap_handler(tf: &mut TrapFrame) {\n    #[cfg(feature = \"uspace\")]\n    super::tls::switch_to_kernel_fs_base(tf);\n    if !matches!(tf.vector as u8, IRQ_VECTOR_START..=IRQ_VECTOR_END) {\n        unmask_irqs(tf);\n    }\n    match tf.vector as u8 {\n        PAGE_FAULT_VECTOR => handle_page_fault(tf),\n        BREAKPOINT_VECTOR => debug!(\"#BP @ {:#x} \", tf.rip),\n        GENERAL_PROTECTION_FAULT_VECTOR => {\n            panic!(\n                \"#GP @ {:#x}, error_code={:#x}:\\n{:#x?}\",\n                tf.rip, tf.error_code, tf\n            );\n        }\n        #[cfg(feature = \"uspace\")]\n        LEGACY_SYSCALL_VECTOR => super::syscall::handle_syscall(tf),\n        IRQ_VECTOR_START..=IRQ_VECTOR_END => {\n            handle_trap!(IRQ, tf.vector as _);\n        }\n        _ => {\n            panic!(\n                \"Unhandled exception {} ({}, error_code={:#x}) @ {:#x}:\\n{:#x?}\",\n                tf.vector,\n                vec_to_str(tf.vector),\n                tf.error_code,\n                tf.rip,\n                tf\n            );\n        }\n    }\n    crate::trap::post_trap_callback(tf, tf.is_user());\n    #[cfg(feature = \"uspace\")]\n    super::tls::switch_to_user_fs_base(tf);\n    mask_irqs();\n}"
+    },
+    {
+      "block_id": "block_35",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\x86_64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "vec_to_str",
+      "content": "fn vec_to_str(vec: u64) -> &'static str {\n    if vec < 32 {\n        EXCEPTIONS[vec as usize].mnemonic\n    } else {\n        \"Unknown\"\n    }\n}"
+    },
+    {
+      "block_id": "block_36",
+      "file_path": "arceos\\modules\\axhal\\src\\arch\\x86_64\\trap.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "err_code_to_flags",
+      "content": "fn err_code_to_flags(err_code: u64) -> Result<MappingFlags, u64> {\n    let code = PageFaultErrorCode::from_bits_truncate(err_code);\n    let reserved_bits = (PageFaultErrorCode::CAUSED_BY_WRITE\n        | PageFaultErrorCode::USER_MODE\n        | PageFaultErrorCode::INSTRUCTION_FETCH)\n        .complement();\n    if code.intersects(reserved_bits) {\n        Err(err_code)\n    } else {\n        let mut flags = MappingFlags::empty();\n        if code.contains(PageFaultErrorCode::CAUSED_BY_WRITE) {\n            flags |= MappingFlags::WRITE;\n        } else {\n            flags |= MappingFlags::READ;\n        }\n        if code.contains(PageFaultErrorCode::USER_MODE) {\n            flags |= MappingFlags::USER;\n        }\n        if code.contains(PageFaultErrorCode::INSTRUCTION_FETCH) {\n            flags |= MappingFlags::EXECUTE;\n        }\n        Ok(flags)\n    }\n}\n\n// Interrupt unmasking function for exception handling.\n// NOTE: It must be invoked after the switch to kernel mode has finished\n//\n// If interrupts were enabled before the exception (`IF` bit in `RFlags`\n// is set), re-enable interrupts before handling the exception.\npub(super) fn unmask_irqs(tf: &TrapFrame) {\n    use x86_64::registers::rflags::RFlags;\n    const IF: u64 = RFlags::INTERRUPT_FLAG.bits();\n    if tf.rflags & IF == IF {\n        super::enable_irqs();\n    } else {\n        debug!(\"Interrupts were disabled before exception\");\n    }\n}\n\npub(super) fn mask_irqs() {\n    super::disable_irqs();\n}"
+    },
+    {
+      "block_id": "block_37",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Default for ThreadGroup {",
+      "content": "impl Default for ThreadGroup {"
+    },
+    {
+      "block_id": "block_38",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "default",
+      "content": "fn default() -> Self {\n        Self {\n            threads: WeakMap::new(),\n            exit_code: 0,\n            group_exited: false,\n        }\n    }\n}\n\n/// A process."
+    },
+    {
+      "block_id": "block_39",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "struct",
+      "name": "Process",
+      "content": "pub struct Process {\n    pid: Pid,\n    is_zombie: AtomicBool,\n    pub(crate) tg: SpinNoIrq<ThreadGroup>,\n\n    data: Box<dyn Any + Send + Sync>,\n\n    // TODO: child subreaper\n    children: SpinNoIrq<StrongMap<Pid, Arc<Process>>>,\n    parent: SpinNoIrq<Weak<Process>>,\n\n    group: SpinNoIrq<Arc<ProcessGroup>>,\n}"
+    },
+    {
+      "block_id": "block_40",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Process {",
+      "content": "impl Process {\n    /// The [`Process`] ID."
+    },
+    {
+      "block_id": "block_41",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "pid",
+      "content": "pub fn pid(&self) -> Pid {\n        self.pid\n    }\n\n    /// The data associated with the [`Process`].\n    pub fn data<T: Any + Send + Sync>(&self) -> Option<&T> {\n        self.data.downcast_ref::<T>()\n    }\n\n    /// Returns `true` if the [`Process`] is the init process.\n    ///\n    /// This is a convenience method for checking if the [`Process`]\n    /// [`Arc::ptr_eq`]s with the init process, which is cheaper than\n    /// calling [`init_proc`] or testing if [`Process::parent`] is `None`."
+    },
+    {
+      "block_id": "block_42",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "is_init",
+      "content": "pub fn is_init(self: &Arc<Self>) -> bool {\n        Arc::ptr_eq(self, INIT_PROC.get().unwrap())\n    }\n}\n\n/// Parent & children"
+    },
+    {
+      "block_id": "block_43",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Process {",
+      "content": "impl Process {\n    /// The parent [`Process`]."
+    },
+    {
+      "block_id": "block_44",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "parent",
+      "content": "pub fn parent(&self) -> Option<Arc<Process>> {\n        self.parent.lock().upgrade()\n    }\n\n    /// The child [`Process`]es."
+    },
+    {
+      "block_id": "block_45",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "children",
+      "content": "pub fn children(&self) -> Vec<Arc<Process>> {\n        self.children.lock().values().cloned().collect()\n    }\n}\n\n/// [`ProcessGroup`] & [`Session`]"
+    },
+    {
+      "block_id": "block_46",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Process {",
+      "content": "impl Process {\n    /// The [`ProcessGroup`] that the [`Process`] belongs to."
+    },
+    {
+      "block_id": "block_47",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "group",
+      "content": "pub fn group(&self) -> Arc<ProcessGroup> {\n        self.group.lock().clone()\n    }"
+    },
+    {
+      "block_id": "block_48",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "set_group",
+      "content": "fn set_group(self: &Arc<Self>, group: &Arc<ProcessGroup>) {\n        let mut self_group = self.group.lock();\n\n        self_group.processes.lock().remove(&self.pid);\n\n        group.processes.lock().insert(self.pid, self);\n\n        *self_group = group.clone();\n    }\n\n    /// Creates a new [`Session`] and new [`ProcessGroup`] and moves the\n    /// [`Process`] to it.\n    ///\n    /// If the [`Process`] is already a session leader, this method does\n    /// nothing and returns `None`.\n    ///\n    /// Otherwise, it returns the new [`Session`] and [`ProcessGroup`].\n    ///\n    /// The caller has to ensure that the new [`ProcessGroup`] does not conflict\n    /// with any existing [`ProcessGroup`]. Thus, the [`Process`] must not\n    /// be a [`ProcessGroup`] leader.\n    ///\n    /// Checking [`Session`] conflicts is unnecessary."
+    },
+    {
+      "block_id": "block_49",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "create_session",
+      "content": "pub fn create_session(self: &Arc<Self>) -> Option<(Arc<Session>, Arc<ProcessGroup>)> {\n        if self.group.lock().session.sid() == self.pid {\n            return None;\n        }\n\n        let new_session = Session::new(self.pid);\n        let new_group = ProcessGroup::new(self.pid, &new_session);\n        self.set_group(&new_group);\n\n        Some((new_session, new_group))\n    }\n\n    /// Creates a new [`ProcessGroup`] and moves the [`Process`] to it.\n    ///\n    /// If the [`Process`] is already a group leader, this method does nothing\n    /// and returns `None`.\n    ///\n    /// Otherwise, it returns the new [`ProcessGroup`].\n    ///\n    /// The caller has to ensure that the new [`ProcessGroup`] does not conflict\n    /// with any existing [`ProcessGroup`]."
+    },
+    {
+      "block_id": "block_50",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "create_group",
+      "content": "pub fn create_group(self: &Arc<Self>) -> Option<Arc<ProcessGroup>> {\n        if self.group.lock().pgid() == self.pid {\n            return None;\n        }\n\n        let new_group = ProcessGroup::new(self.pid, &self.group.lock().session);\n        self.set_group(&new_group);\n\n        Some(new_group)\n    }\n\n    /// Moves the [`Process`] to a specified [`ProcessGroup`].\n    ///\n    /// Returns `true` if the move succeeded. The move failed if the\n    /// [`ProcessGroup`] is not in the same [`Session`] as the [`Process`].\n    ///\n    /// If the [`Process`] is already in the specified [`ProcessGroup`], this\n    /// method does nothing and returns `true`."
+    },
+    {
+      "block_id": "block_51",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "move_to_group",
+      "content": "pub fn move_to_group(self: &Arc<Self>, group: &Arc<ProcessGroup>) -> bool {\n        if Arc::ptr_eq(&self.group.lock(), group) {\n            return true;\n        }\n\n        if !Arc::ptr_eq(&self.group.lock().session, &group.session) {\n            return false;\n        }\n\n        self.set_group(group);\n        true\n    }\n}\n\n/// Threads"
+    },
+    {
+      "block_id": "block_52",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Process {",
+      "content": "impl Process {\n    /// Creates a new [`Thread`] in this [`Process`]."
+    },
+    {
+      "block_id": "block_53",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "new_thread",
+      "content": "pub fn new_thread(self: &Arc<Self>, tid: Pid) -> ThreadBuilder {\n        ThreadBuilder::new(tid, self.clone())\n    }\n\n    /// The [`Thread`]s in this [`Process`]."
+    },
+    {
+      "block_id": "block_54",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "threads",
+      "content": "pub fn threads(&self) -> Vec<Arc<Thread>> {\n        self.tg.lock().threads.values().collect()\n    }\n\n    /// Returns `true` if the [`Process`] is group exited."
+    },
+    {
+      "block_id": "block_55",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "is_group_exited",
+      "content": "pub fn is_group_exited(&self) -> bool {\n        self.tg.lock().group_exited\n    }\n\n    /// Marks the [`Process`] as group exited."
+    },
+    {
+      "block_id": "block_56",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "group_exit",
+      "content": "pub fn group_exit(&self) {\n        self.tg.lock().group_exited = true;\n    }\n\n    /// The exit code of the [`Process`]."
+    },
+    {
+      "block_id": "block_57",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "exit_code",
+      "content": "pub fn exit_code(&self) -> i32 {\n        self.tg.lock().exit_code\n    }\n}\n\n/// Status & exit"
+    },
+    {
+      "block_id": "block_58",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Process {",
+      "content": "impl Process {\n    /// Returns `true` if the [`Process`] is a zombie process."
+    },
+    {
+      "block_id": "block_59",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "is_zombie",
+      "content": "pub fn is_zombie(&self) -> bool {\n        self.is_zombie.load(Ordering::Acquire)\n    }\n\n    /// Terminates the [`Process`], marking it as a zombie process.\n    ///\n    /// Child processes are inherited by the init process or by the nearest\n    /// subreaper process.\n    ///\n    /// This method panics if the [`Process`] is the init process."
+    },
+    {
+      "block_id": "block_60",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "exit",
+      "content": "pub fn exit(self: &Arc<Self>) {\n        if self.is_init() {\n            panic!(\"init process cannot exit\");\n        }\n\n        // TODO: child subreaper\n        let reaper = INIT_PROC.get().unwrap();\n\n        let mut children = self.children.lock(); // Acquire the lock first\n        self.is_zombie.store(true, Ordering::Release);\n\n        let mut reaper_children = reaper.children.lock();\n        let reaper = Arc::downgrade(reaper);\n\n        for (pid, child) in core::mem::take(&mut *children) {\n            *child.parent.lock() = reaper.clone();\n            reaper_children.insert(pid, child);\n        }\n    }\n\n    /// Frees a zombie [`Process`]. Removes it from the parent.\n    ///\n    /// This method panics if the [`Process`] is not a zombie."
+    },
+    {
+      "block_id": "block_61",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "free",
+      "content": "pub fn free(&self) {\n        assert!(self.is_zombie(), \"only zombie process can be freed\");\n\n        if let Some(parent) = self.parent() {\n            parent.children.lock().remove(&self.pid);\n        }\n    }\n}"
+    },
+    {
+      "block_id": "block_62",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl fmt::Debug for Process {",
+      "content": "impl fmt::Debug for Process {"
+    },
+    {
+      "block_id": "block_63",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "fmt",
+      "content": "fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {\n        let mut builder = f.debug_struct(\"Process\");\n        builder.field(\"pid\", &self.pid);\n\n        let tg = self.tg.lock();\n        if tg.group_exited {\n            builder.field(\"group_exited\", &tg.group_exited);\n        }\n        if self.is_zombie() {\n            builder.field(\"exit_code\", &tg.exit_code);\n        }\n\n        if let Some(parent) = self.parent() {\n            builder.field(\"parent\", &parent.pid());\n        }\n        builder.field(\"group\", &self.group());\n        builder.finish()\n    }\n}\n\n/// Builder"
+    },
+    {
+      "block_id": "block_64",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Process {",
+      "content": "impl Process {\n    /// Creates a init [`Process`].\n    ///\n    /// This function can be called multiple times, but\n    /// [`ProcessBuilder::build`] on the the result must be called only once."
+    },
+    {
+      "block_id": "block_65",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "new_init",
+      "content": "pub fn new_init(pid: Pid) -> ProcessBuilder {\n        ProcessBuilder {\n            pid,\n            parent: None,\n            data: Box::new(()),\n        }\n    }\n\n    /// Creates a child [`Process`]."
+    },
+    {
+      "block_id": "block_66",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "fork",
+      "content": "pub fn fork(self: &Arc<Process>, pid: Pid) -> ProcessBuilder {\n        ProcessBuilder {\n            pid,\n            parent: Some(self.clone()),\n            data: Box::new(()),\n        }\n    }\n}\n\n/// A builder for creating a new [`Process`]."
+    },
+    {
+      "block_id": "block_67",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "struct",
+      "name": "ProcessBuilder",
+      "content": "pub struct ProcessBuilder {\n    pid: Pid,\n    parent: Option<Arc<Process>>,\n    data: Box<dyn Any + Send + Sync>,\n}"
+    },
+    {
+      "block_id": "block_68",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl ProcessBuilder {",
+      "content": "impl ProcessBuilder {\n    /// Sets the data associated with the [`Process`].\n    pub fn data<T: Any + Send + Sync>(self, data: T) -> Self {\n        Self {\n            data: Box::new(data),\n            ..self\n        }\n    }\n\n    /// Finishes the builder and returns a new [`Process`]."
+    },
+    {
+      "block_id": "block_69",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "build",
+      "content": "pub fn build(self) -> Arc<Process> {\n        let Self { pid, parent, data } = self;\n\n        let group = parent.as_ref().map_or_else(\n            || {\n                let session = Session::new(pid);\n                ProcessGroup::new(pid, &session)\n            },\n            |p| p.group(),\n        );\n\n        let process = Arc::new(Process {\n            pid,\n            is_zombie: AtomicBool::new(false),\n            tg: SpinNoIrq::new(ThreadGroup::default()),\n            data,\n            children: SpinNoIrq::new(StrongMap::new()),\n            parent: SpinNoIrq::new(parent.as_ref().map(Arc::downgrade).unwrap_or_default()),\n            group: SpinNoIrq::new(group.clone()),\n        });\n\n        group.processes.lock().insert(pid, &process);\n\n        if let Some(parent) = parent {\n            parent.children.lock().insert(pid, process.clone());\n        } else {\n            INIT_PROC.init_once(process.clone());\n        }\n\n        process\n    }\n}\n\nstatic INIT_PROC: LazyInit<Arc<Process>> = LazyInit::new();\n\n/// Gets the init process.\n///\n/// This function panics if the init process has not been initialized yet."
+    },
+    {
+      "block_id": "block_70",
+      "file_path": "vendor\\axprocess\\src\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "init_proc",
+      "content": "pub fn init_proc() -> Arc<Process> {\n    INIT_PROC.get().unwrap().clone()\n}"
+    },
+    {
+      "block_id": "block_71",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "struct",
+      "name": "ProcessGroup",
+      "content": "pub struct ProcessGroup {\n    pgid: Pid,\n    pub(crate) session: Arc<Session>,\n    pub(crate) processes: SpinNoIrq<WeakMap<Pid, Weak<Process>>>,\n}"
+    },
+    {
+      "block_id": "block_72",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl ProcessGroup {",
+      "content": "impl ProcessGroup {\n    /// Create a new [`ProcessGroup`] within a [`Session`].\n    pub(crate) fn new(pgid: Pid, session: &Arc<Session>) -> Arc<Self> {\n        let group = Arc::new(Self {\n            pgid,\n            session: session.clone(),\n            processes: SpinNoIrq::new(WeakMap::new()),\n        });\n        session.process_groups.lock().insert(pgid, &group);\n        group\n    }\n}"
+    },
+    {
+      "block_id": "block_73",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl ProcessGroup {",
+      "content": "impl ProcessGroup {\n    /// The [`ProcessGroup`] ID."
+    },
+    {
+      "block_id": "block_74",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "pgid",
+      "content": "pub fn pgid(&self) -> Pid {\n        self.pgid\n    }\n\n    /// The [`Session`] that the [`ProcessGroup`] belongs to."
+    },
+    {
+      "block_id": "block_75",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "session",
+      "content": "pub fn session(&self) -> Arc<Session> {\n        self.session.clone()\n    }\n\n    /// The [`Process`]es that belong to this [`ProcessGroup`]."
+    },
+    {
+      "block_id": "block_76",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "processes",
+      "content": "pub fn processes(&self) -> Vec<Arc<Process>> {\n        self.processes.lock().values().collect()\n    }\n}"
+    },
+    {
+      "block_id": "block_77",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl fmt::Debug for ProcessGroup {",
+      "content": "impl fmt::Debug for ProcessGroup {"
+    },
+    {
+      "block_id": "block_78",
+      "file_path": "vendor\\axprocess\\src\\process_group.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "fmt",
+      "content": "fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {\n        f.debug_struct(\"ProcessGroup\")\n            .field(\"pgid\", &self.pgid)\n            .field(\"session\", &self.session)\n            .finish()\n    }\n}"
+    },
+    {
+      "block_id": "block_79",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "struct",
+      "name": "SignalActions(pub(crate) [SignalAction",
+      "content": "pub struct SignalActions(pub(crate) [SignalAction; 64]);"
+    },
+    {
+      "block_id": "block_80",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Default for SignalActions {",
+      "content": "impl Default for SignalActions {"
+    },
+    {
+      "block_id": "block_81",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "default",
+      "content": "fn default() -> Self {\n        Self(array::from_fn(|_| SignalAction::default()))\n    }\n}"
+    },
+    {
+      "block_id": "block_82",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl Index<Signo> for SignalActions {",
+      "content": "impl Index<Signo> for SignalActions {\n    type Output = SignalAction;"
+    },
+    {
+      "block_id": "block_83",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "index",
+      "content": "fn index(&self, signo: Signo) -> &SignalAction {\n        &self.0[signo as usize - 1]\n    }\n}"
+    },
+    {
+      "block_id": "block_84",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "impl",
+      "name": "impl IndexMut<Signo> for SignalActions {",
+      "content": "impl IndexMut<Signo> for SignalActions {"
+    },
+    {
+      "block_id": "block_85",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "index_mut",
+      "content": "fn index_mut(&mut self, signo: Signo) -> &mut SignalAction {\n        &mut self.0[signo as usize - 1]\n    }\n}\n\n/// Process-level signal manager."
+    },
+    {
+      "block_id": "block_86",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "struct",
+      "name": "ProcessSignalManager<M, WQ>",
+      "content": "pub struct ProcessSignalManager<M, WQ> {\n    /// The process-level shared pending signals\n    pending: Mutex<M, PendingSignals>,\n\n    /// The signal actions\n    pub actions: Arc<Mutex<M, SignalActions>>,\n\n    /// The wait queue for signal. Used by `rt_sigtimedwait`, etc.\n    ///\n    /// Note that this is shared by all threads in the process, so false wakeups\n    /// may occur.\n    pub(crate) wq: WQ,\n\n    /// The default restorer function.\n    pub(crate) default_restorer: usize,\n}\nimpl<M: RawMutex, WQ: WaitQueue> ProcessSignalManager<M, WQ> {\n    /// Creates a new process signal manager."
+    },
+    {
+      "block_id": "block_87",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "new",
+      "content": "pub fn new(actions: Arc<Mutex<M, SignalActions>>, default_restorer: usize) -> Self {\n        Self {\n            pending: Mutex::new(PendingSignals::new()),\n            actions,\n            wq: WQ::default(),\n            default_restorer,\n        }\n    }\n\n    pub(crate) fn dequeue_signal(&self, mask: &SignalSet) -> Option<SignalInfo> {\n        self.pending.lock().dequeue_signal(mask)\n    }\n\n    /// Sends a signal to the process.\n    ///\n    /// See [`ThreadSignalManager::send_signal`] for the thread-level version."
+    },
+    {
+      "block_id": "block_88",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "send_signal",
+      "content": "pub fn send_signal(&self, sig: SignalInfo) {\n        self.pending.lock().put_signal(sig);\n        self.wq.notify_one();\n    }\n\n    /// Gets currently pending signals."
+    },
+    {
+      "block_id": "block_89",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "pending",
+      "content": "pub fn pending(&self) -> SignalSet {\n        self.pending.lock().set\n    }\n\n    /// Suspends current task until a signal is delivered. Note that this could\n    /// return early if a signal is delivered to another thread in this process."
+    },
+    {
+      "block_id": "block_90",
+      "file_path": "vendor\\axsignal\\src\\api\\process.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "wait_signal",
+      "content": "pub fn wait_signal(&self) {\n        self.wq.wait();\n    }\n}"
+    },
+    {
+      "block_id": "block_91",
+      "file_path": "vendor\\itertools\\src\\process_results_impl.rs",
+      "file_score": 34,
+      "type": "struct",
+      "name": "ProcessResults<'a, I, E: 'a>",
+      "content": "pub struct ProcessResults<'a, I, E: 'a> {\n    error: &'a mut Result<(), E>,\n    iter: I,\n}\n\nimpl<'a, I, E> ProcessResults<'a, I, E> {\n    #[inline(always)]\n    fn next_body<T>(&mut self, item: Option<Result<T, E>>) -> Option<T> {\n        match item {\n            Some(Ok(x)) => Some(x),\n            Some(Err(e)) => {\n                *self.error = Err(e);\n                None\n            }\n            None => None,\n        }\n    }\n}\n\nimpl<'a, I, T, E> Iterator for ProcessResults<'a, I, E>\nwhere\n    I: Iterator<Item = Result<T, E>>,\n{\n    type Item = T;"
+    },
+    {
+      "block_id": "block_92",
+      "file_path": "vendor\\itertools\\src\\process_results_impl.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "next",
+      "content": "fn next(&mut self) -> Option<Self::Item> {\n        let item = self.iter.next();\n        self.next_body(item)\n    }"
+    },
+    {
+      "block_id": "block_93",
+      "file_path": "vendor\\itertools\\src\\process_results_impl.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "size_hint",
+      "content": "fn size_hint(&self) -> (usize, Option<usize>) {\n        (0, self.iter.size_hint().1)\n    }\n\n    fn fold<B, F>(mut self, init: B, mut f: F) -> B\n    where\n        Self: Sized,\n        F: FnMut(B, Self::Item) -> B,\n    {\n        let error = self.error;\n        self.iter\n            .try_fold(init, |acc, opt| match opt {\n                Ok(x) => Ok(f(acc, x)),\n                Err(e) => {\n                    *error = Err(e);\n                    Err(acc)\n                }\n            })\n            .unwrap_or_else(|e| e)\n    }\n}\n\nimpl<'a, I, T, E> DoubleEndedIterator for ProcessResults<'a, I, E>\nwhere\n    I: Iterator<Item = Result<T, E>>,\n    I: DoubleEndedIterator,\n{"
+    },
+    {
+      "block_id": "block_94",
+      "file_path": "vendor\\itertools\\src\\process_results_impl.rs",
+      "file_score": 34,
+      "type": "function",
+      "name": "next_back",
+      "content": "fn next_back(&mut self) -> Option<Self::Item> {\n        let item = self.iter.next_back();\n        self.next_body(item)\n    }\n\n    fn rfold<B, F>(mut self, init: B, mut f: F) -> B\n    where\n        F: FnMut(B, Self::Item) -> B,\n    {\n        let error = self.error;\n        self.iter\n            .try_rfold(init, |acc, opt| match opt {\n                Ok(x) => Ok(f(acc, x)),\n                Err(e) => {\n                    *error = Err(e);\n                    Err(acc)\n                }\n            })\n            .unwrap_or_else(|e| e)\n    }\n}\n\n/// “Lift” a function of the values of an iterator so that it can process\n/// an iterator of `Result` values instead.\n///\n/// [`IntoIterator`] enabled version of [`Itertools::process_results`].\npub fn process_results<I, F, T, E, R>(iterable: I, processor: F) -> Result<R, E>\nwhere\n    I: IntoIterator<Item = Result<T, E>>,\n    F: FnOnce(ProcessResults<I::IntoIter, E>) -> R,\n{\n    let iter = iterable.into_iter();\n    let mut error = Ok(());\n\n    let result = processor(ProcessResults {\n        error: &mut error,\n        iter,\n    });\n\n    error.map(|_| result)\n}"
+    },
+    {
+      "block_id": "block_95",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "struct",
+      "name": "DummyNetDev",
+      "content": "pub struct DummyNetDev;"
+    },
+    {
+      "block_id": "block_96",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "struct",
+      "name": "DummyNetDrvier",
+      "content": "pub struct DummyNetDrvier;\n        register_net_driver!(DummyNetDriver, DummyNetDev);"
+    },
+    {
+      "block_id": "block_97",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "impl",
+      "name": "impl BaseDriverOps for DummyNetDev {",
+      "content": "impl BaseDriverOps for DummyNetDev {"
+    },
+    {
+      "block_id": "block_98",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "device_type",
+      "content": "fn device_type(&self) -> DeviceType { DeviceType::Net }"
+    },
+    {
+      "block_id": "block_99",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "device_name",
+      "content": "fn device_name(&self) -> &str { \"dummy-net\" }\n        }"
+    },
+    {
+      "block_id": "block_100",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "impl",
+      "name": "impl NetDriverOps for DummyNetDev {",
+      "content": "impl NetDriverOps for DummyNetDev {"
+    },
+    {
+      "block_id": "block_101",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "mac_address",
+      "content": "fn mac_address(&self) -> EthernetAddress { unreachable!() }"
+    },
+    {
+      "block_id": "block_102",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "can_transmit",
+      "content": "fn can_transmit(&self) -> bool { false }"
+    },
+    {
+      "block_id": "block_103",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "can_receive",
+      "content": "fn can_receive(&self) -> bool { false }"
+    },
+    {
+      "block_id": "block_104",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "rx_queue_size",
+      "content": "fn rx_queue_size(&self) -> usize { 0 }"
+    },
+    {
+      "block_id": "block_105",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "tx_queue_size",
+      "content": "fn tx_queue_size(&self) -> usize { 0 }"
+    },
+    {
+      "block_id": "block_106",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "recycle_rx_buffer",
+      "content": "fn recycle_rx_buffer(&mut self, _: NetBufPtr) -> DevResult { Err(DevError::Unsupported) }"
+    },
+    {
+      "block_id": "block_107",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "recycle_tx_buffers",
+      "content": "fn recycle_tx_buffers(&mut self) -> DevResult { Err(DevError::Unsupported) }"
+    },
+    {
+      "block_id": "block_108",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "transmit",
+      "content": "fn transmit(&mut self, _: NetBufPtr) -> DevResult { Err(DevError::Unsupported) }"
+    },
+    {
+      "block_id": "block_109",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "receive",
+      "content": "fn receive(&mut self) -> DevResult<NetBufPtr> { Err(DevError::Unsupported) }"
+    },
+    {
+      "block_id": "block_110",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "alloc_tx_buffer",
+      "content": "fn alloc_tx_buffer(&mut self, _: usize) -> DevResult<NetBufPtr> { Err(DevError::Unsupported) }\n        }\n    }\n}\n\ncfg_if! {\n    if #[cfg(block_dev = \"dummy\")] {"
+    },
+    {
+      "block_id": "block_111",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "struct",
+      "name": "DummyBlockDev",
+      "content": "pub struct DummyBlockDev;"
+    },
+    {
+      "block_id": "block_112",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "struct",
+      "name": "DummyBlockDriver",
+      "content": "pub struct DummyBlockDriver;\n        register_block_driver!(DummyBlockDriver, DummyBlockDev);"
+    },
+    {
+      "block_id": "block_113",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "impl",
+      "name": "impl BaseDriverOps for DummyBlockDev {",
+      "content": "impl BaseDriverOps for DummyBlockDev {"
+    },
+    {
+      "block_id": "block_114",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "device_type",
+      "content": "fn device_type(&self) -> DeviceType {\n                DeviceType::Block\n            }"
+    },
+    {
+      "block_id": "block_115",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "device_name",
+      "content": "fn device_name(&self) -> &str {\n                \"dummy-block\"\n            }\n        }"
+    },
+    {
+      "block_id": "block_116",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "impl",
+      "name": "impl BlockDriverOps for DummyBlockDev {",
+      "content": "impl BlockDriverOps for DummyBlockDev {"
+    },
+    {
+      "block_id": "block_117",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "num_blocks",
+      "content": "fn num_blocks(&self) -> u64 {\n                0\n            }"
+    },
+    {
+      "block_id": "block_118",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "block_size",
+      "content": "fn block_size(&self) -> usize {\n                0\n            }"
+    },
+    {
+      "block_id": "block_119",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "read_block",
+      "content": "fn read_block(&mut self, _: u64, _: &mut [u8]) -> DevResult {\n                Err(DevError::Unsupported)\n            }"
+    },
+    {
+      "block_id": "block_120",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "write_block",
+      "content": "fn write_block(&mut self, _: u64, _: &[u8]) -> DevResult {\n                Err(DevError::Unsupported)\n            }"
+    },
+    {
+      "block_id": "block_121",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "flush",
+      "content": "fn flush(&mut self) -> DevResult {\n                Err(DevError::Unsupported)\n            }\n        }\n    }\n}\n\ncfg_if! {\n    if #[cfg(display_dev = \"dummy\")] {"
+    },
+    {
+      "block_id": "block_122",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "struct",
+      "name": "DummyDisplayDev",
+      "content": "pub struct DummyDisplayDev;"
+    },
+    {
+      "block_id": "block_123",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "struct",
+      "name": "DummyDisplayDriver",
+      "content": "pub struct DummyDisplayDriver;\n        register_display_driver!(DummyDisplayDriver, DummyDisplayDev);"
+    },
+    {
+      "block_id": "block_124",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "impl",
+      "name": "impl BaseDriverOps for DummyDisplayDev {",
+      "content": "impl BaseDriverOps for DummyDisplayDev {"
+    },
+    {
+      "block_id": "block_125",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "device_type",
+      "content": "fn device_type(&self) -> DeviceType {\n                DeviceType::Display\n            }"
+    },
+    {
+      "block_id": "block_126",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "device_name",
+      "content": "fn device_name(&self) -> &str {\n                \"dummy-display\"\n            }\n        }"
+    },
+    {
+      "block_id": "block_127",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "impl",
+      "name": "impl DisplayDriverOps for DummyDisplayDev {",
+      "content": "impl DisplayDriverOps for DummyDisplayDev {"
+    },
+    {
+      "block_id": "block_128",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "info",
+      "content": "fn info(&self) -> axdriver_display::DisplayInfo {\n                unreachable!()\n            }"
+    },
+    {
+      "block_id": "block_129",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "fb",
+      "content": "fn fb(&self) -> axdriver_display::FrameBuffer {\n                unreachable!()\n            }"
+    },
+    {
+      "block_id": "block_130",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "need_flush",
+      "content": "fn need_flush(&self) -> bool {\n                false\n            }"
+    },
+    {
+      "block_id": "block_131",
+      "file_path": "arceos\\modules\\axdriver\\src\\dummy.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "flush",
+      "content": "fn flush(&mut self) -> DevResult {\n                Err(DevError::Unsupported)\n            }\n        }\n    }\n}"
+    },
+    {
+      "block_id": "block_132",
+      "file_path": "arceos\\modules\\axdriver\\src\\bus\\mmio.rs",
+      "file_score": 32,
+      "type": "impl",
+      "name": "impl AllDevices {",
+      "content": "impl AllDevices {\n    pub(crate) fn probe_bus_devices(&mut self) {\n        // TODO: parse device tree\n        #[cfg(feature = \"virtio\")]\n        for reg in axconfig::devices::VIRTIO_MMIO_REGIONS {\n            for_each_drivers!(type Driver, {\n                if let Some(dev) = Driver::probe_mmio(reg.0, reg.1) {\n                    info!(\n                        \"registered a new {:?} device at [PA:{:#x}, PA:{:#x}): {:?}\",\n                        dev.device_type(),\n                        reg.0, reg.0 + reg.1,\n                        dev.device_name(),\n                    );\n                    self.add_device(dev);\n                    continue; // skip to the next device\n                }\n            });\n        }\n    }\n}"
+    },
+    {
+      "block_id": "block_133",
+      "file_path": "arceos\\tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\common.rs",
+      "file_score": 32,
+      "type": "struct",
+      "name": "MMIODerefWrapper<T>",
+      "content": "pub struct MMIODerefWrapper<T> {\n    start_addr: usize,\n    phantom: PhantomData<fn() -> T>,\n}\n\n//--------------------------------------------------------------------------------------------------\n// Public Code\n//--------------------------------------------------------------------------------------------------\n\nimpl<T> MMIODerefWrapper<T> {\n    /// Create an instance.\n    pub const unsafe fn new(start_addr: usize) -> Self {\n        Self {\n            start_addr,\n            phantom: PhantomData,\n        }\n    }\n}\n\nimpl<T> ops::Deref for MMIODerefWrapper<T> {\n    type Target = T;"
+    },
+    {
+      "block_id": "block_134",
+      "file_path": "arceos\\tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\common.rs",
+      "file_score": 32,
+      "type": "function",
+      "name": "deref",
+      "content": "fn deref(&self) -> &Self::Target {\n        unsafe { &*(self.start_addr as *const _) }\n    }\n}"
+    },
+    {
+      "block_id": "block_135",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\generic_timer.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "current_ticks",
+      "content": "pub fn current_ticks() -> u64 {\n    CNTPCT_EL0.get()\n}\n\n/// Converts hardware ticks to nanoseconds.\n#[inline]"
+    },
+    {
+      "block_id": "block_136",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\generic_timer.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "ticks_to_nanos",
+      "content": "pub fn ticks_to_nanos(ticks: u64) -> u64 {\n    unsafe { CNTPCT_TO_NANOS_RATIO.mul_trunc(ticks) }\n}\n\n/// Converts nanoseconds to hardware ticks.\n#[inline]"
+    },
+    {
+      "block_id": "block_137",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\generic_timer.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "nanos_to_ticks",
+      "content": "pub fn nanos_to_ticks(nanos: u64) -> u64 {\n    unsafe { NANOS_TO_CNTPCT_RATIO.mul_trunc(nanos) }\n}\n\n/// Return epoch offset in nanoseconds (wall time offset to monotonic clock start)."
+    },
+    {
+      "block_id": "block_138",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\generic_timer.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "epochoffset_nanos",
+      "content": "pub fn epochoffset_nanos() -> u64 {\n    unsafe { RTC_EPOCHOFFSET_NANOS }\n}\n\n/// Set a one-shot timer.\n///\n/// A timer interrupt will be triggered at the specified monotonic time deadline (in nanoseconds).\n#[cfg(feature = \"irq\")]"
+    },
+    {
+      "block_id": "block_139",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\generic_timer.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "set_oneshot_timer",
+      "content": "pub fn set_oneshot_timer(deadline_ns: u64) {\n    let cnptct = CNTPCT_EL0.get();\n    let cnptct_deadline = nanos_to_ticks(deadline_ns);\n    if cnptct < cnptct_deadline {\n        let interval = cnptct_deadline - cnptct;\n        debug_assert!(interval <= u32::MAX as u64);\n        CNTP_TVAL_EL0.set(interval);\n    } else {\n        CNTP_TVAL_EL0.set(0);\n    }\n}\n\n/// Early stage initialization: stores the timer frequency.\npub(crate) fn init_early() {\n    let freq = CNTFRQ_EL0.get();\n    unsafe {\n        CNTPCT_TO_NANOS_RATIO = Ratio::new(crate::time::NANOS_PER_SEC as u32, freq as u32);\n        NANOS_TO_CNTPCT_RATIO = CNTPCT_TO_NANOS_RATIO.inverse();\n    }\n\n    // Make sure `RTC_PADDR` is valid in platform config file.\n    #[cfg(feature = \"rtc\")]\n    if axconfig::devices::RTC_PADDR != 0 {\n        use crate::mem::phys_to_virt;\n        use arm_pl031::Rtc;\n        use memory_addr::PhysAddr;\n\n        const PL031_BASE: PhysAddr = pa!(axconfig::devices::RTC_PADDR);\n\n        let rtc = unsafe { Rtc::new(phys_to_virt(PL031_BASE).as_usize() as _) };\n        // Get the current time in microseconds since the epoch (1970-01-01) from the aarch64 pl031 RTC.\n        // Subtract the timer ticks to get the actual time when ArceOS was booted.\n        let epoch_time_nanos = rtc.get_unix_timestamp() as u64 * 1_000_000_000;\n\n        unsafe {\n            RTC_EPOCHOFFSET_NANOS = epoch_time_nanos - ticks_to_nanos(current_ticks());\n        }\n    }\n}\n\npub(crate) fn init_percpu() {\n    #[cfg(feature = \"irq\")]\n    {\n        CNTP_CTL_EL0.write(CNTP_CTL_EL0::ENABLE::SET);\n        CNTP_TVAL_EL0.set(0);\n        crate::platform::irq::set_enable(crate::platform::irq::TIMER_IRQ_NUM, true);\n    }\n}"
+    },
+    {
+      "block_id": "block_140",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\aarch64.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_save_and_disable",
+      "content": "pub fn local_irq_save_and_disable() -> usize {\n    let flags: usize;\n    // save `DAIF` flags, mask `I` bit (disable IRQs)\n    unsafe { asm!(\"mrs {}, daif; msr daifset, #2\", out(reg) flags) };\n    flags\n}\n\n#[inline]"
+    },
+    {
+      "block_id": "block_141",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\aarch64.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_restore",
+      "content": "pub fn local_irq_restore(flags: usize) {\n    unsafe { asm!(\"msr daif, {}\", in(reg) flags) };\n}"
+    },
+    {
+      "block_id": "block_142",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\loongarch64.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_save_and_disable",
+      "content": "pub fn local_irq_save_and_disable() -> usize {\n    let mut flags: usize = 0;\n    // clear the `IE` bit, and return the old CSR\n    unsafe { asm!(\"csrxchg {}, {}, 0x0\", inout(reg) flags, in(reg) IE_MASK) };\n    flags & IE_MASK\n}\n\n#[inline]"
+    },
+    {
+      "block_id": "block_143",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\loongarch64.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_restore",
+      "content": "pub fn local_irq_restore(flags: usize) {\n    // restore the `IE` bit\n    unsafe { asm!(\"csrxchg {}, {}, 0x0\", in(reg) flags, in(reg) IE_MASK) };\n}"
+    },
+    {
+      "block_id": "block_144",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\riscv.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_save_and_disable",
+      "content": "pub fn local_irq_save_and_disable() -> usize {\n    let flags: usize;\n    // clear the `SIE` bit, and return the old CSR\n    unsafe { asm!(\"csrrc {}, sstatus, {}\", out(reg) flags, const SIE_BIT) };\n    flags & SIE_BIT\n}\n\n#[inline]"
+    },
+    {
+      "block_id": "block_145",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\riscv.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_restore",
+      "content": "pub fn local_irq_restore(flags: usize) {\n    // restore the `SIE` bit\n    unsafe { asm!(\"csrrs x0, sstatus, {}\", in(reg) flags) };\n}"
+    },
+    {
+      "block_id": "block_146",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\x86.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_save_and_disable",
+      "content": "pub fn local_irq_save_and_disable() -> usize {\n    let flags: usize;\n    unsafe { asm!(\"pushf; pop {}; cli\", out(reg) flags) };\n    flags & IF_BIT\n}\n\n#[inline]"
+    },
+    {
+      "block_id": "block_147",
+      "file_path": "vendor\\kernel_guard\\src\\arch\\x86.rs",
+      "file_score": 31,
+      "type": "function",
+      "name": "local_irq_restore",
+      "content": "pub fn local_irq_restore(flags: usize) {\n    if flags != 0 {\n        unsafe { asm!(\"sti\") };\n    } else {\n        unsafe { asm!(\"cli\") };\n    }\n}"
+    }
+  ]
+}

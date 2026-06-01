@@ -1,0 +1,1053 @@
+{
+  "repo_name": "tianjingongye",
+  "created_at": "2026-05-31 17:48:28",
+  "function_count": 20,
+  "ai_edge_count": 35,
+  "regex_edge_count": 62,
+  "merged_edge_count": 86,
+  "edges": [
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "axhal::irq_stats::get_all_irq_stats",
+      "caller_module": "interrupt",
+      "evidence": "函数内部调用了 axhal::irq_stats::get_all_irq_stats()，并且遍历中断号和计数，生成与中断相关的格式化输出，明显属于中断统计信息的获取与展示。",
+      "source_block_id": "block_4",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "axfs_vfs::VfsNodePerm::from_bits_truncate",
+      "caller_module": "filesystem",
+      "evidence": "函数名 get_attr 返回 VfsNodeAttr，内容涉及权限、文件类型、大小，是VFS标准属性获取接口；路径包含 proc_interrupts，符合文件系统模块。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "self.get_current_content",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "VfsNodeAttr::new",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "get_current_content",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_7",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "write_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "AxError::PermissionDenied",
+      "caller_module": "filesystem",
+      "evidence": "函数签名中的参数 _offset 和 _buf 被忽略，函数体仅返回错误，这是典型的权限控制实现，常见于伪文件系统（procfs）中的只读文件。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "truncate",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "AxError::PermissionDenied",
+      "caller_module": "filesystem",
+      "evidence": "函数 truncate 是文件系统标准操作之一，通常用于调整文件大小。代码中立即返回权限拒绝错误，表明该文件系统节点不支持截断。同时文件路径包含 'axfs' 模块，以及后续的 impl_vfs_non_dir_default! 宏调用暗示这是一个 VFS 节点的实现，属于文件系统模块。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "exit",
+      "caller_file": "arceos\\ulib\\axstd\\src\\process.rs",
+      "callee": "arceos_api::sys::ax_terminate",
+      "caller_module": "process",
+      "evidence": "函数名为 exit，调用 ax_terminate 来终止进程，且返回类型为 !（永不返回），符合进程退出的典型行为。",
+      "source_block_id": "block_10",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "is_from_user",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "matches!",
+      "caller_module": "interrupt",
+      "evidence": "函数名is_from_user和匹配的枚举值LowerAArch64、LowerAArch32暗示与异常/陷阱来源（trap source）相关，通常用于中断处理或异常处理模块。AArch64架构中，Lower指代较低异常级别（用户态），因此该函数用于区分陷阱是否来自用户态。",
+      "source_block_id": "block_12",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "invalid_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "panic!",
+      "caller_module": "interrupt",
+      "evidence": "函数名为 invalid_exception，且 panic 信息明确提及异常（exception），并结合文件路径位于 trap.rs 中，表明该函数处理未预期或非法异常，属于中断/异常处理模块。",
+      "source_block_id": "block_13",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_irq_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "handle_trap!",
+      "caller_module": "interrupt",
+      "evidence": "函数名为handle_irq_exception，直接处理IRQ异常；调用handle_trap!宏处理中断；调用post_trap_callback进行后续处理。代码中明确使用IRQ标识表明属于中断处理模块。",
+      "source_block_id": "block_14",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_irq_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "crate::trap::post_trap_callback",
+      "caller_module": "interrupt",
+      "evidence": "函数名为handle_irq_exception，直接处理IRQ异常；调用handle_trap!宏处理中断；调用post_trap_callback进行后续处理。代码中明确使用IRQ标识表明属于中断处理模块。",
+      "source_block_id": "block_14",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_instruction_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "va!",
+      "caller_module": "interrupt",
+      "evidence": "函数处理指令异常（Instruction Abort），属于异常/中断处理的一部分，通过检查ISS、FAR_EL1等系统寄存器，调用PAGE_FAULT处理，符合中断处理模块的特征。",
+      "source_block_id": "block_15",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_instruction_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "FAR_EL1.get",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_15",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "handle_instruction_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "handle_trap!",
+      "caller_module": "interrupt",
+      "evidence": "函数处理指令异常（Instruction Abort），属于异常/中断处理的一部分，通过检查ISS、FAR_EL1等系统寄存器，调用PAGE_FAULT处理，符合中断处理模块的特征。",
+      "source_block_id": "block_15",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_instruction_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "panic!",
+      "caller_module": "interrupt",
+      "evidence": "函数处理指令异常（Instruction Abort），属于异常/中断处理的一部分，通过检查ISS、FAR_EL1等系统寄存器，调用PAGE_FAULT处理，符合中断处理模块的特征。",
+      "source_block_id": "block_15",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_data_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "va!",
+      "caller_module": "memory",
+      "evidence": "函数从ISS和FAR_EL1获取故障地址和访问权限，然后检测翻译/权限错误码，并调用PAGE_FAULT陷阱处理（handle_trap!宏），表明此函数是内存管理页错误处理流程的一部分。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_data_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "handle_trap!",
+      "caller_module": "memory",
+      "evidence": "函数从ISS和FAR_EL1获取故障地址和访问权限，然后检测翻译/权限错误码，并调用PAGE_FAULT陷阱处理（handle_trap!宏），表明此函数是内存管理页错误处理流程的一部分。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "unmask_irqs",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "crate::trap::handle_syscall",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "handle_instruction_abort",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "handle_data_abort",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "crate::trap::post_trap_callback",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "mask_irqs",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "ESR_EL1.extract",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "ESR_EL1::ISS",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "ESR_EL1::EC",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "ESR_EL1.read_as_enum",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "ESR_EL1.get",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "ESR_EL1.read",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "debug!",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "panic!",
+      "caller_module": "interrupt",
+      "evidence": "该函数处理同步异常（如系统调用、页错误），涉及中断屏蔽/使能（mask/unmask_irqs），以及异常派发处理，属于中断和异常处理模块。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "unmask_irqs",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "super::enable_irqs",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_18",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "mask_irqs",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "disable_irqs",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "caller": "handle_breakpoint",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
+      "callee": "debug!",
+      "caller_module": "interrupt",
+      "evidence": "函数名为 handle_breakpoint，位于 trap.rs 中，处理断点异常；debug! 用于调试输出；修改 era 寄存器以恢复执行。",
+      "source_block_id": "block_20",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "irq_stats::get_all_irq_stats",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "Vec::new",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "result.extend_from_slice",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "line.as_bytes",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "get_all_irq_stats",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "new",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "extend_from_slice",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_current_content",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "as_bytes",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_4",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "VfsNodePerm::from_bits_truncate",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "content.len",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "from_bits_truncate",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "get_current_content",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "new",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "get_attr",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "len",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_6",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "self.get_current_content",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "content.len",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "buf.len",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "src.len",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "len",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "min",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "read_at",
+      "caller_file": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+      "callee": "copy_from_slice",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "exit",
+      "caller_file": "arceos\\ulib\\axstd\\src\\process.rs",
+      "callee": "sys::ax_terminate",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "exit",
+      "caller_file": "arceos\\ulib\\axstd\\src\\process.rs",
+      "callee": "ax_terminate",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "is_from_user",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "unsafe",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "invalid_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "unsafe",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_irq_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "trap::post_trap_callback",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_irq_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "source.is_from_user",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_irq_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "post_trap_callback",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_irq_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "is_from_user",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_14",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_instruction_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "get",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_15",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_data_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "FAR_EL1.get",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_16",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_data_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "get",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_16",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_data_abort",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "unsafe",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_16",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "trap::handle_syscall",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "trap::post_trap_callback",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "esr.read",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "esr.read_as_enum",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "esr.get",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "source.is_from_user",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "extract",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "read",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "read_as_enum",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "cfg",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "handle_syscall",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "get",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "post_trap_callback",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "is_from_user",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_sync_exception",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "exception",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_17",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "unmask_irqs",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "enable_irqs",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_18",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "mask_irqs",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
+      "callee": "super::disable_irqs",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    },
+    {
+      "caller": "handle_breakpoint",
+      "caller_file": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
+      "callee": "Exception",
+      "caller_module": "interrupt",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_20",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6
+    }
+  ]
+}
