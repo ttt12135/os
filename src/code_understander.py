@@ -36,6 +36,7 @@ def build_function_analysis_prompt(repo_name, block):
 block_id: {block.get("block_id")}
 文件路径: {block.get("file_path")}
 语言: {block.get("language")}
+解析器: {block.get("parser")}
 起始行: {block.get("start_line")}
 结束行: {block.get("end_line")}
 类型: {block.get("type")}
@@ -51,13 +52,14 @@ text
 请按 JSON 格式输出，字段如下：
 
 {{
-"block_id": "{block.get("block_id")}",
-"file_path": "{block.get("file_path")}",
-"language": "{block.get("language")}",
-"start_line": "{block.get("start_line")}",
-"end_line": "{block.get("end_line")}",
-"name": "{block.get("name")}",
-"type": "{block.get("type")}",
+  "block_id": "{block.get("block_id")}",
+  "file_path": "{block.get("file_path")}",
+  "language": "{block.get("language")}",
+  "parser": "{block.get("parser")}",
+  "start_line": "{block.get("start_line")}",
+  "end_line": "{block.get("end_line")}",
+  "name": "{block.get("name")}",
+  "type": "{block.get("type")}",
 
 "summary": "这个代码块的主要作用",
 "logic_steps": [
@@ -97,6 +99,10 @@ def analyze_single_block(repo_name, block, ask_ai_once):
         analysis = {
             "block_id": block.get("block_id"),
             "file_path": block.get("file_path"),
+            "language": block.get("language"),
+            "parser": block.get("parser"),
+            "start_line": block.get("start_line"),
+            "end_line": block.get("end_line"),
             "name": block.get("name"),
             "type": block.get("type"),
             "summary": ai_reply,
@@ -116,13 +122,20 @@ def analyze_code_blocks_file(blocks_file_path, ask_ai_once, max_blocks=10):
     """
     分析一个代码块 JSON 文件中的前 max_blocks 个代码块。
     max_blocks 先限制代码块数量，防止多度使用token
+
+    max_blocks:
+    整数：只分析前 max_blocks 个代码块
+    None：分析全部代码块
     """
     data = load_code_blocks(blocks_file_path)
 
     repo_name = data.get("repo_name", "unknown_repo")
     blocks = data.get("blocks", [])
 
-    selected_blocks = blocks[:max_blocks]
+    if max_blocks is None:
+        selected_blocks = blocks
+    else:
+        selected_blocks = blocks[:max_blocks]
 
     results = []
 

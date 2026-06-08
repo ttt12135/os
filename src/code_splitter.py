@@ -1,6 +1,7 @@
 import os
 import re
 from src.file_scorer import get_file_score_info
+from src.ast_parser import parse_code_blocks_with_tree_sitter
 
 
 def is_code_file(file_path):
@@ -21,7 +22,9 @@ def is_code_file(file_path):
         ".asm",
         ".java",
         ".js",
-        ".ts"
+        ".ts",
+        ".sh",
+        ".bash",
     }
 
     file_name = os.path.basename(file_path).lower()
@@ -50,6 +53,9 @@ def detect_language(file_path):
 
     if ext == ".py":
         return "python"
+
+    if ext == ".sh":
+        return "bash"
 
     if ext == ".rs":
         return "rust"
@@ -555,12 +561,21 @@ def remove_duplicate_blocks(blocks):
 def split_code_content(file_path, content):
     """
     根据文件类型选择不同切分方式。
+
+    Rust / C / C++ / Python / Bash 优先使用 tree-sitter AST 解析；
+    如果 AST 解析失败，再回退到原来的正则切分。
     """
 
     language = detect_language(file_path)
     _, ext = os.path.splitext(file_path)
     ext = ext.lower()
     file_name = os.path.basename(file_path).lower()
+
+    if language in {"rust", "c", "cpp", "python", "bash"}:
+        ast_blocks = parse_code_blocks_with_tree_sitter(file_path, content)
+
+        if len(ast_blocks) > 0:
+            return ast_blocks
 
     if language == "python":
         return split_python_code(content)
@@ -591,13 +606,13 @@ def split_code_content(file_path, content):
 
 def collect_code_blocks(repo_path, max_files=50, max_blocks=200):
     """
-    扫描仓库并收集代码块。
+    扫描仓库并收集代码块
 
-    当前函数保留用于调试。
+    当前函数保留用于调试
     """
 
     ignore_dirs = {
-        ".git",
+       ".git",
         "__pycache__",
         ".idea",
         ".vscode",
@@ -606,7 +621,17 @@ def collect_code_blocks(repo_path, max_files=50, max_blocks=200):
         "venv",
         "target",
         "build",
-        "dist"
+        "dist",
+        "out",
+        ".cargo",
+
+        "code_blocks",
+        "function_analysis",
+        "call_graph",
+        "module_summary",
+        "repo_profiles",
+        "reports",
+        "history_knowledge_base",
     }
 
     code_files = []
@@ -642,13 +667,19 @@ def collect_code_blocks(repo_path, max_files=50, max_blocks=200):
         for block in blocks:
             all_blocks.append(
                 {
-                    "file_path": relative_path,
-                    "language": block.get("language", detect_language(file_path)),
-                    "start_line": block.get("start_line"),
-                    "end_line": block.get("end_line"),
-                    "type": block["type"],
-                    "name": block["name"],
-                    "content": block["content"]
+                    all_blocks.append(
+                        {
+                            "file_path": file_info["relative_path"],
+                            "file_score": file_info["score"],
+                            "language": block.get("language", detect_language(file_path)),
+                            "parser": block.get("parser", "regex"),
+                            "start_line": block.get("start_line"),
+                            "end_line": block.get("end_line"),
+                            "type": block["type"],
+                            "name": block["name"],
+                            "content": block["content"]
+                        }
+)
                 }
             )
 
@@ -676,7 +707,17 @@ def collect_code_blocks_from_scored_files(repo_path, max_files=30, max_blocks=20
         "venv",
         "target",
         "build",
-        "dist"
+        "dist",
+        "out",
+        ".cargo",
+
+        "code_blocks",
+        "function_analysis",
+        "call_graph",
+        "module_summary",
+        "repo_profiles",
+        "reports",
+        "history_knowledge_base",
     }
 
     scored_files = []
@@ -725,6 +766,7 @@ def collect_code_blocks_from_scored_files(repo_path, max_files=30, max_blocks=20
                     "file_path": file_info["relative_path"],
                     "file_score": file_info["score"],
                     "language": block.get("language", detect_language(file_path)),
+                    "parser": block.get("parser", "regex"),
                     "start_line": block.get("start_line"),
                     "end_line": block.get("end_line"),
                     "type": block["type"],
@@ -738,6 +780,96 @@ def collect_code_blocks_from_scored_files(repo_path, max_files=30, max_blocks=20
 
     return all_blocks
 
+def collect_all_code_blocks(repo_path, max_blocks=None):
+    """
+    全仓库收集代码块。
+
+    这个函数用于 full 模式：
+    - 不只扫描高分文件
+    - 会尽量扫描整个仓库的所有代码文件
+    - 每个代码块仍然保留 file_score，方便后续排序和分析
+    """
+
+    ignore_dirs = {
+        ".git",
+        "__pycache__",
+        ".idea",
+        ".vscode",
+        "node_modules",
+        ".venv",
+        "venv",
+        "target",
+        "build",
+        "dist",
+        "out",
+        ".cargo",
+
+        "code_blocks",
+        "function_analysis",
+        "call_graph",
+        "module_summary",
+        "repo_profiles",
+        "reports",
+        "history_knowledge_base",
+    }
+
+    code_files = []
+
+    for current_path, dirs, files in os.walk(repo_path):
+        dirs[:] = [d for d in dirs if d not in ignore_dirs]
+
+        for file_name in files:
+            file_path = os.path.join(current_path, file_name)
+
+            if is_code_file(file_path):
+                code_files.append(file_path)
+
+    scored_files = []
+
+    for file_path in code_files:
+        score_info = get_file_score_info(file_path, repo_path)
+
+        scored_files.append(
+            {
+                "file_path": file_path,
+                "relative_path": score_info["path"],
+                "score": score_info["score"]
+            }
+        )
+
+    # full 模式仍然优先把高分文件放前面，但不会丢掉低分文件
+    scored_files.sort(key=lambda item: item["score"], reverse=True)
+
+    all_blocks = []
+
+    for file_info in scored_files:
+        file_path = file_info["file_path"]
+        content = read_code_file(file_path)
+
+        if content == "":
+            continue
+
+        blocks = split_code_content(file_path, content)
+
+        for block in blocks:
+            all_blocks.append(
+                {
+                    "file_path": file_info["relative_path"],
+                    "file_score": file_info["score"],
+                    "language": block.get("language", detect_language(file_path)),
+                    "parser": block.get("parser", "regex"),
+                    "start_line": block.get("start_line"),
+                    "end_line": block.get("end_line"),
+                    "type": block["type"],
+                    "name": block["name"],
+                    "content": block["content"]
+                }
+            )
+
+            if max_blocks is not None and len(all_blocks) >= max_blocks:
+                return all_blocks
+
+    return all_blocks
 
 def format_code_blocks(blocks, max_chars_per_block=1200):
     """

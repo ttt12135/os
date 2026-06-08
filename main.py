@@ -533,7 +533,7 @@ def generate_special_evaluation_report(
     return save_path, preview, report_content
 
 
-def run_ingest_history(repo_path, max_blocks=20):
+def run_ingest_history(repo_path, max_blocks=20, analysis_mode="quick"):
     """
     一键入库历史仓库。
     """
@@ -541,7 +541,8 @@ def run_ingest_history(repo_path, max_blocks=20):
     generated_files = ingest_history_repo(
         repo_path=repo_path,
         ask_ai_once=ask_ai_once,
-        max_blocks=max_blocks
+        max_blocks=max_blocks,
+        analysis_mode=analysis_mode
     )
 
     result_text = format_pipeline_result(
@@ -551,15 +552,19 @@ def run_ingest_history(repo_path, max_blocks=20):
 
     return generated_files, result_text
 
-def run_analyze_target(repo_path, max_blocks=20):
+def run_analyze_target(repo_path, max_blocks=20, analysis_mode="quick"):
     """
-    一键分析新提交仓库。
+    分析目标仓库
+    - repo_path: 仓库路径
+    - max_blocks: 最大分析代码块数
+    - analysis_mode: quick/full
     """
 
     generated_files = analyze_target_repo(
-        repo_path=repo_path,
-        ask_ai_once=ask_ai_once,
-        max_blocks=max_blocks
+    repo_path=repo_path,
+    ask_ai_once=ask_ai_once,
+    max_blocks=max_blocks,
+    analysis_mode=analysis_mode
     )
 
     result_text = format_pipeline_result(
@@ -568,6 +573,25 @@ def run_analyze_target(repo_path, max_blocks=20):
     )
 
     return generated_files, result_text
+
+def parse_max_blocks_input(max_blocks_text, default_value=20):
+    """
+    解析用户输入的 max_blocks。
+
+    - 直接回车：返回默认值
+    - all：返回 None，表示分析全部代码块
+    - 数字：返回对应整数
+    """
+
+    text = max_blocks_text.strip().lower()
+
+    if text == "":
+        return default_value
+
+    if text == "all":
+        return None
+
+    return int(text)
 
 def main():
     print("v1.9- 专项对比评分报告版")
@@ -784,16 +808,20 @@ def main():
 
         elif command == "ingest_history":
             repo_path = input("请输入历史仓库路径: ")
-            max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，直接回车默认 20: ")
+            analysis_mode = input("请选择分析模式 quick/full，直接回车默认 quick: ")
 
-            if max_blocks_text.strip() == "":
-                max_blocks = 20
-            else:
-                max_blocks = int(max_blocks_text)
+            if analysis_mode.strip() == "":
+                analysis_mode = "quick"
+
+            analysis_mode = analysis_mode.strip().lower()
+
+            max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 20: ")
+            max_blocks = parse_max_blocks_input(max_blocks_text, default_value=20)
 
             generated_files, result_text = run_ingest_history(
                 repo_path=repo_path,
-                max_blocks=max_blocks
+                max_blocks=max_blocks,
+                analysis_mode=analysis_mode
             )
 
             print()
@@ -802,16 +830,20 @@ def main():
 
         elif command == "analyze_target":
             repo_path = input("请输入新提交仓库路径: ")
-            max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，直接回车默认 20: ")
+            analysis_mode = input("请选择分析模式 quick/full，直接回车默认 quick: ")
 
-            if max_blocks_text.strip() == "":
-                max_blocks = 20
-            else:
-                max_blocks = int(max_blocks_text)
+            if analysis_mode.strip() == "":
+                analysis_mode = "quick"
+
+            analysis_mode = analysis_mode.strip().lower()
+
+            max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 20: ")
+            max_blocks = parse_max_blocks_input(max_blocks_text, default_value=20)
 
             generated_files, result_text = run_analyze_target(
                 repo_path=repo_path,
-                max_blocks=max_blocks
+                max_blocks=max_blocks,
+                analysis_mode=analysis_mode
             )
 
             print()

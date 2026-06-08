@@ -2,7 +2,7 @@ import os
 
 from src.repo_reader import build_file_tree
 from src.file_reader import collect_important_files, format_file_scores
-from src.code_splitter import collect_code_blocks_from_scored_files
+from src.code_splitter import collect_code_blocks_from_scored_files, collect_all_code_blocks
 from src.code_block_store import save_code_blocks
 from src.code_understander import analyze_code_blocks_file, save_function_analysis
 from src.call_graph_builder import build_enhanced_call_graph, save_call_graph
@@ -19,7 +19,13 @@ def get_repo_name(repo_path):
     return os.path.basename(repo_path)
 
 
-def run_repo_analysis_pipeline(repo_path, ask_ai_once, max_blocks=20, profile_type="history"):
+def run_repo_analysis_pipeline(
+    repo_path,
+    ask_ai_once,
+    max_blocks=20,
+    profile_type="history",
+    analysis_mode="quick"
+):
     """
     一键分析一个仓库。
 
@@ -36,6 +42,7 @@ def run_repo_analysis_pipeline(repo_path, ask_ai_once, max_blocks=20, profile_ty
     repo_name = get_repo_name(repo_path)
 
     generated_files = {}
+    generated_files["analysis_mode"] = analysis_mode
 
     print()
     print(f"开始分析仓库：{repo_name}")
@@ -43,13 +50,21 @@ def run_repo_analysis_pipeline(repo_path, ask_ai_once, max_blocks=20, profile_ty
     print("-" * 60)
 
     # 1. 代码切片
-    print("步骤 1/5：正在进行高分文件优先代码切片...")
+    if analysis_mode == "full":
+        print("步骤 1/5：正在进行 full 模式全仓库代码切片...")
 
-    blocks = collect_code_blocks_from_scored_files(
-        repo_path=repo_path,
-        max_files=30,
-        max_blocks=200
-    )
+        blocks = collect_all_code_blocks(
+            repo_path=repo_path,
+            max_blocks=5000
+        )
+    else:
+        print("步骤 1/5：正在进行 quick 模式高分文件优先代码切片...")
+
+        blocks = collect_code_blocks_from_scored_files(
+            repo_path=repo_path,
+            max_files=30,
+            max_blocks=200
+        )
 
     code_blocks_path = save_code_blocks(
         repo_path=repo_path,
@@ -137,8 +152,8 @@ def run_repo_analysis_pipeline(repo_path, ask_ai_once, max_blocks=20, profile_ty
     )
 
     repo_profile_path = save_repo_profile(
-    profile,
-    profile_type=profile_type
+        profile,
+        profile_type=profile_type
     )
 
     generated_files["repo_profile_path"] = repo_profile_path
@@ -153,7 +168,7 @@ def run_repo_analysis_pipeline(repo_path, ask_ai_once, max_blocks=20, profile_ty
     return generated_files
 
 
-def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20):
+def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="quick"):
     """
     一键入库历史仓库。
 
@@ -167,7 +182,8 @@ def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20):
     repo_path=repo_path,
     ask_ai_once=ask_ai_once,
     max_blocks=max_blocks,
-    profile_type="history"
+    profile_type="history",
+    analysis_mode=analysis_mode
     )
 
     print()
@@ -184,7 +200,7 @@ def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20):
     return generated_files
 
 
-def analyze_target_repo(repo_path, ask_ai_once, max_blocks=20):
+def analyze_target_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="quick"):
     """
     一键分析新提交仓库。
 
@@ -195,7 +211,8 @@ def analyze_target_repo(repo_path, ask_ai_once, max_blocks=20):
     repo_path=repo_path,
     ask_ai_once=ask_ai_once,
     max_blocks=max_blocks,
-    profile_type="target"
+    profile_type="target",
+    analysis_mode=analysis_mode
     )
 
     return generated_files

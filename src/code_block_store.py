@@ -35,12 +35,13 @@ def add_block_ids(blocks):
             "file_path": block["file_path"],
             "file_score": block.get("file_score", 0),
             "language": block.get("language", "unknown"),
+            "parser": block.get("parser", "unknown"),
             "start_line": block.get("start_line"),
             "end_line": block.get("end_line"),
             "type": block["type"],
             "name": block["name"],
             "content": block["content"]
-}
+        }
 
         new_blocks.append(new_block)
 
