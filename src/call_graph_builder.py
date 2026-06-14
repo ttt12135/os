@@ -67,6 +67,25 @@ def clean_callee_name(name):
 
     return name
 
+def normalize_function_name(name):
+    """
+    标准化函数名，方便调用图合并和匹配。
+    """
+
+    if not name:
+        return ""
+
+    name = str(name).strip()
+
+    # Rust / C++ 的路径调用，保留最后一级名称
+    if "::" in name:
+        name = name.split("::")[-1]
+
+    # 方法调用 object.method，只保留 method
+    if "." in name:
+        name = name.split(".")[-1]
+
+    return name
 
 def extract_calls_by_regex(code_content):
     """
@@ -237,6 +256,125 @@ def merge_edges(ai_edges, regex_edges):
 
     return list(edge_map.values())
 
+def build_function_nodes(functions):
+    """
+    根据 function_analysis 结果构建调用图节点。
+    """
+
+    nodes = []
+
+    for item in functions:
+        node = {
+            "block_id": item.get("block_id"),
+            "name": item.get("name"),
+            "normalized_name": normalize_function_name(item.get("name")),
+            "file_path": item.get("file_path"),
+            "language": item.get("language"),
+            "parser": item.get("parser"),
+            "start_line": item.get("start_line"),
+            "end_line": item.get("end_line"),
+            "type": item.get("type"),
+            "module": item.get("related_os_module", "unknown"),
+            "summary": item.get("summary", "")
+        }
+
+        nodes.append(node)
+
+    return nodes
+
+def build_defined_function_name_set(nodes):
+    """
+    构建仓库内部已定义函数名集合。
+
+    用于判断某条调用边是内部调用还是外部调用。
+    """
+
+    defined_names = set()
+
+    for node in nodes:
+        name = node.get("name")
+        normalized_name = node.get("normalized_name")
+
+        if name:
+            defined_names.add(name)
+
+        if normalized_name:
+            defined_names.add(normalized_name)
+
+    return defined_names
+
+
+def enrich_edges(edges, defined_function_names):
+    """
+    对调用边进行增强：
+    标准化 caller / callee
+    判断 internal / external
+    增加 edge_id
+    """
+
+    enriched_edges = []
+
+    for index, edge in enumerate(edges, start=1):
+        caller = edge.get("caller")
+        callee = edge.get("callee")
+
+        normalized_caller = normalize_function_name(caller)
+        normalized_callee = normalize_function_name(callee)
+
+        if normalized_callee in defined_function_names:
+            call_type = "internal"
+        else:
+            call_type = "external"
+
+        new_edge = dict(edge)
+        new_edge["edge_id"] = f"edge_{index}"
+        new_edge["normalized_caller"] = normalized_caller
+        new_edge["normalized_callee"] = normalized_callee
+        new_edge["call_type"] = call_type
+
+        enriched_edges.append(new_edge)
+
+    return enriched_edges
+
+def build_module_stats(nodes, edges):
+    """
+    统计每个 OS 模块的函数数量和调用关系数量。
+    """
+
+    module_stats = {}
+
+    for node in nodes:
+        module = node.get("module", "unknown")
+
+        if module not in module_stats:
+            module_stats[module] = {
+                "function_count": 0,
+                "outgoing_edge_count": 0,
+                "internal_edge_count": 0,
+                "external_edge_count": 0
+            }
+
+        module_stats[module]["function_count"] += 1
+
+    for edge in edges:
+        module = edge.get("caller_module", "unknown")
+
+        if module not in module_stats:
+            module_stats[module] = {
+                "function_count": 0,
+                "outgoing_edge_count": 0,
+                "internal_edge_count": 0,
+                "external_edge_count": 0
+            }
+
+        module_stats[module]["outgoing_edge_count"] += 1
+
+        if edge.get("call_type") == "internal":
+            module_stats[module]["internal_edge_count"] += 1
+        else:
+            module_stats[module]["external_edge_count"] += 1
+
+    return module_stats
 
 def build_enhanced_call_graph(function_analysis_path, code_blocks_path):
     """
@@ -273,8 +411,65 @@ def build_enhanced_call_graph(function_analysis_path, code_blocks_path):
 
     return call_graph
 
+def build_full_call_graph(function_analysis_path, code_blocks_path):
+    """
+    构建 full 版本调用图。
 
-def save_call_graph(call_graph, enhanced=True):
+    相比 enhanced 版本，full 版本增加：
+    nodes
+    enriched_edges
+    internal / external 调用分类
+    module_stats
+    """
+
+    function_analysis_data = load_json_file(function_analysis_path)
+    code_blocks_data = load_json_file(code_blocks_path)
+
+    repo_name = function_analysis_data.get("repo_name", "unknown_repo")
+    functions = function_analysis_data.get("functions", [])
+
+    block_map = build_block_map(code_blocks_data)
+
+    nodes = build_function_nodes(functions)
+    defined_function_names = build_defined_function_name_set(nodes)
+
+    ai_edges = extract_ai_edges(functions)
+    regex_edges = extract_regex_edges(functions, block_map)
+
+    merged_edges = merge_edges(ai_edges, regex_edges)
+    enriched_edges = enrich_edges(merged_edges, defined_function_names)
+
+    internal_edge_count = 0
+    external_edge_count = 0
+
+    for edge in enriched_edges:
+        if edge.get("call_type") == "internal":
+            internal_edge_count += 1
+        else:
+            external_edge_count += 1
+
+    module_stats = build_module_stats(nodes, enriched_edges)
+
+    call_graph = {
+        "repo_name": repo_name,
+        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "graph_type": "full",
+        "function_count": len(functions),
+        "node_count": len(nodes),
+        "ai_edge_count": len(ai_edges),
+        "regex_edge_count": len(regex_edges),
+        "merged_edge_count": len(enriched_edges),
+        "internal_edge_count": internal_edge_count,
+        "external_edge_count": external_edge_count,
+        "module_count": len(module_stats),
+        "nodes": nodes,
+        "edges": enriched_edges,
+        "module_stats": module_stats
+    }
+
+    return call_graph
+
+def save_call_graph(call_graph, enhanced=True, graph_type=None):
     """
     保存调用图 JSON。
     """
@@ -283,7 +478,9 @@ def save_call_graph(call_graph, enhanced=True):
 
     repo_name = call_graph.get("repo_name", "unknown_repo")
 
-    if enhanced:
+    if graph_type == "full":
+        file_name = f"{repo_name}_call_graph_full.json"
+    elif enhanced:
         file_name = f"{repo_name}_call_graph_enhanced.json"
     else:
         file_name = f"{repo_name}_call_graph.json"

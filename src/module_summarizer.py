@@ -268,3 +268,325 @@ def format_module_summary_preview(module_summary, save_path):
 
     return "\n".join(output)
 
+def safe_module_name(module_name):
+    """
+    规范化模块名称。
+    """
+
+    if module_name is None:
+        return "unknown"
+
+    module_name = str(module_name).strip()
+
+    if module_name == "":
+        return "unknown"
+
+    return module_name
+
+
+def get_edge_caller_key(edge):
+    """
+    获取调用边中的 caller 标识。
+    优先使用 normalized_caller。
+    """
+
+    normalized_caller = edge.get("normalized_caller")
+
+    if normalized_caller:
+        return normalized_caller
+
+    return edge.get("caller", "")
+
+
+def build_function_outgoing_count(edges):
+    """
+    统计每个函数的输出调用数量。
+    用于判断模块中的核心函数。
+    """
+
+    outgoing_count = {}
+
+    for edge in edges:
+        caller = get_edge_caller_key(edge)
+
+        if caller == "":
+            continue
+
+        if caller not in outgoing_count:
+            outgoing_count[caller] = 0
+
+        outgoing_count[caller] += 1
+
+    return outgoing_count
+
+
+def build_module_file_map(nodes):
+    """
+    根据调用图节点统计每个模块涉及的文件。
+    """
+
+    module_file_map = {}
+
+    for node in nodes:
+        module = safe_module_name(node.get("module"))
+        file_path = node.get("file_path")
+
+        if module not in module_file_map:
+            module_file_map[module] = set()
+
+        if file_path:
+            module_file_map[module].add(file_path)
+
+    result = {}
+
+    for module, files in module_file_map.items():
+        result[module] = sorted(list(files))
+
+    return result
+
+
+def build_module_function_map(nodes):
+    """
+    根据调用图节点按模块收集函数。
+    """
+
+    module_function_map = {}
+
+    for node in nodes:
+        module = safe_module_name(node.get("module"))
+
+        if module not in module_function_map:
+            module_function_map[module] = []
+
+        module_function_map[module].append(node)
+
+    return module_function_map
+
+
+def select_core_functions(module_functions, outgoing_count, max_functions=10):
+    """
+    选择模块中的核心函数。
+
+    规则：
+    优先选择输出调用数量高的函数
+    其次保留有 summary 的函数
+    """
+
+    scored_functions = []
+
+    for node in module_functions:
+        name = node.get("normalized_name") or node.get("name") or ""
+        call_count = outgoing_count.get(name, 0)
+
+        scored_functions.append(
+            {
+                "name": node.get("name"),
+                "normalized_name": node.get("normalized_name"),
+                "file_path": node.get("file_path"),
+                "language": node.get("language"),
+                "start_line": node.get("start_line"),
+                "end_line": node.get("end_line"),
+                "outgoing_call_count": call_count,
+                "summary": node.get("summary", "")
+            }
+        )
+
+    scored_functions.sort(
+        key=lambda item: (
+            item.get("outgoing_call_count", 0),
+            len(item.get("summary", ""))
+        ),
+        reverse=True
+    )
+
+    return scored_functions[:max_functions]
+
+
+def calculate_ratio(part, total):
+    """
+    计算比例，避免除零错误。
+    """
+
+    if total == 0:
+        return 0.0
+
+    return round(part / total, 4)
+
+
+def calculate_module_weight(module_stats, total_functions, total_edges):
+    """
+    粗略计算模块权重。
+
+    函数数量和调用数量都能反映模块重要性。
+    """
+
+    function_count = module_stats.get("function_count", 0)
+    outgoing_edge_count = module_stats.get("outgoing_edge_count", 0)
+
+    function_part = calculate_ratio(function_count, total_functions)
+    edge_part = calculate_ratio(outgoing_edge_count, total_edges)
+
+    weight = function_part * 0.6 + edge_part * 0.4
+
+    return round(weight, 4)
+
+
+def build_module_profile_from_call_graph(call_graph):
+    """
+    根据 full 调用图构建模块画像。
+
+    输入：
+    call_graph 中的 nodes / edges / module_stats
+
+    输出：
+    结构化模块画像
+    """
+
+    repo_name = call_graph.get("repo_name", "unknown_repo")
+    nodes = call_graph.get("nodes", [])
+    edges = call_graph.get("edges", [])
+    module_stats = call_graph.get("module_stats", {})
+
+    total_functions = call_graph.get("node_count", len(nodes))
+    total_edges = call_graph.get("merged_edge_count", len(edges))
+
+    outgoing_count = build_function_outgoing_count(edges)
+    module_file_map = build_module_file_map(nodes)
+    module_function_map = build_module_function_map(nodes)
+
+    modules = {}
+
+    all_module_names = set()
+
+    for module_name in module_stats.keys():
+        all_module_names.add(safe_module_name(module_name))
+
+    for module_name in module_function_map.keys():
+        all_module_names.add(safe_module_name(module_name))
+
+    for module_name in sorted(all_module_names):
+        stats = module_stats.get(
+            module_name,
+            {
+                "function_count": 0,
+                "outgoing_edge_count": 0,
+                "internal_edge_count": 0,
+                "external_edge_count": 0
+            }
+        )
+
+        function_count = stats.get("function_count", 0)
+        outgoing_edge_count = stats.get("outgoing_edge_count", 0)
+        internal_edge_count = stats.get("internal_edge_count", 0)
+        external_edge_count = stats.get("external_edge_count", 0)
+
+        module_functions = module_function_map.get(module_name, [])
+        core_functions = select_core_functions(
+            module_functions=module_functions,
+            outgoing_count=outgoing_count,
+            max_functions=10
+        )
+
+        module_profile = {
+            "module_name": module_name,
+            "function_count": function_count,
+            "outgoing_edge_count": outgoing_edge_count,
+            "internal_edge_count": internal_edge_count,
+            "external_edge_count": external_edge_count,
+            "internal_call_ratio": calculate_ratio(
+                internal_edge_count,
+                outgoing_edge_count
+            ),
+            "external_call_ratio": calculate_ratio(
+                external_edge_count,
+                outgoing_edge_count
+            ),
+            "module_weight": calculate_module_weight(
+                module_stats=stats,
+                total_functions=total_functions,
+                total_edges=total_edges
+            ),
+            "files": module_file_map.get(module_name, []),
+            "file_count": len(module_file_map.get(module_name, [])),
+            "core_functions": core_functions,
+            "summary": "",
+            "strengths": [],
+            "weaknesses": [],
+            "uncertainty": [
+                "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+                "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+            ]
+        }
+
+        modules[module_name] = module_profile
+
+    result = {
+        "repo_name": repo_name,
+        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "summary_type": "full",
+        "module_count": len(modules),
+        "total_function_count": total_functions,
+        "total_edge_count": total_edges,
+        "internal_edge_count": call_graph.get("internal_edge_count", 0),
+        "external_edge_count": call_graph.get("external_edge_count", 0),
+        "modules": modules,
+        "data_sources": {
+            "call_graph": "nodes / edges / module_stats"
+        }
+    }
+
+    return result
+
+
+def save_module_summary_full(module_summary_full):
+    """
+    保存 full 版本模块画像。
+    """
+
+    output_dir = "module_summary"
+    ensure_dir(output_dir)
+
+    repo_name = module_summary_full.get("repo_name", "unknown_repo")
+    file_name = f"{repo_name}_module_summary_full.json"
+    file_path = os.path.join(output_dir, file_name)
+
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(module_summary_full, file, ensure_ascii=False, indent=2)
+
+    return file_path
+
+
+def format_module_summary_full_preview(module_summary_full, save_path):
+    """
+    生成 full 模块画像的终端预览。
+    """
+
+    output = []
+
+    output.append("full 模块画像生成完成。")
+    output.append("")
+    output.append(f"仓库名称：{module_summary_full.get('repo_name')}")
+    output.append(f"模块数量：{module_summary_full.get('module_count')}")
+    output.append(f"函数节点数量：{module_summary_full.get('total_function_count')}")
+    output.append(f"调用边数量：{module_summary_full.get('total_edge_count')}")
+    output.append(f"保存路径：{save_path}")
+    output.append("")
+    output.append("模块预览：")
+
+    modules = module_summary_full.get("modules", {})
+
+    sorted_modules = sorted(
+        modules.values(),
+        key=lambda item: item.get("module_weight", 0),
+        reverse=True
+    )
+
+    for index, module in enumerate(sorted_modules[:8], start=1):
+        output.append(f"{index}. {module.get('module_name')}")
+        output.append(f"   函数数量：{module.get('function_count')}")
+        output.append(f"   调用边数量：{module.get('outgoing_edge_count')}")
+        output.append(f"   模块权重：{module.get('module_weight')}")
+        output.append(f"   文件数量：{module.get('file_count')}")
+        output.append("")
+
+    return "\n".join(output)

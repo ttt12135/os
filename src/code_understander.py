@@ -1,6 +1,8 @@
 import os
 import json
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
 
 
 def ensure_dir(dir_path):
@@ -115,18 +117,63 @@ def analyze_single_block(repo_name, block, ask_ai_once):
 
     return analysis
 
-
-
-
-def analyze_code_blocks_file(blocks_file_path, ask_ai_once, max_blocks=10):
+def analyze_single_block_safe(repo_name, block, ask_ai_once):
     """
-    分析一个代码块 JSON 文件中的前 max_blocks 个代码块。
-    max_blocks 先限制代码块数量，防止多度使用token
+    安全分析单个代码块。
+
+    这个个函数用于并发场景：
+    单个 block 出错不会导致整个分析流程崩溃
+    出错信息会被保存到结果中
+    """
+
+    try:
+        return analyze_single_block(
+            repo_name=repo_name,
+            block=block,
+            ask_ai_once=ask_ai_once
+        )
+
+    except Exception as error:
+        return {
+            "block_id": block.get("block_id"),
+            "file_path": block.get("file_path"),
+            "language": block.get("language"),
+            "parser": block.get("parser"),
+            "start_line": block.get("start_line"),
+            "end_line": block.get("end_line"),
+            "name": block.get("name"),
+            "type": block.get("type"),
+            "summary": "该代码块分析失败。",
+            "logic_steps": [],
+            "called_functions": [],
+            "related_os_module": "unknown",
+            "evidence": str(error),
+            "uncertainty": "并发分析过程中该代码块发生异常，后续可单独重试。"
+        }
+
+
+def analyze_code_blocks_file(
+    blocks_file_path,
+    ask_ai_once,
+    max_blocks=10,
+    resume=True,
+    save_every=1
+):
+    """
+    分析代码块 JSON 文件。
 
     max_blocks:
-    整数：只分析前 max_blocks 个代码块
-    None：分析全部代码块
+    - 整数：分析前 max_blocks 个代码块
+    - None：分析全部代码块
+
+    resume:
+    - True：启用断点续跑，跳过已经分析过的 block
+    - False：从头重新分析
+
+    save_every:
+    - 每分析多少个 block 保存一次进度
     """
+
     data = load_code_blocks(blocks_file_path)
 
     repo_name = data.get("repo_name", "unknown_repo")
@@ -137,10 +184,23 @@ def analyze_code_blocks_file(blocks_file_path, ask_ai_once, max_blocks=10):
     else:
         selected_blocks = blocks[:max_blocks]
 
-    results = []
+    if resume:
+        results = load_analysis_progress(repo_name)
+    else:
+        results = []
+
+    analyzed_block_ids = build_analyzed_block_id_set(results)
+
+    total_count = len(selected_blocks)
 
     for index, block in enumerate(selected_blocks, start=1):
-        print(f"正在分析第 {index}/{len(selected_blocks)} 个代码块：{block.get('name')}")
+        block_id = block.get("block_id")
+
+        if block_id in analyzed_block_ids:
+            print(f"跳过已分析代码块 {index}/{total_count}：{block.get('name')}")
+            continue
+
+        print(f"正在分析第 {index}/{total_count} 个代码块：{block.get('name')}")
 
         analysis = analyze_single_block(
             repo_name=repo_name,
@@ -149,18 +209,25 @@ def analyze_code_blocks_file(blocks_file_path, ask_ai_once, max_blocks=10):
         )
 
         results.append(analysis)
+        analyzed_block_ids.add(block_id)
+
+        if len(results) % save_every == 0:
+            save_analysis_progress(repo_name, results)
+
+    save_analysis_progress(repo_name, results)
 
     return repo_name, results
 
 
-def save_function_analysis(repo_name, analysis_results):
+def save_function_analysis(repo_name, analysis_results, suffix="function_analysis"):
     """
-    保存AI分析结果
+    保存函数级代码理解结果。
     """
+
     output_dir = "function_analysis"
     ensure_dir(output_dir)
 
-    file_name = f"{repo_name}_function_analysis.json"
+    file_name = f"{repo_name}_{suffix}.json"
     file_path = os.path.join(output_dir, file_name)
 
     data = {
@@ -199,3 +266,164 @@ def format_function_analysis_summary(repo_name, analysis_results, save_path):
         output.append("")
 
     return "\n".join(output)
+
+def save_analysis_progress(repo_name, analysis_results):
+    """
+    保存函数理解进度。
+    每分析完一批或一个 block，就写入 progress 文件。
+    """
+
+    output_dir = "function_analysis"
+
+    ensure_dir(output_dir)
+
+    file_name = f"{repo_name}_function_analysis_progress.json"
+    file_path = os.path.join(output_dir, file_name)
+
+    data = {
+        "repo_name": repo_name,
+        "analysis_count": len(analysis_results),
+        "functions": analysis_results
+    }
+
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=2)
+
+    return file_path
+
+
+def load_analysis_progress(repo_name):
+    """
+    读取已有函数理解进度。
+    如果没有进度文件，就返回空列表。
+    """
+
+    file_path = os.path.join(
+        "function_analysis",
+        f"{repo_name}_function_analysis_progress.json"
+    )
+
+    if not os.path.exists(file_path):
+        return []
+
+    with open(file_path, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    return data.get("functions", [])
+
+
+
+def build_analyzed_block_id_set(analysis_results):
+    """
+    从已有分析结果中提取已经完成的 block_id。
+    """
+
+    analyzed_block_ids = set()
+
+    for item in analysis_results:
+        block_id = item.get("block_id")
+
+        if block_id:
+            analyzed_block_ids.add(block_id)
+
+    return analyzed_block_ids
+
+def analyze_code_blocks_file_concurrent(
+    blocks_file_path,
+    ask_ai_once,
+    max_blocks=10,
+    resume=True,
+    save_every=5,
+    max_workers=3
+):
+    """
+    并发分析代码块 JSON 文件。
+
+    max_blocks:
+    分析前 max_blocks 个代码块
+
+    resume:
+    True：启用断点续跑，跳过已经分析过的 block
+
+    save_every:每完成多少个新 block 保存一次进度
+
+    max_workers:并发线程数
+    """
+
+    data = load_code_blocks(blocks_file_path)
+
+    repo_name = data.get("repo_name", "unknown_repo")
+    blocks = data.get("blocks", [])
+
+    if max_blocks is None:
+        selected_blocks = blocks
+    else:
+        selected_blocks = blocks[:max_blocks]
+
+    if resume:
+        results = load_analysis_progress(repo_name)
+    else:
+        results = []
+
+    analyzed_block_ids = build_analyzed_block_id_set(results)
+
+    pending_blocks = []
+
+    for block in selected_blocks:
+        block_id = block.get("block_id")
+
+        if block_id in analyzed_block_ids:
+            continue
+
+        pending_blocks.append(block)
+
+    total_count = len(selected_blocks)
+    pending_count = len(pending_blocks)
+    finished_count = len(selected_blocks) - pending_count
+
+    print(f"代码块总数：{total_count}")
+    print(f"已完成数量：{finished_count}")
+    print(f"待分析数量：{pending_count}")
+    print(f"并发线程数：{max_workers}")
+
+    if pending_count == 0:
+        print("所有代码块都已经分析完成，无需重复调用 API。")
+        return repo_name, results
+
+    completed_new_count = 0
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_block = {}
+
+        for block in pending_blocks:
+            future = executor.submit(
+                analyze_single_block_safe,
+                repo_name,
+                block,
+                ask_ai_once
+            )
+
+            future_to_block[future] = block
+
+        for future in as_completed(future_to_block):
+            block = future_to_block[future]
+            block_id = block.get("block_id")
+            block_name = block.get("name")
+
+            analysis = future.result()
+
+            results.append(analysis)
+            analyzed_block_ids.add(block_id)
+            completed_new_count += 1
+
+            print(
+                f"已完成并发分析 {completed_new_count}/{pending_count}：{block_name}"
+            )
+
+            if completed_new_count % save_every == 0:
+                save_analysis_progress(repo_name, results)
+                print("已保存一次分析进度。")
+
+    save_analysis_progress(repo_name, results)
+
+    return repo_name, results

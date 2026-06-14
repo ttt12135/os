@@ -1,0 +1,339 @@
+{
+  "repo_name": "zhengzhoudaxue111",
+  "profile_type": "full",
+  "target_or_history": "target",
+  "project_type": "filesystem_focused_project",
+  "main_languages": [
+    "rust"
+  ],
+  "function_count": 50,
+  "node_count": 50,
+  "edge_count": 711,
+  "internal_edge_count": 9,
+  "external_edge_count": 702,
+  "module_count": 3,
+  "core_modules": [
+    "syscall",
+    "filesystem",
+    "unknown"
+  ],
+  "core_module_details": [
+    {
+      "module_name": "syscall",
+      "module_weight": 0.7538,
+      "completeness": 0.75,
+      "final_score": 0.7523
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.2342,
+      "completeness": 0.65,
+      "final_score": 0.4005
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.012,
+      "completeness": 0.13,
+      "final_score": 0.0592
+    }
+  ],
+  "module_completeness": {
+    "filesystem": 0.65,
+    "syscall": 0.75,
+    "unknown": 0.13
+  },
+  "structure_complexity": 0.6,
+  "module_profiles": {
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 13,
+      "outgoing_edge_count": 139,
+      "internal_edge_count": 3,
+      "external_edge_count": 136,
+      "internal_call_ratio": 0.0216,
+      "external_call_ratio": 0.9784,
+      "module_weight": 0.2342,
+      "files": [
+        "kernel\\src\\syscall\\fs.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "do_getdents64",
+          "normalized_name": "do_getdents64",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "264",
+          "end_line": "303",
+          "outgoing_call_count": 28,
+          "summary": "实现 getdents64 系统调用，从目录文件读取目录项并编码为 linux_dirent64 格式写入用户缓冲区。"
+        },
+        {
+          "name": "do_mkdirat",
+          "normalized_name": "do_mkdirat",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "350",
+          "end_line": "380",
+          "outgoing_call_count": 25,
+          "summary": "该函数实现了mkdirat系统调用，用于在指定目录下创建一个目录。它首先解析目录文件描述符或使用AT_FDCWD获取当前工作目录，然后从用户空间拷贝目录名，最后在目标目录中创建目录。"
+        },
+        {
+          "name": "do_umount2",
+          "normalized_name": "do_umount2",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "424",
+          "end_line": "439",
+          "outgoing_call_count": 23,
+          "summary": "实现 umount2 系统调用，根据用户提供的路径卸载文件系统挂载点。首先从用户空间拷贝目标路径字符串，处理相对路径（拼接当前工作目录），然后通过 VFS 管理器定位挂载点并执行卸载操作。"
+        },
+        {
+          "name": "do_mount",
+          "normalized_name": "do_mount",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "383",
+          "end_line": "422",
+          "outgoing_call_count": 23,
+          "summary": "处理 mount 系统调用，解析用户传入的路径和文件系统类型参数，但实际仅支持 vfat 类型的伪装挂载（将 vfat 请求替换为 devfs 挂载），其他类型返回错误。"
+        },
+        {
+          "name": "do_ftruncate",
+          "normalized_name": "do_ftruncate",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "869",
+          "end_line": "895",
+          "outgoing_call_count": 20,
+          "summary": "实现 ftruncate 系统调用，根据文件描述符获取文件对象，检查写权限，然后设置文件大小到元数据中。"
+        },
+        {
+          "name": "create_pipe_pair",
+          "normalized_name": "create_pipe_pair",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "632",
+          "end_line": "637",
+          "outgoing_call_count": 13,
+          "summary": "该函数创建一个新的管道对，返回一对文件句柄（一个读端、一个写端）。内部通过共享同一个环形缓冲区（RingPipe）来实现通信。"
+        },
+        {
+          "name": "do_dup",
+          "normalized_name": "do_dup",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "1141",
+          "end_line": "1148",
+          "outgoing_call_count": 7,
+          "summary": "实现文件描述符的复制（dup）系统调用，通过状态中的文件描述符表复制一个旧文件描述符，返回新分配的文件描述符。"
+        },
+        {
+          "name": "KStat",
+          "normalized_name": "KStat",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "450",
+          "end_line": "470",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个用于存储文件状态信息的结构体KStat，包含设备号、inode、文件模式、链接数、用户ID、组ID、文件大小、块大小、块数以及三个时间戳（访问、修改、状态变更）等字段，对应于类Unix系统中的stat结构。"
+        },
+        {
+          "name": "AT_STATX_FORCE_SYNC",
+          "normalized_name": "AT_STATX_FORCE_SYNC",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "1194",
+          "end_line": "1194",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为 AT_STATX_FORCE_SYNC 的常量，值为 0x2000，用于 statx 系统调用中指示强制同步操作。"
+        },
+        {
+          "name": "AT_EMPTY_PATH",
+          "normalized_name": "AT_EMPTY_PATH",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "1190",
+          "end_line": "1190",
+          "outgoing_call_count": 0,
+          "summary": "定义一个常量 AT_EMPTY_PATH，用于表示在文件系统路径操作中允许空路径标志的数值。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 36,
+      "outgoing_edge_count": 572,
+      "internal_edge_count": 6,
+      "external_edge_count": 566,
+      "internal_call_ratio": 0.0105,
+      "external_call_ratio": 0.9895,
+      "module_weight": 0.7538,
+      "files": [
+        "kernel/src/syscall/fs.rs",
+        "kernel\\src\\syscall\\fs.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "do_openat",
+          "normalized_name": "do_openat",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "41",
+          "end_line": "102",
+          "outgoing_call_count": 72,
+          "summary": "实现 openat 系统调用，根据 dirfd 和路径打开或创建文件/目录，分配文件描述符并返回。"
+        },
+        {
+          "name": "do_copy_file_range",
+          "normalized_name": "do_copy_file_range",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "963",
+          "end_line": "1137",
+          "outgoing_call_count": 59,
+          "summary": "实现 copy_file_range 系统调用，从源文件读取指定范围数据并写入目标文件，支持通过指针或文件偏移量指定起始位置，处理零长度、负偏移、源文件大小裁剪、空洞填充和分块复制等边界情况。"
+        },
+        {
+          "name": "do_newfstatat",
+          "normalized_name": "do_newfstatat",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "501",
+          "end_line": "590",
+          "outgoing_call_count": 48,
+          "summary": "实现'newfstatat'系统调用，根据文件描述符和路径获取文件状态信息并填充到用户空间的结构体中"
+        },
+        {
+          "name": "do_splice",
+          "normalized_name": "do_splice",
+          "file_path": "kernel/src/syscall/fs.rs",
+          "language": "rust",
+          "start_line": "669",
+          "end_line": "783",
+          "outgoing_call_count": 41,
+          "summary": "实现splice系统调用的核心逻辑，在两个文件描述符之间移动数据，要求其中一个必须是管道端，另一个是普通文件，支持文件->管道和管道->文件两种方向的数据搬运，并处理偏移量更新。"
+        },
+        {
+          "name": "do_fstat",
+          "normalized_name": "do_fstat",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": 441,
+          "end_line": 498,
+          "outgoing_call_count": 36,
+          "summary": "实现 fstat 系统调用，通过文件描述符获取文件元数据并填充 Linux 格式的 kstat 结构，然后写回用户空间。"
+        },
+        {
+          "name": "do_writev",
+          "normalized_name": "do_writev",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "168",
+          "end_line": "211",
+          "outgoing_call_count": 30,
+          "summary": "实现 writev 系统调用，将用户空间多个缓冲区（iovec 数组）的数据写入到文件描述符对应的文件中，支持从当前文件偏移位置写入并更新偏移量，处理部分写入（短写）情况。"
+        },
+        {
+          "name": "do_write",
+          "normalized_name": "do_write",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "137",
+          "end_line": "165",
+          "outgoing_call_count": 30,
+          "summary": "实现系统调用write，从用户空间缓冲区读取数据并根据文件描述符写入文件，同时更新文件偏移量。"
+        },
+        {
+          "name": "do_unlinkat",
+          "normalized_name": "do_unlinkat",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": 331,
+          "end_line": 348,
+          "outgoing_call_count": 27,
+          "summary": "该代码块实现了一个异步的取消链接系统调用（unlinkat），用于删除由文件描述符和路径指定的文件或目录。它从用户空间复制路径字符串，根据目录文件描述符或当前工作目录解析目标目录，然后调用目录的unlink方法来执行删除操作。"
+        },
+        {
+          "name": "do_getcwd",
+          "normalized_name": "do_getcwd",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "593",
+          "end_line": "629",
+          "outgoing_call_count": 27,
+          "summary": "实现了 getcwd 系统调用的核心逻辑，用于获取当前工作目录的路径字符串，并处理两种用户调用方式：提供缓冲区或由内核分配缓冲区。"
+        },
+        {
+          "name": "do_pwrite64",
+          "normalized_name": "do_pwrite64",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "829",
+          "end_line": "861",
+          "outgoing_call_count": 27,
+          "summary": "实现系统调用pwrite64：根据文件描述符和偏移量将用户空间缓冲区数据写入文件。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.012,
+      "files": [
+        "kernel\\src\\syscall\\fs.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "ZFILL_CHUNK",
+          "normalized_name": "ZFILL_CHUNK",
+          "file_path": "kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": "1049",
+          "end_line": "1049",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个常量 ZFILL_CHUNK，值为 4096，用于表示以零填充的内存块大小（通常为页面大小）。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "created_by": "os_analysis_agent"
+}

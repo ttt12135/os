@@ -4,10 +4,10 @@ from src.repo_reader import build_file_tree
 from src.file_reader import collect_important_files, format_file_scores
 from src.code_splitter import collect_code_blocks_from_scored_files, collect_all_code_blocks
 from src.code_block_store import save_code_blocks
-from src.code_understander import analyze_code_blocks_file, save_function_analysis
-from src.call_graph_builder import build_enhanced_call_graph, save_call_graph
-from src.module_summarizer import summarize_modules, save_module_summary
-from src.repo_profiler import build_repo_profile, save_repo_profile
+from src.code_understander import analyze_code_blocks_file,analyze_code_blocks_file_concurrent,save_function_analysis
+from src.call_graph_builder import build_enhanced_call_graph,build_full_call_graph,save_call_graph
+from src.module_summarizer import summarize_modules,save_module_summary,build_module_profile_from_call_graph,save_module_summary_full
+from src.repo_profiler import build_repo_profile,save_repo_profile,build_repo_profile_full,save_repo_profile_full
 from src.history_kb_builder import build_history_knowledge_base, save_history_knowledge_base
 
 
@@ -80,15 +80,24 @@ def run_repo_analysis_pipeline(
     print()
     print("步骤 2/5：正在进行 AI 函数级代码理解...")
 
-    repo_name_from_blocks, analysis_results = analyze_code_blocks_file(
+    repo_name_from_blocks, analysis_results = analyze_code_blocks_file_concurrent(
         blocks_file_path=code_blocks_path,
         ask_ai_once=ask_ai_once,
-        max_blocks=max_blocks
+        max_blocks=max_blocks,
+        resume=True,
+        save_every=5,
+        max_workers=3
     )
+
+    if max_blocks is None:
+        function_suffix = "function_analysis_full"
+    else:
+        function_suffix = "function_analysis"
 
     function_analysis_path = save_function_analysis(
         repo_name=repo_name_from_blocks,
-        analysis_results=analysis_results
+        analysis_results=analysis_results,
+        suffix=function_suffix
     )
 
     generated_files["function_analysis_path"] = function_analysis_path
@@ -100,19 +109,37 @@ def run_repo_analysis_pipeline(
     print()
     print("步骤 3/5：正在生成增强版函数调用关系图...")
 
-    call_graph = build_enhanced_call_graph(
-        function_analysis_path=function_analysis_path,
-        code_blocks_path=code_blocks_path
-    )
+    if max_blocks is None:
+        print("正在生成 full 版本函数调用关系图...")
 
-    call_graph_path = save_call_graph(
-        call_graph=call_graph,
-        enhanced=True
-    )
+        call_graph = build_full_call_graph(
+            function_analysis_path=function_analysis_path,
+            code_blocks_path=code_blocks_path
+        )
+
+        call_graph_path = save_call_graph(
+            call_graph=call_graph,
+            graph_type="full"
+        )
+    else:
+        print("正在生成增强版函数调用关系图...")
+
+        call_graph = build_full_call_graph(
+            function_analysis_path=function_analysis_path,
+            code_blocks_path=code_blocks_path
+        )
+
+        call_graph_path = save_call_graph(
+            call_graph=call_graph,
+            enhanced=True
+        )
 
     generated_files["call_graph_path"] = call_graph_path
 
+    print(f"调用图生成完成，节点数量：{call_graph.get('node_count')}")
     print(f"调用图生成完成，调用边数量：{call_graph.get('merged_edge_count')}")
+    print(f"内部调用边数量：{call_graph.get('internal_edge_count')}")
+    print(f"外部调用边数量：{call_graph.get('external_edge_count')}")
     print(f"保存路径：{call_graph_path}")
 
     # 4. 模块逻辑总结
@@ -132,6 +159,41 @@ def run_repo_analysis_pipeline(
 
     print(f"模块总结完成，模块数量：{module_summary.get('module_count')}")
     print(f"保存路径：{module_summary_path}")
+
+    print()
+    print("步骤 4.1/5：正在生成 full 结构化模块画像...")
+
+    module_summary_full = build_module_profile_from_call_graph(call_graph)
+
+    module_summary_full_path = save_module_summary_full(module_summary_full)
+
+    generated_files["module_summary_full_path"] = module_summary_full_path
+
+    print(f"full 模块画像生成完成，模块数量：{module_summary_full.get('module_count')}")
+    print(f"保存路径：{module_summary_full_path}")
+
+    print()
+    print("步骤 4.2/5：正在生成 full 仓库画像...")
+
+    repo_profile_full = build_repo_profile_full(
+        repo_name=repo_name_from_blocks,
+        call_graph=call_graph,
+        module_summary_full=module_summary_full,
+        profile_type=profile_type
+    )
+
+    repo_profile_full_path = save_repo_profile_full(
+        profile=repo_profile_full,
+        profile_type=profile_type
+    )
+
+    generated_files["repo_profile_full_path"] = repo_profile_full_path
+
+    print(f"full 仓库画像生成完成：{repo_profile_full_path}")
+    print(f"项目类型：{repo_profile_full.get('project_type')}")
+    print(f"核心模块：{repo_profile_full.get('core_modules')}")
+    print(f"结构复杂度：{repo_profile_full.get('structure_complexity')}")
+
 
     # 5. 仓库画像
     print()
@@ -179,11 +241,11 @@ def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="qu
     """
 
     generated_files = run_repo_analysis_pipeline(
-    repo_path=repo_path,
-    ask_ai_once=ask_ai_once,
-    max_blocks=max_blocks,
-    profile_type="history",
-    analysis_mode=analysis_mode
+        repo_path=repo_path,
+        ask_ai_once=ask_ai_once,
+        max_blocks=max_blocks,
+        profile_type="history",
+        analysis_mode=analysis_mode
     )
 
     print()
@@ -208,11 +270,11 @@ def analyze_target_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="qu
     """
 
     generated_files = run_repo_analysis_pipeline(
-    repo_path=repo_path,
-    ask_ai_once=ask_ai_once,
-    max_blocks=max_blocks,
-    profile_type="target",
-    analysis_mode=analysis_mode
+        repo_path=repo_path,
+        ask_ai_once=ask_ai_once,
+        max_blocks=max_blocks,
+        profile_type="target",
+        analysis_mode=analysis_mode
     )
 
     return generated_files

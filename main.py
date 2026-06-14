@@ -818,6 +818,10 @@ def main():
             max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 20: ")
             max_blocks = parse_max_blocks_input(max_blocks_text, default_value=20)
 
+            if max_blocks is None:
+                print("你选择了 all，将尝试分析全部代码块。")
+                print("本模式可能耗时较长，但支持断点续跑。中途失败后可重新运行继续分析。")
+
             generated_files, result_text = run_ingest_history(
                 repo_path=repo_path,
                 max_blocks=max_blocks,
@@ -839,6 +843,10 @@ def main():
 
             max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 20: ")
             max_blocks = parse_max_blocks_input(max_blocks_text, default_value=20)
+
+            if max_blocks is None:
+                print("你选择了 all，将尝试分析全部代码块。")
+                print("本模式可能耗时较长，但支持断点续跑。中途失败后可重新运行继续分析。")
 
             generated_files, result_text = run_analyze_target(
                 repo_path=repo_path,
