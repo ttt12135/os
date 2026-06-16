@@ -1,7 +1,7 @@
 {
   "repo_name": "nankai",
   "repo_path": "D:\\os\\history\\nankai",
-  "created_at": "2026-05-31 17:35:45",
+  "created_at": "2026-06-16 02:23:20",
   "basic_info": {
     "repo_name": "nankai",
     "repo_path": "D:\\os\\history\\nankai"
@@ -11,66 +11,48 @@
   "function_analysis_summary": {
     "analysis_count": 20,
     "module_distribution": {
-      "process": 7,
       "syscall": 11,
-      "scheduler": 2
+      "process": 8,
+      "process/syscall": 1
     }
   },
   "call_graph_summary": {
-    "edge_count": 131,
-    "high_confidence_edge_count": 33,
+    "edge_count": 107,
+    "high_confidence_edge_count": 26,
     "high_confidence_edges_preview": [
       {
         "caller": "sys_exit",
         "caller_file": "os\\src\\syscall\\process.rs",
         "callee": "exit_current_and_run_next",
-        "caller_module": "process",
+        "caller_module": "syscall",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_1",
+        "source_block_id": "block_5",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_2",
+        "normalized_caller": "sys_exit",
+        "normalized_callee": "exit_current_and_run_next",
+        "call_type": "external"
       },
       {
         "caller": "sys_exit_group",
         "caller_file": "os\\src\\syscall\\process.rs",
         "callee": "exit_current_and_run_next",
-        "caller_module": "process",
+        "caller_module": "process/syscall",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_2",
+        "source_block_id": "block_6",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "sys_set_robust_list",
-        "caller_file": "os\\src\\syscall\\process.rs",
-        "callee": "current_task",
-        "caller_module": "syscall",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_3",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "sys_set_robust_list",
-        "caller_file": "os\\src\\syscall\\process.rs",
-        "callee": "task.inner_exclusive_access",
-        "caller_module": "syscall",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_3",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_4",
+        "normalized_caller": "sys_exit_group",
+        "normalized_callee": "exit_current_and_run_next",
+        "call_type": "external"
       },
       {
         "caller": "sys_settidaddr",
@@ -78,25 +60,16 @@
         "callee": "current_task",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_4",
+        "source_block_id": "block_8",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "sys_settidaddr",
-        "caller_file": "os\\src\\syscall\\process.rs",
-        "callee": "task.inner_exclusive_access",
-        "caller_module": "process",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_4",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_8",
+        "normalized_caller": "sys_settidaddr",
+        "normalized_callee": "current_task",
+        "call_type": "external"
       },
       {
         "caller": "sys_settidaddr",
@@ -104,43 +77,21 @@
         "callee": "sys_gettid",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_4",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "sys_yield",
-        "caller_file": "os\\src\\syscall\\process.rs",
-        "callee": "suspend_current_and_run_next",
-        "caller_module": "scheduler",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_5",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "sys_getpid",
-        "caller_file": "os\\src\\syscall\\process.rs",
-        "callee": "current_task",
-        "caller_module": "syscall",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
         "source_block_id": "block_8",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_10",
+        "normalized_caller": "sys_settidaddr",
+        "normalized_callee": "sys_gettid",
+        "call_type": "internal"
       },
       {
-        "caller": "sys_getppid",
+        "caller": "sys_yield",
         "caller_file": "os\\src\\syscall\\process.rs",
-        "callee": "current_task",
+        "callee": "suspend_current_and_run_next",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
         "source_block_id": "block_9",
@@ -148,7 +99,96 @@
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_11",
+        "normalized_caller": "sys_yield",
+        "normalized_callee": "suspend_current_and_run_next",
+        "call_type": "external"
+      },
+      {
+        "caller": "sys_getpid",
+        "caller_file": "os\\src\\syscall\\process.rs",
+        "callee": "current_task",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_12",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_15",
+        "normalized_caller": "sys_getpid",
+        "normalized_callee": "current_task",
+        "call_type": "external"
+      },
+      {
+        "caller": "sys_getppid",
+        "caller_file": "os\\src\\syscall\\process.rs",
+        "callee": "current_task",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_13",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_20",
+        "normalized_caller": "sys_getppid",
+        "normalized_callee": "current_task",
+        "call_type": "external"
+      },
+      {
+        "caller": "sys_getppid",
+        "caller_file": "os\\src\\syscall\\process.rs",
+        "callee": "task.inner_exclusive_access",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_13",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_21",
+        "normalized_caller": "sys_getppid",
+        "normalized_callee": "inner_exclusive_access",
+        "call_type": "external"
+      },
+      {
+        "caller": "sys_getppid",
+        "caller_file": "os\\src\\syscall\\process.rs",
+        "callee": "parent.upgrade",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_13",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_22",
+        "normalized_caller": "sys_getppid",
+        "normalized_callee": "upgrade",
+        "call_type": "external"
+      },
+      {
+        "caller": "sys_gettid",
+        "caller_file": "os\\src\\syscall\\process.rs",
+        "callee": "current_task",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_18",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_29",
+        "normalized_caller": "sys_gettid",
+        "normalized_callee": "current_task",
+        "call_type": "external"
       }
     ]
   },
@@ -156,135 +196,135 @@
     "module_count": 3,
     "module_names": [
       "process",
-      "scheduler",
+      "process/syscall",
       "syscall"
     ],
     "modules": [
       {
         "module_name": "process",
-        "module_summary": "该模块是操作系统中的进程管理系统，负责处理进程创建、退出、等待、获取进程信息等核心系统调用。它通过一系列函数与任务调度器、进程控制块（TCB）交互，管理进程的生命周期和父子关系。",
+        "module_summary": "该模块是操作系统中与进程/线程管理相关的系统调用处理模块。它提供了设置线程ID地址、主动让出CPU、获取进程/线程ID、克隆进程（创建新线程/进程）等系统调用的实现，并对设置进程组ID提供了占位实现。模块通过操作任务控制块（task）数据结构，与内核调度器交互，完成进程的创建、查询和调度操作。",
         "key_functions": [
           {
-            "name": "sys_exit",
-            "role": "处理进程退出系统调用，记录退出码并调用 exit_current_and_run_next 终止当前进程，切换到下一个就绪进程，此函数不会返回。"
-          },
-          {
-            "name": "sys_exit_group",
-            "role": "实现退出当前进程组（或线程组）的系统调用，记录退出码并调用 exit_current_and_run_next 终止当前进程，但可能未完全实现进程组退出逻辑。"
+            "name": "WNOHANG",
+            "role": "定义一个常量，用于非阻塞等待子进程状态变化，但当前模块中未显示其使用上下文。"
           },
           {
             "name": "sys_settidaddr",
-            "role": "设置当前任务的 clear_child_tid 字段为传入的地址，并返回当前任务的线程ID，用于子线程退出时清理TID空间以通知其他进程。"
+            "role": "设置当前任务的 clear_child_tid 字段，通常用于在进程/线程退出时内核自动清零该地址以通知等待线程。"
           },
-          {
-            "name": "sys_getppid",
-            "role": "获取当前进程的父进程ID（PPID），通过当前任务控制块获取父进程弱引用并升级为强引用，返回父进程PID，如果父进程不存在则返回错误。"
-          },
-          {
-            "name": "sys_clone",
-            "role": "实现 clone 系统调用，根据标志位和栈指针等参数创建新任务，调用 clone_task 创建任务后通过 add_task 添加至调度器，返回新任务PID。"
-          },
-          {
-            "name": "sys_wait4",
-            "role": "等待子进程状态变化，支持阻塞（WNOHANG未设置时挂起当前进程并让出CPU）和非阻塞模式，检测子进程是否为僵尸态，收集退出码和资源使用数据，返回子进程PID和状态码。"
-          },
-          {
-            "name": "impl Processor",
-            "role": "定义Processor结构体的实现，可能包含处理器相关的任务管理方法，但当前代码块为空，具体功能未定义。"
-          }
-        ],
-        "call_flow_summary": "模块内部存在较清晰的调用链：sys_exit 和 sys_exit_group 均直接调用 exit_current_and_run_next 来终止当前进程；sys_settidaddr 依次调用 current_task、inner_exclusive_access 和 sys_gettid；sys_getppid 调用 current_task 和 inner_exclusive_access 并操作父进程引用；sys_clone 调用 current_task、clone_task 和 add_task；sys_wait4 通过循环调用 current_task、inner_exclusive_access 检查子进程状态，必要时调用 suspend_current_and_run_next 挂起当前进程。这些函数共同依赖任务与调度器基础设施。",
-        "evidence": [
-          "sys_exit 调用 exit_current_and_run_next，返回类型 ! 表明不会返回。",
-          "sys_exit_group 调用 exit_current_and_run_next 并执行 unreachable!() 宏。",
-          "sys_settidaddr 使用 current_task().unwrap() 和 task.inner_exclusive_access() 修改 clear_child_tid 字段。",
-          "sys_getppid 通过 current_task 获取父进程弱引用并调用 upgrade 强引用。",
-          "sys_clone 调用 CloneFlags::from_bits、current_task().clone_task 和 add_task。",
-          "sys_wait4 调用 current_task、inner_exclusive_access、is_zombie、add_child_time、put_data 和 suspend_current_and_run_next。",
-          "函数调用关系列表提供了具体的调用来源和置信度。"
-        ],
-        "uncertainty": "1. sys_exit_group 实际调用的是 exit_current_and_run_next 而非注释中提及的 exit_current_group_and_run_next，不确定是否已完全实现进程组退出逻辑。2. clear_child_tid 字段的完整用途在材料中未详细说明。3. sys_wait4 的 put_data 函数未给出定义，仅能推测为跨地址空间写内存函数。4. sys_clone 中 clone_task 和 add_task 的具体实现细节未展示。5. impl Processor 代码块为空，无法确定任何具体实现。"
-      },
-      {
-        "module_name": "scheduler",
-        "module_summary": "该模块负责操作系统的任务调度与切换，包括提供系统调用接口让当前任务主动让出CPU，并管理处理器的当前任务状态和空闲任务上下文，以实现任务间的上下文切换和调度决策。",
-        "key_functions": [
           {
             "name": "sys_yield",
-            "role": "系统调用接口函数，实现sys_yield功能，用于主动让出CPU，通过调用suspend_current_and_run_next挂起当前任务并切换到下一个就绪任务。"
-          },
-          {
-            "name": "Processor",
-            "role": "进程处理器结构，管理当前正在运行的任务控制块和空闲任务的内核上下文，是任务调度和上下文切换的核心数据结构。"
-          }
-        ],
-        "call_flow_summary": "存在明显的调用链：sys_yield函数会调用suspend_current_and_run_next函数（虽然该函数的具体实现未在提供材料中展示，但调用关系已由证据确认），而Processor结构作为调度器底层状态容器，其字段被suspend_current_and_run_next等调度相关函数使用。整体流程为：用户或内核通过sys_yield发起主动让权，经由suspend_current_and_run_next执行实际的任务切换，切换过程中依赖于Processor维护的当前任务信息和空闲上下文。",
-        "evidence": [
-          "sys_yield函数定义中明确调用了suspend_current_and_run_next，并记录了trace日志。",
-          "Processor结构定义在os/src/task/processor.rs，包含current和idle_task_cx字段，与任务调度和空闲状态管理直接相关。",
-          "调用关系证据显示sys_yield -> suspend_current_and_run_next，置信度0.9。"
-        ],
-        "uncertainty": "未提供suspend_current_and_run_next函数的具体实现代码，因此无法确认其调度算法（如优先级、时间片轮转等）以及底层上下文切换细节；Processor结构仅展示了字段定义，未给出方法实现，无法确定它如何与suspend_current_and_run_next交互或具体的调度逻辑。"
-      },
-      {
-        "module_name": "syscall",
-        "module_summary": "该模块主要处理与进程管理相关的系统调用，包括进程ID获取、用户/组ID获取、进程组ID设置、执行新程序、设置鲁棒链表以及关机等功能。其中多数ID获取类函数为伪实现，仅返回固定值（0或1）并记录日志；实际工作函数如sys_exec和sys_set_robust_list则完成了部分核心逻辑。",
-        "key_functions": [
-          {
-            "name": "sys_set_robust_list",
-            "role": "设置当前进程的robust list头指针，用于支持robust futex机制；检查参数长度后存入任务控制块。"
+            "role": "主动让出CPU，挂起当前任务并调度下一个就绪任务。"
           },
           {
             "name": "sys_setpgid",
-            "role": "伪实现，仅输出日志并返回Ok(0)，未实际设置进程组ID。"
-          },
-          {
-            "name": "sys_getpgid",
-            "role": "伪实现，固定返回1，未真正获取进程组ID。"
+            "role": "伪实现，仅记录调用日志并返回成功，没有实际设置进程组ID。"
           },
           {
             "name": "sys_getpid",
-            "role": "返回当前任务的进程ID，通过调用current_task获取pid字段。"
+            "role": "获取当前任务的进程ID（PID）。"
           },
           {
-            "name": "sys_getuid",
-            "role": "伪实现，返回UID=0，未真正获取用户ID。"
-          },
-          {
-            "name": "sys_geteuid",
-            "role": "伪实现，返回有效用户ID=0，仅记录日志。"
-          },
-          {
-            "name": "sys_getgid",
-            "role": "伪实现，返回组ID=0，仅记录日志。"
-          },
-          {
-            "name": "sys_getegid",
-            "role": "伪实现，返回有效组ID=0，仅记录日志。"
+            "name": "sys_getppid",
+            "role": "获取当前进程的父进程ID，若父进程不存在则返回ESRCH错误。"
           },
           {
             "name": "sys_gettid",
-            "role": "返回当前线程ID，通过current_task获取pid.0。"
+            "role": "获取当前线程的ID，与sys_getpid类似，返回当前任务控制块中的pid字段。"
+          },
+          {
+            "name": "sys_clone",
+            "role": "处理clone系统调用，解析标志位，克隆当前任务并将新任务添加到调度器中，返回新任务的PID。"
+          }
+        ],
+        "call_flow_summary": "模块内函数之间存在清晰的调用链：sys_settidaddr 调用 current_task 获取当前任务，并通过 inner_exclusive_access 设置字段，然后调用 sys_gettid 返回线程ID。sys_getpid、sys_getppid、sys_gettid 均依赖于 current_task 获取任务控制块。sys_clone 调用 current_task 获取当前任务，调用 clone_task 创建新任务，再调用 add_task 将新任务加入调度器。sys_yield 调用 suspend_current_and_run_next 实现任务切换。sys_setpgid 未调用其他内核函数，仅进行日志记录。整体上，大部分函数都依赖于 current_task 函数获取当前任务上下文，并通过任务控制块的内部方法（如 inner_exclusive_access、clone_task、add_task）完成具体操作。",
+        "evidence": [
+          "函数sys_settidaddr、sys_getpid、sys_getppid、sys_gettid、sys_clone都调用current_task获取当前任务控制块。",
+          "函数sys_settidaddr调用了sys_gettid来返回线程ID。",
+          "函数sys_yield调用了suspend_current_and_run_next来实现任务调度。",
+          "函数sys_clone调用了current_task().clone_task来创建新任务，然后调用add_task注册新任务。",
+          "函数sys_setpgid内部仅有trace!和warn!日志宏，无实际任务操作，且注释掉的代码显示了曾有的设置逻辑。",
+          "所有函数位于同一文件os/src/syscall/process.rs中，表明它们属于同一模块的进程相关系统调用。"
+        ],
+        "uncertainty": "WNOHANG常量在模块中仅定义，未显示其使用上下文，其具体用途基于常量名和值推测。suspend_current_and_run_next函数的具体实现未在提供的代码中展示，仅根据函数名推断其作用。sys_setpgid的当前实现为空，无法确定未来是否会启用注释中的逻辑。假设所有任务控制块中的pid字段为元组结构体，且第一个元素为整数ID。假设trace!和warn!宏不影响主逻辑功能。假设clone_task方法位于任务结构体中，并接受所有参数。"
+      },
+      {
+        "module_name": "process/syscall",
+        "module_summary": "该模块处理进程组退出的系统调用，负责强制终止当前进程并切换到下一个可运行进程。",
+        "key_functions": [
+          {
+            "name": "sys_exit_group",
+            "role": "实现进程组退出系统调用，通过调用内部函数退出当前进程并调度下一个进程，函数执行后不会返回。"
+          }
+        ],
+        "call_flow_summary": "sys_exit_group 先输出调试信息，然后调用 exit_current_and_run_next 函数（或历史版本中的 exit_current_group_and_run_next）来实际执行进程退出和调度，最后通过 unreachable! 标记流程终结。",
+        "evidence": [
+          "AI模型对 sys_exit_group 的理解指出其内部调用 exit_current_and_run_next。",
+          "函数调用关系中记录了 sys_exit_group -> exit_current_and_run_next（置信度0.9）。",
+          "regex模式也匹配到 sys_exit_group -> exit_current_group_and_run_next（置信度0.6），但AI理解表明当前使用前者。",
+          "函数体包含 unreachable! 宏，表明函数不会返回。"
+        ],
+        "uncertainty": "exit_current_and_run_next 的具体实现细节未知，只能根据函数名和上下文推断其作用是退出当前进程并调度下一个进程。历史版本中的 exit_current_group_and_run_next 是否存在或使用不确定，证据包含两个可能的调用目标。"
+      },
+      {
+        "module_name": "syscall",
+        "module_summary": "该模块负责实现操作系统内核与用户态程序之间的系统调用接口，主要处理进程管理相关的系统调用，包括进程退出、执行新程序（execve）、设置健壮列表以及获取用户/组ID等。部分系统调用当前为直接返回固定值的伪实现，仅记录日志而未有实际功能。",
+        "key_functions": [
+          {
+            "name": "DEFAULT",
+            "role": "定义了一个值为0的常量，可能作为系统调用的默认返回值或错误码，但其具体用途未在代码中明确说明。"
+          },
+          {
+            "name": "WUNTRACED",
+            "role": "定义了一个值为0x02的常量，作为等待子进程时报告未停止状态的标志位，对应POSIX系统调用waitpid的选项参数。"
+          },
+          {
+            "name": "WCONTINUED",
+            "role": "定义了一个值为0x08的常量，作为等待子进程时报告继续执行状态的标志位，通常用于waitpid等进程等待函数的选项参数。"
+          },
+          {
+            "name": "sys_exit",
+            "role": "实现进程退出系统调用，记录退出日志后调用exit_current_and_run_next终止当前进程并切换到下一个可运行进程。"
+          },
+          {
+            "name": "sys_set_robust_list",
+            "role": "设置当前线程的健壮列表（robust list），用于用户空间同步。该函数检查传入的列表头大小，若匹配则更新任务内部数据中的健壮列表头地址。"
+          },
+          {
+            "name": "sys_getpgid",
+            "role": "当前为伪实现，仅记录日志并返回固定的pgid=1，未实现根据pid查询进程组ID的实际逻辑。"
+          },
+          {
+            "name": "sys_getuid",
+            "role": "当前为伪实现，仅记录日志并返回固定的uid=0，未实现实际用户ID查询逻辑。"
+          },
+          {
+            "name": "sys_geteuid",
+            "role": "当前为伪实现，仅记录日志并返回固定的euid=0，未实现实际有效用户ID查询逻辑。"
+          },
+          {
+            "name": "sys_getgid",
+            "role": "当前为伪实现，仅记录日志并返回固定的gid=0，未实现实际组ID查询逻辑。"
+          },
+          {
+            "name": "sys_getegid",
+            "role": "当前为伪实现，仅记录日志并返回固定的egid=0，未实现实际有效组ID查询逻辑。"
           },
           {
             "name": "sys_exec",
-            "role": "执行新程序：解析路径、参数和环境变量，处理.sh脚本启动，读取可执行文件数据并调用task.exec加载程序。"
-          },
-          {
-            "name": "sys_shutdown",
-            "role": "触发系统关机，调用shutdown函数执行关机操作。"
+            "role": "实现execve系统调用，加载并执行用户程序。该函数从用户空间获取路径、参数和环境变量，经过字符串翻译、shell脚本处理、路径解析后读取文件数据，最后调用任务调度函数替换当前进程的执行映像。"
           }
         ],
-        "call_flow_summary": "模块内部函数大多是独立系统调用处理程序，相互之间无直接调用链。每个函数仅调用辅助函数（如current_task、trace!、warn!、translated_str等）和内核服务（如open、read_all、task.exec、shutdown）。sys_exec是调用链最复杂的函数，涉及内存翻译、文件操作和任务执行等多个步骤。其余函数逻辑简单，无深层嵌套调用关系。",
+        "call_flow_summary": "该模块内部函数各自独立实现具体系统调用，不存在函数之间的显式调用链。但每个系统调用函数内部会调用外部辅助函数（如日志宏trace!、warn!、上下文管理函数current_task、内存管理函数translated_str等）来完成其功能。其中sys_exec调用链较为复杂：它依次调用current_user_token获取令牌、translated_str翻译路径字符串、translated_ref翻译环境变量和参数数组、current_task获取当前任务、get_abs_path结合工作目录得到绝对路径、open和read_all读取文件数据、task.exec替换进程映像。",
         "evidence": [
-          "所有函数均定义在os/src/syscall/process.rs文件中，属于syscall模块。",
-          "大部分ID获取函数（sys_getuid、sys_geteuid、sys_getgid、sys_getegid、sys_getpgid、sys_setpgid）均通过trace!和warn!宏记录伪实现日志并返回固定值。",
-          "sys_exec函数内部调用了current_user_token、translated_str、translated_ref、current_task、get_abs_path、open、read_all和task.exec等辅助函数，存在多步调用链。",
-          "sys_set_robust_list调用了current_task和task.inner_exclusive_access来操作任务控制块。",
-          "sys_getpid和sys_gettid通过current_task获取任务控制块并提取pid字段。",
-          "sys_shutdown仅调用trace!和shutdown函数。"
+          "函数定义位于os/src/syscall/process.rs文件中，属于系统调用模块。",
+          "sys_exit函数内调用了exit_current_and_run_next（置信度0.9）。",
+          "sys_set_robust_list函数内调用了current_task()和inner_exclusive_access()（置信度0.7）。",
+          "sys_getpgid、sys_getuid、sys_geteuid、sys_getgid、sys_getegid函数均通过warn!宏输出“伪实现”警告，并返回固定值。",
+          "sys_exec函数调用了current_user_token、translated_str、translated_ref、current_task、get_abs_path、open、read_all、task.exec等多个函数（置信度0.9）。",
+          "常量WUNTRACED和WCONTINUED的名称直接对应POSIX标准中的waitpid选项宏。"
         ],
-        "uncertainty": "多个伪实现函数（sys_setpgid、sys_getpgid、sys_getuid、sys_geteuid、sys_getgid、sys_getegid）未实际完成预期的系统调用功能，未来是否会实现或仅用于测试暂不确定。sys_exec中调用的辅助函数（如current_user_token、translated_str、open、task.exec等）的具体实现细节未给出，其正确性和可靠性依赖于其他模块。sys_set_robust_list未校验head地址的有效性，可能存在未定义行为。sys_getpid和sys_gettid使用了unwrap()，若current_task返回None将导致panic。"
+        "uncertainty": "多个系统调用（sys_getpgid、sys_getuid、sys_geteuid、sys_getgid、sys_getegid）被明确标记为伪实现，其实际行为与返回值仅为实现占位，不代表最终功能。常量DEFAULT的具体用途未从代码上下文中明确，可能仅作为内部约定标记。函数调用关系中部分记录基于正则表达式匹配或AI推断，置信度不一致（0.6~0.9），例如sys_set_robust_list和sys_getpgid的调用关系中有多处推断自正则表达式但未在AI理解中显式确认。sys_exec中调用translated_str、translated_ref等辅助函数的具体实现细节未给出，但不影响对该模块系统调用功能的整体理解。"
       }
     ]
   },

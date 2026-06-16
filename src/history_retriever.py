@@ -1,4 +1,5 @@
 import json
+import os
 
 
 def load_json_file(file_path):
@@ -226,6 +227,385 @@ def format_retrieval_results(retrieval_result):
         output.append(f"      模块重合度：{detail.get('module_overlap_score')}")
         output.append(f"      模块分布相似度：{detail.get('module_distribution_score')}")
         output.append(f"      调用图规模相似度：{detail.get('call_graph_score')}")
+        output.append("")
+
+    return "\n".join(output)
+
+def calculate_jaccard_similarity(list_a, list_b):
+    """
+    计算两个列表的 Jaccard 相似度。
+
+    用于比较 core_modules、main_languages 等集合型字段。
+    """
+
+    set_a = set(list_a or [])
+    set_b = set(list_b or [])
+
+    if not set_a and not set_b:
+        return 0.0
+
+    intersection_count = len(set_a.intersection(set_b))
+    union_count = len(set_a.union(set_b))
+
+    if union_count == 0:
+        return 0.0
+
+    return round(intersection_count / union_count, 4)
+
+
+def calculate_numeric_similarity(value_a, value_b):
+    """
+    计算两个数值的相似度。
+
+    数值越接近，相似度越高。
+    """
+
+    try:
+        value_a = float(value_a)
+        value_b = float(value_b)
+    except (TypeError, ValueError):
+        return 0.0
+
+    if value_a == 0 and value_b == 0:
+        return 1.0
+
+    max_value = max(abs(value_a), abs(value_b))
+
+    if max_value == 0:
+        return 0.0
+
+    difference = abs(value_a - value_b)
+
+    similarity = 1 - difference / max_value
+
+    if similarity < 0:
+        similarity = 0.0
+
+    return round(similarity, 4)
+
+
+def calculate_module_completeness_similarity(target_modules, history_modules):
+    """
+    计算两个仓库模块完成度分布的相似度。
+
+    只比较双方共同出现的模块。
+    """
+
+    target_modules = target_modules or {}
+    history_modules = history_modules or {}
+
+    common_modules = set(target_modules.keys()).intersection(
+        set(history_modules.keys())
+    )
+
+    if not common_modules:
+        return 0.0
+
+    similarities = []
+
+    for module_name in common_modules:
+        target_value = target_modules.get(module_name, 0)
+        history_value = history_modules.get(module_name, 0)
+
+        similarity = calculate_numeric_similarity(target_value, history_value)
+
+        similarities.append(similarity)
+
+    if not similarities:
+        return 0.0
+
+    return round(sum(similarities) / len(similarities), 4)
+
+
+def calculate_project_type_similarity(target_type, history_type):
+    """
+    计算项目类型相似度。
+    """
+
+    if not target_type or not history_type:
+        return 0.0
+
+    if target_type == history_type:
+        return 1.0
+
+    related_groups = [
+        {
+            "teaching_os_or_general_kernel",
+            "minimal_general_kernel",
+            "basic_kernel"
+        },
+        {
+            "rtos_like_kernel",
+            "network_or_driver_focused_kernel"
+        },
+        {
+            "filesystem_focused_project"
+        },
+        {
+            "memory_management_focused_project"
+        }
+    ]
+
+    for group in related_groups:
+        if target_type in group and history_type in group:
+            return 0.6
+
+    return 0.0
+
+
+def calculate_full_profile_similarity(target_profile, history_profile):
+    """
+    计算目标仓库与单个历史仓库的结构相似度。
+
+    相似度组成：
+    project_type：项目类型
+    core_modules：核心模块重合度
+    module_completeness：模块完成度相似度
+    scale：函数/调用边/模块数量规模相似度
+    structure_complexity：结构复杂度相似度
+    languages：主要语言相似度
+    """
+
+    project_type_score = calculate_project_type_similarity(
+        target_profile.get("project_type"),
+        history_profile.get("project_type")
+    )
+
+    core_module_score = calculate_jaccard_similarity(
+        target_profile.get("core_modules", []),
+        history_profile.get("core_modules", [])
+    )
+
+    module_completeness_score = calculate_module_completeness_similarity(
+        target_profile.get("module_completeness", {}),
+        history_profile.get("module_completeness", {})
+    )
+
+    function_count_score = calculate_numeric_similarity(
+        target_profile.get("function_count", 0),
+        history_profile.get("function_count", 0)
+    )
+
+    edge_count_score = calculate_numeric_similarity(
+        target_profile.get("edge_count", 0),
+        history_profile.get("edge_count", 0)
+    )
+
+    module_count_score = calculate_numeric_similarity(
+        target_profile.get("module_count", 0),
+        history_profile.get("module_count", 0)
+    )
+
+    scale_score = round(
+        function_count_score * 0.4
+        + edge_count_score * 0.4
+        + module_count_score * 0.2,
+        4
+    )
+
+    structure_complexity_score = calculate_numeric_similarity(
+        target_profile.get("structure_complexity", 0),
+        history_profile.get("structure_complexity", 0)
+    )
+
+    language_score = calculate_jaccard_similarity(
+        target_profile.get("main_languages", []),
+        history_profile.get("main_languages", [])
+    )
+
+    overall_score = round(
+        project_type_score * 0.20
+        + core_module_score * 0.25
+        + module_completeness_score * 0.20
+        + scale_score * 0.15
+        + structure_complexity_score * 0.15
+        + language_score * 0.05,
+        4
+    )
+
+    detail = {
+        "project_type_score": project_type_score,
+        "core_module_score": core_module_score,
+        "module_completeness_score": module_completeness_score,
+        "scale_score": scale_score,
+        "structure_complexity_score": structure_complexity_score,
+        "language_score": language_score,
+        "overall_score": overall_score
+    }
+
+    return detail
+
+
+def explain_similarity(target_profile, history_profile, score_detail):
+    """
+    生成规则检索的可解释说明。
+    """
+
+    explanations = []
+
+    target_type = target_profile.get("project_type")
+    history_type = history_profile.get("project_type")
+
+    if score_detail.get("project_type_score", 0) == 1.0:
+        explanations.append(f"项目类型相同，均为 {target_type}。")
+    elif score_detail.get("project_type_score", 0) > 0:
+        explanations.append(
+            f"项目类型相关，目标项目为 {target_type}，历史项目为 {history_type}。"
+        )
+
+    target_modules = set(target_profile.get("core_modules", []))
+    history_modules = set(history_profile.get("core_modules", []))
+    common_modules = sorted(list(target_modules.intersection(history_modules)))
+
+    if common_modules:
+        explanations.append(
+            f"核心模块存在重合：{', '.join(common_modules)}。"
+        )
+
+    if score_detail.get("scale_score", 0) >= 0.7:
+        explanations.append("函数数量、调用边数量和模块数量规模较接近。")
+
+    if score_detail.get("structure_complexity_score", 0) >= 0.7:
+        explanations.append("结构复杂度较接近。")
+
+    if score_detail.get("module_completeness_score", 0) >= 0.7:
+        explanations.append("共同模块的完成度分布较接近。")
+
+    if not explanations:
+        explanations.append("该项目与目标项目存在一定结构相似性，但相似原因不突出。")
+
+    return explanations
+
+
+def retrieve_similar_history_projects_full(
+    target_profile_path,
+    history_kb_full_path="history_knowledge_base/history_profiles_full.json",
+    top_k=3
+):
+    """
+    基于 repo_profile_full 和 history_profiles_full 检索相似历史项目。
+    """
+
+    target_profile = load_json_file(target_profile_path)
+    history_kb = load_json_file(history_kb_full_path)
+
+    history_profiles = history_kb.get("profiles", [])
+
+    results = []
+
+    for history_profile in history_profiles:
+        if history_profile.get("error"):
+            continue
+
+        # 避免目标仓库误混入历史库后和自己比较
+        if history_profile.get("repo_name") == target_profile.get("repo_name"):
+            continue
+
+        score_detail = calculate_full_profile_similarity(
+            target_profile=target_profile,
+            history_profile=history_profile
+        )
+
+        explanations = explain_similarity(
+            target_profile=target_profile,
+            history_profile=history_profile,
+            score_detail=score_detail
+        )
+
+        result = {
+            "repo_name": history_profile.get("repo_name"),
+            "source_profile": history_profile.get("source_profile"),
+            "project_type": history_profile.get("project_type"),
+            "core_modules": history_profile.get("core_modules", []),
+            "function_count": history_profile.get("function_count", 0),
+            "edge_count": history_profile.get("edge_count", 0),
+            "module_count": history_profile.get("module_count", 0),
+            "structure_complexity": history_profile.get("structure_complexity", 0),
+            "similarity_score": score_detail.get("overall_score"),
+            "score_detail": score_detail,
+            "explanations": explanations
+        }
+
+        results.append(result)
+
+    results.sort(
+        key=lambda item: item.get("similarity_score", 0),
+        reverse=True
+    )
+
+    selected_results = results[:top_k]
+
+    retrieval_result = {
+        "target_repo": target_profile.get("repo_name"),
+        "target_profile": target_profile_path,
+        "history_kb": history_kb_full_path,
+        "top_k": top_k,
+        "candidate_count": len(results),
+        "results": selected_results
+    }
+
+    return retrieval_result
+
+
+def save_retrieval_result_full(retrieval_result):
+    """
+    保存 full 相似历史项目检索结果。
+    """
+
+    output_dir = os.path.join(
+        "history_knowledge_base",
+        "retrieval_results"
+    )
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    target_repo = retrieval_result.get("target_repo", "unknown_repo")
+
+    file_path = os.path.join(
+        output_dir,
+        f"{target_repo}_similar_projects_full.json"
+    )
+
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(retrieval_result, file, ensure_ascii=False, indent=2)
+
+    return file_path
+
+def format_retrieval_result_full_preview(retrieval_result, save_path):
+    """
+    生成 full 相似历史项目检索结果的终端预览。
+    """
+
+    output = []
+
+    output.append("full 相似历史项目检索完成。")
+    output.append("")
+    output.append(f"目标仓库：{retrieval_result.get('target_repo')}")
+    output.append(f"候选历史项目数量：{retrieval_result.get('candidate_count')}")
+    output.append(f"Top-K：{retrieval_result.get('top_k')}")
+    output.append(f"保存路径：{save_path}")
+    output.append("")
+    output.append("相似项目结果：")
+
+    results = retrieval_result.get("results", [])
+
+    if not results:
+        output.append("暂无相似历史项目。")
+        return "\n".join(output)
+
+    for index, item in enumerate(results, start=1):
+        output.append(f"{index}. {item.get('repo_name')}")
+        output.append(f"   相似度：{item.get('similarity_score')}")
+        output.append(f"   项目类型：{item.get('project_type')}")
+        output.append(f"   核心模块：{item.get('core_modules')}")
+        output.append(f"   函数数量：{item.get('function_count')}")
+        output.append(f"   调用边数量：{item.get('edge_count')}")
+        output.append("   相似依据：")
+
+        for explanation in item.get("explanations", []):
+            output.append(f"   - {explanation}")
+
         output.append("")
 
     return "\n".join(output)

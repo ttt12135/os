@@ -1,0 +1,339 @@
+{
+  "repo_name": "jilindaxue",
+  "profile_type": "full",
+  "target_or_history": "history",
+  "project_type": "unknown_os_project",
+  "main_languages": [
+    "c"
+  ],
+  "function_count": 20,
+  "node_count": 20,
+  "edge_count": 42,
+  "internal_edge_count": 6,
+  "external_edge_count": 36,
+  "module_count": 6,
+  "core_modules": [
+    "filesystem",
+    "process",
+    "unknown",
+    "scheduler",
+    "interrupt"
+  ],
+  "core_module_details": [
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.5314,
+      "completeness": 0.53,
+      "final_score": 0.5308
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.35,
+      "completeness": 0.38,
+      "final_score": 0.362
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.049,
+      "completeness": 0.18,
+      "final_score": 0.1014
+    },
+    {
+      "module_name": "scheduler",
+      "module_weight": 0.0395,
+      "completeness": 0.18,
+      "final_score": 0.0957
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.03,
+      "completeness": 0.13,
+      "final_score": 0.07
+    }
+  ],
+  "module_completeness": {
+    "filesystem": 0.53,
+    "interrupt": 0.13,
+    "memory": 0.05,
+    "process": 0.38,
+    "scheduler": 0.18,
+    "unknown": 0.18
+  },
+  "structure_complexity": 0.36,
+  "module_profiles": {
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 12,
+      "outgoing_edge_count": 18,
+      "internal_edge_count": 5,
+      "external_edge_count": 13,
+      "internal_call_ratio": 0.2778,
+      "external_call_ratio": 0.7222,
+      "module_weight": 0.5314,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.03,
+      "files": [
+        "kernel\\fs\\procfs.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "record_intr",
+          "normalized_name": "record_intr",
+          "file_path": "kernel\\fs\\procfs.c",
+          "language": "c",
+          "start_line": "167",
+          "end_line": "172",
+          "outgoing_call_count": 0,
+          "summary": "对中断号进行合法性检查，若有效则递增该中断的计数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\sched\\proc.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "allocpid",
+          "normalized_name": "allocpid",
+          "file_path": "kernel\\sched\\proc.c",
+          "language": "c",
+          "start_line": "27",
+          "end_line": "27",
+          "outgoing_call_count": 1,
+          "summary": "原子递增全局变量nextpid并返回新值，用于分配一个唯一的进程ID。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 5,
+      "outgoing_edge_count": 21,
+      "internal_edge_count": 0,
+      "external_edge_count": 21,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.35,
+      "files": [
+        "kernel\\fs\\procfs.c",
+        "kernel\\sched\\proc.c"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "procinit",
+          "normalized_name": "procinit",
+          "file_path": "kernel\\sched\\proc.c",
+          "language": "c",
+          "start_line": "59",
+          "end_line": "90",
+          "outgoing_call_count": 8,
+          "summary": "初始化进程表和相关数据结构，包括全局队列、进程锁、状态列表以及未使用进程队列，并为每个进程分配内核栈。"
+        },
+        {
+          "name": "proc_interrupts_read",
+          "normalized_name": "proc_interrupts_read",
+          "file_path": "kernel\\fs\\procfs.c",
+          "language": "c",
+          "start_line": "95",
+          "end_line": "142",
+          "outgoing_call_count": 7,
+          "summary": "读取并返回当前已发生的中断计数列表，用于 proc 文件系统中的一个只读文件（如 /proc/interrupts），支持用户态访问和内核态直接读取。"
+        },
+        {
+          "name": "thread_mapstacks",
+          "normalized_name": "thread_mapstacks",
+          "file_path": "kernel\\sched\\proc.c",
+          "language": "c",
+          "start_line": "122",
+          "end_line": "149",
+          "outgoing_call_count": 5,
+          "summary": "为每个线程的内核栈分配物理内存并建立页表映射，每个线程映射KSTACK_PAGE个页面大小的虚拟地址空间。"
+        },
+        {
+          "name": "delete_child",
+          "normalized_name": "delete_child",
+          "file_path": "kernel\\sched\\proc.c",
+          "language": "c",
+          "start_line": "95",
+          "end_line": "105",
+          "outgoing_call_count": 4,
+          "summary": "从父进程的子进程链表中移除指定的子进程节点。"
+        },
+        {
+          "name": "append_child",
+          "normalized_name": "append_child",
+          "file_path": "kernel\\sched\\proc.c",
+          "language": "c",
+          "start_line": "111",
+          "end_line": "117",
+          "outgoing_call_count": 3,
+          "summary": "将一个子进程连接到父进程的子进程链表上，如果父进程当前没有子进程则直接设为第一个子进程，否则将新子进程添加到第一个子进程的兄弟链表末尾。"
+        },
+        {
+          "name": "procfs_close",
+          "normalized_name": "procfs_close",
+          "file_path": "kernel\\fs\\procfs.c",
+          "language": "c",
+          "start_line": 86,
+          "end_line": 92,
+          "outgoing_call_count": 2,
+          "summary": "{\n  \"block_id\": \"block_7\",\n  \"file_path\": \"kernel\\\\fs\\\\procfs.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"86\",\n  \"end_line\": \"92\",\n  \"name\": \"procfs_close\",\n  \"type\": \"function\",\n  \"summary\": \"关闭一个procfs文件，根据文件路径调用对应的关闭处理函数。当前实现只处理了/proc/interrupts，其他路径返回错误。\",\n  \"logic_steps\": [\n    \"第1步：从文件结构体中获取文件路径字符串保存到局部变量path中。\",\n    \"第2步：比较path是否为字符串\"/proc/interrupts\"，如果是则调用proc_interrupts_close函数并返回其结果。\",\n    \"第3步：否则返回-1表示文件关闭操作失败或不支持。\"\n  ],\n  \"called_functions\": [\n    \"strcmp\",\n    \"proc_interrupts_close\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"函数名procfs_close暗示是procfs文件系统的关闭操作，代码中检查了文件路径并调用了特定的关闭函数strcmp和proc_interrupts_close，属于文件系统模块。\",\n  \"uncertainty\": \"proc_interrupts_close函数的定义和实现在当前代码块中未提供，无法确认其具体行为。此外，procfs_close仅处理了一个特定路径，其他路径的关闭逻辑可能尚未实现。\"\n}"
+        },
+        {
+          "name": "procfs_rename",
+          "normalized_name": "procfs_rename",
+          "file_path": "kernel\\fs\\procfs.c",
+          "language": "c",
+          "start_line": "56",
+          "end_line": "61",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块定义了一个名为 procfs_rename 的函数，用于重命名 procfs 中的文件。它检查旧路径是否为 \"/proc/interrupts\"，如果是则调用专门的重命名函数处理，否则返回 -1 表示不支持。"
+        },
+        {
+          "name": "procfs_read",
+          "normalized_name": "procfs_read",
+          "file_path": "kernel\\fs\\procfs.c",
+          "language": "c",
+          "start_line": "62",
+          "end_line": "68",
+          "outgoing_call_count": 2,
+          "summary": "该函数是procfs文件系统的读取操作入口。它首先获取文件路径，然后判断路径是否为'/proc/interrupts'，如果是则调用专门的处理函数，否则返回-1表示不支持或路径不存在。"
+        },
+        {
+          "name": "procfs_open",
+          "normalized_name": "procfs_open",
+          "file_path": "kernel\\fs\\procfs.c",
+          "language": "c",
+          "start_line": "79",
+          "end_line": "84",
+          "outgoing_call_count": 2,
+          "summary": "procfs文件系统中open操作的处理函数，根据路径匹配决定是否调用proc_interrupts_open打开文件。"
+        },
+        {
+          "name": "procfs_unlink",
+          "normalized_name": "procfs_unlink",
+          "file_path": "kernel\\fs\\procfs.c",
+          "language": "c",
+          "start_line": "50",
+          "end_line": "55",
+          "outgoing_call_count": 2,
+          "summary": "这是一个取消链接操作的回调函数，仅在路径为/proc/interrupts时调用特定处理函数，否则返回-1表示不支持。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 0,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0395,
+      "files": [
+        "kernel\\sched\\proc.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "cpuid",
+          "normalized_name": "cpuid",
+          "file_path": "kernel\\sched\\proc.c",
+          "language": "c",
+          "start_line": "155",
+          "end_line": "160",
+          "outgoing_call_count": 1,
+          "summary": "获取当前 CPU 的 ID，通过读取 tp（线程指针）寄存器的值来实现。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 1,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.5,
+      "external_call_ratio": 0.5,
+      "module_weight": 0.049,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "created_by": "os_analysis_agent"
+}

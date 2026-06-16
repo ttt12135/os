@@ -1,0 +1,107 @@
+{
+  "repo_name": "zhengzhoudaxue111",
+  "created_at": "2026-06-16 19:26:07",
+  "score_type": "full",
+  "inputs": {
+    "repo_profile": "repo_profiles\\target\\zhengzhoudaxue111_repo_profile_full.json",
+    "retrieval_result": "history_knowledge_base\\retrieval_results\\zhengzhoudaxue111_similar_projects_full.json",
+    "comparison_result": "history_knowledge_base\\comparisons\\zhengzhoudaxue111_history_comparison_full.json"
+  },
+  "reference_scores": {
+    "originality": 13,
+    "novelty": 13,
+    "practicality": 9,
+    "difficulty": 13,
+    "completion": 8,
+    "reference_factors": {
+      "average_module_completeness": 0.325,
+      "structure_complexity": 0.45,
+      "module_count": 4,
+      "function_count": 20,
+      "edge_count": 415,
+      "top_similarity": 0.5258,
+      "advantage_count": 8,
+      "weakness_count": 8
+    }
+  },
+  "evaluation": {
+    "repo_name": "zhengzhoudaxue111",
+    "overall_score": 53.0,
+    "score_level": "medium",
+    "scores": {
+      "originality": {
+        "score": 12.0,
+        "reference_score": 13.0,
+        "max_score": 20,
+        "reason": "项目以文件系统和系统调用为核心，在Rust实现的OS项目中属于常见方向，但未发现显著独创设计。与历史项目对比，核心模块重叠率高，原创性表现一般。",
+        "evidence": [
+          "核心模块与历史项目（如qinghuadaxue、nankai）存在大量重叠（filesystem、syscall）。",
+          "项目类型为filesystem_focused_project，但未展示独特架构或创新点。",
+          "技术特性和弱点字段为空，缺乏独特设计记录。"
+        ]
+      },
+      "novelty": {
+        "score": 12.0,
+        "reference_score": 13.0,
+        "max_score": 20,
+        "reason": "虽然项目聚焦文件系统，但模块完成度分布与历史项目接近（如filesystem 0.55类似），且未引入新模块或新技术，新颖性不足。",
+        "evidence": [
+          "模块完成度与历史项目（如tianjingongye filesystem 0.63）差异较小。",
+          "build和user模块完成度极低（0.05），未体现创新拓展。",
+          "外部边数量高但未说明具体依赖的新颖性。"
+        ]
+      },
+      "practicality": {
+        "score": 10.0,
+        "reference_score": 9.0,
+        "max_score": 20,
+        "reason": "项目系统调用和文件系统模块完成度较高（0.65和0.55），具备一定实用性；但模块不均衡（build和user极低），缺乏启动、进程等基础模块，整体实用性受限。",
+        "evidence": [
+          "syscall模块完成度0.65，filesystem模块0.55，具备基本功能。",
+          "缺乏boot、memory、process等通用OS模块，功能覆盖面窄。",
+          "历史项目对比显示目标仓库在多功能OS场景下实用性不足。"
+        ]
+      },
+      "difficulty": {
+        "score": 12.0,
+        "reference_score": 13.0,
+        "max_score": 20,
+        "reason": "项目结构复杂度中等（0.45），外部边数量高（408），表明有一定工程复杂度；但模块数量少、缺乏多模块集成，技术难度不及通用OS项目。",
+        "evidence": [
+          "结构复杂度0.45，与历史项目（如qinghuadaxue 0.43）接近，显示中等复杂程度。",
+          "外部边408表示对外依赖较多，可能降低实现难度。",
+          "仅4个模块且部分完成度低，整体难度不高。"
+        ]
+      },
+      "completion": {
+        "score": 7.0,
+        "reference_score": 8.0,
+        "max_score": 20,
+        "reason": "完成度偏低：filesystem 0.55和syscall 0.65是主要贡献，但build和user模块仅0.05，整体模块完成度严重不均衡。与历史项目对比，目标仓库在模块多样性上明显不足。",
+        "evidence": [
+          "核心模块filesystem（0.55）和syscall（0.65）完成度可接受。",
+          "build（0.05）和user（0.05）模块几乎未实现。",
+          "历史项目（如qinghuadaxue）有多个模块完成度较高（boot 0.68），目标仓库模块发展不平衡。"
+        ]
+      }
+    },
+    "strengths": [
+      "系统调用模块完成度较高（0.65），表明系统调用层实现相对完善。",
+      "文件系统模块完成度中等（0.55），具备基本文件操作能力。",
+      "外部边数量丰富（408），可能支持更广泛的库集成。"
+    ],
+    "weaknesses": [
+      "模块发展严重不均衡：build和user模块完成度极低（0.05），缺少启动、进程等其他基础OS模块。",
+      "整体完成度偏低（关键模块未达0.7），且与外部队列相似度项目中表现平平。",
+      "缺乏创新性和多样性，与历史项目在核心模块和完成度分布上高度重叠。"
+    ],
+    "recommendations": [
+      "优先提升build和user模块的完成度，增强构建和用户态支持。",
+      "借鉴历史项目（如qinghuadaxue）的boot模块设计，补充启动流程。",
+      "扩展内存管理和进程管理模块，提升通用OS能力。",
+      "减少不必要的外部依赖，优化边结构，降低耦合度。"
+    ],
+    "confidence": "medium",
+    "uncertainty": "评分基于结构化画像和AI对比结果，但缺乏实际代码内容和性能指标；历史项目类型未知，可能导致对比评估偏差；模块完成度数值仅反映静态分析，不直接体现功能质量，因此置信度为中等。"
+  }
+}

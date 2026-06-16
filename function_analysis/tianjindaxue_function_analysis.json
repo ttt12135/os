@@ -1,170 +1,283 @@
 {
   "repo_name": "tianjindaxue",
-  "created_at": "2026-05-31 17:45:58",
+  "created_at": "2026-06-16 02:30:09",
   "analysis_count": 20,
   "functions": [
     {
-      "block_id": "block_1",
+      "block_id": "block_3",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "set_libc_path",
-      "type": "function",
-      "summary": "设置一个全局的LIBC路径，将传入的字符串存入互斥锁保护的静态变量中。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "35",
+      "end_line": "35",
+      "name": "DYN_PATH",
+      "type": "static",
+      "summary": "定义了一个全局静态可变互斥锁保护的字符串变量 DYN_PATH，用于存储动态路径或配置字符串。",
       "logic_steps": [
-        "获取静态变量LIBC_PATH的互斥锁，并锁定其保护的数据。",
-        "将传入的path字符串赋值给被锁定的数据，即更新LIBC路径。"
+        "声明一个静态变量 DYN_PATH，类型为 Mutex<String>，用于线程安全的共享可变字符串。",
+        "使用 Mutex::new(String::new()) 初始化该变量为一个空字符串的互斥锁。"
       ],
       "called_functions": [
-        "LIBC_PATH.lock"
+        "Mutex::new",
+        "String::new"
       ],
       "related_os_module": "process",
-      "evidence": "函数通过锁操作更新全局路径变量，通常与进程初始化或加载有关（如设置C库路径），文件路径位于kernel/src/tasks/initproc.rs更指向进程初始化模块。",
-      "uncertainty": "未看到LIBC_PATH的定义和使用上下文，无法确定该路径的具体用途（例如用于动态链接器或仿真环境），但模块归属明确。"
+      "evidence": "该变量位于 initproc.rs 文件中，该文件通常用于初始化进程或任务，变量名 DYN_PATH 暗示其可能用于存储动态加载路径或进程相关配置。",
+      "uncertainty": "该代码块仅定义了变量，未使用该变量，因此无法完全确认其具体用途，只能根据文件名和变量名推断与进程或初始化相关。"
     },
     {
       "block_id": "block_2",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "get_libc_path",
-      "type": "function",
-      "summary": "获取 LIBC_PATH 的克隆副本",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "34",
+      "end_line": "34",
+      "name": "GLIBC_PATH",
+      "type": "static",
+      "summary": "声明一个全局静态互斥锁保护的字符串变量，用于存储GLIBC库的路径。",
       "logic_steps": [
-        "获取全局变量 LIBC_PATH 的锁",
-        "调用 clone 方法克隆锁内的值并返回"
+        "1. 使用`static`关键字定义全局静态变量`GLIBC_PATH`。",
+        "2. 类型为`Mutex<String>`，提供了线程安全的互斥访问。",
+        "3. 初始化为空的`String`，由`Mutex::new`包装。"
       ],
       "called_functions": [
-        "lock",
-        "clone"
+        "Mutex::new",
+        "String::new"
       ],
-      "related_os_module": "unknown",
-      "evidence": "函数体仅包含 `LIBC_PATH.lock().clone()`，返回 String 类型，明显通过锁和克隆访问一个全局变量 LIBC_PATH",
-      "uncertainty": "无法确定 LIBC_PATH 的具体类型和初始化来源，可能属于进程或系统库相关，但缺乏进一步上下文"
+      "related_os_module": "process",
+      "evidence": "该变量位于进程初始化相关文件`initproc.rs`中，主要用于记录GLIBC路径，可能在创建或初始化进程时配置动态库路径。",
+      "uncertainty": "虽然判断为process模块，但具体用途（例如是否仅在初始化阶段使用，或运行时动态修改）需要更多上下文确认。代码块仅声明变量，无实际读写逻辑。"
     },
     {
-      "block_id": "block_3",
+      "block_id": "block_1",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "set_glibc_path",
-      "type": "function",
-      "summary": "将传入的路径字符串写入到一个名为 GLIBC_PATH 的全局静态变量中，该变量被互斥锁保护，用于设置 glibc 库的路径。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "33",
+      "end_line": "33",
+      "name": "LIBC_PATH",
+      "type": "static",
+      "summary": "定义了一个全局静态变量 LIBC_PATH，该变量是一个包装在互斥锁（Mutex）中的空字符串，用于存储 libc 的路径，保证在多线程或异步环境下的安全访问。",
       "logic_steps": [
-        "获取 GLIBC_PATH 的锁，返回一个可写的引用",
-        "将传入的 path 字符串赋值给被锁保护的 GLIBC_PATH"
+        "声明一个静态变量 LIBC_PATH，其类型为 Mutex<String>。",
+        "使用 Mutex::new(String::new()) 初始化该变量，初始值为一个空字符串。"
       ],
       "called_functions": [
-        "GLIBC_PATH.lock"
+        "Mutex::new",
+        "String::new"
       ],
-      "related_os_module": "unknown",
-      "evidence": "函数体 `*GLIBC_PATH.lock() = path;` 表明 GLIBC_PATH 是一个静态变量，通过 lock() 获取互斥锁后写入新值。",
-      "uncertainty": "无法确定 GLIBC_PATH 的具体类型（可能是 Mutex<String> 或类似封装），也无法确定该路径何时被使用以及属于哪个操作系统的功能模块（如进程初始化、动态链接器支持等），仅能从函数名推测与 glibc 库路径设置相关。"
+      "related_os_module": "process",
+      "evidence": "该变量定义在 initproc.rs 文件中，文件名暗示其与初始进程（init process）相关；变量名 LIBC_PATH 暗示用于存储 libc 库路径，这通常与进程加载和初始化相关。",
+      "uncertainty": "由于仅提供了这一行代码，无法确定 LIBC_PATH 在后续代码中的具体使用场景（如是否用于加载动态库、设置环境变量等），因此模块归类有一定推测成分。"
     },
     {
       "block_id": "block_4",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "get_glibc_path",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "37",
+      "end_line": "39",
+      "name": "set_libc_path",
       "type": "function",
-      "summary": "获取全局 glibc 路径的字符串，通过返回一个静态 Mutex 保护字符串的克隆值实现原子访问。",
+      "summary": "该函数用于设置 libc 路径：通过获取全局静态变量 LIBC_PATH 的锁，然后将传入的路径值赋给它。",
       "logic_steps": [
-        "获取 GLIBC_PATH（可能是全局静态 Mutex<String>）的锁，进入临界区。",
-        "返回锁内字符串的克隆副本。"
+        "第1步逻辑：获取全局静态变量 LIBC_PATH 的锁（.lock()），返回一个可变引用。",
+        "第2步逻辑：将传入的 path（String 类型）赋值给被锁保护的 LIBC_PATH。"
       ],
       "called_functions": [
-        "GLIBC_PATH.lock",
-        "clone"
+        "LIBC_PATH.lock()"
       ],
       "related_os_module": "process",
-      "evidence": "函数名和内容均涉及 glibc 路径的获取，该路径通常与用户态进程的初始化（initproc）相关；文件位于 tasks 目录，功能属于进程管理。",
-      "uncertainty": "低不确定性：GLIBC_PATH 的具体初始化位置和初始值未提供，但不影响对函数逻辑的分析。"
+      "evidence": "函数定义在 tasks/initproc.rs 中，功能是修改全局存储的 libc 路径，该路径通常与进程初始化或加载相关，属于进程管理模块。",
+      "uncertainty": "无法确定 LIBC_PATH 的具体类型（例如是否 std::sync::Mutex<String>），但根据 .lock() 调用推断是某种互斥锁包装。此外，函数名和实现逻辑一致，不存在歧义。"
     },
     {
       "block_id": "block_5",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "set_dyn_path",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "41",
+      "end_line": "43",
+      "name": "get_libc_path",
       "type": "function",
-      "summary": "该函数将一个字符串路径设置为全局动态路径。它通过获取一个全局锁保护的静态变量DYN_PATH的锁，并将传入的path赋值给它来实现。",
+      "summary": "获取全局静态变量 LIBC_PATH 中存储的路径字符串的克隆副本。",
       "logic_steps": [
-        "1. 调用DYN_PATH.lock()获取对全局静态变量DYN_PATH的互斥锁，返回一个可变引用。",
-        "2. 将传入的字符串path赋值给该可变引用所指向的DYN_PATH内部值。"
+        "调用 LIBC_PATH 的锁方法进行加锁（获取互斥访问权），返回一个 MutexGuard。",
+        "对加锁后的内部值调用 clone() 方法，返回一个 String 副本。"
       ],
       "called_functions": [
-        "DYN_PATH.lock()"
+        "LIBC_PATH.lock()",
+        "clone()"
       ],
-      "related_os_module": "filesystem",
-      "evidence": "函数名set_dyn_path暗示设置动态路径，路径通常与文件系统相关；代码中操作全局变量DYN_PATH，该变量名称包含'dyn_path'，结合initproc.rs文件路径，该变量可能在进程初始化时用于指定动态链接库搜索路径或其他文件系统相关路径。",
-      "uncertainty": "由于未提供DYN_PATH的定义和上下文，无法确定其具体用途（如动态链接库路径、根文件系统路径等），模块归属为推测。"
+      "related_os_module": "process",
+      "evidence": "函数体内直接操作名为 LIBC_PATH 的全局变量，该变量通过 .lock() 加锁（暗示是 Mutex<String> 类型），随后调用 .clone() 返回一个字符串副本。该函数通常用于提供 libc 路径给其他模块，属于进程初始化或任务管理的一部分。",
+      "uncertainty": "不确定 LIBC_PATH 变量的具体定义位置和初始赋值，以及该路径最终用于何种目的（可能用于加载 libc 库或设置任务属性）。"
     },
     {
       "block_id": "block_6",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "45",
+      "end_line": "47",
+      "name": "set_glibc_path",
+      "type": "function",
+      "summary": "该函数用于设置一个全局静态变量 GLIBC_PATH 的值为传入的字符串路径。它通过获取 GLIBC_PATH 锁并写入 path 来实现对共享可变状态的更新。",
+      "logic_steps": [
+        "获取 GLIBC_PATH 的锁（lock() 返回一个 MutexGuard），以便安全地访问和修改其内部值",
+        "将传入的 path 字符串赋值给被锁保护的值（通过解引用 MutexGuard 并执行赋值操作）"
+      ],
+      "called_functions": [
+        "GLIBC_PATH.lock"
+      ],
+      "related_os_module": "process",
+      "evidence": "代码中直接对全局静态变量 GLIBC_PATH（类型为 Mutex<String>）调用 lock() 方法并进行赋值，表明该函数负责设置与 init 进程或 glibc 相关的路径，属于进程初始化或运行环境配置的一部分。",
+      "uncertainty": "由于未提供 GLIBC_PATH 的定义上下文，无法完全确定其确切作用（例如是用于动态链接器路径还是其他），但基于函数名和赋值操作可合理推断其与 glibc 路径设置相关，可能用于后续进程装载或执行时查找 glibc 库。"
+    },
+    {
+      "block_id": "block_8",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "53",
+      "end_line": "55",
+      "name": "set_dyn_path",
+      "type": "function",
+      "summary": "将传入的路径字符串设置为全局动态路径 DYN_PATH 的值。",
+      "logic_steps": [
+        "获取全局变量 DYN_PATH 的锁，确保线程安全。",
+        "将锁内部的值更新为传入的 path 字符串。"
+      ],
+      "called_functions": [
+        "DYN_PATH.lock()"
+      ],
+      "related_os_module": "process",
+      "evidence": "函数名 set_dyn_path 暗示设置动态路径，函数体通过锁保护对全局变量 DYN_PATH 进行赋值操作，DYN_PATH 可能用于记录进程初始任务的动态库或执行路径，相关上下文在 initproc.rs 中与进程初始化有关。",
+      "uncertainty": "DYN_PATH 的具体类型未在此代码段中定义，可能是一个全局静态 Mutex<String> 或类似结构，但从 lock() 调用可推断其实现了锁机制；另外函数简单设置路径，不涉及路径验证或解析，因此功能仅限于赋值。"
+    },
+    {
+      "block_id": "block_7",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "49",
+      "end_line": "51",
+      "name": "get_glibc_path",
+      "type": "function",
+      "summary": "返回一个存储全局路径字符串的互斥锁保护的 `String` 的克隆值，该路径通常用于标记 glibc 的位置。",
+      "logic_steps": [
+        "获取全局静态变量 `GLIBC_PATH`（类型为 `Mutex<String>` 或类似互斥锁保护的字符串）的锁，保证线程安全。",
+        "调用 `lock()` 获得互斥锁的守护，然后调用 `.clone()` 复制内部字符串，返回克隆后的 `String`。"
+      ],
+      "called_functions": [
+        "Mutex::lock",
+        "String::clone"
+      ],
+      "related_os_module": "process",
+      "evidence": "函数体仅包含 `GLIBC_PATH.lock().clone()`，`GLIBC_PATH` 应是一个定义在文件/模块级别的全局 `Mutex<String>` 或 `Mutex<PathBuf>`（此处 `clone()` 要求类型实现 `Clone`，`String` 满足）。该函数返回一个 `String`，结合上下文和函数名，推测该路径用于动态链接器的 glibc 相关路径，属于进程初始化模块。",
+      "uncertainty": "未直接看到 `GLIBC_PATH` 的定义，但根据模式推断其为 `Mutex<String>`。具体初始化时机和用途需依赖文件上下文；模块归属基于函数名和所在文件 `initproc.rs` 推测为 process。"
+    },
+    {
+      "block_id": "block_9",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "57",
+      "end_line": "59",
       "name": "get_dyn_path",
       "type": "function",
-      "summary": "获取DYN_PATH全局变量的值，返回其字符串克隆。",
+      "summary": "获取当前动态路径（DYN_PATH）的共享可变状态，返回其克隆值。",
       "logic_steps": [
-        "获取全局静态变量DYN_PATH上的锁，返回MutexGuard",
-        "调用MutexGuard的clone方法，复制内部的String并返回"
+        "获取全局变量 DYN_PATH 的锁（Mutex 或类似同步原语），确保线程安全",
+        "调用 .clone() 方法复制内部 String 并返回副本"
       ],
       "called_functions": [
         "DYN_PATH.lock",
         "String::clone"
       ],
       "related_os_module": "process",
-      "evidence": "代码中使用了DYN_PATH.lock()，说明DYN_PATH是一个静态Mutex，同时clone()返回String，表明该函数用于获取动态路径字符串。通常路径管理属于进程或任务初始化模块。",
-      "uncertainty": "无法确定DYN_PATH的具体用途（如动态链接库路径、工作目录等），但根据函数名和文件路径（initproc.rs），可能与进程初始化时的动态路径设置有关。"
+      "evidence": "函数名 'get_dyn_path' 暗示获取动态路径；通过全局变量 DYN_PATH 上的 lock().clone() 操作，表明 DYN_PATH 是一个受互斥锁保护的 String，常见于进程相关的全局路径信息（例如 initproc 的当前工作目录或运行路径）。文件路径包含 'tasks/initproc.rs'，符合进程初始化相关模块。",
+      "uncertainty": "未提供 DYN_PATH 的定义上下文（例如声明的类型和具体位置），可能属于全局静态 Mutex<String>，但未排除其他锁类型；实际调用者及用途未知，仅根据函数名和调用推测为进程相关。"
     },
     {
-      "block_id": "block_7",
+      "block_id": "block_10",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "61",
+      "end_line": "69",
       "name": "clear",
       "type": "function",
-      "summary": "该函数通过向 DebugConsole 串行输出 ANSI 转义序列来清除终端屏幕：序列 \"ESC [ H ESC [ 2 J\" 表示将光标移动到左上角并清除整个屏幕。",
+      "summary": "该函数通过向DebugConsole输出ANSI转义序列来清除终端屏幕。序列 ESC [ H 将光标移动到左上角，ESC [ 2 J 清除整个屏幕。",
       "logic_steps": [
-        "连续调用 DebugConsole::putchar 发送 0x1b (ESC), 0x5b ('['), 0x48 ('H') 组成 \"ESC [ H\" 序列，将光标移动到屏幕左上角。",
-        "继续发送 0x1b (ESC), 0x5b ('['), 0x32 ('2'), 0x4a ('J') 组成 \"ESC [ 2 J\" 序列，清除整个屏幕从光标位置到屏幕末尾的内容。"
+        "第1步：连续发送字节 0x1b 和 0x5b，构成ANSI转义序列的开始部分 ESC [。",
+        "第2步：发送字节 0x48（即'H'），形成 ESC [ H 序列，将光标移动到屏幕左上角。",
+        "第3步：再次发送字节 0x1b 和 0x5b，开始另一条ANSI转义序列。",
+        "第4步：发送字节 0x32 和 0x4a（即'2J'），形成 ESC [ 2 J 序列，清除整个屏幕。"
       ],
       "called_functions": [
         "DebugConsole::putchar"
       ],
       "related_os_module": "driver",
-      "evidence": "函数体仅由多个 DebugConsole::putchar 调用组成，写入的字节序列 0x1b 0x5b 0x48 和 0x1b 0x5b 0x32 0x4a 分别对应 ANSI 转义码光标归位 (CUP) 和清屏 (ED)。因此功能是清空终端显示。",
-      "uncertainty": "low - 函数名和字节序列明确指向终端清屏功能，无歧义。"
+      "evidence": "函数内连续调用 DebugConsole::putchar 发送字节，其中 0x1b 是ESC字符，0x5b 是'['，0x48 是'H'，0x32 是'2'，0x4a 是'J'。这些字节组合成标准的ANSI转义序列 ESC[H 和 ESC[2J，用于清除终端显示。",
+      "uncertainty": "低。代码逻辑清晰，没有歧义。"
     },
     {
-      "block_id": "block_8",
+      "block_id": "block_11",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "71",
+      "end_line": "79",
       "name": "kill_all_tasks",
       "type": "function",
-      "summary": "遍历所有任务，对类型为 MonolithicTask 的任务调用 exit(100) 强制终止。",
+      "summary": "该函数遍历任务映射中的所有任务，对类型为 MonolithicTask 的任务调用 exit(100) 来终止它们。",
       "logic_steps": [
-        "获取全局任务映射表 TASK_MAP 的锁，并遍历其所有值（任务弱引用）。",
-        "对每个弱引用调用 upgrade() 尝试提升为强引用，若成功则检查任务类型是否为 MonolithicTask。",
-        "如果任务类型匹配，则调用该任务的 exit(100) 方法，赋予退出码 100 并终止任务。"
+        "获取 TASK_MAP 的锁，并遍历其所有值（每个值是一个任务引用）。",
+        "对每个任务引用调用 upgrade() 尝试获得强引用（可能是弱引用转换），然后通过 inspect 方法检查是否成功。",
+        "对于成功获取的任务，检查其任务类型是否为 MonolithicTask，若是则调用该任务的 exit 方法并传入参数 100 来退出任务。"
       ],
       "called_functions": [
         "TASK_MAP.lock",
         "task.upgrade",
+        "inspect",
         "x.get_task_type",
         "x.exit"
       ],
       "related_os_module": "process",
-      "evidence": "函数名 kill_all_tasks 暗示杀死任务；内部遍历 TASK_MAP（任务列表），通过 get_task_type() 判断任务类型（MonolithicTask），调用 exit(100) 终止任务，逻辑符合进程/任务管理模块的终止功能。",
-      "uncertainty": "TASK_MAP 的具体实现（如 lock 类型）未从本代码块看出，但推断为某种全局并发容器；exit(100) 的退出码 100 可能仅用于标识，具体行为依赖 task 对象的 exit 实现；旁注释掉的 command 函数与 kill_all_tasks 无关，不纳入分析。"
+      "evidence": "函数通过全局任务映射 TASK_MAP 遍历所有任务，并根据任务类型（MonolithicTask）选择性终止任务，这属于进程管理中的任务销毁逻辑。",
+      "uncertainty": "TASK_MAP 的具体定义（如全局静态变量）和 upgrade 的详细语义未在代码块中体现，但基于常见 Rust 模式推断其为弱引用升级；exit(100) 的参数 100 代表退出码，但具体含义未在代码中说明。"
     },
     {
-      "block_id": "block_9",
+      "block_id": "block_12",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "108",
+      "end_line": "200",
       "name": "command",
       "type": "function",
-      "summary": "解析命令字符串并执行文件，支持引号和转义符，通过文件系统打开文件后创建用户进程执行。",
+      "summary": "该函数解析传入的命令字符串，尝试打开对应文件，如果成功则创建一个新的用户任务并执行该程序，等待其退出后清理资源。",
       "logic_steps": [
-        "遍历命令字符串字符，根据引号和转义符状态解析参数到args向量",
-        "将args向量转换为字符串切片，检查是否为空，若空则打印提示并返回",
-        "以第一个参数为文件名尝试以只读模式打开文件，若失败则打印未知命令并返回",
-        "创建新用户任务（UserTask），使用传入的work_dir，调用exec_with_process执行程序",
-        "等待任务完成（循环检测exit_code），然后额外等待一段时间并执行内存屏障"
+        "解析命令字符串，处理引号和转义字符，分割得到参数列表。",
+        "如果参数列表为空，打印提示并返回。",
+        "取第一个参数作为文件名，剩余参数作为程序参数。",
+        "尝试以只读方式打开文件，如果失败则打印未知命令并返回。",
+        "如果文件打开成功，扩展参数列表（包含文件名），克隆工作目录，获取当前任务。",
+        "创建新的 UserTask，设置工作目录，调用 before_run 进行初始化。",
+        "调用 exec_with_process 异步执行程序，如果失败则打印错误并返回。",
+        "调用当前任务的 before_run，获取新任务的 ID 并通过 thread::spawn 生成用户线程。",
+        "进入循环，等待任务退出（exit_code 非 None），然后释放任务。",
+        "额外循环 100000 次让出 CPU 确保进程完全清理，最后插入内存屏障。"
       ],
       "called_functions": [
         "File::open",
         "current_task",
         "UserTask::new",
-        "UserTask::before_run",
+        "task.before_run",
         "exec_with_process",
+        "curr_task.before_run",
+        "task.get_task_id",
         "thread::spawn",
         "user_entry",
         "tid2task",
@@ -174,48 +287,53 @@
         "core::sync::atomic::fence"
       ],
       "related_os_module": "process",
-      "evidence": "代码通过打开文件、创建UserTask、调用exec_with_process和thread::spawn来启动用户进程，涉及进程管理和执行，核心是exec_with_process。",
-      "uncertainty": "exec_with_process和user_entry的具体实现未在此代码块中体现，但根据调用推测是进程执行相关。"
+      "evidence": "函数名称为 command，主要逻辑涉及解析命令、打开文件、创建用户任务、异步执行进程并等待其退出，属于进程管理范畴。",
+      "uncertainty": "函数返回类型为 async fn，但具体 Future 类型未显式标注；user_entry 的具体实现未在代码段中展示，假设为调度入口。"
     },
     {
-      "block_id": "block_10",
+      "block_id": "block_13",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "203",
+      "end_line": "228",
       "name": "command_iperf",
       "type": "function",
-      "summary": "该函数用于执行iperf测试，并在测试前后进行强制清理和同步操作，以确保测试环境的隔离性。",
+      "summary": "该函数是用于执行iperf网络测试的命令处理函数，通过预先和事后强制清理所有任务（kill_all_tasks）并插入内存屏障和延迟循环，以增强测试执行时的隔离性，减少其他任务干扰。",
       "logic_steps": [
-        "调用kill_all_tasks()强制清理所有现有任务，确保测试环境干净。",
-        "执行内存屏障（SeqCst顺序的fence）和自旋等待循环，强制状态同步和缓存一致性。",
-        "调用command()执行实际的iperf测试命令。",
-        "测试完成后再次调用kill_all_tasks()强制清理所有任务。",
-        "再次执行内存屏障和更长时间的自旋等待（200000次迭代），确保清理完成状态同步。"
+        "第1步：记录日志，表示开始增强隔离的iperf测试。",
+        "第2步：调用kill_all_tasks强制清理所有现有任务。",
+        "第3步：执行内存屏障（SeqCst），然后进行10万次自旋循环，确保内存状态同步且等待清理生效。",
+        "第4步：调用command函数执行实际的iperf命令（使用传入的cmd和work_dir）。",
+        "第5步：测试完成后再次调用kill_all_tasks强制清理任务。",
+        "第6步：再次执行内存屏障和20万次自旋循环，确保清理后状态同步且稳定。",
+        "第7步：记录日志，表示完成iperf测试。"
       ],
       "called_functions": [
         "kill_all_tasks",
         "command"
       ],
-      "related_os_module": "scheduler",
-      "evidence": "函数中多次调用kill_all_tasks()来清理任务，以及使用fence和spin_loop进行同步，这些操作与任务调度和进程管理相关。",
-      "uncertainty": "kill_all_tasks和command函数的具体实现未在此代码段中给出，可能存在依赖的具体实现细节未知。"
+      "related_os_module": "process",
+      "evidence": "函数体内依次调用了kill_all_tasks和command，并在执行前后加入了atomic::fence和spin_loop序列，以增强任务隔离性；函数名和注释明确提及iperf测试和增强隔离。",
+      "uncertainty": "无法从代码中确定kill_all_tasks和command的具体实现细节，以及iperf测试的命令解析逻辑，仅基于函数调用和上下文推断。"
     },
     {
-      "block_id": "block_11",
+      "block_id": "block_14",
       "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "230",
+      "end_line": "624",
       "name": "initproc",
       "type": "function",
-      "summary": "该函数是系统初始进程，根据架构（LoongArch64或非LoongArch64）执行不同的启动任务，包括设置libc路径、通过busybox命令创建目录和链接、运行多个测试套件（如basic、LTP、libc、iperf、lmbench、iozone、lua等），最后检查是否只有空白内核任务并决定是否关机。",
+      "summary": "系统初始化进程，负责根据架构配置库路径、创建必要符号链接、启动一系列测试和基准测试（包括busybox、musl、glibc、LTP、iperf、lmbench等），最后打印完成信息并执行关机逻辑。",
       "logic_steps": [
-        "对于非LoongArch64架构，设置libc路径和动态链接器路径，然后执行'/bin/busybox sh'命令在/bin目录下启动shell。",
-        "对于LoongArch64架构，设置musl的libc和动态链接器路径，打印提示信息，创建必要的/bin目录，复制busybox并创建多个命令的符号链接（sleep, cp, ls, mkdir, mv, rm, cat, echo, chmod），并赋予可执行权限。",
-        "在LoongArch64架构下，运行musl环境下的basic测试套件（/musl/basic/run-all.sh），并输出开始和结束标记。",
-        "在LoongArch64架构下，运行LTP测试套件，包括创建临时目录、设置权限、运行run_ltp_tests函数，并输出开始和结束标记。",
-        "在LoongArch64架构下，依次运行iperf、lmbench、iozone、libcbench、busybox、lua测试脚本。",
-        "在LoongArch64架构下，运行musl libc测试，使用run_musl_tests函数并传入排除列表，排除一些已知有问题的测试（如pthread相关、setvbuf_unget、sem_init、tls相关等）。",
-        "切换libc路径为glibc，设置动态链接器路径，为glibc环境创建/bin目录、复制busybox、创建/sleep和/bin/sleep链接并赋予权限。",
-        "在LoongArch64架构下，运行glibc环境下的basic测试套件（/glibc/basic/run-all.sh），并输出开始和结束标记。",
-        "在LoongArch64架构下，运行glibc环境下的lmbench、libcbench、busybox、lua测试脚本。",
-        "打印测试完成标记，调用shutdown函数。最后检查任务映射中是否存在非BlankKernel类型的任务，如果没有则再次调用shutdown。",
-        "对于LoongArch64架构，最后设置libc路径为glibc并开始glibc环境下的测试。"
+        "对于非loongarch64架构（如RISC-V），设置libc路径和动态链接器路径为musl相关路径，然后调用command函数启动busybox sh。",
+        "对于loongarch64架构，先设置musl环境：调用set_libc_path和set_dyn_path，创建/bin目录，将busybox复制为多个常用命令（sleep、cp、ls、mkdir、mv、rm、cat、echo、chmod）到/bin下，并赋予可执行权限。",
+        "在musl环境下依次运行basic-musl测试组（run-all.sh）、LTP测试（run_ltp_tests）、iperf测试（command_iperf）、lmbench、iozone、libcbench、busybox、lua等测试。",
+        "运行libctest-musl测试组，调用run_musl_tests并传入排除列表（主要排除pthread相关和某些tls测试）。",
+        "切换为glibc环境：重新设置libc路径和动态链接器路径，创建/bin目录，复制busybox并设置权限，然后运行basic-glibc、lmbench、libcbench、busybox、lua等测试。",
+        "打印'!TEST FINISH!'并检查全局任务映射中是否仅有BlankKernel类型任务，若是则调用shutdown()关机；否则无条件调用shutdown()（此处逻辑可能存在冗余）。"
       ],
       "called_functions": [
         "set_libc_path",
@@ -224,205 +342,162 @@
         "run_ltp_tests",
         "command_iperf",
         "run_musl_tests",
-        "shutdown"
-      ],
-      "related_os_module": "build",
-      "evidence": "代码中执行了多个测试脚本（如run-all.sh、run_ltp_tests、iperf_testcode.sh等），并输出测试分组标记（如'OS COMP TEST GROUP START basic-musl'），表明这是用于操作系统比赛的测试构建和运行逻辑。",
-      "uncertainty": "代码中调用的command、run_ltp_tests、command_iperf、run_musl_tests等函数的具体实现在本代码块中未给出，只能根据调用上下文推测其功能。shutdown函数的具体实现也未提供。部分路径和命令（如/glibc/busybox）依赖于文件系统预置，不确定其部署方式。"
-    },
-    {
-      "block_id": "block_12",
-      "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "run_ltp_tests",
-      "type": "function",
-      "summary": "这个函数定义了一个包含许多LTP测试用例名称的列表，然后逐个执行这些测试。对于每个测试，它首先打印出运行的测试名称，然后调用对应的测试可执行文件，最后打印测试结果（失败信息）。",
-      "logic_steps": [
-        "定义了一个名为 `ltp_tests` 的向量，其中包含了大量LTP测试用例的名称字符串，通过注释可以发现许多测试被注释掉，实际参与运行的测试是列表中未被注释的部分。",
-        "遍历 `ltp_tests` 向量中的每个测试名 `test_name`。",
-        "对于每个测试，首先执行一条命令 `echo RUN LTP CASE {test_name}` 以输出运行信息。",
-        "然后执行该测试对应的可执行程序，路径为 `/musl/ltp/testcases/bin/{test_name}`。",
-        "最后再执行一条命令 `echo FAIL LTP CASE {test_name} : 0` 以输出测试失败的结果（无论测试实际是否成功，此处都输出失败提示）。"
-      ],
-      "called_functions": [
-        "command"
-      ],
-      "related_os_module": "report_generation",
-      "evidence": "函数内循环中连续调用 `command` 函数来执行shell命令，依次输出运行提示、运行测试程序、输出失败提示，并且测试名称对应的路径是固定的LTP测试用例路径。",
-      "uncertainty": "没有看到 `command` 函数的定义，无法确定其具体实现细节（例如如何处理返回值、环境、错误等）。函数的逻辑中在测试运行后总是输出失败信息，这可能是一种简化处理，实际测试结果并不影响后续流程。"
-    },
-    {
-      "block_id": "block_13",
-      "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "run_musl_tests",
-      "type": "function",
-      "summary": "执行 musl 测试集的函数，它定义了两个测试列表（静态链接和动态链接），然后遍历每个测试，排除指定的测试项后，通过 command 函数运行每个测试程序。",
-      "logic_steps": [
-        "定义静态链接测试列表 musl_static_tests，包含多个测试项，每个测试项由运行程序路径 (runtest)、被测程序名称 (entry) 和测试用例名称 (test_name) 组成。",
-        "定义动态链接测试列表 musl_dynamic_tests，结构与静态列表类似，但 entry 为 entry-dynamic.exe，且包含 tls_init、tls_local_exec、tls_get_new_dtv 等额外测试。",
-        "遍历两个测试列表（先静态，后动态）。",
-        "对于每个测试项，检查是否在 exclude 列表中（通过比较 runtest、entry、test_name 和 test_dir 是否完全匹配）。",
-        "如果测试项不在排除列表中，则调用 command 函数，构造命令行字符串 \"./runtest -w entry test_name\" 并传递 test_dir 作为工作目录，异步执行该测试。"
-      ],
-      "called_functions": [
-        "command",
-        "PathBuf::clone",
-        "alloc::format"
+        "shutdown",
+        "TASK_MAP.lock"
       ],
       "related_os_module": "process",
-      "evidence": "该函数定义在 kernel\\src\\tasks\\initproc.rs 中，initproc 通常与进程初始化相关；函数名 run_musl_tests 表明它用于运行 musl 兼容性测试；内部调用 command 函数异步执行外部程序，属于进程创建和任务调度范畴。",
-      "uncertainty": "command 函数的具体实现没有给出，但其功能明显是运行一个外部命令；exclude 列表中的目录参数 (PathBuf) 虽然被使用，但实际排除逻辑中仅比较 test_dir，没有用到 PathBuf 的路径信息，可能是一个冗余字段或用于其他未体现的目的。"
-    },
-    {
-      "block_id": "block_14",
-      "file_path": "kernel\\src\\tasks\\initproc.rs",
-      "name": "run_glibc_tests",
-      "type": "function",
-      "summary": "该函数定义了一个异步函数 run_glibc_tests，用于运行 GLibc 测试套件。它接收一个 glibc_home_dir 路径和排除列表 exclude，然后遍历预定义的静态测试和动态测试列表，对于不在排除列表中的每个测试项，通过调用 command 函数异步执行测试命令（格式为 '/glibc/runtest.exe -w entry-type test_name'）。",
-      "logic_steps": [
-        "定义两个硬编码的测试列表：glibc_static_tests，包含约 100 个静态链接的测试用例；glibc_dynamic_tests，包含约 100 个动态链接的测试用例。每个用例是一个三元组 (runtest 路径, entry 文件名, 测试名称)。",
-        "遍历两个列表（先静态后动态）。",
-        "对于每个测试项，执行以下步骤：",
-        "克隆 glibc_home_dir 作为当前测试目录 test_dir。",
-        "检查该测试项是否出现在 exclude 列表中（通过比较 runtest, entry, test_name 和 test_dir 四个字段的精确匹配）。",
-        "如果不在排除列表中，则调用 command 函数，传入格式化后的命令行字符串（格式为 '{} -w {} {}'，对应 runtest 路径、entry 文件名、测试名称）和 test_dir 路径，并等待异步执行完成。",
-        "所有测试按顺序依次执行，无并行或批处理。"
-      ],
-      "called_functions": [
-        "command"
-      ],
-      "related_os_module": "unknown",
-      "evidence": "函数体明确调用 command 函数执行外部程序，但代码中未体现该函数来自哪个模块，只能说与测试执行相关。",
-      "uncertainty": "command 函数的具体实现未在此代码块中提供，无法确定其定义位置和具体行为（如是否涉及 syscall、进程创建等）。函数名中的“glibc”暗示与标准库兼容性测试相关，但代码本身不直接暴露所属模块。"
+      "evidence": "该函数是初始化进程（initproc），负责配置系统库路径、执行各种用户态测试程序，并最终决定是否关机，属于进程/任务管理范畴。",
+      "uncertainty": "代码中包含了大量针对loongarch64架构的测试脚本调用，但部分测试脚本（如lmbench_testcode.sh等）的具体实现和来源未在此代码块中体现；另外关机逻辑中两次调用shutdown可能有误，但属于代码逻辑问题。"
     },
     {
       "block_id": "block_15",
-      "file_path": "kernel\\src\\syscall\\mm.rs",
-      "name": "impl UserTaskContainer {",
-      "type": "impl",
-      "summary": "定义了 UserTaskContainer 的实现块，但具体实现内容缺失，无法确定其功能。",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "625",
+      "end_line": "2973",
+      "name": "run_ltp_tests",
+      "type": "function",
+      "summary": "该函数定义一个名为 ltp_tests 的 Vec，包含一个大型的 LTP 测试用例名称列表（大部分被注释掉），然后遍历该列表，对于每个测试用例，依次执行三条命令：输出用例开始信息、实际运行 ltp 测试二进制文件、输出失败信息（无论实际结果如何）。该函数旨在批量运行一组预设的 LTP 测试用例，并记录日志。",
       "logic_steps": [
-        "当前代码块仅包含实现块的起始声明，没有提供任何方法或逻辑。"
+        "第1步：声明一个 Vec<String> 变量 ltp_tests，其中包含大量测试用例名称字符串，大多数测试用例已被注释掉，只有部分被启用。",
+        "第2步：使用 for 循环遍历 ltp_tests 中的每个测试名 test_name。",
+        "第3步：对每个 test_name，依次调用 command 函数三次：第一次输出 'RUN LTP CASE <test_name>' 作为日志；第二次执行 /musl/ltp/testcases/bin/<test_name> 运行实际测试；第三次输出 'FAIL LTP CASE <test_name> : 0' 作为日志（不论测试成功或失败，均输出 FAIL）。"
       ],
-      "called_functions": [],
-      "related_os_module": "syscall",
-      "evidence": "代码块位于 syscall/mm.rs 文件中，且实现块名为 UserTaskContainer，表明其与内存管理和系统调用相关。",
-      "uncertainty": "由于代码块内容仅包含 'impl UserTaskContainer {' 这一行，没有实际实现代码，因此无法分析具体逻辑步骤、调用函数或详细功能。"
+      "called_functions": [
+        "command"
+      ],
+      "related_os_module": "process",
+      "evidence": "函数名 run_ltp_tests 暗示运行 LTP 测试；函数体内通过 command 调用外部测试二进制文件；LTP 是 Linux 测试项目，用于验证系统调用和内核功能，属于进程管理范畴（创建子进程执行程序）。",
+      "uncertainty": "代码中未显示 command 函数的定义，但其原型应为异步函数，接受命令字符串和 PathBuf 参数；未展示如何处理测试结果（所有运行后均输出 FAIL，可能仅为日志，实际结果未用于判断）。"
     },
     {
       "block_id": "block_16",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "2975",
+      "end_line": "3443",
+      "name": "run_musl_tests",
+      "type": "function",
+      "summary": "该函数定义了一个异步函数，用于运行针对 musl 库的静态链接和动态链接测试用例。它内置了两个测试向量列表（musl_static_tests 和 musl_dynamic_tests），每个元素包含运行测试的程序路径、可执行文件入口和测试名称。函数遍历这两个列表，对于每个测试，如果它不在排除列表（exclude）中，则调用 command 函数以异步方式执行测试命令。",
+      "logic_steps": [
+        "第1步：定义静态链接测试用例列表 musl_static_tests，每个条目为 (runtest 路径, 静态可执行文件 'entry-static.exe', 测试名称)。",
+        "第2步：定义动态链接测试用例列表 musl_dynamic_tests，每个条目为 (runtest 路径, 动态可执行文件 'entry-dynamic.exe', 测试名称)。",
+        "第3步：将两个列表放入一个外部 Vec 中，并对其进行迭代。",
+        "第4步：对于每个测试条目，获取其 runtest、entry 和 test_name 字段，并复制 home_dir 作为测试目录。",
+        "第5步：检查当前测试是否出现在 exclude 列表中（比较 runtest、entry、test_name 和 test_dir）。",
+        "第6步：如果不在排除列表中，则构造命令字符串格式为 '<runtest> -w <entry> <test_name>'，并以 test_dir 为工作目录调用 command 异步函数执行该命令。"
+      ],
+      "called_functions": [
+        "command"
+      ],
+      "related_os_module": "process",
+      "evidence": "该代码块位于 kernel/src/tasks/initproc.rs 中，initproc 通常是初始化进程相关的实现。函数 run_musl_tests 旨在运行进程测试（musl 库的测试用例），并调用了异步 command 函数，这通常用于在用户空间执行命令或程序，因此属于进程管理模块。",
+      "uncertainty": "无"
+    },
+    {
+      "block_id": "block_18",
       "file_path": "kernel\\src\\syscall\\mm.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "13",
+      "end_line": "13",
+      "name": "MAP_AREA_START",
+      "type": "const",
+      "summary": "定义内存映射区域的起始地址常量，值为0x2_0000_0000，用于指定用户态或内核态内存映射的基地址。",
+      "logic_steps": [
+        "定义常量MAP_AREA_START为usize类型，值为0x2_0000_0000。"
+      ],
+      "called_functions": [],
+      "related_os_module": "memory",
+      "evidence": "该常量位于syscall/mm.rs文件中，且名称和值暗示其与内存映射管理相关，常见于用户空间映射区域的起始地址设置。",
+      "uncertainty": "代码仅定义常量，未展示具体使用场景，无法确定是用于用户态还是内核态映射，也可能与其他区域（如堆、栈）的布局配合使用。"
+    },
+    {
+      "block_id": "block_17",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "3445",
+      "end_line": "3941",
+      "name": "run_glibc_tests",
+      "type": "function",
+      "summary": "该函数定义了一组 glibc 静态和动态测试用例列表，并依次运行这些测试，通过调用外部命令来执行测试程序，同时支持排除指定的测试用例。",
+      "logic_steps": [
+        "定义静态测试用例列表 glibc_static_tests，每个元素由 (runtest路径, entry文件, test名称) 组成，所有测试都使用 /glibc/runtest.exe 和 entry-static.exe。",
+        "定义动态测试用例列表 glibc_dynamic_tests，类似但使用 entry-dynamic.exe，并额外包含 dlopen、sem_init、tls_init、tls_local_exec、tls_get_new_dtv 等测试。",
+        "遍历两个测试列表（先静态后动态）。",
+        "对于每个测试，检查 exclude 列表中是否包含与当前测试 (runtest, entry, test_name, test_dir) 完全匹配的项。",
+        "如果不被排除，则调用 command 函数执行格式为 \"{} -w {} {}\" 的命令（runtest, entry, test_name），工作目录为 test_dir。",
+        "command 调用是异步的，使用 .await 等待执行完成。"
+      ],
+      "called_functions": [
+        "command",
+        "alloc::format"
+      ],
+      "related_os_module": "unknown",
+      "evidence": "函数定义了两个向量 glibc_static_tests 和 glibc_dynamic_tests，其中包含多个测试用例的元组，然后循环遍历这些测试并使用 command 函数运行它们，排除通过 exclude 参数指定的测试用例。没有涉及硬件或内核核心模块的直接操作。",
+      "uncertainty": "无法确定 command 函数的具体实现，可能来自外部 crate 或文件内其他部分。函数名中的 'glibc_tests' 暗示它与 glibc 兼容性测试相关，但代码本身并不直接包含 glibc 的实现。"
+    },
+    {
+      "block_id": "block_20",
+      "file_path": "kernel\\src\\syscall\\mm.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "16",
+      "end_line": "22",
       "name": "sys_brk",
       "type": "function",
-      "summary": "这是sys_brk系统调用的实现，用于调整进程堆的结束地址（program break），当传入地址为0时返回当前堆地址，否则通过task的sbrk方法更新堆地址并返回新地址。",
+      "summary": "实现 sys_brk 系统调用，根据传入的 addr 返回当前堆地址或调整堆大小并返回新堆地址。",
       "logic_steps": [
-        "检查传入的addr是否为0，如果是则直接返回当前任务的堆结尾地址（通过self.task.heap()获取）并包装为Ok成功结果",
-        "如果addr不为0，则调用self.task.sbrk(addr)将堆结尾设置为新地址，并返回设置后的实际结果（通常返回新地址或错误）"
+        "检查传入的 addr 是否为 0，如果是 0，则直接返回当前任务堆的地址（self.task.heap()）。",
+        "如果 addr 非 0，则调用 self.task.sbrk(addr) 调整堆到指定地址，并返回调整后的堆地址。"
       ],
       "called_functions": [
         "self.task.heap()",
         "self.task.sbrk(addr)"
       ],
-      "related_os_module": "syscall",
-      "evidence": "函数名sys_brk与Linux的brk系统调用对应，代码中根据addr是否为0分别执行查询或修改堆顶操作，符合brk语义。",
-      "uncertainty": "不确定self.task.heap()和self.task.sbrk()的具体内部实现（例如是否真正分配/释放内存），但从接口看是典型的brk系统调用模式。"
-    },
-    {
-      "block_id": "block_17",
-      "file_path": "kernel\\src\\syscall\\mm.rs",
-      "name": "sys_mmap",
-      "type": "function",
-      "summary": "实现mmap系统调用，根据参数（起始地址、长度、保护标志、映射标志、文件描述符、偏移量）在用户空间分配或映射内存区域，支持匿名/文件、私有/共享、固定地址等映射类型，并处理地址对齐、用户空间范围检查、重叠检测、页表映射以及从文件读取数据等操作。",
-      "logic_steps": [
-        "1. 解析并截断flags和prot参数，将len向上对齐到页大小。",
-        "2. 根据fd是否为-1或MAP_ANONYMOUS标志确定是否匿名映射，获取文件对象（可选）。",
-        "3. 获取当前任务的空闲地址，并根据start参数决定实际映射地址：若start为0则使用空闲地址或MAP_AREA_START起始，否则使用start指定的虚拟地址。",
-        "4. 如果len为0则直接返回地址。",
-        "5. 针对LoongArch架构检查地址+len是否超出用户空间上限（0x7F_FFFF_FFFF），超出则返回ENOMEM。",
-        "6. 检查地址区间是否与现有映射重叠：若MAP_FIXED则移除重叠区域，否则返回EINVAL。",
-        "7. 根据MAP_SHARED标志区分共享映射和私有映射：共享映射下，若有文件则进行文件共享映射，否则进行匿名共享映射并逐页映射物理内存；私有映射下，若有文件则分配匿名物理页，否则在内存描述中记录匿名私有区域。",
-        "8. 若存在文件，则使用UserRef缓冲区从文件中读取数据到映射地址，读取失败时清理已分配内存并返回错误。",
-        "9. 返回映射的起始地址。"
-      ],
-      "called_functions": [
-        "alignup",
-        "MapFlags::from_bits_truncate",
-        "MmapProt::from_bits_truncate",
-        "flags.contains",
-        "self.task.get_fd",
-        "self.task.get_last_free_addr",
-        "VirtAddr::from",
-        "VirtAddr::new",
-        "self.task.pcb.lock().memset.overlapping",
-        "self.task.pcb.lock().memset.sub_area",
-        "self.task.pcb.lock().memset.push",
-        "self.task.map_frames",
-        "self.task.frame_alloc",
-        "self.task.map",
-        "MemArea::new (?)",
-        "UserRef::from(...).slice_mut_with_len",
-        "file.readat",
-        "self.task.page_table"
-      ],
       "related_os_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "uncertainty": "对于某些函数如MemArea的构造方式未完全显式，但根据上下文推断；文件操作（file.readat）可能依赖块设备驱动，但代码未详细展开，故模块仍判断为memory。"
-    },
-    {
-      "block_id": "block_18",
-      "file_path": "kernel\\src\\syscall\\mm.rs",
-      "name": "sys_munmap",
-      "type": "function",
-      "summary": "该函数是系统调用 munmap 的实现，用于取消映射指定内存区域。它通过调用 task 的 inner_map 方法，在进程控制块（PCB）中调用 memset 的 sub_area 方法来释放或取消映射从 start 到 start+len 的内存区域。",
-      "logic_steps": [
-        "调用 self.task.inner_map 方法，传入一个闭包，该闭包以 pcb（进程控制块）为参数",
-        "在闭包内，调用 pcb.memset 的 sub_area 方法，传入 start 和 start+len 参数，以及 self.task.page_table（页表），以取消映射指定区域",
-        "返回 Ok(0) 表示成功"
-      ],
-      "called_functions": [
-        "self.task.inner_map",
-        "pcb.memset.sub_area"
-      ],
-      "related_os_module": "memory",
-      "evidence": "代码中使用了 memset.sub_area 处理内存区域，且函数名 sys_munmap 与取消内存映射的系统调用对应，涉及内存管理模块",
-      "uncertainty": "sub_area 的具体实现细节未给出，可能涉及释放页表或标记页面无效；inner_map 的作用未明确说明，可能是加锁访问 PCB 的接口"
+      "evidence": "代码位于 mm.rs 文件，函数名为 sys_brk，属于内存管理系统调用；函数内部调用 self.task.heap() 和 self.task.sbrk(addr) 操作进程堆。",
+      "uncertainty": "self.task.sbrk 的具体实现细节（如参数含义、是否返回新地址）无法从本代码块得知，但根据 POSIX brk 语义，通常传入新堆边界并返回调整后的地址。"
     },
     {
       "block_id": "block_19",
       "file_path": "kernel\\src\\syscall\\mm.rs",
-      "name": "sys_mprotect",
-      "type": "function",
-      "summary": "处理系统调用 mprotect，用于修改内存区域的保护属性，但当前实现仅解析权限标志并返回成功（0），未实际执行保护修改。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "15",
+      "end_line": "286",
+      "name": "impl UserTaskContainer {",
+      "type": "impl",
+      "summary": "实现了用户任务的内存相关系统调用，包括 brk、mmap、munmap、mprotect、msync、set_robust_list 和 get_robust_list。",
       "logic_steps": [
-        "解析传入的 prot 参数为 ProtFlags 位标志（截断非法位）。",
-        "日志输出调试信息，记录起始地址、长度和保护标志。",
-        "直接返回成功（Ok(0)），注释掉的错误 EPERM 表明原本可能拒绝操作，但当前未实现实际内存保护设置。"
+        "sys_brk: 如果 addr 为 0，返回当前堆地址；否则调用 sbrk 调整堆大小并返回新地址。",
+        "sys_mmap: 解析标志和权限，对齐长度；确定文件来源（匿名或文件映射）；计算起始地址（如果 start 为 0，则使用 MAP_AREA_START 或任务最后空闲地址）；检查地址范围是否超出用户空间限制；处理映射重叠情况（MAP_FIXED 时移除重叠区域，否则返回 EINVAL）；根据 MAP_SHARED 和文件是否存在分别处理共享映射和私有映射；如果有文件，从文件读取数据到映射区域；返回映射地址。",
+        "sys_munmap: 调用 memset.sub_area 移除指定区间的内存区域。",
+        "sys_mprotect: 目前仅记录调试日志并返回 Ok(0)，未实际修改保护属性。",
+        "sys_msync: 目前仅记录调试日志并返回 Ok(0)，未实际同步内存。",
+        "sys_set_robust_list: 验证长度是否为 24 字节，验证 head 地址有效性并检查是否映射，然后设置任务控制块中的 robust_list_head 和 robust_list_len。",
+        "sys_get_robust_list: 通过页表翻译 head_ptr 和 len_ptr 地址，并在这些地址处写入 0（当前实现总是返回 0，未真正获取 robust 列表）。"
       ],
       "called_functions": [
-        "ProtFlags::from_bits_truncate",
-        "debug!",
-        "Ok"
-      ],
-      "related_os_module": "memory",
-      "evidence": "函数使用 ProtFlags 用于内存保护标志，处理的内存地址范围，属于内存管理系统调用；但实现是空壳仅返回成功，未涉及任何内存修改操作。",
-      "uncertainty": "无法确认 ProtFlags 的具体定义和 from_bits_truncate 的行为（可能来自 bitflags 宏），且未实现实际内存保护设置，函数后续可能被完善；另外日志宏 debug! 可能依赖 log 或 tracing 库，但非核心逻辑。"
-    },
-    {
-      "block_id": "block_20",
-      "file_path": "kernel\\src\\syscall\\mm.rs",
-      "name": "sys_msync",
-      "type": "function",
-      "summary": "这是一个未实现的系统调用，处理msync同步内存映射到文件的操作，目前仅解析标志位并返回成功。",
-      "logic_steps": [
-        "使用 MSyncFlags::from_bits_truncate 将传入的 flags 参数转换为 MSyncFlags 枚举",
-        "记录调试日志，包含地址、长度和标志信息",
-        "直接返回 Ok(0)，表示暂时未实现真正的同步逻辑"
-      ],
-      "called_functions": [
-        "MSyncFlags::from_bits_truncate"
+        "self.task.heap()",
+        "self.task.sbrk(addr)",
+        "self.task.get_fd(fd)",
+        "self.task.get_last_free_addr()",
+        "self.task.pcb.lock().memset.overlapping()",
+        "self.task.pcb.lock().memset.sub_area()",
+        "self.task.map_frames()",
+        "self.task.frame_alloc()",
+        "self.task.map()",
+        "self.task.pcb.lock().memset.push()",
+        "self.task.inner_map()",
+        "self.task.page_table.translate()"
       ],
       "related_os_module": "syscall",
-      "evidence": "代码中明确调用了 MSyncFlags::from_bits_truncate 和 debug!，并且返回 Ok(0)，注释 'use it temporarily' 表明这是一个临时实现。",
-      "uncertainty": "函数功能基于名称猜测，但返回值Ok(0)和注释确认了当前为占位实现；部分细节如addr和len的实际使用未体现。"
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "uncertainty": "无"
     }
   ]
 }

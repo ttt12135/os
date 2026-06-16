@@ -1,7 +1,7 @@
 {
   "repo_name": "tongjidaxue",
   "repo_path": "D:\\os\\history\\tongjidaxue",
-  "created_at": "2026-05-31 17:50:07",
+  "created_at": "2026-06-16 02:33:07",
   "basic_info": {
     "repo_name": "tongjidaxue",
     "repo_path": "D:\\os\\history\\tongjidaxue"
@@ -11,18 +11,17 @@
   "function_analysis_summary": {
     "analysis_count": 20,
     "module_distribution": {
-      "process": 17,
-      "unknown": 3
+      "process": 20
     }
   },
   "call_graph_summary": {
-    "edge_count": 63,
-    "high_confidence_edge_count": 7,
+    "edge_count": 138,
+    "high_confidence_edge_count": 11,
     "high_confidence_edges_preview": [
       {
-        "caller": "from_id",
+        "caller": "impl WaitId {",
         "caller_file": "src\\kernel\\task\\process.rs",
-        "callee": "pgroup_rcu",
+        "callee": "id.cast_unsigned",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
         "source_block_id": "block_9",
@@ -30,7 +29,11 @@
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_7",
+        "normalized_caller": "impl WaitId {",
+        "normalized_callee": "cast_unsigned",
+        "call_type": "external"
       },
       {
         "caller": "from_id",
@@ -38,194 +41,250 @@
         "callee": "cast_unsigned",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_9",
+        "source_block_id": "block_11",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_9",
+        "normalized_caller": "from_id",
+        "normalized_callee": "cast_unsigned",
+        "call_type": "external"
       },
       {
-        "caller": "clone_from",
+        "caller": "impl WaitType {",
         "caller_file": "src\\kernel\\task\\process.rs",
-        "callee": "new_shared",
+        "callee": "into_raw",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_19",
+        "source_block_id": "block_14",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_11",
+        "normalized_caller": "impl WaitType {",
+        "normalized_callee": "into_raw",
+        "call_type": "external"
       },
       {
-        "caller": "clone_from",
+        "caller": "to_wstatus",
         "caller_file": "src\\kernel\\task\\process.rs",
-        "callee": "new_cloned",
+        "callee": "into_raw",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_19",
+        "source_block_id": "block_15",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_13",
+        "normalized_caller": "to_wstatus",
+        "normalized_callee": "into_raw",
+        "call_type": "external"
       },
       {
-        "caller": "clone_from",
+        "caller": "impl WaitObject {",
         "caller_file": "src\\kernel\\task\\process.rs",
-        "callee": "exit_signal",
+        "callee": "WaitType::Stopped",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_19",
+        "source_block_id": "block_17",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_17",
+        "normalized_caller": "impl WaitObject {",
+        "normalized_callee": "Stopped",
+        "call_type": "external"
       },
       {
-        "caller": "clone_from",
+        "caller": "impl ProcessBuilder {",
         "caller_file": "src\\kernel\\task\\process.rs",
-        "callee": "mm_list",
+        "callee": "process_list.add_process",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_19",
+        "source_block_id": "block_20",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_24",
+        "normalized_caller": "impl ProcessBuilder {",
+        "normalized_callee": "add_process",
+        "call_type": "external"
       },
       {
-        "caller": "clone_from",
+        "caller": "impl ProcessBuilder {",
         "caller_file": "src\\kernel\\task\\process.rs",
-        "callee": "parent",
+        "callee": "Session::new",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_19",
+        "source_block_id": "block_20",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_28",
+        "normalized_caller": "impl ProcessBuilder {",
+        "normalized_callee": "new",
+        "call_type": "external"
+      },
+      {
+        "caller": "impl ProcessBuilder {",
+        "caller_file": "src\\kernel\\task\\process.rs",
+        "callee": "ProcessGroupBuilder::new",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_20",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_29",
+        "normalized_caller": "impl ProcessBuilder {",
+        "normalized_callee": "new",
+        "call_type": "external"
+      },
+      {
+        "caller": "impl ProcessBuilder {",
+        "caller_file": "src\\kernel\\task\\process.rs",
+        "callee": "pgroup.add_member",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_20",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_33",
+        "normalized_caller": "impl ProcessBuilder {",
+        "normalized_callee": "add_member",
+        "call_type": "external"
+      },
+      {
+        "caller": "impl ProcessBuilder {",
+        "caller_file": "src\\kernel\\task\\process.rs",
+        "callee": "parent.add_child",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_20",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_34",
+        "normalized_caller": "impl ProcessBuilder {",
+        "normalized_callee": "add_child",
+        "call_type": "external"
       }
     ]
   },
   "module_summary": {
-    "module_count": 2,
+    "module_count": 1,
     "module_names": [
-      "process",
-      "unknown"
+      "process"
     ],
     "modules": [
       {
         "module_name": "process",
-        "module_summary": "该模块定义了操作系统中进程管理的核心数据结构与相关功能，包括进程控制块（Process）、等待队列（WaitList）、等待条目（Entry）、批量通知（NotifyBatch）、已退出进程处理（DrainExited），以及等待标识（WaitId）和等待类型（WaitType）的转换与状态码生成。模块主要负责进程的创建/克隆（通过 ProcessBuilder 和 clone_from 函数）、进程等待/退出状态管理（WaitList、Entry、DrainExited）以及系统调用中 wait/waitpid/waitid 的参数解析和状态码生成（from_type_and_id、from_id、to_wstatus、to_status_code 等）。",
+        "module_summary": "该模块是操作系统内核中进程管理模块，主要负责进程的结构定义、创建、等待状态管理和同步。它提供了进程内部数据管理（子进程和线程的弱引用）、进程构建器（ProcessBuilder）用于逐步配置并创建进程和线程、进程等待机制（等待标识、等待类型、等待对象、等待队列和条件变量）以及状态码转换。",
         "key_functions": [
           {
+            "name": "ProcessInner",
+            "role": "存储进程内部数据，包括子进程集合（BTreeMap<u32, Weak<Process>>）和线程集合（BTreeMap<u32, Weak<Thread>>），使用弱引用防止循环引用。"
+          },
+          {
             "name": "ProcessBuilder",
-            "role": "构建器模式的结构体，用于逐步配置和创建进程实例，包含内存列表、退出信号、父进程等可选字段。"
+            "role": "提供构建器模式用于创建进程，支持设置内存管理列表、退出信号、父进程、线程构建器、进程组、会话和进程ID，并包含 build 方法执行实际创建逻辑（分配MMList、创建Arc<Process>、加入进程列表、构建线程、设置父子关系和进程组/会话）。"
           },
           {
             "name": "Process",
-            "role": "进程核心结构体，定义进程标识、父子关系、线程管理、信号、共享内存、进程组与会话等字段，是进程控制块的主要表示。"
+            "role": "定义进程核心结构，包含进程ID、等待列表、内存管理列表、退出信号、共享内存区域、父进程、进程组、会话等字段，以及内部锁保护的数据（ProcessInner）。"
           },
           {
             "name": "WaitList",
-            "role": "等待队列结构体，使用自旋锁和条件变量管理等待对象（WaitObject），用于进程同步与唤醒。"
-          },
-          {
-            "name": "NotifyBatch",
-            "role": "批量通知结构体，持有等待队列守卫、进程引用和条件变量引用，用于一次性唤醒多个等待的进程。"
+            "role": "定义等待队列，包含自旋锁保护的VecDeque<WaitObject>队列和条件变量，用于管理等待资源或事件的进程/线程。"
           },
           {
             "name": "Entry",
-            "role": "等待队列中的条目结构体，存储进程等待上下文，包括等待队列引用、进程列表引用、条件变量引用以及控制标志（want_stop、want_continue）和等待ID。"
+            "role": "定义用于进程等待管理的内部数据结构，包含等待队列、进程列表、条件变量引用和等待控制标志（want_stop、want_continue、want_id）。"
+          },
+          {
+            "name": "NotifyBatch",
+            "role": "定义批量通知结构体，在持有锁的上下文中延迟发送条件变量通知，避免死锁或重入问题（RAII模式，drop时根据needs_notify标志触发通知）。"
           },
           {
             "name": "DrainExited",
-            "role": "用于遍历并消费已退出进程的等待对象，包装受自旋锁保护的 VecDeque<WaitObject>，便于清理退出状态。"
+            "role": "定义包装器，用于安全排空已退出进程的等待对象列表（包含自旋锁保护的VecDeque<WaitObject>引用）。"
+          },
+          {
+            "name": "WaitId",
+            "role": "枚举表示进程等待标识，支持任意进程（Any）、特定PID（Pid(u32)）和特定进程组ID（Pgid(u32)），并提供了from_type_and_id和from_id两个构造函数。"
           },
           {
             "name": "from_type_and_id",
-            "role": "根据 id_type 和 id 参数将 Linux waitid 系统调用中的类型转换为内部 WaitId 枚举（Any、Pid、Pgid），不支持 P_PIDFD 时 panic，无效类型返回错误。"
+            "role": "根据id_type（P_ALL/P_PID/P_PGID）和id参数构造WaitId枚举值，用于解析wait系统调用的标识类型。"
           },
           {
             "name": "from_id",
-            "role": "根据传入的 id 值和当前线程信息，将 id 转换为 WaitId 变体：id=-1 表示任意子进程，id=0 表示同组进程，正数表示特定 PID，负数表示特定 PGID。"
+            "role": "根据整数id和线程引用构造WaitId，负数id表示进程组ID（绝对值），-1表示任意，0表示当前进程组，正数表示特定PID。"
+          },
+          {
+            "name": "WaitType",
+            "role": "枚举表示进程等待状态，包括Exited（带退出码）、Signaled（被信号终止）、Stopped（被信号停止）和Continued（继续运行），并实现状态码转换方法to_wstatus和to_status_code。"
           },
           {
             "name": "WaitObject",
-            "role": "等待对象结构体，包含进程 ID（pid）和等待类型（WaitType），用于在等待队列中记录等待项。"
-          },
-          {
-            "name": "impl WaitType",
-            "role": "WaitType 类型的空实现块，当前未定义任何方法，可能用于未来扩展。"
+            "role": "结构体表示等待操作状态，包含进程ID（pid）和等待类型（code: WaitType），提供stopped()和is_continue()查询方法。"
           },
           {
             "name": "to_wstatus",
-            "role": "将 WaitType 枚举转换为 Linux 兼容的 wait 状态码（wstatus），处理 Exited、Signaled、Stopped、Continued 四种事件，符合 waitpid 返回规范。"
+            "role": "将WaitType转换为符合UNIX标准的32位wstatus格式（如WEXITSTATUS、WTERMSIG、WIFSTOPPED标志等）。"
           },
           {
-            "name": "to_status_code",
-            "role": "将 WaitType 转换为状态码二元组（退出码/信号值和 CLD_* 事件常量），用于返回给父进程，支持 CLD_EXITED、CLD_DUMPED、CLD_KILLED、CLD_STOPPED、CLD_CONTINUED。"
+            "role": "将WaitType转换为(u32, u32)状态码和子进程状态标识（如CLD_EXITED、CLD_DUMPED等），用于向用户态返回wait系统调用结果。",
+            "name": "to_status_code"
           },
           {
             "name": "stopped",
-            "role": "判断 WaitType 是否为 Stopped 变体，若是则返回对应的停止信号（Signal），否则返回 None。"
+            "role": "返回WaitObject中进程停止时的信号，若未停止则返回None。"
           },
           {
             "name": "is_continue",
-            "role": "判断 WaitType 是否为 Continued 状态，返回布尔值。"
-          },
-          {
-            "name": "new",
-            "role": "为 Process 结构体创建一个所有字段均为 None 的空占位实例。"
-          },
-          {
-            "name": "clone_from",
-            "role": "根据克隆参数（clone_args）克隆进程：根据 CLONE_VM 标志决定共享或复制内存空间，设置退出信号、内存列表、父进程，用于进程创建（如 fork）。"
-          },
-          {
-            "name": "exit_signal",
-            "role": "设置进程的退出信号（Signal），并返回修改后的自身，用于配置进程退出时向父进程发送的信号。"
+            "role": "判断WaitObject是否为Continued状态，返回布尔值。"
           }
         ],
-        "call_flow_summary": "模块内部存在明显的调用链：1) 进程等待状态处理链：from_type_and_id 和 from_id 根据系统调用参数生成 WaitId，可能用于后续与 WaitObject 的匹配；2) WaitList 与 WaitObject 配合管理等待队列，DrainExited 用于遍历已退出进程的等待项，Entry 表示等待上下文，NotifyBatch 用于批量唤醒；3) 状态码生成链：to_wstatus 和 to_status_code 均处理 WaitType 枚举，生成不同的状态表示（wstatus 或 CLD_* 事件），其中 to_wstatus 调用了 SIGNAL_COREDUMP! 宏和 into_raw，to_status_code 也调用了 SIGNAL_COREDUMP! 和 into_raw；4) 进程克隆链：clone_from 函数调用 new_shared 或 new_cloned（取决于 CLONE_VM 标志），并调用 exit_signal、mm_list、parent 方法完成进程构建；5) 进程结构体可通过 ProcessBuilder 进行构建，但当前未显示实现方法。此外，from_id 函数依赖 pgroup_rcu 方法获取进程组 ID。",
+        "call_flow_summary": "进程创建流程通过ProcessBuilder的build方法串联：首先初始化MMList（根据clone_from中CLONE_VM标志选择new_shared/new_cloned），创建Arc<Process>对象并设置pid、wait_list、mm_list等字段，调用process_list.add_process注册新进程，利用ThreadBuilder构建线程（传递process和tid），设置session（新创建或使用已有），通过ProcessGroupBuilder创建/设置进程组并调用pgroup.add_member添加成员，若有父进程则调用parent.add_child加入子进程集合，最后通过unsafe swap更新进程的parent/pgroup/session字段。\n等待机制中，外部通过WaitId枚举的from_type_and_id/from_id构造等待标识，利用WaitList（含Spin<VecDeque<WaitObject>>和CondVar）管理等待对象，Entry结构体作为内部状态机（持有SpinGuard保护等待队列、RwLockReadGuard保护进程列表及条件变量引用），NotifyBatch用于延迟通知（drop时根据needs_notify条件变量唤醒），DrainExited用于安全排空已退出进程的等待对象。WaitType的to_wstatus/to_status_code方法被WaitObject等调用以生成状态码。",
         "evidence": [
-          "函数理解中明确描述了 ProcessBuilder、Process、WaitList 等结构体及其字段，与进程管理相关",
-          "from_type_and_id 和 from_id 函数涉及 P_ALL、P_PID、P_PGID、P_PIDFD 常量，与 Linux waitid 系统调用对应",
-          "to_wstatus 和 to_status_code 函数处理 WaitType 的四种变体（Exited、Signaled、Stopped、Continued），并生成标准状态码",
-          "clone_from 函数使用 CLONE_VM 标志和 exit_signal、mm_list、parent 方法，明显是进程克隆逻辑",
-          "调用关系图中显示了 from_id -> pgroup_rcu、clone_from -> new_shared/new_cloned 等具体依赖"
+          "ProcessInner结构体定义children（BTreeMap<u32, Weak<Process>>）和threads（BTreeMap<u32, Weak<Thread>>）。",
+          "ProcessBuilder包含mm_list、exit_signal、parent、thread_builder、pgroup、session、pid字段，并实现new、clone_from、build等方法。",
+          "Process结构体包含pid、wait_list、mm_list、exit_signal、shm_areas、parent、pgroup、session、inner等字段。",
+          "WaitList包含Spin<VecDeque<WaitObject>>和CondVar。",
+          "Entry包含wait_procs（SpinGuard）、process_list（RwLockReadGuard）、cv引用及控制字段。",
+          "NotifyBatch包含wait_procs（SpinGuard）、process（引用）、cv引用、needs_notify标志。",
+          "DrainExited包含SpinGuard<VecDeque<WaitObject>>。",
+          "WaitId枚举有Any、Pid(u32)、Pgid(u32)变体，并实现from_type_and_id和from_id方法。",
+          "from_type_and_id匹配P_ALL返回Any，P_PID返回Pid(id)，P_PGID返回Pgid(id)，P_PIDFD panic，其他返回EINVAL。",
+          "from_id根据id值（< -1、-1、0、>0）构造Pgid、Any、Pgid（取自pgroup_rcu().pgid）、Pid。",
+          "WaitType枚举有Exited(u32)、Signaled(Signal)、Stopped(Signal)、Continued，并实现to_wstatus和to_status_code。",
+          "to_wstatus将Exited左移8位，Signaled根据是否core dump返回0x80或信号值，Stopped返回0x7f | (signal<<8)，Continued返回0xffff。",
+          "to_status_code返回(status/into_raw(), CLD_EXITED/CLD_DUMPED/CLD_KILLED/CLD_STOPPED/CLD_CONTINUED)。",
+          "WaitObject包含pid和code: WaitType，实现stopped（返回Option<Signal>）和is_continue（返回bool）。",
+          "ProcessBuilder的build方法调用MMList::new()/new_shared()/new_cloned()、Arc::new、process_list.add_process、ThreadBuilder::process/tid/build、Session::new、ProcessGroupBuilder::new/leader/session/build、pgroup.add_member、parent.add_child。",
+          "调用关系显示from_id依赖thread.process.pgroup_rcu，WaitType的to_wstatus和to_status_code依赖into_raw和SIGNAL_COREDUMP宏。"
         ],
-        "uncertainty": "部分函数（如 ProcessBuilder、Entry、DrainExited）仅展示了结构体定义，未提供方法实现，具体逻辑无法确认；SIGNAL_COREDUMP!() 宏的具体定义未知；to_wstatus 中 Stopped 分支的表达式中括号缺失可能导致计算语义不明确；CLD_TRAPPED 在 to_status_code 中被注释为 TODO，表明该功能未实现；new_shared 和 new_cloned 的具体实现细节未在代码中给出；WaitType 的具体定义（枚举还是结构体）及 WaitId 的完整定义未知；panic! 宏在 from_type_and_id 中的行为（终止任务还是线程）未说明。"
-      },
-      {
-        "module_name": "unknown",
-        "module_summary": "该模块位于 src/kernel/task/process.rs 文件中，从文件路径推测可能与操作系统中的任务/进程管理有关，但提供的函数理解和调用关系信息严重不足，无法确认模块的具体职责和功能范围。",
-        "key_functions": [
-          {
-            "name": "impl WaitId",
-            "role": "仅为 impl 块起始声明，缺乏方法实现，无法确定在进程管理中的实际作用，可能涉及等待某个ID相关的进程操作。"
-          },
-          {
-            "name": "impl WaitObject",
-            "role": "仅为 impl 块起始声明，缺乏方法实现，无法确定具体角色，可能与等待某个对象（如信号量、锁等）相关。"
-          },
-          {
-            "name": "impl ProcessBuilder",
-            "role": "仅为 impl 块起始声明，缺乏方法实现，但 ProcessBuilder 通常用于构造或初始化进程，推测其角色是提供创建进程所需的配置和构建接口。"
-          }
-        ],
-        "call_flow_summary": "由于所有函数均缺乏具体实现代码，且未提供任何函数调用关系信息，因此无法总结模块内部的调用链或执行流程。",
-        "evidence": [
-          "所有函数提供的代码材料均仅包含 impl 块起始声明（如 'impl WaitId {'），未包含任何方法定义或函数体。",
-          "模块归属的文件路径为 src/kernel/task/process.rs，暗示与任务/进程管理相关。",
-          "函数调用关系部分为空，无任何调用记录。"
-        ],
-        "uncertainty": "信息严重不足：各函数的具体实现、内部逻辑、参数、返回值及调用关系均未知；无法确认模块的准确名称和具体功能，所有推测仅基于文件名和类型名（如 ProcessBuilder、WaitId、WaitObject）的常见命名惯例。"
+        "uncertainty": "部分类型（如MMList、SpinGuard、RwLockReadGuard、CondVar、Signal、Session、ProcessGroupBuilder等）的具体实现细节未提供，依赖推测；WaitList的字段wait_procs与DrainExited的字段同名但类型不同（前者Spin<VecDeque<WaitObject>>，后者SpinGuard<VecDeque<WaitObject>>），可能存在关联但未明确展示；from_type_and_id中对P_PIDFD直接panic的行为描述基于代码推断；to_status_code中注释提到TODO CLD_TRAPPED但当前匹配未包含，可能未处理该情况。"
       }
     ]
   },

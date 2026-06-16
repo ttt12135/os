@@ -1,346 +1,464 @@
 {
   "repo_name": "tongjidaxue",
-  "created_at": "2026-05-31 17:49:52",
+  "created_at": "2026-06-16 02:32:49",
   "analysis_count": 20,
   "functions": [
     {
-      "block_id": "block_1",
+      "block_id": "block_3",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "ProcessBuilder",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "80",
+      "end_line": "83",
+      "name": "ProcessInner",
       "type": "struct",
-      "summary": "定义了一个用于逐步构造进程对象的构建器结构体，包含进程相关的可选字段，如内存管理列表、退出信号、父进程、线程构建器、进程组、会话和进程ID。",
+      "summary": "定义进程内部数据结构，用于管理进程的子进程和线程的弱引用集合。",
       "logic_steps": [
-        "声明一个包含多个可选字段的struct，用于后续通过Builder模式组合配置进程属性。"
+        "声明一个结构体 ProcessInner，包含两个字段 children 和 threads。",
+        "children 字段类型为 BTreeMap<u32, Weak<Process>>，用于存储子进程：键为 u32 类型（可能是 PID），值为对 Process 的弱引用，避免循环引用。",
+        "threads 字段类型为 BTreeMap<u32, Weak<Thread>>，用于存储进程内的线程：键为 u32 类型（可能是线程 ID），值为对 Thread 的弱引用。"
       ],
       "called_functions": [],
       "related_os_module": "process",
-      "evidence": "结构体名称ProcessBuilder暗示了进程构建模式，字段包括MMList、Signal、Process、ThreadBuilder、ProcessGroup、Session和pid，这些均与进程管理和任务调度相关。",
-      "uncertainty": "结构体只有字段定义，没有实现方法，无法确认具体构建逻辑；字段类型如MMList、Signal、ThreadBuilder、ProcessGroup、Session的准确定义未在当前代码块中给出，可能存在依赖其他模块。"
+      "evidence": "结构体名称ProcessInner表明是进程相关内部类型，字段 children 和 threads 分别管理子进程和线程，使用弱引用（Weak）防止引用循环，BTreeMap保证有序存储。",
+      "uncertainty": "该结构体仅定义数据成员，未包含方法或逻辑，具体用途需结合其他代码推断；字段键值类型u32的可能含义（PID、TID或其他标识符）未明确说明。"
+    },
+    {
+      "block_id": "block_1",
+      "file_path": "src\\kernel\\task\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "32",
+      "end_line": "40",
+      "name": "ProcessBuilder",
+      "type": "struct",
+      "summary": "定义了一个名为ProcessBuilder的结构体，用于逐步构建或配置一个进程对象。结构体包含多个可选字段，如内存管理列表、退出信号、父进程、线程构造器、进程组、会话和进程ID。",
+      "logic_steps": [
+        "声明结构体字段：mm_list (Option<MMList>)，表示进程的内存管理列表。",
+        "声明结构体字段：exit_signal (Option<Signal>)，表示进程退出时发送的信号。",
+        "声明结构体字段：parent (Option<Arc<Process>>)，表示父进程的Arc引用。",
+        "声明结构体字段：thread_builder (Option<ThreadBuilder>)，表示用于构造线程的构建器。",
+        "声明结构体字段：pgroup (Option<Arc<ProcessGroup>>)，表示进程所属的进程组。",
+        "声明结构体字段：session (Option<Arc<Session>>)，表示进程所属的会话。",
+        "声明结构体字段：pid (Option<u32>)，表示进程的ID（可选）。"
+      ],
+      "called_functions": [],
+      "related_os_module": "process",
+      "evidence": "结构体中的所有字段均与进程的创建和管理直接相关：MMList（内存管理）、Signal（信号）、Process（进程）、ThreadBuilder（线程构建）、ProcessGroup（进程组）、Session（会话）、pid（进程ID）。这些字段通常出现在操作系统进程描述符（PCB）或进程构建模式中。",
+      "uncertainty": "该代码块仅定义了结构体字段，未包含任何方法或函数调用，因此无法确定其具体使用方式或调用关系。"
     },
     {
       "block_id": "block_2",
       "file_path": "src\\kernel\\task\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "43",
+      "end_line": "77",
       "name": "Process",
       "type": "struct",
-      "summary": "定义了操作系统中的进程控制块，包含进程标识、父子关系、线程管理、信号、共享内存、进程组与会话等进程管理所需的核心字段。",
+      "summary": "定义操作系统中进程的核心结构，包含标识、等待队列、内存管理、共享内存、父子进程关系、进程组、会话以及内部锁保护的数据。",
       "logic_steps": [
-        "定义进程唯一标识符 pid，在整个生命周期内不变。",
-        "包含等待列表 wait_list 和内存映射列表 mm_list，用于管理子进程等待和内存映射。",
-        "存储退出时发送的信号 exit_signal，可能为 None。",
-        "维护共享内存区域 shm_areas，使用虚拟地址到大小的映射，由自旋锁保护。",
-        "使用 RCUPointer 管理父进程 parent、进程组 pgroup 和会话 session，保证并发安全，这些字段对内核线程可能为 None。",
-        "通过 inner 字段封装进程内部可变状态，包括子进程映射 children（BTreeMap<u32, Weak<Process>>）和线程映射 threads（BTreeMap<u32, Weak<Thread>>），使用锁和进程列表保护。"
+        "定义进程的公共字段：pid（进程ID）、wait_list（等待队列）、mm_list（内存管理列表）、exit_signal（退出信号）、shm_areas（共享内存区域映射，使用Spin锁保护）。",
+        "定义父进程、进程组、会话的RCU保护指针，注释说明这些字段在整个进程生命周期内必须有效，仅init进程或内核线程可能为None。",
+        "定义内部字段inner，使用Locked类型包装，包含一个ProcessInner和锁保护（ProcessList），用于管理进程列表相关数据。"
       ],
       "called_functions": [],
       "related_os_module": "process",
-      "evidence": "代码明确包含进程控制块的标准字段（pid、parent、children、threads、pgroup、session、wait_list、mm_list、shm_areas、exit_signal），并使用了 RCUPointer、Locked、Spin 等同步机制，这些是进程管理的核心实现。",
-      "uncertainty": "无显著不确定性，代码结构清晰展示了进程结构体定义及其内部嵌套的结构。"
-    },
-    {
-      "block_id": "block_3",
-      "file_path": "src\\kernel\\task\\process.rs",
-      "name": "WaitList",
-      "type": "struct",
-      "summary": "定义了一个等待列表结构，用于管理等待对象的队列，并通过条件变量实现同步等待与唤醒功能。",
-      "logic_steps": [
-        "包含一个由自旋锁保护的 VecDeque<WaitObject> 类型的队列 wait_procs，用于存储等待对象，确保并发安全。",
-        "包含一个条件变量 cv_wait_procs，用于实现线程/进程在队列为空或满足特定条件时的阻塞等待与唤醒通知。"
-      ],
-      "called_functions": [
-        "Spin::new",
-        "VecDeque::new"
-      ],
-      "related_os_module": "process",
-      "evidence": "结构体定义中使用了 Spin（自旋锁）和 VecDeque（双端队列）以及 CondVar（条件变量），这些是操作系统进程或任务调度中实现等待队列的常见组件，因此与进程管理模块相关。",
-      "uncertainty": "代码仅包含结构体字段声明，没有方法实现，无法确认 WaitObject 的具体结构以及条件变量的具体使用逻辑，因此不推断更多功能。"
+      "evidence": "结构体名为Process，包含pid、wait_list、mm_list、exit_signal、shm_areas等典型进程管理字段，以及parent、pgroup、session等进程关系字段，且位于src/kernel/task/process.rs路径下，明显属于进程管理模块。",
+      "uncertainty": "代码中未显示具体函数调用，仅定义结构体字段；WaitList、MMList、Spin、BTreeMap、RCUPointer、Locked等类型的实现细节不在本代码块中，无法确定其具体功能。"
     },
     {
       "block_id": "block_4",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "NotifyBatch<'waitlist, 'process, 'cv>",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "86",
+      "end_line": "89",
+      "name": "WaitList",
       "type": "struct",
-      "summary": "定义一个结构体，用于批量唤醒等待在条件变量上的进程，包含等待队列的守卫、目标进程引用、条件变量引用和是否需要通知的标记。",
+      "summary": "定义一个等待队列结构，用于管理等待某个资源或事件的任务（进程/线程），包含一个自旋锁保护的等待对象双端队列和一个条件变量用于同步等待操作。",
       "logic_steps": [
-        "包含一个受自旋锁保护的等待队列的守卫，用于管理等待对象。",
-        "持有一个指向当前进程的引用，用于后续的唤醒操作。",
-        "持有一个指向条件变量的引用，表示该批次通知关联的条件变量。",
-        "包含一个布尔标记，指示是否需要进行通知操作。"
+        "定义名为WaitList的结构体。",
+        "包含一个wait_procs字段，类型为Spin<VecDeque<WaitObject>>，表示使用自旋锁保护的等待对象双端队列，用于存储等待的进程或任务。",
+        "包含一个cv_wait_procs字段，类型为CondVar，表示一个条件变量，用于在等待队列上实现阻塞和唤醒机制。"
       ],
       "called_functions": [],
       "related_os_module": "process",
-      "evidence": "结构体名称包含'NotifyBatch'，字段包括等待队列守卫、进程引用、条件变量引用和通知标记，明显与进程同步和条件变量通知相关。",
-      "uncertainty": "无法确定具体方法逻辑，因为仅定义了字段，未提供实现代码。"
-    },
-    {
-      "block_id": "block_5",
-      "file_path": "src\\kernel\\task\\process.rs",
-      "name": "Entry<'waitlist, 'proclist, 'cv>",
-      "type": "struct",
-      "summary": "该结构体定义了等待队列中的一个条目，用于在条件变量上等待进程的上下文，包括等待进程列表、进程列表、条件变量引用以及等待控制标志和等待ID。",
-      "logic_steps": [
-        "struct Entry包含一个对SpinGuard保护的VecDeque<WaitObject>的引用，用于存储等待对象。",
-        "包含一个RwLockReadGuard保护的进程列表的引用，用于访问进程列表。",
-        "包含一个条件变量CondVar的引用，用于同步等待。",
-        "包含布尔标志want_stop和want_continue，用于控制等待行为。",
-        "包含一个WaitId类型的want_id，标识等待的目标。"
-      ],
-      "called_functions": [],
-      "related_os_module": "process",
-      "evidence": "文件路径为src\\kernel\\task\\process.rs，结构体字段包含wait_procs、process_list、cv等与进程同步和等待相关的元素，类型为进程相关的类型。",
-      "uncertainty": "代码仅展示结构体定义，未包含方法实现，因此具体逻辑如spinlock操作、条件变量使用方式等无法确认。"
+      "evidence": "该结构体位于src\\kernel\\task\\process.rs，字段类型Spin、VecDeque、CondVar典型用于进程/任务调度中的等待队列实现。",
+      "uncertainty": "关于WaitObject的具体定义和CondVar的具体实现细节未在此代码块中提供，因此无法完全确定其内部逻辑和交互方式。"
     },
     {
       "block_id": "block_6",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "DrainExited<'waitlist>",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "98",
+      "end_line": "105",
+      "name": "Entry",
       "type": "struct",
-      "summary": "这个结构体用于遍历和获取已退出进程的等待对象，它包装了一个受自旋锁保护的 VecDeque 引用，允许外部迭代或清除其中的 WaitObject 项。",
+      "summary": "定义了一个用于管理进程等待和条件变量的内部数据结构Entry，包含等待队列、进程列表、条件变量引用以及控制等待行为的标志。",
       "logic_steps": [
-        "DrainExited 结构体包含一个字段 wait_procs，类型为 SpinGuard<'waitlist, VecDeque<WaitObject>>，表示这是一个对共享 VecDeque<WaitObject> 的受保护引用。SpinGuard 通常用于在持有自旋锁期间安全地访问内部数据。",
-        "该结构体通常与进程退出处理相关，用于从等待队列中取出已退出进程的 WaitObject，以便给等待该进程的其他任务发送信号或清理状态。它可能通过实现 Iterator 来逐个消费队列中的元素。"
+        "通过泛型生命周期参数绑定waitlist、proclist和cv，确保引用有效。",
+        "包含一个SpinGuard保护的等待队列wait_procs，用于存储等待对象。",
+        "包含一个RwLock读锁保护的进程列表process_list，用于只读访问进程数据。",
+        "包含一个条件变量cv的引用，用于进程同步。",
+        "包含三个控制字段：want_stop表示是否要停止等待，want_continue表示是否要继续等待，want_id表示等待的目标ID。"
       ],
       "called_functions": [
-        "可能调用 SpinGuard::new 或相关锁获取方法",
-        "可能调用 VecDeque::pop_front 或类似方法迭代元素"
+        "SpinGuard",
+        "VecDeque",
+        "RwLockReadGuard",
+        "CondVar",
+        "WaitObject",
+        "WaitId"
       ],
       "related_os_module": "process",
-      "evidence": "结构体位于进程管理模块 (task/process.rs)，其字段类型 SpinGuard 表明涉及并发保护，VecDeque<WaitObject> 是等待对象队列，用于进程同步和退出状态通知。",
-      "uncertainty": "由于代码块只给出了结构体定义和 WaitId 枚举，没有展示具体方法实现，因此无法确定其确切迭代或消费逻辑，但基于命名和类型可推测是用于 draining（取出并移除）已退出进程的等待项。"
+      "evidence": "结构体包含wait_procs（等待对象队列）、process_list（进程列表）、cv（条件变量）等与进程同步和调度相关的字段，且位于src\\kernel\\task\\process.rs中，属于进程管理模块。",
+      "uncertainty": "无法准确判断SpinGuard和RwLockReadGuard的具体实现来源，根据常见命名推测为自旋锁和读写锁的守卫类型，但代码未提供定义。"
+    },
+    {
+      "block_id": "block_5",
+      "file_path": "src\\kernel\\task\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "91",
+      "end_line": "96",
+      "name": "NotifyBatch",
+      "type": "struct",
+      "summary": "定义了一个用于批量通知等待进程的临时结构体，包含等待队列的锁保护引用、进程引用、条件变量引用以及是否执行通知的标志。该结构体通常用于在持有锁的上下文中延迟执行通知操作，以避免死锁或重入问题。",
+      "logic_steps": [
+        "创建 NotifyBatch 实例时，借用了等待队列（wait_procs）的自旋锁保护引用、进程对象和条件变量。",
+        "设置 needs_notify 标志为 true，表示当结构体被释放（drop）时需要发送通知。",
+        "在结构体生命周期内，可以通过将 needs_notify 置为 false 来取消通知。",
+        "当结构体离开作用域时，其 Drop 实现会检查 needs_notify，如果为 true 则调用条件变量的 notify 方法唤醒等待进程。"
+      ],
+      "called_functions": [],
+      "related_os_module": "process",
+      "evidence": "结构体中含有 wait_procs（等待队列）、process（进程）、cv（条件变量）字段，典型的用于条件变量通知模式的 RAII 守护结构，常见于内核进程/线程同步。字段类型 SpinGuard 表明使用了自旋锁保护，needs_notify 标志用于控制 drop 时是否触发通知。",
+      "uncertainty": "代码块仅展示了结构体定义，没有展示其方法或 Drop 实现，因此具体操作流程如 notify 调用、标志设置等为推测，但属于常见模式。"
     },
     {
       "block_id": "block_7",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "impl WaitId {",
-      "type": "impl",
-      "summary": "为 WaitId 类型实现方法，但代码块内容仅包含 impl 块起始声明，没有提供具体方法实现，因此无法确定具体作用。",
-      "logic_steps": [],
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "107",
+      "end_line": "109",
+      "name": "DrainExited",
+      "type": "struct",
+      "summary": "这个结构体定义了一个包装器，包含一个已加锁的 VecDeque<WaitObject> 引用，用于在安全的方式下排空（drain）已退出进程的等待对象列表。",
+      "logic_steps": [
+        "定义名为 DrainExited 的结构体，带有生命周期参数 'waitlist，以表示借用等待列表的期间。",
+        "结构体唯一字段 wait_procs 的类型是 SpinGuard<'waitlist, VecDeque<WaitObject>>，这是一个自旋锁保护的 VecDeque 队列，队列中存放 WaitObject 类型的元素。"
+      ],
       "called_functions": [],
-      "related_os_module": "unknown",
-      "evidence": "代码块仅包含 'impl WaitId {'，没有提供任何方法或函数体。",
-      "uncertainty": "信息严重不足，无法分析任何逻辑或调用关系，仅能从文件路径推测可能与任务/进程管理相关，但模块归属仍不确定。"
+      "related_os_module": "process",
+      "evidence": "结构体名称 DrainExited 暗示用于处理已退出（exited）进程的 draining 操作；字段类型 SpinGuard 来自常见操作系统内核的自旋锁封装，VecDeque<WaitObject> 用于存储等待对象；文件路径 process.rs 也表明与进程管理相关。",
+      "uncertainty": "由于只提供了结构体定义，没有方法实现，具体 draining 逻辑（如如何获取 SpinGuard、如何遍历移除等）无法确定。"
     },
     {
       "block_id": "block_8",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "from_type_and_id",
-      "type": "function",
-      "summary": "根据传入的 id_type 和 id 参数，返回对应的 WaitId 枚举值，用于标识等待进程的类型（任意进程、特定PID、特定PGID），不支持的 P_PIDFD 类型会触发 panic，无效类型返回 EINVAL 错误。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "112",
+      "end_line": "116",
+      "name": "WaitId",
+      "type": "enum",
+      "summary": "定义一个枚举类型WaitId，用于表示进程等待时的标识符，可以是任意进程、特定PID的进程或特定进程组ID的进程。",
       "logic_steps": [
-        "匹配 id_type 参数的值，根据不同的常量分支执行不同逻辑",
-        "若 id_type 为 P_ALL，返回 Ok(WaitId::Any) 表示等待任意子进程",
-        "若 id_type 为 P_PID，返回 Ok(WaitId::Pid(id)) 表示等待指定 PID 的进程",
-        "若 id_type 为 P_PGID，返回 Ok(WaitId::Pgid(id)) 表示等待指定 PGID 的进程组",
-        "若 id_type 为 P_PIDFD，则调用 panic! 宏，表示不支持该类型",
-        "若 id_type 为其他值，返回 Err(EINVAL) 表示参数无效"
+        "定义枚举WaitId，包含三个变体：Any表示等待任意子进程，Pid(u32)表示等待特定PID的进程，Pgid(u32)表示等待特定进程组ID的进程。"
       ],
-      "called_functions": [
-        "panic!",
-        "Err(EINVAL)"
-      ],
+      "called_functions": [],
       "related_os_module": "process",
-      "evidence": "函数名和参数暗示与 wait 系统调用中的 ID 类型处理相关；代码中使用了 P_ALL、P_PID、P_PGID、P_PIDFD 这些在 Linux 中用作 waitid 系统调用的 idtype 常量；返回值 WaitId 枚举及其变体 Any、Pid、Pgid 直接对应等待子进程的不同方式。",
-      "uncertainty": "无法确认 P_ALL、P_PID、P_PGID、P_PIDFD、EINVAL 的具体数值定义及 WaitId 枚举的完整定义，这些信息在代码片段之外。panic! 的行为（是终止任务还是线程）也未说明。"
+      "evidence": "枚举WaitId出现在src/kernel/task/process.rs文件中，结合枚举变体Any、Pid、Pgid的命名和类型，该枚举用于进程等待操作，通常与进程管理的wait系统调用相关。",
+      "uncertainty": "由于代码块仅为枚举定义，未展示具体使用上下文，无法确认其实际使用方式或是否在其他函数中被调用。"
     },
     {
       "block_id": "block_9",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "from_id",
-      "type": "function",
-      "summary": "根据给定的 id 和当前线程信息，将 id 转换为对应的 WaitId 枚举变体，用于表示等待的子进程标识类型。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "118",
+      "end_line": "137",
+      "name": "impl WaitId {",
+      "type": "impl",
+      "summary": "WaitId 枚举的实现，提供了两个构造函数：from_type_and_id 根据等待类型和 ID 构造 WaitId，from_id 根据 i32 类型的 id 和线程信息构造 WaitId，用于进程等待操作。",
       "logic_steps": [
-        "检查 id 是否小于 -1：如果是，则将 id 取负并转换为无符号整数作为 Pgid（进程组 ID）的 WaitId 变体。",
-        "检查 id 是否等于 -1：如果是，则返回 Any 变体，表示等待任意子进程。",
-        "检查 id 是否等于 0：如果是，则使用线程的进程组 ID（通过 pgroup_rcu 方法获取）构造 Pgid 变体。",
-        "对于其他 id 值（正整数），将其直接转换为无符号整数作为 Pid（进程 ID）的 WaitId 变体。"
+        "from_type_and_id：根据 id_type 匹配 P_ALL、P_PID、P_PGID 分别构造 WaitId::Any、WaitId::Pid(id)、WaitId::Pgid(id)，遇到 P_PIDFD 直接 panic，其他情况返回错误 EINVAL。",
+        "from_id：根据 id 值的范围匹配：若 id < -1 则取相反数作为无符号整数构造 WaitId::Pgid；若 id == -1 构造 WaitId::Any；若 id == 0 通过 thread.process.pgroup_rcu().pgid 获取当前进程组 ID 构造 WaitId::Pgid；其他情况直接作为无符号整数构造 WaitId::Pid。"
       ],
       "called_functions": [
-        "pgroup_rcu",
-        "cast_unsigned"
+        "id.cast_unsigned",
+        "thread.process.pgroup_rcu().pgid"
       ],
       "related_os_module": "process",
-      "evidence": "函数根据 id 的正负零值分别映射到 WaitId 的四个变体（Pgid、Any、Pgid、Pid），体现了等待系统调用中 id 参数的常见语义（-1 等待任意，0 等待同组，正 pid 等待特定进程，负 pgid 等待特定进程组）。",
-      "uncertainty": "无"
+      "evidence": "代码位于 src/kernel/task/process.rs，函数涉及进程等待 id 类型（P_ALL、P_PID、P_PGID、P_PIDFD）和进程组 ID（pgroup_rcu().pgid），明显属于进程管理模块。",
+      "uncertainty": "低，函数逻辑清晰，所含调用均来自上下文。"
     },
     {
       "block_id": "block_10",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "WaitObject",
-      "type": "struct",
-      "summary": "定义了一个用于表示等待对象的结构体，包含等待的进程ID和等待类型。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "119",
+      "end_line": "127",
+      "name": "from_type_and_id",
+      "type": "function",
+      "summary": "该函数根据传入的 id_type 和 id 参数，将 wait 进程标识类型转换为对应的 WaitId 枚举变体，用于进程等待系统调用中的标识解析。它支持三种标准类型：P_ALL（等待任意子进程）、P_PID（等待指定 PID 的进程）、P_PGID（等待指定进程组的进程），对 P_PIDFD 类型直接 panic（不支持），其他类型返回错误 EINVAL。",
       "logic_steps": [
-        "定义结构体 WaitObject，包含两个字段：pid（u32类型，表示进程标识符）和 code（WaitType类型，表示等待的类型）。"
+        "匹配 id_type 参数的值，若等于 P_ALL 则返回 WaitId::Any，表示等待任意子进程；",
+        "若等于 P_PID 则返回 WaitId::Pid(id)，表示等待指定 pid 的进程；",
+        "若等于 P_PGID 则返回 WaitId::Pgid(id)，表示等待指定进程组的所有子进程；",
+        "若等于 P_PIDFD 则触发 panic，表示内核不支持该类型；",
+        "若为其他未识别值则返回 Err(EINVAL)，表示无效参数。"
       ],
-      "called_functions": [],
+      "called_functions": [
+        "Ok",
+        "Err"
+      ],
       "related_os_module": "process",
-      "evidence": "结构体定义位于 process.rs 文件中，字段 pid 表示进程ID，code 使用 WaitType 类型，与进程等待操作相关。",
-      "uncertainty": "WaitType 的具体定义未在代码中给出，无法确定所有等待类型。"
+      "evidence": "代码中使用了 P_ALL、P_PID、P_PGID、P_PIDFD 等常量，以及返回 Err(EINVAL) 的错误处理，这些是 Linux wait 系统调用中定义的类型；该函数位于 src\\kernel\\task\\process.rs 文件中，属于进程管理模块。",
+      "uncertainty": "无"
     },
     {
       "block_id": "block_11",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "impl WaitType {",
-      "type": "impl",
-      "summary": "这个代码块仅包含一个空的 impl 块定义，用于为 WaitType 类型实现方法，但当前没有任何方法或关联函数被定义。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "129",
+      "end_line": "136",
+      "name": "from_id",
+      "type": "function",
+      "summary": "根据传入的整数id和线程引用，构造对应的WaitId枚举值，用于标识等待的目标进程或进程组。",
       "logic_steps": [
-        "定义了一个 impl 块用于实现 WaitType 类型的方法"
+        "匹配id的值：如果id小于等于-2（即..-1），则取其绝对值并转换为无符号整数，构造WaitId::Pgid，表示等待进程组（负数PGID）。",
+        "如果id等于-1，返回WaitId::Any，表示等待任意子进程。",
+        "如果id等于0，从线程的进程结构中获取当前进程组的pgid，构造WaitId::Pgid，表示等待与当前线程同组的进程。",
+        "如果id大于0，直接将id转换为无符号整数，构造WaitId::Pid，表示等待特定pid的进程。"
       ],
-      "called_functions": [],
+      "called_functions": [
+        "cast_unsigned",
+        "thread.process.pgroup_rcu"
+      ],
       "related_os_module": "process",
-      "evidence": "代码块内容仅有 'impl WaitType {'，没有后续的方法或函数调用，因此推断这是一个空的 impl 块，可能等待后续填充。",
-      "uncertainty": "高：由于代码块不完整，无法确定 WaitType 是枚举还是结构体，也无法确定其具体功能，仅能根据文件路径判断与进程模块相关。"
+      "evidence": "函数名from_id暗示根据ID构造某种类型；match分支将id映射到WaitId的不同变体，涉及Pgid、Any、Pid，与进程等待语义相关；代码中使用了thread.process.pgroup_rcu()获取当前进程组ID，表明属于进程管理模块。",
+      "uncertainty": "WaitId枚举类型的完整定义未给出，但根据上下文可推断其变体含义；pgroup_rcu方法的具体实现细节未知，但返回值应包含pgid字段。"
     },
     {
       "block_id": "block_12",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "to_wstatus",
-      "type": "function",
-      "summary": "将 WaitType 枚举转换为 Linux 兼容的 wait 状态码（wstatus）。该函数根据等待事件类型（退出、信号终止、信号停止、继续）生成对应格式的 u32 值，符合 waitpid 返回的状态码规范。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "140",
+      "end_line": "145",
+      "name": "WaitType",
+      "type": "enum",
+      "summary": "定义进程等待状态枚举，用于表示进程在等待时可能处于的四种状态：已退出（带退出码）、被信号终止、被信号停止、或继续运行。",
       "logic_steps": [
-        "匹配 WaitType::Exited(status)：提取退出状态 status，取低8位后左移8位，构成状态码的低16位为 (status & 0xff) << 8。",
-        "匹配 WaitType::Signaled(signal) 且信号为宏 SIGNAL_COREDUMP!() 匹配的核心转储信号：将信号原始值（signal.into_raw()）与 0x80 按位或，设置核心转储标志。",
-        "匹配 WaitType::Signaled(signal)（其他信号）：直接返回信号的原始值。",
-        "匹配 WaitType::Stopped(signal)：固定返回 0x7f，并将信号原始值左移8位后与之相或（注意：该表达式优先级可能导致计算错误，实际应为 (0x7f | (signal.into_raw() << 8))，但代码中未加括号，需确认意图）。",
-        "匹配 WaitType::Continued：固定返回 0xffff。"
+        "枚举了进程等待的四种情况：Exited(u32) 表示进程退出并携带退出码；Signaled(Signal) 表示进程被信号终止；Stopped(Signal) 表示进程被信号停止；Continued 表示进程继续运行。"
       ],
-      "called_functions": [
-        "SIGNAL_COREDUMP!()",
-        "signal.into_raw()"
-      ],
+      "called_functions": [],
       "related_os_module": "process",
-      "evidence": "代码位于 process.rs，函数处理进程等待状态（WaitType），生成符合 POSIX wait status 规范的值，直接与进程退出/信号处理相关。匹配宏 SIGNAL_COREDUMP! 可能用于识别核心转储信号。",
-      "uncertainty": "宏 SIGNAL_COREDUMP!() 的具体定义未知，仅从名称推测用于匹配核心转储信号。Stopped 分支中的 0x7f | (signal.into_raw() << 8) 可能缺少括号，实际语义可能不确定，但常见实现中 0x7f 与移位后的信号值组合符合 Linux 停止状态的规范。此外，Continued 返回 0xffff 并非标准 wait status 定义，可能是自定义扩展或需要进一步核实。"
+      "evidence": "枚举名称 WaitType 和变体 Exited, Signaled, Stopped, Continued 直接对应进程等待操作中可能的状态。",
+      "uncertainty": "Signal 类型的具体定义未在此代码块中给出，但推断为信号枚举。"
     },
     {
       "block_id": "block_13",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "to_status_code",
-      "type": "function",
-      "summary": "将进程的 WaitType 枚举转换为用于返回给父进程的状态码和事件类型，二者分别为退出码/信号值和标识子进程状态变化的 CLD_* 常量。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "148",
+      "end_line": "151",
+      "name": "WaitObject",
+      "type": "struct",
+      "summary": "定义了一个表示等待操作状态的对象，包含进程ID和等待类型。",
       "logic_steps": [
-        "匹配 WaitType::Exited，返回 (退出码, CLD_EXITED)，表示子进程正常退出。",
-        "匹配 WaitType::Signaled 且信号带有 SIGNAL_COREDUMP!() 标记，返回 (信号原始值, CLD_DUMPED)，表示发送了产生 core dump 的信号。",
-        "匹配 WaitType::Signaled 的其他情况，返回 (信号原始值, CLD_KILLED)，表示被信号杀死。",
-        "匹配 WaitType::Stopped，返回 (信号原始值, CLD_STOPPED)，表示子进程被暂停。",
-        "匹配 WaitType::Continued，返回 (SIGCONT 信号原始值, CLD_CONTINUED)，表示子进程恢复执行。"
+        "定义一个结构体，包含两个字段：pid（u32类型）用于标识进程，code（WaitType类型）用于指定等待的类型（如退出、信号等）。"
       ],
-      "called_functions": [
-        "Signal::into_raw",
-        "SIGNAL_COREDUMP!() 宏调用"
-      ],
+      "called_functions": [],
       "related_os_module": "process",
-      "evidence": "函数名为 to_status_code，接收 WaitType 枚举，返回 (u32, u32) 作为状态码；处理了 Exited、Signaled、Stopped、Continued 等子进程状态变化，并映射到 CLD_* 系列常量。这些常量通常用于 waitid / waitpid 系统调用的信息返回，属于进程管理模块。",
-      "uncertainty": "CLD_TRAPPED 被注释标记为 TODO，说明该函数目前未实现对子进程被跟踪时（如 ptrace 断点）的状态转换。SIGNAL_COREDUMP!() 是宏调用，其具体实现细节未知，但推测用于检查信号是否生成 core dump。"
+      "evidence": "结构体位于src/kernel/task/process.rs文件中，涉及进程标识和等待类型，与进程管理中的等待机制相关。",
+      "uncertainty": "WaitType的具体定义和枚举值未给出，无法进一步确定等待类型的具体含义。"
     },
     {
       "block_id": "block_14",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "impl WaitObject {",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "153",
+      "end_line": "174",
+      "name": "impl WaitType {",
       "type": "impl",
-      "summary": "该代码块仅声明了 `impl WaitObject {`，表示开始为 `WaitObject` 类型（可能是结构体或枚举）实现方法，但后续代码未提供，因此无法进一步分析具体逻辑。",
+      "summary": "为WaitTpye枚举实现两个方法to_wstatus和to_status_code，分别用于将进程等待状态转换为POSIX wstatus格式和信号与状态码格式，以支持进程状态报告。",
       "logic_steps": [
-        "代码块仅包含 `impl WaitObject {`，未提供任何实现内容。"
+        "to_wstatus方法根据WaitType变体构造32位wstatus值：Exited将退出状态左移8位；Signaled且带SIGNAL_COREDUMP宏返回信号号加0x80；普通Signaled直接返回信号号；Stopped返回0x7f与信号号左移8位的或；Continued返回0xffff。",
+        "to_status_code方法返回(u32, u32)元组：第一项根据变体提取退出状态（Exited返回status，其他返回信号号或SIGCONT），第二项返回对应的CLD_常量枚举值（CLD_EXITED, CLD_DUMPED, CLD_KILLED, CLD_STOPPED, CLD_CONTINUED）。"
       ],
-      "called_functions": [],
-      "related_os_module": "unknown",
-      "evidence": "代码块内容只有 'impl WaitObject {' 这一行，没有具体的函数实现或方法定义。",
-      "uncertainty": "由于代码块内容不完整（仅有起始行），无法判断 `WaitObject` 的定义、用途以及任何具体逻辑。建议提供完整代码块以进行准确分析。"
+      "called_functions": [
+        "into_raw",
+        "SIGNAL_COREDUMP"
+      ],
+      "related_os_module": "process",
+      "evidence": "代码位于kernel/task/process.rs，实现WaitType的转换函数，涉及进程退出/信号/停止/继续等状态，明显属于进程管理模块。",
+      "uncertainty": "SIGNAL_COREDUMP是一个宏(已知)但具体定义不在本块内，into_raw是Signal类型的方法，假设通过引入获得。to_status_code中注释TODO CLD_TRAPPED表示未处理该情况，但实际匹配未包含。"
     },
     {
       "block_id": "block_15",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "stopped",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "154",
+      "end_line": "162",
+      "name": "to_wstatus",
       "type": "function",
-      "summary": "根据进程的等待状态（WaitType）判断是否处于停止状态，如果是则返回对应的停止信号（Signal）。",
+      "summary": "将 WaitType 枚举转换为符合 UNIX 标准 wait 状态码 (wstatus) 的 32 位无符号整数，用于表示进程退出、信号终止、停止或继续事件。",
       "logic_steps": [
-        "匹配当前进程的 `code` 字段，判断其是否为 `WaitType::Stopped` 枚举变体。",
-        "如果是 `Stopped` 变体，则提取并返回其中包含的 `Signal` 值；否则返回 `None`。"
+        "当 WaitType 为 Exited(status) 时，将 status 的低 8 位左移 8 位，形成 WEXITSTATUS 格式。",
+        "当 WaitType 为 Signaled 且信号为 SIGCOREDUMP 时，将信号的原始值（低 7 位）与 0x80（表示 core dump）按位或，产生 WCOREDUMP 格式。",
+        "当 WaitType 为 Signaled 但非 SIGCOREDUMP 时，直接返回信号的原始值，作为 WTERMSIG 格式。",
+        "当 WaitType 为 Stopped(signal) 时，返回 0x7f（WIFSTOPPED 标志）与信号原始值左移 8 位的按位或，形成 WSTOPSIG 格式。",
+        "当 WaitType 为 Continued 时，返回 0xffff，对应 WIFCONTINUED 标志的常见表示。"
       ],
-      "called_functions": [],
+      "called_functions": [
+        "into_raw"
+      ],
       "related_os_module": "process",
-      "evidence": "函数通过 `WaitType::Stopped` 模式匹配判断进程停止状态，并返回内部存储的 `Signal`，这通常用于进程管理（如 waitpid 调用时的停止信号处理）。",
-      "uncertainty": "由于缺乏上下文，无法确定 `self.code` 和 `WaitType` 的具体定义，但函数逻辑清晰，无歧义。"
+      "evidence": "函数名 to_wstatus 暗示转换为 wait 状态码；枚举变体 Exited/Stopped/Signaled/Continued 对应 Linux waitpid 状态宏；0x7f 是 WIFSTOPPED 的值，0x80 是 core dump 标志，0xffff 通常表示继续。",
+      "uncertainty": "无法确认 SIGNAL_COREDUMP!() 宏的实现细节，但推测其对应一个特定的信号值（如 SIGQUIT 或 SIGABRT）。"
     },
     {
       "block_id": "block_16",
       "file_path": "src\\kernel\\task\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "164",
+      "end_line": "173",
+      "name": "to_status_code",
+      "type": "function",
+      "summary": "将 WaitType 枚举的进程等待状态转换为对应的 (状态码, 子进程状态标识) 元组，用于向用户态返回 wait 系统调用的结果。",
+      "logic_steps": [
+        "匹配 WaitType 的各个变体，分别为 Exited、Signaled、Stopped、Continued。",
+        "对于 Exited(status)，返回 (status, CLD_EXITED)，即退出码和标识正常退出的常量。",
+        "对于带有 SIGNAL_COREDUMP!() 特征信号的 Signaled，返回 (signal.into_raw(), CLD_DUMPED)，表示信号导致核心转储。",
+        "对于其他 Signaled，返回 (signal.into_raw(), CLD_KILLED)，表示信号导致终止。",
+        "对于 Stopped(signal)，返回 (signal.into_raw(), CLD_STOPPED)，表示进程被暂停。",
+        "对于 Continued，返回 (Signal::SIGCONT.into_raw(), CLD_CONTINUED)，表示进程恢复执行。"
+      ],
+      "called_functions": [
+        "SIGNAL_COREDUMP!()",
+        "signal.into_raw()",
+        "Signal::SIGCONT.into_raw()"
+      ],
+      "related_os_module": "process",
+      "evidence": "函数名 to_status_code 暗示将等待类型转换为状态码；逻辑中使用了 CLD_EXITED、CLD_DUMPED、CLD_KILLED、CLD_STOPPED、CLD_CONTINUED 等常量，这些常量符合 Linux 中的 CLD_* 标志，用于进程等待状态报告；返回元组 (u32, u32) 与系统调用 wait 或 waitpid 的返回格式一致。",
+      "uncertainty": "低不确定性。代码逻辑清晰，仅无法确定 CLD_* 常量的具体数值和父级调用上下文，但整体意图明确。"
+    },
+    {
+      "block_id": "block_17",
+      "file_path": "src\\kernel\\task\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "176",
+      "end_line": "188",
+      "name": "impl WaitObject {",
+      "type": "impl",
+      "summary": "为WaitObject类型实现两个方法：stopped()返回进程停止时的信号，is_continue()判断是否继续执行。",
+      "logic_steps": [
+        "定义stopped方法：检查self.code是否为WaitType::Stopped变体，如果是则返回Some(signal)，否则返回None。",
+        "定义is_continue方法：使用matches!宏判断self.code是否为WaitType::Continued变体，返回bool值。"
+      ],
+      "called_functions": [
+        "WaitType::Stopped",
+        "WaitType::Continued"
+      ],
+      "related_os_module": "process",
+      "evidence": "代码位于src/kernel/task/process.rs，实现了进程等待状态相关的查询方法，涉及Signal和WaitType枚举，属于进程管理模块。",
+      "uncertainty": "WaitObject结构体的完整定义未给出，可能还包含其他字段；WaitType枚举的具体定义不在此代码块中，仅根据代码中的模式匹配推断其变体。"
+    },
+    {
+      "block_id": "block_18",
+      "file_path": "src\\kernel\\task\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "177",
+      "end_line": "183",
+      "name": "stopped",
+      "type": "function",
+      "summary": "返回进程停止时的信号，如果进程未停止则返回 None。",
+      "logic_steps": [
+        "检查 self.code 是否是 WaitType::Stopped 变体，如果是则提取并返回其中的 Signal 值。",
+        "如果 self.code 不是 WaitType::Stopped 变体，则返回 None。"
+      ],
+      "called_functions": [],
+      "related_os_module": "process",
+      "evidence": "函数接收 &self，访问 self.code，并通过 match 判断是否为 WaitType::Stopped，从而决定返回 Some(signal) 或 None。",
+      "uncertainty": "无。函数逻辑清晰，无外部依赖或未定义行为。"
+    },
+    {
+      "block_id": "block_19",
+      "file_path": "src\\kernel\\task\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "185",
+      "end_line": "187",
       "name": "is_continue",
       "type": "function",
-      "summary": "判断当前等待类型是否为继续（Continued）状态。",
+      "summary": "判断当前进程等待类型是否为'继续'状态。该函数返回一个布尔值，指示self.code是否等于WaitType::Continued。",
       "logic_steps": [
-        "使用 matches! 宏检查 self.code 字段是否为 WaitType::Continued 枚举值。",
-        "返回匹配结果（true 或 false）。"
+        "使用matches!宏检查self.code的值是否匹配WaitType枚举的Continued变体。",
+        "如果匹配，则返回true，否则返回false。"
       ],
       "called_functions": [
         "matches!"
       ],
       "related_os_module": "process",
-      "evidence": "函数体中使用了 matches!(self.code, WaitType::Continued)，其中 self.code 类型为 WaitType，该函数用于检测进程等待状态是否为 Continued。",
-      "uncertainty": "无"
-    },
-    {
-      "block_id": "block_17",
-      "file_path": "src\\kernel\\task\\process.rs",
-      "name": "impl ProcessBuilder {",
-      "type": "impl",
-      "summary": "定义了ProcessBuilder结构体的实现块，但代码内容未展示具体实现，仅为impl块开头。",
-      "logic_steps": [],
-      "called_functions": [],
-      "related_os_module": "unknown",
-      "evidence": "提供的代码内容仅为'impl ProcessBuilder {'，没有包含任何方法体或具体逻辑。",
-      "uncertainty": "由于代码内容不完整，无法推断实现的具体逻辑、调用的函数或所属模块。"
-    },
-    {
-      "block_id": "block_18",
-      "file_path": "src\\kernel\\task\\process.rs",
-      "name": "new",
-      "type": "function",
-      "summary": "创建一个新的 Process 结构体实例，所有字段初始化为 None，表示一个空的进程控制块占位。",
-      "logic_steps": [
-        "初始化 Process 结构体，所有字段设为 None：pid、mm_list、exit_signal、parent、thread_builder、pgroup、session。",
-        "返回该新创建的 Process 实例。"
-      ],
-      "called_functions": [],
-      "related_os_module": "process",
-      "evidence": "函数实现中直接构建 Self 并返回，所有字段均为 None，符合空占位初始化模式。函数位于 process.rs 文件中，与进程管理相关。",
-      "uncertainty": "低不确定性：代码逻辑清晰，仅完成空初始化，无额外操作。"
-    },
-    {
-      "block_id": "block_19",
-      "file_path": "src\\kernel\\task\\process.rs",
-      "name": "clone_from",
-      "type": "function",
-      "summary": "根据克隆参数克隆进程，包括内存空间（共享或复制）和退出信号设置，并设置父进程。",
-      "logic_steps": [
-        "根据 clone_args.flags 中是否包含 CLONE_VM 标志，决定是共享内存空间（调用 new_shared）还是克隆内存空间（调用 new_cloned）",
-        "如果 clone_args.exit_signal 存在，则调用 exit_signal 方法设置进程的退出信号",
-        "调用 mm_list 方法设置内存列表，并调用 parent 方法设置父进程为传入的 process"
-      ],
-      "called_functions": [
-        "new_shared",
-        "new_cloned",
-        "exit_signal",
-        "mm_list",
-        "parent"
-      ],
-      "related_os_module": "process",
-      "evidence": "代码中操作了进程的内存列表（mm_list）和父进程关系（parent），涉及 CLONE_VM 标志和 exit_signal，这些典型属于进程克隆的功能。",
-      "uncertainty": "无法确定 new_shared 和 new_cloned 的具体实现细节，以及 exit_signal、mm_list、parent 是否是当前结构体的方法；另外函数签名中的 async 表明涉及异步操作，但具体异步行为未在代码片段中体现。"
+      "evidence": "函数体中仅有一条语句：matches!(self.code, WaitType::Continued)，通过模式匹配判断self.code是否为WaitType::Continued。WaitType推测为进程等待状态枚举类型，该函数属于进程管理模块。",
+      "uncertainty": "不确定WaitType::Continued的具体定义及上下文，但依据函数名和代码结构，可合理推测其功能。"
     },
     {
       "block_id": "block_20",
       "file_path": "src\\kernel\\task\\process.rs",
-      "name": "exit_signal",
-      "type": "function",
-      "summary": "设置进程的退出信号，并返回修改后的自身。",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "190",
+      "end_line": "310",
+      "name": "impl ProcessBuilder {",
+      "type": "impl",
+      "summary": "该代码块为 ProcessBuilder 结构体实现了一系列方法，包括构造、克隆参数设置（如 VM 共享、退出信号等）、属性设置（pid、mm_list、parent、thread_builder、pgroup、session）以及最终的 build 方法，用于构建并初始化一个新的 Process 和 Thread 对象，并处理进程组、会话、父进程关系等任务。",
       "logic_steps": [
-        "接收一个Signal类型的exit_signal参数",
-        "将self的exit_signal字段设置为Some(exit_signal)",
-        "返回self"
+        "new() 初始化一个 ProcessBuilder 实例，所有字段均为 None。",
+        "clone_from() 根据 clone_args 中的 CLONE_VM 标志决定 mm_list 是共享（new_shared）还是克隆（new_cloned），并设置 exit_signal 和 parent。",
+        "一系列 setter 方法（exit_signal, mm_list, pid, parent, thread_builder, pgroup, session）设置对应字段并返回 self。",
+        "build() 方法先获取 mm_list（若未设置则新建 MMList），然后创建一个 Arc<Process> 对象，包含 pid、wait_list、mm_list、shm_areas、exit_signal、parent、pgroup、session 及 inner（含 children 和 threads 的 BTreeMap）。",
+        "调用 process_list.add_process(&process) 将新进程加入进程列表。",
+        "根据 self.thread_builder 构建 Thread，并将 process 和 tid（等于 pid）传入。",
+        "根据 self.session 设置 session，若未提供则创建新 Session。",
+        "根据 self.pgroup 设置进程组，若未提供则使用 ProcessGroupBuilder 新建，并调用 add_member 添加成员。",
+        "若存在 parent，则调用 parent.add_child 将进程添加为子进程。",
+        "最后通过 unsafe 操作更新 process 的 parent、pgroup 和 session 字段（使用 swap），返回 (thread, process) 元组。"
       ],
-      "called_functions": [],
+      "called_functions": [
+        "MMList::new()",
+        "MMList::new_shared()",
+        "MMList::new_cloned()",
+        "Process::new() (通过构造语法创建 Arc<Process>)",
+        "process_list.add_process",
+        "ThreadBuilder::process",
+        "ThreadBuilder::tid",
+        "ThreadBuilder::build",
+        "Session::new",
+        "ProcessGroupBuilder::new",
+        "ProcessGroupBuilder::leader",
+        "ProcessGroupBuilder::session",
+        "ProcessGroupBuilder::build",
+        "pgroup.add_member",
+        "parent.add_child",
+        "process_list.prove_mut"
+      ],
       "related_os_module": "process",
-      "evidence": "函数名exit_signal和参数exit_signal: Signal表明它与进程退出信号相关；代码所在文件路径src\\kernel\\task\\process.rs也指向进程模块。",
-      "uncertainty": "无法确定exit_signal字段在其他上下文中的具体用途，仅根据代码内容推断为设置退出信号，但未体现其他功能如信号传递或处理。"
+      "evidence": "代码位于 src\\kernel\\task\\process.rs，涉及进程创建、进程组、会话、内存管理（MMList）、线程构建（ThreadBuilder）等典型操作系统进程模块内容。",
+      "uncertainty": "有些内部函数如 new_shared/new_cloned 具体实现未在此代码段中提供，仅根据调用名推断功能；prove_mut 的语义需结合外部定义，但不影响主要逻辑分析。"
     }
   ]
 }

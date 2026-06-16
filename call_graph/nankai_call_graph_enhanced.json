@@ -1,74 +1,391 @@
 {
   "repo_name": "nankai",
-  "created_at": "2026-05-31 17:35:28",
+  "created_at": "2026-06-16 02:22:58",
+  "graph_type": "full",
   "function_count": 20,
-  "ai_edge_count": 49,
-  "regex_edge_count": 115,
-  "merged_edge_count": 131,
+  "node_count": 20,
+  "ai_edge_count": 48,
+  "regex_edge_count": 85,
+  "merged_edge_count": 107,
+  "internal_edge_count": 1,
+  "external_edge_count": 106,
+  "module_count": 3,
+  "nodes": [
+    {
+      "block_id": "block_1",
+      "name": "DEFAULT",
+      "normalized_name": "DEFAULT",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "17",
+      "end_line": "17",
+      "type": "const",
+      "module": "syscall",
+      "summary": "定义了一个名为DEFAULT的常量，其值为0，类型为isize，可能用作系统调用中的默认返回值或错误码。"
+    },
+    {
+      "block_id": "block_2",
+      "name": "WNOHANG",
+      "normalized_name": "WNOHANG",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "18",
+      "end_line": "18",
+      "type": "const",
+      "module": "process",
+      "summary": "定义常量WNOHANG，其值为0x01。WNOHANG是一个标志，通常用于系统调用waitpid或类似函数，表示非阻塞等待子进程状态变化。此处仅定义常量值，未显示其使用上下文。"
+    },
+    {
+      "block_id": "block_3",
+      "name": "WUNTRACED",
+      "normalized_name": "WUNTRACED",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "19",
+      "end_line": "19",
+      "type": "const",
+      "module": "syscall",
+      "summary": "定义了一个常数值，表示等待子进程时报告未停止状态的标志位，值为0x02，对应POSIX系统中的WUNTRACED宏。"
+    },
+    {
+      "block_id": "block_4",
+      "name": "WCONTINUED",
+      "normalized_name": "WCONTINUED",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "20",
+      "end_line": "20",
+      "type": "const",
+      "module": "syscall",
+      "summary": "定义了一个常量 WCONTINUED，值为 0x08，用于表示子进程被继续执行的状态标志。"
+    },
+    {
+      "block_id": "block_5",
+      "name": "sys_exit",
+      "normalized_name": "sys_exit",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "22",
+      "end_line": "26",
+      "type": "function",
+      "module": "syscall",
+      "summary": "实现系统退出功能，结束当前进程并切换到下一个可运行进程。"
+    },
+    {
+      "block_id": "block_6",
+      "name": "sys_exit_group",
+      "normalized_name": "sys_exit_group",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "28",
+      "end_line": "33",
+      "type": "function",
+      "module": "process/syscall",
+      "summary": "实现进程组退出系统调用，强制终止当前进程并开始执行下一个进程。"
+    },
+    {
+      "block_id": "block_7",
+      "name": "sys_set_robust_list",
+      "normalized_name": "sys_set_robust_list",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "34",
+      "end_line": "48",
+      "type": "function",
+      "module": "syscall",
+      "summary": "实现在用户态设置健壮列表（robust_list）的系统调用。它检查传入的列表头大小是否匹配预期的健壮列表头部大小，若匹配则将当前任务（线程）的健壮列表头地址更新为传入的值，并返回成功。若不匹配则返回无效参数错误。"
+    },
+    {
+      "block_id": "block_8",
+      "name": "sys_settidaddr",
+      "normalized_name": "sys_settidaddr",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "50",
+      "end_line": "59",
+      "type": "function",
+      "module": "process",
+      "summary": "设置当前任务的 clear_child_tid 字段为传入的 tidptr 地址，并返回当前线程的 tid。通常用于进程或线程退出时，内核将 tid 清零以通知等待线程。"
+    },
+    {
+      "block_id": "block_9",
+      "name": "sys_yield",
+      "normalized_name": "sys_yield",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "61",
+      "end_line": "65",
+      "type": "function",
+      "module": "process",
+      "summary": "实现系统调用 sys_yield，用于主动让出 CPU，触发当前任务挂起并调度下一个任务执行。"
+    },
+    {
+      "block_id": "block_10",
+      "name": "sys_setpgid",
+      "normalized_name": "sys_setpgid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "67",
+      "end_line": "81",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数是一个空实现的系统调用，用于设置进程组ID，但实际未执行任何设置操作，仅记录调用日志并直接返回成功。"
+    },
+    {
+      "block_id": "block_12",
+      "name": "sys_getpid",
+      "normalized_name": "sys_getpid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "101",
+      "end_line": "104",
+      "type": "function",
+      "module": "process",
+      "summary": "获取当前任务的PID并返回"
+    },
+    {
+      "block_id": "block_11",
+      "name": "sys_getpgid",
+      "normalized_name": "sys_getpgid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "83",
+      "end_line": "99",
+      "type": "function",
+      "module": "syscall",
+      "summary": "这个代码块是一个伪实现的 sys_getpgid 系统调用，它本应根据传入的 pid 返回对应进程的进程组 ID (pgid)，但当前实现仅仅打印日志并返回固定的值 Ok(1)，没有进行任何实际逻辑处理。注释中保留了未实现的正确逻辑框架。"
+    },
+    {
+      "block_id": "block_14",
+      "name": "sys_getuid",
+      "normalized_name": "sys_getuid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "114",
+      "end_line": "118",
+      "type": "function",
+      "module": "syscall",
+      "summary": "这个代码块是一个伪实现的系统调用，用于获取用户ID（uid）。它仅仅记录日志并返回固定的值0，并不执行真正的UID查询或权限检查。"
+    },
+    {
+      "block_id": "block_13",
+      "name": "sys_getppid",
+      "normalized_name": "sys_getppid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "106",
+      "end_line": "112",
+      "type": "function",
+      "module": "process",
+      "summary": "获取当前进程的父进程ID（PID），如果父进程不存在则返回错误ESRCH。"
+    },
+    {
+      "block_id": "block_15",
+      "name": "sys_geteuid",
+      "normalized_name": "sys_geteuid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "120",
+      "end_line": "124",
+      "type": "function",
+      "module": "syscall",
+      "summary": "这个代码块定义了一个系统调用函数 `sys_geteuid`，该函数模拟获取有效用户 ID（EUID）的功能。它首先通过 trace 宏记录调用事件，然后通过 warn 宏发出警告，表明这是一个伪实现，并始终返回 EUID 为 0 的结果。"
+    },
+    {
+      "block_id": "block_16",
+      "name": "sys_getgid",
+      "normalized_name": "sys_getgid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "126",
+      "end_line": "130",
+      "type": "function",
+      "module": "syscall",
+      "summary": "这个代码块实现了伪系统调用 sys_getgid，该调用仅记录调用事件并打印警告信息，然后返回固定的 gid 值 0。这是一个占位实现，实际功能未完成。"
+    },
+    {
+      "block_id": "block_17",
+      "name": "sys_getegid",
+      "normalized_name": "sys_getegid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "132",
+      "end_line": "136",
+      "type": "function",
+      "module": "syscall",
+      "summary": "实现了一个伪系统调用sys_getegid，始终返回0表示有效组ID，并记录追踪和警告日志。"
+    },
+    {
+      "block_id": "block_18",
+      "name": "sys_gettid",
+      "normalized_name": "sys_gettid",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "138",
+      "end_line": "141",
+      "type": "function",
+      "module": "process",
+      "summary": "获取当前线程的ID，并将其作为系统调用的返回值返回。"
+    },
+    {
+      "block_id": "block_19",
+      "name": "sys_clone",
+      "normalized_name": "sys_clone",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "143",
+      "end_line": "160",
+      "type": "function",
+      "module": "process",
+      "summary": "处理 clone 系统调用，解析标志位，克隆当前任务，注册新任务并返回其 PID。"
+    },
+    {
+      "block_id": "block_20",
+      "name": "sys_exec",
+      "normalized_name": "sys_exec",
+      "file_path": "os\\src\\syscall\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "162",
+      "end_line": "225",
+      "type": "function",
+      "module": "syscall",
+      "summary": "实现sys_exec系统调用，负责加载并执行用户程序。它从用户空间获取路径、参数和环境变量，进行字符串翻译，处理shell脚本（使用busybox的sh解释执行），解析绝对路径并读取文件数据，最后调用任务执行函数替换当前进程的执行映像。"
+    }
+  ],
   "edges": [
     {
       "caller": "sys_exit",
       "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "trace!",
+      "caller_module": "syscall",
+      "evidence": "函数名为 sys_exit，通过 trace! 记录退出信息，调用 exit_current_and_run_next 实现退出并调度，最后的 panic! 表明该函数不会返回。",
+      "source_block_id": "block_5",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_1",
+      "normalized_caller": "sys_exit",
+      "normalized_callee": "trace!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_exit",
+      "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "exit_current_and_run_next",
-      "caller_module": "process",
+      "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_1",
+      "source_block_id": "block_5",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_2",
+      "normalized_caller": "sys_exit",
+      "normalized_callee": "exit_current_and_run_next",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_exit",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "panic!",
+      "caller_module": "syscall",
+      "evidence": "函数名为 sys_exit，通过 trace! 记录退出信息，调用 exit_current_and_run_next 实现退出并调度，最后的 panic! 表明该函数不会返回。",
+      "source_block_id": "block_5",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_3",
+      "normalized_caller": "sys_exit",
+      "normalized_callee": "panic!",
+      "call_type": "external"
     },
     {
       "caller": "sys_exit_group",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "exit_current_and_run_next",
-      "caller_module": "process",
+      "caller_module": "process/syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_2",
+      "source_block_id": "block_6",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_4",
+      "normalized_caller": "sys_exit_group",
+      "normalized_callee": "exit_current_and_run_next",
+      "call_type": "external"
     },
     {
       "caller": "sys_set_robust_list",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "trace!",
       "caller_module": "syscall",
-      "evidence": "代码中直接调用 current_task() 和 task.inner_exclusive_access() 操作当前任务控制块，并检查 len 是否等于 RobustList 头部大小；函数名 sys_set_robust_list 为 Linux 系统调用号 311 的标准封装，用于设置进程的 robust futex 列表。",
-      "source_block_id": "block_3",
+      "evidence": "代码位于syscall模块下的process.rs文件中，函数名以sys_开头表示系统调用，内部调用current_task()获取当前任务，更新任务的robust_list，返回SyscallRet类型（系统调用返回值）。这些特征表明该函数是一个系统调用实现，属于syscall模块。",
+      "source_block_id": "block_7",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_5",
+      "normalized_caller": "sys_set_robust_list",
+      "normalized_callee": "trace!",
+      "call_type": "external"
     },
     {
       "caller": "sys_set_robust_list",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "current_task",
+      "callee": "current_task()",
       "caller_module": "syscall",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_3",
+      "evidence": "代码位于syscall模块下的process.rs文件中，函数名以sys_开头表示系统调用，内部调用current_task()获取当前任务，更新任务的robust_list，返回SyscallRet类型（系统调用返回值）。这些特征表明该函数是一个系统调用实现，属于syscall模块。",
+      "source_block_id": "block_7",
       "source": [
-        "ai",
-        "regex"
+        "ai"
       ],
-      "confidence": 0.9
+      "confidence": 0.7,
+      "edge_id": "edge_6",
+      "normalized_caller": "sys_set_robust_list",
+      "normalized_callee": "current_task()",
+      "call_type": "external"
     },
     {
       "caller": "sys_set_robust_list",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "task.inner_exclusive_access",
+      "callee": "task.inner_exclusive_access()",
       "caller_module": "syscall",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_3",
+      "evidence": "代码位于syscall模块下的process.rs文件中，函数名以sys_开头表示系统调用，内部调用current_task()获取当前任务，更新任务的robust_list，返回SyscallRet类型（系统调用返回值）。这些特征表明该函数是一个系统调用实现，属于syscall模块。",
+      "source_block_id": "block_7",
       "source": [
-        "ai",
-        "regex"
+        "ai"
       ],
-      "confidence": 0.9
+      "confidence": 0.7,
+      "edge_id": "edge_7",
+      "normalized_caller": "sys_set_robust_list",
+      "normalized_callee": "inner_exclusive_access()",
+      "call_type": "external"
     },
     {
       "caller": "sys_settidaddr",
@@ -76,25 +393,32 @@
       "callee": "current_task",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_4",
+      "source_block_id": "block_8",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_8",
+      "normalized_caller": "sys_settidaddr",
+      "normalized_callee": "current_task",
+      "call_type": "external"
     },
     {
       "caller": "sys_settidaddr",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "task.inner_exclusive_access",
+      "callee": "current_task().unwrap().inner_exclusive_access",
       "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_4",
+      "evidence": "代码直接操作了任务控制块（task）内部的 clear_child_tid 字段（类型为 Option<usize>），并调用了 sys_gettid 系统调用。这些是进程/线程管理相关操作。",
+      "source_block_id": "block_8",
       "source": [
-        "ai",
-        "regex"
+        "ai"
       ],
-      "confidence": 0.9
+      "confidence": 0.7,
+      "edge_id": "edge_9",
+      "normalized_caller": "sys_settidaddr",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
       "caller": "sys_settidaddr",
@@ -102,86 +426,162 @@
       "callee": "sys_gettid",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_4",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_yield",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "suspend_current_and_run_next",
-      "caller_module": "scheduler",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_5",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_setpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "trace!",
-      "caller_module": "syscall",
-      "evidence": "代码中显式使用trace!和warn!宏输出日志，并注释掉了实际设置pgid的代码，返回值是Ok(0)。",
-      "source_block_id": "block_6",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_setpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "warn!",
-      "caller_module": "syscall",
-      "evidence": "代码中显式使用trace!和warn!宏输出日志，并注释掉了实际设置pgid的代码，返回值是Ok(0)。",
-      "source_block_id": "block_6",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_getpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "trace",
-      "caller_module": "syscall",
-      "evidence": "函数声明为pub fn sys_getpgid(pid: usize) -> SyscallRet，内部通过trace和warn宏输出日志，最后返回Ok(1)。注释部分展示了原本应通过任务结构体获取pgid的逻辑，但被注释掉，因此当前行为是固定返回1的伪实现。",
-      "source_block_id": "block_7",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_getpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "warn",
-      "caller_module": "syscall",
-      "evidence": "函数声明为pub fn sys_getpgid(pid: usize) -> SyscallRet，内部通过trace和warn宏输出日志，最后返回Ok(1)。注释部分展示了原本应通过任务结构体获取pgid的逻辑，但被注释掉，因此当前行为是固定返回1的伪实现。",
-      "source_block_id": "block_7",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_getpid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "current_task",
-      "caller_module": "syscall",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
       "source_block_id": "block_8",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_10",
+      "normalized_caller": "sys_settidaddr",
+      "normalized_callee": "sys_gettid",
+      "call_type": "internal"
+    },
+    {
+      "caller": "sys_yield",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "suspend_current_and_run_next",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_9",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_11",
+      "normalized_caller": "sys_yield",
+      "normalized_callee": "suspend_current_and_run_next",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_setpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "trace!",
+      "caller_module": "process",
+      "evidence": "函数体中被注释的代码展示了原本的设置逻辑（设置进程的pgid），但当前版本仅包含日志宏和返回成功，未执行任何有效操作，因此被标记为伪实现。",
+      "source_block_id": "block_10",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_12",
+      "normalized_caller": "sys_setpgid",
+      "normalized_callee": "trace!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_setpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "warn!",
+      "caller_module": "process",
+      "evidence": "函数体中被注释的代码展示了原本的设置逻辑（设置进程的pgid），但当前版本仅包含日志宏和返回成功，未执行任何有效操作，因此被标记为伪实现。",
+      "source_block_id": "block_10",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_13",
+      "normalized_caller": "sys_setpgid",
+      "normalized_callee": "warn!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "trace!",
+      "caller_module": "process",
+      "evidence": "函数名 sys_getpid 表明是系统调用获取PID；代码中通过 current_task().unwrap().pid.0 从当前任务中读取PID；位于 syscall/process.rs 文件中，属于进程相关的系统调用",
+      "source_block_id": "block_12",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_14",
+      "normalized_caller": "sys_getpid",
+      "normalized_callee": "trace!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "current_task",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_12",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_15",
+      "normalized_caller": "sys_getpid",
+      "normalized_callee": "current_task",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "trace!",
+      "caller_module": "syscall",
+      "evidence": "函数体包含 trace! 和 warn! 日志宏调用，返回值为 Ok(1)，注释中有一段被注释掉的正确实现逻辑（包括 current_task、inner_exclusive_access 等），说明当前实现仅占位。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_16",
+      "normalized_caller": "sys_getpgid",
+      "normalized_callee": "trace!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "warn!",
+      "caller_module": "syscall",
+      "evidence": "函数体包含 trace! 和 warn! 日志宏调用，返回值为 Ok(1)，注释中有一段被注释掉的正确实现逻辑（包括 current_task、inner_exclusive_access 等），说明当前实现仅占位。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_17",
+      "normalized_caller": "sys_getpgid",
+      "normalized_callee": "warn!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getuid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "trace!",
+      "caller_module": "syscall",
+      "evidence": "函数名称sys_getuid表示获取用户ID，但代码内只调用了trace!和warn!宏进行日志记录，并返回固定值0，没有实际的UID获取逻辑，因此判断为伪实现。",
+      "source_block_id": "block_14",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_18",
+      "normalized_caller": "sys_getuid",
+      "normalized_callee": "trace!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getuid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "warn!",
+      "caller_module": "syscall",
+      "evidence": "函数名称sys_getuid表示获取用户ID，但代码内只调用了trace!和warn!宏进行日志记录，并返回固定值0，没有实际的UID获取逻辑，因此判断为伪实现。",
+      "source_block_id": "block_14",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_19",
+      "normalized_caller": "sys_getuid",
+      "normalized_callee": "warn!",
+      "call_type": "external"
     },
     {
       "caller": "sys_getppid",
@@ -189,172 +589,196 @@
       "callee": "current_task",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_13",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_20",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "current_task",
+      "call_type": "external"
     },
     {
       "caller": "sys_getppid",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "inner_exclusive_access",
+      "callee": "task.inner_exclusive_access",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_13",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_21",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
       "caller": "sys_getppid",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "upgrade",
+      "callee": "parent.upgrade",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_13",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_getuid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "trace!",
-      "caller_module": "syscall",
-      "evidence": "函数位于syscall/process.rs路径下，通过trace!和warn!宏记录日志，并直接返回Ok(0)，未进行实际的UID获取逻辑，属于系统调用模块中进程管理功能的占位实现。",
-      "source_block_id": "block_10",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_getuid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "warn!",
-      "caller_module": "syscall",
-      "evidence": "函数位于syscall/process.rs路径下，通过trace!和warn!宏记录日志，并直接返回Ok(0)，未进行实际的UID获取逻辑，属于系统调用模块中进程管理功能的占位实现。",
-      "source_block_id": "block_10",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
+      "confidence": 0.9,
+      "edge_id": "edge_22",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "upgrade",
+      "call_type": "external"
     },
     {
       "caller": "sys_geteuid",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "trace!",
       "caller_module": "syscall",
-      "evidence": "函数位于syscall模块的process.rs文件中，通过trace!和warn!宏输出日志，并直接返回Ok(0)表示系统调用成功，符合伪实现的特征。",
-      "source_block_id": "block_11",
+      "evidence": "该函数位于 `os/src/syscall/process.rs` 文件中，属于系统调用模块。函数体仅包含日志宏和固定返回值，未涉及实际权限检查或用户 ID 获取逻辑，符合伪实现特征。",
+      "source_block_id": "block_15",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_23",
+      "normalized_caller": "sys_geteuid",
+      "normalized_callee": "trace!",
+      "call_type": "external"
     },
     {
       "caller": "sys_geteuid",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "warn!",
       "caller_module": "syscall",
-      "evidence": "函数位于syscall模块的process.rs文件中，通过trace!和warn!宏输出日志，并直接返回Ok(0)表示系统调用成功，符合伪实现的特征。",
-      "source_block_id": "block_11",
+      "evidence": "该函数位于 `os/src/syscall/process.rs` 文件中，属于系统调用模块。函数体仅包含日志宏和固定返回值，未涉及实际权限检查或用户 ID 获取逻辑，符合伪实现特征。",
+      "source_block_id": "block_15",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_24",
+      "normalized_caller": "sys_geteuid",
+      "normalized_callee": "warn!",
+      "call_type": "external"
     },
     {
       "caller": "sys_getgid",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "trace!",
       "caller_module": "syscall",
-      "evidence": "函数位于syscall/process.rs，属于系统调用模块，输出信息表明是伪实现，返回固定值0。",
-      "source_block_id": "block_12",
+      "evidence": "函数名 sys_getgid 暗示这是一个系统调用，用于获取进程的 GID；代码中使用了 trace! 和 warn! 宏记录日志，并返回 Ok(0)，没有执行真正的 GID 查询或权限检查逻辑。",
+      "source_block_id": "block_16",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_25",
+      "normalized_caller": "sys_getgid",
+      "normalized_callee": "trace!",
+      "call_type": "external"
     },
     {
       "caller": "sys_getgid",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "warn!",
       "caller_module": "syscall",
-      "evidence": "函数位于syscall/process.rs，属于系统调用模块，输出信息表明是伪实现，返回固定值0。",
-      "source_block_id": "block_12",
+      "evidence": "函数名 sys_getgid 暗示这是一个系统调用，用于获取进程的 GID；代码中使用了 trace! 和 warn! 宏记录日志，并返回 Ok(0)，没有执行真正的 GID 查询或权限检查逻辑。",
+      "source_block_id": "block_16",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_26",
+      "normalized_caller": "sys_getgid",
+      "normalized_callee": "warn!",
+      "call_type": "external"
     },
     {
       "caller": "sys_getegid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "trace!",
+      "caller_module": "syscall",
+      "evidence": "函数名称sys_getegid表明它处理获取有效组ID的系统调用；代码中调用trace!和warn!日志宏记录调用和警告；返回Ok(0)表示返回值为0的伪实现。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_27",
+      "normalized_caller": "sys_getegid",
+      "normalized_callee": "trace!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getegid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "warn!",
+      "caller_module": "syscall",
+      "evidence": "函数名称sys_getegid表明它处理获取有效组ID的系统调用；代码中调用trace!和warn!日志宏记录调用和警告；返回Ok(0)表示返回值为0的伪实现。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_28",
+      "normalized_caller": "sys_getegid",
+      "normalized_callee": "warn!",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_gettid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "current_task",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_18",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_29",
+      "normalized_caller": "sys_gettid",
+      "normalized_callee": "current_task",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_gettid",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "trace",
-      "caller_module": "syscall",
-      "evidence": "函数定义在os::syscall::process模块中，日志明确标注了‘pseudo implementation’，且直接返回固定值0，没有访问进程控制块或组ID相关数据结构。",
-      "source_block_id": "block_13",
+      "caller_module": "process",
+      "evidence": "函数通过 current_task() 获取当前任务，并返回其 pid.0，符合获取线程ID的语义；路径为 os/src/syscall/process.rs，表明属于进程/线程相关系统调用模块。",
+      "source_block_id": "block_18",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_30",
+      "normalized_caller": "sys_gettid",
+      "normalized_callee": "trace",
+      "call_type": "external"
     },
     {
-      "caller": "sys_getegid",
+      "caller": "sys_clone",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "warn",
-      "caller_module": "syscall",
-      "evidence": "函数定义在os::syscall::process模块中，日志明确标注了‘pseudo implementation’，且直接返回固定值0，没有访问进程控制块或组ID相关数据结构。",
-      "source_block_id": "block_13",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_gettid",
-      "caller_file": "os/src/syscall/process.rs",
-      "callee": "trace!",
-      "caller_module": "syscall",
-      "evidence": "代码中明确调用 current_task().unwrap().pid.0，且函数名为 sys_gettid，属于系统调用模块，返回当前线程的ID。trace! 宏用于调试日志。",
-      "source_block_id": "block_14",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_gettid",
-      "caller_file": "os/src/syscall/process.rs",
-      "callee": "current_task",
-      "caller_module": "syscall",
+      "callee": "CloneFlags::from_bits",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_14",
+      "source_block_id": "block_19",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_gettid",
-      "caller_file": "os/src/syscall/process.rs",
-      "callee": "unwrap",
-      "caller_module": "syscall",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_14",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_31",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "from_bits",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -362,24 +786,48 @@
       "callee": "current_task",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_32",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "current_task",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_clone",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "current_task().unwrap()",
+      "caller_module": "process",
+      "evidence": "函数名 sys_clone、处理 CloneFlags、调用 clone_task 和 add_task，明显属于进程管理相关的系统调用。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_33",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "unwrap()",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "current_task().clone_task",
       "caller_module": "process",
-      "evidence": "函数名 sys_clone 对应 OS 进程管理的 clone 系统调用；调用了 current_task()、clone_task() 和 add_task()，均与进程/任务管理相关。",
-      "source_block_id": "block_15",
+      "evidence": "函数名 sys_clone、处理 CloneFlags、调用 clone_task 和 add_task，明显属于进程管理相关的系统调用。",
+      "source_block_id": "block_19",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_34",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "clone_task",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -387,12 +835,16 @@
       "callee": "add_task",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_35",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "add_task",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -400,12 +852,16 @@
       "callee": "current_user_token",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_36",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "current_user_token",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -413,12 +869,16 @@
       "callee": "translated_str",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_37",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "translated_str",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -426,12 +886,16 @@
       "callee": "translated_ref",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_38",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "translated_ref",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -439,12 +903,16 @@
       "callee": "current_task",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_39",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "current_task",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -452,12 +920,16 @@
       "callee": "get_abs_path",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_40",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "get_abs_path",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -465,12 +937,16 @@
       "callee": "open",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_41",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "open",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -478,12 +954,16 @@
       "callee": "file",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_42",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "file",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -491,252 +971,120 @@
       "callee": "read_all",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_43",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "read_all",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "task.exec",
-      "caller_module": "syscall",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "current_task",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "inner_exclusive_access",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "getpid",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "is_zombie",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "add_child_time",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "put_data",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "suspend_current_and_run_next",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_shutdown",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "trace!",
-      "caller_module": "syscall",
-      "evidence": "代码中 trace! 宏用于日志输出，shutdown() 函数直接调用关机操作；所属文件位于 syscall 目录下，功能为系统调用之一。",
-      "source_block_id": "block_18",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_shutdown",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "shutdown",
       "caller_module": "syscall",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_18",
+      "source_block_id": "block_20",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_44",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_exec",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "get_cwd",
+      "caller_module": "syscall",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_20",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_45",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "get_cwd",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_exec",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "as_str",
+      "caller_module": "syscall",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_20",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_46",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "as_str",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_exec",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "exec",
+      "caller_module": "syscall",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_20",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_47",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "exec",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_exec",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "unwrap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_20",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_48",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
     },
     {
       "caller": "sys_exit_group",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "exit_current_group_and_run_next",
-      "caller_module": "process",
+      "caller_module": "process/syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_2",
+      "source_block_id": "block_6",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_49",
+      "normalized_caller": "sys_exit_group",
+      "normalized_callee": "exit_current_group_and_run_next",
+      "call_type": "external"
     },
     {
       "caller": "sys_set_robust_list",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "unwrap",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_3",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_set_robust_list",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "inner_exclusive_access",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_3",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_settidaddr",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "unwrap",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_4",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_settidaddr",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "inner_exclusive_access",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_4",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_setpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "task.inner_exclusive_access",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_6",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_setpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "current_task",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_6",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_setpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "unwrap",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_6",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_setpgid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "inner_exclusive_access",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_6",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_getpgid",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "task.inner_exclusive_access",
       "caller_module": "syscall",
@@ -745,10 +1093,14 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_50",
+      "normalized_caller": "sys_set_robust_list",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
-      "caller": "sys_getpgid",
+      "caller": "sys_set_robust_list",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "current_task",
       "caller_module": "syscall",
@@ -757,10 +1109,14 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_51",
+      "normalized_caller": "sys_set_robust_list",
+      "normalized_callee": "current_task",
+      "call_type": "external"
     },
     {
-      "caller": "sys_getpgid",
+      "caller": "sys_set_robust_list",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "unwrap",
       "caller_module": "syscall",
@@ -769,10 +1125,14 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_52",
+      "normalized_caller": "sys_set_robust_list",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
     },
     {
-      "caller": "sys_getpgid",
+      "caller": "sys_set_robust_list",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "inner_exclusive_access",
       "caller_module": "syscall",
@@ -781,31 +1141,203 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_53",
+      "normalized_caller": "sys_set_robust_list",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
-      "caller": "sys_getpid",
+      "caller": "sys_settidaddr",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "unwrap",
-      "caller_module": "syscall",
+      "callee": "task.inner_exclusive_access",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
       "source_block_id": "block_8",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_54",
+      "normalized_caller": "sys_settidaddr",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
-      "caller": "sys_getppid",
+      "caller": "sys_settidaddr",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "unwrap",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_55",
+      "normalized_caller": "sys_settidaddr",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_settidaddr",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "inner_exclusive_access",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_56",
+      "normalized_caller": "sys_settidaddr",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_setpgid",
       "caller_file": "os\\src\\syscall\\process.rs",
       "callee": "task.inner_exclusive_access",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_10",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_57",
+      "normalized_caller": "sys_setpgid",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_setpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "current_task",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_58",
+      "normalized_caller": "sys_setpgid",
+      "normalized_callee": "current_task",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_setpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "unwrap",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_59",
+      "normalized_caller": "sys_setpgid",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_setpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "inner_exclusive_access",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_10",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_60",
+      "normalized_caller": "sys_setpgid",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "unwrap",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_12",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_61",
+      "normalized_caller": "sys_getpid",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "task.inner_exclusive_access",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_62",
+      "normalized_caller": "sys_getpgid",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "current_task",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_63",
+      "normalized_caller": "sys_getpgid",
+      "normalized_callee": "current_task",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "unwrap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_64",
+      "normalized_caller": "sys_getpgid",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getpgid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "inner_exclusive_access",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_11",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_65",
+      "normalized_caller": "sys_getpgid",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
       "caller": "sys_getppid",
@@ -813,23 +1345,15 @@
       "callee": "parent.as_ref",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_getppid",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "parent.upgrade",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_66",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "as_ref",
+      "call_type": "external"
     },
     {
       "caller": "sys_getppid",
@@ -837,11 +1361,31 @@
       "callee": "unwrap",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_67",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_getppid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "inner_exclusive_access",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_13",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_68",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
       "caller": "sys_getppid",
@@ -849,11 +1393,15 @@
       "callee": "as_ref",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_69",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "as_ref",
+      "call_type": "external"
     },
     {
       "caller": "sys_getppid",
@@ -861,23 +1409,47 @@
       "callee": "ok_or",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_70",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "ok_or",
+      "call_type": "external"
     },
     {
-      "caller": "sys_clone",
+      "caller": "sys_getppid",
       "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "CloneFlags::from_bits",
+      "callee": "upgrade",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_71",
+      "normalized_caller": "sys_getppid",
+      "normalized_callee": "upgrade",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_gettid",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "unwrap",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_18",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_72",
+      "normalized_caller": "sys_gettid",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -885,11 +1457,15 @@
       "callee": "flags.bits",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_73",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "bits",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -897,11 +1473,15 @@
       "callee": "current_task.clone_task",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_74",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "clone_task",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -909,11 +1489,15 @@
       "callee": "from_bits",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_75",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "from_bits",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -921,11 +1505,15 @@
       "callee": "ok_or_else",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_76",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "ok_or_else",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -933,11 +1521,15 @@
       "callee": "bits",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_77",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "bits",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -945,11 +1537,15 @@
       "callee": "unwrap",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_78",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
     },
     {
       "caller": "sys_clone",
@@ -957,11 +1553,15 @@
       "callee": "clone_task",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_19",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_79",
+      "normalized_caller": "sys_clone",
+      "normalized_callee": "clone_task",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -969,11 +1569,15 @@
       "callee": "Vec::new",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_80",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -981,11 +1585,15 @@
       "callee": "String::from",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_81",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "from",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -993,11 +1601,15 @@
       "callee": "envp.is_null",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_82",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "is_null",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1005,11 +1617,15 @@
       "callee": "env.push",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_83",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "push",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1017,11 +1633,15 @@
       "callee": "envp.add",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_84",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "add",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1029,11 +1649,15 @@
       "callee": "args.is_null",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_85",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "is_null",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1041,11 +1665,15 @@
       "callee": "args_vec.push",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_86",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "push",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1053,11 +1681,15 @@
       "callee": "args.add",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_87",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "add",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1065,11 +1697,15 @@
       "callee": "path.ends_with",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_88",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "ends_with",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1077,11 +1713,15 @@
       "callee": "args_vec.insert",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_89",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "insert",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1089,11 +1729,15 @@
       "callee": "task.inner_exclusive_access",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_90",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "inner_exclusive_access",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1101,11 +1745,15 @@
       "callee": "fsinfo.get_cwd",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_91",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "get_cwd",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1113,11 +1761,15 @@
       "callee": "path.as_str",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_92",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "as_str",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1125,11 +1777,15 @@
       "callee": "abs_path.as_str",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_93",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "as_str",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1137,11 +1793,15 @@
       "callee": "inode.read_all",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_94",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "read_all",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1149,11 +1809,31 @@
       "callee": "args_vec.len",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_95",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "len",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_exec",
+      "caller_file": "os\\src\\syscall\\process.rs",
+      "callee": "task.exec",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_20",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_96",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "exec",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1161,11 +1841,15 @@
       "callee": "all_data.as_slice",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_97",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "as_slice",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1173,11 +1857,15 @@
       "callee": "new",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_98",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1185,11 +1873,15 @@
       "callee": "is_null",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_99",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "is_null",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1197,11 +1889,15 @@
       "callee": "push",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_100",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "push",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1209,11 +1905,15 @@
       "callee": "add",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_101",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "add",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1221,11 +1921,15 @@
       "callee": "to_string",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_102",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "to_string",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1233,11 +1937,15 @@
       "callee": "ends_with",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_103",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "ends_with",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1245,11 +1953,15 @@
       "callee": "insert",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_104",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "insert",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1257,59 +1969,15 @@
       "callee": "from",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_exec",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "unwrap",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_exec",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "inner_exclusive_access",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_exec",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "get_cwd",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_exec",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "as_str",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_105",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "from",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1317,23 +1985,15 @@
       "callee": "len",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_exec",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "exec",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_106",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "len",
+      "call_type": "external"
     },
     {
       "caller": "sys_exec",
@@ -1341,275 +2001,35 @@
       "callee": "as_slice",
       "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
+      "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "Arc::strong_count",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "task.inner_exclusive_access",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "p.getpid",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "children.iter",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "p.inner_exclusive_access",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "children.remove",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "child.getpid",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "child.inner_exclusive_access",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "time_data.add_child_time",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "status_ptr.is_null",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "memory_set.token",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "unwrap",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "iter",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "any",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "enumerate",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "find",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "remove",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "strong_count",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "is_null",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "translated_refmut",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "token",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_wait4",
-      "caller_file": "os\\src\\syscall\\process.rs",
-      "callee": "drop",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_107",
+      "normalized_caller": "sys_exec",
+      "normalized_callee": "as_slice",
+      "call_type": "external"
     }
-  ]
+  ],
+  "module_stats": {
+    "syscall": {
+      "function_count": 11,
+      "outgoing_edge_count": 65,
+      "internal_edge_count": 0,
+      "external_edge_count": 65
+    },
+    "process": {
+      "function_count": 8,
+      "outgoing_edge_count": 40,
+      "internal_edge_count": 1,
+      "external_edge_count": 39
+    },
+    "process/syscall": {
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 0,
+      "external_edge_count": 2
+    }
+  }
 }

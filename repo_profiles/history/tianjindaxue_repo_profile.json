@@ -1,7 +1,7 @@
 {
   "repo_name": "tianjindaxue",
   "repo_path": "D:\\os\\history\\tianjindaxue",
-  "created_at": "2026-05-31 17:46:31",
+  "created_at": "2026-06-16 02:30:46",
   "basic_info": {
     "repo_name": "tianjindaxue",
     "repo_path": "D:\\os\\history\\tianjindaxue"
@@ -11,25 +11,89 @@
   "function_analysis_summary": {
     "analysis_count": 20,
     "module_distribution": {
-      "process": 6,
-      "unknown": 3,
-      "filesystem": 1,
+      "process": 15,
       "driver": 1,
-      "scheduler": 1,
-      "build": 1,
-      "report_generation": 1,
-      "syscall": 3,
-      "memory": 3
+      "memory": 2,
+      "unknown": 1,
+      "syscall": 1
     }
   },
   "call_graph_summary": {
-    "edge_count": 233,
-    "high_confidence_edge_count": 43,
+    "edge_count": 230,
+    "high_confidence_edge_count": 39,
     "high_confidence_edges_preview": [
       {
-        "caller": "set_libc_path",
+        "caller": "DYN_PATH",
         "caller_file": "kernel\\src\\tasks\\initproc.rs",
-        "callee": "LIBC_PATH.lock",
+        "callee": "Mutex::new",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_3",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_1",
+        "normalized_caller": "DYN_PATH",
+        "normalized_callee": "new",
+        "call_type": "external"
+      },
+      {
+        "caller": "DYN_PATH",
+        "caller_file": "kernel\\src\\tasks\\initproc.rs",
+        "callee": "String::new",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_3",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_2",
+        "normalized_caller": "DYN_PATH",
+        "normalized_callee": "new",
+        "call_type": "external"
+      },
+      {
+        "caller": "GLIBC_PATH",
+        "caller_file": "kernel\\src\\tasks\\initproc.rs",
+        "callee": "Mutex::new",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_2",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_3",
+        "normalized_caller": "GLIBC_PATH",
+        "normalized_callee": "new",
+        "call_type": "external"
+      },
+      {
+        "caller": "GLIBC_PATH",
+        "caller_file": "kernel\\src\\tasks\\initproc.rs",
+        "callee": "String::new",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_2",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_4",
+        "normalized_caller": "GLIBC_PATH",
+        "normalized_callee": "new",
+        "call_type": "external"
+      },
+      {
+        "caller": "LIBC_PATH",
+        "caller_file": "kernel\\src\\tasks\\initproc.rs",
+        "callee": "Mutex::new",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
         "source_block_id": "block_1",
@@ -37,77 +101,33 @@
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_5",
+        "normalized_caller": "LIBC_PATH",
+        "normalized_callee": "new",
+        "call_type": "external"
       },
       {
-        "caller": "get_libc_path",
+        "caller": "LIBC_PATH",
         "caller_file": "kernel\\src\\tasks\\initproc.rs",
-        "callee": "lock",
-        "caller_module": "unknown",
+        "callee": "String::new",
+        "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_2",
+        "source_block_id": "block_1",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "get_libc_path",
-        "caller_file": "kernel\\src\\tasks\\initproc.rs",
-        "callee": "clone",
-        "caller_module": "unknown",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_2",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_6",
+        "normalized_caller": "LIBC_PATH",
+        "normalized_callee": "new",
+        "call_type": "external"
       },
       {
         "caller": "set_glibc_path",
         "caller_file": "kernel\\src\\tasks\\initproc.rs",
         "callee": "GLIBC_PATH.lock",
-        "caller_module": "unknown",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_3",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "get_glibc_path",
-        "caller_file": "kernel\\src\\tasks\\initproc.rs",
-        "callee": "GLIBC_PATH.lock",
-        "caller_module": "process",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_4",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "get_glibc_path",
-        "caller_file": "kernel\\src\\tasks\\initproc.rs",
-        "callee": "clone",
-        "caller_module": "process",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_4",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "get_dyn_path",
-        "caller_file": "kernel\\src\\tasks\\initproc.rs",
-        "callee": "DYN_PATH.lock",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
         "source_block_id": "block_6",
@@ -115,7 +135,28 @@
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_10",
+        "normalized_caller": "set_glibc_path",
+        "normalized_callee": "lock",
+        "call_type": "external"
+      },
+      {
+        "caller": "get_dyn_path",
+        "caller_file": "kernel\\src\\tasks\\initproc.rs",
+        "callee": "DYN_PATH.lock",
+        "caller_module": "process",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_9",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_14",
+        "normalized_caller": "get_dyn_path",
+        "normalized_callee": "lock",
+        "call_type": "external"
       },
       {
         "caller": "clear",
@@ -123,12 +164,16 @@
         "callee": "DebugConsole::putchar",
         "caller_module": "driver",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_7",
+        "source_block_id": "block_10",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_16",
+        "normalized_caller": "clear",
+        "normalized_callee": "putchar",
+        "call_type": "external"
       },
       {
         "caller": "kill_all_tasks",
@@ -136,216 +181,202 @@
         "callee": "TASK_MAP.lock",
         "caller_module": "process",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_8",
+        "source_block_id": "block_11",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "kill_all_tasks",
-        "caller_file": "kernel\\src\\tasks\\initproc.rs",
-        "callee": "task.upgrade",
-        "caller_module": "process",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_8",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_17",
+        "normalized_caller": "kill_all_tasks",
+        "normalized_callee": "lock",
+        "call_type": "external"
       }
     ]
   },
   "module_summary": {
-    "module_count": 8,
+    "module_count": 5,
     "module_names": [
-      "build",
       "driver",
-      "filesystem",
       "memory",
       "process",
-      "report_generation",
-      "scheduler",
-      "syscall"
+      "syscall",
+      "unknown"
     ],
     "modules": [
       {
-        "module_name": "build",
-        "module_summary": "该模块是操作系统比赛作品中的构建与测试执行模块，主要负责系统初始进程的启动逻辑，根据不同的CPU架构（LoongArch64或其它）执行系统初始化、文件系统准备（创建目录、复制busybox、设置符号链接和权限）、以及执行多项测试套件（包括basic、LTP、iperf、lmbench、iozone、libcbench、busybox、lua、musl libc测试等），最终在测试完成后进行关机或清理。",
-        "key_functions": [
-          {
-            "name": "initproc",
-            "role": "模块的核心函数，作为系统初始进程的入口，执行架构判断、环境配置、测试调用的串联以及关机逻辑。"
-          }
-        ],
-        "call_flow_summary": "initproc函数内部按顺序调用多个子函数和命令来完成整个启动与测试流程：先调用set_libc_path和set_dyn_path设置库路径，然后根据架构（LoongArch64或非LoongArch64）选择执行路径：非LoongArch64架构下直接启动busybox shell；LoongArch64架构下依次调用command（与busybox交互创建目录、复制文件、设置链接）、run_ltp_tests、command_iperf、run_musl_tests等执行多个测试函数，最后切换至glibc环境并重复部分测试，最终调用shutdown函数关机。整个执行流程是顺序展开的，没有明显的分支循环，属于典型的线性调用链。",
-        "evidence": [
-          "函数initproc中根据架构条件进行了分支处理，例如'cfg!(target_arch = \"loongarch64\")'条件判断。",
-          "函数内部调用了set_libc_path、set_dyn_path、command、run_ltp_tests、command_iperf、run_musl_tests、shutdown等函数。",
-          "代码中执行了多个测试脚本（如run-all.sh、run_ltp_tests、iperf_testcode.sh等）并输出测试分组标记（如'OS COMP TEST GROUP START basic-musl'）。",
-          "函数最后通过任务映射检查是否存在非BlankKernel类型的任务，并根据结果决定是否再次调用shutdown。"
-        ],
-        "uncertainty": "代码中调用的command、run_ltp_tests、command_iperf、run_musl_tests等函数的具体实现在当前材料中未给出，仅能根据调用上下文推断其功能为执行shell命令或运行测试脚本；shutdown函数的具体实现也未提供。部分路径和命令（如/glibc/busybox）依赖于文件系统预置，其部署方式未在材料中说明。"
-      },
-      {
         "module_name": "driver",
-        "module_summary": "driver模块负责提供底层驱动程序接口，当前可见部分包含终端控制功能，通过向DebugConsole串口发送ANSI转义序列实现屏幕清空操作。",
+        "module_summary": "该模块主要负责终端显示的控制，例如通过发送ANSI转义序列清除屏幕。模块提供了基本的底层字符输出接口，并在此基础上实现了简单的屏幕操作功能。",
         "key_functions": [
           {
             "name": "clear",
-            "role": "clear函数是驱动模块中用于清除终端屏幕的函数，通过调用DebugConsole::putchar发送ANSI转义序列（光标归位和清屏），实现清屏效果。"
+            "role": "通过ANSI转义序列清除终端屏幕，具体操作包括将光标移至左上角并清除整个屏幕，依赖于DebugConsole::putchar输出原始字节。"
           }
         ],
-        "call_flow_summary": "模块内部存在明确定义的调用链：clear函数调用DebugConsole::putchar（置信度0.9）以及可能直接调用putchar（置信度0.6）。基于高置信度证据，主要执行流程为clear依次发送多个字符到DebugConsole。",
+        "call_flow_summary": "模块内函数间的主要调用链为：clear函数调用DebugConsole::putchar（或可能的putchar）函数发送字节，实现屏幕清除功能。由于仅识别到一个高层函数clear，其内部直接调用底层I/O函数，无其他中间调用层次。",
         "evidence": [
-          "函数clear通过连续调用DebugConsole::putchar发送字节序列0x1b 0x5b 0x48（ESC [ H）和0x1b 0x5b 0x32 0x4a（ESC [ 2 J），对应ANSI控制码。",
-          "调用关系显示clear->DebugConsole::putchar（来源：ai, regex，置信度0.9）和clear->putchar（来源：regex，置信度0.6）。"
+          "clear函数连续调用DebugConsole::putchar发送字节0x1b, 0x5b, 0x48, 0x1b, 0x5b, 0x32, 0x4a，组合成标准ANSI转义序列ESC[H和ESC[2J。",
+          "调用关系显示：clear -> DebugConsole::putchar（置信度0.9）和clear -> putchar（置信度0.6），表明putchar可能是DebugConsole::putchar的别名或重定向。"
         ],
-        "uncertainty": "当前只有clear一个函数被理解，模块中可能还有其他驱动函数未被分析；调用关系中clear->putchar的置信度较低（0.6），无法完全确认是否存在单独的putchar函数被调用；另外DebugConsole::putchar是否为模块内部实现尚不确定。"
-      },
-      {
-        "module_name": "filesystem",
-        "module_summary": "该模块（filesystem）主要负责与文件系统相关的路径管理功能，具体体现在通过set_dyn_path函数设置一个全局动态路径，该路径可能用于指定动态链接库搜索路径或根文件系统路径等文件系统相关用途。但由于上下文不足，该模块的具体职责尚存不确定性。",
-        "key_functions": [
-          {
-            "name": "set_dyn_path",
-            "role": "设置全局动态路径，通过获取全局锁保护的静态变量DYN_PATH的互斥锁，并将传入的path字符串赋值给该变量，从而为文件系统相关操作（如动态库加载或路径解析）提供路径配置。"
-          }
-        ],
-        "call_flow_summary": "目前仅有一个函数set_dyn_path，其内部调用顺序为：先获取静态变量DYN_PATH的锁（通过lock()方法），然后设置路径值。不存在多个函数之间的调用链。",
-        "evidence": [
-          "AI模型分析set_dyn_path函数时指出：该函数通过获取全局锁保护的静态变量DYN_PATH的锁，并赋值path，可能用于动态链接库搜索路径或其他文件系统相关路径。",
-          "调用关系表明set_dyn_path内部调用了DYN_PATH.lock()（来源：ai，置信度0.7）以及DYN_PATH.lock和lock方法（来源：regex，置信度0.6），说明函数依赖全局锁机制。",
-          "文件路径为kernel/src/tasks/initproc.rs，表明该函数与进程初始化相关，可能涉及文件系统路径的初始化设置。"
-        ],
-        "uncertainty": "由于未提供DYN_PATH的定义和完整上下文，无法确认该动态路径的具体用途（如是否为动态链接库路径、根文件系统路径或其他文件系统相关路径），且模块中只识别出这一个函数，缺乏更多函数和调用关系，因此模块整体功能和角色推测性较强，可能不完整或存在其他未分析的函数。"
+        "uncertainty": "关于putchar调用的具体实现（如是否与DebugConsole::putchar完全一致）存在一定不确定性，因为regex来源的调用关系置信度仅为0.6；另外，模块中是否还有其他未被分析到的函数（如终端初始化、颜色控制等）尚不可知。"
       },
       {
         "module_name": "memory",
-        "module_summary": "该模块实现了与内存管理相关的三个核心系统调用：mmap（内存映射）、munmap（取消内存映射）和mprotect（修改内存保护属性）。它负责在用户空间虚拟地址空间中分配、释放和调整内存区域，包括处理匿名/文件映射、私有/共享映射、地址对齐、页表映射、重叠检测以及数据读取等操作。模块通过操作当前任务的进程控制块（PCB）、内存区域描述结构（memset）和页表来完成具体的内存管理任务。",
+        "module_summary": "该模块是操作系统内存管理相关的系统调用实现，主要处理用户态内存映射区域起始地址的定义以及堆内存的调整操作（通过brk/sbrk系统调用）。",
         "key_functions": [
           {
-            "name": "sys_mmap",
-            "role": "实现mmap系统调用，根据参数在用户空间分配或映射内存区域，支持多种映射类型，处理地址对齐、范围检查、重叠区域移除、页表映射以及从文件读取数据等步骤，返回映射的起始地址。"
-          },
-          {
-            "name": "sys_munmap",
-            "role": "实现munmap系统调用，通过调用PCB的sub_area方法取消指定虚拟地址范围的内存映射，返回成功标志0。"
-          },
-          {
-            "name": "sys_mprotect",
-            "role": "实现mprotect系统调用，解析保护标志参数并记录调试信息，但当前实现为空壳，仅返回成功（Ok(0)），未实际修改内存保护属性。"
-          }
-        ],
-        "call_flow_summary": "sys_mmap内部存在较长的调用链：首先调用alignup、from_bits_truncate等辅助函数解析参数，然后通过self.task获取当前任务的空闲地址和PCB锁，进一步调用memset.overlapping检测重叠、memset.sub_area移除重叠区域、memset.push添加新区域，以及map_frames、frame_alloc、map等函数进行页表映射和物理帧分配，最后在文件映射场景下调用file.readat和UserRef读取数据。sys_munmap直接调用task.inner_map进入PCB上下文，再调用memset.sub_area取消映射。sys_mprotect仅解析ProtFlags并输出日志，无进一步调用。三个函数分别独立，彼此之间没有直接调用关系。",
-        "evidence": [
-          "函数理解中明确sys_mmap需要处理地址对齐、页表映射、保护标志等，并调用了memset.sub_area、map_frames、file.readat等函数",
-          "函数理解中sys_munmap通过self.task.inner_map调用pcb.memset.sub_area",
-          "函数理解中sys_mprotect仅解析ProtFlags并返回Ok(0)，未调用其他内存操作函数",
-          "调用关系中列出了sys_mmap调用的大量内存和文件相关函数，sys_munmap调用inner_map和sub_area，sys_mprotect仅调用from_bits_truncate和debug!"
-        ],
-        "uncertainty": "部分内部函数的具体实现细节未给出，例如sub_area、map_frames、MemArea构造方式、ProtFlags定义来源等；sys_mprotect的ProtFlags是否为bitflags宏生成的未知；inner_map的确切作用未在材料中明确说明，可能为加锁访问PCB的封装；文件读取操作file.readat可能依赖块设备驱动，但代码未详细展开；所有置信度低于1.0的调用关系均基于AI或正则推断，实际源码可能有所不同。"
-      },
-      {
-        "module_name": "process",
-        "module_summary": "该模块负责操作系统内核中的进程管理功能，包括进程初始化、路径配置、任务终止、命令执行和测试运行。模块位于kernel/src/tasks/initproc.rs，主要处理用户进程的启动、路径设置（如libc、glibc、动态库路径）、终止所有任务，以及执行musl兼容性测试。",
-        "key_functions": [
-          {
-            "name": "set_libc_path",
-            "role": "设置全局libc路径，将传入的字符串存入互斥锁保护的静态变量中，用于进程初始化时的库路径配置。"
-          },
-          {
-            "name": "get_glibc_path",
-            "role": "获取全局glibc路径的字符串克隆值，通过互斥锁实现原子访问，用于获取GNU C库路径。"
-          },
-          {
-            "name": "get_dyn_path",
-            "role": "获取动态路径的字符串克隆值，通过互斥锁访问全局变量，可能用于动态链接库路径或工作目录。"
-          },
-          {
-            "name": "kill_all_tasks",
-            "role": "遍历所有任务，对MonolithicTask类型的任务调用exit(100)强制终止，用于系统清理或关闭时的任务销毁。"
-          },
-          {
-            "name": "command",
-            "role": "解析命令字符串并执行外部程序，支持引号和转义符，通过文件系统打开文件后创建用户进程执行，是模块中的核心执行函数。"
-          },
-          {
-            "name": "run_musl_tests",
-            "role": "执行musl测试集，定义静态和动态测试列表，排除指定项后调用command函数运行每个测试程序，用于检验musl库兼容性。"
-          }
-        ],
-        "call_flow_summary": "模块内部存在明确的调用关系：run_musl_tests函数会调用command函数来执行每个测试程序；command函数内部调用多个底层函数（如File::open、UserTask::new、exec_with_process、thread::spawn等）；其他函数（set_libc_path、get_glibc_path、get_dyn_path、kill_all_tasks）相对独立，无相互调用证据。kill_all_tasks的调用关系中剔除了错误关联（如File::open等），实际上主要调用TASK_MAP.lock、task.upgrade、get_task_type和exit。",
-        "evidence": [
-          "run_musl_tests通过command函数运行每个测试项（调用关系22）",
-          "command内部调用File::open、UserTask::new、exec_with_process、thread::spawn等（调用关系10-21）",
-          "set_libc_path、get_glibc_path、get_dyn_path、kill_all_tasks函数均独立操作全局变量或任务映射",
-          "kill_all_tasks遍历TASK_MAP并调用get_task_type和exit（调用关系6-9）",
-          "所有函数位于同一文件kernel/src/tasks/initproc.rs，属于进程管理模块"
-        ],
-        "uncertainty": "不确定信息：具体全局变量（LIBC_PATH、GLIBC_PATH、DYN_PATH、TASK_MAP）的初始化位置和默认值未提供；command函数中exec_with_process和user_entry的具体实现未体现；kill_all_tasks中exit(100)的退出码含义不明确；run_musl_tests的exclude列表中test_dir参数是否有效存在冗余可能性。"
-      },
-      {
-        "module_name": "report_generation",
-        "module_summary": "该模块负责在操作系统启动时，通过运行一系列LTP（Linux Test Project）测试用例来验证系统功能，并输出每个测试的执行结果（包括运行提示与失败信息），其行为较为简单，侧重于测试的批量执行与结果打印，而非结果收集或统计。",
-        "key_functions": [
-          {
-            "name": "run_ltp_tests",
-            "role": "核心函数，定义待运行的LTP测试用例列表，依次执行每个测试，并打印运行提示（RUN）和固定失败提示（FAIL），作为测试流程的主要驱动者。"
-          }
-        ],
-        "call_flow_summary": "模块内部调用流程线性且简单：run_ltp_tests遍历预定义的测试名称列表，对每个名称依次调用command函数执行三个shell命令——首先输出运行提示，然后运行指定路径下的测试可执行文件，最后输出失败提示。未发现其他函数间的复杂调用链或分支逻辑。",
-        "evidence": [
-          "函数run_ltp_tests中维护了一个包含多个LTP测试用例名称的字符串向量，并通过for循环遍历执行。",
-          "循环体内连续调用command执行固定格式的命令：echo RUN LTP CASE {test_name}、/musl/ltp/testcases/bin/{test_name}、echo FAIL LTP CASE {test_name} : 0。",
-          "调用关系显示run_ltp_tests调用了command，置信度为0.9，佐证了执行shell命令的行为。"
-        ],
-        "uncertainty": "command函数的定义不在提供材料中，其具体实现（如如何执行命令、处理返回码、设置环境等）不确定；所有测试运行后均输出失败信息，但实际是否成功不影响该模块行为，该设计可能是简化或占位逻辑，尚未确认其真实意图。"
-      },
-      {
-        "module_name": "scheduler",
-        "module_summary": "该模块主要负责任务管理和环境清理，具体表现为在iperf测试前后通过强制杀死所有任务和同步操作来确保测试环境的隔离性与状态一致性。",
-        "key_functions": [
-          {
-            "name": "command_iperf",
-            "role": "是模块的核心函数，用于执行iperf测试，并在测试前后进行强制任务清理和内存同步，以保证测试环境干净且无残留任务干扰。"
-          }
-        ],
-        "call_flow_summary": "command_iperf 函数首先调用 kill_all_tasks 清理现有任务，然后执行内存屏障（fence）和自旋等待（spin_loop）进行同步，接着调用 command 执行 iperf 测试，测试结束后再次调用 kill_all_tasks 清理任务，并再次执行同步等待。函数内部形成了明确的调用链：kill_all_tasks → fence → spin_loop → command → kill_all_tasks → fence → spin_loop。",
-        "evidence": [
-          "函数 command_iperf 中多次调用 kill_all_tasks() 来清理任务，这表明模块涉及任务调度与管理。",
-          "使用 atomic::fence 和 hint::spin_loop 进行内存同步和自旋等待，确保清理状态在全核间可见。",
-          "调用关系图显示 command_iperf 直接调用了 kill_all_tasks、command、fence、spin_loop 等函数。"
-        ],
-        "uncertainty": "kill_all_tasks 和 command 函数的具体实现未给出，无法确定其内部逻辑和对调度器的具体影响；此外，模块中仅有一个关键函数被描述，可能存在其他未包含在分析材料中的函数。"
-      },
-      {
-        "module_name": "syscall",
-        "module_summary": "该模块实现了操作系统中的系统调用功能，主要用于内存管理相关的系统调用，包括调整进程堆（brk）和同步内存映射文件（msync）的部分逻辑，但msync当前仅提供占位实现。",
-        "key_functions": [
-          {
-            "name": "impl UserTaskContainer",
-            "role": "定义了UserTaskContainer的实现块，但具体方法缺失，无法确定其详细功能，推测与系统调用中任务的内存管理相关。"
+            "name": "MAP_AREA_START",
+            "role": "定义内存映射区域的起始地址常量，值为0x2_0000_0000，作为用户态或内核态内存映射的基地址。"
           },
           {
             "name": "sys_brk",
-            "role": "实现brk系统调用，用于调整进程堆的结束地址：当传入地址为0时返回当前堆地址，否则通过任务的sbrk方法更新堆地址并返回新地址。"
+            "role": "实现sys_brk系统调用，提供程序断点（堆边界）的查询和调整功能，当传入地址为0时返回当前堆地址，否则调用任务级别的sbrk方法调整堆并返回新堆地址。"
+          }
+        ],
+        "call_flow_summary": "sys_brk函数内部包含两条主要调用路径：当参数addr为0时，调用self.task.heap()返回当前堆地址；当addr非0时，调用self.task.sbrk(addr)调整堆地址并返回结果。这两个调用均依赖于任务（task）对象的方法，但task.heap()和task.sbrk的具体实现在本模块中不可见。",
+        "evidence": [
+          "常量MAP_AREA_START在kernel/src/syscall/mm.rs文件中被定义为usize类型，值为0x2_0000_0000，表明其用于指定内存映射基地址。",
+          "函数sys_brk在相同文件中实现，其逻辑根据addr是否为0分别调用self.task.heap()或self.task.sbrk(addr)，符合典型的brk系统调用语义。",
+          "调用关系分析显示sys_brk显式调用了self.task.heap()和self.task.sbrk(addr)，且置信度来源包括AI分析和正则匹配（置信度0.6-0.7）。"
+        ],
+        "uncertainty": "MAP_AREA_START的具体使用场景和该常量是用于用户态还是内核态映射无法从当前代码块中确定，可能与其他内存区域（如堆、栈）布局配合使用。self.task.heap()和self.task.sbrk()的具体实现细节（如参数含义、返回值类型、是否返回新地址）在本模块中缺失，只能根据常见POSIX语义推断sys_brk的行为。此外，调用关系中的部分匹配项（如“heap”、“sbrk”等）因正则匹配导致，可能包含不准确的间接引用。"
+      },
+      {
+        "module_name": "process",
+        "module_summary": "该模块是操作系统的进程/任务管理模块，主要负责系统初始化进程（initproc）的创建与配置、用户任务（如shell和测试程序）的执行与控制、路径配置（如libc、glibc、动态链接器路径）的管理，以及批量测试（如LTP、musl测试、iperf等）的调度和运行。",
+        "key_functions": [
+          {
+            "name": "DYN_PATH",
+            "role": "全局静态变量，存储动态路径或配置字符串，受互斥锁保护，用于进程初始化时的路径配置。"
+          },
+          {
+            "name": "GLIBC_PATH",
+            "role": "全局静态变量，存储glibc库的路径，受互斥锁保护，为进程提供glibc路径信息。"
+          },
+          {
+            "name": "LIBC_PATH",
+            "role": "全局静态变量，存储libc库的路径，受互斥锁保护，用于设置或获取libc路径。"
+          },
+          {
+            "name": "set_libc_path",
+            "role": "设置libc路径，通过获取LIBC_PATH的锁并写入传入的路径字符串。"
+          },
+          {
+            "name": "get_libc_path",
+            "role": "获取libc路径，返回LIBC_PATH中存储的路径副本。"
+          },
+          {
+            "name": "set_glibc_path",
+            "role": "设置glibc路径，通过获取GLIBC_PATH的锁并写入传入的路径字符串。"
+          },
+          {
+            "name": "get_glibc_path",
+            "role": "获取glibc路径，返回GLIBC_PATH中存储的路径副本。"
+          },
+          {
+            "name": "set_dyn_path",
+            "role": "设置动态路径（DYN_PATH），通过获取DYN_PATH的锁并写入传入的路径字符串。"
+          },
+          {
+            "name": "get_dyn_path",
+            "role": "获取动态路径（DYN_PATH），返回DYN_PATH中存储的路径副本。"
+          },
+          {
+            "name": "kill_all_tasks",
+            "role": "终止所有类型为MonolithicTask的任务，遍历任务映射并调用exit(100)强制退出。"
+          },
+          {
+            "name": "command",
+            "role": "解析命令字符串，打开可执行文件，创建并执行用户任务（UserTask），等待任务退出后清理资源。"
+          },
+          {
+            "name": "command_iperf",
+            "role": "在执行iperf网络测试前后进行强制的任务清理和内存同步，以提高测试隔离性。"
+          },
+          {
+            "name": "initproc",
+            "role": "系统初始化进程主体，配置库路径（libc/glibc/动态链接器），创建/bin目录和符号链接，安排并运行一系列测试（如busybox、LTP、iperf、musl/glibc测试等），最后执行关机。"
+          },
+          {
+            "name": "run_ltp_tests",
+            "role": "批量运行LTP（Linux Test Project）测试用例，遍历预定义列表并调用command执行每个测试二进制文件。"
+          },
+          {
+            "name": "run_musl_tests",
+            "role": "运行musl库的静态链接和动态链接测试用例，通过排除列表过滤并调用command执行测试。"
+          }
+        ],
+        "call_flow_summary": "模块的主要执行流程由initproc函数驱动：initproc首先设置库路径（调用set_libc_path、set_dyn_path），然后调用command启动基础shell或测试环境；接着依次调用run_ltp_tests（执行LTP测试）、command_iperf（执行iperf测试）、run_musl_tests（执行musl测试）等；这些批量测试函数内部均通过command函数创建用户任务来运行具体程序。command函数本身负责解析命令、打开文件、创建UserTask并执行，任务结束后进行清理。另外，command_iperf在执行前后会调用kill_all_tasks强制终止所有MonolithicTask，以增强测试隔离。initproc最后检查任务状态并调用shutdown()关机。",
+        "evidence": [
+          "所有函数均定义在 kernel/src/tasks/initproc.rs 文件中，该文件名暗示与进程初始化相关。",
+          "多个全局静态变量（DYN_PATH、GLIBC_PATH、LIBC_PATH）设计用于存储路径信息，并通过互斥锁保护，这是进程模块常见的配置管理方式。",
+          "initproc函数是系统初始化进程，它配置环境后启动各种测试，符合操作系统内核中init进程的角色。",
+          "command函数实现了从命令解析到任务创建、执行、等待退出的完整流程，是进程创建与执行的核心。",
+          "kill_all_tasks通过遍历任务映射并强制退出MonolithicTask，属于进程管理中的任务清理功能。",
+          "函数间的调用关系：initproc调用set_libc_path、set_dyn_path、command、run_ltp_tests、command_iperf、run_musl_tests；run_ltp_tests和run_musl_tests内部调用command；command_iperf调用kill_all_tasks和command。"
+        ],
+        "uncertainty": "部分函数的实现细节未在提供的代码中完整展示（如TASK_MAP定义、upgrade语义、user_entry具体实现、LTP测试脚本来源等），但基于常见模式推断其属于进程模块。此外，initproc中关机逻辑存在两次调用shutdown()的冗余，但功能判断不受影响。"
+      },
+      {
+        "module_name": "syscall",
+        "module_summary": "该模块是操作系统用户任务系统调用的内存管理部分，位于 syscall/mm.rs 文件中。它实现了与用户任务内存相关的系统调用接口，包括堆扩展（brk）、内存映射（mmap）、解除映射（munmap）、内存保护修改（mprotect）、内存同步（msync）以及健壮列表（robust list）的设置与获取。模块通过操作任务控制块（TCB）和页表来管理用户虚拟地址空间。当前部分功能（如 mprotect 和 msync）仍为存根实现，仅记录日志并未实际执行操作。",
+        "key_functions": [
+          {
+            "name": "sys_brk",
+            "role": "处理 brk 系统调用，用于调整用户任务的堆大小。如果参数 addr 为 0，返回当前堆顶地址；否则调用 sbrk 调整堆大小并返回新堆地址。"
+          },
+          {
+            "name": "sys_mmap",
+            "role": "处理 mmap 系统调用，负责在用户虚拟地址空间中创建新的内存映射。解析标志和权限，对齐长度，确定映射源（匿名或文件），计算起始地址，检查地址合法性，处理 MAP_FIXED 时的重叠映射，支持共享映射和私有映射，并从文件读取数据到映射区域（如果文件存在）。返回映射的起始地址。"
+          },
+          {
+            "name": "sys_munmap",
+            "role": "处理 munmap 系统调用，移除指定地址区间的内存映射。通过调用内存段的 sub_area 方法实现。"
+          },
+          {
+            "name": "sys_mprotect",
+            "role": "处理 mprotect 系统调用，当前为存根实现，仅记录调试日志并返回 Ok(0)，未实际修改内存保护属性。"
           },
           {
             "name": "sys_msync",
-            "role": "处理msync系统调用，用于同步内存映射到文件。当前为占位实现，仅解析标志位并返回成功，未执行真正的同步操作。"
+            "role": "处理 msync 系统调用，当前为存根实现，仅记录调试日志并返回 Ok(0)，未实际同步内存到文件。"
+          },
+          {
+            "name": "sys_set_robust_list",
+            "role": "处理 set_robust_list 系统调用，验证参数（长度必须为 24 字节，地址必须有效且已映射），并将 robust_list_head 和 robust_list_len 保存到任务控制块中。"
+          },
+          {
+            "name": "sys_get_robust_list",
+            "role": "处理 get_robust_list 系统调用，通过页表翻译用户指针地址，并写入 0。当前实现仅返回固定值 0，未真正获取健壮列表数据。"
           }
         ],
-        "call_flow_summary": "模块内部调用关系有限：sys_brk依赖于self.task.heap()和self.task.sbrk()方法；sys_msync依赖于MSyncFlags::from_bits_truncate进行标志解析。两函数之间没有直接调用关系。",
+        "call_flow_summary": "模块内部函数主要通过 UserTaskContainer 结构体的方法实现。调用链显示，sys_brk 和 sys_mmap 会调用任务对象的方法（如 heap、sbrk、get_fd、get_last_free_addr、map_frames、frame_alloc、map、inner_map）以及页表翻译（page_table.translate）。sys_munmap 调用 memset.sub_area 移除内存区域。sys_set_robust_list 通过 page_table.translate 验证地址合法性。sys_get_robust_list 也通过 translate 写回数据。此外，所有系统调用分支涉及标志解析（如 MapFlags::from_bits_truncate、MmapProt::from_bits_truncate、ProtFlags::from_bits_truncate、MSyncFlags::from_bits_truncate）和条件判断（flags.contains）。整体上，sys_mmap 是调用链最复杂的函数，涉及多个子步骤和任务内部接口。",
         "evidence": [
-          "sys_brk函数中根据addr是否为0，分别调用self.task.heap()返回当前堆地址，或调用self.task.sbrk(addr)设置新地址并返回结果。",
-          "sys_msync函数中调用了MSyncFlags::from_bits_truncate(flags)解析标志，并打印调试日志，然后返回Ok(0)，注释表明为临时实现。",
-          "调用关系证据显示sys_brk对self.task.heap()和self.task.sbrk(addr)的调用来自多个来源（AI、正则匹配），置信度在0.6-0.7之间。",
-          "sys_msync对MSyncFlags::from_bits_truncate的调用来自AI和正则匹配，置信度0.9。"
+          "文件路径：kernel/src/syscall/mm.rs 实现了 impl UserTaskContainer 下的 sys_brk, sys_mmap, sys_munmap, sys_mprotect, sys_msync, sys_set_robust_list, sys_get_robust_list 函数。",
+          "函数理解中指出 sys_mprotect 和 sys_msync 仅记录调试日志返回 Ok(0)，未实际修改或同步。",
+          "sys_set_robust_list 验证长度为 24，并通过 translate 检查 head 地址的映射状态。",
+          "sys_get_robust_list 通过 translate 写入 0，实际未获取列表。",
+          "调用的方法如 heap, sbrk, get_fd, get_last_free_addr, map_frames, frame_alloc, map, inner_map, memset.sub_area 均来源于任务对象或其内部结构（pcb, memset）。"
         ],
-        "uncertainty": "UserTaskContainer的实现块内容缺失，无法分析其具体方法和逻辑；self.task.heap()和self.task.sbrk()的内部实现细节未知（例如是否真正分配/释放内存）；sys_msync的addr和len参数在代码中未实际使用。"
+        "uncertainty": "无"
+      },
+      {
+        "module_name": "unknown",
+        "module_summary": "该模块主要负责运行 glibc 兼容性测试，包括静态链接和动态链接两种类型的测试用例，通过遍历预定义的测试列表并调用外部命令执行测试程序，同时支持排除特定测试用例，用于验证操作系统的 glibc 运行环境是否正常。",
+        "key_functions": [
+          {
+            "name": "run_glibc_tests",
+            "role": "模块的核心函数，定义 glibc 静态和动态测试用例列表，控制测试执行流程，管理测试排除逻辑，并调用 command 函数异步运行每个测试命令。"
+          }
+        ],
+        "call_flow_summary": "模块仅包含一个关键函数 run_glibc_tests，该函数内部先定义两组测试列表（静态、动态），然后依次遍历每个测试用例，通过 exclude 列表进行过滤后，调用 command 函数执行测试命令（格式为 '{} -w {} {}'），整个流程是线性的，无复杂分支或跨函数调用链。",
+        "evidence": [
+          "函数定义了两个向量 glibc_static_tests 和 glibc_dynamic_tests，每个元素包含 runtest 路径、entry 文件和测试名称。",
+          "测试执行使用 command 函数，参数格式为 '{} -w {} {}'，工作目录为 test_dir。",
+          "排除逻辑通过 exclude 列表与当前测试 (runtest, entry, test_name, test_dir) 进行比较。",
+          "调用关系显示 run_glibc_tests 直接调用 command 函数（置信度 0.9）。"
+        ],
+        "uncertainty": "command 函数的具体实现未知，可能来自外部 crate 或文件内其他部分；exclude 列表的来源未说明；模块中仅识别出一个函数，缺少其他函数信息，无法确认模块完整结构；test_name、test_dir 等变量的提取细节不明确。"
       }
     ]
   },

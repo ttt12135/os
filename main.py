@@ -12,10 +12,14 @@ from src.code_understander import analyze_code_blocks_file, save_function_analys
 from src.call_graph_builder import build_enhanced_call_graph, save_call_graph, format_call_graph_summary
 from src.module_summarizer import summarize_modules, save_module_summary, format_module_summary_preview
 from src.repo_profiler import build_repo_profile, save_repo_profile, format_repo_profile_preview
-from src.history_kb_builder import build_history_knowledge_base, save_history_knowledge_base, format_history_kb_preview
-from src.history_retriever import retrieve_similar_history_profiles, format_retrieval_results
+from src.history_kb_builder import build_history_knowledge_base,save_history_knowledge_base,build_history_knowledge_base_full,save_history_knowledge_base_full,format_history_kb_full_preview
+from src.history_retriever import retrieve_similar_history_profiles,retrieve_similar_history_projects_full,save_retrieval_result_full,format_retrieval_result_full_preview
 from src.evaluator import generate_evaluation_report, save_evaluation_report, format_evaluation_preview
 from src.ingest_pipeline import ingest_history_repo, analyze_target_repo, format_pipeline_result
+from src.history_comparator import compare_retrieval_results_with_ai,save_history_comparison_full,format_history_comparison_full_preview
+from src.score_evaluator import evaluate_project_score_full,save_score_result_full,format_score_result_full_preview
+from src.final_report_generator import generate_final_report_full,save_final_report_full,format_final_report_preview
+from src.final_pipeline import run_final_analyze_pipeline,format_final_analyze_preview
 
 #读取.env文件
 load_dotenv()
@@ -614,7 +618,7 @@ def main():
     print("输入 exit：退出程序")
 
     while True:
-        command = input("请选择模式(chat/repo/report/batch/compare/split/save_blocks/understand/call_graph/module_summary/profile/history_kb/retrieve/evaluate/ingest_history/analyze_target/exit): ")
+        command = input("请选择模式(chat/repo/report/batch/compare/split/save_blocks/understand/call_graph/module_summary/profile/history_kb/history_kb_full/retrieve/evaluate/ingest_history/analyze_target/retrieve_full/compare_full/score_full/final_report/final_analyze/exit): ")
         if command == "exit":
             print("程序退出")
             break
@@ -763,6 +767,24 @@ def main():
             print(preview)
             print("-" * 30)
 
+        elif command == "history_kb_full":
+            history_kb_full = build_history_knowledge_base_full(
+                profile_dir="repo_profiles/history"
+            )
+
+            history_kb_full_path = save_history_knowledge_base_full(
+                history_kb_full
+            )
+
+            result_text = format_history_kb_full_preview(
+                history_kb=history_kb_full,
+                save_path=history_kb_full_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
         elif command == "retrieve":
             target_profile_path = input("请输入目标作品 repo_profile JSON 路径: ")
             history_kb_path = input("请输入历史知识库 JSON 路径: ")
@@ -782,6 +804,37 @@ def main():
             print()
             print(preview)
             print("-" * 30)
+
+
+        elif command == "retrieve_full":
+            target_profile_path = input("请输入目标仓库 repo_profile_full 路径: ")
+
+            top_k_text = input("请输入返回相似项目数量 top_k，直接回车默认 3: ")
+
+            if top_k_text.strip() == "":
+                top_k = 3
+            else:
+                top_k = int(top_k_text)
+
+            retrieval_result = retrieve_similar_history_projects_full(
+                target_profile_path=target_profile_path,
+                history_kb_full_path="history_knowledge_base/history_profiles_full.json",
+                top_k=top_k
+            )
+
+            retrieval_result_path = save_retrieval_result_full(
+                retrieval_result
+            )
+
+            result_text = format_retrieval_result_full_preview(
+                retrieval_result=retrieval_result,
+                save_path=retrieval_result_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
 
         elif command == "evaluate":
             target_profile_path = input("请输入目标作品 repo_profile JSON 路径: ")
@@ -857,6 +910,123 @@ def main():
             print()
             print(result_text)
             print("-" * 30)
+
+
+        elif command == "compare_full":
+            retrieval_result_path = input("请输入 retrieve_full 生成的相似项目结果路径: ")
+
+            comparison_result = compare_retrieval_results_with_ai(
+                retrieval_result_path=retrieval_result_path,
+                ask_ai_once=ask_ai_once
+            )
+
+            comparison_result_path = save_history_comparison_full(
+                comparison_result
+            )
+
+            result_text = format_history_comparison_full_preview(
+                comparison_result=comparison_result,
+                save_path=comparison_result_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
+
+        elif command == "score_full":
+            repo_profile_path = input("请输入目标仓库 repo_profile_full 路径: ")
+            retrieval_result_path = input("请输入 retrieve_full 结果路径: ")
+            comparison_result_path = input("请输入 compare_full 结果路径: ")
+
+            score_result = evaluate_project_score_full(
+                repo_profile_path=repo_profile_path,
+                retrieval_result_path=retrieval_result_path,
+                comparison_result_path=comparison_result_path,
+                ask_ai_once=ask_ai_once
+            )
+
+            score_result_path = save_score_result_full(score_result)
+
+            result_text = format_score_result_full_preview(
+                score_result=score_result,
+                save_path=score_result_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+    
+
+        elif command == "final_report":
+            repo_profile_path = input("请输入目标仓库 repo_profile_full 路径: ")
+            retrieval_result_path = input("请输入 retrieve_full 结果路径: ")
+            comparison_result_path = input("请输入 compare_full 结果路径: ")
+            score_result_path = input("请输入 score_full 结果路径: ")
+
+            report_result = generate_final_report_full(
+                repo_profile_path=repo_profile_path,
+                retrieval_result_path=retrieval_result_path,
+                comparison_result_path=comparison_result_path,
+                score_result_path=score_result_path
+            )
+
+            report_path = save_final_report_full(report_result)
+
+            result_text = format_final_report_preview(
+                report_result=report_result,
+                save_path=report_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
+        elif command == "final_analyze":
+            repo_path = input("请输入目标仓库路径: ")
+
+            analysis_mode = input("请选择分析模式 quick/full，直接回车默认 full: ")
+
+            if analysis_mode.strip() == "":
+                analysis_mode = "full"
+
+            analysis_mode = analysis_mode.strip().lower()
+
+            max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 100: ")
+
+            max_blocks = parse_max_blocks_input(
+                max_blocks_text,
+                default_value=100
+            )
+
+            top_k_text = input("请输入相似历史项目数量 top_k，直接回车默认 3: ")
+
+            if top_k_text.strip() == "":
+                top_k = 3
+            else:
+                top_k = int(top_k_text)
+
+            if max_blocks is None:
+                print()
+                print("你选择了 all，将尝试分析全部代码块。")
+                print("该模式可能耗时较长，但支持断点续跑。")
+
+            generated_files = run_final_analyze_pipeline(
+                repo_path=repo_path,
+                ask_ai_once=ask_ai_once,
+                analysis_mode=analysis_mode,
+                max_blocks=max_blocks,
+                top_k=top_k
+            )
+
+            result_text = format_final_analyze_preview(
+                generated_files
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
 
         else:
             print("未知命令，请输入 chat、repo、report、batch、compare 或 exit。")

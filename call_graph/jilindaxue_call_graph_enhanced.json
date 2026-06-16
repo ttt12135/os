@@ -1,10 +1,277 @@
 {
   "repo_name": "jilindaxue",
-  "created_at": "2026-05-31 17:30:36",
+  "created_at": "2026-06-15 03:03:28",
+  "graph_type": "full",
   "function_count": 20,
+  "node_count": 20,
   "ai_edge_count": 36,
-  "regex_edge_count": 48,
-  "merged_edge_count": 48,
+  "regex_edge_count": 42,
+  "merged_edge_count": 42,
+  "internal_edge_count": 6,
+  "external_edge_count": 36,
+  "module_count": 5,
+  "nodes": [
+    {
+      "block_id": "block_1",
+      "name": "init_procfs",
+      "normalized_name": "init_procfs",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "46",
+      "end_line": "48",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "初始化 procfs 文件系统，通过调用 register_fs 注册 procfs 文件系统类型。"
+    },
+    {
+      "block_id": "block_2",
+      "name": "procfs_unlink",
+      "normalized_name": "procfs_unlink",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "50",
+      "end_line": "55",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "这是一个取消链接操作的回调函数，仅在路径为/proc/interrupts时调用特定处理函数，否则返回-1表示不支持。"
+    },
+    {
+      "block_id": "block_3",
+      "name": "procfs_rename",
+      "normalized_name": "procfs_rename",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "56",
+      "end_line": "61",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "这个代码块定义了一个名为 procfs_rename 的函数，用于重命名 procfs 中的文件。它检查旧路径是否为 \"/proc/interrupts\"，如果是则调用专门的重命名函数处理，否则返回 -1 表示不支持。"
+    },
+    {
+      "block_id": "block_5",
+      "name": "procfs_write",
+      "normalized_name": "procfs_write",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "71",
+      "end_line": "77",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "该函数实现了procfs文件系统中的写操作入口，根据打开文件的路径判断执行哪个具体的写处理函数。"
+    },
+    {
+      "block_id": "block_4",
+      "name": "procfs_read",
+      "normalized_name": "procfs_read",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "62",
+      "end_line": "68",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "该函数是procfs文件系统的读取操作入口。它首先获取文件路径，然后判断路径是否为'/proc/interrupts'，如果是则调用专门的处理函数，否则返回-1表示不支持或路径不存在。"
+    },
+    {
+      "block_id": "block_6",
+      "name": "procfs_open",
+      "normalized_name": "procfs_open",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "79",
+      "end_line": "84",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "procfs文件系统中open操作的处理函数，根据路径匹配决定是否调用proc_interrupts_open打开文件。"
+    },
+    {
+      "block_id": "block_7",
+      "name": "procfs_close",
+      "normalized_name": "procfs_close",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": 86,
+      "end_line": 92,
+      "type": "function",
+      "module": "unknown",
+      "summary": "{\n  \"block_id\": \"block_7\",\n  \"file_path\": \"kernel\\\\fs\\\\procfs.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"86\",\n  \"end_line\": \"92\",\n  \"name\": \"procfs_close\",\n  \"type\": \"function\",\n  \"summary\": \"关闭一个procfs文件，根据文件路径调用对应的关闭处理函数。当前实现只处理了/proc/interrupts，其他路径返回错误。\",\n  \"logic_steps\": [\n    \"第1步：从文件结构体中获取文件路径字符串保存到局部变量path中。\",\n    \"第2步：比较path是否为字符串\"/proc/interrupts\"，如果是则调用proc_interrupts_close函数并返回其结果。\",\n    \"第3步：否则返回-1表示文件关闭操作失败或不支持。\"\n  ],\n  \"called_functions\": [\n    \"strcmp\",\n    \"proc_interrupts_close\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"函数名procfs_close暗示是procfs文件系统的关闭操作，代码中检查了文件路径并调用了特定的关闭函数strcmp和proc_interrupts_close，属于文件系统模块。\",\n  \"uncertainty\": \"proc_interrupts_close函数的定义和实现在当前代码块中未提供，无法确认其具体行为。此外，procfs_close仅处理了一个特定路径，其他路径的关闭逻辑可能尚未实现。\"\n}"
+    },
+    {
+      "block_id": "block_9",
+      "name": "proc_interrupts_write",
+      "normalized_name": "proc_interrupts_write",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "144",
+      "end_line": "147",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "这个函数是procfs中用于中断信息的写操作处理函数，但当前实现直接返回-1，表示写入操作不被允许，即只读。"
+    },
+    {
+      "block_id": "block_8",
+      "name": "proc_interrupts_read",
+      "normalized_name": "proc_interrupts_read",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "95",
+      "end_line": "142",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "读取并返回当前已发生的中断计数列表，用于 proc 文件系统中的一个只读文件（如 /proc/interrupts），支持用户态访问和内核态直接读取。"
+    },
+    {
+      "block_id": "block_10",
+      "name": "proc_interrupts_open",
+      "normalized_name": "proc_interrupts_open",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "149",
+      "end_line": "152",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "设置文件指针类型为FD_SPEC（特殊文件描述符），并返回成功，作为procfs中interrupts文件节点的打开操作实现。"
+    },
+    {
+      "block_id": "block_11",
+      "name": "proc_interrupts_close",
+      "normalized_name": "proc_interrupts_close",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "154",
+      "end_line": "156",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "该函数是procfs文件系统中用于关闭中断相关文件的操作函数，但当前实现仅返回0，不执行任何实际操作。"
+    },
+    {
+      "block_id": "block_13",
+      "name": "proc_interrupts_unlink",
+      "normalized_name": "proc_interrupts_unlink",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "163",
+      "end_line": "166",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "这个函数是procfs中对于'/proc/interrupts'文件的unlink操作的回调实现，其行为是直接返回-1，表示不允许对该文件进行删除操作。"
+    },
+    {
+      "block_id": "block_12",
+      "name": "proc_interrupts_rename",
+      "normalized_name": "proc_interrupts_rename",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "158",
+      "end_line": "161",
+      "type": "function",
+      "module": "filesystem",
+      "summary": "这个函数是一个占位实现，用于处理procfs中interrupts文件的重命名操作，但实际禁止重命名。"
+    },
+    {
+      "block_id": "block_14",
+      "name": "record_intr",
+      "normalized_name": "record_intr",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "167",
+      "end_line": "172",
+      "type": "function",
+      "module": "interrupt",
+      "summary": "对中断号进行合法性检查，若有效则递增该中断的计数。"
+    },
+    {
+      "block_id": "block_15",
+      "name": "allocpid",
+      "normalized_name": "allocpid",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "27",
+      "end_line": "27",
+      "type": "function",
+      "module": "process",
+      "summary": "原子递增全局变量nextpid并返回新值，用于分配一个唯一的进程ID。"
+    },
+    {
+      "block_id": "block_17",
+      "name": "delete_child",
+      "normalized_name": "delete_child",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "95",
+      "end_line": "105",
+      "type": "function",
+      "module": "process",
+      "summary": "从父进程的子进程链表中移除指定的子进程节点。"
+    },
+    {
+      "block_id": "block_16",
+      "name": "procinit",
+      "normalized_name": "procinit",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "59",
+      "end_line": "90",
+      "type": "function",
+      "module": "process",
+      "summary": "初始化进程表和相关数据结构，包括全局队列、进程锁、状态列表以及未使用进程队列，并为每个进程分配内核栈。"
+    },
+    {
+      "block_id": "block_18",
+      "name": "append_child",
+      "normalized_name": "append_child",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "111",
+      "end_line": "117",
+      "type": "function",
+      "module": "process",
+      "summary": "将一个子进程连接到父进程的子进程链表上，如果父进程当前没有子进程则直接设为第一个子进程，否则将新子进程添加到第一个子进程的兄弟链表末尾。"
+    },
+    {
+      "block_id": "block_20",
+      "name": "cpuid",
+      "normalized_name": "cpuid",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "155",
+      "end_line": "160",
+      "type": "function",
+      "module": "scheduler",
+      "summary": "获取当前 CPU 的 ID，通过读取 tp（线程指针）寄存器的值来实现。"
+    },
+    {
+      "block_id": "block_19",
+      "name": "thread_mapstacks",
+      "normalized_name": "thread_mapstacks",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "122",
+      "end_line": "149",
+      "type": "function",
+      "module": "process",
+      "summary": "为每个线程的内核栈分配物理内存并建立页表映射，每个线程映射KSTACK_PAGE个页面大小的虚拟地址空间。"
+    }
+  ],
   "edges": [
     {
       "caller": "init_procfs",
@@ -17,7 +284,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_1",
+      "normalized_caller": "init_procfs",
+      "normalized_callee": "register_fs",
+      "call_type": "external"
     },
     {
       "caller": "procfs_unlink",
@@ -30,7 +301,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_2",
+      "normalized_caller": "procfs_unlink",
+      "normalized_callee": "strcmp",
+      "call_type": "external"
     },
     {
       "caller": "procfs_unlink",
@@ -43,7 +318,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_3",
+      "normalized_caller": "procfs_unlink",
+      "normalized_callee": "proc_interrupts_unlink",
+      "call_type": "internal"
     },
     {
       "caller": "procfs_rename",
@@ -56,7 +335,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_4",
+      "normalized_caller": "procfs_rename",
+      "normalized_callee": "strcmp",
+      "call_type": "external"
     },
     {
       "caller": "procfs_rename",
@@ -69,33 +352,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procfs_read",
-      "caller_file": "kernel\\fs\\procfs.c",
-      "callee": "strcmp",
-      "caller_module": "filesystem",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_4",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procfs_read",
-      "caller_file": "kernel\\fs\\procfs.c",
-      "callee": "proc_interrupts_read",
-      "caller_module": "filesystem",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_4",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_5",
+      "normalized_caller": "procfs_rename",
+      "normalized_callee": "proc_interrupts_rename",
+      "call_type": "internal"
     },
     {
       "caller": "procfs_write",
@@ -108,7 +369,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_6",
+      "normalized_caller": "procfs_write",
+      "normalized_callee": "strcmp",
+      "call_type": "external"
     },
     {
       "caller": "procfs_write",
@@ -121,33 +386,79 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_7",
+      "normalized_caller": "procfs_write",
+      "normalized_callee": "proc_interrupts_write",
+      "call_type": "internal"
     },
     {
-      "caller": "procfs_close",
+      "caller": "procfs_read",
       "caller_file": "kernel\\fs\\procfs.c",
       "callee": "strcmp",
       "caller_module": "filesystem",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_7",
+      "source_block_id": "block_4",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_8",
+      "normalized_caller": "procfs_read",
+      "normalized_callee": "strcmp",
+      "call_type": "external"
     },
     {
-      "caller": "procfs_close",
+      "caller": "procfs_read",
       "caller_file": "kernel\\fs\\procfs.c",
-      "callee": "proc_interrupts_close",
+      "callee": "proc_interrupts_read",
       "caller_module": "filesystem",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_7",
+      "source_block_id": "block_4",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_9",
+      "normalized_caller": "procfs_read",
+      "normalized_callee": "proc_interrupts_read",
+      "call_type": "internal"
+    },
+    {
+      "caller": "procfs_open",
+      "caller_file": "kernel\\fs\\procfs.c",
+      "callee": "strcmp",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_10",
+      "normalized_caller": "procfs_open",
+      "normalized_callee": "strcmp",
+      "call_type": "external"
+    },
+    {
+      "caller": "procfs_open",
+      "caller_file": "kernel\\fs\\procfs.c",
+      "callee": "proc_interrupts_open",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_6",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_11",
+      "normalized_caller": "procfs_open",
+      "normalized_callee": "proc_interrupts_open",
+      "call_type": "internal"
     },
     {
       "caller": "proc_interrupts_read",
@@ -160,7 +471,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_12",
+      "normalized_caller": "proc_interrupts_read",
+      "normalized_callee": "kmalloc",
+      "call_type": "external"
     },
     {
       "caller": "proc_interrupts_read",
@@ -173,7 +488,28 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_13",
+      "normalized_caller": "proc_interrupts_read",
+      "normalized_callee": "sprintf",
+      "call_type": "external"
+    },
+    {
+      "caller": "proc_interrupts_read",
+      "caller_file": "kernel\\fs\\procfs.c",
+      "callee": "myproc",
+      "caller_module": "filesystem",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_8",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_14",
+      "normalized_caller": "proc_interrupts_read",
+      "normalized_callee": "myproc",
+      "call_type": "external"
     },
     {
       "caller": "proc_interrupts_read",
@@ -186,7 +522,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_15",
+      "normalized_caller": "proc_interrupts_read",
+      "normalized_callee": "copyout",
+      "call_type": "external"
     },
     {
       "caller": "proc_interrupts_read",
@@ -199,7 +539,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_16",
+      "normalized_caller": "proc_interrupts_read",
+      "normalized_callee": "kfree",
+      "call_type": "external"
     },
     {
       "caller": "proc_interrupts_read",
@@ -212,7 +556,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_17",
+      "normalized_caller": "proc_interrupts_read",
+      "normalized_callee": "Warn",
+      "call_type": "external"
     },
     {
       "caller": "proc_interrupts_read",
@@ -225,7 +573,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_18",
+      "normalized_caller": "proc_interrupts_read",
+      "normalized_callee": "Log",
+      "call_type": "external"
     },
     {
       "caller": "allocpid",
@@ -238,85 +590,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procinit",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "PCB_Q_ALL_INIT",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procinit",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "atomic_set",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procinit",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "initlock",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procinit",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "KSTACK",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procinit",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "INIT_LIST_HEAD",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "procinit",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "queue_push_back_atomic",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_19",
+      "normalized_caller": "allocpid",
+      "normalized_callee": "atomic_inc_return",
+      "call_type": "external"
     },
     {
       "caller": "delete_child",
@@ -329,7 +607,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_20",
+      "normalized_caller": "delete_child",
+      "normalized_callee": "nosibling",
+      "call_type": "external"
     },
     {
       "caller": "delete_child",
@@ -342,7 +624,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_21",
+      "normalized_caller": "delete_child",
+      "normalized_callee": "firstchild",
+      "call_type": "external"
     },
     {
       "caller": "delete_child",
@@ -355,7 +641,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_22",
+      "normalized_caller": "delete_child",
+      "normalized_callee": "nextsibling",
+      "call_type": "external"
     },
     {
       "caller": "delete_child",
@@ -368,7 +658,96 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_23",
+      "normalized_caller": "delete_child",
+      "normalized_callee": "list_del_reinit",
+      "call_type": "external"
+    },
+    {
+      "caller": "procinit",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "PCB_Q_ALL_INIT",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_24",
+      "normalized_caller": "procinit",
+      "normalized_callee": "PCB_Q_ALL_INIT",
+      "call_type": "external"
+    },
+    {
+      "caller": "procinit",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "atomic_set",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_25",
+      "normalized_caller": "procinit",
+      "normalized_callee": "atomic_set",
+      "call_type": "external"
+    },
+    {
+      "caller": "procinit",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "initlock",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_26",
+      "normalized_caller": "procinit",
+      "normalized_callee": "initlock",
+      "call_type": "external"
+    },
+    {
+      "caller": "procinit",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "INIT_LIST_HEAD",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_27",
+      "normalized_caller": "procinit",
+      "normalized_callee": "INIT_LIST_HEAD",
+      "call_type": "external"
+    },
+    {
+      "caller": "procinit",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "queue_push_back_atomic",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_16",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_28",
+      "normalized_caller": "procinit",
+      "normalized_callee": "queue_push_back_atomic",
+      "call_type": "external"
     },
     {
       "caller": "append_child",
@@ -381,7 +760,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_29",
+      "normalized_caller": "append_child",
+      "normalized_callee": "nochildren",
+      "call_type": "external"
     },
     {
       "caller": "append_child",
@@ -394,7 +777,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_30",
+      "normalized_caller": "append_child",
+      "normalized_callee": "firstchild",
+      "call_type": "external"
     },
     {
       "caller": "append_child",
@@ -407,59 +794,11 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "thread_mapstacks",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "kzalloc",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_19",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "thread_mapstacks",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "mappages",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_19",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "thread_mapstacks",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "panic",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_19",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "thread_mapstacks",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "Log",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_19",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_31",
+      "normalized_caller": "append_child",
+      "normalized_callee": "list_add_tail",
+      "call_type": "external"
     },
     {
       "caller": "cpuid",
@@ -472,115 +811,127 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_32",
+      "normalized_caller": "cpuid",
+      "normalized_callee": "r_tp",
+      "call_type": "external"
     },
     {
-      "caller": "procfs_open",
+      "caller": "thread_mapstacks",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "kzalloc",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_33",
+      "normalized_caller": "thread_mapstacks",
+      "normalized_callee": "kzalloc",
+      "call_type": "external"
+    },
+    {
+      "caller": "thread_mapstacks",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "panic",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_34",
+      "normalized_caller": "thread_mapstacks",
+      "normalized_callee": "panic",
+      "call_type": "external"
+    },
+    {
+      "caller": "thread_mapstacks",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "mappages",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_35",
+      "normalized_caller": "thread_mapstacks",
+      "normalized_callee": "mappages",
+      "call_type": "external"
+    },
+    {
+      "caller": "thread_mapstacks",
+      "caller_file": "kernel\\sched\\proc.c",
+      "callee": "Log",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_36",
+      "normalized_caller": "thread_mapstacks",
+      "normalized_callee": "Log",
+      "call_type": "external"
+    },
+    {
+      "caller": "procfs_close",
       "caller_file": "kernel\\fs\\procfs.c",
       "callee": "strcmp",
       "caller_module": "unknown",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_6",
+      "source_block_id": "block_7",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_37",
+      "normalized_caller": "procfs_close",
+      "normalized_callee": "strcmp",
+      "call_type": "external"
     },
     {
-      "caller": "procfs_open",
+      "caller": "procfs_close",
       "caller_file": "kernel\\fs\\procfs.c",
-      "callee": "proc_interrupts_open",
+      "callee": "proc_interrupts_close",
       "caller_module": "unknown",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_6",
+      "source_block_id": "block_7",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_38",
+      "normalized_caller": "procfs_close",
+      "normalized_callee": "proc_interrupts_close",
+      "call_type": "internal"
     },
     {
-      "caller": "proc_interrupts_read",
-      "caller_file": "kernel\\fs\\procfs.c",
-      "callee": "myproc",
-      "caller_module": "filesystem",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "allocpid",
+      "caller": "procinit",
       "caller_file": "kernel\\sched\\proc.c",
-      "callee": "forkret",
+      "callee": "KSTACK",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
+      "source_block_id": "block_16",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "allocpid",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "freeproc",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "allocpid",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "wait",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "allocpid",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "mm_init",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "allocpid",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "INIT_LIST_HEAD",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "allocpid",
-      "caller_file": "kernel\\sched\\proc.c",
-      "callee": "initlock",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_15",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_39",
+      "normalized_caller": "procinit",
+      "normalized_callee": "KSTACK",
+      "call_type": "external"
     },
     {
       "caller": "procinit",
@@ -592,7 +943,11 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_40",
+      "normalized_caller": "procinit",
+      "normalized_callee": "mm_init",
+      "call_type": "external"
     },
     {
       "caller": "procinit",
@@ -604,7 +959,11 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_41",
+      "normalized_caller": "procinit",
+      "normalized_callee": "Info",
+      "call_type": "external"
     },
     {
       "caller": "thread_mapstacks",
@@ -616,7 +975,43 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_42",
+      "normalized_caller": "thread_mapstacks",
+      "normalized_callee": "KSTACK",
+      "call_type": "external"
     }
-  ]
+  ],
+  "module_stats": {
+    "filesystem": {
+      "function_count": 12,
+      "outgoing_edge_count": 18,
+      "internal_edge_count": 5,
+      "external_edge_count": 13
+    },
+    "unknown": {
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 1,
+      "external_edge_count": 1
+    },
+    "interrupt": {
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0
+    },
+    "process": {
+      "function_count": 5,
+      "outgoing_edge_count": 21,
+      "internal_edge_count": 0,
+      "external_edge_count": 21
+    },
+    "scheduler": {
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 0,
+      "external_edge_count": 1
+    }
+  }
 }

@@ -1,0 +1,316 @@
+{
+  "repo_name": "nankai",
+  "profile_type": "full",
+  "target_or_history": "history",
+  "project_type": "unknown_os_project",
+  "main_languages": [
+    "rust"
+  ],
+  "function_count": 20,
+  "node_count": 20,
+  "edge_count": 107,
+  "internal_edge_count": 1,
+  "external_edge_count": 106,
+  "module_count": 4,
+  "core_modules": [
+    "syscall",
+    "process",
+    "process/syscall",
+    "interrupt"
+  ],
+  "core_module_details": [
+    {
+      "module_name": "syscall",
+      "module_weight": 0.573,
+      "completeness": 0.55,
+      "final_score": 0.5638
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.3895,
+      "completeness": 0.5,
+      "final_score": 0.4337
+    },
+    {
+      "module_name": "process/syscall",
+      "module_weight": 0.0375,
+      "completeness": 0.13,
+      "final_score": 0.0745
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.0,
+      "completeness": 0.05,
+      "final_score": 0.02
+    }
+  ],
+  "module_completeness": {
+    "interrupt": 0.05,
+    "process": 0.5,
+    "process/syscall": 0.13,
+    "syscall": 0.55
+  },
+  "structure_complexity": 0.38,
+  "module_profiles": {
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\src\\syscall\\process.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "DEFAULT",
+          "normalized_name": "DEFAULT",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "17",
+          "end_line": "17",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为DEFAULT的常量，其值为0，类型为isize，可能用作系统调用中的默认返回值或错误码。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 8,
+      "outgoing_edge_count": 40,
+      "internal_edge_count": 1,
+      "external_edge_count": 39,
+      "internal_call_ratio": 0.025,
+      "external_call_ratio": 0.975,
+      "module_weight": 0.3895,
+      "files": [
+        "os\\src\\syscall\\process.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "sys_exec",
+          "normalized_name": "sys_exec",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "162",
+          "end_line": "225",
+          "outgoing_call_count": 41,
+          "summary": "实现sys_exec系统调用，负责加载并执行用户程序。它从用户空间获取路径、参数和环境变量，进行字符串翻译，处理shell脚本（使用busybox的sh解释执行），解析绝对路径并读取文件数据，最后调用任务执行函数替换当前进程的执行映像。"
+        },
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "143",
+          "end_line": "160",
+          "outgoing_call_count": 12,
+          "summary": "处理 clone 系统调用，解析标志位，克隆当前任务，注册新任务并返回其 PID。"
+        },
+        {
+          "name": "sys_exit",
+          "normalized_name": "sys_exit",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "26",
+          "outgoing_call_count": 3,
+          "summary": "实现系统退出功能，结束当前进程并切换到下一个可运行进程。"
+        },
+        {
+          "name": "sys_exit_group",
+          "normalized_name": "sys_exit_group",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "28",
+          "end_line": "33",
+          "outgoing_call_count": 2,
+          "summary": "实现进程组退出系统调用，强制终止当前进程并开始执行下一个进程。"
+        },
+        {
+          "name": "WNOHANG",
+          "normalized_name": "WNOHANG",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "18",
+          "outgoing_call_count": 0,
+          "summary": "定义常量WNOHANG，其值为0x01。WNOHANG是一个标志，通常用于系统调用waitpid或类似函数，表示非阻塞等待子进程状态变化。此处仅定义常量值，未显示其使用上下文。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process/syscall": {
+      "module_name": "process/syscall",
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 0,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0375,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 11,
+      "outgoing_edge_count": 65,
+      "internal_edge_count": 0,
+      "external_edge_count": 65,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.573,
+      "files": [
+        "os\\src\\syscall\\process.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "sys_getppid",
+          "normalized_name": "sys_getppid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "106",
+          "end_line": "112",
+          "outgoing_call_count": 9,
+          "summary": "获取当前进程的父进程ID（PID），如果父进程不存在则返回错误ESRCH。"
+        },
+        {
+          "name": "sys_set_robust_list",
+          "normalized_name": "sys_set_robust_list",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "34",
+          "end_line": "48",
+          "outgoing_call_count": 7,
+          "summary": "实现在用户态设置健壮列表（robust_list）的系统调用。它检查传入的列表头大小是否匹配预期的健壮列表头部大小，若匹配则将当前任务（线程）的健壮列表头地址更新为传入的值，并返回成功。若不匹配则返回无效参数错误。"
+        },
+        {
+          "name": "sys_getpgid",
+          "normalized_name": "sys_getpgid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "83",
+          "end_line": "99",
+          "outgoing_call_count": 6,
+          "summary": "这个代码块是一个伪实现的 sys_getpgid 系统调用，它本应根据传入的 pid 返回对应进程的进程组 ID (pgid)，但当前实现仅仅打印日志并返回固定的值 Ok(1)，没有进行任何实际逻辑处理。注释中保留了未实现的正确逻辑框架。"
+        },
+        {
+          "name": "sys_settidaddr",
+          "normalized_name": "sys_settidaddr",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "50",
+          "end_line": "59",
+          "outgoing_call_count": 6,
+          "summary": "设置当前任务的 clear_child_tid 字段为传入的 tidptr 地址，并返回当前线程的 tid。通常用于进程或线程退出时，内核将 tid 清零以通知等待线程。"
+        },
+        {
+          "name": "sys_setpgid",
+          "normalized_name": "sys_setpgid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "67",
+          "end_line": "81",
+          "outgoing_call_count": 6,
+          "summary": "该函数是一个空实现的系统调用，用于设置进程组ID，但实际未执行任何设置操作，仅记录调用日志并直接返回成功。"
+        },
+        {
+          "name": "sys_gettid",
+          "normalized_name": "sys_gettid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "138",
+          "end_line": "141",
+          "outgoing_call_count": 3,
+          "summary": "获取当前线程的ID，并将其作为系统调用的返回值返回。"
+        },
+        {
+          "name": "sys_getpid",
+          "normalized_name": "sys_getpid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "101",
+          "end_line": "104",
+          "outgoing_call_count": 3,
+          "summary": "获取当前任务的PID并返回"
+        },
+        {
+          "name": "sys_geteuid",
+          "normalized_name": "sys_geteuid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "120",
+          "end_line": "124",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块定义了一个系统调用函数 `sys_geteuid`，该函数模拟获取有效用户 ID（EUID）的功能。它首先通过 trace 宏记录调用事件，然后通过 warn 宏发出警告，表明这是一个伪实现，并始终返回 EUID 为 0 的结果。"
+        },
+        {
+          "name": "sys_getgid",
+          "normalized_name": "sys_getgid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "126",
+          "end_line": "130",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块实现了伪系统调用 sys_getgid，该调用仅记录调用事件并打印警告信息，然后返回固定的 gid 值 0。这是一个占位实现，实际功能未完成。"
+        },
+        {
+          "name": "sys_getuid",
+          "normalized_name": "sys_getuid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "114",
+          "end_line": "118",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块是一个伪实现的系统调用，用于获取用户ID（uid）。它仅仅记录日志并返回固定的值0，并不执行真正的UID查询或权限检查。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "created_by": "os_analysis_agent"
+}

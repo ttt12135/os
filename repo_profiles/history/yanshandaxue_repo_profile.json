@@ -1,7 +1,7 @@
 {
   "repo_name": "yanshandaxue",
   "repo_path": "D:\\os\\history\\yanshandaxue",
-  "created_at": "2026-05-31 17:51:32",
+  "created_at": "2026-06-16 02:34:32",
   "basic_info": {
     "repo_name": "yanshandaxue",
     "repo_path": "D:\\os\\history\\yanshandaxue"
@@ -11,254 +11,329 @@
   "function_analysis_summary": {
     "analysis_count": 20,
     "module_distribution": {
-      "process": 1,
-      "interrupt": 16,
-      "memory": 3
+      "boot": 13,
+      "memory": 5,
+      "unknown": 1,
+      "process": 1
     }
   },
   "call_graph_summary": {
-    "edge_count": 122,
+    "edge_count": 92,
     "high_confidence_edge_count": 24,
     "high_confidence_edges_preview": [
       {
-        "caller": "handle_instruction_abort",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "FAR_EL1.get",
+        "caller": "BOOT_PT_L0",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "A64PTE::empty",
         "caller_module": "memory",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_6",
+        "source_block_id": "block_2",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_1",
+        "normalized_caller": "BOOT_PT_L0",
+        "normalized_callee": "empty",
+        "call_type": "external"
       },
       {
-        "caller": "handle_data_abort",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "FAR_EL1.get",
-        "caller_module": "interrupt",
+        "caller": "BOOT_PT_L1",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "A64PTE::empty",
+        "caller_module": "boot",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_7",
+        "source_block_id": "block_3",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_2",
+        "normalized_caller": "BOOT_PT_L1",
+        "normalized_callee": "empty",
+        "call_type": "external"
       },
       {
-        "caller": "handle_sync_exception",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "unmask_irqs",
-        "caller_module": "interrupt",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_8",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "handle_sync_exception",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "handle_instruction_abort",
-        "caller_module": "interrupt",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_8",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "handle_sync_exception",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "handle_data_abort",
-        "caller_module": "interrupt",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_8",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "handle_sync_exception",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "mask_irqs",
-        "caller_module": "interrupt",
-        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_8",
-        "source": [
-          "ai",
-          "regex"
-        ],
-        "confidence": 0.9
-      },
-      {
-        "caller": "unmask_irqs",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "super::enable_irqs",
-        "caller_module": "interrupt",
+        "caller": "enable_fp",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "CPACR_EL1.write",
+        "caller_module": "boot",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
         "source_block_id": "block_9",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_3",
+        "normalized_caller": "enable_fp",
+        "normalized_callee": "write",
+        "call_type": "external"
       },
       {
-        "caller": "mask_irqs",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-        "callee": "disable_irqs",
-        "caller_module": "interrupt",
+        "caller": "enable_fp",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "barrier::isb",
+        "caller_module": "boot",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_10",
+        "source_block_id": "block_9",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_4",
+        "normalized_caller": "enable_fp",
+        "normalized_callee": "isb",
+        "call_type": "external"
       },
       {
-        "caller": "handle_page_fault",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
-        "callee": "badv::read",
-        "caller_module": "memory",
+        "caller": "init_mmu",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "barrier::isb",
+        "caller_module": "boot",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_12",
+        "source_block_id": "block_8",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_5",
+        "normalized_caller": "init_mmu",
+        "normalized_callee": "isb",
+        "call_type": "external"
       },
       {
-        "caller": "loongarch64_trap_handler",
-        "caller_file": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
-        "callee": "estat::read",
-        "caller_module": "interrupt",
+        "caller": "switch_to_el1",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "SPSel.write",
+        "caller_module": "boot",
         "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-        "source_block_id": "block_13",
+        "source_block_id": "block_7",
         "source": [
           "ai",
           "regex"
         ],
-        "confidence": 0.9
+        "confidence": 0.9,
+        "edge_id": "edge_7",
+        "normalized_caller": "switch_to_el1",
+        "normalized_callee": "write",
+        "call_type": "external"
+      },
+      {
+        "caller": "switch_to_el1",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "SP_EL0.set",
+        "caller_module": "boot",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_7",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_8",
+        "normalized_caller": "switch_to_el1",
+        "normalized_callee": "set",
+        "call_type": "external"
+      },
+      {
+        "caller": "switch_to_el1",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "CurrentEL.read",
+        "caller_module": "boot",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_7",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_9",
+        "normalized_caller": "switch_to_el1",
+        "normalized_callee": "read",
+        "call_type": "external"
+      },
+      {
+        "caller": "switch_to_el1",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "SCR_EL3.write",
+        "caller_module": "boot",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_7",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_10",
+        "normalized_caller": "switch_to_el1",
+        "normalized_callee": "write",
+        "call_type": "external"
+      },
+      {
+        "caller": "switch_to_el1",
+        "caller_file": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "callee": "SPSR_EL3.write",
+        "caller_module": "boot",
+        "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+        "source_block_id": "block_7",
+        "source": [
+          "ai",
+          "regex"
+        ],
+        "confidence": 0.9,
+        "edge_id": "edge_11",
+        "normalized_caller": "switch_to_el1",
+        "normalized_callee": "write",
+        "call_type": "external"
       }
     ]
   },
   "module_summary": {
-    "module_count": 3,
+    "module_count": 4,
     "module_names": [
-      "interrupt",
+      "boot",
       "memory",
-      "process"
+      "process",
+      "unknown"
     ],
     "modules": [
       {
-        "module_name": "interrupt",
-        "module_summary": "该模块负责处理操作系统在AArch64、LoongArch64和RISC-V架构下的异常与中断，是异常/中断处理的核心。它包含异常源识别、异常分发处理（如系统调用、缺页、断点、外部中断）、中断状态保存/恢复等关键功能，为上层提供统一的陷阱处理接口。",
+        "module_name": "boot",
+        "module_summary": "该模块是操作系统在AArch64和LoongArch64两种架构上的引导（boot）部分，负责早期处理器初始化、异常级别切换、内存管理单元（MMU）初始化、页表建立、栈设置，并最终将控制权交给Rust编写的主入口函数。它涵盖了AArch64和LoongArch64两个平台的启动流程，包括多核启动。",
         "key_functions": [
           {
-            "name": "TrapSource (AArch64)",
-            "role": "表示异常源类型，提供获取异常源类型和描述字符串的方法。"
+            "name": "_start",
+            "role": "引导入口函数，在两种架构下分别通过内联汇编实现。在AArch64中定义ARM64 Linux启动协议要求的Image头部并跳转到_start_primary；在LoongArch64中配置直接映射窗口、设置栈、调用页表和MMU初始化，然后跳转到rust_entry。"
           },
           {
-            "name": "is_from_user (AArch64)",
-            "role": "判断当前陷阱是否来自用户态。"
+            "name": "_start_primary",
+            "role": "AArch64主CPU启动函数，从MPIDR_EL1读取CPU ID，保存设备树指针，设置启动栈，依次调用switch_to_el1、enable_fp、init_boot_page_table、init_mmu，将栈指针迁移到虚拟地址空间，最后将CPU ID和DTB指针传递给Rust入口函数rust_entry。"
           },
           {
-            "name": "invalid_exception (AArch64)",
-            "role": "处理无效或无法识别的异常，调用 panic 导致系统崩溃并打印错误信息。"
+            "name": "_start_secondary",
+            "role": "AArch64从CPU（非主CPU）入口函数，读取CPU ID，设置栈指针（从参数x0获取），调用switch_to_el1切换到EL1，初始化MMU和FP，调整栈指针到虚拟地址空间，调用rust_entry_secondary，最后陷入无限循环。"
           },
           {
-            "name": "handle_irq_exception (AArch64)",
-            "role": "处理AArch64架构下的中断异常，记录IRQ源并执行陷阱后回调。"
+            "name": "switch_to_el1",
+            "role": "将当前CPU异常级别从EL2或EL3切换到EL1，配置相关系统寄存器（SCR_EL3、SPSR_EL3、ELR_EL3、CNTHCTL_EL2、CNTVOFF_EL2、HCR_EL2、SPSR_EL2、ELR_EL2），并执行ERET指令完成切换。"
           },
           {
-            "name": "handle_data_abort (AArch64)",
-            "role": "处理数据中止异常，解析ISS字段获取访问类型和权限，尝试处理页错误，失败则panic。"
+            "name": "enable_fp",
+            "role": "在AArch64架构中，通过配置CPACR_EL1寄存器启用浮点运算和SIMD扩展，并执行指令同步屏障（ISB）以确保配置生效。"
           },
           {
-            "name": "handle_sync_exception (AArch64)",
-            "role": "AArch64同步异常的主处理函数，根据异常类别分发至系统调用、指令/数据中止、断点等处理逻辑。"
+            "name": "init_mmu",
+            "role": "在AArch64架构中初始化MMU，设置MAIR_EL1（内存属性）、TCR_EL1（页表配置）、TTBR0_EL1/TTBR1_EL1（页表基址），刷新TLB，并修改SCTLR_EL1以启用MMU和缓存。"
           },
           {
-            "name": "unmask_irqs (AArch64, LoongArch64, RISC-V)",
-            "role": "根据陷阱帧中保存的中断屏蔽状态，在异常处理前恢复中断使能，支持嵌套中断。"
+            "name": "init_boot_page_table",
+            "role": "一个封装函数，调用平台特定的mem::init_boot_page_table，传入BOOT_PT_L0和BOOT_PT_L1的指针，用于初始化启动阶段的页表。"
           },
           {
-            "name": "mask_irqs (AArch64, LoongArch64, RISC-V)",
-            "role": "在异常处理完成后屏蔽所有中断，为恢复执行做准备。"
+            "name": "BOOT_STACK",
+            "role": "定义两个平台下的启动栈，均为可变静态字节数组，大小为TASK_STACK_SIZE，初始化为全零，用于引导阶段临时栈空间。"
           },
           {
-            "name": "handle_breakpoint (LoongArch64, RISC-V)",
-            "role": "处理断点异常，打印调试信息并跳过当前断点指令。"
+            "name": "BOOT_PT_L1",
+            "role": "AArch64下定义的可变静态L1页表数组，包含512个空页表项（A64PTE::empty()），用于启动阶段建立临时页表。"
           },
           {
-            "name": "loongarch64_trap_handler (LoongArch64)",
-            "role": "LoongArch64架构的异常/中断总入口，根据异常原因分发至系统调用、缺页、断点、外部中断等处理。"
+            "name": "BOOT_PT_L0",
+            "role": "LoongArch64下定义的可变静态L0页表数组，包含512个空页表项（LA64PTE::empty()），用于启动阶段建立页表。"
           },
           {
-            "name": "riscv_trap_handler (RISC-V)",
-            "role": "RISC-V架构的陷阱总入口，根据陷阱原因分发至系统调用、缺页、断点、外部中断等处理。"
+            "name": "FLAG_ANY_MEM",
+            "role": "AArch64平台中定义的一个常量（值为0b1000），用作内存标志位，表示任意内存类型，具体用途未在代码中体现。"
           }
         ],
-        "call_flow_summary": "模块内存在清晰的异常处理调用链：各架构的trap_handler（如riscv_trap_handler、loongarch64_trap_handler、handle_sync_exception）作为入口函数，读取异常/中断原因，然后根据原因调用对应的处理函数（如handle_page_fault、handle_data_abort、handle_breakpoint、handle_syscall），并在处理前后调用unmask_irqs和mask_irqs管理中断使能，最后调用post_trap_callback执行后处理。另外，handle_irq_exception和handle_sync_exception内部也调用了post_trap_callback和unmask_irqs/mask_irqs，形成标准化的异常处理流程。",
+        "call_flow_summary": "在AArch64平台上，整体执行流程为：_start（引导入口） -> _start_primary（主CPU入口） -> 依次调用 switch_to_el1、enable_fp、init_boot_page_table、init_mmu -> 最后跳转到 rust_entry。从CPU入口 _start_secondary 依次调用 switch_to_el1、init_mmu、enable_fp -> 跳转到 rust_entry_secondary。init_boot_page_table 内部调用平台特定 mem::init_boot_page_table（传递BOOT_PT_L0和BOOT_PT_L1）。switch_to_el1 内部依赖多个系统寄存器操作和ERET指令。enable_fp 和 init_mmu 内部涉及系统寄存器写入和屏障指令。LoongArch64平台的 _start 函数内直接调用 init_boot_page_table 和 init_mmu，然后跳转到 rust_entry，没有独立的从CPU入口函数。两个平台之间功能对应但实现细节不同。",
         "evidence": [
-          "函数理解中明确指出各trap_handler负责分发和调度异常处理。",
-          "调用关系列表中展示了各trap_handler内部调用unmask_irqs、mask_irqs、handle_page_fault、handle_breakpoint、handle_syscall等函数。",
-          "多个架构下存在名称和功能相同的unmask_irqs和mask_irqs函数，用于统一的中断状态管理。"
+          "AArch64平台：_start函数使用naked_asm定义ARM64 Image头部，并跳转到_start_primary。",
+          "AArch64平台：_start_primary函数依次调用switch_to_el1、enable_fp、init_boot_page_table、init_mmu，最后跳转rust_entry。",
+          "AArch64平台：_start_secondary函数依次调用switch_to_el1、init_mmu、enable_fp，最后跳转rust_entry_secondary。",
+          "AArch64平台：switch_to_el1函数中包含了读取CurrentEL、写入SCR_EL3、SPSR_EL3、ELR_EL3、CNTHCTL_EL2、CNTVOFF_EL2、HCR_EL2、SPSR_EL2、ELR_EL2以及执行ERET指令。",
+          "AArch64平台：enable_fp函数中涉及CPACR_EL1写入和barrier::isb调用。",
+          "AArch64平台：init_mmu函数中涉及MAIR_EL1、TCR_EL1、TTBR0_EL1、TTBR1_EL1、SCTLR_EL1的配置，以及flush_tlb和ISB。",
+          "AArch64平台：init_boot_page_table函数调用crate::platform::mem::init_boot_page_table，并传入BOOT_PT_L0和BOOT_PT_L1的指针。",
+          "AArch64平台：BOOT_PT_L1定义为[A64PTE; 512]，初始化为A64PTE::empty()。",
+          "LoongArch64平台：_start函数设置DMW0和DMW1映射窗口，设置栈，调用init_boot_page_table和init_mmu，最后跳转到rust_entry。",
+          "LoongArch64平台：BOOT_PT_L0定义为[LA64PTE; 512]，初始化为LA64PTE::empty()。"
         ],
-        "uncertainty": "部分函数的具体实现细节未提供，例如handle_trap!宏、handle_page_fault、handle_instruction_abort、post_trap_callback、handle_syscall以及disable_irqs/enable_irqs的内部逻辑未知。此外，函数之间的调用关系部分基于正则表达式推断，置信度较低（如0.6），可能存在少量误报或漏报。"
+        "uncertainty": "1. TASK_STACK_SIZE的具体数值未在提供的代码中给出，需查阅配置文件或常量定义。2. init_boot_page_table调用的平台特定函数（mem::init_boot_page_table）的具体实现未知，无法确定页表填充细节。3. FLAG_ANY_MEN常量的具体使用场景未体现，仅通过命名和位置推测与内存类型标记相关。4. AArch64 _start函数中关于bootloader传递的X0（dtb指针）和x18寄存器magic值的处理细节未在提供的代码中展示。5. phys_virt_offset的具体值未提供，仅知道用于栈指针迁移。6. LoongArch64平台未提供主/从CPU分离的启动函数，多核启动细节未知。"
       },
       {
         "module_name": "memory",
-        "module_summary": "该模块负责处理不同CPU架构（AArch64、LoongArch64、RISC-V）下的内存访问异常，特别是缺页异常（Page Fault）和指令中止异常。模块通过读取故障原因和虚拟地址，调用通用陷阱处理机制尝试修复页面映射，若无法处理则触发内核恐慌并输出诊断信息。",
+        "module_summary": "该模块主要负责操作系统引导阶段的内存管理单元（MMU）和页表的初始化工作，涵盖AArch64和LoongArch64两种架构。具体包括定义引导阶段使用的静态页表结构、设置页表项以建立物理地址到虚拟地址的映射，以及初始化MMU硬件（如TLB、页表基地址、分页模式）。",
         "key_functions": [
           {
-            "name": "handle_instruction_abort",
-            "role": "处理AArch64架构内的指令中止异常，判断故障类型（翻译故障或权限故障），尝试通过页故障处理机制修复，失败则panic。"
+            "name": "BOOT_PT_L0",
+            "role": "为AArch64架构定义L0级引导页表，初始化为512个空页表项，作为页表层级结构的顶层（或底层）的静态存储。"
           },
           {
-            "name": "handle_page_fault (LoongArch64)",
-            "role": "处理LoongArch64架构的页错误，根据是否用户态设置访问权限，读取故障虚拟地址，调用通用陷阱处理函数尝试修复，失败则panic输出错误详情。"
+            "name": "BOOT_PT_L1",
+            "role": "为LoongArch64架构定义L1级引导页表，初始化为512个空页表项，构成两级页表的第一级（L1）索引。"
           },
           {
-            "name": "handle_page_fault (RISC-V)",
-            "role": "处理RISC-V架构的缺页异常，根据是否用户态添加USER权限标志，调用通用陷阱处理函数尝试修复，失败则panic输出异常类型、程序计数器及故障虚拟地址等信息。"
+            "name": "FLAG_PAGE_SIZE_4K",
+            "role": "定义4KB页大小标志常量（值0b10），用于配置AArch64内存管理单元中的页粒度，是页表属性设置的基础参数。"
+          },
+          {
+            "name": "init_mmu",
+            "role": "初始化LoongArch64架构的MMU：初始化TLB、设置页表全局目录（PGD）和局部目录（PGDL）的基地址、刷新TLB、启用分页模式。是整个MMU启动的关键入口。"
+          },
+          {
+            "name": "init_boot_page_table",
+            "role": "初始化LoongArch64架构的启动页表：在L0和L1级页表中填写表项，建立特定虚拟地址范围到物理地址的映射，并设置访问属性（如读写、可执行、设备内存）。"
           }
         ],
-        "call_flow_summary": "模块内函数均作为异常入口点，各自独立处理特定架构的缺页/中止异常。每个函数先读取故障原因和虚拟地址（通过架构相关寄存器或宏，如FAR_EL1.get、badv::read、va!），然后调用 handle_trap! 宏执行通用缺页处理。若 handle_trap! 返回 false，则触发 panic!。模块内部未发现多个函数之间的直接调用链（跨架构函数相互独立）。",
+        "call_flow_summary": "该模块未在提供的函数理解中展示明确的内部调用链，但基于调用关系数据和逻辑推理，可以推断：\n- `init_boot_page_table` 内部可能调用自身或外部 `BOOT_PT_L0` 所引用的页表，关键操作包括调用 `virt_to_phys` 获取页表物理地址、使用 `LA64PTE::new_table` 创建指向下一级页表的表项、使用 `LA64PTE::new_page` 创建大页映射。\n- `init_mmu` 初始化过程首先调用 `crate::arch::init_tlb` 初始化TLB，然后通过 `virt_to_phys` 获取 `BOOT_PT_L0` 的物理地址并调用 `pgdh::set_base` 设置为基础，调用 `pgdl::set_base(0)` 清零，接着调用 `flush_tlb` 刷新TLB，最后调用 `crmd::set_pg(true)` 启用分页模式。\n- `BOOT_PT_L0` 和 `BOOT_PT_L1` 作为静态变量被其他函数引用，形成数据依赖关系。",
         "evidence": [
-          "handle_instruction_abort 从ISS寄存器提取IFSC位判断故障类型为翻译/权限故障，并调用 handle_trap!(PAGE_FAULT) 处理。",
-          "LoongArch64 的 handle_page_fault 根据 is_user 设置 USER 标志，通过 badv 寄存器读取虚拟地址，调用 handle_trap!。",
-          "RISC-V 的 handle_page_fault 同样依据 is_user 添加 USER 权限，调用 handle_trap!。",
-          "所有三个函数在 handle_trap! 返回 false 后均调用 panic! 输出详细信息。",
-          "调用关系显示 handle_instruction_abort 调用 FAR_EL1.get、matches!、handle_trap!；handle_page_fault 调用 badv::read、va!、handle_trap!、panic!。"
+          "函数BOOT_PT_L0和BOOT_PT_L1分别用于AArch64和LoongArch64的引导页表，文件位于platform子目录下的boot.rs。",
+          "init_mmu调用init_tlb、virt_to_phys、pgdh::set_base、pgdl::set_base、flush_tlb、crmd::set_pg等函数，置信度多0.9以上。",
+          "init_boot_page_table调用virt_to_phys、LA64PTE::new_table、LA64PTE::new_page，置信度0.7至0.9。",
+          "FLAG_PAGE_SIZE_4K定义4K页大小标志，但其在提供的函数理解中未与具体操作函数直接关联。",
+          "调用关系数据中BOOT_PT_L0和BOOT_PT_L1通过empty方法初始化，与A64PTE/LA64PTE关联。"
         ],
-        "uncertainty": "handle_trap! 宏和 va! 宏的具体实现未在提供的代码片段中定义，无法确认其内部是否涉及进程切换、物理内存分配或具体页表操作。此外，函数间的调用关系仅限单个函数内部的顺序执行，未发现跨函数调用链（如一个handle_page_fault调用另一个）。"
+        "uncertainty": "1. 本模块中AArch64的BOOT_PT_L0和FLAG_PAGE_SIZE_4K与LoongArch64的init_mmu、init_boot_page_table等函数之间未显示直接调用或数据传递关系，可能属于同一模块但针对不同架构，具体集成方式不明确。\n2. init_boot_page_table中对具体物理地址范围和内存属性（如设备属性）的选择理由未从提供材料直接证明，仅基于常见假设。\n3. 模块的完整代码上下文（如其他页表级、内存映射范围）缺失，无法全面评估页表层级深度和映射覆盖范围。\n4. 调用关系数据中部分函数（如empty、init_tlb）通过regex匹配，置信度较低（0.6），可靠性降低。"
       },
       {
         "module_name": "process",
-        "module_summary": "该模块主要提供进程退出功能，通过调用底层系统接口终止当前进程的执行，确保进程退出后不再返回。",
+        "module_summary": "该模块提供了进程退出的基本功能，允许当前进程主动终止自身执行，并可能传递退出码，但当前实现中退出码未被使用。",
         "key_functions": [
           {
             "name": "exit",
-            "role": "接收退出码并调用底层终止接口来结束当前进程，函数返回类型为!表示永不返回。"
+            "role": "终止当前进程的执行，封装了底层系统调用 ax_terminate，函数返回类型为 ! 表示调用后进程立即结束且不再返回。"
           }
         ],
-        "call_flow_summary": "模块内部仅有exit一个函数，它直接调用底层API ax_terminate来终止进程，不存在其他函数间的调用链。",
+        "call_flow_summary": "模块内仅有一个关键函数 exit，它内部直接调用 arceos_api::sys::ax_terminate 或 sys::ax_terminate（即底层系统终止接口），没有其他内部函数调用链。",
         "evidence": [
-          "exit函数通过调用arceos_api::sys::ax_terminate实现进程终止，返回类型为!。",
-          "函数调用关系记录显示exit→arceos_api::sys::ax_terminate（置信度0.7），以及exit→sys::ax_terminate（置信度0.6）和exit→ax_terminate（置信度0.6）。"
+          "函数 exit 接收可选退出码参数但未使用，直接调用 ax_terminate 触发进程终止。",
+          "调用关系显示 exit 依赖于 arceos_api::sys::ax_terminate（置信度0.7）和 sys::ax_terminate（置信度0.6）。"
         ],
-        "uncertainty": "无法确定exit函数的退出码参数是否被底层API实际使用；ax_terminate的具体行为（如是否立即停止所有线程、是否允许清理资源）未在现有代码材料中体现。"
+        "uncertainty": "该模块可能包含其他未提供的函数或更复杂的逻辑，但基于当前资料仅能确认 exit 函数及与其相关的系统调用。此外，exit 函数中退出码参数被忽略的具体原因未说明，底层系统调用的具体行为依赖于 arceos_api 实现，但超出本模块范围。"
+      },
+      {
+        "module_name": "unknown",
+        "module_summary": "该模块仅包含一个常量定义，且缺乏上下文信息，无法确定其具体功能或所属操作系统模块。它可能位于AArch64架构的启动相关代码中，但常量FLAG_LE的用途不明。",
+        "key_functions": [
+          {
+            "name": "FLAG_LE",
+            "role": "定义为一个值为0的常量，可能表示某种标志或配置（如Little-Endian模式），但由于未在展示代码中被使用，其实际作用无法确定。"
+          }
+        ],
+        "call_flow_summary": "没有展示任何函数调用关系，因此无法推断模块内部的执行流程或调用链。",
+        "evidence": [
+          "仓库名称：yanshandaxue",
+          "模块名称：unknown",
+          "函数1名称为FLAG_LE，位于arceos/modules/axhal/src/platform/aarch64_common/boot.rs",
+          "代码仅定义常量FLAG_LE = 0b0（即0），无其他上下文或使用位置。"
+        ],
+        "uncertainty": "由于仅有一个常量定义且无注释、调用关系或额外上下文，无法判断FLAG_LE在该操作系统比赛作品中的具体角色、所属子模块以及与其他组件的交互方式。常量名暗示可能与Little-Endian或标志位相关，但缺乏证据支持，不能进行任何推测。"
       }
     ]
   },

@@ -1,0 +1,155 @@
+{
+  "target_repo": "zhengzhoudaxue111",
+  "target_profile": "repo_profiles\\target\\zhengzhoudaxue111_repo_profile_full.json",
+  "retrieval_result": "history_knowledge_base\\retrieval_results\\zhengzhoudaxue111_similar_projects_full.json",
+  "created_at": "2026-06-16 19:25:56",
+  "comparison_count": 3,
+  "comparisons": [
+    {
+      "history_repo_name": "qinghuadaxue",
+      "similarity_summary": "两个仓库均为Rust实现的操作系统项目，核心模块均包含文件系统，且文件系统的完成度相同（均为0.55），结构复杂度接近（0.45 vs 0.43），整体规模一致（函数数量均为20），表明两者在文件系统模块的成熟度和代码组织方式上具有可比的相似性。",
+      "main_similarities": [
+        "两者均使用Rust作为主要编程语言，函数数量均为20，项目规模相当。",
+        "文件系统模块的完成度完全一致，均为0.55，反映出该模块的实现深度相近。",
+        "结构复杂度接近（目标0.45，历史0.43），表明代码内部模块间耦合与依赖模式相似。"
+      ],
+      "main_differences": [
+        "目标仓库专注于文件系统（project_type为filesystem_focused_project），而历史仓库是通用操作系统项目（unknown_os_project），范围更广。",
+        "目标仓库核心模块包括syscall、filesystem、build、user，历史仓库包括boot、filesystem、process、memory、scheduler，模块覆盖维度不同。",
+        "目标仓库的系统调用模块完成度（0.65）显著高于历史仓库的进程（0.28）、内存（0.13）等模块，而历史仓库的boot模块完成度（0.68）高于目标仓库的所有模块。",
+        "目标仓库的边总数（415）远高于历史仓库（119），尤其是外部边数量（408 vs 100），表明目标仓库对外部依赖更丰富。"
+      ],
+      "target_advantages": [
+        "目标仓库的系统调用模块完成度更高（0.65），表明其系统调用层设计与实现更完整。",
+        "目标仓库的外部边数量更多（408），可能意味着其与外部库或组件的集成更广泛，功能扩展性更强。"
+      ],
+      "target_weaknesses": [
+        "目标仓库的权重分配显示其文件系统模块为唯一主要非零模块，而历史仓库有多个高权重模块（如boot权重0.565），目标仓库在模块多样性上不足。",
+        "目标仓库的build和user模块完成度极低（均为0.05），历史仓库的scheduler模块同样低（0.05），但历史仓库有其他模块的补充，目标仓库模块发展不均衡更明显。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可借鉴历史仓库的boot模块设计，提升启动流程的完整性和完成度。",
+        "目标仓库可参考历史仓库的文件系统模块实现，尽管两者完成度相同，但历史仓库可能包含不同的设计模式或细节可供借鉴。",
+        "历史仓库的进程和内存管理模块虽完成度不高，但其结构设计思路对目标仓库扩展通用操作系统功能有参考价值。"
+      ],
+      "comparison_confidence": "medium",
+      "uncertainty": "本次对比基于结构化画像的字段信息，缺少实际代码内容和性能指标，且历史仓库类型为unknown_os_project，导致项目类型维度相似性得分较低；部分数值（如结构复杂度、边数）仅反映静态分析，不直接体现功能质量，因此置信度为中等。",
+      "source_profile": "repo_profiles/history\\qinghuadaxue_repo_profile_full.json",
+      "similarity_score": 0.5258,
+      "score_detail": {
+        "project_type_score": 0.0,
+        "core_module_score": 0.125,
+        "module_completeness_score": 1.0,
+        "scale_score": 0.6747,
+        "structure_complexity_score": 0.9556,
+        "language_score": 1.0,
+        "overall_score": 0.5258
+      },
+      "retrieval_explanations": [
+        "核心模块存在重合：filesystem。",
+        "结构复杂度较接近。",
+        "共同模块的完成度分布较接近。"
+      ]
+    },
+    {
+      "history_repo_name": "tianjingongye",
+      "similarity_summary": "两个仓库都是以 Rust 为主要语言的 OS 项目，均包含 20 个函数，并在 filesystem 模块上存在核心功能的重叠，且结构复杂度相近（目标 0.45，历史 0.43）。目标仓库专注于文件系统和系统调用，而历史仓库还包括 boot、interrupt、memory 等模块，但两者在 filesystem 模块的完成度分布上最为接近，因此相似度评分较高。",
+      "main_similarities": [
+        "主要开发语言均为 Rust，函数数量相同（20）。",
+        "结构复杂度接近（目标 0.45 vs 历史 0.43）。",
+        "共同核心模块 filesystem 的存在，且该模块在历史中是权重较高的模块之一。",
+        "模块完成度分布中 filesystem 均处于中等水平（目标 0.55 vs 历史 0.63）。"
+      ],
+      "main_differences": [
+        "目标仓库核心模块为 syscall（权重 0.6494）和 filesystem（权重 0.3506），无 boot、interrupt、memory 等模块；历史仓库核心模块更分散，包括 boot（权重 0.5）、filesystem（权重 0.2707）、interrupt（权重 0.1324）等。",
+        "目标仓库的模块数量更少（4 个 vs 7 个），且 build 和 user 模块完成度极低（0.05）；历史仓库的 boot 模块完成度较高（0.68）。",
+        "目标仓库的边数远多于历史仓库（415 vs 116），外部边占比极高（408 vs 89），表明目标仓库对外部依赖更强或复杂性更高。",
+        "目标仓库没有技术特性和弱点的记录，而历史仓库同样没有，但目标仓库的 project_type 明确为 filesystem_focused，历史仓库则未知。"
+      ],
+      "target_advantages": [
+        "系统调用模块（syscall）完成度较高（0.65），表明在系统调用接口方面可能更成熟。",
+        "模块整体完成度（syscall 0.65, filesystem 0.55）高于历史仓库除 boot 外的其他模块。",
+        "更专注于文件系统领域，可能在该方向上设计更深入。"
+      ],
+      "target_weaknesses": [
+        "缺乏 boot、interrupt、memory 等基础 OS 模块，整体 OS 功能覆盖面较窄。",
+        "build 和 user 模块完成度极低（0.05），可能缺少用户态运行和构建支持。",
+        "文件系统模块的完成度（0.55）略低于历史仓库（0.63），可借鉴历史仓库的实现来提升。"
+      ],
+      "borrowable_designs": [
+        "历史仓库的 boot 模块完成度较高（0.68），若目标仓库未来需添加启动功能，可借鉴其设计。",
+        "历史仓库的 filesystem 模块完成度为 0.63，略高于目标仓库的 0.55，可参考其文件系统实现中的内部模块划分和功能逻辑。",
+        "历史仓库的 interrupt 模块完成度 0.41 和 memory 模块 0.18 虽不高，但提供了基础的中断和内存管理骨架，目标仓库若有扩展需求可参考其架构。"
+      ],
+      "comparison_confidence": "medium",
+      "uncertainty": "相似度分析基于结构化画像但未提供具体代码内容，无法验证实际实现细节。目标仓库的模块边界（如 syscall）与历史仓库的模块（如 boot、interrupt）分类标准可能不同，导致直接比较完成度存在尺度偏差。且目标仓库的 project_type 明确聚焦文件系统，而历史仓库是未知类型，功能定位差异可能影响对比的公平性。",
+      "source_profile": "repo_profiles/history\\tianjingongye_repo_profile_full.json",
+      "similarity_score": 0.4931,
+      "score_detail": {
+        "project_type_score": 0.0,
+        "core_module_score": 0.125,
+        "module_completeness_score": 0.873,
+        "scale_score": 0.6261,
+        "structure_complexity_score": 0.9556,
+        "language_score": 1.0,
+        "overall_score": 0.4931
+      },
+      "retrieval_explanations": [
+        "核心模块存在重合：filesystem。",
+        "结构复杂度较接近。",
+        "共同模块的完成度分布较接近。"
+      ]
+    },
+    {
+      "history_repo_name": "nankai",
+      "similarity_summary": "两个仓库都是使用 Rust 语言开发的操作系统内核项目，且均以 syscall 为核心模块；在模块完成度分布上较为接近，syscall 模块的完成度均为 0.55 左右，其他核心模块完成度较低；函数数量相同（20个），结构复杂度也较接近（0.45 vs 0.38），表明两者在规模和耦合程度上具有相似性。",
+      "main_similarities": [
+        "都使用 Rust 作为主要开发语言。",
+        "核心模块中均包含 syscall，且完成度接近（0.65 vs 0.55）。",
+        "函数数量相同（20个），模块数量相同（4个）。",
+        "整体结构复杂度较为接近（0.45 vs 0.38）。"
+      ],
+      "main_differences": [
+        "目标仓库聚焦于文件系统（filesystem_focused_project），而历史仓库项目类型未知（unknown_os_project）。",
+        "目标仓库的核心模块包括 syscall、filesystem、build、user；历史仓库的核心模块包括 syscall、process、process/syscall、interrupt。",
+        "目标仓库的 filesystem 模块完成度为 0.55，而历史仓库没有文件系统模块；历史仓库的 process 模块完成度为 0.5，目标仓库没有显式的进程模块。",
+        "目标仓库的 edges 总数（415）和外部调用边数（408）远多于历史仓库（107 和 106），表明目标仓库的外部依赖更多或外部库调用更复杂。",
+        "目标仓库模块权重最高的为 syscall（0.6494）和 filesystem（0.3506），历史仓库为 syscall（0.573）和 process（0.3895），侧重点不同。"
+      ],
+      "target_advantages": [
+        "目标仓库设有专门的 filesystem 模块，且完成度较高（0.55），适合文件系统相关任务。",
+        "目标仓库的 syscall 模块完成度（0.65）略高于历史仓库（0.55），系统调用处理可能更完整。",
+        "目标仓库的 module_completeness 评分在 filesystem 和 syscall 上更高，整体 final_score（0.6496 vs 0.5638）更高，表明核心模块实现更充分。"
+      ],
+      "target_weaknesses": [
+        "目标仓库缺少进程管理和中断处理模块，而历史仓库包含 process 和 interrupt 模块，在进程调度和中断处理方面可能更完善。",
+        "目标仓库的 edges 数（尤其外部调用边）明显更多，可能引入额外的外部依赖或不必要的复杂性。",
+        "目标仓库内部调用边数（7）远多于历史仓库（1），模块间耦合可能更高。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可以借鉴历史仓库的 process 模块设计，以完善进程管理和调度功能。",
+        "目标仓库可以学习历史仓库在 interrupt 模块的设计，以支持中断处理。",
+        "历史仓库的 process/syscall 子模块设计可能有助于目标仓库优化 syscall 与进程的交互。"
+      ],
+      "comparison_confidence": "medium",
+      "uncertainty": "历史仓库的项目类型为 unknown_os_project，具体用途和文件系统能力未知；双方的 technical_features 和 weaknesses 均为空，缺乏具体实现细节；相似度评分基于规则自动计算，未深入代码逻辑验证。",
+      "source_profile": "repo_profiles/history\\nankai_repo_profile_full.json",
+      "similarity_score": 0.4871,
+      "score_detail": {
+        "project_type_score": 0.0,
+        "core_module_score": 0.1429,
+        "module_completeness_score": 0.8462,
+        "scale_score": 0.7031,
+        "structure_complexity_score": 0.8444,
+        "language_score": 1.0,
+        "overall_score": 0.4871
+      },
+      "retrieval_explanations": [
+        "核心模块存在重合：syscall。",
+        "函数数量、调用边数量和模块数量规模较接近。",
+        "结构复杂度较接近。",
+        "共同模块的完成度分布较接近。"
+      ]
+    }
+  ]
+}

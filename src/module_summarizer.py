@@ -6,7 +6,7 @@
 import os
 import json
 from datetime import datetime
-
+from src.module_classifier import classify_os_module
 
 def ensure_dir(dir_path):
     """
@@ -328,7 +328,11 @@ def build_module_file_map(nodes):
     module_file_map = {}
 
     for node in nodes:
-        module = safe_module_name(node.get("module"))
+        module = classify_os_module(
+            file_path=node.get("file_path"),
+            function_name=node.get("name"),
+            ai_module=node.get("module")
+        )
         file_path = node.get("file_path")
 
         if module not in module_file_map:
@@ -353,7 +357,11 @@ def build_module_function_map(nodes):
     module_function_map = {}
 
     for node in nodes:
-        module = safe_module_name(node.get("module"))
+        module = classify_os_module(
+            file_path=node.get("file_path"),
+            function_name=node.get("name"),
+            ai_module=node.get("module")
+        )
 
         if module not in module_function_map:
             module_function_map[module] = []

@@ -1,107 +1,155 @@
 {
   "repo_name": "jilindaxue",
-  "created_at": "2026-05-31 17:30:36",
+  "created_at": "2026-06-15 03:03:28",
   "analysis_count": 20,
   "functions": [
     {
       "block_id": "block_1",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "46",
+      "end_line": "48",
       "name": "init_procfs",
       "type": "function",
-      "summary": "注册 procfs 文件系统到内核，初始化 procfs 功能。",
+      "summary": "初始化 procfs 文件系统，通过调用 register_fs 注册 procfs 文件系统类型。",
       "logic_steps": [
-        "调用 register_fs 函数，将 procfs 文件系统结构体注册到内核的文件系统列表中。"
+        "第1步逻辑：调用 register_fs 函数，将 procfs 文件系统结构体作为参数传递进行注册。",
+        "第2步逻辑：返回 register_fs 的调用结果（通常为 0 表示成功，非零表示失败）。"
       ],
       "called_functions": [
         "register_fs"
       ],
       "related_os_module": "filesystem",
-      "evidence": "函数体仅包含 return register_fs(&procfs)，其中 procfs 是文件系统结构体，register_fs 用于挂载和注册文件系统。",
-      "uncertainty": "代码中未显示 procfs 结构体和 register_fs 的具体实现，但根据常见的操作系统框架，此函数用于初始化 procfs。"
+      "evidence": "函数名 init_procfs 暗示初始化 procfs，内部仅调用 register_fs(&procfs)，procfs 是一个全局变量（推测是文件系统描述结构体），此调用是注册文件系统的典型模式。",
+      "uncertainty": "无法确定 register_fs 的实现细节以及 procfs 结构体的具体定义，但函数逻辑清晰且仅包含该操作。"
     },
     {
       "block_id": "block_2",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "50",
+      "end_line": "55",
       "name": "procfs_unlink",
       "type": "function",
-      "summary": "处理在procfs文件系统中删除文件的操作，当前只支持删除/proc/interrupts文件，其他路径返回-1表示不支持或未实现。",
+      "summary": "这是一个取消链接操作的回调函数，仅在路径为/proc/interrupts时调用特定处理函数，否则返回-1表示不支持。",
       "logic_steps": [
-        "比较传入路径是否为'/proc/interrupts'",
-        "如果是，则调用proc_interrupts_unlink函数执行实际删除操作并返回其结果",
-        "否则，返回-1表示操作失败或未实现"
+        "比较传入的路径字符串是否等于/proc/interrupts",
+        "如果相等，则调用proc_interrupts_unlink函数处理取消链接操作并返回其结果",
+        "如果不相等，则返回-1表示操作失败（不支持该路径的取消链接）"
       ],
       "called_functions": [
         "strcmp",
         "proc_interrupts_unlink"
       ],
       "related_os_module": "filesystem",
-      "evidence": "函数位于procfs.c中，属于proc文件系统实现；函数通过strcmp检查路径，并委托给特定文件的unlink函数。",
-      "uncertainty": "无法确定proc_interrupts_unlink函数的具体实现，以及该代码是否属于完整项目的一部分；未显示如何处理其他路径。"
+      "evidence": "函数名procfs_unlink暗示其为proc文件系统的unlink操作实现；代码中检查路径是否为/proc/interrupts，并调用proc_interrupts_unlink，表明该函数属于文件系统模块中处理proc文件系统特定文件的删除操作。",
+      "uncertainty": "未提供proc_interrupts_unlink的具体实现，无法确认其内部细节；另外，当前函数仅处理/proc/interrupts这一个路径，其他路径均返回-1，可能表示proc文件系统只支持删除该特定文件。"
     },
     {
       "block_id": "block_3",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "56",
+      "end_line": "61",
       "name": "procfs_rename",
       "type": "function",
-      "summary": "这个函数是procfs文件系统中用于重命名操作的接口，当前仅支持对特定路径 /proc/interrupts 的重命名，对其他路径返回 -1 表示不支持。",
+      "summary": "这个代码块定义了一个名为 procfs_rename 的函数，用于重命名 procfs 中的文件。它检查旧路径是否为 \"/proc/interrupts\"，如果是则调用专门的重命名函数处理，否则返回 -1 表示不支持。",
       "logic_steps": [
-        "检查传入的旧路径 oldpath 是否等于字符串 \"/proc/interrupts\"。",
-        "如果相等，则调用 proc_interrupts_rename(oldpath, newpath) 执行实际的重命名操作。",
-        "否则，返回 -1 表示重命名失败或不支持。"
+        "第 1 步：比较传入的 oldpath 参数与字符串 \"/proc/interrupts\" 是否相等。",
+        "第 2 步：如果相等，则调用 proc_interrupts_rename(oldpath, newpath) 并返回其结果。",
+        "第 3 步：如果不相等，则返回 -1，表示不支持该路径的重命名操作。"
       ],
       "called_functions": [
         "strcmp",
         "proc_interrupts_rename"
       ],
       "related_os_module": "filesystem",
-      "evidence": "代码中使用了 strcmp 进行字符串比较，并调用了 proc_interrupts_rename 函数。该代码位于 procfs.c 文件中，属于进程文件系统模块的实现，因此判断为文件系统模块。",
-      "uncertainty": "proc_interrupts_rename 函数的具体实现未给出，因此无法确认其行为和效果；此外，该函数是否只用于处理中断相关文件的重命名，以及是否还有其他路径的支持，只能基于当前代码判断。"
-    },
-    {
-      "block_id": "block_4",
-      "file_path": "kernel\\fs\\procfs.c",
-      "name": "procfs_read",
-      "type": "function",
-      "summary": "处理对procfs文件的读取操作，根据文件路径分发到具体处理函数，目前仅支持/proc/interrupts路径。",
-      "logic_steps": [
-        "从文件结构体中获取路径字符串",
-        "比较路径是否为/proc/interrupts",
-        "若是则调用proc_interrupts_read处理并返回结果，否则返回-1表示不支持"
-      ],
-      "called_functions": [
-        "strcmp",
-        "proc_interrupts_read"
-      ],
-      "related_os_module": "filesystem",
-      "evidence": "函数位于procfs.c文件中，实现procfs文件系统的read回调，通过路径判断分发到具体文件读取处理。",
-      "uncertainty": "无法确定proc_interrupts_read的具体实现细节，以及是否有其他路径在后续代码中被添加。"
+      "evidence": "函数名 procfs_rename 表明它属于 proc 文件系统的一部分；函数体仅针对 /proc/interrupts 路径进行特殊处理，否则返回 -1，这是典型的文件系统重命名操作实现模式。",
+      "uncertainty": "代码中未提供 proc_interrupts_rename 的具体实现，因此无法确认该函数是否真正执行重命名或仅返回成功/失败。另外，procfs 的其他路径重命名均返回 -1，这可能是临时实现或占位符。"
     },
     {
       "block_id": "block_5",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "71",
+      "end_line": "77",
       "name": "procfs_write",
       "type": "function",
-      "summary": "procfs写入操作的分发函数：根据文件路径判断是否是对/proc/interrupts的写入，如果是则调用专门的写入处理函数proc_interrupts_write，否则返回-1表示不支持写入。",
+      "summary": "该函数实现了procfs文件系统中的写操作入口，根据打开文件的路径判断执行哪个具体的写处理函数。",
       "logic_steps": [
-        "从文件结构体fp中获取路径信息path。",
-        "将path与字符串'/proc/interrupts'进行比较。",
-        "如果路径匹配，则调用proc_interrupts_write函数执行实际写入操作并返回其结果。",
-        "如果路径不匹配，直接返回-1表示当前procfs文件不支持写入操作。"
+        "第1步，从文件结构体fp中获取路径字符串path。",
+        "第2步，比较path与字符串\"/proc/interrupts\"是否相等。",
+        "第3步，如果相等，则调用proc_interrupts_write函数处理写请求并返回其结果；否则返回-1表示不支持写入。"
       ],
       "called_functions": [
         "strcmp",
         "proc_interrupts_write"
       ],
       "related_os_module": "filesystem",
-      "evidence": "函数位于procfs.c文件中，路径比较涉及/proc/interrupts，这是proc文件系统中的一个文件。函数的作用是分发写请求到对应文件的具体处理函数，属于文件系统操作。",
-      "uncertainty": "代码中没有展示其他procfs文件的写入处理，无法确认是否支持更多procfs文件的写入，也无法确认proc_interrupts_write的具体实现，但本函数的逻辑清晰。"
+      "evidence": "函数定义是static int procfs_write(struct file *fp, ...)，内部使用strcmp比较路径，然后调用proc_interrupts_write。这属于文件系统层的写操作分发逻辑。",
+      "uncertainty": ""
+    },
+    {
+      "block_id": "block_4",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "62",
+      "end_line": "68",
+      "name": "procfs_read",
+      "type": "function",
+      "summary": "该函数是procfs文件系统的读取操作入口。它首先获取文件路径，然后判断路径是否为'/proc/interrupts'，如果是则调用专门的处理函数，否则返回-1表示不支持或路径不存在。",
+      "logic_steps": [
+        "从fp->info.path获取文件路径字符串。",
+        "将路径与'/proc/interrupts'进行比较。",
+        "如果路径匹配，则调用proc_interrupts_read函数执行实际读取操作。",
+        "如果路径不匹配，则返回-1表示读取失败。"
+      ],
+      "called_functions": [
+        "strcmp",
+        "proc_interrupts_read"
+      ],
+      "related_os_module": "filesystem",
+      "evidence": "函数位于procfs.c中，属于proc文件系统实现的一部分。它根据路径分发到不同的处理函数，并处理来自文件系统上层的read请求。",
+      "uncertainty": "代码仅处理了'/proc/interrupts'这一种路径，未体现对其他proc条目的处理，因此无法判断是否支持或如何扩展其他路径。"
     },
     {
       "block_id": "block_6",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "79",
+      "end_line": "84",
       "name": "procfs_open",
       "type": "function",
-      "summary": "{\n\"block_id\": \"block_6\",\n\"file_path\": \"kernel\\\\fs\\\\procfs.c\",\n\"name\": \"procfs_open\",\n\"type\": \"function\",\n\"summary\": \"procfs文件系统打开文件的回调函数，根据路径判断是否匹配/proc/interrupts，若匹配则调用对应的proc_interrupts_open函数；否则返回-1表示失败。\",\n\"logic_steps\": [\n\"第1步: 比较传入的path参数与字符串\"/proc/interrupts\"是否相等。\",\n\"第2步: 如果相等，调用proc_interrupts_open函数并返回其结果；否则返回-1。\"\n],\n\"called_functions\": [\n\"proc_interrupts_open\"\n],\n\"related_os_module\": \"filesystem\",\n\"evidence\": \"函数属于procfs文件系统（内核文件系统实现），用于打开/proc下的虚拟文件；内部调用proc_interrupts_open（通常用于读取中断信息），并且依赖strcmp进行路径判断。\",\n\"uncertainty\": \"无法准确知晓proc_interrupts_open的具体实现，但根据命名和上下文推测它与中断信息展示相关；此外，未展示其他/proc路径的处理逻辑。\"\n}",
+      "summary": "procfs文件系统中open操作的处理函数，根据路径匹配决定是否调用proc_interrupts_open打开文件。",
+      "logic_steps": [
+        "检查传入的路径path是否为'/proc/interrupts'。",
+        "如果路径匹配，则调用proc_interrupts_open函数并返回其结果。",
+        "如果路径不匹配，则返回-1表示打开失败。"
+      ],
+      "called_functions": [
+        "strcmp",
+        "proc_interrupts_open"
+      ],
+      "related_os_module": "filesystem",
+      "evidence": "函数位于procfs.c文件中，属于procfs文件系统；其实现通过路径匹配决定如何处理open请求，是一个典型的文件系统操作。",
+      "uncertainty": "不确定是否有其他未被显示的路径分支；proc_interrupts_open函数的具体实现在当前代码块中不可见。"
+    },
+    {
+      "block_id": "block_7",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": 86,
+      "end_line": 92,
+      "name": "procfs_close",
+      "type": "function",
+      "summary": "{\n  \"block_id\": \"block_7\",\n  \"file_path\": \"kernel\\\\fs\\\\procfs.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"86\",\n  \"end_line\": \"92\",\n  \"name\": \"procfs_close\",\n  \"type\": \"function\",\n  \"summary\": \"关闭一个procfs文件，根据文件路径调用对应的关闭处理函数。当前实现只处理了/proc/interrupts，其他路径返回错误。\",\n  \"logic_steps\": [\n    \"第1步：从文件结构体中获取文件路径字符串保存到局部变量path中。\",\n    \"第2步：比较path是否为字符串\"/proc/interrupts\"，如果是则调用proc_interrupts_close函数并返回其结果。\",\n    \"第3步：否则返回-1表示文件关闭操作失败或不支持。\"\n  ],\n  \"called_functions\": [\n    \"strcmp\",\n    \"proc_interrupts_close\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"函数名procfs_close暗示是procfs文件系统的关闭操作，代码中检查了文件路径并调用了特定的关闭函数strcmp和proc_interrupts_close，属于文件系统模块。\",\n  \"uncertainty\": \"proc_interrupts_close函数的定义和实现在当前代码块中未提供，无法确认其具体行为。此外，procfs_close仅处理了一个特定路径，其他路径的关闭逻辑可能尚未实现。\"\n}",
       "logic_steps": [],
       "called_functions": [],
       "related_os_module": "unknown",
@@ -109,197 +157,184 @@
       "uncertainty": "JSON 解析失败，需要后续优化 Prompt 或手动检查。"
     },
     {
-      "block_id": "block_7",
+      "block_id": "block_9",
       "file_path": "kernel\\fs\\procfs.c",
-      "name": "procfs_close",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "144",
+      "end_line": "147",
+      "name": "proc_interrupts_write",
       "type": "function",
-      "summary": "关闭 procfs 文件时，根据文件路径选择对应的关闭处理函数，如果路径是 /proc/interrupts，则调用 proc_interrupts_close 进行关闭，否则返回错误码 -1。",
+      "summary": "这个函数是procfs中用于中断信息的写操作处理函数，但当前实现直接返回-1，表示写入操作不被允许，即只读。",
       "logic_steps": [
-        "从文件结构体 fp 的 info 成员中获取文件路径字符串 path。",
-        "比较 path 是否等于字符串 \"/proc/interrupts\"，如果相等，则调用 proc_interrupts_close(fp) 并返回其结果。",
-        "如果路径不是 \"/proc/interrupts\"，则直接返回 -1，表示关闭操作失败（不支持该路径的关闭）。"
+        "函数接收文件指针、用户空间标志、源地址、偏移量、大小和写入计数指针等参数，但未使用这些参数。",
+        "直接返回-1，表示写入失败或不允许写入。"
       ],
-      "called_functions": [
-        "strcmp",
-        "proc_interrupts_close"
-      ],
+      "called_functions": [],
       "related_os_module": "filesystem",
-      "evidence": "代码中使用了 strcmp 比较路径，并调用了 proc_interrupts_close，函数返回 int 类型错误码，符合文件系统关闭操作的典型模式。",
-      "uncertainty": "代码未显示 proc_interrupts_close 的具体实现，无法确定其内部细节；另外，对于其他可能的 procfs 路径（如 /proc/stat 等），均未定义关闭行为，统一返回 -1。"
+      "evidence": "函数名包含proc_interrupts_write，表明它是proc文件系统中interrupts条目的写函数；函数体只返回-1，注释也说明“cannot write”，因此实际逻辑为禁止写入。",
+      "uncertainty": "该函数仅是一个占位实现，未真正调用其他函数或执行写入逻辑，也不清楚完整procfs中是否在其他地方处理写入。"
     },
     {
       "block_id": "block_8",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "95",
+      "end_line": "142",
       "name": "proc_interrupts_read",
       "type": "function",
-      "summary": "读取proc文件系统中中断计数信息，将非零的中断向量及其计数格式化为字符串，并通过copyout复制到用户空间或直接写入内核缓冲区。",
+      "summary": "读取并返回当前已发生的中断计数列表，用于 proc 文件系统中的一个只读文件（如 /proc/interrupts），支持用户态访问和内核态直接读取。",
       "logic_steps": [
-        "遍历intrcnt数组找到最大的非零中断向量索引la，作为文件位置标记",
-        "如果当前文件位置fpos等于la，则重置fpos并返回0（表示无新数据）",
-        "根据user_dst参数决定分配内核缓冲区（通过kmalloc）或直接使用用户提供的地址",
-        "再次遍历intrcnt数组，将所有非零中断向量及其计数通过sprintf格式化写入缓冲区，并累加长度",
-        "如果user_dst为真，调用copyout将内核缓冲区内容复制到用户空间页表指定的地址",
-        "设置返回计数*rcnt为写入的总长度，更新文件位置fpos为la，释放内核缓冲区（如果分配过）并返回0"
+        "遍历全局数组 intrcnt[0..MAXINTR-1]，找到最后一个非零中断号，记为 la。",
+        "检查文件指针 fp->fpos 是否等于 la，如果相等表示没有新的中断数据（内容未变），则将 fpos 重置为 0，*rcnt 设为 0，返回 0。",
+        "根据 user_dst 决定缓冲区来源：若为用户态访问（user_dst 非 0），则通过 kmalloc 分配一页内核缓冲区；否则直接将 buf 指向 dst（内核态的直接地址）。",
+        "将指针 p 指向 buf 起始，len 初始为 0，遍历 intrcnt 数组，对每个非零的中断号 i，使用 sprintf 将格式 \"%d:      %d\\n\" 写入 p，并更新 len 和 p。",
+        "若 user_dst 且 copyout（从内核缓冲区到用户页表指定地址）失败，则释放缓冲区并返回 -1。",
+        "设置 *rcnt = len，fp->fpos = la，若 user_dst 则释放临时分配的缓冲区，返回 0。"
       ],
       "called_functions": [
         "kmalloc",
         "sprintf",
+        "myproc",
         "copyout",
         "kfree",
         "Warn",
         "Log"
       ],
       "related_os_module": "filesystem",
-      "evidence": "函数位于kernel/fs/procfs.c，是proc文件系统的一部分，读取中断统计信息并返回给用户进程，涉及文件操作和用户拷贝，属于文件系统模块。",
-      "uncertainty": "不明确intrcnt数组的定义位置和MAXINTR的具体值，但功能逻辑清晰。"
-    },
-    {
-      "block_id": "block_9",
-      "file_path": "kernel\\fs\\procfs.c",
-      "name": "proc_interrupts_write",
-      "type": "function",
-      "summary": "拒绝向中断信息文件写入任何数据，始终返回-1表示写操作错误。",
-      "logic_steps": [
-        "函数接收文件描述符、用户态标识、源地址、偏移量、大小和写入计数指针等参数。",
-        "函数体直接返回-1，不执行任何写入操作。"
-      ],
-      "called_functions": [],
-      "related_os_module": "filesystem",
-      "evidence": "函数名为proc_interrupts_write，属于procfs文件系统的一部分，函数体只有return -1;，表明禁止写入操作。",
-      "uncertainty": "无"
+      "evidence": "函数位于 kernel/fs/procfs.c，用于实现 proc 文件系统的读取接口，遍历中断计数数组 intrcnt，并通过 copyout 将格式化数据复制到用户空间，与进程虚拟文件系统（procfs）相关。",
+      "uncertainty": "全局变量 intrcnt 的定义和 MAXINTR 未在本代码块中声明，中断计数由何处更新（如中断处理程序）未体现；因此具体硬件中断来源和计数机制不明确。"
     },
     {
       "block_id": "block_10",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "149",
+      "end_line": "152",
       "name": "proc_interrupts_open",
       "type": "function",
-      "summary": "设置文件类型为FD_SPEC并返回0，表示打开操作成功，但未执行任何实际资源分配或初始化逻辑。",
+      "summary": "设置文件指针类型为FD_SPEC（特殊文件描述符），并返回成功，作为procfs中interrupts文件节点的打开操作实现。",
       "logic_steps": [
-        "将文件指针的type字段设置为FD_SPEC，表明这是一个特殊文件类型（如procfs下的虚拟文件）。",
-        "返回0，表示打开操作成功。"
+        "将文件指针fp的type字段赋值为FD_SPEC",
+        "返回0表示操作成功"
       ],
       "called_functions": [],
       "related_os_module": "filesystem",
-      "evidence": "函数体明确将fp->type赋值为FD_SPEC。FD_SPEC是预定义的宏，通常用于标识特殊文件（如procfs中的中断信息文件）。返回值0表示成功，符合open系统调用的常规语义。",
-      "uncertainty": "函数内部没有对path、flags参数做任何检查或处理，也没有分配资源或进行权限验证。实际的数据读取逻辑（如填充中断信息）可能在其他函数（如proc_interrupts_read）中实现，但本代码块未体现。"
+      "evidence": "函数操作fp->type = FD_SPEC，这是文件系统层面对文件描述符类型的常见设置；且函数位于procfs.c中，属于procfs文件系统实现。",
+      "uncertainty": "由于未包含错误处理、权限检查或其他细节，无法确定该文件的实际读写行为是否完全由proc_interrupts_open以外的函数控制。"
     },
     {
       "block_id": "block_11",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "154",
+      "end_line": "156",
       "name": "proc_interrupts_close",
       "type": "function",
-      "summary": "这个函数是一个 procfs 文件系统操作中用于关闭文件的回调函数，其具体实现是直接返回 0，表示关闭操作成功，但不执行任何实际的清理或释放操作。",
+      "summary": "该函数是procfs文件系统中用于关闭中断相关文件的操作函数，但当前实现仅返回0，不执行任何实际操作。",
       "logic_steps": [
-        "函数接收一个 struct file 指针参数 fp，但未使用该参数。",
-        "函数直接返回整数 0，表示操作成功结束。"
+        "第1步：直接返回0，表示操作成功"
       ],
       "called_functions": [],
       "related_os_module": "filesystem",
-      "evidence": "函数作为 procfs 文件系统中 file_operations 结构体的 .close 成员，用于处理文件关闭操作；函数体仅 return 0，无其他操作。",
+      "evidence": "函数体中仅有一行'return 0;'，没有进行任何资源释放或状态清理，表明这是一个空实现或占位函数。",
+      "uncertainty": "由于代码极为简单，无法确定它在未来会扩展为何种实际关闭逻辑；函数名暗示其服务于procfs中处理中断信息的文件，但当前无具体操作。"
+    },
+    {
+      "block_id": "block_13",
+      "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "163",
+      "end_line": "166",
+      "name": "proc_interrupts_unlink",
+      "type": "function",
+      "summary": "这个函数是procfs中对于'/proc/interrupts'文件的unlink操作的回调实现，其行为是直接返回-1，表示不允许对该文件进行删除操作。",
+      "logic_steps": [
+        "函数接收路径参数path和flags，但不使用它们。",
+        "直接返回-1，表示unlink操作失败，从而禁止删除这个procfs中的文件。"
+      ],
+      "called_functions": [],
+      "related_os_module": "filesystem",
+      "evidence": "函数体只有一行返回-1，注释也写明'cannot unlink'，明确禁止解除链接操作。",
       "uncertainty": "无"
     },
     {
       "block_id": "block_12",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "158",
+      "end_line": "161",
       "name": "proc_interrupts_rename",
       "type": "function",
-      "summary": "实现了procfs中中断相关条目的重命名操作，但直接返回-1表示不支持重命名，因此该函数实际上是一个占位符或禁用操作。",
+      "summary": "这个函数是一个占位实现，用于处理procfs中interrupts文件的重命名操作，但实际禁止重命名。",
       "logic_steps": [
-        "函数接收两个参数：旧路径oldpath和新路径newpath。",
-        "函数直接返回-1，表示重命名操作不被允许或尚未实现。"
+        "函数接收两个字符串参数oldpath和newpath，但未使用。",
+        "直接返回-1，表示重命名操作不被允许。"
       ],
       "called_functions": [],
       "related_os_module": "filesystem",
-      "evidence": "函数体内仅有一条return -1;语句，无任何其他操作，表明重命名功能被禁止。",
-      "uncertainty": "无"
-    },
-    {
-      "block_id": "block_13",
-      "file_path": "kernel\\fs\\procfs.c",
-      "name": "proc_interrupts_unlink",
-      "type": "function",
-      "summary": "该函数是procfs文件系统中'interrupts'文件的unlink操作回调，直接返回-1表示不支持取消链接（删除）该文件。",
-      "logic_steps": [
-        "接收参数path和flags，但未使用。",
-        "直接返回-1，表示操作失败，即不允许对该文件执行取消链接操作。"
-      ],
-      "called_functions": [],
-      "related_os_module": "filesystem",
-      "evidence": "函数返回-1，且注释明确说明'cannot unlink'，表明该文件是只读或受保护的，不允许删除。",
-      "uncertainty": ""
+      "evidence": "函数返回固定值-1，且注释明确说明'cannot rename'，表明该函数只是返回错误码，不执行任何实际重命名逻辑。",
+      "uncertainty": "函数名暗示与procfs的interrupts文件相关，但代码中未体现具体文件内容或路径处理，可能proc_interrupts_rename是一个回调函数指针的一部分。"
     },
     {
       "block_id": "block_14",
       "file_path": "kernel\\fs\\procfs.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "167",
+      "end_line": "172",
       "name": "record_intr",
       "type": "function",
-      "summary": "记录中断次数，如果中断号有效则递增对应的中断计数器。",
+      "summary": "对中断号进行合法性检查，若有效则递增该中断的计数。",
       "logic_steps": [
-        "检查传入的中断号是否大于等于最大中断数MAXINTR，如果是则直接返回不进行记录。",
-        "如果中断号有效，则对全局数组intrcnt中对应索引的元素进行自增操作。"
+        "检查传入的中断号是否小于MAXINTR，如果不满足则直接返回。",
+        "如果中断号合法，则对全局数组intrcnt中对应索引的元素执行自增操作。"
       ],
       "called_functions": [],
       "related_os_module": "interrupt",
-      "evidence": "函数名record_intr暗示记录中断，参数uint64 intr为中断号，比较MAXINTR检查有效性，intrcnt[intr]++表示计数递增。全局数组intrcnt通常用于统计各类中断发生次数。",
-      "uncertainty": "无法确定intrcnt数组和MAXINTR的具体定义及位置，但基于常见操作系统设计，此函数用于中断统计。"
+      "evidence": "函数名record_intr暗示记录中断，内部操作intrcnt[intr]++增大了中断计数器的值，同时有边界检查intr >= MAXINTR，属于典型的中断统计功能。",
+      "uncertainty": "由于MAXINTR和intrcnt未在本代码块中定义，无法确定其具体类型和取值，但基于命名和上下文推测这是中断处理模块的一部分。"
     },
     {
       "block_id": "block_15",
       "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "27",
+      "end_line": "27",
       "name": "allocpid",
       "type": "function",
-      "summary": "原子性地递增全局PID计数器并返回新的PID值，用于分配唯一的进程ID。",
+      "summary": "原子递增全局变量nextpid并返回新值，用于分配一个唯一的进程ID。",
       "logic_steps": [
         "调用atomic_inc_return函数，对全局变量nextpid执行原子递增操作",
-        "返回递增后的新nextpid值作为分配的PID"
+        "返回递增后的值，作为新分配的PID"
       ],
       "called_functions": [
         "atomic_inc_return"
       ],
       "related_os_module": "process",
-      "evidence": "函数体为return atomic_inc_return(&nextpid);，其中nextpid为全局PID计数器，atomic_inc_return保证线程安全。",
-      "uncertainty": "未展示nextpid变量的定义，但根据上下文推断其为全局整数。"
-    },
-    {
-      "block_id": "block_16",
-      "file_path": "kernel\\sched\\proc.c",
-      "name": "procinit",
-      "type": "function",
-      "summary": "初始化进程表，包括全局队列、锁、每个进程控制块的状态和链接结构，并将所有进程放入空闲队列中。",
-      "logic_steps": [
-        "调用 PCB_Q_ALL_INIT() 初始化所有全局进程队列（如空闲队列、就绪队列等）。",
-        "将全局进程 ID 计数器 nextpid 原子设置为 1。",
-        "初始化等待锁 wait_lock。",
-        "遍历进程数组 proc 中的每个进程控制块（共 NPROC 个）。",
-        "对每个进程：初始化其自旋锁 lock 和退出锁 lth_exitlock。",
-        "将内核时间 ktime 和用户时间 utime 清零。",
-        "设置状态 state 为 UNUSED。",
-        "分配内核栈地址 kstack（基于进程在数组中的索引）。",
-        "初始化进程状态链表节点 state_list 和兄弟链表节点 sibling_list。",
-        "将进程通过 queue_push_back_atomic 原子地加入空闲队列 unused_p_q。"
-      ],
-      "called_functions": [
-        "PCB_Q_ALL_INIT",
-        "atomic_set",
-        "initlock",
-        "KSTACK",
-        "INIT_LIST_HEAD",
-        "queue_push_back_atomic"
-      ],
-      "related_os_module": "process",
-      "evidence": "代码遍历进程数组，设置每个 proc 结构体的字段（state, kstack, lock, ktime, utime 等），并管理进程队列（unused_p_q），这是典型的进程控制块初始化逻辑。",
-      "uncertainty": "无"
+      "evidence": "函数名allocpid暗示分配PID，代码中调用了atomic_inc_return(&nextpid)原子操作来生成唯一ID，nextpid应是全局变量，用于进程ID分配。",
+      "uncertainty": "未看到nextpid的定义和初始化，但根据常见操作系统实现，它应为全局整数变量。"
     },
     {
       "block_id": "block_17",
       "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "95",
+      "end_line": "105",
       "name": "delete_child",
       "type": "function",
-      "summary": "从父进程的子进程列表中删除指定的子进程，并更新父进程的 first_child 指针。",
+      "summary": "从父进程的子进程链表中移除指定的子进程节点。",
       "logic_steps": [
-        "检查 child 是否有兄弟节点（通过 nosibling 函数）：如果 child 是唯一子节点，则将 parent->first_child 置为 NULL。",
-        "否则，获取 parent 的第一个子节点 firstchild，如果 child 就是第一个子节点，则将 parent->first_child 更新为第一个兄弟节点。",
-        "然后从 child 的 sibling_list 链表中将其移除（通过 list_del_reinit 函数）。"
+        "检查子进程是否没有兄弟进程（即它是父进程的唯一子进程），如果是，则将父进程的 first_child 指针置为 NULL。",
+        "否则，获取父进程的第一个子进程，比较删除目标是否就是第一个子进程，如果是，则将父进程的 first_child 更新为第一个子进程的下一个兄弟。",
+        "最后，从兄弟链表中移除该子进程节点，并重新初始化其链表节点。"
       ],
       "called_functions": [
         "nosibling",
@@ -308,19 +343,50 @@
         "list_del_reinit"
       ],
       "related_os_module": "process",
-      "evidence": "函数名和逻辑明显涉及子进程管理，且文件路径在 kernel\\sched\\proc.c 中，属于进程调度与进程控制模块。",
-      "uncertainty": "nosibling、firstchild、nextsibling 以及 list_del_reinit 的具体实现未给出，但其用途由上下文推导。"
+      "evidence": "函数名 delete_child 以及操作 parent->first_child 和 child->sibling_list，表明其用于管理进程树中子进程的删除逻辑。",
+      "uncertainty": "需要确认 list_del_reinit 的具体实现，但根据命名可推断其功能。"
+    },
+    {
+      "block_id": "block_16",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "59",
+      "end_line": "90",
+      "name": "procinit",
+      "type": "function",
+      "summary": "初始化进程表和相关数据结构，包括全局队列、进程锁、状态列表以及未使用进程队列，并为每个进程分配内核栈。",
+      "logic_steps": [
+        "调用 PCB_Q_ALL_INIT() 初始化所有进程控制块队列",
+        "原子设置 nextpid 为 1，确保新进程 PID 从 1 开始",
+        "初始化 wait_lock 锁（注释中 pid_lock 被注释掉）",
+        "遍历进程表 proc 数组（共 NPROC 个进程），对每个进程 p 执行：初始化 p->lock 和 p->lth_exitlock 自旋锁；清零 p->ktime 和 p->utime；设置状态为 UNUSED；分配内核栈地址通过 KSTACK 宏计算；初始化 state_list 和 sibling_list 链表头；将进程加入 unused_p_q 未使用队列"
+      ],
+      "called_functions": [
+        "PCB_Q_ALL_INIT",
+        "atomic_set",
+        "initlock",
+        "INIT_LIST_HEAD",
+        "queue_push_back_atomic"
+      ],
+      "related_os_module": "process",
+      "evidence": "代码中对进程控制块（struct proc）进行初始化，包括锁、状态、队列和内核栈分配，并组装到未使用进程队列，是进程管理模块的初始化步骤。",
+      "uncertainty": "KSTACK 宏的具体实现未在代码块中给出，但不影响对整体逻辑的判断。"
     },
     {
       "block_id": "block_18",
       "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "111",
+      "end_line": "117",
       "name": "append_child",
       "type": "function",
-      "summary": "将一个子进程添加到父进程的子进程链表中。如果父进程没有子进程，则将子进程设为第一个子进程；否则将子进程插入到第一个子进程的同级链表尾部。",
+      "summary": "将一个子进程连接到父进程的子进程链表上，如果父进程当前没有子进程则直接设为第一个子进程，否则将新子进程添加到第一个子进程的兄弟链表末尾。",
       "logic_steps": [
-        "检查父进程是否没有子进程（通过 nochildren 函数判断）。",
-        "如果没有子进程，直接将 child 设为 parent 的 first_child 指针指向。",
-        "如果有子进程，则通过 list_add_tail 将 child 的 sibling_list 节点添加到第一个子进程的 sibling_list 链表的尾部。"
+        "检查父进程是否有子进程，通过调用 nochildren(parent) 判断，如果为真则执行第2步，否则执行第3步。",
+        "将 child 直接赋值为 parent->first_child，即 child 成为父进程的第一个子进程。",
+        "若父进程已有子进程，则通过 list_add_tail 将 child 插入到第一个子进程的 sibling_list 链表尾部，从而将 child 作为兄弟节点添加。"
       ],
       "called_functions": [
         "nochildren",
@@ -328,49 +394,58 @@
         "list_add_tail"
       ],
       "related_os_module": "process",
-      "evidence": "函数名 append_child 和参数 parent、child 表明这是进程管理中的子进程添加操作；内部调用 nochildren 检查子进程是否存在，使用 firstchild 获取第一个子进程，并通过 list_add_tail 操作链表，符合进程树管理逻辑。",
-      "uncertainty": "nochildren 和 firstchild 的具体实现未在代码中给出，但根据函数名和常见操作系统设计可以推断其功能。list_add_tail 是标准内核链表操作，调用方式明确。"
-    },
-    {
-      "block_id": "block_19",
-      "file_path": "kernel\\sched\\proc.c",
-      "name": "thread_mapstacks",
-      "type": "function",
-      "summary": "为所有线程分配并映射内核栈到给定的页表kpgtbl中，每个线程分配KSTACK_PAGE个物理页并映射到虚拟地址空间KSTACK(线程索引)开始的连续区域。",
-      "logic_steps": [
-        "遍历从tcb_pool开始的NTHREADS个线程控制块tcb。",
-        "对于每个线程，计算其内核栈的虚拟基地址va = KSTACK(t - tcb_pool)。",
-        "循环KSTACK_PAGE次，每次调用kzalloc分配一页物理内存，如果失败则panic。",
-        "根据架构宏（__ARCH_RISCV或其他），调用mappages将物理页映射到va + i*PGSIZE，并设置相应权限（RISC-V下为PTE_R|PTE_W，否则为PTE_P|PTE_W|PTE_MAT|PTE_D）。",
-        "如果定义了__DEBUG_THREAD_MAPSTACKS宏，则打印调试日志，显示线程编号和栈底、栈顶虚拟地址。"
-      ],
-      "called_functions": [
-        "kzalloc",
-        "mappages",
-        "panic",
-        "Log"
-      ],
-      "related_os_module": "process",
-      "evidence": "函数名称thread_mapstacks暗示与线程栈映射相关；代码中遍历tcb_pool线程池，分配物理页并映射到内核页表，属于进程/线程初始化过程中的内存映射操作，是进程管理（process）模块的一部分。",
-      "uncertainty": "无，代码逻辑清晰，没有隐藏或模糊的功能。"
+      "evidence": "函数名 append_child 暗示添加子进程；操作了 proc 结构中的 first_child 和 sibling_list 字段，且位于 kernel\\sched\\proc.c 路径下，属于进程调度相关。",
+      "uncertainty": ""
     },
     {
       "block_id": "block_20",
       "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "155",
+      "end_line": "160",
       "name": "cpuid",
       "type": "function",
-      "summary": "获取当前 CPU 的核心 ID，通过读取线程指针寄存器（tp）的值实现。",
+      "summary": "获取当前 CPU 的 ID，通过读取 tp（线程指针）寄存器的值来实现。",
       "logic_steps": [
-        "调用 r_tp() 读取当前 CPU 的线程指针寄存器（通常存储了当前 CPU 的 ID 或相关数据结构地址）",
-        "将 r_tp() 的返回值赋值给局部变量 id",
-        "返回 id，即当前 CPU 的 ID"
+        "调用 r_tp() 函数，读取当前线程指针寄存器 tp 的值，该值通常存储当前 CPU 的 ID。",
+        "将读取到的 CPU ID 赋值给局部变量 id。",
+        "返回 id，即当前 CPU 的 ID。"
       ],
       "called_functions": [
         "r_tp"
       ],
       "related_os_module": "scheduler",
-      "evidence": "函数直接调用 r_tp() 获取当前 CPU 标识符，并且文件中包含注释表明返回值用于获取当前 CPU 的 cpu struct，与调度器多核处理相关。",
-      "uncertainty": "r_tp() 的具体实现未在此代码块中给出，但其名称暗示它是读取 tp 寄存器的内联汇编或函数，通常 tp 寄存器在多核系统中存储当前 CPU 的 hart ID 或核心编号。"
+      "evidence": "函数名为 cpuid，意图获取 CPU ID；实现中使用 r_tp() 读取 tp 寄存器，在经典 OS（如 xv6）中，tp 寄存器常被用来保存 hart ID（即 CPU ID），在多核系统中用于区分不同 CPU。",
+      "uncertainty": "没有提供 r_tp() 的实现细节，因此 tp 寄存器具体如何被设置和表示 CPU ID 是未知的，但基于常见设计模式可合理推断。"
+    },
+    {
+      "block_id": "block_19",
+      "file_path": "kernel\\sched\\proc.c",
+      "language": "c",
+      "parser": "tree_sitter",
+      "start_line": "122",
+      "end_line": "149",
+      "name": "thread_mapstacks",
+      "type": "function",
+      "summary": "为每个线程的内核栈分配物理内存并建立页表映射，每个线程映射KSTACK_PAGE个页面大小的虚拟地址空间。",
+      "logic_steps": [
+        "遍历tcb_pool数组中的每个tcb结构体，t指向当前线程控制块。",
+        "计算当前线程对应的内核栈虚拟基地址va，公式为KSTACK((int)(t - tcb_pool))。",
+        "循环KSTACK_PAGE次，每次分配一个物理页面（kzalloc），失败则panic。",
+        "根据当前架构条件编译：若为__ARCH_RISCV，调用mappages映射虚拟地址va+i*PGSIZE到物理地址pa，权限为PTE_R|PTE_W；否则（非RISC-V）映射权限为PTE_P|PTE_W|PTE_MAT|PTE_D。",
+        "映射失败则panic。",
+        "如果定义了__DEBUG_THREAD_MAPSTACKS宏，则打印调试日志，显示线程编号、栈底和栈顶虚拟地址。"
+      ],
+      "called_functions": [
+        "kzalloc",
+        "panic",
+        "mappages",
+        "Log"
+      ],
+      "related_os_module": "process",
+      "evidence": "函数遍历线程控制块池(tcb_pool)，为每个线程分配并映射内核栈页面，属于进程管理中的栈初始化；调用了mappages（页表操作）和kzalloc（内存分配），与内存管理和进程调度相关。",
+      "uncertainty": "函数名称暗示映射栈，但细节中KSTACK_PAGE可能是预处理宏，其具体值未在代码中体现，但代码明确循环KSTACK_PAGE次分配映射，且注释提到“allocate one page for each thread's kernel stack but map it to KSTACK_PAGE * PGSIZE”，因此栈大小可明确为KSTACK_PAGE个页面。"
     }
   ]
 }

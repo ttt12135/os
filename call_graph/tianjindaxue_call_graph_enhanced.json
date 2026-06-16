@@ -1,15 +1,350 @@
 {
   "repo_name": "tianjindaxue",
-  "created_at": "2026-05-31 17:45:58",
+  "created_at": "2026-06-16 02:30:09",
+  "graph_type": "full",
   "function_count": 20,
-  "ai_edge_count": 65,
-  "regex_edge_count": 211,
-  "merged_edge_count": 233,
+  "node_count": 20,
+  "ai_edge_count": 63,
+  "regex_edge_count": 206,
+  "merged_edge_count": 230,
+  "internal_edge_count": 14,
+  "external_edge_count": 216,
+  "module_count": 5,
+  "nodes": [
+    {
+      "block_id": "block_3",
+      "name": "DYN_PATH",
+      "normalized_name": "DYN_PATH",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "35",
+      "end_line": "35",
+      "type": "static",
+      "module": "process",
+      "summary": "定义了一个全局静态可变互斥锁保护的字符串变量 DYN_PATH，用于存储动态路径或配置字符串。"
+    },
+    {
+      "block_id": "block_2",
+      "name": "GLIBC_PATH",
+      "normalized_name": "GLIBC_PATH",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "34",
+      "end_line": "34",
+      "type": "static",
+      "module": "process",
+      "summary": "声明一个全局静态互斥锁保护的字符串变量，用于存储GLIBC库的路径。"
+    },
+    {
+      "block_id": "block_1",
+      "name": "LIBC_PATH",
+      "normalized_name": "LIBC_PATH",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "33",
+      "end_line": "33",
+      "type": "static",
+      "module": "process",
+      "summary": "定义了一个全局静态变量 LIBC_PATH，该变量是一个包装在互斥锁（Mutex）中的空字符串，用于存储 libc 的路径，保证在多线程或异步环境下的安全访问。"
+    },
+    {
+      "block_id": "block_4",
+      "name": "set_libc_path",
+      "normalized_name": "set_libc_path",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "37",
+      "end_line": "39",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数用于设置 libc 路径：通过获取全局静态变量 LIBC_PATH 的锁，然后将传入的路径值赋给它。"
+    },
+    {
+      "block_id": "block_5",
+      "name": "get_libc_path",
+      "normalized_name": "get_libc_path",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "41",
+      "end_line": "43",
+      "type": "function",
+      "module": "process",
+      "summary": "获取全局静态变量 LIBC_PATH 中存储的路径字符串的克隆副本。"
+    },
+    {
+      "block_id": "block_6",
+      "name": "set_glibc_path",
+      "normalized_name": "set_glibc_path",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "45",
+      "end_line": "47",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数用于设置一个全局静态变量 GLIBC_PATH 的值为传入的字符串路径。它通过获取 GLIBC_PATH 锁并写入 path 来实现对共享可变状态的更新。"
+    },
+    {
+      "block_id": "block_8",
+      "name": "set_dyn_path",
+      "normalized_name": "set_dyn_path",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "53",
+      "end_line": "55",
+      "type": "function",
+      "module": "process",
+      "summary": "将传入的路径字符串设置为全局动态路径 DYN_PATH 的值。"
+    },
+    {
+      "block_id": "block_7",
+      "name": "get_glibc_path",
+      "normalized_name": "get_glibc_path",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "49",
+      "end_line": "51",
+      "type": "function",
+      "module": "process",
+      "summary": "返回一个存储全局路径字符串的互斥锁保护的 `String` 的克隆值，该路径通常用于标记 glibc 的位置。"
+    },
+    {
+      "block_id": "block_9",
+      "name": "get_dyn_path",
+      "normalized_name": "get_dyn_path",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "57",
+      "end_line": "59",
+      "type": "function",
+      "module": "process",
+      "summary": "获取当前动态路径（DYN_PATH）的共享可变状态，返回其克隆值。"
+    },
+    {
+      "block_id": "block_10",
+      "name": "clear",
+      "normalized_name": "clear",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "61",
+      "end_line": "69",
+      "type": "function",
+      "module": "driver",
+      "summary": "该函数通过向DebugConsole输出ANSI转义序列来清除终端屏幕。序列 ESC [ H 将光标移动到左上角，ESC [ 2 J 清除整个屏幕。"
+    },
+    {
+      "block_id": "block_11",
+      "name": "kill_all_tasks",
+      "normalized_name": "kill_all_tasks",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "71",
+      "end_line": "79",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数遍历任务映射中的所有任务，对类型为 MonolithicTask 的任务调用 exit(100) 来终止它们。"
+    },
+    {
+      "block_id": "block_12",
+      "name": "command",
+      "normalized_name": "command",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "108",
+      "end_line": "200",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数解析传入的命令字符串，尝试打开对应文件，如果成功则创建一个新的用户任务并执行该程序，等待其退出后清理资源。"
+    },
+    {
+      "block_id": "block_13",
+      "name": "command_iperf",
+      "normalized_name": "command_iperf",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "203",
+      "end_line": "228",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数是用于执行iperf网络测试的命令处理函数，通过预先和事后强制清理所有任务（kill_all_tasks）并插入内存屏障和延迟循环，以增强测试执行时的隔离性，减少其他任务干扰。"
+    },
+    {
+      "block_id": "block_14",
+      "name": "initproc",
+      "normalized_name": "initproc",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "230",
+      "end_line": "624",
+      "type": "function",
+      "module": "process",
+      "summary": "系统初始化进程，负责根据架构配置库路径、创建必要符号链接、启动一系列测试和基准测试（包括busybox、musl、glibc、LTP、iperf、lmbench等），最后打印完成信息并执行关机逻辑。"
+    },
+    {
+      "block_id": "block_15",
+      "name": "run_ltp_tests",
+      "normalized_name": "run_ltp_tests",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "625",
+      "end_line": "2973",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数定义一个名为 ltp_tests 的 Vec，包含一个大型的 LTP 测试用例名称列表（大部分被注释掉），然后遍历该列表，对于每个测试用例，依次执行三条命令：输出用例开始信息、实际运行 ltp 测试二进制文件、输出失败信息（无论实际结果如何）。该函数旨在批量运行一组预设的 LTP 测试用例，并记录日志。"
+    },
+    {
+      "block_id": "block_16",
+      "name": "run_musl_tests",
+      "normalized_name": "run_musl_tests",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "2975",
+      "end_line": "3443",
+      "type": "function",
+      "module": "process",
+      "summary": "该函数定义了一个异步函数，用于运行针对 musl 库的静态链接和动态链接测试用例。它内置了两个测试向量列表（musl_static_tests 和 musl_dynamic_tests），每个元素包含运行测试的程序路径、可执行文件入口和测试名称。函数遍历这两个列表，对于每个测试，如果它不在排除列表（exclude）中，则调用 command 函数以异步方式执行测试命令。"
+    },
+    {
+      "block_id": "block_18",
+      "name": "MAP_AREA_START",
+      "normalized_name": "MAP_AREA_START",
+      "file_path": "kernel\\src\\syscall\\mm.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "13",
+      "end_line": "13",
+      "type": "const",
+      "module": "memory",
+      "summary": "定义内存映射区域的起始地址常量，值为0x2_0000_0000，用于指定用户态或内核态内存映射的基地址。"
+    },
+    {
+      "block_id": "block_17",
+      "name": "run_glibc_tests",
+      "normalized_name": "run_glibc_tests",
+      "file_path": "kernel\\src\\tasks\\initproc.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "3445",
+      "end_line": "3941",
+      "type": "function",
+      "module": "unknown",
+      "summary": "该函数定义了一组 glibc 静态和动态测试用例列表，并依次运行这些测试，通过调用外部命令来执行测试程序，同时支持排除指定的测试用例。"
+    },
+    {
+      "block_id": "block_20",
+      "name": "sys_brk",
+      "normalized_name": "sys_brk",
+      "file_path": "kernel\\src\\syscall\\mm.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "16",
+      "end_line": "22",
+      "type": "function",
+      "module": "memory",
+      "summary": "实现 sys_brk 系统调用，根据传入的 addr 返回当前堆地址或调整堆大小并返回新堆地址。"
+    },
+    {
+      "block_id": "block_19",
+      "name": "impl UserTaskContainer {",
+      "normalized_name": "impl UserTaskContainer {",
+      "file_path": "kernel\\src\\syscall\\mm.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "15",
+      "end_line": "286",
+      "type": "impl",
+      "module": "syscall",
+      "summary": "实现了用户任务的内存相关系统调用，包括 brk、mmap、munmap、mprotect、msync、set_robust_list 和 get_robust_list。"
+    }
+  ],
   "edges": [
     {
-      "caller": "set_libc_path",
+      "caller": "DYN_PATH",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "LIBC_PATH.lock",
+      "callee": "Mutex::new",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_3",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_1",
+      "normalized_caller": "DYN_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "DYN_PATH",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "String::new",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_3",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_2",
+      "normalized_caller": "DYN_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "GLIBC_PATH",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "Mutex::new",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_2",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_3",
+      "normalized_caller": "GLIBC_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "GLIBC_PATH",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "String::new",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_2",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_4",
+      "normalized_caller": "GLIBC_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "LIBC_PATH",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "Mutex::new",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
       "source_block_id": "block_1",
@@ -17,84 +352,141 @@
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_5",
+      "normalized_caller": "LIBC_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
-      "caller": "get_libc_path",
+      "caller": "LIBC_PATH",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "lock",
-      "caller_module": "unknown",
+      "callee": "String::new",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_2",
+      "source_block_id": "block_1",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_6",
+      "normalized_caller": "LIBC_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "set_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "LIBC_PATH.lock()",
+      "caller_module": "process",
+      "evidence": "函数定义在 tasks/initproc.rs 中，功能是修改全局存储的 libc 路径，该路径通常与进程初始化或加载相关，属于进程管理模块。",
+      "source_block_id": "block_4",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_7",
+      "normalized_caller": "set_libc_path",
+      "normalized_callee": "lock()",
+      "call_type": "external"
     },
     {
       "caller": "get_libc_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "clone",
-      "caller_module": "unknown",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_2",
+      "callee": "LIBC_PATH.lock()",
+      "caller_module": "process",
+      "evidence": "函数体内直接操作名为 LIBC_PATH 的全局变量，该变量通过 .lock() 加锁（暗示是 Mutex<String> 类型），随后调用 .clone() 返回一个字符串副本。该函数通常用于提供 libc 路径给其他模块，属于进程初始化或任务管理的一部分。",
+      "source_block_id": "block_5",
       "source": [
-        "ai",
-        "regex"
+        "ai"
       ],
-      "confidence": 0.9
+      "confidence": 0.7,
+      "edge_id": "edge_8",
+      "normalized_caller": "get_libc_path",
+      "normalized_callee": "lock()",
+      "call_type": "external"
+    },
+    {
+      "caller": "get_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone()",
+      "caller_module": "process",
+      "evidence": "函数体内直接操作名为 LIBC_PATH 的全局变量，该变量通过 .lock() 加锁（暗示是 Mutex<String> 类型），随后调用 .clone() 返回一个字符串副本。该函数通常用于提供 libc 路径给其他模块，属于进程初始化或任务管理的一部分。",
+      "source_block_id": "block_5",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_9",
+      "normalized_caller": "get_libc_path",
+      "normalized_callee": "clone()",
+      "call_type": "external"
     },
     {
       "caller": "set_glibc_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "GLIBC_PATH.lock",
-      "caller_module": "unknown",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_3",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "get_glibc_path",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "GLIBC_PATH.lock",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_4",
+      "source_block_id": "block_6",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "get_glibc_path",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "clone",
-      "caller_module": "process",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_4",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_10",
+      "normalized_caller": "set_glibc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
       "caller": "set_dyn_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "DYN_PATH.lock()",
-      "caller_module": "filesystem",
-      "evidence": "函数名set_dyn_path暗示设置动态路径，路径通常与文件系统相关；代码中操作全局变量DYN_PATH，该变量名称包含'dyn_path'，结合initproc.rs文件路径，该变量可能在进程初始化时用于指定动态链接库搜索路径或其他文件系统相关路径。",
-      "source_block_id": "block_5",
+      "caller_module": "process",
+      "evidence": "函数名 set_dyn_path 暗示设置动态路径，函数体通过锁保护对全局变量 DYN_PATH 进行赋值操作，DYN_PATH 可能用于记录进程初始任务的动态库或执行路径，相关上下文在 initproc.rs 中与进程初始化有关。",
+      "source_block_id": "block_8",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_11",
+      "normalized_caller": "set_dyn_path",
+      "normalized_callee": "lock()",
+      "call_type": "external"
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "Mutex::lock",
+      "caller_module": "process",
+      "evidence": "函数体仅包含 `GLIBC_PATH.lock().clone()`，`GLIBC_PATH` 应是一个定义在文件/模块级别的全局 `Mutex<String>` 或 `Mutex<PathBuf>`（此处 `clone()` 要求类型实现 `Clone`，`String` 满足）。该函数返回一个 `String`，结合上下文和函数名，推测该路径用于动态链接器的 glibc 相关路径，属于进程初始化模块。",
+      "source_block_id": "block_7",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_12",
+      "normalized_caller": "get_glibc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "String::clone",
+      "caller_module": "process",
+      "evidence": "函数体仅包含 `GLIBC_PATH.lock().clone()`，`GLIBC_PATH` 应是一个定义在文件/模块级别的全局 `Mutex<String>` 或 `Mutex<PathBuf>`（此处 `clone()` 要求类型实现 `Clone`，`String` 满足）。该函数返回一个 `String`，结合上下文和函数名，推测该路径用于动态链接器的 glibc 相关路径，属于进程初始化模块。",
+      "source_block_id": "block_7",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_13",
+      "normalized_caller": "get_glibc_path",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "get_dyn_path",
@@ -102,24 +494,32 @@
       "callee": "DYN_PATH.lock",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_6",
+      "source_block_id": "block_9",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_14",
+      "normalized_caller": "get_dyn_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
       "caller": "get_dyn_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "String::clone",
       "caller_module": "process",
-      "evidence": "代码中使用了DYN_PATH.lock()，说明DYN_PATH是一个静态Mutex，同时clone()返回String，表明该函数用于获取动态路径字符串。通常路径管理属于进程或任务初始化模块。",
-      "source_block_id": "block_6",
+      "evidence": "函数名 'get_dyn_path' 暗示获取动态路径；通过全局变量 DYN_PATH 上的 lock().clone() 操作，表明 DYN_PATH 是一个受互斥锁保护的 String，常见于进程相关的全局路径信息（例如 initproc 的当前工作目录或运行路径）。文件路径包含 'tasks/initproc.rs'，符合进程初始化相关模块。",
+      "source_block_id": "block_9",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_15",
+      "normalized_caller": "get_dyn_path",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "clear",
@@ -127,12 +527,16 @@
       "callee": "DebugConsole::putchar",
       "caller_module": "driver",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_7",
+      "source_block_id": "block_10",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_16",
+      "normalized_caller": "clear",
+      "normalized_callee": "putchar",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -140,12 +544,16 @@
       "callee": "TASK_MAP.lock",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_17",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -153,12 +561,33 @@
       "callee": "task.upgrade",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_18",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "upgrade",
+      "call_type": "external"
+    },
+    {
+      "caller": "kill_all_tasks",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "inspect",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_11",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_19",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "inspect",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -166,12 +595,16 @@
       "callee": "x.get_task_type",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_20",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "get_task_type",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -179,12 +612,16 @@
       "callee": "x.exit",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_21",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "exit",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -192,12 +629,16 @@
       "callee": "File::open",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_22",
+      "normalized_caller": "command",
+      "normalized_callee": "open",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -205,12 +646,16 @@
       "callee": "current_task",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_23",
+      "normalized_caller": "command",
+      "normalized_callee": "current_task",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -218,24 +663,33 @@
       "callee": "UserTask::new",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_24",
+      "normalized_caller": "command",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
       "caller": "command",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "UserTask::before_run",
+      "callee": "task.before_run",
       "caller_module": "process",
-      "evidence": "代码通过打开文件、创建UserTask、调用exec_with_process和thread::spawn来启动用户进程，涉及进程管理和执行，核心是exec_with_process。",
-      "source_block_id": "block_9",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_12",
       "source": [
-        "ai"
+        "ai",
+        "regex"
       ],
-      "confidence": 0.7
+      "confidence": 0.9,
+      "edge_id": "edge_25",
+      "normalized_caller": "command",
+      "normalized_callee": "before_run",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -243,12 +697,50 @@
       "callee": "exec_with_process",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_26",
+      "normalized_caller": "command",
+      "normalized_callee": "exec_with_process",
+      "call_type": "external"
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "curr_task.before_run",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_12",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_27",
+      "normalized_caller": "command",
+      "normalized_callee": "before_run",
+      "call_type": "external"
+    },
+    {
+      "caller": "command",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "task.get_task_id",
+      "caller_module": "process",
+      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "source_block_id": "block_12",
+      "source": [
+        "ai",
+        "regex"
+      ],
+      "confidence": 0.9,
+      "edge_id": "edge_28",
+      "normalized_caller": "command",
+      "normalized_callee": "get_task_id",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -256,12 +748,16 @@
       "callee": "thread::spawn",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_29",
+      "normalized_caller": "command",
+      "normalized_callee": "spawn",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -269,12 +765,16 @@
       "callee": "user_entry",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_30",
+      "normalized_caller": "command",
+      "normalized_callee": "user_entry",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -282,12 +782,16 @@
       "callee": "tid2task",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_31",
+      "normalized_caller": "command",
+      "normalized_callee": "tid2task",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -295,12 +799,16 @@
       "callee": "task.exit_code",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_32",
+      "normalized_caller": "command",
+      "normalized_callee": "exit_code",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -308,12 +816,16 @@
       "callee": "release_task",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_33",
+      "normalized_caller": "command",
+      "normalized_callee": "release_task",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -321,154 +833,218 @@
       "callee": "yield_now",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_34",
+      "normalized_caller": "command",
+      "normalized_callee": "yield_now",
+      "call_type": "external"
     },
     {
       "caller": "command",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "core::sync::atomic::fence",
       "caller_module": "process",
-      "evidence": "代码通过打开文件、创建UserTask、调用exec_with_process和thread::spawn来启动用户进程，涉及进程管理和执行，核心是exec_with_process。",
-      "source_block_id": "block_9",
+      "evidence": "函数名称为 command，主要逻辑涉及解析命令、打开文件、创建用户任务、异步执行进程并等待其退出，属于进程管理范畴。",
+      "source_block_id": "block_12",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_35",
+      "normalized_caller": "command",
+      "normalized_callee": "fence",
+      "call_type": "external"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "kill_all_tasks",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_36",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "kill_all_tasks",
+      "call_type": "internal"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "command",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_37",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "command",
+      "call_type": "internal"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "set_libc_path",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_38",
+      "normalized_caller": "initproc",
+      "normalized_callee": "set_libc_path",
+      "call_type": "internal"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "set_dyn_path",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_39",
+      "normalized_caller": "initproc",
+      "normalized_callee": "set_dyn_path",
+      "call_type": "internal"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "command",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_40",
+      "normalized_caller": "initproc",
+      "normalized_callee": "command",
+      "call_type": "internal"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "run_ltp_tests",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_41",
+      "normalized_caller": "initproc",
+      "normalized_callee": "run_ltp_tests",
+      "call_type": "internal"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "command_iperf",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_42",
+      "normalized_caller": "initproc",
+      "normalized_callee": "command_iperf",
+      "call_type": "internal"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "run_musl_tests",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_43",
+      "normalized_caller": "initproc",
+      "normalized_callee": "run_musl_tests",
+      "call_type": "internal"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "shutdown",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_44",
+      "normalized_caller": "initproc",
+      "normalized_callee": "shutdown",
+      "call_type": "external"
+    },
+    {
+      "caller": "initproc",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "TASK_MAP.lock",
+      "caller_module": "process",
+      "evidence": "该函数是初始化进程（initproc），负责配置系统库路径、执行各种用户态测试程序，并最终决定是否关机，属于进程/任务管理范畴。",
+      "source_block_id": "block_14",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_45",
+      "normalized_caller": "initproc",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
       "caller": "run_ltp_tests",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "command",
-      "caller_module": "report_generation",
+      "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_12",
+      "source_block_id": "block_15",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_46",
+      "normalized_caller": "run_ltp_tests",
+      "normalized_callee": "command",
+      "call_type": "internal"
     },
     {
       "caller": "run_musl_tests",
@@ -476,36 +1052,16 @@
       "callee": "command",
       "caller_module": "process",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_13",
+      "source_block_id": "block_16",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "run_musl_tests",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "PathBuf::clone",
-      "caller_module": "process",
-      "evidence": "该函数定义在 kernel\\src\\tasks\\initproc.rs 中，initproc 通常与进程初始化相关；函数名 run_musl_tests 表明它用于运行 musl 兼容性测试；内部调用 command 函数异步执行外部程序，属于进程创建和任务调度范畴。",
-      "source_block_id": "block_13",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "run_musl_tests",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "alloc::format",
-      "caller_module": "process",
-      "evidence": "该函数定义在 kernel\\src\\tasks\\initproc.rs 中，initproc 通常与进程初始化相关；函数名 run_musl_tests 表明它用于运行 musl 兼容性测试；内部调用 command 函数异步执行外部程序，属于进程创建和任务调度范畴。",
-      "source_block_id": "block_13",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
+      "confidence": 0.9,
+      "edge_id": "edge_47",
+      "normalized_caller": "run_musl_tests",
+      "normalized_callee": "command",
+      "call_type": "internal"
     },
     {
       "caller": "run_glibc_tests",
@@ -513,360 +1069,323 @@
       "callee": "command",
       "caller_module": "unknown",
       "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_14",
+      "source_block_id": "block_17",
       "source": [
         "ai",
         "regex"
       ],
-      "confidence": 0.9
+      "confidence": 0.9,
+      "edge_id": "edge_48",
+      "normalized_caller": "run_glibc_tests",
+      "normalized_callee": "command",
+      "call_type": "internal"
+    },
+    {
+      "caller": "run_glibc_tests",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "alloc::format",
+      "caller_module": "unknown",
+      "evidence": "函数定义了两个向量 glibc_static_tests 和 glibc_dynamic_tests，其中包含多个测试用例的元组，然后循环遍历这些测试并使用 command 函数运行它们，排除通过 exclude 参数指定的测试用例。没有涉及硬件或内核核心模块的直接操作。",
+      "source_block_id": "block_17",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_49",
+      "normalized_caller": "run_glibc_tests",
+      "normalized_callee": "format",
+      "call_type": "external"
     },
     {
       "caller": "sys_brk",
       "caller_file": "kernel\\src\\syscall\\mm.rs",
       "callee": "self.task.heap()",
-      "caller_module": "syscall",
-      "evidence": "函数名sys_brk与Linux的brk系统调用对应，代码中根据addr是否为0分别执行查询或修改堆顶操作，符合brk语义。",
-      "source_block_id": "block_16",
+      "caller_module": "memory",
+      "evidence": "代码位于 mm.rs 文件，函数名为 sys_brk，属于内存管理系统调用；函数内部调用 self.task.heap() 和 self.task.sbrk(addr) 操作进程堆。",
+      "source_block_id": "block_20",
       "source": [
         "ai"
       ],
-      "confidence": 0.7
+      "confidence": 0.7,
+      "edge_id": "edge_50",
+      "normalized_caller": "sys_brk",
+      "normalized_callee": "heap()",
+      "call_type": "external"
     },
     {
       "caller": "sys_brk",
       "caller_file": "kernel\\src\\syscall\\mm.rs",
       "callee": "self.task.sbrk(addr)",
-      "caller_module": "syscall",
-      "evidence": "函数名sys_brk与Linux的brk系统调用对应，代码中根据addr是否为0分别执行查询或修改堆顶操作，符合brk语义。",
-      "source_block_id": "block_16",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "alignup",
       "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "MapFlags::from_bits_truncate",
-      "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "MmapProt::from_bits_truncate",
-      "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "flags.contains",
-      "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.get_fd",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.get_last_free_addr",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "VirtAddr::from",
-      "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "VirtAddr::new",
-      "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.pcb.lock().memset.overlapping",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.pcb.lock().memset.sub_area",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.pcb.lock().memset.push",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.map_frames",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.frame_alloc",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.map",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "MemArea::new (?)",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "UserRef::from(...).slice_mut_with_len",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "file.readat",
-      "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.page_table",
-      "caller_module": "memory",
-      "evidence": "代码定义pub async fn sys_mmap，处理虚拟内存映射，涉及页对齐、页表映射、内存区域管理（memset）、物理帧分配等内存子系统核心功能；同时关联文件描述符和文件读取，但核心仍是内存映射操作。",
-      "source_block_id": "block_17",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_munmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "self.task.inner_map",
-      "caller_module": "memory",
-      "evidence": "代码中使用了 memset.sub_area 处理内存区域，且函数名 sys_munmap 与取消内存映射的系统调用对应，涉及内存管理模块",
-      "source_block_id": "block_18",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_munmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "pcb.memset.sub_area",
-      "caller_module": "memory",
-      "evidence": "代码中使用了 memset.sub_area 处理内存区域，且函数名 sys_munmap 与取消内存映射的系统调用对应，涉及内存管理模块",
-      "source_block_id": "block_18",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_mprotect",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "ProtFlags::from_bits_truncate",
-      "caller_module": "memory",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
-      "source_block_id": "block_19",
-      "source": [
-        "ai",
-        "regex"
-      ],
-      "confidence": 0.9
-    },
-    {
-      "caller": "sys_mprotect",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "debug!",
-      "caller_module": "memory",
-      "evidence": "函数使用 ProtFlags 用于内存保护标志，处理的内存地址范围，属于内存管理系统调用；但实现是空壳仅返回成功，未涉及任何内存修改操作。",
-      "source_block_id": "block_19",
-      "source": [
-        "ai"
-      ],
-      "confidence": 0.7
-    },
-    {
-      "caller": "sys_msync",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "MSyncFlags::from_bits_truncate",
-      "caller_module": "syscall",
-      "evidence": "该调用关系同时由 AI 函数理解和源码正则提取发现，可信度较高。",
+      "evidence": "代码位于 mm.rs 文件，函数名为 sys_brk，属于内存管理系统调用；函数内部调用 self.task.heap() 和 self.task.sbrk(addr) 操作进程堆。",
       "source_block_id": "block_20",
       "source": [
-        "ai",
-        "regex"
+        "ai"
       ],
-      "confidence": 0.9
+      "confidence": 0.7,
+      "edge_id": "edge_51",
+      "normalized_caller": "sys_brk",
+      "normalized_callee": "sbrk(addr)",
+      "call_type": "external"
     },
     {
-      "caller": "set_libc_path",
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.heap()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_52",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "heap()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.sbrk(addr)",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_53",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sbrk(addr)",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.get_fd(fd)",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_54",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_fd(fd)",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.get_last_free_addr()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_55",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_last_free_addr()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.pcb.lock().memset.overlapping()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_56",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "overlapping()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.pcb.lock().memset.sub_area()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_57",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sub_area()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.map_frames()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_58",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "map_frames()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.frame_alloc()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_59",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "frame_alloc()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.map()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_60",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "map()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.pcb.lock().memset.push()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_61",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "push()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.inner_map()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_62",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "inner_map()",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "self.task.page_table.translate()",
+      "caller_module": "syscall",
+      "evidence": "代码位于 syscall/mm.rs，实现了多个以 sys_ 开头的系统调用函数，这些函数操作任务的内存结构（堆、mmap 区域、页表等），属于系统调用模块中的内存管理部分。",
+      "source_block_id": "block_19",
+      "source": [
+        "ai"
+      ],
+      "confidence": 0.7,
+      "edge_id": "edge_63",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "translate()",
+      "call_type": "external"
+    },
+    {
+      "caller": "DYN_PATH",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "lock",
+      "callee": "new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_3",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_64",
+      "normalized_caller": "DYN_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "GLIBC_PATH",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "new",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_2",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_65",
+      "normalized_caller": "GLIBC_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "LIBC_PATH",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "new",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
       "source_block_id": "block_1",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_66",
+      "normalized_caller": "LIBC_PATH",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
-      "caller": "get_libc_path",
+      "caller": "set_libc_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "LIBC_PATH.lock",
-      "caller_module": "unknown",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_2",
+      "source_block_id": "block_4",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_67",
+      "normalized_caller": "set_libc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
-      "caller": "set_glibc_path",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "lock",
-      "caller_module": "unknown",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_3",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "get_glibc_path",
+      "caller": "set_libc_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "lock",
       "caller_module": "process",
@@ -875,34 +1394,62 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_68",
+      "normalized_caller": "set_libc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
-      "caller": "set_dyn_path",
+      "caller": "get_libc_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "DYN_PATH.lock",
-      "caller_module": "filesystem",
+      "callee": "LIBC_PATH.lock",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
       "source_block_id": "block_5",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_69",
+      "normalized_caller": "get_libc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
-      "caller": "set_dyn_path",
+      "caller": "get_libc_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "lock",
-      "caller_module": "filesystem",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
       "source_block_id": "block_5",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_70",
+      "normalized_caller": "get_libc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
-      "caller": "get_dyn_path",
+      "caller": "get_libc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_5",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_71",
+      "normalized_caller": "get_libc_path",
+      "normalized_callee": "clone",
+      "call_type": "external"
+    },
+    {
+      "caller": "set_glibc_path",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "lock",
       "caller_module": "process",
@@ -911,7 +1458,107 @@
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_72",
+      "normalized_caller": "set_glibc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "set_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "DYN_PATH.lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_73",
+      "normalized_caller": "set_dyn_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "set_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_8",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_74",
+      "normalized_caller": "set_dyn_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "GLIBC_PATH.lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_75",
+      "normalized_caller": "get_glibc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_76",
+      "normalized_caller": "get_glibc_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "get_glibc_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "clone",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_7",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_77",
+      "normalized_caller": "get_glibc_path",
+      "normalized_callee": "clone",
+      "call_type": "external"
+    },
+    {
+      "caller": "get_dyn_path",
+      "caller_file": "kernel\\src\\tasks\\initproc.rs",
+      "callee": "lock",
+      "caller_module": "process",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_9",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_78",
+      "normalized_caller": "get_dyn_path",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
       "caller": "get_dyn_path",
@@ -919,11 +1566,15 @@
       "callee": "clone",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_6",
+      "source_block_id": "block_9",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_79",
+      "normalized_caller": "get_dyn_path",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "clear",
@@ -931,107 +1582,15 @@
       "callee": "putchar",
       "caller_module": "driver",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_7",
+      "source_block_id": "block_10",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "File::open",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "Vec::new",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "cmd.split",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "args.drain",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "filename.into",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "args_extend.extend",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "args.into_iter",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "task.exit_code",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_80",
+      "normalized_caller": "clear",
+      "normalized_callee": "putchar",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -1039,11 +1598,15 @@
       "callee": "lock",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_81",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -1051,11 +1614,15 @@
       "callee": "values",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_82",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "values",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -1063,11 +1630,15 @@
       "callee": "into_iter",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_83",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "into_iter",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -1075,11 +1646,15 @@
       "callee": "for_each",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_84",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "for_each",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -1087,23 +1662,15 @@
       "callee": "upgrade",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "inspect",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_85",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "upgrade",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -1111,11 +1678,15 @@
       "callee": "get_task_type",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_86",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "get_task_type",
+      "call_type": "external"
     },
     {
       "caller": "kill_all_tasks",
@@ -1123,239 +1694,15 @@
       "callee": "exit",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
+      "source_block_id": "block_11",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "command",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "split",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "filter",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "collect",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "drain",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "last",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "unwrap",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "open",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "into",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "extend",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "add_user_task",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "new",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "tid2task",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "exit_code",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "is_some",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "release_task",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "yield_now",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "syscall",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "kill_all_tasks",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "expect",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_8",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_87",
+      "normalized_caller": "kill_all_tasks",
+      "normalized_callee": "exit",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1363,11 +1710,15 @@
       "callee": "Vec::new",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_88",
+      "normalized_caller": "command",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1375,11 +1726,15 @@
       "callee": "String::new",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_89",
+      "normalized_caller": "command",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1387,11 +1742,15 @@
       "callee": "Weak::new",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_90",
+      "normalized_caller": "command",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1399,11 +1758,15 @@
       "callee": "String::from",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_91",
+      "normalized_caller": "command",
+      "normalized_callee": "from",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1411,11 +1774,15 @@
       "callee": "atomic::fence",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_92",
+      "normalized_caller": "command",
+      "normalized_callee": "fence",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1423,11 +1790,15 @@
       "callee": "cmd.chars",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_93",
+      "normalized_caller": "command",
+      "normalized_callee": "chars",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1435,11 +1806,15 @@
       "callee": "current_arg.push",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_94",
+      "normalized_caller": "command",
+      "normalized_callee": "push",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1447,11 +1822,15 @@
       "callee": "current_arg.is_empty",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_95",
+      "normalized_caller": "command",
+      "normalized_callee": "is_empty",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1459,11 +1838,15 @@
       "callee": "args.push",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_96",
+      "normalized_caller": "command",
+      "normalized_callee": "push",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1471,11 +1854,15 @@
       "callee": "current_arg.clone",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_97",
+      "normalized_caller": "command",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1483,11 +1870,15 @@
       "callee": "current_arg.clear",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_98",
+      "normalized_caller": "command",
+      "normalized_callee": "clear",
+      "call_type": "internal"
     },
     {
       "caller": "command",
@@ -1495,11 +1886,15 @@
       "callee": "args.iter",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_99",
+      "normalized_caller": "command",
+      "normalized_callee": "iter",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1507,11 +1902,15 @@
       "callee": "s.as_str",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_100",
+      "normalized_caller": "command",
+      "normalized_callee": "as_str",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1519,11 +1918,15 @@
       "callee": "args_str.is_empty",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_101",
+      "normalized_caller": "command",
+      "normalized_callee": "is_empty",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1531,11 +1934,15 @@
       "callee": "args_extend.extend",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_102",
+      "normalized_caller": "command",
+      "normalized_callee": "extend",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1543,11 +1950,15 @@
       "callee": "remaining_args.iter",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_103",
+      "normalized_caller": "command",
+      "normalized_callee": "iter",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1555,23 +1966,15 @@
       "callee": "work_dir.clone",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "command",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "task.before_run",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_104",
+      "normalized_caller": "command",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1579,11 +1982,15 @@
       "callee": "task.clone",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_105",
+      "normalized_caller": "command",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1591,35 +1998,15 @@
       "callee": "args_extend.into_iter",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "command",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "curr_task.before_run",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "command",
-      "caller_file": "kernel\\src\\tasks\\initproc.rs",
-      "callee": "task.get_task_id",
-      "caller_module": "process",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_106",
+      "normalized_caller": "command",
+      "normalized_callee": "into_iter",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1627,11 +2014,15 @@
       "callee": "new",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_107",
+      "normalized_caller": "command",
+      "normalized_callee": "new",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1639,11 +2030,15 @@
       "callee": "chars",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_108",
+      "normalized_caller": "command",
+      "normalized_callee": "chars",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1651,11 +2046,15 @@
       "callee": "push",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_109",
+      "normalized_caller": "command",
+      "normalized_callee": "push",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1663,11 +2062,15 @@
       "callee": "is_empty",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_110",
+      "normalized_caller": "command",
+      "normalized_callee": "is_empty",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1675,11 +2078,15 @@
       "callee": "clone",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_111",
+      "normalized_caller": "command",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1687,11 +2094,15 @@
       "callee": "clear",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_112",
+      "normalized_caller": "command",
+      "normalized_callee": "clear",
+      "call_type": "internal"
     },
     {
       "caller": "command",
@@ -1699,11 +2110,15 @@
       "callee": "iter",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_113",
+      "normalized_caller": "command",
+      "normalized_callee": "iter",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1711,11 +2126,15 @@
       "callee": "map",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_114",
+      "normalized_caller": "command",
+      "normalized_callee": "map",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1723,11 +2142,15 @@
       "callee": "as_str",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_115",
+      "normalized_caller": "command",
+      "normalized_callee": "as_str",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1735,11 +2158,15 @@
       "callee": "collect",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_116",
+      "normalized_caller": "command",
+      "normalized_callee": "collect",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1747,11 +2174,15 @@
       "callee": "open",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_117",
+      "normalized_caller": "command",
+      "normalized_callee": "open",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1759,11 +2190,15 @@
       "callee": "into",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_118",
+      "normalized_caller": "command",
+      "normalized_callee": "into",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1771,11 +2206,15 @@
       "callee": "extend",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_119",
+      "normalized_caller": "command",
+      "normalized_callee": "extend",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1783,11 +2222,15 @@
       "callee": "copied",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_120",
+      "normalized_caller": "command",
+      "normalized_callee": "copied",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1795,11 +2238,15 @@
       "callee": "before_run",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_121",
+      "normalized_caller": "command",
+      "normalized_callee": "before_run",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1807,11 +2254,15 @@
       "callee": "from",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_122",
+      "normalized_caller": "command",
+      "normalized_callee": "from",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1819,11 +2270,15 @@
       "callee": "into_iter",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_123",
+      "normalized_caller": "command",
+      "normalized_callee": "into_iter",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1831,11 +2286,15 @@
       "callee": "get_task_id",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_124",
+      "normalized_caller": "command",
+      "normalized_callee": "get_task_id",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1843,11 +2302,15 @@
       "callee": "spawn",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_125",
+      "normalized_caller": "command",
+      "normalized_callee": "spawn",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1855,11 +2318,15 @@
       "callee": "unwrap",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_126",
+      "normalized_caller": "command",
+      "normalized_callee": "unwrap",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1867,11 +2334,15 @@
       "callee": "exit_code",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_127",
+      "normalized_caller": "command",
+      "normalized_callee": "exit_code",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1879,11 +2350,15 @@
       "callee": "is_some",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_128",
+      "normalized_caller": "command",
+      "normalized_callee": "is_some",
+      "call_type": "external"
     },
     {
       "caller": "command",
@@ -1891,335 +2366,447 @@
       "callee": "fence",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_9",
+      "source_block_id": "block_12",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_129",
+      "normalized_caller": "command",
+      "normalized_callee": "fence",
+      "call_type": "external"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "atomic::fence",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_130",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "fence",
+      "call_type": "external"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "hint::spin_loop",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_131",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "spin_loop",
+      "call_type": "external"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "work_dir.clone",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_132",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "fence",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_133",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "fence",
+      "call_type": "external"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "spin_loop",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_134",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "spin_loop",
+      "call_type": "external"
     },
     {
       "caller": "command_iperf",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "clone",
-      "caller_module": "scheduler",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_10",
+      "source_block_id": "block_13",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_135",
+      "normalized_caller": "command_iperf",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "PathBuf::from",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_136",
+      "normalized_caller": "initproc",
+      "normalized_callee": "from",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "home_dir.clone",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_137",
+      "normalized_caller": "initproc",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "glibc_home_dir.clone",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_138",
+      "normalized_caller": "initproc",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "x.upgrade",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_139",
+      "normalized_caller": "initproc",
+      "normalized_callee": "upgrade",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "x.get_task_type",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_140",
+      "normalized_caller": "initproc",
+      "normalized_callee": "get_task_type",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "cfg",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_141",
+      "normalized_caller": "initproc",
+      "normalized_callee": "cfg",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "not",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_142",
+      "normalized_caller": "initproc",
+      "normalized_callee": "not",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "to_string",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_143",
+      "normalized_caller": "initproc",
+      "normalized_callee": "to_string",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "from",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_144",
+      "normalized_caller": "initproc",
+      "normalized_callee": "from",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "clone",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_145",
+      "normalized_caller": "initproc",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "lock",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_146",
+      "normalized_caller": "initproc",
+      "normalized_callee": "lock",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "values",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_147",
+      "normalized_caller": "initproc",
+      "normalized_callee": "values",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "find",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_148",
+      "normalized_caller": "initproc",
+      "normalized_callee": "find",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "upgrade",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_149",
+      "normalized_caller": "initproc",
+      "normalized_callee": "upgrade",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "map",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_150",
+      "normalized_caller": "initproc",
+      "normalized_callee": "map",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "get_task_type",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_151",
+      "normalized_caller": "initproc",
+      "normalized_callee": "get_task_type",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "unwrap_or",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_152",
+      "normalized_caller": "initproc",
+      "normalized_callee": "unwrap_or",
+      "call_type": "external"
     },
     {
       "caller": "initproc",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "is_none",
-      "caller_module": "build",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_11",
+      "source_block_id": "block_14",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_153",
+      "normalized_caller": "initproc",
+      "normalized_callee": "is_none",
+      "call_type": "external"
     },
     {
       "caller": "run_ltp_tests",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "home_dir.clone",
-      "caller_module": "report_generation",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_12",
+      "source_block_id": "block_15",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_154",
+      "normalized_caller": "run_ltp_tests",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "run_ltp_tests",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "tests",
-      "caller_module": "report_generation",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_12",
+      "source_block_id": "block_15",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_155",
+      "normalized_caller": "run_ltp_tests",
+      "normalized_callee": "tests",
+      "call_type": "external"
     },
     {
       "caller": "run_ltp_tests",
       "caller_file": "kernel\\src\\tasks\\initproc.rs",
       "callee": "clone",
-      "caller_module": "report_generation",
+      "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_12",
+      "source_block_id": "block_15",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_156",
+      "normalized_caller": "run_ltp_tests",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "run_musl_tests",
@@ -2227,11 +2814,15 @@
       "callee": "home_dir.clone",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_13",
+      "source_block_id": "block_16",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_157",
+      "normalized_caller": "run_musl_tests",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "run_musl_tests",
@@ -2239,11 +2830,15 @@
       "callee": "clone",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_13",
+      "source_block_id": "block_16",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_158",
+      "normalized_caller": "run_musl_tests",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "run_musl_tests",
@@ -2251,11 +2846,15 @@
       "callee": "iter",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_13",
+      "source_block_id": "block_16",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_159",
+      "normalized_caller": "run_musl_tests",
+      "normalized_callee": "iter",
+      "call_type": "external"
     },
     {
       "caller": "run_musl_tests",
@@ -2263,11 +2862,15 @@
       "callee": "any",
       "caller_module": "process",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_13",
+      "source_block_id": "block_16",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_160",
+      "normalized_caller": "run_musl_tests",
+      "normalized_callee": "any",
+      "call_type": "external"
     },
     {
       "caller": "run_glibc_tests",
@@ -2275,11 +2878,15 @@
       "callee": "glibc_home_dir.clone",
       "caller_module": "unknown",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_14",
+      "source_block_id": "block_17",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_161",
+      "normalized_caller": "run_glibc_tests",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "run_glibc_tests",
@@ -2287,11 +2894,15 @@
       "callee": "clone",
       "caller_module": "unknown",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_14",
+      "source_block_id": "block_17",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_162",
+      "normalized_caller": "run_glibc_tests",
+      "normalized_callee": "clone",
+      "call_type": "external"
     },
     {
       "caller": "run_glibc_tests",
@@ -2299,11 +2910,15 @@
       "callee": "iter",
       "caller_module": "unknown",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_14",
+      "source_block_id": "block_17",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_163",
+      "normalized_caller": "run_glibc_tests",
+      "normalized_callee": "iter",
+      "call_type": "external"
     },
     {
       "caller": "run_glibc_tests",
@@ -2311,539 +2926,1103 @@
       "callee": "any",
       "caller_module": "unknown",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_14",
+      "source_block_id": "block_17",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_164",
+      "normalized_caller": "run_glibc_tests",
+      "normalized_callee": "any",
+      "call_type": "external"
     },
     {
       "caller": "sys_brk",
       "caller_file": "kernel\\src\\syscall\\mm.rs",
       "callee": "task.heap",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_brk",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "task.sbrk",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_brk",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "heap",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_brk",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "sbrk",
-      "caller_module": "syscall",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_16",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "usize::from",
       "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "task.get_fd",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "task.get_last_free_addr",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "addr.into",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "addr.raw",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "pcb.lock",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "memset.sub_area",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "task.map_frames",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "file.get_bare_file",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "prot.into",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "len.div_ceil",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "file.is_some",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "memset.push",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "from_bits_truncate",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "contains",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "get_fd",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "get_last_free_addr",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "from",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "new",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "into",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "cfg",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "raw",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "lock",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "overlapping",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "sub_area",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "map_frames",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "get_bare_file",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "frame_alloc",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "div_ceil",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "ok_or",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "map",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "is_some",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "push",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "slice_mut_with_len",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "readat",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_17",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_munmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "task.inner_map",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_18",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_munmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "inner_map",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_18",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_munmap",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "sub_area",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_18",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_mprotect",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "from_bits_truncate",
-      "caller_module": "memory",
-      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
-      "source_block_id": "block_19",
-      "source": [
-        "regex"
-      ],
-      "confidence": 0.6
-    },
-    {
-      "caller": "sys_msync",
-      "caller_file": "kernel\\src\\syscall\\mm.rs",
-      "callee": "from_bits_truncate",
-      "caller_module": "syscall",
       "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
       "source_block_id": "block_20",
       "source": [
         "regex"
       ],
-      "confidence": 0.6
+      "confidence": 0.6,
+      "edge_id": "edge_165",
+      "normalized_caller": "sys_brk",
+      "normalized_callee": "heap",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.sbrk",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_20",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_166",
+      "normalized_caller": "sys_brk",
+      "normalized_callee": "sbrk",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "heap",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_20",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_167",
+      "normalized_caller": "sys_brk",
+      "normalized_callee": "heap",
+      "call_type": "external"
+    },
+    {
+      "caller": "sys_brk",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sbrk",
+      "caller_module": "memory",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_20",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_168",
+      "normalized_caller": "sys_brk",
+      "normalized_callee": "sbrk",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "MapFlags::from_bits_truncate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_169",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from_bits_truncate",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "MmapProt::from_bits_truncate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_170",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from_bits_truncate",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "usize::from",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_171",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "VirtAddr::from",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_172",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "VirtAddr::new",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_173",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "ProtFlags::from_bits_truncate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_174",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from_bits_truncate",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "MSyncFlags::from_bits_truncate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_175",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from_bits_truncate",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.heap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_176",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "heap",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.sbrk",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_177",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sbrk",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "flags.contains",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_178",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "contains",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.get_fd",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_179",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_fd",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.get_last_free_addr",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_180",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_last_free_addr",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "addr.into",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_181",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "into",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "addr.raw",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_182",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "raw",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "pcb.lock",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_183",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "memset.sub_area",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_184",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sub_area",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.map_frames",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_185",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "map_frames",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "file.get_bare_file",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_186",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_bare_file",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "prot.into",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_187",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "into",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "len.div_ceil",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_188",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "div_ceil",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "file.is_some",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_189",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "is_some",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "memset.push",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_190",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "push",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "file.readat",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_191",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "readat",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "task.inner_map",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_192",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "inner_map",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "page_table.translate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_193",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "translate",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "tcb.write",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_194",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "write",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sys_brk",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_195",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sys_brk",
+      "call_type": "internal"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "heap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_196",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "heap",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sbrk",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_197",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sbrk",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sys_mmap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_198",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sys_mmap",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "from_bits_truncate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_199",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from_bits_truncate",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "alignup",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_200",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "alignup",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "contains",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_201",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "contains",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "get_fd",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_202",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_fd",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "get_last_free_addr",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_203",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_last_free_addr",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "from",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_204",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "from",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "new",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_205",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "new",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "into",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_206",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "into",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "cfg",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_207",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "cfg",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "raw",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_208",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "raw",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "lock",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_209",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "lock",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "overlapping",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_210",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "overlapping",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sub_area",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_211",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sub_area",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "map_frames",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_212",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "map_frames",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "get_bare_file",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_213",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "get_bare_file",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "frame_alloc",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_214",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "frame_alloc",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "div_ceil",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_215",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "div_ceil",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "ok_or",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_216",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "ok_or",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "map",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_217",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "map",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "is_some",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_218",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "is_some",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "push",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_219",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "push",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "slice_mut_with_len",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_220",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "slice_mut_with_len",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "readat",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_221",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "readat",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sys_munmap",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_222",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sys_munmap",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "inner_map",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_223",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "inner_map",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sys_mprotect",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_224",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sys_mprotect",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sys_msync",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_225",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sys_msync",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sys_set_robust_list",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_226",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sys_set_robust_list",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "translate",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_227",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "translate",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "is_none",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_228",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "is_none",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "write",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_229",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "write",
+      "call_type": "external"
+    },
+    {
+      "caller": "impl UserTaskContainer {",
+      "caller_file": "kernel\\src\\syscall\\mm.rs",
+      "callee": "sys_get_robust_list",
+      "caller_module": "syscall",
+      "evidence": "该调用关系由源码正则规则从代码块 content 中提取。",
+      "source_block_id": "block_19",
+      "source": [
+        "regex"
+      ],
+      "confidence": 0.6,
+      "edge_id": "edge_230",
+      "normalized_caller": "impl UserTaskContainer {",
+      "normalized_callee": "sys_get_robust_list",
+      "call_type": "external"
     }
-  ]
+  ],
+  "module_stats": {
+    "process": {
+      "function_count": 15,
+      "outgoing_edge_count": 142,
+      "internal_edge_count": 12,
+      "external_edge_count": 130
+    },
+    "driver": {
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 0,
+      "external_edge_count": 2
+    },
+    "memory": {
+      "function_count": 2,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 0,
+      "external_edge_count": 6
+    },
+    "unknown": {
+      "function_count": 1,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 1,
+      "external_edge_count": 5
+    },
+    "syscall": {
+      "function_count": 1,
+      "outgoing_edge_count": 74,
+      "internal_edge_count": 1,
+      "external_edge_count": 73
+    }
+  }
 }

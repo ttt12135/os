@@ -1,405 +1,482 @@
 {
   "repo_name": "yanshandaxue",
-  "created_at": "2026-05-31 17:51:18",
+  "created_at": "2026-06-16 02:34:03",
   "analysis_count": 20,
   "functions": [
     {
       "block_id": "block_1",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "9",
+      "end_line": "9",
+      "name": "BOOT_STACK",
+      "type": "static",
+      "summary": "定义一个可变静态字节数组作为启动栈，大小为 TASK_STACK_SIZE，初始化为全零。",
+      "logic_steps": [
+        "声明一个名为 BOOT_STACK 的可变静态变量，类型为 [u8; TASK_STACK_SIZE]，即字节数组。",
+        "将数组初始化为全零值，用于引导阶段临时栈空间。"
+      ],
+      "called_functions": [],
+      "related_os_module": "boot",
+      "evidence": "代码位于 boot.rs 中，变量名 BOOT_STACK 暗示其为引导栈，类型为字节数组且可变，符合引导阶段栈的典型实现。",
+      "uncertainty": "TASK_STACK_SIZE 的具体数值和上下文未提供，无法确定栈大小；未包含栈分配或切换逻辑，仅为栈内存定义。"
+    },
+    {
+      "block_id": "block_2",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "12",
+      "end_line": "12",
+      "name": "BOOT_PT_L0",
+      "type": "static",
+      "summary": "声明一个可变的静态数组，用于存储AArch64架构下L0级页表的页表项，初始化为512个空页表项。这是引导阶段页表结构的一部分。",
+      "logic_steps": [
+        "第1步: 定义名为BOOT_PT_L0的可变静态变量，类型为包含512个A64PTE元素的数组。",
+        "第2步: 使用`[A64PTE::empty(); 512]`将数组所有元素初始化为空页表项（即所有位为0的页表项）。"
+      ],
+      "called_functions": [
+        "A64PTE::empty"
+      ],
+      "related_os_module": "memory",
+      "evidence": "代码中明确使用A64PTE类型（AArch64页表项），并指定大小为512（对应AArch64页表的L0级条目数），且位于boot.rs文件中，表明与引导阶段内存页表初始化相关。",
+      "uncertainty": "低不确定性。该代码块仅声明静态变量，未包含完整页表填充或映射逻辑，因此无法推断后续如何使用此页表。"
+    },
+    {
+      "block_id": "block_3",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "15",
+      "end_line": "15",
+      "name": "BOOT_PT_L1",
+      "type": "static",
+      "summary": "创建一个可变的静态数组BOOT_PT_L1，用于存放AArch64架构下的L1页表项，初始化为512个A64PTE::empty()条目，该数组通常在系统启动阶段用于建立临时页表。",
+      "logic_steps": [
+        "第1步逻辑：声明一个可变的静态数组BOOT_PT_L1，其类型为[A64PTE; 512]（512个A64PTE元素的数组）。",
+        "第2步逻辑：使用A64PTE::empty()作为初始值构造一个长度为512的数组，表示所有页表项初始为空（无效）状态。"
+      ],
+      "called_functions": [
+        "A64PTE::empty"
+      ],
+      "related_os_module": "boot",
+      "evidence": "代码中明确使用了A64PTE::empty()来初始化页表项，且变量名为BOOT_PT_L1，暗示其用于boot阶段的L1页表。文件路径位于platform/aarch64_common/boot.rs，进一步确认与AArch64架构的启动相关。",
+      "uncertainty": "由于只有一行静态变量声明，无法确定后续如何使用该数组，也无法确认数组的地址、属性（如内存类型、权限）等具体配置。"
+    },
+    {
+      "block_id": "block_4",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "17",
+      "end_line": "17",
+      "name": "FLAG_LE",
+      "type": "const",
+      "summary": "定义了一个常量FLAG_LE，其值为0，可能用于表示某种标志或配置，但具体用途不明。",
+      "logic_steps": [
+        "定义常量FLAG_LE并赋值为0b0（即0）。",
+        "该常量在代码中仅声明，未在展示的片段中被使用，因此无法推断其具体作用。"
+      ],
+      "called_functions": [],
+      "related_os_module": "unknown",
+      "evidence": "代码仅为一个常量定义，值为0，无其他上下文可判断其归属模块或具体功能。",
+      "uncertainty": "由于仅有一个常量定义，且无任何上下文（如注释、使用位置等），无法确定其在操作系统中的具体角色。常量名FLAG_LE可能暗示与Little-Endian或标志位相关，但缺乏证据支持。"
+    },
+    {
+      "block_id": "block_6",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "19",
+      "end_line": "19",
+      "name": "FLAG_ANY_MEM",
+      "type": "const",
+      "summary": "定义了一个常量，表示内存标志位，用于标识任何内存类型。",
+      "logic_steps": [
+        "声明一个常量 FLAG_ANY_MEM，类型为 usize，值为 0b1000（即十进制8）。"
+      ],
+      "called_functions": [],
+      "related_os_module": "boot",
+      "evidence": "常量名为 FLAG_ANY_MEM，值0b1000是一个二进制位掩码，通常用于内存属性或类型标志。文件路径位于aarch64_common/boot.rs，表明与启动引导阶段的内存配置相关。",
+      "uncertainty": "仅从单行代码无法确定该标志具体用于何处，但根据命名和文件路径，推测与启动阶段的内存类型标记相关。"
+    },
+    {
+      "block_id": "block_5",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "18",
+      "end_line": "18",
+      "name": "FLAG_PAGE_SIZE_4K",
+      "type": "const",
+      "summary": "定义了一个表示4K页大小的标志常量，值为二进制0b10，用于在AArch64架构中配置页表属性。",
+      "logic_steps": [
+        "声明一个常量FLAG_PAGE_SIZE_4K，类型为usize。",
+        "将该常量初始化为二进制值0b10，即十进制2。"
+      ],
+      "called_functions": [],
+      "related_os_module": "memory",
+      "evidence": "该常量名称和数值与ARMv8-A架构中系统寄存器TCR_EL1的TG0/TG1字段位定义相关（TG0=0b10表示4KB粒度），常用于内存管理单元的页表配置，因此属于memory模块。",
+      "uncertainty": "该常量在代码中未与其他函数直接关联，仅从名称和值推断其用于页大小配置，但未在可见范围内验证使用场景。"
+    },
+    {
+      "block_id": "block_9",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "98",
+      "end_line": "103",
+      "name": "enable_fp",
+      "type": "function",
+      "summary": "在支持FP/SIMD特性的情况下，通过配置CPACR_EL1寄存器启用浮点运算和SIMD扩展，并执行指令同步屏障。",
+      "logic_steps": [
+        "检查特性标志fp_simd是否启用。",
+        "若启用，则将CPACR_EL1寄存器的FPEN字段设置为TrapNothing，允许非安全EL0和EL1访问浮点和SIMD功能。",
+        "调用指令同步屏障(ISB)以确保后续指令看到新的配置。"
+      ],
+      "called_functions": [
+        "CPACR_EL1.write",
+        "barrier::isb"
+      ],
+      "related_os_module": "boot",
+      "evidence": "代码中调用CPACR_EL1.write设置FPEN字段，并使用barrier::isb进行同步，这在AArch64体系结构中用于启用FP/SIMD，属于系统初始化（boot）阶段。",
+      "uncertainty": "无"
+    },
+    {
+      "block_id": "block_8",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "66",
+      "end_line": "96",
+      "name": "init_mmu",
+      "type": "function",
+      "summary": "在AArch64架构上初始化MMU（内存管理单元），设置页表转换相关的系统寄存器并启用MMU和缓存。",
+      "logic_steps": [
+        "设置MAIR_EL1寄存器，配置内存属性（MAIR_VALUE）。",
+        "构造TCR_EL1寄存器标志位，使能TTBR0和TTBR1的页表遍历，设置页大小为4K，虚拟地址大小为2^(64-16)=48位（T0SZ=16, T1SZ=16），物理地址大小为48位（IPS=Bits_48），并配置共享属性、缓存策略。",
+        "写入TCR_EL1寄存器，并执行ISB指令同步。",
+        "获取根页表（BOOT_PT_L0）的物理地址，分别写入TTBR0_EL1和TTBR1_EL1（使用相同的页表）。",
+        "刷新整个TLB（Translation Lookaside Buffer）。",
+        "修改SCTLR_EL1寄存器，启用MMU以及数据和指令缓存（M、C、I位），并执行ISB同步。"
+      ],
+      "called_functions": [
+        "barrier::isb",
+        "crate::arch::flush_tlb"
+      ],
+      "related_os_module": "boot",
+      "evidence": "函数名init_mmu，操作的系统寄存器包括MAIR_EL1、TCR_EL1、TTBR0_EL1、TTBR1_EL1、SCTLR_EL1，均为MMU和缓存控制相关；页表基址来自BOOT_PT_L0，属于启动阶段；流程末尾通过SCTLR_EL1使能MMU，体现引导初始化。",
+      "uncertainty": "无；代码逻辑清晰，所有操作均与MMU初始化直接相关。"
+    },
+    {
+      "block_id": "block_7",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "21",
+      "end_line": "64",
+      "name": "switch_to_el1",
+      "type": "function",
+      "summary": "将当前CPU异常级别从EL2或EL3切换到EL1，配置相关系统寄存器以设置64位执行模式、屏蔽中断并返回至保存的链接寄存器地址。",
+      "logic_steps": [
+        "1. 选择当前堆栈指针为ELx（SPsel写入ELx），并将SP_EL0清零。",
+        "2. 读取当前异常级别（CurrentEL），若级别低于2则跳过后续操作。",
+        "3. 如果当前是EL3：配置SCR_EL3以指示EL2为非安全、启用HVC、并设置下一级（EL2）为AArch64；设置SPSR_EL3用于返回至EL1h并屏蔽所有异常；将链接寄存器（LR）存入ELR_EL3作为返回地址。",
+        "4. 如果当前是EL2或EL3（执行到此处至少为EL2）：通过CNTHCTL_EL2修改禁用EL1的定时器陷阱并启用定时器计数；清零CNTVOFF_EL2关闭虚拟偏移；配置HCR_EL2使EL1为AArch64。",
+        "5. 设置SPSR_EL2以返回至EL1h并屏蔽所有异常。",
+        "6. 将当前栈指针（SP）存入SP_EL1（通过汇编指令mov x8, sp; msr sp_el1, x8）。",
+        "7. 将LR存入ELR_EL2作为返回地址。",
+        "8. 执行ERET指令，使CPU切换到EL1并跳转至ELR_EL2指定的地址。"
+      ],
+      "called_functions": [
+        "SPSel.write",
+        "SP_EL0.set",
+        "CurrentEL.read",
+        "SCR_EL3.write",
+        "SPSR_EL3.write",
+        "ELR_EL3.set",
+        "CNTHCTL_EL2.modify",
+        "CNTVOFF_EL2.set",
+        "HCR_EL2.write",
+        "SPSR_EL2.write",
+        "ELR_EL2.set",
+        "asm::eret"
+      ],
+      "related_os_module": "boot",
+      "evidence": "函数名为switch_to_el1，代码中包含对EL3、EL2系统寄存器的写入以及ERET指令，符合ARMv8-A架构从高异常级别切换到EL1的典型引导流程。",
+      "uncertainty": "函数使用了全局变量LR（链接寄存器），但该变量未在代码块中定义，其来源需参考文件上下文；另外，汇编操作仅移动栈指针，未涉及通用寄存器保存，假设LR和SP已由调用者设置正确。"
+    },
+    {
+      "block_id": "block_10",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "105",
+      "end_line": "107",
+      "name": "init_boot_page_table",
+      "type": "function",
+      "summary": "该函数是一个封装，调用平台特定的 `mem::init_boot_page_table` 函数，并传入两个全局页表缓冲区的可变指针（BOOT_PT_L0 和 BOOT_PT_L1），用于初始化启动阶段的页表。",
+      "logic_steps": [
+        "1. 获取全局页表缓冲区 `BOOT_PT_L0` 和 `BOOT_PT_L1` 的可变指针。",
+        "2. 调用 `crate::platform::mem::init_boot_page_table` 函数，将这两个指针作为参数传递，执行具体的页表初始化工作。"
+      ],
+      "called_functions": [
+        "crate::platform::mem::init_boot_page_table",
+        "addr_of_mut!"
+      ],
+      "related_os_module": "boot",
+      "evidence": "函数名包含 `boot_page_table`，且函数体仅调用 `crate::platform::mem::init_boot_page_table`，并传递与页表相关的全局变量地址。",
+      "uncertainty": "低。代码逻辑清晰，明确用于启动阶段的页表初始化，但无法从代码中获知 `BOOT_PT_L0` 和 `BOOT_PT_L1` 的具体类型和大小，也无法得知平台特定函数的实现细节。"
+    },
+    {
+      "block_id": "block_11",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "118",
+      "end_line": "136",
+      "name": "_start",
+      "type": "function",
+      "summary": "实现AArch64架构的早期启动入口，通过naked汇编定义ARM64 Linux启动协议要求的Image头部结构，并跳转到主启动函数_start_primary。",
+      "logic_steps": [
+        "第1步：计算并检查'MZ' magic值（可能用于验证bootloader加载地址或兼容性）。",
+        "第2步：无条件跳转到符号_start_primary，标志内核真正启动。",
+        "第3步：在跳转指令之后嵌入ARM64 Image头部信息，包括Image镜像加载偏移、有效大小、内核标志以及ARM64魔术字，确保bootloader能正确识别和加载内核。"
+      ],
+      "called_functions": [
+        "_start_primary"
+      ],
+      "related_os_module": "boot",
+      "evidence": "函数名_start是典型的AArch64启动入口；naked_asm中包含了ARM64 Image header (.quad和.ascii \"ARM\\x64\")，这是Linux启动协议要求的格式；无条件跳转sym _start_primary表明后续启动流程由_start_primary接管。",
+      "uncertainty": "缺乏对bootloader传递的X0寄存器（dtb指针）以及x18寄存器内'0x16' offset作为magic的详细处理逻辑，功能推测基于常规AArch64启动流程，可能存在细微差异。"
+    },
+    {
+      "block_id": "block_12",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "141",
+      "end_line": "174",
+      "name": "_start_primary",
+      "type": "function",
+      "summary": "这是AArch64架构下主CPU的启动入口函数，使用naked_asm内联汇编实现。它读取当前CPU ID，保存设备树指针，设置启动栈，依次调用函数切换到EL1异常级别、启用浮点与NEON、初始化启动页表和MMU，然后将栈指针迁移到高地址（虚拟地址空间），最后将CPU ID和DTB指针作为参数传递给Rust入口函数。",
+      "logic_steps": [
+        "从MPIDR_EL1寄存器读取当前CPU ID并保存到x19，同时将设备树指针从x0暂存到x20",
+        "通过adrp和add计算启动栈的栈顶地址并设置sp",
+        "依次调用switch_to_el1切换到EL1异常级别",
+        "调用enable_fp启用浮点与NEON单元",
+        "调用init_boot_page_table初始化启动页表",
+        "调用init_mmu初始化并启用MMU",
+        "将栈指针sp加上phys_virt_offset，使其指向虚拟地址空间的高地址",
+        "将CPU ID (x19)和设备树指针 (x20)分别放入x0和x1作为参数",
+        "通过ldr指令加载rust_entry的绝对地址到x8，并跳转到该入口函数"
+      ],
+      "called_functions": [
+        "switch_to_el1",
+        "enable_fp",
+        "init_boot_page_table",
+        "init_mmu",
+        "crate::platform::rust_entry"
+      ],
+      "related_os_module": "boot",
+      "evidence": "代码中使用了naked_asm宏，明确调用了多个与启动、异常级别切换、FP/NEON使能、页表初始化、MMU初始化相关的函数，最后跳转到rust_entry，且注释提到X0=dtb，整体流程符合AArch64平台主CPU的启动初始化逻辑。",
+      "uncertainty": "不确定phys_virt_offset的具体值以及启动栈的布局细节，但代码中已明确使用相关符号和常量。"
+    },
+    {
+      "block_id": "block_14",
       "file_path": "arceos\\ulib\\axstd\\src\\process.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": 8,
+      "end_line": 10,
       "name": "exit",
       "type": "function",
-      "summary": "该函数提供进程退出功能，通过调用底层API终止当前进程，且不返回。",
+      "summary": "当前进程退出函数，通过调用系统接口终止当前进程的执行。",
       "logic_steps": [
-        "接收一个i32类型的退出码作为参数（尽管参数未被使用）",
-        "调用arceos_api::sys::ax_terminate()来终止当前进程的执行"
+        "接收一个可选参数 _exit_code（i32 类型），但实际实现中未使用该参数。",
+        "调用 arceos_api::sys::ax_terminate() 函数，触发系统终止进程的操作。",
+        "该函数返回类型为 ! 表示此函数不会返回，调用后进程立即结束。"
       ],
       "called_functions": [
         "arceos_api::sys::ax_terminate"
       ],
       "related_os_module": "process",
-      "evidence": "函数名为exit，实现中调用了ax_terminate，表明用于终止进程；返回类型为!表示永不返回，符合进程退出语义。",
-      "uncertainty": "无法确定退出码参数是否被忽略或由底层API使用，因为代码中未使用_exit_code；ax_terminate的具体行为（如是否立即停止所有线程）未在代码中体现。"
-    },
-    {
-      "block_id": "block_2",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "impl TrapSource {",
-      "type": "impl",
-      "summary": "为 TrapSource 结构体实现方法，提供了获取异常源类型和用于打印的描述字符串的功能。",
-      "logic_steps": [
-        "定义了一个名为 TrapSource 的结构体，并为其实现方法。",
-        "实现了 new 方法，通过解析当前异常向量中的 syndrome 寄存器来初始化 TrapSource 实例。",
-        "实现了 source_type 方法，返回一个 TrapSourceType 枚举，标识异常源的类型（如同步异常、IRQ、FIQ、SError 等）。",
-        "实现了 display 方法，返回一个与异常源类型对应的可打印字符串描述。"
-      ],
-      "called_functions": [
-        "new",
-        "source_type",
-        "display"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "代码位于 trap.rs 文件中，并处理异常源（TrapSource），属于中断和异常处理模块。",
-      "uncertainty": "由于只提供了 impl TrapSource 的起始花括号，没有具体函数体，具体逻辑步骤是根据常见 trap 实现推断的，实际情况可能有差异。"
-    },
-    {
-      "block_id": "block_3",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "is_from_user",
-      "type": "function",
-      "summary": "判断当前陷阱是否来自用户态，通过匹配陷阱源是否为LowerAArch64或LowerAArch32来确定。",
-      "logic_steps": [
-        "接收self参数，类型为TrapSource枚举。",
-        "使用matches!宏判断self是否为TrapSource::LowerAArch64或TrapSource::LowerAArch32。",
-        "返回布尔值，匹配时返回true，否则返回false。"
-      ],
-      "called_functions": [],
-      "related_os_module": "interrupt",
-      "evidence": "函数名is_from_user表明其用途，匹配的枚举值LowerAArch64和LowerAArch32表示来自较低异常级别的AArch64或AArch32状态，通常指用户态。函数位于trap.rs文件中，与陷阱处理相关。",
-      "uncertainty": "未提供TrapSource枚举的具体定义，但根据命名和上下文可合理推断其含义。"
-    },
-    {
-      "block_id": "block_4",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "invalid_exception",
-      "type": "function",
-      "summary": "该函数是一个异常处理函数，用于处理无法识别的或无效的异常。当发生此类异常时，它会调用 panic! 宏，输出异常类型、异常来源以及陷阱帧信息，导致系统崩溃并打印错误信息。",
-      "logic_steps": [
-        "接收指向陷阱帧的引用 tf、异常类型 kind 和异常来源 source。",
-        "调用 panic! 宏，格式化输出异常类型、异常来源和陷阱帧详细信息，触发系统崩溃。"
-      ],
-      "called_functions": [
-        "panic!"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数位于 trap.rs 文件中，用于处理异常（trap），且内部通过 panic! 处理无效异常，这属于操作系统中断与异常处理模块的典型逻辑。",
-      "uncertainty": "无显著不确定性，函数逻辑清晰，仅根据代码内容描述即可。"
-    },
-    {
-      "block_id": "block_5",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "handle_irq_exception",
-      "type": "function",
-      "summary": "处理来自AArch64架构的中断异常，调用宏记录IRQ源，并执行后陷阱回调函数。",
-      "logic_steps": [
-        "调用handle_trap!宏并传递参数IRQ和0，用于记录或处理IRQ中断源。",
-        "调用crate::trap::post_trap_callback函数，传入陷阱帧tf和布尔值（指示是否来自用户态）作为参数。"
-      ],
-      "called_functions": [
-        "handle_trap! (宏)",
-        "crate::trap::post_trap_callback"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数名handle_irq_exception表明处理IRQ（中断请求）；handle_trap!宏用于中断处理；post_trap_callback是陷阱处理后的回调，常见于中断处理流程。",
-      "uncertainty": "handle_trap!宏的具体实现未给出，无法确认其内部逻辑；post_trap_callback的完整功能依赖于模块其他部分。"
-    },
-    {
-      "block_id": "block_6",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "handle_instruction_abort",
-      "type": "function",
-      "summary": "处理AArch64架构下的指令中止异常，包括翻译故障和权限故障，通过页故障处理机制进行页面映射修复，若无法处理则触发内核恐慌。",
-      "logic_steps": [
-        "从ISS（Instruction Syndrome Syndrome）寄存器中提取故障类型，判断是否为翻译故障（IFSC=0b0100）或权限故障（IFSC=0b1100）。",
-        "若故障类型匹配且页故障处理成功，则正常返回；否则触发panic并输出异常详细信息，包括异常级别、指令地址、故障虚拟地址、ISS值及陷阱帧。"
-      ],
-      "called_functions": [
-        "va!",
-        "FAR_EL1.get",
-        "matches!",
-        "handle_trap!"
-      ],
-      "related_os_module": "memory",
-      "evidence": "函数通过检查ISS的IFSC位确定故障类型为翻译或权限故障，并调用handle_trap!宏处理PAGE_FAULT，这属于虚拟内存管理中的缺页异常处理。",
-      "uncertainty": "代码中的va!宏和handle_trap!宏未在此文件中定义，具体实现细节未知，但根据上下文，va!用于将物理地址或系统寄存器值转换为虚拟地址，handle_trap!用于调用页故障处理流程。"
-    },
-    {
-      "block_id": "block_7",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "handle_data_abort",
-      "type": "function",
-      "summary": "处理AArch64架构的数据中止异常，根据ISS字段判断访问类型和权限，并尝试通过页错误处理程序处理，若失败则触发Panic。",
-      "logic_steps": [
-        "从ISS中提取WnR位（第6位）确定是写（WRITE）还是读（READ）操作，以及CM位（第8位）判断是否为缓存维护操作，组合生成访问标志（MappingFlags），若为用户态（is_user）则添加USER标志。",
-        "读取FAR_EL1寄存器获取故障虚拟地址vaddr。",
-        "检查ISS的低6位（DFSC字段）是否为翻译错误（0b0100）或权限错误（0b1100），若不是则直接进入Panic。",
-        "调用handle_trap!宏（实际是PAGE_FAULT处理程序）尝试处理页错误，传入vaddr、access_flags和is_user参数；若处理失败（返回false），则触发Panic打印详细异常信息。"
-      ],
-      "called_functions": [
-        "handle_trap!",
-        "FAR_EL1.get"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "该函数处理数据中止异常（硬件中断的一种），涉及异常综合症状（ISS）解析、页错误处理，是中断/异常处理流程的一部分。",
-      "uncertainty": "无法确认handle_trap!宏的具体实现，只能从代码推断其根据返回布尔值决定是否处理成功。"
-    },
-    {
-      "block_id": "block_8",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "handle_sync_exception",
-      "type": "function",
-      "summary": "处理AArch64架构下的同步异常，根据异常类别（EC）分发到不同的处理逻辑，包括系统调用、指令/数据中止、BRK断点等。",
-      "logic_steps": [
-        "从ESR_EL1系统寄存器中读取异常综合症状（ESR）和ISS字段。",
-        "调用unmask_irqs(tf)解除中断屏蔽，根据异常前的中断使能状态重新使能中断。",
-        "匹配ESR_EL1的异常类别（EC）字段，执行对应处理：SVC64（系统调用）、InstrAbortLowerEL/CurrentEL（指令异常）、DataAbortLowerEL/CurrentEL（数据异常）、Brk64（断点）。",
-        "对于SVC64，将tf.r[8]作为系统调用号，调用crate::trap::handle_syscall处理，并将返回值存储到tf.r[0]。",
-        "对于指令/数据异常，调用handle_instruction_abort或handle_data_abort函数，传递ISS和是否来自较低异常级别（lower EL）的标志。",
-        "对于BRK断点，打印调试信息并将程序计数器（ELR）加4（跳过断点指令）。",
-        "如果EC未知，触发panic，输出异常地址、ESR值等信息。",
-        "在所有处理结束后，调用post_trap_callback(tf, source.is_from_user())进行处理后回调。",
-        "调用mask_irqs()重新屏蔽中断。"
-      ],
-      "called_functions": [
-        "unmask_irqs",
-        "crate::trap::handle_syscall",
-        "handle_instruction_abort",
-        "handle_data_abort",
-        "crate::trap::post_trap_callback",
-        "mask_irqs"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "代码中操作ESR_EL1系统寄存器，涉及异常向量处理、中断使能/屏蔽、系统调用分发，这些是中断和异常处理模块的典型特征。",
-      "uncertainty": "函数内部调用的handle_instruction_abort和handle_data_abort的具体实现未给出，但其名称明确指示了指令和数据异常处理。系统调用处理依赖于uspace特性开关，但函数本身归属明确。"
-    },
-    {
-      "block_id": "block_9",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "unmask_irqs",
-      "type": "function",
-      "summary": "根据陷阱帧中的SPSR寄存器判断异常发生前中断是否被屏蔽，若未屏蔽则重新启用中断，否则仅输出调试信息。",
-      "logic_steps": [
-        "定义常量I_MASK为1左移7位，即位7用于标识中断屏蔽状态。",
-        "检查陷阱帧tf的spsr字段与I_MASK进行按位与操作的结果是否不等于I_MASK，即判断异常发生前中断是否未被屏蔽。",
-        "如果中断未被屏蔽（条件成立），则调用super::enable_irqs()函数启用中断。",
-        "如果中断已被屏蔽（条件不成立），则仅输出调试信息“Interrupts were disabled before exception”。"
-      ],
-      "called_functions": [
-        "super::enable_irqs",
-        "debug"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数名unmask_irqs和内部调用enable_irqs暗示与中断屏蔽状态管理相关；检查SPSR寄存器的I位（第7位）是AArch64架构中判断中断使能状态的典型做法。",
-      "uncertainty": "无法确定super模块的具体实现，但可以确认调用了一个名为enable_irqs的函数。"
-    },
-    {
-      "block_id": "block_10",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\aarch64\\trap.rs",
-      "name": "mask_irqs",
-      "type": "function",
-      "summary": "通过调用 disable_irqs 函数屏蔽所有中断",
-      "logic_steps": [
-        "调用 super::disable_irqs() 函数"
-      ],
-      "called_functions": [
-        "disable_irqs"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数名 mask_irqs 和调用的 disable_irqs 都暗示与中断屏蔽相关，且位于 trap.rs 文件中，通常涉及中断处理",
-      "uncertainty": "函数体仅包含一个函数调用，没有额外的逻辑，因此分析结果明确"
-    },
-    {
-      "block_id": "block_11",
-      "file_path": "arceos/modules/axhal/src/arch/loongarch64/trap.rs",
-      "name": "handle_breakpoint",
-      "type": "function",
-      "summary": "处理LoongArch64架构下的断点异常，通过打印调试信息并递增异常返回地址（ERA）来跳过当前断点指令。",
-      "logic_steps": [
-        "调用debug!宏输出异常信息，包含当前异常返回地址era的值（格式化为十六进制）",
-        "将era的值增加4，即跳转至下一条指令（因为LoongArch64指令长度固定为4字节）"
-      ],
-      "called_functions": [
-        "debug!"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数名为handle_breakpoint，位于trap.rs文件中，操作为处理断点异常，与中断/异常处理相关。",
-      "uncertainty": "由于代码未体现断点异常的具体触发场景（如用户调试或内核调试），以及debug!宏具体目标（标准输出或日志系统），不能确定其完整上下文。"
-    },
-    {
-      "block_id": "block_12",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
-      "name": "handle_page_fault",
-      "type": "function",
-      "summary": "处理LoongArch64架构下的页错误（Page Fault），根据是否用户态设置访问标志，读取错误虚拟地址，调用PAGE_FAULT陷阱处理函数，若未处理则触发内核恐慌并输出错误信息。",
-      "logic_steps": [
-        "根据传入的is_user参数判断是否来自用户态（PLV3），如果是，则在access_flags中添加USER权限标志。",
-        "通过badv寄存器读取发生页错误的虚拟地址vaddr（使用va!宏和raw()方法获取原始值）。",
-        "调用宏handle_trap!传入PAGE_FAULT类型、虚拟地址、访问标志和用户态标志进行实际处理。",
-        "如果handle_trap!返回false（表示未处理该页错误），则调用panic!输出详细的错误信息，包括访问级别、TrapFrame中的返回地址era、错误虚拟地址和访问标志等。"
-      ],
-      "called_functions": [
-        "badv::read",
-        "va!",
-        "handle_trap!",
-        "panic!"
-      ],
-      "related_os_module": "memory",
-      "evidence": "函数名称handle_page_fault表明处理页错误，核心逻辑涉及虚拟地址读取和访问标志设置，符合内存管理模块的典型页错误处理；同时调用了handle_trap!宏处理PAGE_FAULT事件，与内存地址空间映射相关。",
-      "uncertainty": "不确定badv::read和va!的具体实现细节（如是否封装了特权指令），handle_trap!宏的具体行为依赖于该项目其他代码，无法确认是否涉及进程上下文切换或缺页填充。"
+      "evidence": "函数名 exit 表示进程退出功能；调用 arceos_api::sys::ax_terminate() 是终止当前进程的系统调用；返回类型 ! 表明函数不返回，符合进程终止语义。",
+      "uncertainty": "低：函数逻辑明确，没有歧义。"
     },
     {
       "block_id": "block_13",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
-      "name": "loongarch64_trap_handler",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "181",
+      "end_line": "204",
+      "name": "_start_secondary",
       "type": "function",
-      "summary": "LoongArch64架构的异常和中断处理函数，根据异常/中断类型分发处理：系统调用、缺页异常、断点异常、外部中断等。",
+      "summary": "该函数是AArch64架构下从CPU（非主CPU）的入口函数。它读取当前CPU的ID，设置栈指针，切换异常级别到EL1，初始化MMU，启用浮点运算单元，然后通过物理-虚拟地址偏移调整栈指针到高地址空间，最后调用Rust编写的次级核心入口函数，并进入无限循环。",
       "logic_steps": [
-        "读取ESTAT寄存器获取异常原因（cause）",
-        "如果是异常（Exception）类型，先调用unmask_irqs重新启用中断（若之前已启用）",
-        "匹配具体陷阱类型：系统调用（Syscall）时，将era加4跳过指令，并调用handle_syscall处理，返回值存入a0寄存器",
-        "匹配缺页异常（LoadPageFault、StorePageFault等），调用handle_page_fault并传递对应权限标志（READ/WRITE/EXECUTE）",
-        "匹配断点异常（Breakpoint），调用handle_breakpoint，传入era的引用",
-        "匹配中断（Interrupt），从ESTAT的IS字段确定中断号，调用handle_trap宏处理并传递中断号",
-        "未匹配的陷阱类型触发panic，打印错误信息",
-        "最后调用post_trap_callback进行陷阱后回调，然后调用mask_irqs禁用中断"
+        "第1步: 通过mrs指令读取MPIDR_EL1寄存器，获取当前CPU的ID，并屏蔽低24位以外的高位，存入x19。",
+        "第2步: 将传入的栈基地址（x0）设置到栈指针sp。",
+        "第3步: 调用switch_to_el1函数，将异常级别从EL2或EL3切换到EL1。",
+        "第4步: 调用init_mmu函数，初始化内存管理单元。",
+        "第5步: 调用enable_fp函数，启用浮点运算单元。",
+        "第6步: 通过将PHYS_VIRT_OFFSET常量加到sp上，将栈指针从物理地址空间调整到虚拟地址空间的高地址区域。",
+        "第7步: 将CPU ID（x19）作为参数传递给crate::platform::rust_entry_secondary函数，并跳转执行。",
+        "第8步: 执行结束后，通过b .（无限循环）陷入空闲状态，永不返回。"
       ],
       "called_functions": [
-        "estat::read",
-        "unmask_irqs",
-        "crate::trap::handle_syscall",
-        "handle_page_fault",
-        "handle_breakpoint",
-        "crate::trap::post_trap_callback",
-        "mask_irqs",
-        "handle_trap"
+        "switch_to_el1",
+        "init_mmu",
+        "enable_fp",
+        "crate::platform::rust_entry_secondary"
       ],
-      "related_os_module": "interrupt",
-      "evidence": "函数处理异常和中断分发，包含系统调用、缺页、断点、外部中断，最后有mask_irqs调用，属于中断/异常处理模块。",
-      "uncertainty": "代码中未包含unmask_irqs、mask_irqs、handle_page_fault、handle_breakpoint和handle_trap的具体实现，这些函数可能在当前文件之外定义；此外，post_trap_callback和handle_syscall的具体行为依赖于crate::trap模块，无法从本代码块中完全确定。"
-    },
-    {
-      "block_id": "block_14",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
-      "name": "unmask_irqs",
-      "type": "function",
-      "summary": "根据陷阱帧（TrapFrame）中的 PRMD 字段的 PIE 位（第2位）判断中断是否在异常发生前已启用，若是则调用 enable_irqs 恢复中断使能，否则调试输出中断已禁用。",
-      "logic_steps": [
-        "定义一个常量 PIE 为 1 左移 2 位（即 0x4），用于提取 PRMD 字段的中断使能位。",
-        "检查 tf.prmd 字段是否包含 PIE 位（即该位为1）。",
-        "如果包含，则调用 super::enable_irqs() 启用中断（恢复中断状态）。",
-        "否则（PIE位为0），输出调试信息表明异常发生前中断已被禁用。"
-      ],
-      "called_functions": [
-        "enable_irqs"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数名 unmask_irqs 暗示解除中断屏蔽；代码中检查 PRMD 的 PIE 位（中断使能标志）并根据结果调用 enable_irqs；调试消息提到 'Interrupts were disabled before exception' 进一步确认与中断状态恢复相关。",
-      "uncertainty": "无显著不确定性，代码逻辑清晰且上下文明确。"
-    },
-    {
-      "block_id": "block_15",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\loongarch64\\trap.rs",
-      "name": "mask_irqs",
-      "type": "function",
-      "summary": "该函数的作用是禁用所有中断，通过调用架构相关的 disable_irqs 函数实现中断屏蔽。",
-      "logic_steps": [
-        "调用 super::disable_irqs() 函数来禁用所有中断"
-      ],
-      "called_functions": [
-        "disable_irqs"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数体只有一行调用 super::disable_irqs()，而 disable_irqs 通常用于禁用中断。函数名 mask_irqs 也暗示了中断屏蔽操作。",
-      "uncertainty": "由于代码内容非常简短，无法确认 disable_irqs 的具体实现细节，例如是否支持嵌套或优先级屏蔽，但根据上下文可以确定它是用于全局中断屏蔽。"
-    },
-    {
-      "block_id": "block_16",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
-      "name": "handle_breakpoint",
-      "type": "function",
-      "summary": "处理RISC-V架构下的断点异常（Breakpoint exception），打印调试信息并跳过当前指令（假设为压缩指令，长度2字节）。",
-      "logic_steps": [
-        "使用debug!宏打印断点异常发生时的SEPC值（即触发异常的指令地址）",
-        "将异常返回地址（sepc）增加2，使恢复到用户态或内核态时跳过断点指令继续执行"
-      ],
-      "called_functions": [
-        "debug!"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数名为handle_breakpoint，处理的是异常类型Breakpoint；通过sepc寄存器地址偏移实现指令跳过；依赖debug!宏输出调试信息，属于异常处理的一部分，归类为interrupt模块。",
-      "uncertainty": "无显著不确定性，但根据RISC-V规范，断点指令可能是2字节（c.ebreak）或4字节（ebreak）。此处直接加2，暗示假设断点指令为压缩指令，但代码注释未明确说明，因此存在极小不确定性。"
-    },
-    {
-      "block_id": "block_17",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
-      "name": "handle_page_fault",
-      "type": "function",
-      "summary": "处理RISC-V架构下的缺页异常（Page Fault），根据异常来源（用户态或监管者态）设置访问标志，并尝试通过handle_trap宏处理未解决的缺页异常，若处理失败则触发panic。",
-      "logic_steps": [
-        "检查异常是否来自用户态（is_user为true），如果是，则在访问标志（access_flags）中添加USER权限位。",
-        "调用handle_trap!宏，传入PAGE_FAULT、虚拟地址（vaddr）、访问标志（access_flags）和用户态标志（is_user），尝试处理缺页异常。",
-        "如果handle_trap!返回false（未处理），则触发panic，输出异常类型（User或Supervisor）、异常程序计数器（sepc）、故障虚拟地址（vaddr）、访问标志以及整个陷阱帧（TrapFrame）的信息。"
-      ],
-      "called_functions": [
-        "handle_trap!"
-      ],
-      "related_os_module": "memory",
-      "evidence": "函数名handle_page_fault明确表示处理缺页异常；访问标志设置和虚拟地址处理涉及内存映射；handle_trap!宏通常与内存缺页处理相关。",
-      "uncertainty": "无法确定handle_trap!的具体实现，但基于命名和上下文，推测它可能调用内存管理相关的缺页处理函数；不确定是否有其他外部模块参与。"
-    },
-    {
-      "block_id": "block_18",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
-      "name": "riscv_trap_handler",
-      "type": "function",
-      "summary": "RISC-V 架构的陷阱处理函数，根据陷阱原因（异常或中断）分发处理，包括系统调用、缺页异常、断点异常和外部中断，并在处理前后进行中断掩码/解掩码操作。",
-      "logic_steps": [
-        "读取 scause 寄存器获取陷阱原因，并尝试将其转换为 Rust 枚举类型。",
-        "读取 stval 寄存器保存虚拟地址（vaddr），因为后续可能启用中断会修改 stval。",
-        "如果是异常（非中断），则调用 unmask_irqs 根据之前的 SPIE 位恢复中断使能（即允许嵌套中断）。",
-        "根据陷阱原因（cause）进行匹配分发：用户环境调用（UserEnvCall）时执行系统调用（sepc+4 并设置返回值），缺页异常分为 Load、Store、Instruction 三种分别调用 handle_page_fault，断点异常调用 handle_breakpoint，中断则调用 handle_trap!(IRQ, ...)，未知陷阱触发 panic。",
-        "处理完陷阱后，调用 post_trap_callback 执行后续回调。",
-        "最后调用 mask_irqs 重新屏蔽中断，为 sret 做准备。",
-        "如果 scause.cause 无法转换为已知类型，则直接 panic 并打印未知陷阱信息。"
-      ],
-      "called_functions": [
-        "scause::read",
-        "stval::read",
-        "unmask_irqs",
-        "crate::trap::handle_syscall",
-        "handle_page_fault",
-        "handle_breakpoint",
-        "handle_trap!(IRQ, ...)",
-        "crate::trap::post_trap_callback",
-        "mask_irqs"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数处理 S 模式下的异常和中断，包括系统调用、缺页、断点、外部中断等，并涉及中断嵌套控制（unmask_irqs / mask_irqs），属于操作系统异常和中断处理的核心部分。",
-      "uncertainty": "对于 handle_page_fault 和 handle_breakpoint 的具体实现细节无法从本代码块得知，但根据函数签名和上下文可判断其功能。同时，'crate::trap::handle_syscall' 和 'crate::trap::post_trap_callback' 的实际行为依赖于模块内部实现，此处仅依据调用点推断。"
-    },
-    {
-      "block_id": "block_19",
-      "file_path": "arceos\\modules\\axhal\\src\\arch\\riscv\\trap.rs",
-      "name": "unmask_irqs",
-      "type": "function",
-      "summary": "该函数根据陷入帧中的 sstatus 寄存器的 PIE 位（第5位）判断异常发生前中断是否被使能。如果之前中断是使能的（PIE置位），则调用 enable_irqs 重新使能中断；否则打印调试信息说明中断在异常前已被禁用。",
-      "logic_steps": [
-        "定义常量 PIE 为 1 << 5，即 sstatus 中表示先前中断使能状态的位。",
-        "检查传入的 TrapFrame 中 sstatus 字段的 PIE 位是否为1。",
-        "如果 PIE 位为1，则调用 super::enable_irqs() 使能中断。",
-        "如果 PIE 位为0，则输出调试信息 'Interrupts were disabled before exception'。"
-      ],
-      "called_functions": [
-        "super::enable_irqs"
-      ],
-      "related_os_module": "interrupt",
-      "evidence": "函数通过检查 sstatus 的 PIE 位来决定是否恢复中断使能，属于异常返回时的中断状态恢复逻辑，与中断处理相关。",
+      "related_os_module": "boot",
+      "evidence": "函数名_start_secondary暗示这是辅助CPU的启动入口；代码中读取MPIDR_EL1获取CPU ID，调用switch_to_el1、init_mmu、enable_fp进行处理器初始化，并最终调用rust_entry_secondary。这些操作是典型的多核启动流程中的一部分，属于系统引导(boot)模块。",
       "uncertainty": "无"
     },
     {
-      "block_id": "block_20",
-      "file_path": "arceos/modules/axhal/src/arch/riscv/trap.rs",
-      "name": "mask_irqs",
-      "type": "function",
-      "summary": "这个函数通过调用 disable_irqs() 来屏蔽所有中断，即禁用本地处理器的中断响应。",
+      "block_id": "block_15",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "8",
+      "end_line": "8",
+      "name": "BOOT_STACK",
+      "type": "static",
+      "summary": "定义了一个可变静态全局变量 BOOT_STACK，它是一个大小为 TASK_STACK_SIZE 的字节数组，全部初始化为 0。该变量通常用作启动阶段的栈空间。",
       "logic_steps": [
-        "调用 disable_irqs 函数来执行实际的禁用中断操作。"
+        "分配一块连续的字节数组作为启动栈，大小为常亮 TASK_STACK_SIZE。",
+        "将所有字节初始化为 0，以确保栈初始状态干净。",
+        "将数组声明为可变的静态变量，以便在引导过程中可被写入（例如作为栈使用）。"
+      ],
+      "called_functions": [],
+      "related_os_module": "boot",
+      "evidence": "变量名为 BOOT_STACK，且位于 boot.rs 文件中，通常操作系统引导阶段会使用固定区域的静态数组作为临时栈。",
+      "uncertainty": "TASK_STACK_SIZE 的具体值未在代码中显示，可能需要参考其他文件或配置。未观察到调用栈初始化函数的具体代码，仅根据命名和位置判断该变量用于引导栈。"
+    },
+    {
+      "block_id": "block_16",
+      "file_path": "arceos/modules/axhal/src/platform/loongarch64_qemu_virt/boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "11",
+      "end_line": "11",
+      "name": "BOOT_PT_L0",
+      "type": "static",
+      "summary": "定义一个静态可变数组，作为LoongArch64架构的4级页表等级0的页表，用于启动阶段的地址映射",
+      "logic_steps": [
+        "声明一个名为BOOT_PT_L0的可变静态变量，类型为512个LA64PTE元素的数组",
+        "使用LA64PTE::empty()初始化每个页表项为全空状态"
       ],
       "called_functions": [
-        "disable_irqs"
+        "LA64PTE::empty()"
       ],
-      "related_os_module": "interrupt",
-      "evidence": "函数体直接调用了 super::disable_irqs()，该函数通常用于禁用中断，函数名 mask_irqs 也暗示了屏蔽中断的语义。",
-      "uncertainty": "代码中未展示 disable_irqs 的具体实现，但根据常见操作系统实现和命名惯例，可合理推断该函数用于禁用中断。"
+      "related_os_module": "boot",
+      "evidence": "该变量名为BOOT_PT_L0，暗示是Boot阶段的页表等级0（Level 0），类型为LA64PTE数组，大小为512，对应LoongArch64页表每级512项。没有其他context说明其用于其他目的。",
+      "uncertainty": "无法确认该页表在实际启动流程中如何被填充和使用，可能依赖其他代码段来写入页表项。"
+    },
+    {
+      "block_id": "block_17",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "14",
+      "end_line": "14",
+      "name": "BOOT_PT_L1",
+      "type": "static",
+      "summary": "声明一个可变的静态变量 BOOT_PT_L1，用于表示 LoongArch64 架构下的第一级页表，初始化为包含 512 个空页表项的数组。",
+      "logic_steps": [
+        "声明一个静态可变变量 BOOT_PT_L1，类型为包含 512 个 LA64PTE 元素的数组。",
+        "使用 LA64PTE::empty() 初始化每个元素，表示所有页表项初始状态为空。"
+      ],
+      "called_functions": [
+        "LA64PTE::empty"
+      ],
+      "related_os_module": "memory",
+      "evidence": "变量名 BOOT_PT_L1 暗示其用于启动阶段的第1级页表，类型 LA64PTE 为页表项类型，数组长度为 512 符合 LoongArch 页表层级结构，且代码位于 boot.rs 文件中，用于系统初始化内存映射。",
+      "uncertainty": "当前代码块仅声明了静态变量，未展示其后续如何使用或页表的具体映射内容，因此关于其进入页表映射的具体逻辑和最终用途存在不确定性。"
+    },
+    {
+      "block_id": "block_19",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "36",
+      "end_line": "44",
+      "name": "init_mmu",
+      "type": "function",
+      "summary": "该函数初始化 LoongArch64 架构下的 MMU（内存管理单元），具体包括初始化 TLB（旁路转换缓冲）、设置页表基地址、刷新 TLB 并启用分页模式。",
+      "logic_steps": [
+        "第1步逻辑：调用 crate::arch::init_tlb() 初始化 TLB 硬件结构。",
+        "第2步逻辑：将 BOOT_PT_L0（一级页表）的虚拟地址转换为物理地址（paddr）。",
+        "第3步逻辑：通过 pgdh::set_base() 设置页表全局目录（PGD）的基地址为该物理地址。",
+        "第4步逻辑：通过 pgdl::set_base(0) 将页表局部目录（PGDL）的基地址设置为 0。",
+        "第5步逻辑：调用 flush_tlb(None) 刷新整个 TLB，确保旧映射无效。",
+        "第6步逻辑：调用 crmd::set_pg(true) 启用分页模式（PG 位）。"
+      ],
+      "called_functions": [
+        "crate::arch::init_tlb",
+        "crate::mem::virt_to_phys",
+        "pgdh::set_base",
+        "pgdl::set_base",
+        "flush_tlb",
+        "crmd::set_pg"
+      ],
+      "related_os_module": "memory",
+      "evidence": "函数名 init_mmu 暗示初始化 MMU；内部调用了与 TLB 初始化、页表基地址设置、分页启用相关的 LoongArch64 专有操作。",
+      "uncertainty": "没有明确的代码注释或上下文进一步说明 BOOT_PT_L0 的具体定义，但根据常见 boot 流程可推断其为汇编阶段构建的页表。"
+    },
+    {
+      "block_id": "block_18",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "16",
+      "end_line": "34",
+      "name": "init_boot_page_table",
+      "type": "function",
+      "summary": "初始化LoongArch64架构下的启动页表，设置L0和L1级页表项以映射物理内存区域",
+      "logic_steps": [
+        "获取L1级页表物理地址（通过va!宏转换静态页表BOOT_PT_L1的虚拟地址为虚拟地址？实际应为物理地址，但代码中l1_va为虚拟地址，随后virt_to_phys转换得物理地址）",
+        "将L0页表的索引0x100处设置为指向L1页表的表项，映射虚拟地址范围0x0000_0000_0000 ~ 0x0080_0000_0000到下一级页表",
+        "设置L1页表索引0处为1G大页块映射，物理基址0，属性为读、写、设备（非缓存）",
+        "设置L1页表索引2处为1G大页块映射，物理基址0x8000_0000，属性为读、写、执行"
+      ],
+      "called_functions": [
+        "crate::mem::virt_to_phys",
+        "LA64PTE::new_table",
+        "LA64PTE::new_page"
+      ],
+      "related_os_module": "memory",
+      "evidence": "代码通过操作页表项（LA64PTE）设置虚拟地址到物理地址的映射，包括L0/L1页表项，涉及页表初始化，属于内存管理模块",
+      "uncertainty": "函数名暗示为启动阶段的页表初始化，但未包含完整上下文，例如静态页表BOOT_PT_L0和BOOT_PT_L1的定义未在此处；io内存映射区域（0x0~0x4000_0000）为何使用设备属性（DEVICE）需结合硬件规范确认，但代码中清楚表明该映射属性为READ | WRITE | DEVICE。"
+    },
+    {
+      "block_id": "block_20",
+      "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+      "language": "rust",
+      "parser": "tree_sitter",
+      "start_line": "52",
+      "end_line": "79",
+      "name": "_start",
+      "type": "function",
+      "summary": "LoongArch64平台上的启动入口函数，通过内联汇编完成处理器初始化、内存窗口配置、栈设置、MMU初始化并跳转到Rust入口函数。",
+      "logic_steps": [
+        "设置直接映射窗口DMW0：将物理地址0x8000_0000_0000_0000开始的区间映射为 uncacheable PLV0 空间，写入CSR_DMWIN0。",
+        "设置直接映射窗口DMW1：将物理地址0x9000_0000_0000_0000开始的区间映射为 cacheable PLV0 空间，写入CSR_DMWIN1。",
+        "初始化栈指针：使用la.global指令将BOOT_STACK的地址载入$sp，然后加上栈大小TASK_STACK_SIZE指向栈顶。",
+        "初始化MMU：调用init_boot_page_table函数建立引导页表，再调用init_mmu函数设置页表并启用MMU。",
+        "读取当前CPU的ID（csrrd $a0, 0x20），然后跳转到Rust入口函数rust_entry，传递cpuid作为参数。"
+      ],
+      "called_functions": [
+        "init_boot_page_table",
+        "init_mmu",
+        "super::rust_entry"
+      ],
+      "related_os_module": "boot",
+      "evidence": "函数名_start、汇编中设置DMW窗口（内存映射）、引导栈、页表初始化、MMU启用、最后跳转到rust_entry，这些均为操作系统启动阶段的典型操作。",
+      "uncertainty": "代码中未显示TASK_STACK_SIZE和BOOT_STACK的具体定义，但可以推断它们存在于外部作用域。对init_boot_page_table和init_mmu的具体实现未知，但根据名称和上下文可以合理推断其功能。"
     }
   ]
 }

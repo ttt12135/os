@@ -8,7 +8,7 @@ from src.code_understander import analyze_code_blocks_file,analyze_code_blocks_f
 from src.call_graph_builder import build_enhanced_call_graph,build_full_call_graph,save_call_graph
 from src.module_summarizer import summarize_modules,save_module_summary,build_module_profile_from_call_graph,save_module_summary_full
 from src.repo_profiler import build_repo_profile,save_repo_profile,build_repo_profile_full,save_repo_profile_full
-from src.history_kb_builder import build_history_knowledge_base, save_history_knowledge_base
+from src.history_kb_builder import build_history_knowledge_base,save_history_knowledge_base,build_history_knowledge_base_full,save_history_knowledge_base_full
 
 
 def get_repo_name(repo_path):
@@ -235,9 +235,10 @@ def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="qu
     一键入库历史仓库。
 
     流程：
-    1. 分析仓库
-    2. 生成 repo_profile
-    3. 更新 history_knowledge_base/history_profiles.json
+    分析仓库
+    2生成 repo_profile
+    3更新 history_knowledge_base/history_profiles.json
+    4更新 history_knowledge_base/history_profiles_full.json
     """
 
     generated_files = run_repo_analysis_pipeline(
@@ -251,13 +252,32 @@ def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="qu
     print()
     print("正在更新历史作品知识库...")
 
-    knowledge_base = build_history_knowledge_base(profile_dir="repo_profiles/history")
+    knowledge_base = build_history_knowledge_base(
+        profile_dir="repo_profiles/history"
+    )
+
     history_kb_path = save_history_knowledge_base(knowledge_base)
 
     generated_files["history_kb_path"] = history_kb_path
 
     print("历史作品知识库更新完成。")
     print(f"保存路径：{history_kb_path}")
+
+
+    print()
+    print("正在更新 full 历史作品知识库...")
+
+    history_kb_full = build_history_knowledge_base_full(
+        profile_dir="repo_profiles/history"
+    )
+
+    history_kb_full_path = save_history_knowledge_base_full(history_kb_full)
+
+    generated_files["history_kb_full_path"] = history_kb_full_path
+
+    print("full 历史作品知识库更新完成。")
+    print(f"保存路径：{history_kb_full_path}")
+    print(f"full 历史项目数量：{history_kb_full.get('profile_count')}")
 
     return generated_files
 
