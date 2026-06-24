@@ -1,0 +1,174 @@
+{
+  "repo_name": "tongjidaxue",
+  "team_name": "tongjidaxue",
+  "school": "unknown",
+  "repo_url": "",
+  "normalized_repo_url": "",
+  "year": "history",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "unknown_os_project",
+  "main_languages": [
+    "rust"
+  ],
+  "core_modules": [
+    "process"
+  ],
+  "function_count": 20,
+  "node_count": 20,
+  "edge_count": 138,
+  "internal_edge_count": 8,
+  "external_edge_count": 130,
+  "module_count": 1,
+  "structure_complexity": 0.33,
+  "module_completeness": {
+    "process": 0.83
+  },
+  "core_module_details": [
+    {
+      "module_name": "process",
+      "module_weight": 1.0,
+      "completeness": 0.83,
+      "final_score": 0.932
+    }
+  ],
+  "module_profiles": {
+    "process": {
+      "module_name": "process",
+      "function_count": 20,
+      "outgoing_edge_count": 138,
+      "internal_edge_count": 8,
+      "external_edge_count": 130,
+      "internal_call_ratio": 0.058,
+      "external_call_ratio": 0.942,
+      "module_weight": 1.0,
+      "files": [
+        "src\\kernel\\task\\process.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "impl ProcessBuilder {",
+          "normalized_name": "impl ProcessBuilder {",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "190",
+          "end_line": "310",
+          "outgoing_call_count": 61,
+          "summary": "该代码块为 ProcessBuilder 结构体实现了一系列方法，包括构造、克隆参数设置（如 VM 共享、退出信号等）、属性设置（pid、mm_list、parent、thread_builder、pgroup、session）以及最终的 build 方法，用于构建并初始化一个新的 Process 和 Thread 对象，并处理进程组、会话、父进程关系等任务。"
+        },
+        {
+          "name": "impl WaitType {",
+          "normalized_name": "impl WaitType {",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "153",
+          "end_line": "174",
+          "outgoing_call_count": 12,
+          "summary": "为WaitTpye枚举实现两个方法to_wstatus和to_status_code，分别用于将进程等待状态转换为POSIX wstatus格式和信号与状态码格式，以支持进程状态报告。"
+        },
+        {
+          "name": "to_status_code",
+          "normalized_name": "to_status_code",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "164",
+          "end_line": "173",
+          "outgoing_call_count": 12,
+          "summary": "将 WaitType 枚举的进程等待状态转换为对应的 (状态码, 子进程状态标识) 元组，用于向用户态返回 wait 系统调用的结果。"
+        },
+        {
+          "name": "impl WaitId {",
+          "normalized_name": "impl WaitId {",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "118",
+          "end_line": "137",
+          "outgoing_call_count": 11,
+          "summary": "WaitId 枚举的实现，提供了两个构造函数：from_type_and_id 根据等待类型和 ID 构造 WaitId，from_id 根据 i32 类型的 id 和线程信息构造 WaitId，用于进程等待操作。"
+        },
+        {
+          "name": "from_id",
+          "normalized_name": "from_id",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "129",
+          "end_line": "136",
+          "outgoing_call_count": 9,
+          "summary": "根据传入的整数id和线程引用，构造对应的WaitId枚举值，用于标识等待的目标进程或进程组。"
+        },
+        {
+          "name": "to_wstatus",
+          "normalized_name": "to_wstatus",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "154",
+          "end_line": "162",
+          "outgoing_call_count": 8,
+          "summary": "将 WaitType 枚举转换为符合 UNIX 标准 wait 状态码 (wstatus) 的 32 位无符号整数，用于表示进程退出、信号终止、停止或继续事件。"
+        },
+        {
+          "name": "Entry",
+          "normalized_name": "Entry",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "98",
+          "end_line": "105",
+          "outgoing_call_count": 6,
+          "summary": "定义了一个用于管理进程等待和条件变量的内部数据结构Entry，包含等待队列、进程列表、条件变量引用以及控制等待行为的标志。"
+        },
+        {
+          "name": "impl WaitObject {",
+          "normalized_name": "impl WaitObject {",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "176",
+          "end_line": "188",
+          "outgoing_call_count": 5,
+          "summary": "为WaitObject类型实现两个方法：stopped()返回进程停止时的信号，is_continue()判断是否继续执行。"
+        },
+        {
+          "name": "from_type_and_id",
+          "normalized_name": "from_type_and_id",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "119",
+          "end_line": "127",
+          "outgoing_call_count": 4,
+          "summary": "该函数根据传入的 id_type 和 id 参数，将 wait 进程标识类型转换为对应的 WaitId 枚举变体，用于进程等待系统调用中的标识解析。它支持三种标准类型：P_ALL（等待任意子进程）、P_PID（等待指定 PID 的进程）、P_PGID（等待指定进程组的进程），对 P_PIDFD 类型直接 panic（不支持），其他类型返回错误 EINVAL。"
+        },
+        {
+          "name": "WaitType",
+          "normalized_name": "WaitType",
+          "file_path": "src\\kernel\\task\\process.rs",
+          "language": "rust",
+          "start_line": "140",
+          "end_line": "145",
+          "outgoing_call_count": 3,
+          "summary": "定义进程等待状态枚举，用于表示进程在等待时可能处于的四种状态：已退出（带退出码）、被信号终止、被信号停止、或继续运行。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/tongjidaxue.json"
+  },
+  "generated_at": "2026-06-24 20:24:20"
+}

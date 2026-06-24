@@ -26,7 +26,7 @@ from src.history_kb_reporter import generate_history_kb_report,save_history_kb_r
 from src.rag_document_builder import build_history_rag_documents,save_history_rag_documents,save_history_rag_documents_markdown,format_history_rag_documents_preview
 from src.rag_vector_store import build_chroma_vector_store,rag_retrieve_history,save_rag_retrieval_result,format_vector_store_build_preview,format_rag_retrieval_preview
 from src.hybrid_retriever import run_hybrid_retrieve,format_hybrid_retrieval_preview
-
+from src.website_exporter import export_website_data,format_website_export_preview
 
 #读取.env文件
 load_dotenv()
@@ -70,7 +70,8 @@ MAIN_COMMANDS = {
     "score_full": "基于仓库画像、历史检索和 AI 对比结果进行五维评分",
     "final_report": "整合所有结果生成最终 Markdown 报告",
     "final_analyze": "一键执行目标分析、历史检索、AI 对比、评分和报告生成",
-    "final_analyze_hybrid": "一键执行结构分析、RAG 构建、Hybrid 检索、AI 对比、评分和最终报告"
+    "final_analyze_hybrid": "一键执行结构分析、RAG 构建、Hybrid 检索、AI 对比、评分和最终报告",
+    "export_site_data": "导出前端网站所需的作品数据、报告数据和统计数据"
 }
 
 
@@ -1591,6 +1592,31 @@ def main():
             print()
             print(result_text)
             print("-" * 30)
+
+        elif command == "export_site_data":
+            site_output_dir = input("请输入网站 public 输出目录，直接回车默认 site/public: ")
+
+            if site_output_dir.strip() == "":
+                site_output_dir = "site/public"
+
+            manifest_path = input("请输入作品 manifest 路径，直接回车默认 site_config/works_manifest.json: ")
+
+            if manifest_path.strip() == "":
+                manifest_path = "site_config/works_manifest.json"
+
+            export_result = export_website_data(
+                site_output_dir=site_output_dir,
+                manifest_path=manifest_path
+            )
+
+            result_text = format_website_export_preview(
+                export_result
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
 
         else:
             print(f"未知命令：{command}")

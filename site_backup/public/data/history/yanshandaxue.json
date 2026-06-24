@@ -1,0 +1,347 @@
+{
+  "repo_name": "yanshandaxue",
+  "team_name": "yanshandaxue",
+  "school": "unknown",
+  "repo_url": "",
+  "normalized_repo_url": "",
+  "year": "history",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "unknown_os_project",
+  "main_languages": [
+    "rust"
+  ],
+  "core_modules": [
+    "boot",
+    "memory",
+    "process",
+    "unknown",
+    "scheduler"
+  ],
+  "function_count": 20,
+  "node_count": 20,
+  "edge_count": 92,
+  "internal_edge_count": 12,
+  "external_edge_count": 80,
+  "module_count": 5,
+  "structure_complexity": 0.43,
+  "module_completeness": {
+    "boot": 0.68,
+    "memory": 0.38,
+    "process": 0.18,
+    "scheduler": 0.05,
+    "unknown": 0.13
+  },
+  "core_module_details": [
+    {
+      "module_name": "boot",
+      "module_weight": 0.6683,
+      "completeness": 0.68,
+      "final_score": 0.673
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.2587,
+      "completeness": 0.38,
+      "final_score": 0.3072
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.043,
+      "completeness": 0.18,
+      "final_score": 0.0978
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.03,
+      "completeness": 0.13,
+      "final_score": 0.07
+    },
+    {
+      "module_name": "scheduler",
+      "module_weight": 0.0,
+      "completeness": 0.05,
+      "final_score": 0.02
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 13,
+      "outgoing_edge_count": 64,
+      "internal_edge_count": 12,
+      "external_edge_count": 52,
+      "internal_call_ratio": 0.1875,
+      "external_call_ratio": 0.8125,
+      "module_weight": 0.6683,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 5,
+      "outgoing_edge_count": 25,
+      "internal_edge_count": 0,
+      "external_edge_count": 25,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.2587,
+      "files": [
+        "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+        "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "init_mmu",
+          "normalized_name": "init_mmu",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "44",
+          "outgoing_call_count": 31,
+          "summary": "该函数初始化 LoongArch64 架构下的 MMU（内存管理单元），具体包括初始化 TLB（旁路转换缓冲）、设置页表基地址、刷新 TLB 并启用分页模式。"
+        },
+        {
+          "name": "init_mmu",
+          "normalized_name": "init_mmu",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "66",
+          "end_line": "96",
+          "outgoing_call_count": 31,
+          "summary": "在AArch64架构上初始化MMU（内存管理单元），设置页表转换相关的系统寄存器并启用MMU和缓存。"
+        },
+        {
+          "name": "init_boot_page_table",
+          "normalized_name": "init_boot_page_table",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "105",
+          "end_line": "107",
+          "outgoing_call_count": 10,
+          "summary": "该函数是一个封装，调用平台特定的 `mem::init_boot_page_table` 函数，并传入两个全局页表缓冲区的可变指针（BOOT_PT_L0 和 BOOT_PT_L1），用于初始化启动阶段的页表。"
+        },
+        {
+          "name": "init_boot_page_table",
+          "normalized_name": "init_boot_page_table",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "34",
+          "outgoing_call_count": 10,
+          "summary": "初始化LoongArch64架构下的启动页表，设置L0和L1级页表项以映射物理内存区域"
+        },
+        {
+          "name": "_start_primary",
+          "normalized_name": "_start_primary",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "141",
+          "end_line": "174",
+          "outgoing_call_count": 6,
+          "summary": "这是AArch64架构下主CPU的启动入口函数，使用naked_asm内联汇编实现。它读取当前CPU ID，保存设备树指针，设置启动栈，依次调用函数切换到EL1异常级别、启用浮点与NEON、初始化启动页表和MMU，然后将栈指针迁移到高地址（虚拟地址空间），最后将CPU ID和DTB指针作为参数传递给Rust入口函数。"
+        },
+        {
+          "name": "_start_secondary",
+          "normalized_name": "_start_secondary",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "181",
+          "end_line": "204",
+          "outgoing_call_count": 5,
+          "summary": "该函数是AArch64架构下从CPU（非主CPU）的入口函数。它读取当前CPU的ID，设置栈指针，切换异常级别到EL1，初始化MMU，启用浮点运算单元，然后通过物理-虚拟地址偏移调整栈指针到高地址空间，最后调用Rust编写的次级核心入口函数，并进入无限循环。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "118",
+          "end_line": "136",
+          "outgoing_call_count": 5,
+          "summary": "实现AArch64架构的早期启动入口，通过naked汇编定义ARM64 Linux启动协议要求的Image头部结构，并跳转到主启动函数_start_primary。"
+        },
+        {
+          "name": "BOOT_PT_L0",
+          "normalized_name": "BOOT_PT_L0",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "12",
+          "outgoing_call_count": 5,
+          "summary": "声明一个可变的静态数组，用于存储AArch64架构下L0级页表的页表项，初始化为512个空页表项。这是引导阶段页表结构的一部分。"
+        },
+        {
+          "name": "BOOT_PT_L1",
+          "normalized_name": "BOOT_PT_L1",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "15",
+          "end_line": "15",
+          "outgoing_call_count": 4,
+          "summary": "创建一个可变的静态数组BOOT_PT_L1，用于存放AArch64架构下的L1页表项，初始化为512个A64PTE::empty()条目，该数组通常在系统启动阶段用于建立临时页表。"
+        },
+        {
+          "name": "BOOT_PT_L1",
+          "normalized_name": "BOOT_PT_L1",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "14",
+          "outgoing_call_count": 4,
+          "summary": "声明一个可变的静态变量 BOOT_PT_L1，用于表示 LoongArch64 架构下的第一级页表，初始化为包含 512 个空页表项的数组。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 0,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.043,
+      "files": [
+        "arceos\\ulib\\axstd\\src\\process.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "exit",
+          "normalized_name": "exit",
+          "file_path": "arceos\\ulib\\axstd\\src\\process.rs",
+          "language": "rust",
+          "start_line": 8,
+          "end_line": 10,
+          "outgoing_call_count": 3,
+          "summary": "当前进程退出函数，通过调用系统接口终止当前进程的执行。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "switch_to_el1",
+          "normalized_name": "switch_to_el1",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "21",
+          "end_line": "64",
+          "outgoing_call_count": 19,
+          "summary": "将当前CPU异常级别从EL2或EL3切换到EL1，配置相关系统寄存器以设置64位执行模式、屏蔽中断并返回至保存的链接寄存器地址。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.03,
+      "files": [
+        "arceos/modules/axhal/src/platform/loongarch64_qemu_virt/boot.rs",
+        "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "79",
+          "outgoing_call_count": 5,
+          "summary": "LoongArch64平台上的启动入口函数，通过内联汇编完成处理器初始化、内存窗口配置、栈设置、MMU初始化并跳转到Rust入口函数。"
+        },
+        {
+          "name": "BOOT_PT_L0",
+          "normalized_name": "BOOT_PT_L0",
+          "file_path": "arceos/modules/axhal/src/platform/loongarch64_qemu_virt/boot.rs",
+          "language": "rust",
+          "start_line": "11",
+          "end_line": "11",
+          "outgoing_call_count": 5,
+          "summary": "定义一个静态可变数组，作为LoongArch64架构的4级页表等级0的页表，用于启动阶段的地址映射"
+        },
+        {
+          "name": "BOOT_STACK",
+          "normalized_name": "BOOT_STACK",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\loongarch64_qemu_virt\\boot.rs",
+          "language": "rust",
+          "start_line": "8",
+          "end_line": "8",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个可变静态全局变量 BOOT_STACK，它是一个大小为 TASK_STACK_SIZE 的字节数组，全部初始化为 0。该变量通常用作启动阶段的栈空间。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/yanshandaxue.json"
+  },
+  "generated_at": "2026-06-24 20:24:20"
+}

@@ -1,0 +1,414 @@
+{
+  "repo_name": "tianjindaxue",
+  "team_name": "tianjindaxue",
+  "school": "unknown",
+  "repo_url": "",
+  "normalized_repo_url": "",
+  "year": "history",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "basic_kernel",
+  "main_languages": [
+    "rust"
+  ],
+  "core_modules": [
+    "process",
+    "syscall",
+    "memory",
+    "unknown",
+    "driver"
+  ],
+  "function_count": 20,
+  "node_count": 20,
+  "edge_count": 230,
+  "internal_edge_count": 14,
+  "external_edge_count": 216,
+  "module_count": 7,
+  "structure_complexity": 0.5,
+  "module_completeness": {
+    "driver": 0.18,
+    "memory": 0.23,
+    "network": 0.05,
+    "process": 0.73,
+    "syscall": 0.43,
+    "test": 0.05,
+    "unknown": 0.23
+  },
+  "core_module_details": [
+    {
+      "module_name": "process",
+      "module_weight": 0.697,
+      "completeness": 0.73,
+      "final_score": 0.7102
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.1587,
+      "completeness": 0.43,
+      "final_score": 0.2672
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0704,
+      "completeness": 0.23,
+      "final_score": 0.1342
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.0404,
+      "completeness": 0.23,
+      "final_score": 0.1162
+    },
+    {
+      "module_name": "driver",
+      "module_weight": 0.0335,
+      "completeness": 0.18,
+      "final_score": 0.0921
+    }
+  ],
+  "module_profiles": {
+    "driver": {
+      "module_name": "driver",
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 0,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0335,
+      "files": [
+        "kernel\\src\\tasks\\initproc.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "clear",
+          "normalized_name": "clear",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "61",
+          "end_line": "69",
+          "outgoing_call_count": 2,
+          "summary": "该函数通过向DebugConsole输出ANSI转义序列来清除终端屏幕。序列 ESC [ H 将光标移动到左上角，ESC [ 2 J 清除整个屏幕。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 2,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 0,
+      "external_edge_count": 6,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0704,
+      "files": [
+        "kernel\\src\\syscall\\mm.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "MAP_AREA_START",
+          "normalized_name": "MAP_AREA_START",
+          "file_path": "kernel\\src\\syscall\\mm.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "13",
+          "outgoing_call_count": 0,
+          "summary": "定义内存映射区域的起始地址常量，值为0x2_0000_0000，用于指定用户态或内核态内存映射的基地址。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\src\\tasks\\initproc.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "command_iperf",
+          "normalized_name": "command_iperf",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "203",
+          "end_line": "228",
+          "outgoing_call_count": 8,
+          "summary": "该函数是用于执行iperf网络测试的命令处理函数，通过预先和事后强制清理所有任务（kill_all_tasks）并插入内存屏障和延迟循环，以增强测试执行时的隔离性，减少其他任务干扰。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 15,
+      "outgoing_edge_count": 142,
+      "internal_edge_count": 12,
+      "external_edge_count": 130,
+      "internal_call_ratio": 0.0845,
+      "external_call_ratio": 0.9155,
+      "module_weight": 0.697,
+      "files": [
+        "kernel\\src\\syscall\\mm.rs",
+        "kernel\\src\\tasks\\initproc.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "impl UserTaskContainer {",
+          "normalized_name": "impl UserTaskContainer {",
+          "file_path": "kernel\\src\\syscall\\mm.rs",
+          "language": "rust",
+          "start_line": "15",
+          "end_line": "286",
+          "outgoing_call_count": 74,
+          "summary": "实现了用户任务的内存相关系统调用，包括 brk、mmap、munmap、mprotect、msync、set_robust_list 和 get_robust_list。"
+        },
+        {
+          "name": "command",
+          "normalized_name": "command",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "108",
+          "end_line": "200",
+          "outgoing_call_count": 56,
+          "summary": "该函数解析传入的命令字符串，尝试打开对应文件，如果成功则创建一个新的用户任务并执行该程序，等待其退出后清理资源。"
+        },
+        {
+          "name": "initproc",
+          "normalized_name": "initproc",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "230",
+          "end_line": "624",
+          "outgoing_call_count": 26,
+          "summary": "系统初始化进程，负责根据架构配置库路径、创建必要符号链接、启动一系列测试和基准测试（包括busybox、musl、glibc、LTP、iperf、lmbench等），最后打印完成信息并执行关机逻辑。"
+        },
+        {
+          "name": "kill_all_tasks",
+          "normalized_name": "kill_all_tasks",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "71",
+          "end_line": "79",
+          "outgoing_call_count": 12,
+          "summary": "该函数遍历任务映射中的所有任务，对类型为 MonolithicTask 的任务调用 exit(100) 来终止它们。"
+        },
+        {
+          "name": "get_glibc_path",
+          "normalized_name": "get_glibc_path",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "49",
+          "end_line": "51",
+          "outgoing_call_count": 5,
+          "summary": "返回一个存储全局路径字符串的互斥锁保护的 `String` 的克隆值，该路径通常用于标记 glibc 的位置。"
+        },
+        {
+          "name": "get_libc_path",
+          "normalized_name": "get_libc_path",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "41",
+          "end_line": "43",
+          "outgoing_call_count": 5,
+          "summary": "获取全局静态变量 LIBC_PATH 中存储的路径字符串的克隆副本。"
+        },
+        {
+          "name": "get_dyn_path",
+          "normalized_name": "get_dyn_path",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "57",
+          "end_line": "59",
+          "outgoing_call_count": 4,
+          "summary": "获取当前动态路径（DYN_PATH）的共享可变状态，返回其克隆值。"
+        },
+        {
+          "name": "LIBC_PATH",
+          "normalized_name": "LIBC_PATH",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "33",
+          "end_line": "33",
+          "outgoing_call_count": 3,
+          "summary": "定义了一个全局静态变量 LIBC_PATH，该变量是一个包装在互斥锁（Mutex）中的空字符串，用于存储 libc 的路径，保证在多线程或异步环境下的安全访问。"
+        },
+        {
+          "name": "set_libc_path",
+          "normalized_name": "set_libc_path",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "37",
+          "end_line": "39",
+          "outgoing_call_count": 3,
+          "summary": "该函数用于设置 libc 路径：通过获取全局静态变量 LIBC_PATH 的锁，然后将传入的路径值赋给它。"
+        },
+        {
+          "name": "DYN_PATH",
+          "normalized_name": "DYN_PATH",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "35",
+          "outgoing_call_count": 3,
+          "summary": "定义了一个全局静态可变互斥锁保护的字符串变量 DYN_PATH，用于存储动态路径或配置字符串。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 1,
+      "outgoing_edge_count": 74,
+      "internal_edge_count": 1,
+      "external_edge_count": 73,
+      "internal_call_ratio": 0.0135,
+      "external_call_ratio": 0.9865,
+      "module_weight": 0.1587,
+      "files": [
+        "kernel\\src\\syscall\\mm.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "sys_brk",
+          "normalized_name": "sys_brk",
+          "file_path": "kernel\\src\\syscall\\mm.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "22",
+          "outgoing_call_count": 6,
+          "summary": "实现 sys_brk 系统调用，根据传入的 addr 返回当前堆地址或调整堆大小并返回新堆地址。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\src\\tasks\\initproc.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "run_glibc_tests",
+          "normalized_name": "run_glibc_tests",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "3445",
+          "end_line": "3941",
+          "outgoing_call_count": 6,
+          "summary": "该函数定义了一组 glibc 静态和动态测试用例列表，并依次运行这些测试，通过调用外部命令来执行测试程序，同时支持排除指定的测试用例。"
+        },
+        {
+          "name": "run_musl_tests",
+          "normalized_name": "run_musl_tests",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "2975",
+          "end_line": "3443",
+          "outgoing_call_count": 5,
+          "summary": "该函数定义了一个异步函数，用于运行针对 musl 库的静态链接和动态链接测试用例。它内置了两个测试向量列表（musl_static_tests 和 musl_dynamic_tests），每个元素包含运行测试的程序路径、可执行文件入口和测试名称。函数遍历这两个列表，对于每个测试，如果它不在排除列表（exclude）中，则调用 command 函数以异步方式执行测试命令。"
+        },
+        {
+          "name": "run_ltp_tests",
+          "normalized_name": "run_ltp_tests",
+          "file_path": "kernel\\src\\tasks\\initproc.rs",
+          "language": "rust",
+          "start_line": "625",
+          "end_line": "2973",
+          "outgoing_call_count": 4,
+          "summary": "该函数定义一个名为 ltp_tests 的 Vec，包含一个大型的 LTP 测试用例名称列表（大部分被注释掉），然后遍历该列表，对于每个测试用例，依次执行三条命令：输出用例开始信息、实际运行 ltp 测试二进制文件、输出失败信息（无论实际结果如何）。该函数旨在批量运行一组预设的 LTP 测试用例，并记录日志。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 1,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 1,
+      "external_edge_count": 5,
+      "internal_call_ratio": 0.1667,
+      "external_call_ratio": 0.8333,
+      "module_weight": 0.0404,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/tianjindaxue.json"
+  },
+  "generated_at": "2026-06-24 20:24:20"
+}

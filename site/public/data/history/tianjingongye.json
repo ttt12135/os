@@ -1,0 +1,420 @@
+{
+  "repo_name": "tianjingongye",
+  "team_name": "tianjingongye",
+  "school": "unknown",
+  "repo_url": "",
+  "normalized_repo_url": "",
+  "year": "history",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "unknown_os_project",
+  "main_languages": [
+    "rust"
+  ],
+  "core_modules": [
+    "boot",
+    "filesystem",
+    "interrupt",
+    "memory",
+    "unknown"
+  ],
+  "function_count": 20,
+  "node_count": 20,
+  "edge_count": 116,
+  "internal_edge_count": 27,
+  "external_edge_count": 89,
+  "module_count": 7,
+  "structure_complexity": 0.43,
+  "module_completeness": {
+    "boot": 0.68,
+    "filesystem": 0.63,
+    "interrupt": 0.41,
+    "memory": 0.18,
+    "process": 0.05,
+    "scheduler": 0.05,
+    "unknown": 0.08
+  },
+  "core_module_details": [
+    {
+      "module_name": "boot",
+      "module_weight": 0.5,
+      "completeness": 0.68,
+      "final_score": 0.572
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.2707,
+      "completeness": 0.63,
+      "final_score": 0.4144
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.1324,
+      "completeness": 0.41,
+      "final_score": 0.2434
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0669,
+      "completeness": 0.18,
+      "final_score": 0.1121
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.03,
+      "completeness": 0.08,
+      "final_score": 0.05
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 10,
+      "outgoing_edge_count": 58,
+      "internal_edge_count": 10,
+      "external_edge_count": 48,
+      "internal_call_ratio": 0.1724,
+      "external_call_ratio": 0.8276,
+      "module_weight": 0.5,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 5,
+      "outgoing_edge_count": 35,
+      "internal_edge_count": 12,
+      "external_edge_count": 23,
+      "internal_call_ratio": 0.3429,
+      "external_call_ratio": 0.6571,
+      "module_weight": 0.2707,
+      "files": [
+        "arceos\\modules\\axfs\\src\\proc_interrupts.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "get_attr",
+          "normalized_name": "get_attr",
+          "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+          "language": "rust",
+          "start_line": "27",
+          "end_line": "36",
+          "outgoing_call_count": 9,
+          "summary": "获取proc_interrupts文件的属性，包括权限（只读）、文件类型（普通文件）和当前内容长度，块数为0。"
+        },
+        {
+          "name": "read_at",
+          "normalized_name": "read_at",
+          "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+          "language": "rust",
+          "start_line": "38",
+          "end_line": "45",
+          "outgoing_call_count": 8,
+          "summary": "从当前内容中读取指定偏移量范围内的数据到缓冲区。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+          "language": "rust",
+          "start_line": "9",
+          "end_line": "11",
+          "outgoing_call_count": 0,
+          "summary": "这是一个构造器函数，用于创建 Self 类型的实例，但实现中直接返回了 Self 本身，没有执行任何实际操作或初始化字段。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 2,
+      "outgoing_edge_count": 21,
+      "internal_edge_count": 5,
+      "external_edge_count": 16,
+      "internal_call_ratio": 0.2381,
+      "external_call_ratio": 0.7619,
+      "module_weight": 0.1324,
+      "files": [
+        "arceos\\modules\\axfs\\src\\proc_interrupts.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "get_current_content",
+          "normalized_name": "get_current_content",
+          "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "23",
+          "outgoing_call_count": 9,
+          "summary": "获取所有中断统计信息，并将其格式化为文本字符串（每行格式为“IRQ号: 次数”），返回字节向量。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 2,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 0,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0669,
+      "files": [
+        "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "init_mmu",
+          "normalized_name": "init_mmu",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "66",
+          "end_line": "96",
+          "outgoing_call_count": 18,
+          "summary": "这个代码块的功能是在 AArch64 架构上初始化内存管理单元 (MMU)，包括配置页表属性和转换控制寄存器、设置根页表、清空 TLB，并最终启用 MMU 和缓存。"
+        },
+        {
+          "name": "_start_primary",
+          "normalized_name": "_start_primary",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "143",
+          "end_line": "178",
+          "outgoing_call_count": 6,
+          "summary": "AArch64架构主CPU启动入口函数，通过内联汇编完成读取当前CPU ID、保存DTB指针、设置启动栈、切换到EL1异常级别、启用浮点单元、初始化页表和MMU、调整栈指针到高地址，最后调用rust_entry进入Rust主函数，且不会返回。"
+        },
+        {
+          "name": "_start_secondary",
+          "normalized_name": "_start_secondary",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "185",
+          "end_line": "210",
+          "outgoing_call_count": 5,
+          "summary": "初始化非主 CPU 核的启动流程：读取 CPU ID，设置栈指针，切换异常级别，启用 MMU，使能浮点运算，然后跳转至 Rust 层入口函数。"
+        },
+        {
+          "name": "enable_fp",
+          "normalized_name": "enable_fp",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "98",
+          "end_line": "103",
+          "outgoing_call_count": 4,
+          "summary": "根据编译特性启用浮点与SIMD功能，当配置了fp_simd特性时，设置CPACR_EL1寄存器的FPEN字段为TrapNothing，并执行指令同步屏障。"
+        },
+        {
+          "name": "BOOT_PT_L0",
+          "normalized_name": "BOOT_PT_L0",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "12",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个可变的静态数组作为 ARMv8-A 架构下 4KB 页表（Page Table）的 L0 级（Level 0）页表项数组，所有项初始化为空页表项（A64PTE::empty()），用于早期启动阶段的页表初始化。"
+        },
+        {
+          "name": "BOOT_PT_L1",
+          "normalized_name": "BOOT_PT_L1",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "15",
+          "end_line": "15",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个用于引导阶段的可变静态数组，作为ARMv8-A架构中的一级页表。数组中每个元素类型为A64PTE，初始化为空项。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "118",
+          "end_line": "138",
+          "outgoing_call_count": 2,
+          "summary": "定义AArch64平台内核入口点，使用naked_asm嵌入汇编，设置头部结构并跳转到主启动函数。"
+        },
+        {
+          "name": "init_boot_page_table",
+          "normalized_name": "init_boot_page_table",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "105",
+          "end_line": "107",
+          "outgoing_call_count": 2,
+          "summary": "调用平台特定的内存初始化函数，并传递两个页表（L0和L1）的指针，以初始化引导页表。"
+        },
+        {
+          "name": "FLAG_ANY_MEM",
+          "normalized_name": "FLAG_ANY_MEM",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "19",
+          "end_line": "19",
+          "outgoing_call_count": 0,
+          "summary": "定义一个常量，表示内存类型为“任意内存”的位标志，值为二进制 0b1000。该标志可能用于描述或过滤内存区域，如启动时对设备树（FDT）中内存节点的识别。"
+        },
+        {
+          "name": "FLAG_PAGE_SIZE_4K",
+          "normalized_name": "FLAG_PAGE_SIZE_4K",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "18",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个常量，表示4K页大小的标志位，值为二进制0b10。该常量可能用于配置页表或内存管理单元（MMU），表明支持4K页面尺寸。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arceos\\modules\\axfs\\src\\proc_interrupts.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "impl VfsNodeOps for ProcInterruptsFile {",
+          "normalized_name": "impl VfsNodeOps for ProcInterruptsFile {",
+          "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+          "language": "rust",
+          "start_line": "26",
+          "end_line": "56",
+          "outgoing_call_count": 18,
+          "summary": "为 ProcInterruptsFile 结构体实现 VfsNodeOps trait，提供虚拟文件系统节点操作，包括获取属性、读取、写入和截断，其中写入和截断返回 PermissionDenied 错误。"
+        },
+        {
+          "name": "impl ProcInterruptsFile {",
+          "normalized_name": "impl ProcInterruptsFile {",
+          "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+          "language": "rust",
+          "start_line": "8",
+          "end_line": "24",
+          "outgoing_call_count": 12,
+          "summary": "定义 ProcInterruptsFile 结构体的实现，提供构造函数和获取当前中断统计信息的方法。"
+        },
+        {
+          "name": "ProcInterruptsFile",
+          "normalized_name": "ProcInterruptsFile",
+          "file_path": "arceos\\modules\\axfs\\src\\proc_interrupts.rs",
+          "language": "rust",
+          "start_line": "6",
+          "end_line": "6",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为 ProcInterruptsFile 的空结构体，可能用于表示 proc 文件系统中与中断信息相关的虚拟文件。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "switch_to_el1",
+          "normalized_name": "switch_to_el1",
+          "file_path": "arceos\\modules\\axhal\\src\\platform\\aarch64_common\\boot.rs",
+          "language": "rust",
+          "start_line": 21,
+          "end_line": 64,
+          "outgoing_call_count": 19,
+          "summary": "该函数用于将CPU从较高的异常级别（EL3或EL2）切换到EL1（操作系统内核运行级别），并配置相关的系统寄存器以确保正确的执行环境。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.03,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/tianjingongye.json"
+  },
+  "generated_at": "2026-06-24 21:48:56"
+}
