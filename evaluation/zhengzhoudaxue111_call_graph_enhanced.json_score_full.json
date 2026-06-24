@@ -1,0 +1,104 @@
+{
+  "repo_name": "zhengzhoudaxue111_call_graph_enhanced.json",
+  "created_at": "2026-06-16 21:27:19",
+  "score_type": "full",
+  "inputs": {
+    "repo_profile": "repo_profiles\\target\\zhengzhoudaxue111_call_graph_enhanced.json_repo_profile_full.json",
+    "retrieval_result": "history_knowledge_base\\retrieval_results\\zhengzhoudaxue111_call_graph_enhanced.json_similar_projects_full.json",
+    "comparison_result": "history_knowledge_base\\comparisons\\zhengzhoudaxue111_call_graph_enhanced.json_history_comparison_full.json"
+  },
+  "reference_scores": {
+    "originality": 16,
+    "novelty": 16,
+    "practicality": 5,
+    "difficulty": 3,
+    "completion": 3,
+    "reference_factors": {
+      "average_module_completeness": 0.0,
+      "structure_complexity": 0.0,
+      "module_count": 0,
+      "function_count": 0,
+      "edge_count": 0,
+      "top_similarity": 0.2,
+      "advantage_count": 4,
+      "weakness_count": 6
+    }
+  },
+  "evaluation": {
+    "repo_name": "zhengzhoudaxue111_call_graph_enhanced.json",
+    "overall_score": 35.0,
+    "score_level": "weak",
+    "scores": {
+      "originality": {
+        "score": 13.0,
+        "reference_score": 16.0,
+        "max_score": 20,
+        "reason": "目标仓库画像数据全为0，缺少函数、模块、边等任何结构信息，无法体现原创性设计；与历史项目对比中无优势，原创性不可评估，因此下调至13分。",
+        "evidence": [
+          "目标仓库函数数为0，模块数为0，核心模块为空",
+          "对比历史项目时无任何目标优势被识别",
+          "项目类型为unknown_os_project，缺乏具体特征"
+        ]
+      },
+      "novelty": {
+        "score": 13.0,
+        "reference_score": 16.0,
+        "max_score": 20,
+        "reason": "有效数据缺失导致无法分析新颖性；历史项目如qinghuadaxue具备boot、filesystem等模块但目标仓库空白，无新颖特征，故下调至13分。",
+        "evidence": [
+          "相似度仅基于项目类型（0.2），核心模块、语言、结构复杂度得分均为0",
+          "与qinghuadaxue对比显示目标仓库无模块、无语言信息",
+          "目标仓库缺乏任何可比较的技术特征"
+        ]
+      },
+      "practicality": {
+        "score": 3.0,
+        "reference_score": 5.0,
+        "max_score": 20,
+        "reason": "项目数据为空，无法证明其可实践性；但考虑到项目类型为os_project，具有一定的实践基础，且规则参考分为5，故保持接近3分。",
+        "evidence": [
+          "目标仓库无函数、边、模块，无法评估代码实现和实践可行性",
+          "历史项目具有具体模块（如文件系统、调度器）但目标仓库空白",
+          "不确定性说明指出可能由于分析失败导致数据缺失"
+        ]
+      },
+      "difficulty": {
+        "score": 3.0,
+        "reference_score": 3.0,
+        "max_score": 20,
+        "reason": "没有有效数据可以衡量技术难度，但项目属于操作系统内核领域，有一定固有难度；规则参考分为3分，因此保持原分。",
+        "evidence": [
+          "目标仓库无函数、模块等数据，无法评估实现难度",
+          "历史项目如qinghuadaxue有20个函数和5个模块，难度可辨，但目标仓库不可比",
+          "项目类型未知，无法判断技术复杂度"
+        ]
+      },
+      "completion": {
+        "score": 3.0,
+        "reference_score": 3.0,
+        "max_score": 20,
+        "reason": "所有画像数据（函数数、边数、模块数）均为0，表明完成度极低或分析失败；与历史项目（如jilindaxue有20个函数）相比差距巨大，规则参考分为3分，故保持原分。",
+        "evidence": [
+          "函数数为0，边数为0，模块数为0，核心模块为空",
+          "结构复杂度为0.0，远低于历史项目的0.36-0.43",
+          "多个对比说明目标仓库缺乏完整结构和模块完整性数据"
+        ]
+      }
+    },
+    "strengths": [
+      "项目类型与多个历史OS项目一致，具有内核开发的基本定位，可能存在潜力和设计空间"
+    ],
+    "weaknesses": [
+      "代码分析数据完全缺失（函数数、边数、模块数均为0），无法进行有效评估",
+      "缺乏核心模块定义和完整性信息，表明项目不成熟或分析工具未能解析",
+      "与其他历史项目对比时，没有表现出任何可识别的优势或技术特征"
+    ],
+    "recommendations": [
+      "确保仓库中包含实际的代码文件或构建脚本，以便能够被分析工具正确解析",
+      "参考历史仓库（如qinghuadaxue）的模块划分（boot、filesystem、process、memory、scheduler）来构建自身内核结构",
+      "先完成基础的函数和模块实现，积累可分析的数据，以便后续评估"
+    ],
+    "confidence": "low",
+    "uncertainty": "目标仓库画像中所有关键字段（function_count、edge_count、module_count、core_modules等）均为零或空，可能由于仓库为空、代码无法被解析或分析工具失败导致。因此所有评分均基于不完整或缺失的数据，高度不确定。"
+  }
+}

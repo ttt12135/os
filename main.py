@@ -19,7 +19,14 @@ from src.ingest_pipeline import ingest_history_repo, analyze_target_repo, format
 from src.history_comparator import compare_retrieval_results_with_ai,save_history_comparison_full,format_history_comparison_full_preview
 from src.score_evaluator import evaluate_project_score_full,save_score_result_full,format_score_result_full_preview
 from src.final_report_generator import generate_final_report_full,save_final_report_full,format_final_report_preview
-from src.final_pipeline import run_final_analyze_pipeline,format_final_analyze_preview
+from src.final_pipeline import run_final_analyze_pipeline,format_final_analyze_preview,run_final_analyze_hybrid_pipeline,format_final_analyze_hybrid_preview
+from src.path_resolver import resolve_final_report_paths,format_resolved_paths_preview
+from src.history_batch_ingestor import run_batch_ingest_history,format_batch_ingest_history_preview
+from src.history_kb_reporter import generate_history_kb_report,save_history_kb_report,format_history_kb_report_preview
+from src.rag_document_builder import build_history_rag_documents,save_history_rag_documents,save_history_rag_documents_markdown,format_history_rag_documents_preview
+from src.rag_vector_store import build_chroma_vector_store,rag_retrieve_history,save_rag_retrieval_result,format_vector_store_build_preview,format_rag_retrieval_preview
+from src.hybrid_retriever import run_hybrid_retrieve,format_hybrid_retrieval_preview
+
 
 #读取.env文件
 load_dotenv()
@@ -44,6 +51,203 @@ messages = [
         "content":"你是一个帮助新手理解代码仓库和操作系统比赛项目的AI助手,回答的时候要清楚简单"
     }
 ]
+
+VERSION_NAME = "v3.9 - 主菜单工程化版"
+
+
+MAIN_COMMANDS = {
+    "ingest_history": "入库历史仓库，生成历史项目 repo_profile_full，并保存到 repo_profiles/history",
+    "batch_ingest_history": "批量入库历史仓库，并自动重建 full 历史知识库",
+    "analyze_target": "分析目标仓库，生成 code_blocks、function_analysis、call_graph、module_summary 和 repo_profile_full",
+    "history_kb_full": "根据 repo_profiles/history 构建 full 历史知识库",
+    "history_kb_report": "生成历史知识库统计报告，展示历史库规模、类型、语言和模块覆盖情况",
+    "build_rag_docs": "将 full 历史知识库转换为标准 RAG 文档，为后续 LangChain/向量库做准备",
+    "build_vector_store": "将 RAG 文档写入 Chroma 向量库",
+    "hybrid_retrieve": "融合 retrieve_full 结构检索和 RAG 语义检索，生成综合相似历史项目",
+    "rag_retrieve": "基于 Chroma 向量库进行历史项目语义检索",
+    "retrieve_full": "基于 repo_profile_full 检索相似历史项目",
+    "compare_full": "对目标项目和相似历史项目进行 AI 对比分析",
+    "score_full": "基于仓库画像、历史检索和 AI 对比结果进行五维评分",
+    "final_report": "整合所有结果生成最终 Markdown 报告",
+    "final_analyze": "一键执行目标分析、历史检索、AI 对比、评分和报告生成",
+    "final_analyze_hybrid": "一键执行结构分析、RAG 构建、Hybrid 检索、AI 对比、评分和最终报告"
+}
+
+
+DEBUG_COMMANDS = {
+    "save_blocks": "单独执行代码切块并保存 code_blocks",
+    "understand": "单独让 AI 理解已有代码块",
+    "call_graph": "单独根据函数理解结果构建调用图",
+    "module_summary": "单独生成模块总结",
+    "profile": "单独生成旧版 repo_profile",
+}
+
+
+LEGACY_COMMANDS = {
+    "chat": "早期普通聊天功能，不属于当前 OS 分析主流程",
+    "repo": "早期单仓库 AI 分析功能，已被 analyze_target 替代",
+    "report": "早期单仓库描述报告，已被 final_report 替代",
+    "batch": "早期批量生成描述报告，已被 ingest_history 流程替代",
+    "compare": "早期 Markdown 报告对比，已被 retrieve_full + compare_full 替代",
+    "split": "早期代码切块预览命令，当前建议使用 save_blocks 或 analyze_target",
+    "history_kb": "旧版历史知识库，已被 history_kb_full 替代",
+    "retrieve": "旧版相似项目检索，已被 retrieve_full 替代",
+    "evaluate": "旧版专项评分报告，已被 score_full + final_report 替代",
+}
+
+
+UTILITY_COMMANDS = {
+    "help": "查看帮助菜单",
+    "workflow": "查看推荐演示流程",
+    "exit": "退出程序"
+}
+
+
+def print_command_menu():
+    """
+    打印简洁主菜单。
+    """
+
+    print("=" * 70)
+    print(VERSION_NAME)
+    print("=" * 70)
+    print()
+    print("【推荐主流程命令】")
+
+    for command, description in MAIN_COMMANDS.items():
+        print(f"  {command:<16} {description}")
+
+    print()
+    print("【辅助命令】")
+
+    for command, description in UTILITY_COMMANDS.items():
+        print(f"  {command:<16} {description}")
+
+    print()
+    print("如需查看调试命令或旧版命令，请输入：")
+    print("  help debug")
+    print("  help legacy")
+    print("=" * 70)
+
+
+def print_debug_commands():
+    """
+    打印调试命令。
+    """
+
+    print()
+    print("【调试命令】")
+    print("这些命令主要用于开发阶段单步测试，不是最终演示主线。")
+
+    for command, description in DEBUG_COMMANDS.items():
+        print(f"  {command:<16} {description}")
+
+    print()
+
+
+def print_legacy_commands():
+    """
+    打印旧版命令。
+    """
+
+    print()
+    print("【旧版 legacy 命令】")
+    print("这些命令是早期版本保留下来的功能，不建议作为当前主流程演示。")
+
+    for command, description in LEGACY_COMMANDS.items():
+        print(f"  {command:<16} {description}")
+
+    print()
+
+
+def print_workflow_guide():
+    """
+    打印推荐演示流程。
+    """
+
+    print()
+    print("【推荐演示流程】")
+    print()
+    print("方式一：分步骤演示")
+    print("  1. ingest_history   入库历史项目")
+    print("  2. analyze_target   分析目标项目")
+    print("  3. history_kb_full  构建 full 历史知识库")
+    print("  4. retrieve_full    检索相似历史项目")
+    print("  5. compare_full     AI 历史项目对比")
+    print("  6. score_full       五维结构化评分")
+    print("  7. final_report     生成最终 Markdown 报告")
+    print()
+    print("方式二：一键演示")
+    print("  final_analyze")
+    print()
+    print("建议现场汇报时先讲分步骤逻辑，再用 final_analyze 说明系统已完成端到端闭环。")
+    print()
+
+
+def print_command_help(command=None):
+    """
+    打印命令帮助。
+    """
+
+    if command is None or command == "":
+        print_command_menu()
+        return
+
+    command = command.strip()
+
+    if command == "debug":
+        print_debug_commands()
+        return
+
+    if command == "legacy":
+        print_legacy_commands()
+        return
+
+    if command in MAIN_COMMANDS:
+        print(f"{command}: {MAIN_COMMANDS[command]}")
+        return
+
+    if command in DEBUG_COMMANDS:
+        print(f"{command}: {DEBUG_COMMANDS[command]}")
+        return
+
+    if command in LEGACY_COMMANDS:
+        print(f"{command}: {LEGACY_COMMANDS[command]}")
+        return
+
+    if command in UTILITY_COMMANDS:
+        print(f"{command}: {UTILITY_COMMANDS[command]}")
+        return
+
+    print(f"未知命令：{command}")
+
+
+def is_known_command(command):
+    """
+    判断是否是已知命令。
+    """
+
+    return (
+        command in MAIN_COMMANDS
+        or command in DEBUG_COMMANDS
+        or command in LEGACY_COMMANDS
+        or command in UTILITY_COMMANDS
+    )
+
+
+def confirm_legacy_command(command):
+    """
+    旧版命令执行前确认。
+    防止误用旧流程。
+    """
+
+    print()
+    print(f"提示：{command} 是旧版 legacy 命令，不属于当前推荐主流程。")
+    print(f"说明：{LEGACY_COMMANDS.get(command)}")
+    confirm_text = input("是否仍然执行？y/n，直接回车默认 n: ")
+
+    return confirm_text.strip().lower() in {"y", "yes", "1", "true"}
+
 
 def chat_with_ai(user_input):
 #函数用途：把用户的话发给DeepSeek
@@ -598,27 +802,37 @@ def parse_max_blocks_input(max_blocks_text, default_value=20):
     return int(text)
 
 def main():
-    print("v1.9- 专项对比评分报告版")
-    print("输入 chat：普通聊天")
-    print("输入 repo：分析本地仓库")
-    print("输入 report：生成单个 OS 仓库描述文档")
-    print("输入 batch：批量分析历史 OS 作品")
-    print("输入 compare：生成新作品与历史作品对比报告")
-    print("输入 split：切分仓库代码块")
-    print("输入 save_blocks：切分代码块并保存 JSON")
-    print("输入 understand：AI 阅读代码块并生成函数理解结果")
-    print("输入 call_graph：根据函数理解结果和代码块生成增强调用关系")
-    print("输入 module_summary：根据函数理解和调用图生成模块总结")
-    print("输入 profile：生成仓库画像 repo_profile.json")
-    print("输入 history_kb：根据 repo_profiles 构建历史作品知识库")
-    print("输入 retrieve：根据 repo_profile 检索相似历史作品")
-    print("输入 evaluate：生成专项对比评分报告")
-    print("输入 ingest_history：一键入库历史仓库")
-    print("输入 analyze_target：一键分析新提交仓库")
-    print("输入 exit：退出程序")
+
+    print_command_menu()
 
     while True:
-        command = input("请选择模式(chat/repo/report/batch/compare/split/save_blocks/understand/call_graph/module_summary/profile/history_kb/history_kb_full/retrieve/evaluate/ingest_history/analyze_target/retrieve_full/compare_full/score_full/final_report/final_analyze/exit): ")
+        command = input("请输入命令（help 查看菜单，workflow 查看演示流程，exit 退出）: ")
+        command = command.strip()
+
+        if command.startswith("help"):
+            parts = command.split(maxsplit=1)
+
+            if len(parts) == 1:
+                print_command_help()
+            else:
+                print_command_help(parts[1])
+
+            continue
+
+        if command == "workflow":
+            print_workflow_guide()
+            continue
+
+        if not is_known_command(command):
+            print(f"未知命令：{command}")
+            print("输入 help 查看可用命令。")
+            continue
+
+        if command in LEGACY_COMMANDS:
+            if not confirm_legacy_command(command):
+                print("已取消执行 legacy 命令。")
+                continue
+
         if command == "exit":
             print("程序退出")
             break
@@ -885,6 +1099,60 @@ def main():
             print(result_text)
             print("-" * 30)
 
+
+        elif command == "batch_ingest_history":
+            history_root_dir = input("请输入历史项目总目录路径: ")
+
+            analysis_mode = input("请选择分析模式 quick/full，直接回车默认 quick: ")
+
+            if analysis_mode.strip() == "":
+                analysis_mode = "quick"
+
+            analysis_mode = analysis_mode.strip().lower()
+
+            max_blocks_text = input("请输入每个历史项目 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 50: ")
+
+            max_blocks = parse_max_blocks_input(
+                max_blocks_text,
+                default_value=50
+            )
+
+            cache_text = input("是否启用缓存 use_cache？y/n，直接回车默认 y: ")
+
+            if cache_text.strip() == "":
+                use_cache = True
+            else:
+                use_cache = cache_text.strip().lower() in {"y", "yes", "1", "true"}
+
+            force_text = input("是否强制重跑 force_rebuild？y/n，直接回车默认 n: ")
+
+            if force_text.strip() == "":
+                force_rebuild = False
+            else:
+                force_rebuild = force_text.strip().lower() in {"y", "yes", "1", "true"}
+
+            if max_blocks is None:
+                print()
+                print("你选择了 all，将尝试分析每个历史项目的全部代码块。")
+                print("该模式可能耗时较长，建议正式大规模入库前先用 quick + 50 测试。")
+
+            batch_result = run_batch_ingest_history(
+                history_root_dir=history_root_dir,
+                ask_ai_once=ask_ai_once,
+                analysis_mode=analysis_mode,
+                max_blocks=max_blocks,
+                use_cache=use_cache,
+                force_rebuild=force_rebuild
+            )
+
+            result_text = format_batch_ingest_history_preview(
+                batch_result
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
         elif command == "analyze_target":
             repo_path = input("请输入新提交仓库路径: ")
             analysis_mode = input("请选择分析模式 quick/full，直接回车默认 quick: ")
@@ -913,7 +1181,7 @@ def main():
 
 
         elif command == "compare_full":
-            retrieval_result_path = input("请输入 retrieve_full 生成的相似项目结果路径: ")
+            retrieval_result_path = input("请输入 retrieve_full 或 hybrid_retrieve 生成的相似项目结果路径: ")
 
             comparison_result = compare_retrieval_results_with_ai(
                 retrieval_result_path=retrieval_result_path,
@@ -959,30 +1227,48 @@ def main():
     
 
         elif command == "final_report":
-            repo_profile_path = input("请输入目标仓库 repo_profile_full 路径: ")
-            retrieval_result_path = input("请输入 retrieve_full 结果路径: ")
-            comparison_result_path = input("请输入 compare_full 结果路径: ")
-            score_result_path = input("请输入 score_full 结果路径: ")
+            print()
+            print("final_report 支持两种输入方式：")
+            print("1. 直接输入仓库名，例如：zhengzhoudaxue111")
+            print("2. 输入 repo_profile_full.json 路径")
+            print()
 
-            report_result = generate_final_report_full(
-                repo_profile_path=repo_profile_path,
-                retrieval_result_path=retrieval_result_path,
-                comparison_result_path=comparison_result_path,
-                score_result_path=score_result_path
-            )
+            repo_name_or_path = input("请输入仓库名或 repo_profile_full.json 路径: ")
 
-            report_path = save_final_report_full(report_result)
-
-            result_text = format_final_report_preview(
-                report_result=report_result,
-                save_path=report_path
+            repo_name, path_map = resolve_final_report_paths(
+                repo_name_or_path
             )
 
             print()
-            print(result_text)
-            print("-" * 30)
+            print(format_resolved_paths_preview(
+                repo_name=repo_name,
+                path_map=path_map
+            ))
 
-        elif command == "final_analyze":
+            confirm_text = input("是否使用以上路径生成最终报告？y/n，直接回车默认 y: ")
+
+            if confirm_text.strip() == "" or confirm_text.strip().lower() in {"y", "yes", "1", "true"}:
+                report_result = generate_final_report_full(
+                    repo_profile_path=path_map["repo_profile_path"],
+                    retrieval_result_path=path_map["retrieval_result_path"],
+                    comparison_result_path=path_map["comparison_result_path"],
+                    score_result_path=path_map["score_result_path"]
+                )
+
+                report_path = save_final_report_full(report_result)
+
+                result_text = format_final_report_preview(
+                    report_result=report_result,
+                    save_path=report_path
+                )
+
+                print()
+                print(result_text)
+                print("-" * 30)
+            else:
+                print("已取消生成最终报告。")
+
+        elif command == "final_analyze_hybrid":
             repo_path = input("请输入目标仓库路径: ")
 
             analysis_mode = input("请选择分析模式 quick/full，直接回车默认 full: ")
@@ -999,27 +1285,90 @@ def main():
                 default_value=100
             )
 
-            top_k_text = input("请输入相似历史项目数量 top_k，直接回车默认 3: ")
+            top_k_text = input("请输入 retrieve_full 结构检索 top_k，直接回车默认 3: ")
 
             if top_k_text.strip() == "":
                 top_k = 3
             else:
                 top_k = int(top_k_text)
 
+            rag_top_k_text = input("请输入 RAG top_k，直接回车默认 10: ")
+
+            if rag_top_k_text.strip() == "":
+                rag_top_k = 10
+            else:
+                rag_top_k = int(rag_top_k_text)
+
+            final_top_k_text = input("请输入最终 Hybrid top_k，直接回车默认 5: ")
+
+            if final_top_k_text.strip() == "":
+                final_top_k = 5
+            else:
+                final_top_k = int(final_top_k_text)
+
+            structured_weight_text = input("请输入结构检索权重，直接回车默认 0.65: ")
+
+            if structured_weight_text.strip() == "":
+                structured_weight = 0.65
+            else:
+                structured_weight = float(structured_weight_text)
+
+            semantic_weight_text = input("请输入 RAG 语义检索权重，直接回车默认 0.35: ")
+
+            if semantic_weight_text.strip() == "":
+                semantic_weight = 0.35
+            else:
+                semantic_weight = float(semantic_weight_text)
+
+            embedding_backend = input("请选择 embedding_backend hash/bge，直接回车默认 hash: ")
+
+            if embedding_backend.strip() == "":
+                embedding_backend = "hash"
+
+            embedding_backend = embedding_backend.strip().lower()
+
+            embedding_model_name = ""
+
+            if embedding_backend == "bge":
+                embedding_model_name = input("请输入 BGE 模型名，直接回车默认 BAAI/bge-small-zh-v1.5: ")
+
+                if embedding_model_name.strip() == "":
+                    embedding_model_name = "BAAI/bge-small-zh-v1.5"
+
+            device = input("请输入运行设备 cpu/cuda，直接回车默认 cpu: ")
+
+            if device.strip() == "":
+                device = "cpu"
+
+            force_text = input("是否强制重建向量库？y/n，直接回车默认 y: ")
+
+            if force_text.strip() == "":
+                force_rebuild_vector_store = True
+            else:
+                force_rebuild_vector_store = force_text.strip().lower() in {"y", "yes", "1", "true"}
+
             if max_blocks is None:
                 print()
                 print("你选择了 all，将尝试分析全部代码块。")
                 print("该模式可能耗时较长，但支持断点续跑。")
 
-            generated_files = run_final_analyze_pipeline(
+            generated_files = run_final_analyze_hybrid_pipeline(
                 repo_path=repo_path,
                 ask_ai_once=ask_ai_once,
                 analysis_mode=analysis_mode,
                 max_blocks=max_blocks,
-                top_k=top_k
+                top_k=top_k,
+                rag_top_k=rag_top_k,
+                final_top_k=final_top_k,
+                structured_weight=structured_weight,
+                semantic_weight=semantic_weight,
+                embedding_backend=embedding_backend,
+                embedding_model_name=embedding_model_name,
+                device=device,
+                force_rebuild_vector_store=force_rebuild_vector_store
             )
 
-            result_text = format_final_analyze_preview(
+            result_text = format_final_analyze_hybrid_preview(
                 generated_files
             )
 
@@ -1027,9 +1376,225 @@ def main():
             print(result_text)
             print("-" * 30)
 
+        elif command == "history_kb_report":
+            history_kb_path = input("请输入 full 历史知识库路径，直接回车默认 history_knowledge_base/history_profiles_full.json: ")
+
+            if history_kb_path.strip() == "":
+                history_kb_path = "history_knowledge_base/history_profiles_full.json"
+
+            report_result = generate_history_kb_report(
+                history_kb_path=history_kb_path
+            )
+
+            report_path = save_history_kb_report(report_result)
+
+            result_text = format_history_kb_report_preview(
+                report_result=report_result,
+                save_path=report_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
+        elif command == "build_rag_docs":
+            history_kb_path = input("请输入 full 历史知识库路径，直接回车默认 history_knowledge_base/history_profiles_full.json: ")
+
+            if history_kb_path.strip() == "":
+                history_kb_path = "history_knowledge_base/history_profiles_full.json"
+
+            rag_result = build_history_rag_documents(
+                history_kb_path=history_kb_path
+            )
+
+            json_path = save_history_rag_documents(
+                rag_result
+            )
+
+            markdown_path = save_history_rag_documents_markdown(
+                rag_result
+            )
+
+            result_text = format_history_rag_documents_preview(
+                rag_result=rag_result,
+                json_path=json_path,
+                markdown_path=markdown_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
+
+        elif command == "build_vector_store":
+            rag_docs_path = input("请输入 RAG 文档路径，直接回车默认 rag_documents/history_rag_documents.json: ")
+
+            if rag_docs_path.strip() == "":
+                rag_docs_path = "rag_documents/history_rag_documents.json"
+
+            persist_directory = input("请输入 Chroma 向量库目录，直接回车默认 vector_store/chroma_history: ")
+
+            if persist_directory.strip() == "":
+                persist_directory = "vector_store/chroma_history"
+
+            collection_name = input("请输入 collection 名称，直接回车默认 os_history_projects: ")
+
+            if collection_name.strip() == "":
+                collection_name = "os_history_projects"
+
+            embedding_backend = input("请选择 embedding_backend hash/bge，直接回车默认 bge: ")
+
+            if embedding_backend.strip() == "":
+                embedding_backend = "bge"
+
+            embedding_backend = embedding_backend.strip().lower()
+
+            embedding_model_name = ""
+
+            if embedding_backend == "bge":
+                embedding_model_name = input("请输入 BGE 模型名，直接回车默认 BAAI/bge-small-zh-v1.5: ")
+
+                if embedding_model_name.strip() == "":
+                    embedding_model_name = "BAAI/bge-small-zh-v1.5"
+
+            device = input("请输入运行设备 cpu/cuda，直接回车默认 cpu: ")
+
+            if device.strip() == "":
+                device = "cpu"
+
+            force_text = input("是否强制重建向量库？y/n，直接回车默认 y: ")
+
+            if force_text.strip() == "":
+                force_rebuild = True
+            else:
+                force_rebuild = force_text.strip().lower() in {"y", "yes", "1", "true"}
+
+            build_result = build_chroma_vector_store(
+                rag_docs_path=rag_docs_path,
+                persist_directory=persist_directory,
+                collection_name=collection_name,
+                force_rebuild=force_rebuild,
+                embedding_backend=embedding_backend,
+                embedding_model_name=embedding_model_name,
+                device=device
+            )
+
+            result_text = format_vector_store_build_preview(
+                build_result
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
+        elif command == "rag_retrieve":
+            query = input("请输入检索问题或目标项目描述: ")
+
+            top_k_text = input("请输入 top_k，直接回车默认 5: ")
+
+            if top_k_text.strip() == "":
+                top_k = 5
+            else:
+                top_k = int(top_k_text)
+
+            persist_directory = input("请输入 Chroma 向量库目录，直接回车默认 vector_store/chroma_history: ")
+
+            if persist_directory.strip() == "":
+                persist_directory = "vector_store/chroma_history"
+
+            collection_name = input("请输入 collection 名称，直接回车默认 os_history_projects: ")
+
+            if collection_name.strip() == "":
+                collection_name = "os_history_projects"
+
+            retrieval_result = rag_retrieve_history(
+                query=query,
+                persist_directory=persist_directory,
+                collection_name=collection_name,
+                top_k=top_k
+            )
+
+            save_path = save_rag_retrieval_result(
+                retrieval_result
+            )
+
+            result_text = format_rag_retrieval_preview(
+                retrieval_result=retrieval_result,
+                save_path=save_path
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
+
+        elif command == "hybrid_retrieve":
+            target_repo_profile_path = input("请输入目标 repo_profile_full 路径: ")
+
+            structured_result_path = input("请输入 retrieve_full 结构检索结果路径: ")
+
+            rag_query = input("请输入 RAG 检索 query，直接回车则根据 repo_profile 自动生成: ")
+
+            persist_directory = input("请输入 Chroma 向量库目录，直接回车默认 vector_store/chroma_history: ")
+
+            if persist_directory.strip() == "":
+                persist_directory = "vector_store/chroma_history"
+
+            collection_name = input("请输入 collection 名称，直接回车默认 os_history_projects: ")
+
+            if collection_name.strip() == "":
+                collection_name = "os_history_projects"
+
+            structured_weight_text = input("请输入结构检索权重，直接回车默认 0.65: ")
+
+            if structured_weight_text.strip() == "":
+                structured_weight = 0.65
+            else:
+                structured_weight = float(structured_weight_text)
+
+            semantic_weight_text = input("请输入 RAG 语义检索权重，直接回车默认 0.35: ")
+
+            if semantic_weight_text.strip() == "":
+                semantic_weight = 0.35
+            else:
+                semantic_weight = float(semantic_weight_text)
+
+            rag_top_k_text = input("请输入 RAG top_k，直接回车默认 10: ")
+
+            if rag_top_k_text.strip() == "":
+                rag_top_k = 10
+            else:
+                rag_top_k = int(rag_top_k_text)
+
+            final_top_k_text = input("请输入最终 top_k，直接回车默认 5: ")
+
+            if final_top_k_text.strip() == "":
+                final_top_k = 5
+            else:
+                final_top_k = int(final_top_k_text)
+
+            hybrid_result = run_hybrid_retrieve(
+                target_repo_profile_path=target_repo_profile_path,
+                structured_result_path=structured_result_path,
+                rag_query=rag_query,
+                persist_directory=persist_directory,
+                collection_name=collection_name,
+                structured_weight=structured_weight,
+                semantic_weight=semantic_weight,
+                rag_top_k=rag_top_k,
+                final_top_k=final_top_k
+            )
+
+            result_text = format_hybrid_retrieval_preview(
+                hybrid_result
+            )
+
+            print()
+            print(result_text)
+            print("-" * 30)
 
         else:
-            print("未知命令，请输入 chat、repo、report、batch、compare 或 exit。")
+            print(f"未知命令：{command}")
+            print("输入 help 查看可用命令。")
 
 
 if __name__ == "__main__":

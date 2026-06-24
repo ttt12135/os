@@ -63,3 +63,69 @@ v3.0 版本主要完成了历史知识库的 full 化升级。在此前版本中
 v3.5 版本主要完成了一键 final_analyze 工作流。在此前版本中，系统已经分别实现了目标仓库分析、full 历史知识库构建、相似历史项目检索、AI 历史项目对比、结构化评分和最终 Markdown 报告生成，但这些能力需要用户手动依次执行多个命令，流程较为分散。
 
 该版本的核心意义在于将项目从“功能模块集合”推进为“完整 Agent 工作流”。
+
+v3.6 版本主要完成了 final_analyze 流程的缓存与跳过机制。此前 final_analyze 已经能够一键串联目标仓库分析、历史知识库构建、相似项目检索、AI 对比、结构化评分和最终报告生成，但每次运行都会重复执行已有步骤，导致调试成本和 API 调用成本较高。
+
+
+此外，本版本加入了仓库路径校验，防止用户误将 JSON 文件路径输入为仓库路径，从而避免生成异常命名文件。整体来看，v3.6 使系统从“能一键跑通”进一步升级为“可复用、可续跑、可减少重复计算”的工程化流程。
+
+v3.7 版本主要增强了最终 Markdown 报告的可读性和展示效果。此前 final_report_generator.py 已经可以整合 repo_profile_full、历史检索结果、AI 对比结果和结构化评分结果，但报告开头缺少面向人工阅读的摘要和综合判断。
+
+该版本使最终报告从单纯的数据整理进一步升级为面向评审场景的分析报告，提高了系统输出结果的可读性、解释性和展示价值。
+
+v3.8 版本主要完成了 final_report 阶段的路径自动推断与输入防呆优化。此前生成最终报告时，用户需要手动输入 repo_profile_full、retrieve_full、compare_full 和 score_full 四个 JSON 文件路径，容易误输入文件夹路径或错误文件路径，导致 PermissionError、FileNotFoundError 等异常。
+
+本版本新增 path_resolver.py，用于根据仓库名自动推断最终报告所需的四个输入文件路径。用户现在只需要输入仓库名，例如 zhengzhoudaxue111，系统即可自动定位 repo_profiles、history_knowledge_base 和 evaluation 目录下对应的 JSON 文件。同时，系统增加了路径检查逻辑，如果缺少某个文件，会明确提示应先运行 analyze_target、retrieve_full、compare_full 或 score_full。
+
+该版本提升了系统的可用性和防错能力，使最终报告生成流程更加简洁、稳定，也减少了演示和调试过程中的路径输入错误。
+
+v3.9 版本主要完成了主菜单工程化与命令分层。此前 main.py 中保留了大量早期版本命令，包括 repo、report、compare、evaluate 等旧流程，以及 save_blocks、understand、call_graph 等调试命令，导致程序启动菜单较为混乱，不利于展示当前主流程。
+
+本版本将命令划分为三类：主流程命令、调试命令和 legacy 旧版命令。其中主流程命令包括 ingest_history、analyze_target、history_kb_full、retrieve_full、compare_full、score_full、final_report 和 final_analyze；调试命令用于单步验证中间模块；legacy 命令保留历史兼容性，但执行前会提示用户确认，避免误用旧流程。
+
+该版本的核心意义在于明确当前系统的主线工作流，使项目从“功能堆叠状态”进一步整理为“工程化命令入口”。这有助于后续演示、调试和项目维护。
+
+
+v4.0 版本主要完成了历史项目批量入库增强功能。此前系统已经支持单个历史仓库通过 ingest_history 进行入库，但如果需要构建较大规模的历史 OS 项目知识库，需要手动逐个运行命令，效率较低。
+
+本版本新增 history_batch_ingestor.py，实现了 batch_ingest_history 命令。用户只需要提供一个历史项目总目录，系统即可自动扫描其中的多个历史仓库，逐个调用已有的 ingest_history 流程生成 repo_profile_full，并保存到 repo_profiles/history 目录下。入库完成后，系统会自动重建 full 历史知识库 history_profiles_full.json，并生成 history_batch_report.md，用于记录每个历史项目的入库状态、成功数量、跳过数量和失败原因。
+
+该版本的核心意义在于增强了系统的历史知识积累能力，使后续相似项目检索、AI 历史对比和原创性评价能够建立在更大规模的历史项目基础上。
+
+v4.1 版本主要完成了历史知识库统计报告增强功能。此前系统已经可以通过 batch_ingest_history 批量入库多个历史 OS 项目，并生成 history_profiles_full.json，但该文件主要面向程序读取，不便于人工理解历史库的规模和覆盖情况。
+
+本版本新增 history_kb_reporter.py，实现 history_kb_report 命令。系统会读取 full 历史知识库，统计历史项目数量、项目类型分布、语言分布、核心模块覆盖情况、平均函数数量、平均调用边数量、结构复杂度排名和模块完整度排名，并生成 history_knowledge_base/history_kb_report.md。
+
+该版本的核心意义在于提升历史知识库的可解释性和展示价值，使系统不仅能使用历史库进行相似项目检索，也能清楚展示当前历史库本身的构成、规模和质量，为后续 RAG 语义检索和更大规模历史项目积累奠定基础。
+
+v4.2 版本主要完成了 RAG 文档构建准备工作。此前系统已经可以构建 full 历史知识库 history_profiles_full.json，但该文件主要是结构化 JSON，更适合规则检索，不适合直接用于向量语义检索。
+
+
+该版本的核心意义在于为后续 RAG 语义检索建立标准文档层，使系统不仅可以基于结构化字段进行相似检索，也为后续基于设计思想、技术特征和模块描述的语义检索打下基础。
+
+
+v4.3 版本完成了 LangChain + Chroma 向量库接入。系统会把 v4.2 生成的 RAG 文档转换为 LangChain Document，再通过 embedding 模型写入 Chroma 本地向量数据库，之后用户可以通过自然语言问题检索历史项目资料。当前版本先使用本地 HashEmbedding 验证完整 RAG 流程，后续会替换为 BGE 等真实语义 embedding 模型，提高检索质量。
+
+v4.3b 版本主要完成了真实语义 Embedding 的接入。在 v4.3a 中，系统已经通过 SimpleHashEmbeddings 打通了 LangChain Document、Chroma 向量库和 RAG 检索流程，但 HashEmbedding 本质上更接近关键词哈希匹配，语义检索能力有限。
+
+本版本在 rag_vector_store.py 中新增可切换 embedding_backend 机制，支持 hash 和 bge 两种模式。默认使用 HuggingFaceEmbeddings 加载 BAAI/bge-small-zh-v1.5 模型，将历史 RAG 文档转换为真实语义向量后写入 Chroma 向量库。同时系统会在向量库目录下保存 embedding_config.json，记录当前使用的 embedding 类型、模型名和运行设备，确保后续 rag_retrieve 可以自动使用一致的 embedding 模型进行查询。
+
+该版本的意义在于将 RAG 检索从“工程链路验证”推进到“真实语义检索”阶段，为后续将 RAG 检索结果融合进 retrieve_full 和 compare_full 打下基础。
+
+v4.4 版本主要完成了 Hybrid 历史项目检索功能。此前系统已经具备 retrieve_full 结构化检索能力，也完成了 RAG 文档构建、Chroma 向量库接入和 BGE Embedding 语义检索，但结构检索和语义检索仍然是两条相互独立的流程。
+
+本版本新增 hybrid_retriever.py，实现 hybrid_retrieve 命令。系统会读取目标项目 repo_profile_full、retrieve_full 结构检索结果，并调用 RAG 向量库进行语义检索。随后系统按照结构相似度和语义相似度进行融合评分，默认结构检索权重为 0.65，RAG 语义检索权重为 0.35，最终输出综合相似历史项目列表。
+
+该版本的核心意义在于将 RAG 检索正式接入历史项目检索主流程，使系统不再只依赖项目类型、模块数量、函数规模和调用图等结构指标，也能结合技术描述、模块语义和历史项目文本特征进行更全面的相似性判断。
+
+v4.5 版本主要完成了 compare_full 对 hybrid_retrieve 结果的兼容。此前 compare_full 主要面向 retrieve_full 的结构化检索结果，只能基于项目类型、核心模块、函数数量、调用边数量和结构复杂度等结构指标进行历史项目对比。
+
+本版本修改 history_comparator.py，新增检索结果类型识别与兼容适配逻辑，使 compare_full 可以同时读取 retrieve_full 结构检索结果和 hybrid_retrieve 融合检索结果。对于 hybrid 检索结果，系统会保留 hybrid_score、structured_score、semantic_score、semantic_evidence 等字段，并将这些信息传入 AI 对比 prompt，使 AI 在比较目标项目和历史项目时能够同时参考结构相似度和 RAG 语义证据。
+
+该版本的核心意义在于将 RAG 增强检索正式接入 AI 历史项目对比环节，使系统从单纯结构对比升级为“结构检索 + 语义检索 + AI解释”的综合对比流程。
+
+v4.6 版本主要完成了 final_analyze_hybrid 一键整合流程。此前系统已经分别具备目标仓库分析、full 历史知识库构建、retrieve_full 结构检索、RAG 文档构建、Chroma 向量库检索、hybrid_retrieve 融合检索、AI 历史项目对比、五维评分和最终报告生成等功能，但这些功能分散在多个命令中，完整运行流程较长。
+
+本版本在 final_pipeline.py 中新增 run_final_analyze_hybrid_pipeline，将上述模块整合为一个完整端到端流程。用户只需要输入目标仓库路径和少量参数，系统即可自动完成目标项目结构分析、历史知识库更新、结构检索、RAG 文档与向量库构建、Hybrid 融合检索、AI 对比解释、结构化评分和最终 Markdown 报告生成。
+
+该版本的核心意义在于将系统从“多个功能模块组合”收束为“可一键运行的 OS 项目智能分析 Agent”，使项目主流程更加清晰，也更适合后续演示、汇报和答辩。

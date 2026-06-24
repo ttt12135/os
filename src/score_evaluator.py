@@ -315,28 +315,28 @@ completion: {reference_scores["completion"]}
     }},
     "novelty": {{
       "score": 0,
-      "reference_score": {reference_scores["originality"]},
+      "reference_score": {reference_scores["novelty"]},
       "max_score": 20,
       "reason": "新颖性评分理由",
       "evidence": ["依据1", "依据2"]
     }},
     "practicality": {{
       "score": 0,
-      "reference_score": {reference_scores["originality"]},
+      "reference_score": {reference_scores["practicality"]},
       "max_score": 20,
       "reason": "可实践性评分理由",
       "evidence": ["依据1", "依据2"]
     }},
     "difficulty": {{
       "score": 0,
-      "reference_score": {reference_scores["originality"]},
+      "reference_score": {reference_scores["difficulty"]},
       "max_score": 20,
       "reason": "技术难度评分理由",
       "evidence": ["依据1", "依据2"]
     }},
     "completion": {{
       "score": 0,
-      "reference_score": {reference_scores["originality"]},
+      "reference_score": {reference_scores["completion"]},
       "max_score": 20,
       "reason": "完成度评分理由",
       "evidence": ["依据1", "依据2"]
