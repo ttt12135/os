@@ -17,10 +17,12 @@ export default function Layout() {
       <div className="bg-orb orb-b" />
       <header className="topbar">
         <Link className="brand" to="/">
-          <span className="brand-icon"><Cpu size={22} /></span>
+          <span className="brand-icon tju-brand-icon">
+            <span className="tju-logo-text">TJU</span>
+          </span>
           <span>
             <b>KernelInsight Agent</b>
-            <small>OS Kernel Track Analysis Platform</small>
+            <small>天津大学 · OS Kernel Track Analysis Platform</small>
           </span>
         </Link>
         <nav className="nav-links">

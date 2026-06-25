@@ -32,21 +32,38 @@ export default function Home() {
     <div className="container hero-page">
       <section className="hero grid-2">
         <div>
-          <div className="eyebrow"><ShieldCheck size={16} /> Kernel Track Intelligence Platform</div>
-          <h1>内核赛道作品<br /><span>智能分析与历史对比平台</span></h1>
-          <p className="hero-desc">面向操作系统比赛内核赛道，展示历史作品库、新作品结构画像、相似项目检索、Hybrid 对比和五维评分报告。</p>
+          <div className="tju-badge-row">
+            <span className="tju-badge">天津大学</span>
+            <span className="tju-badge muted-badge">Tianjin University</span>
+            <span className="tju-badge gold-badge">求是</span>
+          </div>
+
+          <div className="eyebrow"><ShieldCheck size={16} /> TJU Kernel Track Intelligence Platform</div>
+          <h1>天津大学内核赛道作品<br /><span>智能分析与历史对比平台</span></h1>
+          <p className="hero-desc">
+            面向操作系统比赛内核赛道，本平台由天津大学学生团队建设，将往届作品构建为历史知识库，
+            对本届新作品进行源码结构解析、相似项目检索、Hybrid 历史对比和五维评分，并自动生成可视化分析报告。
+          </p>
           <div className="search-box glass">
             <input value={repoInput} onChange={(e) => setRepoInput(e.target.value)} placeholder="输入本届作品 Git 仓库地址，例如 https://github.com/team/kernel.git" onKeyDown={(e) => e.key === 'Enter' && submit()} />
             <button onClick={submit}>开始查询 <ArrowRight size={16} /></button>
           </div>
           {error && <div className="notice warn">{error}</div>}
+          
+          <p className="tju-platform-note">
+            当前平台采用“离线分析引擎 + 前端交互展示”架构。Python Agent 负责完成仓库分析、历史对比与五维评分，
+            网站负责读取预计算结果并进行可视化展示。
+          </p>
+          
           <div className="hero-actions">
             <Link className="secondary-btn" to="/works">查看本届作品</Link>
             <Link className="secondary-btn" to="/history">浏览历史库</Link>
           </div>
         </div>
-        <div className="pipeline glass">
+        <div className="pipeline glass tju-pipeline">
+          <div className="tju-watermark">TJU</div>
           <div className="panel-title"><Brain size={18} /> 分析流水线</div>
+          <div className="pipeline-subtitle">Tianjin University · 求是创新实践</div>
           {flow.map((item, idx) => <div className="flow-item" key={item}><span>{idx + 1}</span><b>{item}</b></div>)}
         </div>
       </section>
