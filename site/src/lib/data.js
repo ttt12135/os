@@ -40,13 +40,42 @@ export function matchWorkByRepoInput(works, input) {
   }) || null
 }
 
+export function toNumber(value, fallback = 0) {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
+}
+
+export function formatNumber(value, fallback = '暂无数据') {
+  if (value === null || value === undefined || value === '') return fallback
+  const number = Number(value)
+  if (!Number.isFinite(number)) return fallback
+  return Number.isInteger(number) ? String(number) : number.toFixed(2).replace(/\.?0+$/, '')
+}
+
+export function safeText(value, fallback = '暂无数据') {
+  if (value === null || value === undefined) return fallback
+  const text = String(value).trim()
+  return text ? text : fallback
+}
+
+export function scoreLevelLabel(value) {
+  const map = {
+    high: '高分',
+    medium: '中等',
+    low: '待完善',
+    excellent: '优秀',
+    good: '良好',
+  }
+  return map[String(value || '').toLowerCase()] || safeText(value)
+}
+
 export function scoreItems(score) {
   const scores = score?.scores || {}
   return [
-    { key: 'originality', name: '原创性', value: Number(scores.originality || 0) },
-    { key: 'novelty', name: '新颖性', value: Number(scores.novelty || 0) },
-    { key: 'practicality', name: '可实践性', value: Number(scores.practicality || 0) },
-    { key: 'difficulty', name: '技术难度', value: Number(scores.difficulty || 0) },
-    { key: 'completion', name: '完成度', value: Number(scores.completion || 0) },
+    { key: 'originality', name: '原创性', value: toNumber(scores.originality) },
+    { key: 'novelty', name: '新颖性', value: toNumber(scores.novelty) },
+    { key: 'practicality', name: '可实践性', value: toNumber(scores.practicality) },
+    { key: 'difficulty', name: '技术难度', value: toNumber(scores.difficulty) },
+    { key: 'completion', name: '完成度', value: toNumber(scores.completion) },
   ]
 }

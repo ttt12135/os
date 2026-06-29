@@ -27,6 +27,9 @@ from src.rag_document_builder import build_history_rag_documents,save_history_ra
 from src.rag_vector_store import build_chroma_vector_store,rag_retrieve_history,save_rag_retrieval_result,format_vector_store_build_preview,format_rag_retrieval_preview
 from src.hybrid_retriever import run_hybrid_retrieve,format_hybrid_retrieval_preview
 from src.website_exporter import export_website_data,format_website_export_preview
+from src.implementation_quality_evaluator import evaluate_implementation_quality,save_implementation_quality_result,save_implementation_quality_markdown,format_implementation_quality_preview
+from src.repo_quality_ranker import rank_repositories_by_quality,format_repository_quality_ranking_preview
+from src.repo_url_workflow import import_repo_from_url,format_repo_url_import_preview
 
 #读取.env文件
 load_dotenv()
@@ -71,9 +74,192 @@ MAIN_COMMANDS = {
     "final_report": "整合所有结果生成最终 Markdown 报告",
     "final_analyze": "一键执行目标分析、历史检索、AI 对比、评分和报告生成",
     "final_analyze_hybrid": "一键执行结构分析、RAG 构建、Hybrid 检索、AI 对比、评分和最终报告",
+    "implementation_quality": "评估单个 OS 仓库的真实实现质量，识别核心模块是否真正实现、是否存在空壳/TODO/关键链路缺失",
+    "import_repo_url": "输入 Git 仓库地址，自动 clone 到本地，并按 history/target 类型完成分析、入库和来源记录保存",
+    "rank_repo_quality": "对历史库或目标库中的多个 OS 仓库进行真实实现质量排名",    
     "export_site_data": "导出前端网站所需的作品数据、报告数据和统计数据"
 }
 
+CORE_COMMANDS = {
+    "1": {
+        "command": "import_repo_url",
+        "title": "导入仓库 URL 并自动分析",
+        "desc": "输入 Git 仓库地址，选择 history 或 target，自动 clone、分析、入库或生成报告。"
+    },
+    "2": {
+        "command": "export_site_data",
+        "title": "导出网站展示数据",
+        "desc": "把分析结果整理到 site/public/data 和 site/public/reports，供网站展示。"
+    },
+    "3": {
+        "command": "rank_repo_quality",
+        "title": "生成仓库质量排名",
+        "desc": "根据真实实现质量、结构复杂度、核心链路和工程证据对仓库排序。"
+    },
+    "4": {
+        "command": "workflow",
+        "title": "查看完整工作流说明",
+        "desc": "查看从导入仓库到网站上线的推荐流程。"
+    }
+}
+
+
+HIDDEN_COMMAND_GROUPS = {
+    "分析与入库命令": [
+        "ingest_history",
+        "batch_ingest_history",
+        "analyze_target",
+        "final_analyze_hybrid",
+        "implementation_quality"
+    ],
+    "检索与对比命令": [
+        "retrieve_full",
+        "build_rag_docs",
+        "build_vector_store",
+        "rag_retrieve",
+        "hybrid_retrieve",
+        "compare_full"
+    ],
+    "评分与报告命令": [
+        "score_full",
+        "final_report",
+        "rank_repo_quality",
+        "history_kb_report"
+    ],
+    "网站与导出命令": [
+        "export_site_data"
+    ],
+    "调试 / 旧版命令": [
+        "repo_tree",
+        "read_files",
+        "score_files",
+        "report",
+        "batch_analyze",
+        "compare",
+        "split_code",
+        "analyze_code",
+        "build_call_graph",
+        "summarize_modules",
+        "profile_repo"
+    ]
+}
+
+
+COMMAND_ALIASES = {
+    "1": "import_repo_url",
+    "2": "export_site_data",
+    "3": "rank_repo_quality",
+    "4": "workflow",
+
+    "h": "help",
+    "help": "help",
+    "a": "advanced",
+    "advanced": "advanced",
+    "all": "advanced",
+
+    "q": "exit",
+    "quit": "exit",
+    "exit": "exit"
+}
+
+
+def print_main_menu():
+    """
+    打印精简版主菜单。
+    """
+
+    print()
+    print("=" * 64)
+    print("KernelInsight Agent")
+    print("内核赛道作品智能分析与历史对比系统")
+    print("=" * 64)
+    print()
+    print("常用流程：")
+
+    for key, item in CORE_COMMANDS.items():
+        print(f"  {key}. {item['title']}")
+        print(f"     {item['desc']}")
+
+    print()
+    print("其他：")
+    print("  h. 查看高级命令")
+    print("  q. 退出程序")
+    print()
+    print("-" * 64)
+
+
+def print_advanced_commands():
+    """
+    打印隐藏的高级命令。
+    """
+
+    print()
+    print("=" * 64)
+    print("高级命令列表")
+    print("=" * 64)
+    print("说明：这些命令主要用于调试、分步运行和历史版本兼容。")
+    print("日常使用优先选择主菜单中的 1 / 2 / 3。")
+    print()
+
+    for group_name, command_list in HIDDEN_COMMAND_GROUPS.items():
+        print(f"[{group_name}]")
+
+        for command in command_list:
+            desc = MAIN_COMMANDS.get(command, "暂无说明")
+            print(f"  - {command}: {desc}")
+
+        print()
+
+    print("输入具体命令名即可执行，例如：implementation_quality")
+    print("-" * 64)
+
+
+def print_workflow_guide():
+    """
+    打印推荐工作流。
+    """
+
+    print()
+    print("=" * 64)
+    print("推荐比赛工作流")
+    print("=" * 64)
+    print()
+    print("一、导入往届历史仓库")
+    print("  运行：1 或 import_repo_url")
+    print("  类型选择：history")
+    print("  作用：clone 往届仓库，生成历史项目画像，并加入历史知识库。")
+    print()
+    print("二、导入本届目标仓库")
+    print("  运行：1 或 import_repo_url")
+    print("  类型选择：target")
+    print("  作用：clone 本届仓库，生成源码分析、历史对比、五维评分和最终报告。")
+    print()
+    print("三、生成仓库质量排名")
+    print("  运行：3 或 rank_repo_quality")
+    print("  作用：根据真实实现质量对 history 或 target 仓库进行排序。")
+    print()
+    print("四、导出网站展示数据")
+    print("  运行：2 或 export_site_data")
+    print("  作用：把结果导出到 site/public/data 和 site/public/reports。")
+    print()
+    print("五、更新网站")
+    print("  进入 site 目录，运行 npm run build。")
+    print("  提交 GitHub 后，Vercel 自动更新网站。")
+    print()
+    print("-" * 64)
+
+
+def normalize_command(user_input):
+    """
+    将用户输入的编号、简写转换成真实命令。
+    """
+
+    text = user_input.strip()
+
+    if text == "":
+        return ""
+
+    return COMMAND_ALIASES.get(text, text)
 
 DEBUG_COMMANDS = {
     "save_blocks": "单独执行代码切块并保存 code_blocks",
@@ -804,29 +990,31 @@ def parse_max_blocks_input(max_blocks_text, default_value=20):
 
 def main():
 
-    print_command_menu()
+    print_main_menu()
 
     while True:
-        command = input("请输入命令（help 查看菜单，workflow 查看演示流程，exit 退出）: ")
-        command = command.strip()
+        command_input = input("请输入编号或命令: ")
+        command = normalize_command(command_input)
 
-        if command.startswith("help"):
-            parts = command.split(maxsplit=1)
+        if command == "":
+            print_main_menu()
+            continue
 
-            if len(parts) == 1:
-                print_command_help()
-            else:
-                print_command_help(parts[1])
+        if command == "exit":
+            print("已退出 KernelInsight Agent。")
+            break
 
+        if command in {"help", "advanced"}:
+            print_advanced_commands()
             continue
 
         if command == "workflow":
             print_workflow_guide()
             continue
 
-        if not is_known_command(command):
-            print(f"未知命令：{command}")
-            print("输入 help 查看可用命令。")
+        if command not in MAIN_COMMANDS:
+            print(f"未识别命令：{command_input}")
+            print("请输入 1 / 2 / 3 / 4，或输入 h 查看高级命令。")
             continue
 
         if command in LEGACY_COMMANDS:
@@ -1100,6 +1288,62 @@ def main():
             print(result_text)
             print("-" * 30)
 
+        elif command == "import_repo_url":
+            repo_url = input("请输入 Git 仓库地址: ").strip()
+
+            scope = input("请选择仓库类型 history/target，直接回车默认 target: ").strip().lower()
+            if scope == "":
+                scope = "target"
+
+            repo_name = input("请输入本地仓库名，直接回车则根据 URL 自动推断: ").strip()
+            if repo_name == "":
+                repo_name = None
+
+            team_name = input("请输入队伍名，直接回车默认使用仓库名: ").strip()
+            school = input("请输入学校名，直接回车默认 unknown: ").strip()
+
+            year = input("请输入年份，history 可回车，target 默认 2026: ").strip()
+            track = input("请输入赛道，直接回车默认 kernel: ").strip()
+            if track == "":
+                track = "kernel"
+
+            clone_strategy = input("clone 策略 skip/update/replace，直接回车默认 skip: ").strip().lower()
+            if clone_strategy == "":
+                clone_strategy = "skip"
+
+            analysis_mode = input("请选择分析模式 quick/full，直接回车默认 quick: ").strip().lower()
+            if analysis_mode == "":
+                analysis_mode = "quick"
+
+            max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 50: ")
+            max_blocks = parse_max_blocks_input(max_blocks_text, default_value=50)
+
+            run_full_target_pipeline = True
+
+            if scope == "target":
+                full_text = input("是否对 target 执行 final_analyze_hybrid 完整流程？y/n，直接回车默认 y: ").strip().lower()
+                run_full_target_pipeline = full_text in {"", "y", "yes", "1", "true"}
+
+            result = import_repo_from_url(
+                repo_url=repo_url,
+                scope=scope,
+                ask_ai_once=ask_ai_once,
+                repo_name=repo_name,
+                team_name=team_name,
+                school=school,
+                year=year,
+                track=track,
+                clone_strategy=clone_strategy,
+                analysis_mode=analysis_mode,
+                max_blocks=max_blocks,
+                run_full_target_pipeline=run_full_target_pipeline,
+                rebuild_history_kb=True,
+                embedding_backend="hash"
+            )
+
+            print()
+            print(format_repo_url_import_preview(result))
+            print("-" * 30)
 
         elif command == "batch_ingest_history":
             history_root_dir = input("请输入历史项目总目录路径: ")
@@ -1226,6 +1470,63 @@ def main():
             print(result_text)
             print("-" * 30)
     
+        elif command == "implementation_quality":
+            repo_profile_path = input("请输入 repo_profile_full.json 路径: ")
+            function_analysis_path = input("请输入 function_analysis 路径，直接回车自动推断: ")
+            code_blocks_path = input("请输入 code_blocks 路径，直接回车自动推断: ")
+            module_summary_path = input("请输入 module_summary_full 路径，直接回车自动推断: ")
+
+            if function_analysis_path.strip() == "":
+                function_analysis_path = None
+            if code_blocks_path.strip() == "":
+                code_blocks_path = None
+            if module_summary_path.strip() == "":
+                module_summary_path = None
+
+            result = evaluate_implementation_quality(
+                repo_profile_path=repo_profile_path,
+                function_analysis_path=function_analysis_path,
+                code_blocks_path=code_blocks_path,
+                module_summary_path=module_summary_path
+            )
+
+            json_path = save_implementation_quality_result(result)
+            md_path = save_implementation_quality_markdown(result)
+
+            print()
+            print(format_implementation_quality_preview(result, json_path=json_path, md_path=md_path))
+            print("-" * 30)
+
+        elif command == "rank_repo_quality":
+            print()
+            print("请选择排名范围：")
+            print("1. history  排名 repo_profiles/history 中的历史仓库")
+            print("2. target   排名 repo_profiles/target 中的目标仓库")
+            scope = input("请输入 history 或 target，直接回车默认 history: ").strip()
+
+            if scope == "":
+                scope = "history"
+
+            if scope == "target":
+                profile_dir = "repo_profiles/target"
+            else:
+                scope = "history"
+                profile_dir = "repo_profiles/history"
+
+            output_dir = input("请输入输出目录，直接回车默认 repository_quality: ").strip()
+            if output_dir == "":
+                output_dir = "repository_quality"
+
+            result, json_path, md_path = rank_repositories_by_quality(
+                profile_dir=profile_dir,
+                output_dir=output_dir,
+                scope=scope
+            )
+
+            print()
+            print(format_repository_quality_ranking_preview(result, json_path=json_path, md_path=md_path))
+            print("-" * 30)
+
 
         elif command == "final_report":
             print()
