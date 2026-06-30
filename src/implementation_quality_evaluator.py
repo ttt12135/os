@@ -206,6 +206,14 @@ def load_json_file(file_path, default=None):
         return default
 
 
+def resolve_repo_artifact_path(repo_name, directory, suffixes):
+    for suffix in suffixes:
+        candidate = os.path.join(directory, f"{repo_name}{suffix}")
+        if os.path.exists(candidate) and os.path.isfile(candidate):
+            return candidate
+    return os.path.join(directory, f"{repo_name}{suffixes[0]}")
+
+
 def save_json_file(data, file_path):
     ensure_dir(os.path.dirname(file_path))
     with open(file_path, "w", encoding="utf-8") as file:
@@ -722,7 +730,11 @@ def evaluate_implementation_quality(
     repo_name = repo_profile.get("repo_name") or infer_repo_name_from_profile_path(repo_profile_path)
 
     if function_analysis_path is None:
-        function_analysis_path = os.path.join("function_analysis", f"{repo_name}_function_analysis.json")
+        function_analysis_path = resolve_repo_artifact_path(
+            repo_name,
+            "function_analysis",
+            ["_function_analysis_full.json", "_function_analysis.json"],
+        )
     if code_blocks_path is None:
         code_blocks_path = os.path.join("code_blocks", f"{repo_name}_blocks.json")
     if module_summary_path is None:

@@ -180,6 +180,7 @@ def run_final_analyze_pipeline(
     ask_ai_once,
     analysis_mode="full",
     max_blocks=100,
+    max_workers=8,
     top_k=3,
     use_cache=True,
     force_rebuild=False
@@ -240,7 +241,8 @@ def run_final_analyze_pipeline(
             repo_path=repo_path,
             ask_ai_once=ask_ai_once,
             max_blocks=max_blocks,
-            analysis_mode=analysis_mode
+            analysis_mode=analysis_mode,
+            max_workers=max_workers
         )
 
         generated_files.update(analysis_files)
@@ -438,7 +440,8 @@ def run_final_analyze_pipeline(
             repo_profile_path=repo_profile_full_path,
             retrieval_result_path=retrieval_result_path,
             comparison_result_path=comparison_result_path,
-            score_result_path=score_result_path
+            score_result_path=score_result_path,
+            ask_ai_once=ask_ai_once
         )
 
         final_report_path = save_final_report_full(
@@ -522,6 +525,7 @@ def run_final_analyze_hybrid_pipeline(
     ask_ai_once,
     analysis_mode="full",
     max_blocks=100,
+    max_workers=8,
     top_k=3,
     rag_top_k=10,
     final_top_k=5,
@@ -572,7 +576,8 @@ def run_final_analyze_hybrid_pipeline(
         repo_path=repo_path,
         ask_ai_once=ask_ai_once,
         max_blocks=max_blocks,
-        analysis_mode=analysis_mode
+        analysis_mode=analysis_mode,
+        max_workers=max_workers
     )
 
     generated_files.update(analysis_files)
@@ -755,7 +760,8 @@ def run_final_analyze_hybrid_pipeline(
         repo_profile_path=repo_profile_full_path,
         retrieval_result_path=hybrid_result_path,
         comparison_result_path=comparison_result_path,
-        score_result_path=score_result_path
+        score_result_path=score_result_path,
+        ask_ai_once=ask_ai_once
     )
 
     final_report_path = save_final_report_full(

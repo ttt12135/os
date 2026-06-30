@@ -10,6 +10,7 @@ from src.implementation_quality_evaluator import (
     save_json_file,
     save_text_file,
     safe_number,
+    resolve_repo_artifact_path,
 )
 
 
@@ -44,133 +45,100 @@ def find_repo_profile_files(profile_dir):
     return files
 
 
-def calculate_structure_score(repo_profile):
-    function_count = safe_number(repo_profile.get("function_count"), 0)
-    edge_count = safe_number(repo_profile.get("edge_count"), 0)
-    module_count = safe_number(repo_profile.get("module_count"), 0)
-    core_modules = repo_profile.get("core_modules", []) or []
-    structure_complexity = safe_number(repo_profile.get("structure_complexity"), 0)
-    module_completeness = repo_profile.get("module_completeness", {}) or {}
+def normalize_score_level(overall_score, score_level=None):
+    if score_level:
+        return score_level
 
-    score = 0.0
-
-    if function_count >= 180:
-        score += 5
-    elif function_count >= 100:
-        score += 4
-    elif function_count >= 50:
-        score += 3
-    elif function_count >= 20:
-        score += 2
-    elif function_count >= 8:
-        score += 1
-
-    if edge_count >= 400:
-        score += 4
-    elif edge_count >= 200:
-        score += 3
-    elif edge_count >= 80:
-        score += 2
-    elif edge_count >= 20:
-        score += 1
-
-    if module_count >= 7:
-        score += 4
-    elif module_count >= 5:
-        score += 3
-    elif module_count >= 3:
-        score += 2
-    elif module_count >= 1:
-        score += 1
-
-    if len(core_modules) >= 6:
-        score += 3
-    elif len(core_modules) >= 4:
-        score += 2
-    elif len(core_modules) >= 2:
-        score += 1
-
-    if structure_complexity >= 0.75:
-        score += 2
-    elif structure_complexity >= 0.45:
-        score += 1
-
-    values = []
-    for value in module_completeness.values():
-        try:
-            values.append(float(value))
-        except Exception:
-            pass
-    if values:
-        average = sum(values) / len(values)
-        if average >= 0.70:
-            score += 2
-        elif average >= 0.45:
-            score += 1
-
-    return round(max(0, min(score, 20)), 2)
+    score = safe_number(overall_score, 0)
+    if score >= 85:
+        return "excellent"
+    if score >= 70:
+        return "good"
+    if score >= 55:
+        return "medium"
+    return "weak"
 
 
-def calculate_final_repository_quality(repo_profile, implementation_quality):
-    implementation_score_100 = safe_number(implementation_quality.get("overall_implementation_score"), 0)
-    implementation_score_20 = implementation_score_100 / 5
-    structure_score_20 = calculate_structure_score(repo_profile)
-    chain_score_20 = safe_number(implementation_quality.get("chain_closure", {}).get("score"), 0)
-    engineering_score_20 = safe_number(implementation_quality.get("engineering_evidence", {}).get("score"), 0)
+def load_score_full_summary(repo_name):
+    score_path = os.path.join("evaluation", f"{repo_name}_score_full.json")
+    score_result = load_json_file(score_path, default={})
+    evaluation = score_result.get("evaluation", {}) if isinstance(score_result, dict) else {}
 
-    red_flag_count = len(implementation_quality.get("red_flags", []))
-    weak_function_count = safe_number(
-        implementation_quality.get("function_quality_summary", {}).get("weak_or_shell_function_count"), 0
-    )
-    total_function_count = safe_number(
-        implementation_quality.get("function_quality_summary", {}).get("function_count"), 0
-    )
+    if not evaluation:
+        return {
+            "score_result_path": score_path,
+            "available": False,
+            "overall_score": 0,
+            "score_level": "unknown",
+            "dimension_scores": {},
+        }
 
-    penalty_20 = 0.0
-    if red_flag_count >= 20:
-        penalty_20 += 3
-    elif red_flag_count >= 10:
-        penalty_20 += 2
-    elif red_flag_count >= 4:
-        penalty_20 += 1
+    dimension_scores = {}
+    for key, value in (evaluation.get("scores", {}) or {}).items():
+        if isinstance(value, dict):
+            dimension_scores[key] = safe_number(value.get("score"), 0)
+        else:
+            dimension_scores[key] = safe_number(value, 0)
 
-    if total_function_count > 0:
-        weak_ratio = weak_function_count / max(total_function_count, 1)
-        if weak_ratio >= 0.45:
-            penalty_20 += 3
-        elif weak_ratio >= 0.25:
-            penalty_20 += 1.5
+    overall_score = safe_number(evaluation.get("overall_score"), 0)
+    return {
+        "score_result_path": score_path,
+        "available": True,
+        "overall_score": overall_score,
+        "score_level": normalize_score_level(overall_score, evaluation.get("score_level")),
+        "dimension_scores": dimension_scores,
+        "confidence": evaluation.get("confidence", "unknown"),
+    }
 
-    final_20 = (
-        implementation_score_20 * 0.50
-        + structure_score_20 * 0.20
-        + chain_score_20 * 0.15
-        + engineering_score_20 * 0.15
-        - penalty_20
-    )
-    final_20 = max(0, min(final_20, 20))
-    final_100 = round(final_20 * 5, 2)
 
-    if final_100 >= 85:
-        level = "excellent"
-    elif final_100 >= 70:
-        level = "good"
-    elif final_100 >= 55:
-        level = "medium"
-    else:
-        level = "weak"
+def build_implementation_quality_auxiliary(implementation_quality):
+    summary = implementation_quality.get("function_quality_summary", {}) or {}
+    return {
+        "overall_implementation_score": implementation_quality.get("overall_implementation_score"),
+        "implementation_level": implementation_quality.get("implementation_level"),
+        "confidence": implementation_quality.get("confidence"),
+        "chain_score_20": safe_number(
+            implementation_quality.get("chain_closure", {}).get("score"), 0
+        ),
+        "engineering_score_20": safe_number(
+            implementation_quality.get("engineering_evidence", {}).get("score"), 0
+        ),
+        "strong_function_count": summary.get("strong_function_count"),
+        "real_function_count": summary.get("real_function_count"),
+        "weak_or_shell_function_count": summary.get("weak_or_shell_function_count"),
+        "red_flag_count": len(implementation_quality.get("red_flags", [])),
+    }
+
+
+def build_ranking_score(repo_profile, repo_name, implementation_quality):
+    score_summary = load_score_full_summary(repo_name)
+    auxiliary = build_implementation_quality_auxiliary(implementation_quality)
+
+    if score_summary.get("available"):
+        return {
+            "final_quality_score": score_summary.get("overall_score"),
+            "quality_level": score_summary.get("score_level"),
+            "score_source": "score_full",
+            "score_full_path": score_summary.get("score_result_path"),
+            "score_components": {
+                "dimension_scores": score_summary.get("dimension_scores", {}),
+                "confidence": score_summary.get("confidence"),
+                "formula": "final_quality_score = score_full.evaluation.overall_score",
+            },
+            "implementation_quality_auxiliary": auxiliary,
+        }
 
     return {
-        "final_quality_score": final_100,
-        "quality_level": level,
+        "final_quality_score": 0,
+        "quality_level": "missing_score_full",
+        "score_source": "missing_score_full",
+        "score_full_path": score_summary.get("score_result_path"),
         "score_components": {
-            "implementation_score_20": round(implementation_score_20, 2),
-            "structure_score_20": round(structure_score_20, 2),
-            "chain_score_20": round(chain_score_20, 2),
-            "engineering_score_20": round(engineering_score_20, 2),
-            "penalty_20": round(penalty_20, 2),
-            "formula": "final = implementation*0.50 + structure*0.20 + chain*0.15 + engineering*0.15 - penalty, then *5",
-        }
+            "dimension_scores": {},
+            "confidence": "none",
+            "formula": "score_full missing; implementation_quality is auxiliary only and is not used as ranking score",
+        },
+        "implementation_quality_auxiliary": auxiliary,
     }
 
 
@@ -186,7 +154,11 @@ def rank_repositories_by_quality(profile_dir="repo_profiles/history", output_dir
 
         implementation_quality = evaluate_implementation_quality(
             repo_profile_path=profile_path,
-            function_analysis_path=os.path.join("function_analysis", f"{repo_name}_function_analysis.json"),
+            function_analysis_path=resolve_repo_artifact_path(
+                repo_name,
+                "function_analysis",
+                ["_function_analysis_full.json", "_function_analysis.json"],
+            ),
             code_blocks_path=os.path.join("code_blocks", f"{repo_name}_blocks.json"),
             module_summary_path=os.path.join("module_summary", f"{repo_name}_module_summary_full.json"),
         )
@@ -194,14 +166,21 @@ def rank_repositories_by_quality(profile_dir="repo_profiles/history", output_dir
         iq_json_path = save_implementation_quality_result(implementation_quality)
         iq_md_path = save_implementation_quality_markdown(implementation_quality)
 
-        quality_score = calculate_final_repository_quality(repo_profile, implementation_quality)
+        quality_score = build_ranking_score(
+            repo_profile=repo_profile,
+            repo_name=repo_name,
+            implementation_quality=implementation_quality,
+        )
 
         item = {
             "repo_name": repo_name,
             "scope": scope,
             "final_quality_score": quality_score.get("final_quality_score"),
             "quality_level": quality_score.get("quality_level"),
+            "score_source": quality_score.get("score_source"),
+            "score_full_path": quality_score.get("score_full_path"),
             "score_components": quality_score.get("score_components"),
+            "implementation_quality_auxiliary": quality_score.get("implementation_quality_auxiliary"),
             "implementation_quality_path": iq_json_path,
             "implementation_quality_report_path": iq_md_path,
             "implementation_summary": {
@@ -240,13 +219,13 @@ def rank_repositories_by_quality(profile_dir="repo_profiles/history", output_dir
 
     result = {
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "ranker_version": "v6.1-repository-quality-ranker",
+        "ranker_version": "v6.2-score-full-ranking-with-implementation-auxiliary",
         "scope": scope,
         "profile_dir": profile_dir,
         "repository_count": len(ranking_items),
         "ranking": ranking_items,
         "detail_records": detail_records,
-        "note": "该排名基于静态代码内容理解、模块真实实现质量、OS 链路闭环、工程证据和结构规模综合得出，不等同于真实运行测试。"
+        "note": "排名总分直接采用 score_full 五维综合评分，与最终报告中的综合评分保持一致；真实实现质量仅作为辅助指标展示，不参与排名总分。缺少 score_full 的仓库会标记为 missing_score_full，不使用真实实现质量替代打分。"
     }
 
     json_path = os.path.join(output_dir, f"{scope}_repository_quality_ranking.json")
@@ -259,7 +238,7 @@ def rank_repositories_by_quality(profile_dir="repo_profiles/history", output_dir
 
 def format_repository_quality_ranking_markdown(result):
     lines = []
-    lines.append(f"# {result.get('scope')} 仓库真实实现质量排行榜")
+    lines.append(f"# {result.get('scope')} 仓库五维综合评分排行")
     lines.append("")
     lines.append(f"生成时间：{result.get('created_at')}")
     lines.append("")
@@ -268,15 +247,18 @@ def format_repository_quality_ranking_markdown(result):
 
     lines.append("## 一、总排名")
     lines.append("")
-    lines.append("| 排名 | 仓库 | 总分 | 等级 | 实现质量 | 结构分 | 链路分 | 工程证据 |")
-    lines.append("|---:|---|---:|---|---:|---:|---:|---:|")
+    lines.append("| 排名 | 仓库 | 五维综合分 | 等级 | 分数来源 | 真实实现质量(辅助) | 真实函数 | 弱/空壳函数 | 风险信号 |")
+    lines.append("|---:|---|---:|---|---|---:|---:|---:|---:|")
 
     for item in result.get("ranking", []):
-        comp = item.get("score_components", {})
+        auxiliary = item.get("implementation_quality_auxiliary", {}) or item.get("implementation_summary", {})
         lines.append(
             f"| {item.get('rank')} | {item.get('repo_name')} | {item.get('final_quality_score')} | "
-            f"{item.get('quality_level')} | {comp.get('implementation_score_20')} | {comp.get('structure_score_20')} | "
-            f"{comp.get('chain_score_20')} | {comp.get('engineering_score_20')} |"
+            f"{item.get('quality_level')} | {item.get('score_source')} | "
+            f"{auxiliary.get('overall_implementation_score')} | "
+            f"{auxiliary.get('real_function_count')} | "
+            f"{auxiliary.get('weak_or_shell_function_count')} | "
+            f"{auxiliary.get('red_flag_count', item.get('red_flag_count'))} |"
         )
 
     lines.append("")
@@ -287,14 +269,15 @@ def format_repository_quality_ranking_markdown(result):
         lines.append(f"### {item.get('rank')}. {item.get('repo_name')} — {item.get('final_quality_score')} 分")
         lines.append("")
         summary = item.get("implementation_summary", {})
-        lines.append(f"- 等级：{item.get('quality_level')}")
-        lines.append(f"- 实现质量：{summary.get('overall_implementation_score')} / 100，{summary.get('implementation_level')}")
+        lines.append(f"- 五维综合等级：{item.get('quality_level')}")
+        lines.append(f"- 分数来源：{item.get('score_source')} ({item.get('score_full_path')})")
+        lines.append(f"- 真实实现质量辅助指标：{summary.get('overall_implementation_score')} / 100，{summary.get('implementation_level')}")
         lines.append(f"- 真实函数数：{summary.get('real_function_count')}，强实现函数数：{summary.get('strong_function_count')}，弱/空壳函数数：{summary.get('weak_or_shell_function_count')}")
         lines.append(f"- 风险信号数：{item.get('red_flag_count')}")
-        lines.append("- 主要优势：")
+        lines.append("- 辅助实现质量优势：")
         for strength in item.get("strengths", []) or ["暂无明确优势。"]:
             lines.append(f"  - {strength}")
-        lines.append("- 主要不足：")
+        lines.append("- 辅助实现质量不足：")
         for weakness in item.get("weaknesses", []) or ["暂无明显不足。"]:
             lines.append(f"  - {weakness}")
         lines.append("")
@@ -304,7 +287,7 @@ def format_repository_quality_ranking_markdown(result):
 
 def format_repository_quality_ranking_preview(result, json_path=None, md_path=None):
     lines = []
-    lines.append("仓库真实实现质量排名完成。")
+    lines.append("仓库五维综合评分排名完成。")
     lines.append("")
     lines.append(f"范围：{result.get('scope')}")
     lines.append(f"仓库数量：{result.get('repository_count')}")
@@ -315,5 +298,5 @@ def format_repository_quality_ranking_preview(result, json_path=None, md_path=No
     lines.append("")
     lines.append("排名：")
     for item in result.get("ranking", [])[:20]:
-        lines.append(f"{item.get('rank')}. {item.get('repo_name')} - {item.get('final_quality_score')} 分 - {item.get('quality_level')}")
+        lines.append(f"{item.get('rank')}. {item.get('repo_name')} - {item.get('final_quality_score')} 分 - {item.get('quality_level')} - {item.get('score_source')}")
     return "\n".join(lines)

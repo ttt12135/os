@@ -290,6 +290,397 @@ def build_showcase_sentence(repo_profile, score_result):
         f"说明其已经具备一定代码结构和模块组织基础，但仍需要结合评分短板继续优化。"
     )
 
+def find_description_report_path(repo_name):
+    """
+    查找旧版仓库描述报告 reports/{repo_name}_description.md。
+    """
+
+    path = os.path.join("reports", f"{repo_name}_description.md")
+
+    if os.path.exists(path):
+        return path
+
+    return None
+
+
+def read_description_report_for_final(repo_name, max_chars=12000):
+    """
+    读取旧版完整仓库描述报告，用于插入最终报告。
+    """
+
+    path = find_description_report_path(repo_name)
+
+    if not path:
+        return ""
+
+    try:
+        with open(path, "r", encoding="utf-8") as file:
+            content = file.read()
+    except Exception:
+        return ""
+
+    content = content.strip()
+
+    if content.startswith("#"):
+        lines = content.splitlines()
+        if lines and lines[0].startswith("#"):
+            content = "\n".join(lines[1:]).strip()
+
+    if len(content) > max_chars:
+        content = content[:max_chars] + "\n\n……旧版仓库描述报告内容较长，后续部分已截断。"
+
+    return content
+
+
+def build_deep_project_description_section(repo_name):
+    """
+    构建 final_report 中的深度项目综述栏目。
+    """
+
+    content = read_description_report_for_final(repo_name)
+
+    if not content:
+        return (
+            "当前未找到旧版仓库描述报告。"
+            "如果需要完整项目综述，请先在导入仓库时生成 "
+            f"`reports/{repo_name}_description.md`。"
+        )
+
+    return content
+
+def _parse_ai_json_object(ai_text):
+    """
+    从 AI 输出中提取 JSON 对象。
+    """
+
+    if not ai_text:
+        return None
+
+    text = str(ai_text).strip()
+
+    if text.startswith("```"):
+        text = text.strip("`").strip()
+        if text.startswith("json"):
+            text = text[4:].strip()
+
+    left = text.find("{")
+    right = text.rfind("}")
+
+    if left >= 0 and right > left:
+        text = text[left:right + 1]
+
+    try:
+        return json.loads(text)
+    except Exception:
+        return None
+
+
+def _safe_join(items, default="暂无"):
+    """
+    安全拼接列表。
+    """
+
+    if not items:
+        return default
+
+    if isinstance(items, dict):
+        items = list(items.keys())
+
+    if isinstance(items, list):
+        return "、".join(str(x) for x in items[:10])
+
+    return str(items)
+
+
+def _get_evaluation(score_result):
+    """
+    兼容不同评分 JSON 结构。
+    """
+
+    if not isinstance(score_result, dict):
+        return {}
+
+    return (
+        score_result.get("evaluation")
+        or score_result.get("scores")
+        or score_result
+        or {}
+    )
+
+
+def _get_top_similar_project(retrieval_result):
+    """
+    提取最相似历史项目。
+    """
+
+    if not isinstance(retrieval_result, dict):
+        return None
+
+    candidates = (
+        retrieval_result.get("top_k")
+        or retrieval_result.get("similar_projects")
+        or retrieval_result.get("results")
+        or retrieval_result.get("retrieval_results")
+        or []
+    )
+
+    if isinstance(candidates, list) and candidates:
+        return candidates[0]
+
+    return None
+
+
+def _fallback_project_overview(repo_profile, retrieval_result, comparison_result, score_result):
+    """
+    AI 生成失败时，使用规则生成一个不空的项目综述。
+    """
+
+    repo_name = repo_profile.get("repo_name", "unknown_repo")
+
+    main_languages = (
+        repo_profile.get("main_languages")
+        or repo_profile.get("languages")
+        or repo_profile.get("language")
+        or []
+    )
+
+    core_modules = (
+        repo_profile.get("core_modules")
+        or repo_profile.get("detected_modules")
+        or []
+    )
+
+    function_count = repo_profile.get("function_count", "暂无")
+    edge_count = repo_profile.get("edge_count") or repo_profile.get("call_edges") or "暂无"
+    module_count = repo_profile.get("module_count", "暂无")
+    structure_complexity = repo_profile.get("structure_complexity", "暂无")
+
+    language_text = _safe_join(main_languages, default="未知语言")
+    module_text = _safe_join(core_modules, default="暂未识别出明确核心模块")
+
+    evaluation = _get_evaluation(score_result)
+    overall_score = evaluation.get("overall_score") or evaluation.get("final_score") or "暂无"
+    score_level = evaluation.get("score_level") or evaluation.get("level") or "暂无"
+
+    top_project = _get_top_similar_project(retrieval_result)
+
+    if top_project:
+        similar_repo_name = (
+            top_project.get("repo_name")
+            or top_project.get("project_name")
+            or top_project.get("name")
+            or "未知历史项目"
+        )
+        similar_score = (
+            top_project.get("hybrid_score")
+            or top_project.get("similarity_score")
+            or top_project.get("score")
+            or "暂无"
+        )
+        similar_text = f"历史检索结果显示，该项目与 `{similar_repo_name}` 较为接近，相似度为 `{similar_score}`。"
+    else:
+        similar_text = "当前没有可用的相似历史项目结果。"
+
+    one_sentence = (
+        f"`{repo_name}` 是一个主要使用 {language_text} 实现的操作系统内核项目，"
+        f"核心结构集中在 {module_text} 等模块。"
+    )
+
+    project_overview = (
+        f"从当前静态分析结果看，`{repo_name}` 主要使用 {language_text} 实现，"
+        f"项目围绕 {module_text} 等操作系统核心模块展开。"
+        f"系统识别到该仓库包含 `{function_count}` 个函数节点、`{edge_count}` 条调用边，"
+        f"覆盖 `{module_count}` 个模块，结构复杂度为 `{structure_complexity}`。"
+        f"这些信息说明该仓库已经形成了一定的源码规模和模块化组织。"
+        f"{similar_text}"
+    )
+
+    maturity = (
+        f"结合当前评分结果，该项目综合评分为 `{overall_score}`，等级为 `{score_level}`。"
+        f"该判断主要基于源码结构画像、核心模块覆盖、历史相似项目检索和五维评分结果。"
+    )
+
+    strengths = (
+        evaluation.get("strengths")
+        or evaluation.get("advantages")
+        or []
+    )
+
+    risks = (
+        evaluation.get("weaknesses")
+        or evaluation.get("risks")
+        or evaluation.get("limitations")
+        or []
+    )
+
+    return {
+        "project_positioning": "操作系统内核项目",
+        "one_sentence_summary": one_sentence,
+        "project_overview": project_overview,
+        "core_implementation_summary": (
+            f"当前识别出的核心模块包括：{module_text}。"
+            "这些模块构成了仓库的主要 OS 实现方向。"
+        ),
+        "maturity_judgement": maturity,
+        "main_strengths": strengths[:5] if isinstance(strengths, list) else [],
+        "main_risks": risks[:5] if isinstance(risks, list) else [],
+        "confidence": evaluation.get("confidence", "medium")
+    }
+
+
+def build_project_overview_prompt(repo_profile, retrieval_result, comparison_result, score_result):
+    """
+    构造项目分析综述 prompt。
+    """
+
+    repo_name = repo_profile.get("repo_name", "unknown_repo")
+
+    main_languages = (
+        repo_profile.get("main_languages")
+        or repo_profile.get("languages")
+        or repo_profile.get("language")
+        or []
+    )
+
+    core_modules = (
+        repo_profile.get("core_modules")
+        or repo_profile.get("detected_modules")
+        or []
+    )
+
+    evaluation = _get_evaluation(score_result)
+    top_project = _get_top_similar_project(retrieval_result)
+
+    prompt = f"""
+你是操作系统内核赛道作品评审助手。现在要为一个 OS 仓库生成最终报告开头的“项目分析综述”。
+
+目标：
+让评委先明白：这个仓库是什么、想实现什么、主要做了哪些 OS 模块、实现成熟度如何、优势和风险是什么。
+
+要求：
+1. 必须基于给出的结构画像、评分和历史对比信息。
+2. 不要空泛，不要只写“具有一定复杂度”。
+3. 不要编造没有证据的功能。
+4. 如果证据不足，要明确说“当前证据不足”。
+5. 输出必须是合法 JSON，不要 Markdown，不要解释。
+
+JSON 格式：
+{{
+  "project_positioning": "项目定位，例如：基于 Rust 的 RISC-V 教学型微型操作系统",
+  "one_sentence_summary": "一句话说明这个仓库是什么",
+  "project_overview": "200到400字项目综述，说明它想实现什么、主要模块、技术路线和整体特点",
+  "core_implementation_summary": "说明核心模块实现情况和可能的执行链路",
+  "maturity_judgement": "说明实现成熟度、完成度和评分位置",
+  "main_strengths": ["优势1", "优势2", "优势3"],
+  "main_risks": ["风险1", "风险2", "风险3"],
+  "confidence": "high/medium/low"
+}}
+
+仓库名称：
+{repo_name}
+
+主要语言：
+{main_languages}
+
+核心模块：
+{core_modules}
+
+结构统计：
+{{
+  "function_count": {repo_profile.get("function_count")},
+  "edge_count": {repo_profile.get("edge_count") or repo_profile.get("call_edges")},
+  "module_count": {repo_profile.get("module_count")},
+  "structure_complexity": {repo_profile.get("structure_complexity")}
+}}
+
+评分结果：
+{json.dumps(evaluation, ensure_ascii=False, indent=2)}
+
+最相似历史项目：
+{json.dumps(top_project, ensure_ascii=False, indent=2)}
+"""
+
+    return prompt
+
+
+def build_project_analysis_overview(
+    repo_profile,
+    retrieval_result,
+    comparison_result,
+    score_result,
+    ask_ai_once=None
+):
+    """
+    生成最终报告中的“项目分析综述”栏目。
+    """
+
+    overview = None
+
+    if ask_ai_once is not None:
+        try:
+            prompt = build_project_overview_prompt(
+                repo_profile=repo_profile,
+                retrieval_result=retrieval_result,
+                comparison_result=comparison_result,
+                score_result=score_result
+            )
+
+            ai_text = ask_ai_once(prompt)
+            overview = _parse_ai_json_object(ai_text)
+        except Exception:
+            overview = None
+
+    if not isinstance(overview, dict):
+        overview = _fallback_project_overview(
+            repo_profile=repo_profile,
+            retrieval_result=retrieval_result,
+            comparison_result=comparison_result,
+            score_result=score_result
+        )
+
+    lines = []
+
+    lines.append(f"**项目定位：** {overview.get('project_positioning', '暂无明确项目定位')}")
+    lines.append("")
+    lines.append(f"**一句话综述：** {overview.get('one_sentence_summary', '暂无')}")
+    lines.append("")
+    lines.append(overview.get("project_overview", "暂无项目综述。"))
+    lines.append("")
+    lines.append("### 1.1 核心实现判断")
+    lines.append("")
+    lines.append(overview.get("core_implementation_summary", "暂无核心实现判断。"))
+    lines.append("")
+    lines.append("### 1.2 实现成熟度判断")
+    lines.append("")
+    lines.append(overview.get("maturity_judgement", "暂无实现成熟度判断。"))
+    lines.append("")
+    lines.append("### 1.3 主要优势")
+    lines.append("")
+
+    strengths = overview.get("main_strengths", [])
+    if strengths:
+        for item in strengths:
+            lines.append(f"- {item}")
+    else:
+        lines.append("- 暂无明确优势。")
+
+    lines.append("")
+    lines.append("### 1.4 主要风险")
+    lines.append("")
+
+    risks = overview.get("main_risks", [])
+    if risks:
+        for item in risks:
+            lines.append(f"- {item}")
+    else:
+        lines.append("- 暂无明确风险。")
+
+    lines.append("")
+    lines.append(f"**综述置信度：** {overview.get('confidence', 'medium')}")
+
+    return "\n".join(lines)
+
+
 def format_score_table(score_result):
     """
     生成五项评分表格。
@@ -542,12 +933,7 @@ def format_score_evidence(score_result):
     return "\n".join(lines)
 
 
-def generate_final_report_full(
-    repo_profile_path,
-    retrieval_result_path,
-    comparison_result_path,
-    score_result_path
-):
+def generate_final_report_full(repo_profile_path,retrieval_result_path,comparison_result_path,score_result_path,ask_ai_once=None):
     """
     生成最终 Markdown 报告文本。
     """
@@ -606,8 +992,12 @@ def generate_final_report_full(
     ))
     lines.append("")
 
+    lines.append("## 1. 项目深度综述")
+    lines.append("")
+    lines.append(build_deep_project_description_section(repo_name))
+    lines.append("")
 
-    lines.append("## 1. 项目概览")
+    lines.append("## 2. 项目概览")
     lines.append("")
     lines.append(f"- 仓库名称：`{repo_name}`")
     lines.append(f"- 项目类型：`{repo_profile.get('project_type')}`")
@@ -620,19 +1010,19 @@ def generate_final_report_full(
     lines.append(f"- 结构复杂度：{repo_profile.get('structure_complexity')}")
     lines.append("")
 
-    lines.append("## 2. 仓库结构画像")
+    lines.append("## 3. 仓库结构画像")
     lines.append("")
-    lines.append("### 2.1 核心模块")
+    lines.append("### 3.1 核心模块")
     lines.append("")
     lines.append(format_core_modules(repo_profile))
     lines.append("")
 
-    lines.append("### 2.2 模块画像概览")
+    lines.append("### 3.2 模块画像概览")
     lines.append("")
     lines.append(format_module_profiles(repo_profile, max_modules=8))
     lines.append("")
 
-    lines.append("## 3. 调用图与结构复杂度分析")
+    lines.append("## 4. 调用图与结构复杂度分析")
     lines.append("")
     lines.append(
         "系统根据函数级理解结果和调用关系构建调用图，并统计内部调用、外部调用和模块分布。"
@@ -645,22 +1035,22 @@ def generate_final_report_full(
     lines.append(f"- 结构复杂度：{repo_profile.get('structure_complexity')}")
     lines.append("")
 
-    lines.append("## 4. 相似历史项目检索结果")
+    lines.append("## 5. 相似历史项目检索结果")
     lines.append("")
     lines.append(format_similar_projects(retrieval_result))
     lines.append("")
 
-    lines.append("### 4.1 规则检索相似依据")
+    lines.append("### 5.1 规则检索相似依据")
     lines.append("")
     lines.append(format_retrieval_explanations(retrieval_result))
     lines.append("")
 
-    lines.append("## 5. AI 历史项目对比解释")
+    lines.append("## 6. AI 历史项目对比解释")
     lines.append("")
     lines.append(format_history_comparisons(comparison_result))
     lines.append("")
 
-    lines.append("## 6. 五项结构化评分")
+    lines.append("## 7. 五项结构化评分")
     lines.append("")
     lines.append(f"- 总分：**{evaluation.get('overall_score')}/100**")
     lines.append(f"- 等级：**{evaluation.get('score_level')}**")
@@ -669,36 +1059,36 @@ def generate_final_report_full(
     lines.append(format_score_table(score_result))
     lines.append("")
 
-    lines.append("### 6.1 评分证据")
+    lines.append("### 7.1 评分证据")
     lines.append("")
     lines.append(format_score_evidence(score_result))
     lines.append("")
 
-    lines.append("### 6.2 规则参考分")
+    lines.append("### 7.2 规则参考分")
     lines.append("")
     lines.append("```json")
     lines.append(json.dumps(reference_scores, ensure_ascii=False, indent=2))
     lines.append("```")
     lines.append("")
 
-    lines.append("## 7. 综合评价")
+    lines.append("## 8. 综合评价")
     lines.append("")
-    lines.append("### 7.1 主要优势")
+    lines.append("### 8.1 主要优势")
     lines.append("")
     lines.append(format_markdown_list(evaluation.get("strengths", [])))
     lines.append("")
 
-    lines.append("### 7.2 主要不足")
+    lines.append("### 8.2 主要不足")
     lines.append("")
     lines.append(format_markdown_list(evaluation.get("weaknesses", [])))
     lines.append("")
 
-    lines.append("### 7.3 改进建议")
+    lines.append("### 8.3 改进建议")
     lines.append("")
     lines.append(format_markdown_list(evaluation.get("recommendations", [])))
     lines.append("")
 
-    lines.append("## 8. 不确定性说明")
+    lines.append("## 9. 不确定性说明")
     lines.append("")
     uncertainty = evaluation.get("uncertainty", "")
 
@@ -713,7 +1103,7 @@ def generate_final_report_full(
     lines.append("")
     lines.append("---")
     lines.append("")
-    lines.append("## 9. 输入文件")
+    lines.append("## 10. 输入文件")
     lines.append("")
     lines.append(f"- repo_profile_full：`{repo_profile_path}`")
     lines.append(f"- retrieve_full：`{retrieval_result_path}`")

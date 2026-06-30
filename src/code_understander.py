@@ -163,15 +163,15 @@ def analyze_code_blocks_file(
     分析代码块 JSON 文件。
 
     max_blocks:
-    - 整数：分析前 max_blocks 个代码块
-    - None：分析全部代码块
+    整数：分析前 max_blocks 个代码块
+    None：分析全部代码块
 
     resume:
-    - True：启用断点续跑，跳过已经分析过的 block
-    - False：从头重新分析
+    True：启用断点续跑，跳过已经分析过的 block
+    False：从头重新分析
 
     save_every:
-    - 每分析多少个 block 保存一次进度
+    每分析多少个 block 保存一次进度
     """
 
     data = load_code_blocks(blocks_file_path)
@@ -328,37 +328,44 @@ def build_analyzed_block_id_set(analysis_results):
 
     return analyzed_block_ids
 
-def analyze_code_blocks_file_concurrent(
-    blocks_file_path,
-    ask_ai_once,
-    max_blocks=10,
-    resume=True,
-    save_every=5,
-    max_workers=3
-):
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+
+
+def analyze_code_blocks_file_concurrent( blocks_file_path,ask_ai_once,max_blocks=None,resume=True,save_every=5,max_workers=8):
     """
     并发分析代码块 JSON 文件。
 
     max_blocks:
-    分析前 max_blocks 个代码块
+    None：全量分析全部代码块
+    数字：只分析前 max_blocks 个代码块
 
     resume:
     True：启用断点续跑，跳过已经分析过的 block
 
-    save_every:每完成多少个新 block 保存一次进度
+    save_every:
+    每完成多少个新 block 保存一次进度
 
-    max_workers:并发线程数
+    max_workers:
+    AI 并发线程数，默认 8
     """
+
+    import time
+    from concurrent.futures import ThreadPoolExecutor, as_completed
 
     data = load_code_blocks(blocks_file_path)
 
     repo_name = data.get("repo_name", "unknown_repo")
     blocks = data.get("blocks", [])
 
+    total_blocks_in_file = len(blocks)
+
     if max_blocks is None:
         selected_blocks = blocks
+        print("分析模式：全量分析")
     else:
         selected_blocks = blocks[:max_blocks]
+        print(f"分析模式：截断分析，最多分析前 {max_blocks} 个代码块")
 
     if resume:
         results = load_analysis_progress(repo_name)
@@ -379,12 +386,16 @@ def analyze_code_blocks_file_concurrent(
 
     total_count = len(selected_blocks)
     pending_count = len(pending_blocks)
-    finished_count = len(selected_blocks) - pending_count
+    finished_count = total_count - pending_count
 
-    print(f"代码块总数：{total_count}")
+    print("=" * 60)
+    print(f"仓库名称：{repo_name}")
+    print(f"代码块文件总数：{total_blocks_in_file}")
+    print(f"本次计划分析数量：{total_count}")
     print(f"已完成数量：{finished_count}")
     print(f"待分析数量：{pending_count}")
     print(f"并发线程数：{max_workers}")
+    print("=" * 60)
 
     if pending_count == 0:
         print("所有代码块都已经分析完成，无需重复调用 API。")
@@ -392,17 +403,46 @@ def analyze_code_blocks_file_concurrent(
 
     completed_new_count = 0
 
+    def safe_analyze(block):
+        """
+        单个代码块安全分析：
+        最多重试 3 次
+        轻微延迟，避免 8 线程瞬间打爆 API
+        """
+
+        for attempt in range(3):
+            try:
+                time.sleep(0.03 * (attempt + 1))
+                return analyze_single_block_safe(
+                    repo_name,
+                    block,
+                    ask_ai_once
+                )
+            except Exception as e:
+                block_name = block.get("name", "unknown_block")
+                print(
+                    f"[WARN] 代码块分析失败，准备重试 "
+                    f"{attempt + 1}/3：{block_name}，错误：{e}"
+                )
+                time.sleep(0.5 * (attempt + 1))
+
+        block_id = block.get("block_id")
+        block_name = block.get("name", "unknown_block")
+
+        return {
+            "repo_name": repo_name,
+            "block_id": block_id,
+            "name": block_name,
+            "analysis_status": "failed",
+            "summary": "该代码块在多次重试后仍分析失败。",
+            "error": "AI analysis failed after retries"
+        }
+
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_block = {}
 
         for block in pending_blocks:
-            future = executor.submit(
-                analyze_single_block_safe,
-                repo_name,
-                block,
-                ask_ai_once
-            )
-
+            future = executor.submit(safe_analyze, block)
             future_to_block[future] = block
 
         for future in as_completed(future_to_block):
@@ -410,7 +450,14 @@ def analyze_code_blocks_file_concurrent(
             block_id = block.get("block_id")
             block_name = block.get("name")
 
-            analysis = future.result()
+            try:
+                analysis = future.result()
+            except Exception as e:
+                print(f"[ERROR] future 执行失败：{block_name}，错误：{e}")
+                continue
+
+            if not analysis:
+                continue
 
             results.append(analysis)
             analyzed_block_ids.add(block_id)
@@ -425,5 +472,6 @@ def analyze_code_blocks_file_concurrent(
                 print("已保存一次分析进度。")
 
     save_analysis_progress(repo_name, results)
+    print("全部待分析代码块处理完成，最终进度已保存。")
 
     return repo_name, results

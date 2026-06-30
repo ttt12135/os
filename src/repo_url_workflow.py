@@ -5,11 +5,12 @@ import shutil
 import subprocess
 from datetime import datetime
 from urllib.parse import urlparse
-
+from src.repo_description_generator import generate_repo_description_report
 from src.ingest_pipeline import ingest_history_repo
 from src.history_kb_builder import build_history_knowledge_base_full, save_history_knowledge_base_full
 from src.final_pipeline import run_final_analyze_hybrid_pipeline
-
+import stat
+import time
 
 DEFAULT_CLONE_ROOT = "external_repos"
 DEFAULT_SOURCE_REGISTRY_DIR = "repo_sources"
@@ -128,14 +129,47 @@ def derive_repo_name_from_url(repo_url):
     return sanitize_repo_name(base)
 
 
+def safe_rmtree(path, retries=5):
+    """
+    Windows 安全删除目录。
+
+    """
+
+    if not os.path.exists(path):
+        return True
+
+    def _remove_readonly(func, file_path, exc_info):
+        try:
+            os.chmod(file_path, stat.S_IWRITE)
+            func(file_path)
+        except Exception:
+            pass
+
+    for attempt in range(retries):
+        try:
+            shutil.rmtree(path, onerror=_remove_readonly)
+            return True
+        except PermissionError as e:
+            print(f"[WARN] 删除目录失败，可能被占用，重试 {attempt + 1}/{retries}：{e}")
+            time.sleep(0.8 * (attempt + 1))
+        except Exception as e:
+            print(f"[WARN] 删除目录失败，重试 {attempt + 1}/{retries}：{e}")
+            time.sleep(0.8 * (attempt + 1))
+
+    return False
+
 def make_unique_repo_dir(base_dir, repo_name, strategy="skip"):
     """
     根据策略处理已存在的本地目录。
 
     strategy:
-    - skip: 已存在就直接复用
-    - update: 已存在且是 git 仓库则 git fetch/pull
-    - replace: 删除后重新 clone
+    skip: 已存在就直接复用
+    update: 已存在且是 git 仓库则 git fetch/pull
+    replace: 删除后重新 clone
+
+    Windows 下 .git/objects/pack 文件可能被占用或只读，
+    所以 replace 不再直接 shutil.rmtree，而是使用 safe_rmtree。
+    如果旧目录无法删除，会尝试改名；如果改名也失败，则使用一个新的目录继续 clone。
     """
 
     ensure_dir(base_dir)
@@ -149,14 +183,37 @@ def make_unique_repo_dir(base_dir, repo_name, strategy="skip"):
         return repo_dir, "existing_reused"
 
     if strategy == "replace":
-        shutil.rmtree(repo_dir)
-        return repo_dir, "removed_for_reclone"
+        print(f"检测到旧仓库目录，准备删除：{repo_dir}")
+
+        deleted = safe_rmtree(repo_dir)
+
+        if deleted:
+            return repo_dir, "removed_for_reclone"
+
+        # 删除失败，尝试改名旧目录
+        backup_dir = repo_dir + "_old_" + time.strftime("%Y%m%d_%H%M%S")
+
+        print("旧仓库目录暂时无法删除。")
+        print(f"旧目录：{repo_dir}")
+        print(f"尝试改名为：{backup_dir}")
+
+        try:
+            os.rename(repo_dir, backup_dir)
+            print("旧目录已改名，继续使用原目录重新 clone。")
+            return repo_dir, "renamed_old_for_reclone"
+        except Exception as e:
+            print(f"旧目录改名也失败：{e}")
+
+            # 删除失败、改名也失败，就换一个新目录，保证流程不中断
+            new_repo_dir = repo_dir + "_new_" + time.strftime("%Y%m%d_%H%M%S")
+            print(f"将改用新的仓库目录继续 clone：{new_repo_dir}")
+
+            return new_repo_dir, "use_new_dir_due_to_locked_old"
 
     if strategy == "update":
         return repo_dir, "existing_update"
 
     raise ValueError(f"未知 clone_strategy：{strategy}")
-
 
 def run_subprocess(command, cwd=None, timeout=600):
     result = subprocess.run(
@@ -429,7 +486,9 @@ def import_repo_from_url(
     clone_strategy="skip",
     clone_depth=None,
     analysis_mode="quick",
-    max_blocks=50,
+    max_blocks="auto",
+    max_workers=8,
+    generate_description_report=None,
     run_full_target_pipeline=True,
     rebuild_history_kb=True,
     top_k=3,
@@ -480,7 +539,7 @@ def import_repo_from_url(
     print(f"本地路径：{local_dir}")
     print(f"clone 策略：{clone_strategy}")
     print(f"分析模式：{analysis_mode}")
-    print(f"max_blocks：{max_blocks if max_blocks is not None else 'all'}")
+    print(f"max_blocks：{'auto' if max_blocks == 'auto' else (max_blocks if max_blocks is not None else 'all')}")
     print("=" * 70)
 
     clone_result = clone_or_update_repo(
@@ -524,14 +583,37 @@ def import_repo_from_url(
 
     generated_files = {}
 
+    description_report_path = ""
+    description_report_content = ""
+
+    if generate_description_report is None:
+        generate_description_report = scope == "target"
+
+    if generate_description_report:
+        try:
+            print()
+            print("正在生成仓库描述报告 description_report...")
+            description_report_path, description_report_content = generate_repo_description_report(
+                repo_path=local_dir,
+                ask_ai_once=ask_ai_once
+            )
+            print(f"仓库描述报告：{description_report_path}")
+        except Exception as e:
+            print(f"仓库描述报告生成失败：{e}")
+    else:
+        print()
+        print("跳过 description_report：history 批量入库默认不生成描述报告，以提高入库速度。")
+
     if scope == "history":
         generated_files = ingest_history_repo(
             repo_path=local_dir,
             ask_ai_once=ask_ai_once,
             max_blocks=max_blocks,
-            analysis_mode=analysis_mode
+            analysis_mode=analysis_mode,
+            max_workers=max_workers
         )
 
+        
         updated_profiles = inject_source_to_generated_profiles(
             repo_name=repo_name,
             scope="history",
@@ -543,6 +625,8 @@ def import_repo_from_url(
         if rebuild_history_kb:
             history_kb_full_path = rebuild_history_kb_full()
 
+        generated_files["description_report_path"] = description_report_path
+
         return {
             "success": True,
             "stage": "history_import_done",
@@ -553,8 +637,10 @@ def import_repo_from_url(
             "clone_result": clone_result,
             "source_record_path": source_record_path,
             "manifest_path": manifest_output_path,
+            "description_report_path": description_report_path,
             "generated_files": generated_files,
             "updated_profiles": updated_profiles,
+            "description_report_path": description_report_path,
             "history_kb_full_path": history_kb_full_path
         }
 
@@ -565,6 +651,7 @@ def import_repo_from_url(
             ask_ai_once=ask_ai_once,
             analysis_mode=analysis_mode,
             max_blocks=max_blocks,
+            max_workers=max_workers,
             top_k=top_k,
             rag_top_k=rag_top_k,
             final_top_k=final_top_k,
@@ -582,8 +669,11 @@ def import_repo_from_url(
             repo_path=local_dir,
             ask_ai_once=ask_ai_once,
             max_blocks=max_blocks,
-            analysis_mode=analysis_mode
+            analysis_mode=analysis_mode,
+            max_workers=max_workers
         )
+
+    generated_files["description_report_path"] = description_report_path
 
     updated_profiles = inject_source_to_generated_profiles(
         repo_name=repo_name,
@@ -601,6 +691,7 @@ def import_repo_from_url(
         "clone_result": clone_result,
         "source_record_path": source_record_path,
         "manifest_path": manifest_output_path,
+        "description_report_path": description_report_path,
         "generated_files": generated_files,
         "updated_profiles": updated_profiles
     }

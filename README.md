@@ -1,131 +1,455 @@
-开发历史：
-v0.4：添加关键文件内容读取，能接入deepseek，但是还未能完全正确得挑选出正确的关键文件，仅是按照文件标准命名来筛选，一旦命名不规范，将前功尽弃
-v0.5:运用根据文件类型，文件名中关键字，文件地址进行打分，更加准确得找出关键文件。0.4和0.5主要是找到给AI的文件，到底读哪些内容。
-PS：此处运用了大模型，总结了哪些文件和后缀是os系统的关键文件后缀
-v0.6:添加分析单个仓库的功效，并且可以生成markdown功效
-v0.7(5.10): 添加分析整个历史组别的os仓库的功能
-v0.8(5.11)：这是极其关键的一个版本，从描述一个仓库正式转型为对比几个仓库
-v0.9(5.12):现在可以实现把仓库切分成json文件，调用了code_splitter & code_block_store
-v1.2(5.20)现在切分文件不是简单把前30个文件划分，而是结合之前的评分系统从高到低做出打分，把高效的文件切分出来
-v1.3能写出函数调用关系图了，但是极其不完整，需要改进，先不管了，先把大框架做出来，跑通后再优化.现在的解决路径是代码切片->a进行函数理解->提取calledfuncs->生成调用关系的json文件.
-v1.4加入正则判断标准，不结合ai直接生成函数调用关系，稳定快捷但是不理解语义，和ai生成的调用图谱结合后可以实现更可靠的函数调用关系
-v1.5新加入(src/module_summarizer.py)模块，让函数调用关系变成按模块分类的形式，流程为代码切片-》AI函数理解-》函数调用关系-》模块逻辑总结
-v1.6加入summarize_repo_modules()模块，把函数理解json，函数调用图json，模块总结json结合在一个文件里，方便之后构建仓库知识档案。
-v1.7给这个大量的历史仓库文件建立一个总的json文件，作为历史作品的目录，也会转成langchain的数据来源，可以相似作品筛选，很激动人心，因为它真的能用了要
-v1.8从知识库中找出最相似的历史作品然后进行比较，采取模块名称重合度50%，模块分布相似度30%，调用图规模相似度20%，它只是在通过规则匹配，这是由于这还处于未接通langchain和vector的阶段，先跑通再说
-v1.9新增evaluator.py可以根据历史作品做专项的对比和评分
-v2.0由于之前测试阶段要逐个仓库入库时要一步一步切分代码再分析有点复杂，现在改成流水线入库
-ingest_history：生成代码块-》生成函数理解-》生成调用图-》生成模块化代码总结-》更新历史仓库
-analyze_target：与ingest相似，只是不会更新历史仓库
-v2.3 版本主要完成了 Full 模式稳定化和 Tree-sitter AST 噪声过滤。
+# KernelInsight
 
-本版本在原有 quick/full 分析模式基础上，对 full 模式增加了安全上限，避免全仓库分析时因 AST 节点过细而生成异常数量的代码块。同时，针对 C/C++ 代码中大量无意义类型引用、短 typedef、函数内部局部类型节点等问题，新增了 AST 过滤规则，只保留函数定义、完整结构体定义、完整枚举定义和有实际结构体内容的 typedef。项目继续保留正则解析作为兜底方案，但主路径优先使用 tree-sitter 对 Rust、C、C++、Python、Bash 等语言进行结构化解析。
+KernelInsight 是一个面向操作系统内核赛道作品的仓库智能分析与历史对比系统。
 
-该版本的重点不是美化报告，而是提升底层代码读取质量，保证后续 AI 函数理解、调用图生成、模块总结和 repo_profile 构建建立在更干净、更可靠的代码块基础上。quick 模式适合快速调试，full 模式适合更深入的仓库分析，但在断点续跑功能完成前，full 模式暂时设置代码块数量上限，避免一次性生成过多无效数据。
+系统可以自动导入 Git 仓库，分析仓库源码结构，理解关键代码模块，建立历史作品库，并对目标仓库生成评分、排名和 Markdown 分析报告。
 
-v2.4 版本主要实现了函数级 AI 理解阶段的分批分析与断点续跑机制。此前系统虽然已经支持 full 模式全仓库代码切片，但 AI 函数理解阶段仍然需要一次性顺序分析指定数量的代码块，一旦中途失败或手动终止，已经完成的分析结果难以复用。本版本通过在 function_analysis 目录下引入 progress 文件，记录已完成分析的代码块及其结果，使系统能够在后续运行中自动跳过已分析 block，继续处理未完成部分。
+本项目主要用于辅助理解 OS 内核赛道作品，帮助开发者和评审者快速了解一个仓库的结构、实现情况、历史相似项目、优势短板和综合评分。
 
-本版本还扩展了 max_blocks 参数语义，使其既支持整数形式的部分分析，也支持 all 模式下的全量分析。当用户选择 full + all 时，系统会尝试分析全部代码块，并在每个代码块分析完成后保存进度，从而降低长时间运行带来的失败风险。最终结果可输出为 function_analysis_full.json，为后续完整调用图构建、模块总结、repo_profile_full 生成和 RAG 知识库入库提供更完整的数据基础。
+！！！！！
 
-该版本的核心意义在于将函数理解阶段从一次性脚本式调用升级为可恢复、可持续运行的分析流程，为大规模 OS 仓库的完整代码理解打下基础。
+当前只提交了后端算法部分，前端单独维护，请勿轻易使用前端相关命令
 
-v2.5加入并发分析，调用api速度显著提升，分析仓库速度显著提升，且加入安全措施，在单个代码块分析失败时不会让程序完全停止
+！！！！！
 
-v2.6 版本主要完成了调用图系统的 full 化升级。此前系统已经能够基于 AI 函数理解结果和源码正则规则生成增强版调用边，但调用图结构仍然以 edges 为主，缺少完整的函数节点、模块统计和内部/外部调用分类。本版本在原有调用边提取基础上，新增了函数节点构建、函数名标准化、已定义函数集合匹配、调用边增强和模块级调用统计等能力。
+---
 
-通过本版本升级，调用图不再只是简单的 caller -> callee 关系集合，而是能够同时描述仓库中有哪些函数节点、每个函数属于哪个模块、调用关系来源于 AI 还是正则、调用关系置信度如何，以及某条调用属于仓库内部调用还是外部函数调用。系统还会按 OS 模块统计函数数量、输出调用数量、内部调用数量和外部调用数量，为后续模块画像、仓库画像和结构化评分提供更可靠的数据基础。
+## 1. 项目能做什么
 
-v2.7 版本主要完成了模块画像的 full 化升级。在此前版本中，系统已经能够基于函数理解结果生成增强调用图。新版本重点解决
+KernelInsight 主要完成以下工作：
 
-相比旧版主要依赖 AI 自然语言总结的模块总结方式，full 模块画像更加结构化，能够为后续仓库画像、历史项目检索、结构化评分和最终报告生成提供更稳定的数据基础。本版本还通过函数输出调用数量和函数摘要信息筛选模块核心函数，并根据函数数量和调用边数量估算模块权重，使系统能够初步判断不同模块在仓库中的重要程度。
+1. 自动导入 Git 仓库；
+2. 区分历史仓库 `history` 和目标仓库 `target`；
+3. 扫描仓库目录结构，识别源码、文档、构建脚本和关键模块；
+4. 对源码进行代码块切片，并过滤第三方依赖、生成文件和低价值代码块；
+5. 对关键代码块进行 AI 辅助理解，提取函数作用、模块职责和实现强度；
+6. 构建仓库画像，包括语言、模块、函数、调用关系和工程证据；
+7. 建立历史作品知识库，用于目标仓库的相似项目检索；
+8. 对目标仓库和历史仓库进行横向对比；
+9. 从原创性、新颖性、可实践性、技术难度、完成度五个维度进行评分；
+10. 自动生成 Markdown 分析报告；
+11. 生成仓库质量排名；
+12. 导出前端展示所需的 JSON 数据和 Markdown 报告。
 
-该版本的核心意义在于将函数级理解和调用图结果进一步聚合为模块级结构认知，使系统从知道有哪些函数和调用关系”推进到“知道仓库中有哪些核心模块以及各模块的重要性（通过每个模块的函数数量和函数的调用边数量。
+---
 
-v2.8 本版本进一步将函数数量、调用边数量、内部/外部调用关系、模块数量、核心模块、模块完成度和结构复杂度等信息汇总为统一的仓库级画像文件 repo_profile_full.json。
+## 2. 系统整体流程
 
-本版本新增了模块完成度估算、项目类型推断、结构复杂度估算和核心模块选择等功能。系统会根据每个模块的函数数量、调用关系、内部调用比例和文件分布，粗略判断模块完成度；同时根据内存管理、进程管理、调度、系统调用、文件系统、驱动、中断等模块的出现情况，推断该 OS 项目的基本类型。核心模块则综合模块权重和模块完成度选出，使仓库画像不再只依赖自然语言总结，而是建立在结构化统计数据之上。
+```text
+Git 仓库地址
+    ↓
+仓库克隆与元信息记录
+    ↓
+源码结构扫描
+    ↓
+代码块切片与过滤
+    ↓
+AI 辅助代码理解
+    ↓
+仓库画像生成
+    ↓
+历史项目知识库构建
+    ↓
+相似历史项目检索
+    ↓
+目标仓库对比分析
+    ↓
+五维评分
+    ↓
+Markdown 报告生成
+    ↓
+前端展示数据导出
+```
 
-v2.9 版本主要完成了 OS 模块分类规则增强。在此前版本中，系统已经能够基于函数理解结果和调用图生成 full 模块画像与 full 仓库画像，但模块归属主要依赖 AI 输出的 related_os_module 字段，容易出现 unknown 过多或模块分类不稳定的问题。本版本新增 module_classifier.py，引入基于文件路径、函数名称和 AI 初始判断的综合分类机制。
+---
+
+## 3. 项目结构
+
+```text
+KernelInsight/
+├── main.py                      # 命令行入口
+├── src/                         # 核心功能模块
+│   ├── repo_url_workflow.py      # Git 仓库导入流程
+│   ├── simple_import_ui.py       # 简化命令行导入界面
+│   ├── ingest_pipeline.py        # history / target 入库流程
+│   ├── code_splitter.py          # 代码切片与过滤
+│   ├── code_understander.py      # AI 辅助代码块理解
+│   ├── history_retriever.py      # 历史项目检索
+│   ├── final_pipeline.py         # 目标仓库完整分析流程
+│   ├── repo_quality_ranker.py    # 仓库质量排名
+│   └── ...
+├── site_config/                 # 前端展示配置
+│   └── works_manifest.json
+├── requirements.txt             # Python 依赖
+├── .env.example                 # 环境变量示例
+└── README.md
+```
+
+---
+
+## 4. 安装与环境配置
+
+### 4.1 安装依赖
+
+进入项目目录：
+
+```bash
+cd KernelInsight
+```
+
+安装依赖：
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4.2 配置 API Key
+
+复制 .example.env 为 `.env`：
+
+```bash
+copy .example.env .env
+```
+
+在 `.env` 中填写：
+
+```env
+DEEPSEEK_API_KEY=your_api_key_here
+```
+
+说明：`.env` 文件只用于本地运行，不应提交到公开仓库。
+
+---
+
+## 5. 命令行使用说明
+
+启动系统：
+
+```bash
+python main.py
+```
+
+启动后会进入命令行菜单：
+
+```text
+1. 导入 Git 仓库并分析
+2. 导出网站数据
+3. 生成仓库质量排名
+4. 查看推荐流程
+
+h. 查看高级命令
+q. 退出程序
+```
+
+---
+
+### 5.1 导入 Git 仓库并分析
+
+命令编号：
+
+```text
+1
+```
+
+该命令是系统最核心的入口，用于输入一个 Git 仓库地址，并自动完成仓库克隆、源码分析、代码理解、仓库画像、评分和报告生成等流程。
+
+适用场景：
+
+- 将往届作品加入历史库；
+- 分析本届目标仓库；
+- 生成目标仓库的描述报告、评分结果和最终报告；
+- 为前端展示准备基础数据。
+
+运行后需要输入的信息包括：
+
+```text
+Git 仓库地址
+仓库类型：history / target
+仓库简称
+队伍名
+学校名
+年份
+分析强度
+```
+
+仓库类型说明：
+
+| 类型 | 含义 |
+|---|---|
+| `history` | 历史仓库，用于建立历史作品库和对比基准 |
+| `target` | 目标仓库，用于生成评分、对比结果和最终报告 |
+
+分析强度说明：
+
+| 模式 | 用途 | 特点 |
+|---|---|---|
+| 快速测试 | 检查仓库能否正常导入 | 只分析少量代码块，速度快 |
+| 正式入库 | 正式加入历史库或分析目标仓库 | 全仓扫描，动态选择高优先级代码块 |
+| 深度最终 | 最终展示前使用 | 尽可能进行全量代码理解，耗时较长 |
+
+---
+
+### 5.2 history 仓库会生成什么
+
+如果导入的是 `history` 仓库，系统主要生成以下文件：
+
+| 路径 | 作用 |
+|---|---|
+| `external_repos/history/{repo_name}/` | 克隆到本地的历史仓库源码 |
+| `repo_sources/history/{repo_name}_source.json` | 仓库来源信息，包括原始 Git 地址、学校、队伍、年份等 |
+| `code_blocks/{repo_name}_blocks.json` | 仓库源码切片后的代码块数据 |
+| `function_analysis/{repo_name}_function_analysis.json` | AI 对代码块的理解结果 |
+| `repo_profiles/history/{repo_name}_repo_profile_full.json` | 历史仓库画像 |
+| `history_knowledge_base/history_profiles_full.json` | 汇总后的历史作品知识库 |
+
+说明：
+
+```text
+history 仓库主要用于建立历史作品库和对比基准。
+为了提高批量入库速度，history 仓库默认不生成详细 description_report。
+```
+
+---
+
+### 5.3 target 仓库会生成什么
+
+如果导入的是 `target` 仓库，系统主要生成以下文件：
+
+| 路径 | 作用 |
+|---|---|
+| `external_repos/target/{repo_name}/` | 克隆到本地的目标仓库源码 |
+| `repo_sources/target/{repo_name}_source.json` | 目标仓库来源信息 |
+| `code_blocks/{repo_name}_blocks.json` | 目标仓库代码块数据 |
+| `function_analysis/{repo_name}_function_analysis.json` | 目标仓库代码理解结果 |
+| `repo_profiles/target/{repo_name}_repo_profile_full.json` | 目标仓库画像 |
+| `reports/{repo_name}_description.md` | 目标仓库详细描述报告 |
+| `evaluation/{repo_name}_score_full.json` | 五维评分结果 |
+| `reports/{repo_name}_final_report.md` | 最终综合分析报告 |
+| `repository_quality/target_repository_quality_ranking.md` | 目标仓库质量排名报告 |
+
+说明：
+
+```text
+target 仓库会生成更详细的 description_report 和 final_report，
+用于前端展示、项目答辩和最终结果说明。
+```
+
+---
+
+### 5.4 导出网站数据
+
+命令编号：
+
+```text
+2
+```
+
+该命令用于将分析结果整理成前端展示所需的数据文件。
+
+前端不会直接运行 Python 分析逻辑，也不会直接调用 AI，只读取该命令导出的 JSON 和 Markdown 文件。
+
+主要作用：
+
+1. 汇总仓库列表；
+2. 汇总历史库信息；
+3. 汇总目标仓库评分结果；
+4. 复制最终分析报告；
+5. 生成前端可以读取的数据目录。
+
+常见生成文件：
+
+| 路径 | 作用 |
+|---|---|
+| `public/data/site_stats.json` | 网站首页统计数据 |
+| `public/data/works_summary.json` | 目标仓库摘要列表 |
+| `public/data/history_summary.json` | 历史仓库摘要列表 |
+| `public/data/works/{repo_name}.json` | 单个目标仓库详情数据 |
+| `public/data/history/{repo_name}.json` | 单个历史仓库详情数据 |
+| `public/data/comparisons/{repo_name}.json` | 目标仓库与历史仓库对比数据 |
+| `public/reports/{repo_name}_final_report.md` | 前端展示用 Markdown 报告 |
+
+如果前端项目独立维护，需要将导出路径设置为前端项目的 `public` 目录。
+
+例如：
+
+```text
+D:\os\kernelinsight-web\public
+```
+
+---
+
+### 5.5 生成仓库质量排名
+
+命令编号：
+
+```text
+3
+```
+
+该命令用于根据已经生成的评分结果，对 history 或 target 仓库进行排序，生成仓库质量排行榜。
+
+排名使用的主分数与最终分析报告中的综合评分保持一致。
+
+主要作用：
+
+1. 读取 `evaluation/{repo_name}_score_full.json` 中的综合评分；
+2. 汇总仓库优势、短板和证据；
+3. 按综合评分进行排序；
+4. 生成 Markdown 和 JSON 两种排名结果。
+
+生成文件：
+
+| 路径 | 作用 |
+|---|---|
+| `repository_quality/history_repository_quality_ranking.md` | 历史仓库质量排名报告 |
+| `repository_quality/history_repository_quality_ranking.json` | 历史仓库排名结构化数据 |
+| `repository_quality/target_repository_quality_ranking.md` | 目标仓库质量排名报告 |
+| `repository_quality/target_repository_quality_ranking.json` | 目标仓库排名结构化数据 |
+
+排名报告中会展示：
+
+- 排名；
+- 仓库名；
+- 学校和队伍；
+- 原始 Git 地址；
+- 综合评分；
+- 等级；
+- 主要优势；
+- 主要不足；
+- 分析报告入口。
+
+---
+
+### 5.6 查看推荐流程
+
+命令编号：
+
+```text
+4
+```
+
+该命令用于查看系统推荐的标准使用流程。
+
+推荐流程一般为：
+
+```text
+1. 导入多个 history 仓库，建立历史作品库
+2. 导入 target 仓库，生成目标仓库画像
+3. 对 target 仓库执行历史对比与评分
+4. 生成仓库质量排名
+5. 导出前端展示数据
+6. 在前端页面查看仓库详情、排名和报告
+```
+
+该命令不会生成新的分析文件，主要用于帮助用户理解系统使用顺序。
+
+---
+
+## 6. 高级命令说明
+
+除主菜单外，系统还保留了一些高级命令，用于调试或单独运行某个分析阶段。
+
+| 命令 | 作用 |
+|---|---|
+| `import_repo_url` | 输入 Git 地址，导入仓库并自动分析 |
+| `ingest_history` | 单独导入历史仓库并生成历史仓库画像 |
+| `batch_ingest_history` | 批量导入历史仓库 |
+| `analyze_target` | 单独分析目标仓库 |
+| `final_analyze_hybrid` | 对目标仓库执行完整分析、检索、对比、评分和报告生成 |
+| `rank_repo_quality` | 生成仓库质量排名 |
+| `export_site_data` | 导出前端展示数据 |
+| `build_rag_docs` | 构建 RAG 检索文档 |
+| `build_vector_store` | 构建向量检索库 |
+| `hybrid_retrieve` | 执行混合检索，寻找相似历史项目 |
+| `compare_full` | 生成目标仓库与历史仓库的详细对比 |
+| `score_full` | 生成五维评分结果 |
+| `final_report` | 根据已有分析结果生成最终报告 |
+
+一般用户建议使用主菜单，不建议直接运行高级命令，除非需要调试某个具体阶段。
+
+---
+
+## 7. 输出文件与目录说明
+
+| 目录 / 文件 | 作用 |
+|---|---|
+| `external_repos/` | 保存克隆到本地的 history 和 target 仓库源码 |
+| `repo_sources/` | 保存仓库来源信息，如 Git 地址、学校、队伍、年份 |
+| `code_blocks/` | 保存代码切片结果 |
+| `function_analysis/` | 保存 AI 对代码块和函数的理解结果 |
+| `call_graph/` | 保存函数调用关系图数据 |
+| `module_summary/` | 保存模块级总结结果 |
+| `repo_profiles/` | 保存仓库画像，包括结构、语言、模块和统计信息 |
+| `history_knowledge_base/` | 保存历史仓库知识库，用于相似项目检索 |
+| `evaluation/` | 保存五维评分结果 |
+| `repository_quality/` | 保存仓库质量排名结果 |
+| `reports/` | 保存 Markdown 分析报告 |
+| `site_config/` | 保存前端展示相关配置，如仓库清单 |
+
+---
+
+### 7.1 关键文件说明
+
+| 文件 | 说明 |
+|---|---|
+| `{repo_name}_source.json` | 记录仓库原始地址、学校、队伍、年份等元信息 |
+| `{repo_name}_blocks.json` | 记录从源码中切分出的代码块 |
+| `{repo_name}_function_analysis.json` | 记录 AI 对代码块的分析结果 |
+| `{repo_name}_repo_profile_full.json` | 仓库结构画像 |
+| `{repo_name}_score_full.json` | 五维评分结果 |
+| `{repo_name}_description.md` | 仓库详细描述报告，主要用于 target |
+| `{repo_name}_final_report.md` | 最终综合分析报告 |
+| `history_repository_quality_ranking.md` | 历史仓库质量排名 |
+| `target_repository_quality_ranking.md` | 目标仓库质量排名 |
+| `works_manifest.json` | 前端展示使用的仓库元信息清单 |
+
+---
+
+## 8. 前端展示说明
+
+WARING!!!!!!!!!!
+
+比赛只提交了后端算法部分，前端单独维护，最终的展示地址将于初赛截止后再提交。
 
 
-该版本的核心意义在于提高模块画像和仓库画像的稳定性。通过减少 unknown 模块数量、纠正部分 AI 分类误差，降低幻觉，系统能够更可靠地识别 OS 仓库中的内存管理、进程管理、调度、文件系统、系统调用和驱动等核心模块，为后续历史项目检索、结构化评分和最终分析报告提供更准确的结构基础。
 
+---
 
-v3.0 版本主要完成了历史知识库的 full 化升级。在此前版本中，系统已经能够为单个目标仓库或历史仓库生成 repo_profile_full.json，记录项目类型、主要语言、函数数量、调用边数量、核心模块、模块完成度和结构复杂度等仓库级画像信息。但这些历史仓库画像仍然以独立 JSON 文件形式分散存放，不利于后续统一检索、相似项目对比和结构化评分。
+## 9. 评分与排名说明
 
-本版本新增了 full 历史知识库构建能力。系统会自动扫描 repo_profiles/history/ 目录下所有 *_repo_profile_full.json 文件，提取其中适合检索和对比的核心字段，包括项目类型、核心模块、函数规模、调用关系规模、模块完成度、结构复杂度、技术特征和不足等，并统一汇总为 history_knowledge_base/history_profiles_full.json。该文件成为后续历史项目检索和对比分析的统一入口。
+系统主要从以下五个维度进行综合评价：
 
-该版本的核心意义在于将系统从“单仓库分析器”推进到“多历史项目管理与对比”的准备阶段。repo_profile_full 可以视为单个仓库的结构化身份证，而 history_profiles_full 则是所有历史仓库身份证的档案库，为后续相似历史项目检索、RAG 语义检索、结构化评分和最终报告生成奠定基础。
+| 维度 | 含义 |
+|---|---|
+| 原创性 | 判断项目是否与历史作品高度重复，是否具有独立设计成分 |
+| 新颖性 | 判断模块组合、技术路线和实现方式是否具有差异化 |
+| 可实践性 | 判断项目是否具备构建、运行、测试和工程落地基础 |
+| 技术难度 | 判断内核模块复杂度、调用关系和系统机制实现深度 |
+| 完成度 | 判断核心链路是否闭环，是否存在大量 TODO 或空实现 |
 
-对比方法是通过项目类型，核心模块规模，复杂度来寻找相似仓库
+最终评分并非仅由代码行数、函数数量或结构复杂度决定，而是综合考虑：
 
+- 源码结构；
+- 核心模块实现证据；
+- 历史项目相似度；
+- 工程完整性；
+- 代码理解结果；
+- 报告与评分输出。
 
-v3.5 版本主要完成了一键 final_analyze 工作流。在此前版本中，系统已经分别实现了目标仓库分析、full 历史知识库构建、相似历史项目检索、AI 历史项目对比、结构化评分和最终 Markdown 报告生成，但这些能力需要用户手动依次执行多个命令，流程较为分散。
+系统最终展示的主评分来自：
 
-该版本的核心意义在于将项目从“功能模块集合”推进为“完整 Agent 工作流”。
+```text
+evaluation/{repo_name}_score_full.json
+```
 
-v3.6 版本主要完成了 final_analyze 流程的缓存与跳过机制。此前 final_analyze 已经能够一键串联目标仓库分析、历史知识库构建、相似项目检索、AI 对比、结构化评分和最终报告生成，但每次运行都会重复执行已有步骤，导致调试成本和 API 调用成本较高。
+该分数会同步用于：
 
+```text
+reports/{repo_name}_final_report.md
+repository_quality/{scope}_repository_quality_ranking.md
+前端展示页面
+```
 
-此外，本版本加入了仓库路径校验，防止用户误将 JSON 文件路径输入为仓库路径，从而避免生成异常命名文件。整体来看，v3.6 使系统从“能一键跑通”进一步升级为“可复用、可续跑、可减少重复计算”的工程化流程。
+因此，最终报告、质量排名和前端页面使用同一评分口径。
 
-v3.7 版本主要增强了最终 Markdown 报告的可读性和展示效果。此前 final_report_generator.py 已经可以整合 repo_profile_full、历史检索结果、AI 对比结果和结构化评分结果，但报告开头缺少面向人工阅读的摘要和综合判断。
-
-该版本使最终报告从单纯的数据整理进一步升级为面向评审场景的分析报告，提高了系统输出结果的可读性、解释性和展示价值。
-
-v3.8 版本主要完成了 final_report 阶段的路径自动推断与输入防呆优化。此前生成最终报告时，用户需要手动输入 repo_profile_full、retrieve_full、compare_full 和 score_full 四个 JSON 文件路径，容易误输入文件夹路径或错误文件路径，导致 PermissionError、FileNotFoundError 等异常。
-
-本版本新增 path_resolver.py，用于根据仓库名自动推断最终报告所需的四个输入文件路径。用户现在只需要输入仓库名，例如 zhengzhoudaxue111，系统即可自动定位 repo_profiles、history_knowledge_base 和 evaluation 目录下对应的 JSON 文件。同时，系统增加了路径检查逻辑，如果缺少某个文件，会明确提示应先运行 analyze_target、retrieve_full、compare_full 或 score_full。
-
-该版本提升了系统的可用性和防错能力，使最终报告生成流程更加简洁、稳定，也减少了演示和调试过程中的路径输入错误。
-
-v3.9 版本主要完成了主菜单工程化与命令分层。此前 main.py 中保留了大量早期版本命令，包括 repo、report、compare、evaluate 等旧流程，以及 save_blocks、understand、call_graph 等调试命令，导致程序启动菜单较为混乱，不利于展示当前主流程。
-
-本版本将命令划分为三类：主流程命令、调试命令和 legacy 旧版命令。其中主流程命令包括 ingest_history、analyze_target、history_kb_full、retrieve_full、compare_full、score_full、final_report 和 final_analyze；调试命令用于单步验证中间模块；legacy 命令保留历史兼容性，但执行前会提示用户确认，避免误用旧流程。
-
-该版本的核心意义在于明确当前系统的主线工作流，使项目从“功能堆叠状态”进一步整理为“工程化命令入口”。这有助于后续演示、调试和项目维护。
-
-
-v4.0 版本主要完成了历史项目批量入库增强功能。此前系统已经支持单个历史仓库通过 ingest_history 进行入库，但如果需要构建较大规模的历史 OS 项目知识库，需要手动逐个运行命令，效率较低。
-
-本版本新增 history_batch_ingestor.py，实现了 batch_ingest_history 命令。用户只需要提供一个历史项目总目录，系统即可自动扫描其中的多个历史仓库，逐个调用已有的 ingest_history 流程生成 repo_profile_full，并保存到 repo_profiles/history 目录下。入库完成后，系统会自动重建 full 历史知识库 history_profiles_full.json，并生成 history_batch_report.md，用于记录每个历史项目的入库状态、成功数量、跳过数量和失败原因。
-
-该版本的核心意义在于增强了系统的历史知识积累能力，使后续相似项目检索、AI 历史对比和原创性评价能够建立在更大规模的历史项目基础上。
-
-v4.1 版本主要完成了历史知识库统计报告增强功能。此前系统已经可以通过 batch_ingest_history 批量入库多个历史 OS 项目，并生成 history_profiles_full.json，但该文件主要面向程序读取，不便于人工理解历史库的规模和覆盖情况。
-
-本版本新增 history_kb_reporter.py，实现 history_kb_report 命令。系统会读取 full 历史知识库，统计历史项目数量、项目类型分布、语言分布、核心模块覆盖情况、平均函数数量、平均调用边数量、结构复杂度排名和模块完整度排名，并生成 history_knowledge_base/history_kb_report.md。
-
-该版本的核心意义在于提升历史知识库的可解释性和展示价值，使系统不仅能使用历史库进行相似项目检索，也能清楚展示当前历史库本身的构成、规模和质量，为后续 RAG 语义检索和更大规模历史项目积累奠定基础。
-
-v4.2 版本主要完成了 RAG 文档构建准备工作。此前系统已经可以构建 full 历史知识库 history_profiles_full.json，但该文件主要是结构化 JSON，更适合规则检索，不适合直接用于向量语义检索。
-
-
-该版本的核心意义在于为后续 RAG 语义检索建立标准文档层，使系统不仅可以基于结构化字段进行相似检索，也为后续基于设计思想、技术特征和模块描述的语义检索打下基础。
-
-
-v4.3 版本完成了 LangChain + Chroma 向量库接入。系统会把 v4.2 生成的 RAG 文档转换为 LangChain Document，再通过 embedding 模型写入 Chroma 本地向量数据库，之后用户可以通过自然语言问题检索历史项目资料。当前版本先使用本地 HashEmbedding 验证完整 RAG 流程，后续会替换为 BGE 等真实语义 embedding 模型，提高检索质量。
-
-v4.3b 版本主要完成了真实语义 Embedding 的接入。在 v4.3a 中，系统已经通过 SimpleHashEmbeddings 打通了 LangChain Document、Chroma 向量库和 RAG 检索流程，但 HashEmbedding 本质上更接近关键词哈希匹配，语义检索能力有限。
-
-本版本在 rag_vector_store.py 中新增可切换 embedding_backend 机制，支持 hash 和 bge 两种模式。默认使用 HuggingFaceEmbeddings 加载 BAAI/bge-small-zh-v1.5 模型，将历史 RAG 文档转换为真实语义向量后写入 Chroma 向量库。同时系统会在向量库目录下保存 embedding_config.json，记录当前使用的 embedding 类型、模型名和运行设备，确保后续 rag_retrieve 可以自动使用一致的 embedding 模型进行查询。
-
-该版本的意义在于将 RAG 检索从“工程链路验证”推进到“真实语义检索”阶段，为后续将 RAG 检索结果融合进 retrieve_full 和 compare_full 打下基础。
-
-v4.4 版本主要完成了 Hybrid 历史项目检索功能。此前系统已经具备 retrieve_full 结构化检索能力，也完成了 RAG 文档构建、Chroma 向量库接入和 BGE Embedding 语义检索，但结构检索和语义检索仍然是两条相互独立的流程。
-
-本版本新增 hybrid_retriever.py，实现 hybrid_retrieve 命令。系统会读取目标项目 repo_profile_full、retrieve_full 结构检索结果，并调用 RAG 向量库进行语义检索。随后系统按照结构相似度和语义相似度进行融合评分，默认结构检索权重为 0.65，RAG 语义检索权重为 0.35，最终输出综合相似历史项目列表。
-
-该版本的核心意义在于将 RAG 检索正式接入历史项目检索主流程，使系统不再只依赖项目类型、模块数量、函数规模和调用图等结构指标，也能结合技术描述、模块语义和历史项目文本特征进行更全面的相似性判断。
-
-v4.5 版本主要完成了 compare_full 对 hybrid_retrieve 结果的兼容。此前 compare_full 主要面向 retrieve_full 的结构化检索结果，只能基于项目类型、核心模块、函数数量、调用边数量和结构复杂度等结构指标进行历史项目对比。
-
-本版本修改 history_comparator.py，新增检索结果类型识别与兼容适配逻辑，使 compare_full 可以同时读取 retrieve_full 结构检索结果和 hybrid_retrieve 融合检索结果。对于 hybrid 检索结果，系统会保留 hybrid_score、structured_score、semantic_score、semantic_evidence 等字段，并将这些信息传入 AI 对比 prompt，使 AI 在比较目标项目和历史项目时能够同时参考结构相似度和 RAG 语义证据。
-
-该版本的核心意义在于将 RAG 增强检索正式接入 AI 历史项目对比环节，使系统从单纯结构对比升级为“结构检索 + 语义检索 + AI解释”的综合对比流程。
-
-v4.6 版本主要完成了 final_analyze_hybrid 一键整合流程。此前系统已经分别具备目标仓库分析、full 历史知识库构建、retrieve_full 结构检索、RAG 文档构建、Chroma 向量库检索、hybrid_retrieve 融合检索、AI 历史项目对比、五维评分和最终报告生成等功能，但这些功能分散在多个命令中，完整运行流程较长。
-
-本版本在 final_pipeline.py 中新增 run_final_analyze_hybrid_pipeline，将上述模块整合为一个完整端到端流程。用户只需要输入目标仓库路径和少量参数，系统即可自动完成目标项目结构分析、历史知识库更新、结构检索、RAG 文档与向量库构建、Hybrid 融合检索、AI 对比解释、结构化评分和最终 Markdown 报告生成。
-
-该版本的核心意义在于将系统从“多个功能模块组合”收束为“可一键运行的 OS 项目智能分析 Agent”，使项目主流程更加清晰，也更适合后续演示、汇报和答辩。
+其他实现质量分、结构复杂度分、证据完整度等指标只作为辅助分析依据，不作为排行榜主分数。

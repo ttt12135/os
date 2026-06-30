@@ -113,6 +113,80 @@ def read_code_file(file_path):
         return ""
 
 
+
+# ===== KernelInsight collection filters =====
+# 这些过滤规则用于避免把第三方依赖、构建产物和超大生成文件切成几十万代码块。
+# 注意：vendor/third_party 里的代码通常不是参赛队伍原创实现，不应该进入正式评分主样本。
+EXTRA_IGNORE_DIRS = {
+    "vendor", "vendors", "third_party", "third-party", "thirdparty",
+    "deps", "dependency", "dependencies", "packages", "registry",
+    "target", "build", "dist", "out", "node_modules", ".git", ".cargo",
+    "__pycache__", ".idea", ".vscode", ".venv", "venv",
+}
+
+# 单个源码文件过大时，通常是自动生成绑定、系统常量表或第三方库展开文件。
+# 这类文件不适合做 AI 函数级理解，否则会严重拖慢入库。
+MAX_CODE_FILE_BYTES_FOR_AI_BLOCKS = 512 * 1024
+
+
+def should_ignore_dir_name(dir_name):
+    return str(dir_name).strip().lower() in EXTRA_IGNORE_DIRS
+
+
+def should_ignore_path(file_path, repo_path=None):
+    """
+    判断文件是否应该从代码块切片中排除。
+    主要排除：第三方依赖、构建产物、隐藏缓存目录、超大生成文件。
+    """
+
+    try:
+        rel = os.path.relpath(file_path, repo_path) if repo_path else str(file_path)
+    except Exception:
+        rel = str(file_path)
+
+    rel_norm = rel.replace("\\", "/").lower()
+    parts = [part for part in rel_norm.split("/") if part]
+
+    for part in parts:
+        if part in EXTRA_IGNORE_DIRS:
+            return True
+
+    try:
+        if os.path.getsize(file_path) > MAX_CODE_FILE_BYTES_FOR_AI_BLOCKS:
+            return True
+    except Exception:
+        pass
+
+    return False
+
+
+def is_meaningful_code_block(block):
+    """
+    过滤过细、过短、低价值的代码块。
+    例如 Rust 里大量一行 const/static，数量很多但对理解 OS 主体价值很低。
+    """
+
+    if not block:
+        return False
+
+    content = str(block.get("content", "")).strip()
+    if not content:
+        return False
+
+    block_type = str(block.get("type", "")).lower()
+    line_count = len(content.splitlines())
+
+    if block_type in {"const", "static"} and line_count <= 1:
+        return False
+
+    if block_type in {"macro"} and line_count <= 1:
+        return False
+
+    if len(content) < 20 and block_type not in {"config"}:
+        return False
+
+    return True
+
 def get_line_number(content, index):
     """
     根据字符下标计算行号。
@@ -606,43 +680,20 @@ def split_code_content(file_path, content):
 
 def collect_code_blocks(repo_path, max_files=50, max_blocks=200):
     """
-    扫描仓库并收集代码块
+    扫描仓库并收集代码块。
 
-    当前函数保留用于调试
+    当前函数主要保留用于调试。正式 full 模式使用 collect_all_code_blocks。
     """
-
-    ignore_dirs = {
-       ".git",
-        "__pycache__",
-        ".idea",
-        ".vscode",
-        "node_modules",
-        ".venv",
-        "venv",
-        "target",
-        "build",
-        "dist",
-        "out",
-        ".cargo",
-
-        "code_blocks",
-        "function_analysis",
-        "call_graph",
-        "module_summary",
-        "repo_profiles",
-        "reports",
-        "history_knowledge_base",
-    }
 
     code_files = []
 
     for current_path, dirs, files in os.walk(repo_path):
-        dirs[:] = [d for d in dirs if d not in ignore_dirs]
+        dirs[:] = [d for d in dirs if not should_ignore_dir_name(d)]
 
         for file_name in files:
             file_path = os.path.join(current_path, file_name)
 
-            if is_code_file(file_path):
+            if is_code_file(file_path) and not should_ignore_path(file_path, repo_path):
                 code_files.append(file_path)
 
     code_files.sort()
@@ -664,22 +715,24 @@ def collect_code_blocks(repo_path, max_files=50, max_blocks=200):
 
         scanned_files += 1
 
+        score_info = get_file_score_info(file_path, repo_path)
+        file_score = score_info.get("score", 0)
+
         for block in blocks:
+            if not is_meaningful_code_block(block):
+                continue
+
             all_blocks.append(
                 {
-                    all_blocks.append(
-                        {
-                            "file_path": file_info["relative_path"],
-                            "file_score": file_info["score"],
-                            "language": block.get("language", detect_language(file_path)),
-                            "parser": block.get("parser", "regex"),
-                            "start_line": block.get("start_line"),
-                            "end_line": block.get("end_line"),
-                            "type": block["type"],
-                            "name": block["name"],
-                            "content": block["content"]
-                        }
-)
+                    "file_path": relative_path,
+                    "file_score": file_score,
+                    "language": block.get("language", detect_language(file_path)),
+                    "parser": block.get("parser", "regex"),
+                    "start_line": block.get("start_line"),
+                    "end_line": block.get("end_line"),
+                    "type": block["type"],
+                    "name": block["name"],
+                    "content": block["content"]
                 }
             )
 
@@ -687,7 +740,6 @@ def collect_code_blocks(repo_path, max_files=50, max_blocks=200):
                 return all_blocks
 
     return all_blocks
-
 
 def collect_code_blocks_from_scored_files(repo_path, max_files=30, max_blocks=200):
     """
@@ -710,6 +762,16 @@ def collect_code_blocks_from_scored_files(repo_path, max_files=30, max_blocks=20
         "dist",
         "out",
         ".cargo",
+        "vendor",
+        "vendors",
+        "third_party",
+        "third-party",
+        "thirdparty",
+        "deps",
+        "dependency",
+        "dependencies",
+        "packages",
+        "registry",
 
         "code_blocks",
         "function_analysis",
@@ -723,12 +785,15 @@ def collect_code_blocks_from_scored_files(repo_path, max_files=30, max_blocks=20
     scored_files = []
 
     for current_path, dirs, files in os.walk(repo_path):
-        dirs[:] = [d for d in dirs if d not in ignore_dirs]
+        dirs[:] = [d for d in dirs if d not in ignore_dirs and not should_ignore_dir_name(d)]
 
         for file_name in files:
             file_path = os.path.join(current_path, file_name)
 
             if not is_code_file(file_path):
+                continue
+
+            if should_ignore_path(file_path, repo_path):
                 continue
 
             score_info = get_file_score_info(file_path, repo_path)
@@ -761,6 +826,9 @@ def collect_code_blocks_from_scored_files(repo_path, max_files=30, max_blocks=20
         blocks = split_code_content(file_path, content)
 
         for block in blocks:
+            if not is_meaningful_code_block(block):
+                continue
+
             all_blocks.append(
                 {
                     "file_path": file_info["relative_path"],
@@ -803,6 +871,16 @@ def collect_all_code_blocks(repo_path, max_blocks=None):
         "dist",
         "out",
         ".cargo",
+        "vendor",
+        "vendors",
+        "third_party",
+        "third-party",
+        "thirdparty",
+        "deps",
+        "dependency",
+        "dependencies",
+        "packages",
+        "registry",
 
         "code_blocks",
         "function_analysis",
@@ -816,12 +894,12 @@ def collect_all_code_blocks(repo_path, max_blocks=None):
     code_files = []
 
     for current_path, dirs, files in os.walk(repo_path):
-        dirs[:] = [d for d in dirs if d not in ignore_dirs]
+        dirs[:] = [d for d in dirs if d not in ignore_dirs and not should_ignore_dir_name(d)]
 
         for file_name in files:
             file_path = os.path.join(current_path, file_name)
 
-            if is_code_file(file_path):
+            if is_code_file(file_path) and not should_ignore_path(file_path, repo_path):
                 code_files.append(file_path)
 
     scored_files = []
@@ -852,6 +930,9 @@ def collect_all_code_blocks(repo_path, max_blocks=None):
         blocks = split_code_content(file_path, content)
 
         for block in blocks:
+            if not is_meaningful_code_block(block):
+                continue
+
             all_blocks.append(
                 {
                     "file_path": file_info["relative_path"],

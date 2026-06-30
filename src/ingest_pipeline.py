@@ -18,13 +18,87 @@ def get_repo_name(repo_path):
     repo_path = os.path.normpath(repo_path)
     return os.path.basename(repo_path)
 
+def resolve_ai_block_budget(total_blocks, max_blocks, profile_type="history", analysis_mode="full"):
+    """
+    根据仓库代码块总量，动态决定 AI 实际分析多少个代码块。
+
+    max_blocks:
+    - None: 全量 AI 分析
+    - "auto": 动态预算
+    - int: 固定分析数量
+
+    设计目标：
+    - 小仓库尽量全量，避免漏掉核心逻辑。
+    - 中型仓库保证足够覆盖核心 OS 模块。
+    - 大型仓库按比例增加预算，避免 5000 个代码块仍只分析 1000 个。
+
+    典型效果：
+    - 3000 个代码块：约分析 1200 个
+    - 5000 个代码块：约分析 3000 个
+    """
+
+    try:
+        total_blocks = int(total_blocks)
+    except Exception:
+        total_blocks = 0
+
+    if total_blocks <= 0:
+        return 0, "empty"
+
+    # 深度最终 / 手动 all：真正全量。
+    if max_blocks is None:
+        return total_blocks, "all"
+
+    # 手动固定数字：尊重用户输入。
+    if isinstance(max_blocks, int):
+        return min(total_blocks, max_blocks), "fixed"
+
+    text = str(max_blocks).strip().lower()
+
+    if text in {"all", "full", "none", "全部", "全量"}:
+        return total_blocks, "all"
+
+    if text not in {"auto", "dynamic", "正式", "正式入库"}:
+        try:
+            value = int(text)
+            return min(total_blocks, value), "fixed"
+        except Exception:
+            pass
+
+    # auto 动态预算：正式入库默认走这里。
+    if total_blocks <= 800:
+        budget = total_blocks
+    elif total_blocks <= 1500:
+        budget = max(800, int(total_blocks * 0.75))
+    elif total_blocks <= 3000:
+        # 3000 个代码块约分析 1200 个。
+        budget = max(1000, int(total_blocks * 0.40))
+    elif total_blocks <= 5000:
+        # 5000 个代码块约分析 3000 个。
+        budget = int(total_blocks * 0.60)
+    elif total_blocks <= 8000:
+        budget = int(total_blocks * 0.55)
+    else:
+        # 超大仓库仍给较高预算，但防止正式入库无限拖慢。
+        budget = min(8000, int(total_blocks * 0.50))
+
+    budget = max(1, min(total_blocks, budget))
+    return budget, "auto"
+
+
+def format_budget_value(value):
+    if value is None:
+        return "all"
+    return str(value)
+
 
 def run_repo_analysis_pipeline(
     repo_path,
     ask_ai_once,
-    max_blocks=20,
+    max_blocks="auto",
     profile_type="history",
-    analysis_mode="quick"
+    analysis_mode="quick",
+    max_workers=8
 ):
     """
     一键分析一个仓库。
@@ -52,10 +126,11 @@ def run_repo_analysis_pipeline(
     # 1. 代码切片
     if analysis_mode == "full":
         print("步骤 1/5：正在进行 full 模式全仓库代码切片...")
+        print("说明：full 模式会先收集全仓代码块，再由动态预算决定 AI 实际分析数量。")
 
         blocks = collect_all_code_blocks(
             repo_path=repo_path,
-            max_blocks=5000
+            max_blocks=None
         )
     else:
         print("步骤 1/5：正在进行 quick 模式高分文件优先代码切片...")
@@ -73,8 +148,24 @@ def run_repo_analysis_pipeline(
 
     generated_files["code_blocks_path"] = code_blocks_path
 
-    print(f"代码切片完成，代码块数量：{len(blocks)}")
+    total_code_blocks = len(blocks)
+    ai_max_blocks, budget_mode = resolve_ai_block_budget(
+        total_blocks=total_code_blocks,
+        max_blocks=max_blocks,
+        profile_type=profile_type,
+        analysis_mode=analysis_mode
+    )
+
+    generated_files["total_code_blocks"] = total_code_blocks
+    generated_files["requested_max_blocks"] = format_budget_value(max_blocks)
+    generated_files["resolved_ai_max_blocks"] = ai_max_blocks
+    generated_files["budget_mode"] = budget_mode
+    generated_files["max_workers"] = max_workers
+
+    print(f"代码切片完成，代码块数量：{total_code_blocks}")
     print(f"保存路径：{code_blocks_path}")
+    print(f"AI 分析预算模式：{budget_mode}")
+    print(f"AI 实际计划分析数量：{ai_max_blocks}/{total_code_blocks}")
 
     # 2. AI 函数级理解
     print()
@@ -83,13 +174,13 @@ def run_repo_analysis_pipeline(
     repo_name_from_blocks, analysis_results = analyze_code_blocks_file_concurrent(
         blocks_file_path=code_blocks_path,
         ask_ai_once=ask_ai_once,
-        max_blocks=max_blocks,
+        max_blocks=ai_max_blocks,
         resume=True,
-        save_every=5,
-        max_workers=3
+        save_every=25,
+        max_workers=max_workers
     )
 
-    if max_blocks is None:
+    if budget_mode == "all":
         function_suffix = "function_analysis_full"
     else:
         function_suffix = "function_analysis"
@@ -109,7 +200,7 @@ def run_repo_analysis_pipeline(
     print()
     print("步骤 3/5：正在生成增强版函数调用关系图...")
 
-    if max_blocks is None:
+    if budget_mode == "all":
         print("正在生成 full 版本函数调用关系图...")
 
         call_graph = build_full_call_graph(
@@ -230,7 +321,7 @@ def run_repo_analysis_pipeline(
     return generated_files
 
 
-def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="quick"):
+def ingest_history_repo(repo_path, ask_ai_once, max_blocks="auto", analysis_mode="full", max_workers=8):
     """
     一键入库历史仓库。
 
@@ -246,7 +337,8 @@ def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="qu
         ask_ai_once=ask_ai_once,
         max_blocks=max_blocks,
         profile_type="history",
-        analysis_mode=analysis_mode
+        analysis_mode=analysis_mode,
+        max_workers=max_workers
     )
 
     print()
@@ -282,7 +374,7 @@ def ingest_history_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="qu
     return generated_files
 
 
-def analyze_target_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="quick"):
+def analyze_target_repo(repo_path, ask_ai_once, max_blocks="auto", analysis_mode="full", max_workers=8):
     """
     一键分析新提交仓库。
 
@@ -294,7 +386,8 @@ def analyze_target_repo(repo_path, ask_ai_once, max_blocks=20, analysis_mode="qu
         ask_ai_once=ask_ai_once,
         max_blocks=max_blocks,
         profile_type="target",
-        analysis_mode=analysis_mode
+        analysis_mode=analysis_mode,
+        max_workers=max_workers
     )
 
     return generated_files

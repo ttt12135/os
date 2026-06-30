@@ -30,6 +30,8 @@ from src.website_exporter import export_website_data,format_website_export_previ
 from src.implementation_quality_evaluator import evaluate_implementation_quality,save_implementation_quality_result,save_implementation_quality_markdown,format_implementation_quality_preview
 from src.repo_quality_ranker import rank_repositories_by_quality,format_repository_quality_ranking_preview
 from src.repo_url_workflow import import_repo_from_url,format_repo_url_import_preview
+from src.simple_import_ui import run_simple_import_flow
+
 
 #读取.env文件
 load_dotenv()
@@ -76,7 +78,7 @@ MAIN_COMMANDS = {
     "final_analyze_hybrid": "一键执行结构分析、RAG 构建、Hybrid 检索、AI 对比、评分和最终报告",
     "implementation_quality": "评估单个 OS 仓库的真实实现质量，识别核心模块是否真正实现、是否存在空壳/TODO/关键链路缺失",
     "import_repo_url": "输入 Git 仓库地址，自动 clone 到本地，并按 history/target 类型完成分析、入库和来源记录保存",
-    "rank_repo_quality": "对历史库或目标库中的多个 OS 仓库进行真实实现质量排名",    
+    "rank_repo_quality": "对历史库或目标库中的多个 OS 仓库按五维综合评分排名，真实实现质量作为辅助指标展示",
     "export_site_data": "导出前端网站所需的作品数据、报告数据和统计数据"
 }
 
@@ -94,7 +96,7 @@ CORE_COMMANDS = {
     "3": {
         "command": "rank_repo_quality",
         "title": "生成仓库质量排名",
-        "desc": "根据真实实现质量、结构复杂度、核心链路和工程证据对仓库排序。"
+        "desc": "根据 score_full 五维综合评分排序，并展示真实实现质量、核心链路和工程证据辅助指标。"
     },
     "4": {
         "command": "workflow",
@@ -236,7 +238,7 @@ def print_workflow_guide():
     print()
     print("三、生成仓库质量排名")
     print("  运行：3 或 rank_repo_quality")
-    print("  作用：根据真实实现质量对 history 或 target 仓库进行排序。")
+    print("  作用：根据 score_full 五维综合评分对 history 或 target 仓库排序，真实实现质量仅作辅助展示。")
     print()
     print("四、导出网站展示数据")
     print("  运行：2 或 export_site_data")
@@ -988,6 +990,14 @@ def parse_max_blocks_input(max_blocks_text, default_value=20):
 
     return int(text)
 
+def print_warning():
+    print("\n" + "=" * 70)
+    print("⚠️  系统重要提示")
+    print("当前前端网站已独立部署（Vercel），不参与比赛源码运行流程")
+    print("请不要使用导出前端相关指令")
+    print("否则可能写入错误目录或覆盖历史数据")
+    print("=" * 70 + "\n")
+
 def main():
 
     print_main_menu()
@@ -1289,60 +1299,7 @@ def main():
             print("-" * 30)
 
         elif command == "import_repo_url":
-            repo_url = input("请输入 Git 仓库地址: ").strip()
-
-            scope = input("请选择仓库类型 history/target，直接回车默认 target: ").strip().lower()
-            if scope == "":
-                scope = "target"
-
-            repo_name = input("请输入本地仓库名，直接回车则根据 URL 自动推断: ").strip()
-            if repo_name == "":
-                repo_name = None
-
-            team_name = input("请输入队伍名，直接回车默认使用仓库名: ").strip()
-            school = input("请输入学校名，直接回车默认 unknown: ").strip()
-
-            year = input("请输入年份，history 可回车，target 默认 2026: ").strip()
-            track = input("请输入赛道，直接回车默认 kernel: ").strip()
-            if track == "":
-                track = "kernel"
-
-            clone_strategy = input("clone 策略 skip/update/replace，直接回车默认 skip: ").strip().lower()
-            if clone_strategy == "":
-                clone_strategy = "skip"
-
-            analysis_mode = input("请选择分析模式 quick/full，直接回车默认 quick: ").strip().lower()
-            if analysis_mode == "":
-                analysis_mode = "quick"
-
-            max_blocks_text = input("请输入 AI 分析代码块数量 max_blocks，输入 all 表示全部分析，直接回车默认 50: ")
-            max_blocks = parse_max_blocks_input(max_blocks_text, default_value=50)
-
-            run_full_target_pipeline = True
-
-            if scope == "target":
-                full_text = input("是否对 target 执行 final_analyze_hybrid 完整流程？y/n，直接回车默认 y: ").strip().lower()
-                run_full_target_pipeline = full_text in {"", "y", "yes", "1", "true"}
-
-            result = import_repo_from_url(
-                repo_url=repo_url,
-                scope=scope,
-                ask_ai_once=ask_ai_once,
-                repo_name=repo_name,
-                team_name=team_name,
-                school=school,
-                year=year,
-                track=track,
-                clone_strategy=clone_strategy,
-                analysis_mode=analysis_mode,
-                max_blocks=max_blocks,
-                run_full_target_pipeline=run_full_target_pipeline,
-                rebuild_history_kb=True,
-                embedding_backend="hash"
-            )
-
-            print()
-            print(format_repo_url_import_preview(result))
+            result = run_simple_import_flow(ask_ai_once=ask_ai_once)
             print("-" * 30)
 
         elif command == "batch_ingest_history":
@@ -1554,7 +1511,8 @@ def main():
                     repo_profile_path=path_map["repo_profile_path"],
                     retrieval_result_path=path_map["retrieval_result_path"],
                     comparison_result_path=path_map["comparison_result_path"],
-                    score_result_path=path_map["score_result_path"]
+                    score_result_path=path_map["score_result_path"],
+                    ask_ai_once=ask_ai_once
                 )
 
                 report_path = save_final_report_full(report_result)

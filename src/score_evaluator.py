@@ -461,7 +461,7 @@ def normalize_score_result(score_result, repo_name, reference_scores=None):
     return {
         "repo_name": score_result.get("repo_name", repo_name),
         "overall_score": overall_score,
-        "score_level": score_result.get("score_level", score_level),
+        "score_level": score_level,
         "scores": normalized_scores,
         "strengths": score_result.get("strengths", []),
         "weaknesses": score_result.get("weaknesses", []),
