@@ -1,0 +1,1898 @@
+{
+  "repo_name": "T2026100669911340",
+  "team_name": "T2026100669911340",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026100669911340-2049",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026100669911340-2049",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "assembly",
+    "makefile",
+    "linker_script"
+  ],
+  "core_modules": [
+    "driver",
+    "unknown",
+    "filesystem",
+    "syscall",
+    "memory"
+  ],
+  "function_count": 855,
+  "node_count": 855,
+  "edge_count": 2279,
+  "internal_edge_count": 693,
+  "external_edge_count": 1586,
+  "module_count": 17,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.75,
+    "build": 0.75,
+    "driver": 1.0,
+    "elf_loader": 0.18,
+    "filesystem": 1.0,
+    "interrupt": 0.93,
+    "ipc": 0.15,
+    "loader": 0.08,
+    "memory": 1.0,
+    "network": 0.38,
+    "process": 1.0,
+    "scheduler": 0.13,
+    "security": 0.18,
+    "syscall": 1.0,
+    "test": 0.18,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "driver",
+      "module_weight": 0.6044,
+      "completeness": 1.0,
+      "final_score": 0.7626
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.1671,
+      "completeness": 1.0,
+      "final_score": 0.5003
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.0474,
+      "completeness": 1.0,
+      "final_score": 0.4284
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.0451,
+      "completeness": 1.0,
+      "final_score": 0.4271
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0359,
+      "completeness": 1.0,
+      "final_score": 0.4215
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 12,
+      "outgoing_edge_count": 37,
+      "internal_edge_count": 30,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.8108,
+      "external_call_ratio": 0.1892,
+      "module_weight": 0.0149,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 10,
+      "outgoing_edge_count": 36,
+      "internal_edge_count": 5,
+      "external_edge_count": 31,
+      "internal_call_ratio": 0.1389,
+      "external_call_ratio": 0.8611,
+      "module_weight": 0.0133,
+      "files": [
+        "Syscall\\rgb_led.c",
+        "Syscall\\sec_core.c",
+        "Syscall\\stm32f10x_it.c",
+        "exe\\secret_net0\\protocol.c",
+        "exe\\secret_net1\\protocol.c",
+        "exe\\work_net0\\protocol.c",
+        "src\\arch\\loongarch\\linker.lds",
+        "src\\arch\\riscv\\linker.lds",
+        "src\\kernel\\string.c",
+        "src\\kernel\\test_runner.c"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "Proto_BuildHandshake",
+          "normalized_name": "Proto_BuildHandshake",
+          "file_path": "exe\\secret_net1\\protocol.c",
+          "language": "c",
+          "start_line": "63",
+          "end_line": "94",
+          "outgoing_call_count": 18,
+          "summary": "这个函数构建一个安全握手消息，用于网络协议中的身份验证或密钥协商。它从会话上下文中取出两个 nonce（nonce_s 和 nonce_h），拼接后使用 MK_CTRL 密钥计算 HMAC-SHA256 标签，然后将 nonce_h 和 HMAC 标签打包成输出数据。"
+        },
+        {
+          "name": "Proto_BuildHandshake",
+          "normalized_name": "Proto_BuildHandshake",
+          "file_path": "exe\\secret_net0\\protocol.c",
+          "language": "c",
+          "start_line": "63",
+          "end_line": "94",
+          "outgoing_call_count": 18,
+          "summary": "该函数用于构建通信握手数据包，将两个 nonce（nonce_s 和 nonce_h）拼接后使用 HMAC-SHA256 算法进行完整性校验，最终输出 nonce_h 和 HMAC 标签的组合载荷。"
+        },
+        {
+          "name": "Proto_BuildHandshake",
+          "normalized_name": "Proto_BuildHandshake",
+          "file_path": "exe\\work_net0\\protocol.c",
+          "language": "c",
+          "start_line": "63",
+          "end_line": "94",
+          "outgoing_call_count": 18,
+          "summary": "构建握手消息载荷，包含对端nonce_h和基于MK_CTRL密钥计算的HMAC-SHA256认证标签，用于协议握手阶段验证对方身份或完整性。"
+        },
+        {
+          "name": "linker.lds",
+          "normalized_name": "lds",
+          "file_path": "src\\arch\\riscv\\linker.lds",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "56",
+          "outgoing_call_count": 9,
+          "summary": "这是 uuOS 内核的 RISC-V 64 位链接器脚本，负责定义内核各段（.text、.rodata、.data、.bss）的布局，设定内核起始地址为 0x80200000（OpenSBI 默认加载地址），预留堆区域，并标记用户态内存起始点，同时丢弃调试信息等不需要的段。"
+        },
+        {
+          "name": "linker.lds",
+          "normalized_name": "lds",
+          "file_path": "src\\arch\\loongarch\\linker.lds",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "52",
+          "outgoing_call_count": 9,
+          "summary": "这个代码块是用于 LoongArch 64 位架构内核的链接器脚本，定义了内核映像的内存布局，包括代码段、只读数据段、数据段、BSS 段、堆区域以及用户内存区域的起始地址，并指定了入口点为 _start。"
+        },
+        {
+          "name": "extract_group_name",
+          "normalized_name": "extract_group_name",
+          "file_path": "src\\kernel\\test_runner.c",
+          "language": "c",
+          "start_line": "28",
+          "end_line": "47",
+          "outgoing_call_count": 4,
+          "summary": "从测试脚本文件名中提取分组名称，去除后缀 '_testcode.sh' 或 '.sh'，并复制到指定缓冲区。"
+        },
+        {
+          "name": "RGB_BlinkN",
+          "normalized_name": "RGB_BlinkN",
+          "file_path": "Syscall\\rgb_led.c",
+          "language": "c",
+          "start_line": "221",
+          "end_line": "230",
+          "outgoing_call_count": 2,
+          "summary": "控制RGB LED闪烁指定次数，每次闪烁包括点亮和熄灭，点亮和熄灭的持续时间分别由参数ms_on和ms_off指定，并通过延时循环实现时间控制。"
+        },
+        {
+          "name": "Kernel_BlinkN",
+          "normalized_name": "Kernel_BlinkN",
+          "file_path": "Syscall\\stm32f10x_it.c",
+          "language": "c",
+          "start_line": "163",
+          "end_line": "166",
+          "outgoing_call_count": 1,
+          "summary": "该函数用于驱动RGB LED闪烁指定次数，通过调用RGB_BlinkN实现，参数传递了闪烁次数、各颜色持续时间和亮度等级。"
+        },
+        {
+          "name": "Kernel_PanicBlink",
+          "normalized_name": "Kernel_PanicBlink",
+          "file_path": "Syscall\\stm32f10x_it.c",
+          "language": "c",
+          "start_line": "314",
+          "end_line": "317",
+          "outgoing_call_count": 1,
+          "summary": "该函数作为内核恐慌（panic）时调用的行为函数，内部仅调用RGB_PanicLoop()实现LED闪烁提示。"
+        },
+        {
+          "name": "SecCore_BuildAuditNACK",
+          "normalized_name": "SecCore_BuildAuditNACK",
+          "file_path": "Syscall\\sec_core.c",
+          "language": "c",
+          "start_line": "578",
+          "end_line": "583",
+          "outgoing_call_count": 0,
+          "summary": "构建一个审计NACK（否定应答）消息包，填充当前Ferry状态并预留服务ID字段占位。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 501,
+      "outgoing_edge_count": 1440,
+      "internal_edge_count": 262,
+      "external_edge_count": 1178,
+      "internal_call_ratio": 0.1819,
+      "external_call_ratio": 0.8181,
+      "module_weight": 0.6044,
+      "files": [
+        "Libary\\stm32f10x_adc.c",
+        "Libary\\stm32f10x_bkp.c",
+        "Libary\\stm32f10x_can.c",
+        "Libary\\stm32f10x_cec.c",
+        "Libary\\stm32f10x_crc.c",
+        "Libary\\stm32f10x_dac.c",
+        "Libary\\stm32f10x_dbgmcu.c",
+        "Libary\\stm32f10x_dma.c",
+        "Libary\\stm32f10x_exti.c",
+        "Libary\\stm32f10x_flash.c",
+        "Libary\\stm32f10x_fsmc.c",
+        "Libary\\stm32f10x_fsmc.h",
+        "Libary\\stm32f10x_gpio.c",
+        "Libary\\stm32f10x_i2c.c",
+        "Libary\\stm32f10x_iwdg.c",
+        "Libary\\stm32f10x_pwr.c",
+        "Libary\\stm32f10x_rcc.c",
+        "Libary\\stm32f10x_rtc.c",
+        "Libary\\stm32f10x_sdio.c",
+        "Libary\\stm32f10x_spi.c",
+        "Libary\\stm32f10x_tim.c",
+        "Syscall\rgb_led.c",
+        "Syscall\\aes_sw.c",
+        "Syscall\\ch340_comm.c",
+        "Syscall\\rgb_led.c",
+        "Syscall\\stm32f10x_it.c",
+        "Syscall\\usb_hid.c",
+        "exe\\secret_net0\\crypto_win.c",
+        "exe\\secret_net0\\hid_comm.c",
+        "exe\\secret_net0\\main.c",
+        "exe\\secret_net0\\protocol.c",
+        "exe\\secret_net0\\serial_comm.c",
+        "exe\\secret_net1\\crypto_win.c",
+        "exe\\secret_net1\\main.c",
+        "exe\\secret_net1\\protocol.c",
+        "exe\\secret_net1\\serial_comm.c",
+        "exe\\work_net0\\crypto_win.c",
+        "exe\\work_net0\\main.c",
+        "exe\\work_net0\\protocol.c",
+        "exe\\work_net0\\serial_comm.c",
+        "src\\kernel\\alloc.c",
+        "src\\kernel\\ext4.c",
+        "src\\kernel\\ext4.h",
+        "src\\kernel\\printf.c",
+        "src\\kernel\\sbi.c",
+        "src\\kernel\\sbi.h",
+        "src\\kernel\\uart.c",
+        "src\\kernel\\virtio_blk.c",
+        "src\\kernel\\virtio_blk.h"
+      ],
+      "file_count": 49,
+      "core_functions": [
+        {
+          "name": "do_handshake",
+          "normalized_name": "do_handshake",
+          "file_path": "exe\\work_net0\\main.c",
+          "language": "c",
+          "start_line": "61",
+          "end_line": "107",
+          "outgoing_call_count": 42,
+          "summary": "该函数实现主机端与STM32设备之间的握手协议，包括接收STM32的Hello帧、发送带有HMAC握手数据的Frame、等待ACK验证、丢弃可能的旧Hello帧，并最终衍生会话密钥。"
+        },
+        {
+          "name": "do_handshake",
+          "normalized_name": "do_handshake",
+          "file_path": "exe\\secret_net1\\main.c",
+          "language": "c",
+          "start_line": "57",
+          "end_line": "99",
+          "outgoing_call_count": 42,
+          "summary": "执行与STM32设备之间的握手协议，包括接收HELLO、生成随机数、发送HANDSHAKE帧、等待ACK并派生会话密钥SK1'。"
+        },
+        {
+          "name": "Crypto_AES_GCM_Encrypt",
+          "normalized_name": "Crypto_AES_GCM_Encrypt",
+          "file_path": "exe\\secret_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "107",
+          "end_line": "165",
+          "outgoing_call_count": 24,
+          "summary": "该函数使用AES-GCM模式对明文进行认证加密，生成密文并附加随机IV和认证标签，最终输出为 IV || CT || TAG 格式。"
+        },
+        {
+          "name": "Crypto_AES_GCM_Decrypt",
+          "normalized_name": "Crypto_AES_GCM_Decrypt",
+          "file_path": "exe\\secret_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "170",
+          "end_line": "213",
+          "outgoing_call_count": 21,
+          "summary": "使用Windows BCrypt API进行AES-GCM解密，验证密钥长度和密文长度，提取IV和认证标签，执行解密并返回解密后的明文长度。"
+        },
+        {
+          "name": "FSMC_NORSRAMInit",
+          "normalized_name": "FSMC_NORSRAMInit",
+          "file_path": "Libary\\stm32f10x_fsmc.c",
+          "language": "c",
+          "start_line": "177",
+          "end_line": "253",
+          "outgoing_call_count": 21,
+          "summary": "初始化FSMC的NOR/SRAM控制器，配置Bank的控制寄存器和时序寄存器，并根据是否启用扩展模式设置写入时序。"
+        },
+        {
+          "name": "Crypto_Init",
+          "normalized_name": "Crypto_Init",
+          "file_path": "exe\\work_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "30",
+          "end_line": "64",
+          "outgoing_call_count": 18,
+          "summary": "初始化 Windows 加密库中的三个算法提供者：SHA256（支持 HMAC）、AES-GCM 和随机数生成器（RNG），分别通过 BCrypt 函数打开句柄并配置属性，若其中任一步骤失败则打印错误信息并返回负状态码。"
+        },
+        {
+          "name": "Crypto_HMAC_SHA256",
+          "normalized_name": "Crypto_HMAC_SHA256",
+          "file_path": "exe\\secret_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "100",
+          "outgoing_call_count": 18,
+          "summary": "该函数使用Windows BCrypt API计算数据的HMAC-SHA256值。它首先创建一个带密钥的哈希句柄，然后处理数据，最后输出哈希结果。"
+        },
+        {
+          "name": "Crypto_HMAC_SHA256",
+          "normalized_name": "Crypto_HMAC_SHA256",
+          "file_path": "exe\\work_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "100",
+          "outgoing_call_count": 18,
+          "summary": "使用Windows BCrypt API创建HMAC-SHA256哈希，对给定密钥和数据进行哈希计算，输出摘要。"
+        },
+        {
+          "name": "TIM_ICInit",
+          "normalized_name": "TIM_ICInit",
+          "file_path": "Libary\\stm32f10x_tim.c",
+          "language": "c",
+          "start_line": "588",
+          "end_line": "645",
+          "outgoing_call_count": 18,
+          "summary": "这个函数用于初始化STM32定时器的输入捕获通道，根据通道号配置极性、选择、滤波器和预分频器。"
+        },
+        {
+          "name": "RGB_Init",
+          "normalized_name": "RGB_Init",
+          "file_path": "Syscall\\rgb_led.c",
+          "language": "c",
+          "start_line": "86",
+          "end_line": "134",
+          "outgoing_call_count": 15,
+          "summary": "初始化RGB LED的PWM控制，配置GPIO为复用推挽输出，定时器TIM2设置为1kHz时基，三个通道输出PWM Mode 1，启动定时器并初始设置LED全灭。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "elf_loader": {
+      "module_name": "elf_loader",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 1,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0009,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 46,
+      "outgoing_edge_count": 86,
+      "internal_edge_count": 75,
+      "external_edge_count": 11,
+      "internal_call_ratio": 0.8721,
+      "external_call_ratio": 0.1279,
+      "module_weight": 0.0474,
+      "files": [
+        "Libary\\stm32f10x_bkp.c",
+        "Libary\\stm32f10x_exti.c",
+        "Libary\\stm32f10x_flash.c",
+        "Libary\\stm32f10x_fsmc.c",
+        "Libary\\stm32f10x_gpio.c",
+        "Libary\\stm32f10x_i2c.c",
+        "Libary\\stm32f10x_iwdg.c",
+        "Libary\\stm32f10x_sdio.c",
+        "Libary\\stm32f10x_spi.c",
+        "Makefile",
+        "Syscall\\rgb_led.c",
+        "Syscall\\sec_core.c",
+        "Syscall\\stm32f10x_it.c",
+        "Syscall\\usb_hid.c",
+        "Tests\\test_fsm.c",
+        "exe\\secret_net0\\Makefile",
+        "exe\\secret_net0\\hid_comm.c",
+        "exe\\secret_net0\\serial_comm.c",
+        "exe\\secret_net1\\Makefile",
+        "exe\\secret_net1\\serial_comm.c",
+        "exe\\work_net0\\Makefile",
+        "exe\\work_net0\\serial_comm.c",
+        "src\\kernel\\elf_loader.c",
+        "src\\kernel\\ext4.c",
+        "src\\kernel\\ext4.h",
+        "src\\kernel\\virtio_blk.c"
+      ],
+      "file_count": 26,
+      "core_functions": [
+        {
+          "name": "Serial_OpenComPort",
+          "normalized_name": "Serial_OpenComPort",
+          "file_path": "exe\\secret_net1\\serial_comm.c",
+          "language": "c",
+          "start_line": "115",
+          "end_line": "183",
+          "outgoing_call_count": 45,
+          "summary": "这个代码块是一个用于打开并配置Windows串口的函数。它构造NT设备路径，调用CreateFileA打开串口，然后配置串口参数（波特率115200、8数据位、无校验、1停止位）并通过DCB结构设置流控制，最后设置读写超时并清空缓冲区，返回串口句柄。"
+        },
+        {
+          "name": "Serial_OpenComPort",
+          "normalized_name": "Serial_OpenComPort",
+          "file_path": "exe\\work_net0\\serial_comm.c",
+          "language": "c",
+          "start_line": "115",
+          "end_line": "183",
+          "outgoing_call_count": 45,
+          "summary": "打开并配置一个串行通信端口，使用115200-8-N-1参数，设置超时和缓冲区清理"
+        },
+        {
+          "name": "Serial_OpenComPort",
+          "normalized_name": "Serial_OpenComPort",
+          "file_path": "exe\\secret_net0\\serial_comm.c",
+          "language": "c",
+          "start_line": "115",
+          "end_line": "183",
+          "outgoing_call_count": 45,
+          "summary": "打开一个串行通信端口，配置为115200-8-N-1模式，设置超时并清空缓冲区。"
+        },
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "118",
+          "outgoing_call_count": 20,
+          "summary": "这是一个用于构建操作系统内核的Makefile，主要目标是为RISC-V和LoongArch两种架构分别生成内核ELF文件（kernel-rv和kernel-la），以及一个可选的EXT4磁盘镜像（disk.img）。它定义了交叉编译器、编译选项、源文件列表、构建规则和清理规则。"
+        },
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "exe\\secret_net0\\Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "56",
+          "outgoing_call_count": 20,
+          "summary": "这个代码块是用于构建 SecuFerry-OS 密网任务下发工具 MasterTask.exe 的 Makefile。它定义了使用 MinGW-w64 或 MSVC 编译器编译源代码并链接必要的加密库的规则，以及清理中间文件和目标文件的规则。"
+        },
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "exe\\secret_net1\\Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "11",
+          "outgoing_call_count": 20,
+          "summary": "该Makefile定义了构建目标MasterRecover.exe的编译规则：使用gcc编译main.c、serial_comm.c、crypto_win.c和protocol.c四个源文件，链接bcrypt库，并提供了清理规则。"
+        },
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "exe\\work_net0\\Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "17",
+          "outgoing_call_count": 20,
+          "summary": "定义并编译一个名为Agent.exe的目标程序，该程序由main.c、serial_comm.c、crypto_win.c和protocol.c组成，使用gcc编译器，链接bcrypt库，最终生成可执行文件并支持清理操作。"
+        },
+        {
+          "name": "Serial_OpenDevice",
+          "normalized_name": "Serial_OpenDevice",
+          "file_path": "exe\\work_net0\\serial_comm.c",
+          "language": "c",
+          "start_line": "77",
+          "end_line": "110",
+          "outgoing_call_count": 15,
+          "summary": "该函数用于打开串口设备。它首先扫描系统中的可用COM端口，如果没有找到任何COM端口则返回无效句柄并提示错误；如果找到端口，则列出所有可用端口，并自动选择编号最高的端口（通常是USB虚拟串口），然后调用Serial_OpenComPort函数打开该端口。"
+        },
+        {
+          "name": "Serial_OpenDevice",
+          "normalized_name": "Serial_OpenDevice",
+          "file_path": "exe\\secret_net1\\serial_comm.c",
+          "language": "c",
+          "start_line": "77",
+          "end_line": "110",
+          "outgoing_call_count": 15,
+          "summary": "打开串口设备：首先扫描系统中的COM端口，如果没有找到则报错返回无效句柄；如果找到，则列出所有可用端口，然后自动选择编号最高的端口（通常是USB虚拟串口）并尝试打开，同时提示用户可以手动指定。"
+        },
+        {
+          "name": "Serial_OpenDevice",
+          "normalized_name": "Serial_OpenDevice",
+          "file_path": "exe\\secret_net0\\serial_comm.c",
+          "language": "c",
+          "start_line": "77",
+          "end_line": "110",
+          "outgoing_call_count": 15,
+          "summary": "该函数扫描可用COM端口，自动选择编号最高的端口（通常为USB虚拟串口）打开，并返回端口句柄。若无可用端口则返回INVALID_HANDLE_VALUE并输出错误提示。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 39,
+      "outgoing_edge_count": 62,
+      "internal_edge_count": 14,
+      "external_edge_count": 48,
+      "internal_call_ratio": 0.2258,
+      "external_call_ratio": 0.7742,
+      "module_weight": 0.0382,
+      "files": [
+        "Libary\\misc.c",
+        "Libary\\stm32f10x_exti.c",
+        "Libary\\stm32f10x_gpio.c",
+        "Libary\\stm32f10x_rcc.c",
+        "Syscall\\ch340_comm.c",
+        "Syscall\\stm32f10x_it.c",
+        "exe\\secret_net0\\main.c",
+        "exe\\secret_net1\\main.c",
+        "exe\\work_net0\\main.c",
+        "src\\arch\\loongarch\\entry.S",
+        "src\\arch\\loongarch\\trap_entry.S",
+        "src\\arch\\riscv\\entry.S",
+        "src\\arch\\riscv\\trap_entry.S",
+        "src\\kernel\\proc.h",
+        "src\\kernel\\sbi.h",
+        "src\\kernel\\syscall.c"
+      ],
+      "file_count": 16,
+      "core_functions": [
+        {
+          "name": "sig_handler",
+          "normalized_name": "sig_handler",
+          "file_path": "exe\\work_net0\\main.c",
+          "language": "c",
+          "start_line": "43",
+          "end_line": "50",
+          "outgoing_call_count": 12,
+          "summary": "这是一个信号处理函数，专门用于捕获并响应 Ctrl+C (SIGINT) 信号。当用户按下 Ctrl+C 时，该函数会先打印清理提示信息，然后关闭设备句柄（保证硬件资源释放），接着执行加密模块的清理操作，最后以状态码 0 退出程序。"
+        },
+        {
+          "name": "sig_handler",
+          "normalized_name": "sig_handler",
+          "file_path": "exe\\secret_net0\\main.c",
+          "language": "c",
+          "start_line": "52",
+          "end_line": "62",
+          "outgoing_call_count": 12,
+          "summary": "信号处理函数，用于响应 Ctrl+C (SIGINT) 信号，执行清理操作：关闭串口设备、清理密码学资源，然后退出程序。"
+        },
+        {
+          "name": "sig_handler",
+          "normalized_name": "sig_handler",
+          "file_path": "exe\\secret_net1\\main.c",
+          "language": "c",
+          "start_line": "39",
+          "end_line": "46",
+          "outgoing_call_count": 12,
+          "summary": "捕获 SIGINT 信号（Ctrl+C），执行清理操作后退出程序。"
+        },
+        {
+          "name": "trap_handler",
+          "normalized_name": "trap_handler",
+          "file_path": "src\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "143",
+          "end_line": "206",
+          "outgoing_call_count": 8,
+          "summary": "处理RISCV陷阱（异常和中断），区分中断和异常，对于用户态ecall异常根据系统调用号分发执行，并更新返回值和pc。"
+        },
+        {
+          "name": "return_to_kernel",
+          "normalized_name": "return_to_kernel",
+          "file_path": "src\\arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": 215,
+          "end_line": 241,
+          "outgoing_call_count": 7,
+          "summary": "{\n  \"block_id\": \"block_16\",\n  \"file_path\": \"src\\\\arch\\\\riscv\\\\trap_entry.S\",\n  \"language\": \"assembly\",\n  \"parser\": \"regex\",\n  \"start_line\": \"215\",\n  \"end_line\": \"241\",\n  \"name\": \"return_to_kernel\",\n  \"type\": \"assembly_label\",\n  \"summary\": \"该代码块用于从用户态返回到内核态，恢复内核栈指针和返回地址，并设置S-mode特权级，然后执行sret指令跳转到指定地址。\",\n  \"logic_steps\": [\n    \"清除t0指向地址处的标志（清零，假设flag位置由t0指定）。\",\n    \"加载全局变量g_kernel_return_sp的值到栈指针sp，恢复内核栈。\",\n    \"加载全局变量g_kernel_return_ra的值到t0，并将其写入sepc寄存器，设置sret返回地址。\",\n    \"设置sstatus寄存器的SPP位（第8位）为1，表示sret后进入S-mode（内核态）。\",\n    \"清零sscratch寄存器，供内核后续重新设置。\",\n    \"执行sret指令，从当前特权级切换到S-mode，并跳转到sepc指定的地址。\"\n  ],\n  \"called_functions\": [],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"代码通过恢复内核栈、设置返回地址和特权级，最终sret进入S-mode，这符合从用户态陷入（trap）返回内核的典型流程。代码中没有调用其他函数，仅用到全局变量和CSR操作。\",\n  \"uncertainty\": \"低不确定性，但具体上下文（如g_kernel_return_sp和g_kernel_return_ra如何设置）未给出，仅基于代码本身逻辑。”]"
+        },
+        {
+          "name": "return_to_kernel",
+          "normalized_name": "return_to_kernel",
+          "file_path": "src\\arch\\loongarch\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "173",
+          "end_line": "193",
+          "outgoing_call_count": 7,
+          "summary": "该代码块实现从异常/中断返回内核态的功能，负责恢复内核堆栈指针、返回地址，设置处理器为内核权限级别（PLV=0），并执行 ERTN 指令完成返回，同时清除之前设置的标志。"
+        },
+        {
+          "name": "trap_vector",
+          "normalized_name": "trap_vector",
+          "file_path": "src\\arch\\loongarch\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "82",
+          "end_line": "138",
+          "outgoing_call_count": 6,
+          "summary": "该代码块是LoongArch架构中异常/中断向量的入口处理函数，负责保存CPU上下文、读取异常相关信息，并调用C语言函数 `trap_handler` 进行进一步处理。之后检查全局变量 `g_return_to_kernel` 来决定是否跳转到内核返回路径。"
+        },
+        {
+          "name": "trap_vector",
+          "normalized_name": "trap_vector",
+          "file_path": "src\\arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "94",
+          "end_line": "162",
+          "outgoing_call_count": 6,
+          "summary": "RISC-V 陷阱向量入口代码，负责从用户态进入内核态时的上下文保存（保存通用寄存器、异常信息），并调用 C 语言陷阱处理函数 trap_handler。之后根据全局变量 g_return_to_kernel 判断返回用户态还是内核态。"
+        },
+        {
+          "name": "trap_vector",
+          "normalized_name": "trap_vector",
+          "file_path": "src\\arch\\loongarch\\entry.S",
+          "language": "assembly",
+          "start_line": "37",
+          "end_line": "128",
+          "outgoing_call_count": 6,
+          "summary": "LoongArch 架构的中断/异常向量入口，保存所有通用寄存器、读取异常相关信息（CRMD、ERA、BADV），调用 C 语言陷阱处理函数 trap_handler，然后恢复寄存器并执行 ertn 返回。"
+        },
+        {
+          "name": "trap_vector",
+          "normalized_name": "trap_vector",
+          "file_path": "src\\arch\\riscv\\entry.S",
+          "language": "assembly",
+          "start_line": "42",
+          "end_line": "136",
+          "outgoing_call_count": 6,
+          "summary": "RISC-V架构的异常/中断向量处理例程，保存CPU寄存器状态，读取异常信息，调用C语言trap_handler函数处理，然后恢复寄存器并返回。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "Libary\\stm32f10x_can.c",
+        "Libary\\stm32f10x_cec.c",
+        "Libary\\stm32f10x_flash.c",
+        "Libary\\stm32f10x_gpio.c",
+        "Libary\\stm32f10x_i2c.c",
+        "Libary\\stm32f10x_rcc.c",
+        "Libary\\stm32f10x_sdio.c",
+        "Libary\\stm32f10x_tim.c"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "TIM_TIxExternalClockConfig",
+          "normalized_name": "TIM_TIxExternalClockConfig",
+          "file_path": "Libary\\stm32f10x_tim.c",
+          "language": "c",
+          "start_line": "1036",
+          "end_line": "1057",
+          "outgoing_call_count": 8,
+          "summary": "配置定时器的外部时钟输入，通过TI1或TI2引脚作为时钟源，设置极性、滤波，并选择触发源触发从模式外部时钟1。"
+        },
+        {
+          "name": "TIM_ETRClockMode1Config",
+          "normalized_name": "TIM_ETRClockMode1Config",
+          "file_path": "Libary\\stm32f10x_tim.c",
+          "language": "c",
+          "start_line": "1076",
+          "end_line": "1099",
+          "outgoing_call_count": 6,
+          "summary": "配置定时器的外部触发时钟模式1（ETR Clock Mode 1），通过设置SMCR寄存器的SMS位为外部时钟模式1、TS位为ETR触发选择，使定时器以外部触发信号作为时钟源。"
+        },
+        {
+          "name": "TIM_ETRClockMode2Config",
+          "normalized_name": "TIM_ETRClockMode2Config",
+          "file_path": "Libary\\stm32f10x_tim.c",
+          "language": "c",
+          "start_line": "1118",
+          "end_line": "1130",
+          "outgoing_call_count": 6,
+          "summary": "配置定时器外部触发(ETR)作为时钟源的模式2，包括设置ETR信号的预分频、极性和滤波器，并启用外部时钟模式2。"
+        },
+        {
+          "name": "TIM_ITRxExternalClockConfig",
+          "normalized_name": "TIM_ITRxExternalClockConfig",
+          "file_path": "Libary\\stm32f10x_tim.c",
+          "language": "c",
+          "start_line": "1009",
+          "end_line": "1018",
+          "outgoing_call_count": 4,
+          "summary": "配置定时器的ITRx外部时钟模式，通过选择内部触发源并将定时器设置为从模式外部时钟模式1，使定时器时钟来自内部触发输入。"
+        },
+        {
+          "name": "I2C_StretchClockCmd",
+          "normalized_name": "I2C_StretchClockCmd",
+          "file_path": "Libary\\stm32f10x_i2c.c",
+          "language": "c",
+          "start_line": "865",
+          "end_line": "880",
+          "outgoing_call_count": 3,
+          "summary": "启用或禁用指定的I2C外设的时钟拉伸功能。当NewState为DISABLE时，设置CR1寄存器的对应位以启用时钟拉伸；否则清除该位以禁用时钟拉伸。"
+        },
+        {
+          "name": "GPIO_PinLockConfig",
+          "normalized_name": "GPIO_PinLockConfig",
+          "file_path": "Libary\\stm32f10x_gpio.c",
+          "language": "c",
+          "start_line": "433",
+          "end_line": "452",
+          "outgoing_call_count": 3,
+          "summary": "该函数实现GPIO引脚配置锁定功能，通过写入特定序列到LCKR寄存器来锁定引脚配置，防止后续意外修改。"
+        },
+        {
+          "name": "CAN_MessagePending",
+          "normalized_name": "CAN_MessagePending",
+          "file_path": "Libary\\stm32f10x_can.c",
+          "language": "c",
+          "start_line": "744",
+          "end_line": "763",
+          "outgoing_call_count": 3,
+          "summary": "查询指定CAN FIFO（FIFO0或FIFO1）中待处理消息的数量，返回低2位的状态值。"
+        },
+        {
+          "name": "SDIO_ClockCmd",
+          "normalized_name": "SDIO_ClockCmd",
+          "file_path": "Libary\\stm32f10x_sdio.c",
+          "language": "c",
+          "start_line": "236",
+          "end_line": "242",
+          "outgoing_call_count": 2,
+          "summary": "根据传入的FunctionalState参数，启用或禁用SDIO接口的时钟。通过向CLKCR寄存器的CLKEN位（使用位带别名地址）写入NewState值来实现。"
+        },
+        {
+          "name": "TIM_InternalClockConfig",
+          "normalized_name": "TIM_InternalClockConfig",
+          "file_path": "Libary\\stm32f10x_tim.c",
+          "language": "c",
+          "start_line": "990",
+          "end_line": "996",
+          "outgoing_call_count": 2,
+          "summary": "配置定时器使用内部时钟，通过清除从模式控制寄存器中的从模式选择位（SMS）来禁用从模式，使预分频器直接由内部时钟驱动。"
+        },
+        {
+          "name": "RCC_ClockSecuritySystemCmd",
+          "normalized_name": "RCC_ClockSecuritySystemCmd",
+          "file_path": "Libary\\stm32f10x_rcc.c",
+          "language": "c",
+          "start_line": "1251",
+          "end_line": "1256",
+          "outgoing_call_count": 2,
+          "summary": "该函数用于启用或禁用RCC时钟安全系统（CSS），通过写入位带地址CR_CSSON_BB来直接控制CSSON位。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "loader": {
+      "module_name": "loader",
+      "function_count": 2,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0014,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 35,
+      "outgoing_edge_count": 65,
+      "internal_edge_count": 33,
+      "external_edge_count": 32,
+      "internal_call_ratio": 0.5077,
+      "external_call_ratio": 0.4923,
+      "module_weight": 0.0359,
+      "files": [
+        "Libary\\stm32f10x_can.c",
+        "Libary\\stm32f10x_flash.c",
+        "Libary\\stm32f10x_gpio.c",
+        "Syscall\\aes_sw.c",
+        "Syscall\\sec_core.c",
+        "Syscall\\stm32f10x_it.c",
+        "exe\\secret_net0\\crypto_win.c",
+        "exe\\secret_net0\\hid_comm.c",
+        "exe\\secret_net0\\protocol.c",
+        "exe\\secret_net1\\crypto_win.c",
+        "exe\\secret_net1\\protocol.c",
+        "exe\\work_net0\\crypto_win.c",
+        "exe\\work_net0\\protocol.c",
+        "src\\kernel\\alloc.c",
+        "src\\kernel\\elf_loader.c",
+        "src\\kernel\\ext4.c",
+        "src\\kernel\\proc.c",
+        "src\\kernel\\string.c"
+      ],
+      "file_count": 18,
+      "core_functions": [
+        {
+          "name": "Proto_BuildEncryptedCmd",
+          "normalized_name": "Proto_BuildEncryptedCmd",
+          "file_path": "exe\\secret_net0\\protocol.c",
+          "language": "c",
+          "start_line": "151",
+          "end_line": "201",
+          "outgoing_call_count": 18,
+          "summary": "该函数构建并加密一条命令载荷，先检查握手状态，然后将输入数据加上2字节长度前缀组成明文，使用AES-128-GCM加密后复制到输出缓冲区。"
+        },
+        {
+          "name": "Proto_BuildEncryptedCmd",
+          "normalized_name": "Proto_BuildEncryptedCmd",
+          "file_path": "exe\\secret_net1\\protocol.c",
+          "language": "c",
+          "start_line": "151",
+          "end_line": "201",
+          "outgoing_call_count": 18,
+          "summary": "构建并加密一条命令包：在握手完成后，将输入数据加上2字节长度前缀组成明文，然后使用AES-GCM算法加密，将密文拷贝到输出缓冲区。"
+        },
+        {
+          "name": "Proto_BuildEncryptedCmd",
+          "normalized_name": "Proto_BuildEncryptedCmd",
+          "file_path": "exe\\work_net0\\protocol.c",
+          "language": "c",
+          "start_line": "151",
+          "end_line": "201",
+          "outgoing_call_count": 18,
+          "summary": "构建加密的命令数据帧：将输入数据封装成明文格式（2字节长度+数据），然后使用AES-128-GCM加密，密文写入输出缓冲区。"
+        },
+        {
+          "name": "kmalloc",
+          "normalized_name": "kmalloc",
+          "file_path": "src\\kernel\\alloc.c",
+          "language": "c",
+          "start_line": "100",
+          "end_line": "132",
+          "outgoing_call_count": 9,
+          "summary": "从内核空闲链表分配对齐内存，支持块分割，返回数据区指针，失败返回NULL。"
+        },
+        {
+          "name": "map_page",
+          "normalized_name": "map_page",
+          "file_path": "src\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "99",
+          "end_line": "127",
+          "outgoing_call_count": 7,
+          "summary": "该函数将给定的物理地址 paddr 映射到虚拟地址 vaddr 上，并设置指定的页表权限 flags，支持 SV39 三级页表（L2->L1->L0）的动态分配和映射。"
+        },
+        {
+          "name": "map_page",
+          "normalized_name": "map_page",
+          "file_path": "src\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "208",
+          "end_line": "212",
+          "outgoing_call_count": 7,
+          "summary": "这是一个空的页面映射函数，接收四个参数但不做任何实际操作，直接返回0表示成功。"
+        },
+        {
+          "name": "extent_map_logical_to_physical",
+          "normalized_name": "extent_map_logical_to_physical",
+          "file_path": "src\\kernel\\ext4.c",
+          "language": "c",
+          "start_line": "320",
+          "end_line": "391",
+          "outgoing_call_count": 6,
+          "summary": "这个函数用于将ext4文件系统中的逻辑块号转换为物理块号，通过遍历extent树（区段树）来实现。它从inode的i_block区域开始，处理索引节点和叶子节点，最终找到逻辑块对应的物理块。"
+        },
+        {
+          "name": "FLASH_ErasePage",
+          "normalized_name": "FLASH_ErasePage",
+          "file_path": "Libary\\stm32f10x_flash.c",
+          "language": "c",
+          "start_line": "420",
+          "end_line": "484",
+          "outgoing_call_count": 5,
+          "summary": "该函数用于擦除STM32F10X系列单片机中指定地址的Flash页面。根据宏STM32F10X_XL是否定义，分别针对不同容量芯片（非XL型号使用单一Flash控制器；XL型号则区分银行1和银行2）执行擦除操作：等待上次操作完成、设置页面擦除位（PER）、指定页面地址（AR或AR2）、触发擦除启动位（STRT）、再次等待操作完成、最后清除PER位。"
+        },
+        {
+          "name": "HID_DumpDeviceInfo",
+          "normalized_name": "HID_DumpDeviceInfo",
+          "file_path": "exe\\secret_net0\\hid_comm.c",
+          "language": "c",
+          "start_line": "204",
+          "end_line": "221",
+          "outgoing_call_count": 5,
+          "summary": "读取并打印HID设备的属性（VendorID、ProductID、VersionNumber）、制造商字符串和产品字符串。"
+        },
+        {
+          "name": "unmap_page",
+          "normalized_name": "unmap_page",
+          "file_path": "src\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "129",
+          "end_line": "140",
+          "outgoing_call_count": 5,
+          "summary": "根据给定的根页表物理页号和多级页表映射，取消虚拟地址对应的物理页映射，并通过 sfence.vma 指令刷新 TLB。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 1,
+      "outgoing_edge_count": 4,
+      "internal_edge_count": 4,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0014,
+      "files": [
+        "Libary\\stm32f10x_rcc.c",
+        "exe\\secret_net0\\crypto_win.c",
+        "exe\\secret_net0\\main.c",
+        "exe\\secret_net0\\protocol.c",
+        "exe\\secret_net1\\crypto_win.c",
+        "exe\\secret_net1\\protocol.c",
+        "exe\\work_net0\\crypto_win.c",
+        "exe\\work_net0\\main.c",
+        "exe\\work_net0\\protocol.c",
+        "src\\kernel\\test_runner.c"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "do_handshake",
+          "normalized_name": "do_handshake",
+          "file_path": "exe\\secret_net0\\main.c",
+          "language": "c",
+          "start_line": "107",
+          "end_line": "201",
+          "outgoing_call_count": 42,
+          "summary": "实现主机端（MK_CTRL）与 STM32 设备之间的握手协议，包括接收 Hello、发送 Handshake 帧、等待 ACK 以及派生会话密钥。"
+        },
+        {
+          "name": "Crypto_AES_GCM_Encrypt",
+          "normalized_name": "Crypto_AES_GCM_Encrypt",
+          "file_path": "exe\\work_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "107",
+          "end_line": "165",
+          "outgoing_call_count": 24,
+          "summary": "使用AES-GCM算法对明文进行认证加密，生成随机IV，输出格式为IV || 密文 || 认证标签，并验证输出缓冲区大小。"
+        },
+        {
+          "name": "Crypto_AES_GCM_Encrypt",
+          "normalized_name": "Crypto_AES_GCM_Encrypt",
+          "file_path": "exe\\secret_net1\\crypto_win.c",
+          "language": "c",
+          "start_line": "107",
+          "end_line": "165",
+          "outgoing_call_count": 24,
+          "summary": "使用 AES-GCM 算法对明文进行认证加密，生成随机 IV，将密文、IV 和认证标签打包输出。"
+        },
+        {
+          "name": "Crypto_AES_GCM_Decrypt",
+          "normalized_name": "Crypto_AES_GCM_Decrypt",
+          "file_path": "exe\\secret_net1\\crypto_win.c",
+          "language": "c",
+          "start_line": "170",
+          "end_line": "213",
+          "outgoing_call_count": 21,
+          "summary": "使用 Windows BCrypt API 执行 AES-GCM 认证解密操作，从密文中提取 IV 和认证标签，并验证解密的认证标签匹配。"
+        },
+        {
+          "name": "Crypto_AES_GCM_Decrypt",
+          "normalized_name": "Crypto_AES_GCM_Decrypt",
+          "file_path": "exe\\work_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "170",
+          "end_line": "213",
+          "outgoing_call_count": 21,
+          "summary": "使用Windows CNG API进行AES-GCM解密，从密文中提取IV和认证标签，验证并解密数据，返回明文及长度。"
+        },
+        {
+          "name": "Crypto_Init",
+          "normalized_name": "Crypto_Init",
+          "file_path": "exe\\secret_net0\\crypto_win.c",
+          "language": "c",
+          "start_line": "30",
+          "end_line": "64",
+          "outgoing_call_count": 18,
+          "summary": "这个代码块的主要作用是初始化Windows加密库（BCrypt）中的三个算法提供者：SHA256（用于HMAC）、AES-GCM（用于加解密）和随机数生成器（RNG）。它依次打开每个提供者，检查返回值是否成功，若失败则打印错误并返回负值错误码；全部成功则打印成功信息并返回0。"
+        },
+        {
+          "name": "Crypto_HMAC_SHA256",
+          "normalized_name": "Crypto_HMAC_SHA256",
+          "file_path": "exe\\secret_net1\\crypto_win.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "100",
+          "outgoing_call_count": 18,
+          "summary": "该函数使用 Windows BCrypt API 计算 HMAC-SHA256，使用给定的密钥对数据进行 HMAC 运算，并将结果输出到缓冲区。"
+        },
+        {
+          "name": "Crypto_Init",
+          "normalized_name": "Crypto_Init",
+          "file_path": "exe\\secret_net1\\crypto_win.c",
+          "language": "c",
+          "start_line": "30",
+          "end_line": "64",
+          "outgoing_call_count": 18,
+          "summary": "初始化 Windows 密码学库 (BCrypt) 的算法提供程序，为后续加密操作准备 SHA256、AES-GCM 和随机数生成器句柄。"
+        },
+        {
+          "name": "Proto_ParseHello",
+          "normalized_name": "Proto_ParseHello",
+          "file_path": "exe\\work_net0\\protocol.c",
+          "language": "c",
+          "start_line": "38",
+          "end_line": "55",
+          "outgoing_call_count": 15,
+          "summary": "解析Hello协议数据包，验证长度并提取nonce_s字段到会话上下文，然后更新会话状态。"
+        },
+        {
+          "name": "Proto_ParseHello",
+          "normalized_name": "Proto_ParseHello",
+          "file_path": "exe\\secret_net0\\protocol.c",
+          "language": "c",
+          "start_line": "38",
+          "end_line": "55",
+          "outgoing_call_count": 15,
+          "summary": "解析Hello协议报文，提取对端发送的nonce_s并更新会话状态。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 26,
+      "outgoing_edge_count": 47,
+      "internal_edge_count": 38,
+      "external_edge_count": 9,
+      "internal_call_ratio": 0.8085,
+      "external_call_ratio": 0.1915,
+      "module_weight": 0.0265,
+      "files": [
+        "Libary\\stm32f10x_flash.c",
+        "Libary\\stm32f10x_rcc.c",
+        "Libary\\stm32f10x_rtc.c",
+        "Libary\\stm32f10x_sdio.c",
+        "Syscall\\stm32f10x_it.c",
+        "exe\\secret_net0\\main.c",
+        "src\\kernel\\elf_loader.c",
+        "src\\kernel\\elf_loader.h",
+        "src\\kernel\\proc.c",
+        "src\\kernel\\proc.h"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "elf_load_internal",
+          "normalized_name": "elf_load_internal",
+          "file_path": "src\\kernel\\elf_loader.c",
+          "language": "c",
+          "start_line": "100",
+          "end_line": "253",
+          "outgoing_call_count": 15,
+          "summary": "加载ELF可执行文件到内存中，分配物理页并建立页表映射，设置用户栈，返回入口点和页表根地址。支持从内存数据或通过回调函数读取两种方式。"
+        },
+        {
+          "name": "send_task",
+          "normalized_name": "send_task",
+          "file_path": "exe\\secret_net0\\main.c",
+          "language": "c",
+          "start_line": "206",
+          "end_line": "277",
+          "outgoing_call_count": 13,
+          "summary": "构建并发送一个数据采集任务到设备，然后等待并处理ACK响应。函数填充任务结构体（包括目标ID、数据点、有效天数）、加密任务载荷、通过串口写入帧、读取响应帧，并尝试解密响应或解析明文ACK以确认任务分配完成。"
+        },
+        {
+          "name": "elf_load",
+          "normalized_name": "elf_load",
+          "file_path": "src\\kernel\\elf_loader.c",
+          "language": "c",
+          "start_line": "295",
+          "end_line": "339",
+          "outgoing_call_count": 9,
+          "summary": "该函数负责从ext4文件系统中加载ELF格式的可执行文件，将其完整读取到内存中，然后调用elf_load_from_memory函数进行具体的ELF加载和解析，最后释放临时缓冲区。"
+        },
+        {
+          "name": "wait_for_device",
+          "normalized_name": "wait_for_device",
+          "file_path": "exe\\secret_net0\\main.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "102",
+          "outgoing_call_count": 7,
+          "summary": "该函数用于打开一个串口设备。如果调用者指定了COM口参数，则直接尝试打开该COM口；否则，循环自动查找并打开CH340设备。"
+        },
+        {
+          "name": "enter_user_process",
+          "normalized_name": "enter_user_process",
+          "file_path": "src\\kernel\\proc.c",
+          "language": "c",
+          "start_line": 218,
+          "end_line": 223,
+          "outgoing_call_count": 4,
+          "summary": "{\n  \"block_id\": \"block_33\",\n  \"file_path\": \"src\\\\kernel\\\\proc.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"218\",\n  \"end_line\": \"223\",\n  \"name\": \"enter_user_process\",\n  \"type\": \"function\",\n  \"summary\": \"该函数用于进入用户进程，但当前是占位实现，未完成实际功能，直接返回-1表示失败。\",\n  \"logic_steps\": [\n    \"使用 (void) 转换忽略所有传入参数（entry、user_stack、page_table_root），防止编译警告。\",\n    \"打印提示信息，表明该函数在LoongArch架构上暂未实现。\",\n    \"返回-1，表示函数执行失败。\"\n  ],\n  \"called_functions\": [\n    \"printf\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"函数名 \"enter_user_process\" 暗示与进程切换/用户态进程进入相关；参数（entry、user_stack、page_table_root）均为进程上下文必备信息；printf 提示涉及 LoongArch 架构；返回 -1 表示未实现。\",\n  \"uncertainty\": \"代码内容较少，无法确定该函数预期的完整实现逻辑，仅能根据参数推测其目的为进入用户进程。\"\n}"
+        },
+        {
+          "name": "Kernel_WriteTask",
+          "normalized_name": "Kernel_WriteTask",
+          "file_path": "Syscall\\stm32f10x_it.c",
+          "language": "c",
+          "start_line": "187",
+          "end_line": "206",
+          "outgoing_call_count": 4,
+          "summary": "该函数用于将任务描述数据写入一个全局扇区缓冲区，并更新系统状态标志。函数先进行参数有效性检查，然后安全地拷贝最多 SECTOR_SIZE 字节的数据到 g_SectorTask 缓冲区，最后将全局状态 g_FerryState 设置为 STATE_ASSIGNED，表示任务已注入。"
+        },
+        {
+          "name": "enter_user_process",
+          "normalized_name": "enter_user_process",
+          "file_path": "src\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "172",
+          "end_line": "201",
+          "outgoing_call_count": 4,
+          "summary": "该函数用于从内核态进入用户进程执行。它保存内核上下文（satp），构造用户页表对应的satp值，然后通过汇编trampoline切换页表并sret到用户程序入口。用户进程退出或返回后，函数获取当前进程的exit_code并返回。"
+        },
+        {
+          "name": "proc_init",
+          "normalized_name": "proc_init",
+          "file_path": "src\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "231",
+          "end_line": "241",
+          "outgoing_call_count": 4,
+          "summary": "初始化进程管理模块，清空进程表、内核上下文结构，重置当前进程标识和指针，并完成页表初始化，最后打印初始化完成信息。"
+        },
+        {
+          "name": "unknown",
+          "normalized_name": "unknown",
+          "file_path": "src\\kernel\\proc.h",
+          "language": "c",
+          "start_line": "117",
+          "end_line": "125",
+          "outgoing_call_count": 3,
+          "summary": "这个代码块定义了一个匿名结构体，用于保存RISC-V架构下进程或线程的上下文寄存器（包括通用寄存器和与异常/中断相关的CSR寄存器），通常作为线程控制块（TCB）或进程控制块（PCB）的一部分。"
+        },
+        {
+          "name": "Kernel_ReadTask",
+          "normalized_name": "Kernel_ReadTask",
+          "file_path": "Syscall\\stm32f10x_it.c",
+          "language": "c",
+          "start_line": "216",
+          "end_line": "237",
+          "outgoing_call_count": 3,
+          "summary": "该函数从RAM扇区（g_SectorTask）读取任务数据到输出缓冲区（g_ReadOutBuf），并根据传入参数决定是否将数据拷贝到用户态缓冲区，同时提供默认读取长度和闪烁提示。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0007,
+      "files": [
+        "src\\arch\\loongarch\\trap_entry.S",
+        "src\\arch\\riscv\\trap_entry.S"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "switch_to_user",
+          "normalized_name": "switch_to_user",
+          "file_path": "src\\arch\\loongarch\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "193",
+          "end_line": "202",
+          "outgoing_call_count": 0,
+          "summary": "该代码块用于从内核态切换到用户态，通过设置CSR寄存器（CRMD、ERA）和栈指针来恢复或创建用户上下文，最后执行ERTN指令返回用户态。"
+        },
+        {
+          "name": "switch_to_user",
+          "normalized_name": "switch_to_user",
+          "file_path": "src\\arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "241",
+          "end_line": "250",
+          "outgoing_call_count": 0,
+          "summary": "切换CPU执行上下文到用户模式，设置栈指针、异常返回地址和状态寄存器，准备通过sret指令跳转至用户程序。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "security": {
+      "module_name": "security",
+      "function_count": 2,
+      "outgoing_edge_count": 4,
+      "internal_edge_count": 2,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.5,
+      "external_call_ratio": 0.5,
+      "module_weight": 0.0021,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 35,
+      "outgoing_edge_count": 117,
+      "internal_edge_count": 85,
+      "external_edge_count": 32,
+      "internal_call_ratio": 0.7265,
+      "external_call_ratio": 0.2735,
+      "module_weight": 0.0451,
+      "files": [
+        "Syscall\\aes_sw.c",
+        "Syscall\\sec_core.c",
+        "Syscall\\sec_core.h",
+        "Syscall\\stm32f10x_it.c",
+        "Syscall\\syscall.h",
+        "src\\arch\\loongarch\\trap_entry.S",
+        "src\\arch\\riscv\\trap_entry.S",
+        "src\\kernel\\sbi.h",
+        "src\\kernel\\syscall.c"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "__svc",
+          "normalized_name": "__svc",
+          "file_path": "Syscall\\syscall.h",
+          "language": "c",
+          "start_line": "37",
+          "end_line": "71",
+          "outgoing_call_count": 15,
+          "summary": "这个代码块是系统调用接口的头文件，定义了一系列基于SVC中断的系统调用函数，并提供了一个切换到用户态的内联函数。"
+        },
+        {
+          "name": "SecCore_GenNonce",
+          "normalized_name": "SecCore_GenNonce",
+          "file_path": "Syscall\\sec_core.c",
+          "language": "c",
+          "start_line": 353,
+          "end_line": 405,
+          "outgoing_call_count": 14,
+          "summary": "该函数通过混合SysTick计数器、指令时序抖动和ADC温度传感器噪声生成一个16字节的随机数（nonce），然后使用LCG（线性同余生成器）将混合结果扩展为完整的nonce输出。"
+        },
+        {
+          "name": "SVC_Router",
+          "normalized_name": "SVC_Router",
+          "file_path": "Syscall\\stm32f10x_it.c",
+          "language": "c",
+          "start_line": "51",
+          "end_line": "101",
+          "outgoing_call_count": 11,
+          "summary": "SVC（Supervisor Call）中断的路由函数，根据SVC号分发调用到对应的内核服务函数，并在分发前对协议命令进行安全审计。"
+        },
+        {
+          "name": "SecCore_DeriveSK",
+          "normalized_name": "SecCore_DeriveSK",
+          "file_path": "Syscall\\sec_core.c",
+          "language": "c",
+          "start_line": "407",
+          "end_line": "425",
+          "outgoing_call_count": 6,
+          "summary": "该函数用于派生成会话密钥，基于主密钥（MK）和两个nonce值（设备端和主机端）通过HMAC-SHA256生成一个16字节的会话密钥，并清空中间敏感数据。"
+        },
+        {
+          "name": "sha256_transform",
+          "normalized_name": "sha256_transform",
+          "file_path": "Syscall\\sec_core.c",
+          "language": "c",
+          "start_line": "87",
+          "end_line": "109",
+          "outgoing_call_count": 6,
+          "summary": "实现SHA-256哈希算法的核心变换步骤，将64字节的输入块（block）与当前哈希状态（H）混合，计算新的哈希状态。"
+        },
+        {
+          "name": "SecCore_HMAC_SHA256",
+          "normalized_name": "SecCore_HMAC_SHA256",
+          "file_path": "Syscall\\sec_core.c",
+          "language": "c",
+          "start_line": "224",
+          "end_line": "293",
+          "outgoing_call_count": 5,
+          "summary": "实现HMAC-SHA256算法，包含密钥处理（当密钥长度超过64字节时先进行SHA256哈希）、构造内外填充密钥、计算内部哈希和外部哈希，并嵌入自测验证（基于RFC 4231测试用例1，通过LED闪烁指示测试通过）。"
+        },
+        {
+          "name": "SecCore_VerifyHandshake",
+          "normalized_name": "SecCore_VerifyHandshake",
+          "file_path": "Syscall\\sec_core.c",
+          "language": "c",
+          "start_line": "449",
+          "end_line": "490",
+          "outgoing_call_count": 5,
+          "summary": "验证挑战-响应握手：接收挑战缓冲区，使用预共享密钥（mk）计算期望的HMAC，并与挑战中收到的HMAC进行比较，若匹配则派生出会话密钥（SK），否则增加失败计数并在超过阈值时触发系统恐慌。"
+        },
+        {
+          "name": "SecCore_AuditSVC",
+          "normalized_name": "SecCore_AuditSVC",
+          "file_path": "Syscall\\sec_core.c",
+          "language": "c",
+          "start_line": "531",
+          "end_line": "572",
+          "outgoing_call_count": 5,
+          "summary": "根据当前系统状态（g_FerryState）和传入的SVC服务ID，决定是否允许执行该SVC，返回0表示允许，1表示拒绝，2表示系统处于PANIC态也拒绝。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "src\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "57",
+          "end_line": "91",
+          "outgoing_call_count": 4,
+          "summary": "实现系统调用 sys_openat，通过用户提供的路径名查找 ext4 文件系统中的文件，分配文件描述符并返回给进程。"
+        },
+        {
+          "name": "aes128_encrypt",
+          "normalized_name": "aes128_encrypt",
+          "file_path": "Syscall\\aes_sw.c",
+          "language": "c",
+          "start_line": "197",
+          "end_line": "232",
+          "outgoing_call_count": 3,
+          "summary": "对输入数据进行AES-128加密，处理任意长度输入，按16字节块分组，使用零填充对齐，并限制最大加密长度为4096字节。调用底层块加密函数逐块加密，最后清零局部变量。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0007,
+      "files": [
+        "Libary\\stm32f10x_i2c.c",
+        "Tests\\test_fsm.c",
+        "src\\kernel\\test_runner.c",
+        "src\\kernel\\test_runner.h"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "test_fsm_run",
+          "normalized_name": "test_fsm_run",
+          "file_path": "Tests\\test_fsm.c",
+          "language": "c",
+          "start_line": "208",
+          "end_line": "227",
+          "outgoing_call_count": 11,
+          "summary": "这个函数运行一系列与状态机有限状态机测试相关的子测试，并生成测试报告。它记录了测试开始前和结束后通过和总测试数的差值，以计算本函数内执行的测试数量。"
+        },
+        {
+          "name": "run_elf_test",
+          "normalized_name": "run_elf_test",
+          "file_path": "src\\kernel\\test_runner.c",
+          "language": "c",
+          "start_line": "179",
+          "end_line": "234",
+          "outgoing_call_count": 8,
+          "summary": "该函数在文件系统中查找指定的 ELF 文件，加载到用户空间，创建进程并进入用户态执行，最后清理进程资源并返回退出码。"
+        },
+        {
+          "name": "test_runner_discover",
+          "normalized_name": "test_runner_discover",
+          "file_path": "src\\kernel\\test_runner.c",
+          "language": "c",
+          "start_line": "140",
+          "end_line": "175",
+          "outgoing_call_count": 6,
+          "summary": "此函数用于扫描文件系统根目录下的目录项，发现并解析以\"_testcode.sh\"结尾的测试脚本文件，统计脚本数量及每个脚本的组名和命令数。"
+        },
+        {
+          "name": "test_reset_state",
+          "normalized_name": "test_reset_state",
+          "file_path": "Tests\\test_fsm.c",
+          "language": "c",
+          "start_line": "38",
+          "end_line": "56",
+          "outgoing_call_count": 4,
+          "summary": "测试SecCore_Init函数是否能正确重置全局状态变量（g_FerryState、g_ChallengeFailCount、g_SessionSK）到初始值。"
+        },
+        {
+          "name": "test_panic_clears_keys",
+          "normalized_name": "test_panic_clears_keys",
+          "file_path": "Tests\\test_fsm.c",
+          "language": "c",
+          "start_line": "150",
+          "end_line": "171",
+          "outgoing_call_count": 4,
+          "summary": "测试 SecCore_Panic() 函数在触发 panic 后是否将会话密钥（g_SessionSK）和一次性随机数（g_NonceDev）清零。"
+        },
+        {
+          "name": "test_initial_state",
+          "normalized_name": "test_initial_state",
+          "file_path": "Tests\\test_fsm.c",
+          "language": "c",
+          "start_line": "26",
+          "end_line": "33",
+          "outgoing_call_count": 3,
+          "summary": "测试函数，调用SecCore_Init()初始化系统状态，然后通过两个断言验证初始化后的全局变量g_FerryState为STATE_INIT，g_ChallengeFailCount为0。"
+        },
+        {
+          "name": "I2C_GenerateSTART",
+          "normalized_name": "I2C_GenerateSTART",
+          "file_path": "Libary\\stm32f10x_i2c.c",
+          "language": "c",
+          "start_line": "395",
+          "end_line": "410",
+          "outgoing_call_count": 3,
+          "summary": "根据传入的 FunctionalState 参数，设置或清除 I2C 外设控制寄存器 CR1 中的 START 位，以产生或禁止 I2C 起始条件。"
+        },
+        {
+          "name": "unknown",
+          "normalized_name": "unknown",
+          "file_path": "src\\kernel\\test_runner.h",
+          "language": "c",
+          "start_line": "20",
+          "end_line": "24",
+          "outgoing_call_count": 3,
+          "summary": "定义了一个用于描述测试用例或可执行程序信息的匿名结构体，包含类型、ELF文件名和完整命令文本三个字段。"
+        },
+        {
+          "name": "I2C_GenerateSTOP",
+          "normalized_name": "I2C_GenerateSTOP",
+          "file_path": "Libary\\stm32f10x_i2c.c",
+          "language": "c",
+          "start_line": "419",
+          "end_line": "434",
+          "outgoing_call_count": 3,
+          "summary": "根据传入的状态参数启用或禁用I2C停止条件的生成，通过操作I2C控制寄存器CR1中的STOP位来实现。"
+        },
+        {
+          "name": "test_runner_run_all",
+          "normalized_name": "test_runner_run_all",
+          "file_path": "src\\kernel\\test_runner.c",
+          "language": "c",
+          "start_line": 236,
+          "end_line": 273,
+          "outgoing_call_count": 2,
+          "summary": "```json\n{\n  \"block_id\": \"block_209\",\n  \"file_path\": \"src\\\\kernel\\\\test_runner.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": 236,\n  \"end_line\": 273,\n  \"name\": \"test_runner_run_all\",\n  \"type\": \"function\",\n  \"summary\": \"运行所有测试组：遍历全局测试脚本数组，对每个测试组输出开始/结束标记，串行执行组内命令（仅处理类型为CMD_TYPE_ELF的ELF测试文件，其他命令跳过），最后输出完成信息。\",\n  \"logic_steps\": [\n    \"打印测试运行器启动信息，包含待执行测试组总数（g_script_count）。\",\n    \"遍历g_scripts数组中的每一个测试脚本结构体。\",\n    \"对每个测试组，先输出开始标记（包含组名）。\",\n    \"如果测试组无命令（cmd_count为0），打印跳过信息。\",\n    \"否则，内层循环遍历组内所有命令。\",\n    \"对每条命令，根据cmd->type判断：若为CMD_TYPE_ELF，则调用run_elf_test执行，失败时打印失败信息；否则打印跳过信息。\",\n    \"循环结束后输出测试组结束标记。\",\n    \"所有组处理完毕，打印执行完毕的结束信息。\"\n  ],\n  \"called_functions\": [\n    \"printf\",\n    \"run_elf_test\"\n  ],\n  \"related_os_module\": \"test\",\n  \"evidence\": \"函数名test_runner_run_all暗示为测试运行器的主入口；函数中操作g_scripts和g_script_count等全局测试脚本数组，输出“OS COMP TEST GROUP”标记，且调用run_elf_test执行ELF测试文件，符合测试运行器的逻辑。\",\n  \"uncertainty\": \"函数未涉及操作系统的具体内核模块（如文件系统、进程调度等），而是专注于测试管理，因此无法归入boot/memory等标准模块，但可明确归为测试/报告生成相关模块。\"\n}\n```"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 143,
+      "outgoing_edge_count": 380,
+      "internal_edge_count": 144,
+      "external_edge_count": 236,
+      "internal_call_ratio": 0.3789,
+      "external_call_ratio": 0.6211,
+      "module_weight": 0.1671,
+      "files": [
+        "Libary\\stm32f10x_adc.c",
+        "Libary\\stm32f10x_bkp.c",
+        "Libary\\stm32f10x_can.c",
+        "Libary\\stm32f10x_cec.c",
+        "Libary\\stm32f10x_crc.c",
+        "Libary\\stm32f10x_dbgmcu.c",
+        "Libary\\stm32f10x_flash.c",
+        "Libary\\stm32f10x_gpio.c",
+        "Libary\\stm32f10x_i2c.c",
+        "Libary\\stm32f10x_pwr.c",
+        "Libary\\stm32f10x_rcc.c",
+        "Libary\\stm32f10x_sdio.c",
+        "Libary\\stm32f10x_spi.c",
+        "Libary\\stm32f10x_tim.c",
+        "src\\arch\\loongarch\\entry.S",
+        "src\\arch\\riscv\\entry.S",
+        "src\\kernel\\elf_loader.c",
+        "src\\kernel\\main.c",
+        "src\\kernel\\printf.c",
+        "src\\kernel\\string.c",
+        "src\\kernel\\types.h"
+      ],
+      "file_count": 21,
+      "core_functions": [
+        {
+          "name": "CAN_Init",
+          "normalized_name": "CAN_Init",
+          "file_path": "Libary\\stm32f10x_can.c",
+          "language": "c",
+          "start_line": "155",
+          "end_line": "283",
+          "outgoing_call_count": 8,
+          "summary": "初始化STM32F10x的CAN外设，包括从睡眠模式退出、请求初始化、配置主控制寄存器(MCR)的各个选项(时间触发通信、自动离线管理、自动唤醒、无自动重发、FIFO锁定、发送FIFO优先级)，设置位时序寄存器(BTR)，然后退出初始化模式，并返回初始化状态。"
+        },
+        {
+          "name": "PWR_EnterSTOPMode",
+          "normalized_name": "PWR_EnterSTOPMode",
+          "file_path": "Libary\\stm32f10x_pwr.c",
+          "language": "c",
+          "start_line": "198",
+          "end_line": "230",
+          "outgoing_call_count": 5,
+          "summary": "该函数用于配置并进入STM32微控制器的STOP模式。它首先设置电源控制寄存器中的调节器状态（低功耗或正常），然后设置Cortex系统控制寄存器的SLEEPDEEP位，再根据参数选择通过WFI或WFE指令进入停止模式，退出后清除SLEEPDEEP位。"
+        },
+        {
+          "name": "ADC_InjectedChannelConfig",
+          "normalized_name": "ADC_InjectedChannelConfig",
+          "file_path": "Libary\\stm32f10x_adc.c",
+          "language": "c",
+          "start_line": "931",
+          "end_line": "985",
+          "outgoing_call_count": 5,
+          "summary": "配置STM32F10x ADC的注入通道，包括设置采样时间和将指定通道分配给某个注入序列的排名（Rank）。根据通道号选择使用SMPR1或SMPR2寄存器设置采样时间，然后通过JSQR寄存器配置注入序列中的通道映射。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "src\\arch\\loongarch\\entry.S",
+          "language": "assembly",
+          "start_line": "5",
+          "end_line": "37",
+          "outgoing_call_count": 5,
+          "summary": "这是LoongArch架构下操作系统的内核入口点_start，负责保存启动参数、设置内核栈、配置异常入口、清零BSS段，然后跳转到内核主函数kernel_main。若kernel_main返回则执行关机例程。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "src\\arch\\riscv\\entry.S",
+          "language": "assembly",
+          "start_line": "5",
+          "end_line": "42",
+          "outgoing_call_count": 5,
+          "summary": "RISC-V S-mode 内核入口点，负责保存设备树指针、设置内核栈、配置异常向量表、启用 S-mode 中断、清除 BSS 段，然后跳转到 C 语言主函数 kernel_main。"
+        },
+        {
+          "name": "vsnprintf_core",
+          "normalized_name": "vsnprintf_core",
+          "file_path": "src\\kernel\\printf.c",
+          "language": "c",
+          "start_line": "30",
+          "end_line": "42",
+          "outgoing_call_count": 4,
+          "summary": "该代码块定义了vsnprintf_core函数的起始部分，主要初始化缓冲区指针和总输出计数，并定义了一个用于写入字符的宏EMIT，该宏支持通过回调函数或直接写入缓冲区两种模式，并处理缓冲区大小为零时的截断情况。"
+        },
+        {
+          "name": "ADC_ITConfig",
+          "normalized_name": "ADC_ITConfig",
+          "file_path": "Libary\\stm32f10x_adc.c",
+          "language": "c",
+          "start_line": "354",
+          "end_line": "373",
+          "outgoing_call_count": 4,
+          "summary": "配置ADC的中断使能或禁止，根据NewState参数设置ADC_CR1寄存器中对应的中断位。"
+        },
+        {
+          "name": "TIM_DMAConfig",
+          "normalized_name": "TIM_DMAConfig",
+          "file_path": "Libary\\stm32f10x_tim.c",
+          "language": "c",
+          "start_line": 938,
+          "end_line": 946,
+          "outgoing_call_count": 4,
+          "summary": "配置定时器的DMA传输基地址和突发长度"
+        },
+        {
+          "name": "unknown",
+          "normalized_name": "unknown",
+          "file_path": "src\\kernel\\elf_loader.c",
+          "language": "c",
+          "start_line": "30",
+          "end_line": "39",
+          "outgoing_call_count": 3,
+          "summary": "这是一个匿名结构体的定义，用于描述 ELF 文件中的程序头（Program Header）结构。每个字段对应 ELF 程序头的标准成员，包括类型、标志、偏移、虚拟地址、物理地址、文件大小、内存大小和对齐方式，用于后续解析 ELF 可执行文件加载到内存时的段信息。"
+        },
+        {
+          "name": "FLASH_BootConfig",
+          "normalized_name": "FLASH_BootConfig",
+          "file_path": "Libary\\stm32f10x_flash.c",
+          "language": "c",
+          "start_line": "1173",
+          "end_line": "1207",
+          "outgoing_call_count": 3,
+          "summary": "该函数用于配置STM32F10x微控制器的启动选项字节，具体设置或清除用户选项字节中的BFB2位，以选择启动Bank1或Bank2。它通过解锁选项字节、等待操作完成、设置选项字节编程位、修改OB->USER寄存器、再等待完成并清除编程位来完成操作。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "Libary\\stm32f10x_flash.c",
+        "Syscall\\main.c",
+        "exe\\secret_net0\\main.c",
+        "exe\\secret_net1\\main.c",
+        "exe\\work_net0\\main.c",
+        "src\\arch\\loongarch\\trap_entry.S",
+        "src\\arch\\riscv\\trap_entry.S",
+        "src\\kernel\\main.c"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "exe\\secret_net1\\main.c",
+          "language": "c",
+          "start_line": "172",
+          "end_line": "234",
+          "outgoing_call_count": 87,
+          "summary": "这个代码块是主函数，实现了SecuFerry-OS MasterRecover工具的阶段2：通过CH340串口（COM端口）与设备建立连接、握手、解密并检索数据。它循环扫描可用设备（或通过命令行参数指定），初始化加密模块后反复尝试连接、握手和解密，成功或失败后根据需要继续等待下一个设备或退出。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "Syscall\\main.c",
+          "language": "c",
+          "start_line": "30",
+          "end_line": "263",
+          "outgoing_call_count": 87,
+          "summary": "这是主函数，负责初始化硬件、执行SHA-256/HMAC自测试、发起安全握手，并进入主循环处理多种域（密网/工控）的通信与任务。主循环中周期性重发Hello帧、检测CH340断线以复位握手、接收并解析帧，根据握手状态和域执行写任务、读数据、请求数据等操作。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "exe\\secret_net0\\main.c",
+          "language": "c",
+          "start_line": "282",
+          "end_line": "363",
+          "outgoing_call_count": 87,
+          "summary": "该代码块是主函数，用于初始化控制台、解析命令行参数、初始化加密模块，并在一个循环中等待设备连接、执行握手协议、下发任务（包含PLC站点和协议描述），最后清理资源。支持通过参数指定COM端口或列出所有串口。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "exe\\work_net0\\main.c",
+          "language": "c",
+          "start_line": "170",
+          "end_line": "234",
+          "outgoing_call_count": 87,
+          "summary": "程序入口函数，实现通过CH340串口与工业网关设备进行握手认证、数据请求和接收的循环逻辑，支持命令行指定串口或自动检测设备，并处理信号终止。"
+        },
+        {
+          "name": "kernel_main",
+          "normalized_name": "kernel_main",
+          "file_path": "src\\kernel\\main.c",
+          "language": "c",
+          "start_line": "60",
+          "end_line": "181",
+          "outgoing_call_count": 22,
+          "summary": "内核主函数，负责系统初始化、块设备扫描、EXT4文件系统挂载、进程和系统调用初始化、测试脚本发现与执行，以及最终关机。"
+        },
+        {
+          "name": "FLASH_UserOptionByteConfig",
+          "normalized_name": "FLASH_UserOptionByteConfig",
+          "file_path": "Libary\\stm32f10x_flash.c",
+          "language": "c",
+          "start_line": "1119",
+          "end_line": "1152",
+          "outgoing_call_count": 5,
+          "summary": "配置STM32F10x的用户选项字节（User Option Bytes），包括IWDG、STOP和STDBY模式控制。"
+        },
+        {
+          "name": "_enter_user_trampoline",
+          "normalized_name": "_enter_user_trampoline",
+          "file_path": "src\\arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "14",
+          "end_line": "62",
+          "outgoing_call_count": 4,
+          "summary": "该代码块是用户态入口的trampoline，负责保存内核上下文、切换到用户页表和栈、设置sret所需的状态，并进入用户态；同时提供一个返回点，用于用户进程退出后恢复内核上下文并返回。"
+        },
+        {
+          "name": "_enter_user_trampoline",
+          "normalized_name": "_enter_user_trampoline",
+          "file_path": "src\\arch\\loongarch\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "17",
+          "end_line": "62",
+          "outgoing_call_count": 4,
+          "summary": "该代码块实现从内核态切换至用户态用户程序的入口，通过保存内核上下文、设置回归点、切换页表、设置用户态状态并执行ertn指令进入用户态。同时包含用户程序退出后的恢复点。"
+        },
+        {
+          "name": "return_to_user",
+          "normalized_name": "return_to_user",
+          "file_path": "src\\arch\\loongarch\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "138",
+          "end_line": "173",
+          "outgoing_call_count": 0,
+          "summary": "从异常或中断处理返回用户态，恢复用户上下文和进入内核时保存的寄存器，包括异常返回地址、通用寄存器、用户栈指针等，并通过ERTN指令返回到用户空间。"
+        },
+        {
+          "name": "return_to_user",
+          "normalized_name": "return_to_user",
+          "file_path": "src\\arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "162",
+          "end_line": "215",
+          "outgoing_call_count": 0,
+          "summary": "该代码块实现了从内核态陷阱处理返回用户态的过程，包括恢复机器状态寄存器sepc、通用寄存器，并切换回用户栈指针，最后通过sret指令返回用户态。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 0.0,
+    "score_level": "unknown",
+    "scores": {
+      "originality": 0,
+      "novelty": 0,
+      "practicality": 0,
+      "difficulty": 0,
+      "completion": 0
+    },
+    "summary": "",
+    "strengths": [],
+    "weaknesses": [],
+    "suggestions": []
+  },
+  "hybrid_top_results": [],
+  "comparison": {
+    "retrieval_mode": "structured",
+    "comparison_count": 0,
+    "comparisons": []
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026100669911340_final_report.md",
+    "work_detail_data": "/data/works/T2026100669911340.json",
+    "comparison_data": "/data/comparisons/T2026100669911340.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

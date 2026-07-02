@@ -1,0 +1,1789 @@
+{
+  "repo_name": "T2026100069910965",
+  "team_name": "T2026100069910965",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026100069910965-1418",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026100069910965-1418",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "bash",
+    "assembly",
+    "linker_script",
+    "makefile"
+  ],
+  "core_modules": [
+    "syscall",
+    "filesystem",
+    "memory",
+    "process",
+    "unknown"
+  ],
+  "function_count": 531,
+  "node_count": 531,
+  "edge_count": 1386,
+  "internal_edge_count": 1135,
+  "external_edge_count": 251,
+  "module_count": 22,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.68,
+    "build": 0.83,
+    "driver": 1.0,
+    "elf_loader": 0.18,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "ipc": 0.05,
+    "kernel (通用工具函数，可能被网络、存储或文件系统等模块使用)": 0.08,
+    "kernel_loader": 0.18,
+    "lib": 0.18,
+    "memory": 1.0,
+    "network": 0.15,
+    "process": 1.0,
+    "process / scheduler": 0.13,
+    "process/scheduler": 0.23,
+    "report_generation": 0.28,
+    "scheduler": 0.83,
+    "syscall": 1.0,
+    "syscall / filesystem": 0.23,
+    "test": 0.05,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "syscall",
+      "module_weight": 0.2023,
+      "completeness": 1.0,
+      "final_score": 0.5214
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1951,
+      "completeness": 1.0,
+      "final_score": 0.5171
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.1733,
+      "completeness": 1.0,
+      "final_score": 0.504
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.1368,
+      "completeness": 1.0,
+      "final_score": 0.4821
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.0807,
+      "completeness": 1.0,
+      "final_score": 0.4484
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 14,
+      "outgoing_edge_count": 27,
+      "internal_edge_count": 24,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.8889,
+      "external_call_ratio": 0.1111,
+      "module_weight": 0.0236,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 11,
+      "outgoing_edge_count": 33,
+      "internal_edge_count": 8,
+      "external_edge_count": 25,
+      "internal_call_ratio": 0.2424,
+      "external_call_ratio": 0.7576,
+      "module_weight": 0.0219,
+      "files": [
+        "arch\\loongarch\\linker.ld",
+        "arch\\loongarch\\power.c",
+        "arch\\riscv\\linker.ld",
+        "kernel\\exec.c",
+        "kernel\\sysfile.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "linker.ld",
+          "normalized_name": "ld",
+          "file_path": "arch\\riscv\\linker.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "47",
+          "outgoing_call_count": 10,
+          "summary": "这个链接脚本定义了RISC-V操作系统内核的布局，指定从物理地址0x80200000开始，按.text、.rodata、.data、.bss的顺序放置各个段，并为文本段和数据段分别创建程序头（PT_LOAD，FLAGS分别设为5和6，对应可读可执行与可读可写），同时将.trampoline段页对齐放置，标记了BSS段的起始和结束符号，并丢弃了不需要的段。"
+        },
+        {
+          "name": "linker.ld",
+          "normalized_name": "ld",
+          "file_path": "arch\\loongarch\\linker.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "43",
+          "outgoing_call_count": 10,
+          "summary": "定义了LoongArch架构内核的链接脚本，指定了输出架构、入口点、程序头及内存布局，将各段（.text, .rodata, .data, .bss）映射到特定地址，并抛弃注释和调试信息段。"
+        },
+        {
+          "name": "build_stack",
+          "normalized_name": "build_stack",
+          "file_path": "kernel\\exec.c",
+          "language": "c",
+          "start_line": "241",
+          "end_line": "303",
+          "outgoing_call_count": 2,
+          "summary": "构建用户程序启动时的栈布局，包括设置字符串参数、环境变量、随机数（AT_RANDOM）、辅助向量（auxiliary vectors）以及参数和环境变量的指针数组，最终返回栈指针。"
+        },
+        {
+          "name": "resolve_link_target",
+          "normalized_name": "resolve_link_target",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "324",
+          "end_line": "331",
+          "outgoing_call_count": 2,
+          "summary": "该函数用于解析符号链接的目标路径。如果给定的路径以 '/' 开头（即绝对路径），则直接复制该路径到输出缓冲区；否则，调用 resolve 函数将相对路径转换为绝对路径。"
+        },
+        {
+          "name": "arch_name",
+          "normalized_name": "arch_name",
+          "file_path": "arch\\loongarch\\power.c",
+          "language": "c",
+          "start_line": "64",
+          "end_line": "67",
+          "outgoing_call_count": 1,
+          "summary": "返回一个表示当前架构和平台名称的字符串，用于标识操作系统运行在 loongarch64 架构的 qemu-virt 虚拟平台上。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 32,
+      "outgoing_edge_count": 45,
+      "internal_edge_count": 37,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.8222,
+      "external_call_ratio": 0.1778,
+      "module_weight": 0.0492,
+      "files": [
+        "arch\\loongarch\\power.c",
+        "arch\\riscv\\sbi.c",
+        "drivers/virtio_blk.c",
+        "drivers\\virtio_blk.c",
+        "fs\\ext4\\ext4.c",
+        "include\\kernel\\loongarch.h",
+        "include\\kernel\\riscv.h",
+        "kernel\\sysfile.c",
+        "lib\\printf.c"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "blk_init_pci_legacy",
+          "normalized_name": "blk_init_pci_legacy",
+          "file_path": "drivers/virtio_blk.c",
+          "language": "c",
+          "start_line": "214",
+          "end_line": "263",
+          "outgoing_call_count": 12,
+          "summary": "该函数初始化一个 Legacy 模式的 Virtio 块设备，通过 PCI 总线扫描发现设备，配置 I/O 和中断，设置虚拟队列，并完成设备初始化。"
+        },
+        {
+          "name": "blk_init_mmio",
+          "normalized_name": "blk_init_mmio",
+          "file_path": "drivers\\virtio_blk.c",
+          "language": "c",
+          "start_line": "115",
+          "end_line": "181",
+          "outgoing_call_count": 6,
+          "summary": "初始化 VirtIO 块设备的 MMIO 接口，包括检测设备、设置状态、协商特性、配置虚拟队列，并分别处理 Legacy (v1) 和 Modern (v2) 布局。"
+        },
+        {
+          "name": "virtio_rw",
+          "normalized_name": "virtio_rw",
+          "file_path": "drivers\\virtio_blk.c",
+          "language": "c",
+          "start_line": "275",
+          "end_line": "318",
+          "outgoing_call_count": 6,
+          "summary": "该函数通过virtio协议向virtio块设备发起读写请求（一个扇区），等待设备完成并返回状态。"
+        },
+        {
+          "name": "arch_shutdown",
+          "normalized_name": "arch_shutdown",
+          "file_path": "arch\\riscv\\sbi.c",
+          "language": "c",
+          "start_line": "75",
+          "end_line": "83",
+          "outgoing_call_count": 5,
+          "summary": "通过SBI接口执行系统关机操作，优先尝试系统复位扩展中的关机命令，若失败则回退到旧版SBI关机调用，最后执行arch_halt()确保系统停止。"
+        },
+        {
+          "name": "blk_init",
+          "normalized_name": "blk_init",
+          "file_path": "drivers\\virtio_blk.c",
+          "language": "c",
+          "start_line": "266",
+          "end_line": "273",
+          "outgoing_call_count": 2,
+          "summary": "根据架构选择不同的初始化路径：在LoongArch上调用blk_init_pci_legacy，在其他架构上调用blk_init_mmio。"
+        },
+        {
+          "name": "setup_legacy_vring",
+          "normalized_name": "setup_legacy_vring",
+          "file_path": "drivers\\virtio_blk.c",
+          "language": "c",
+          "start_line": "104",
+          "end_line": "112",
+          "outgoing_call_count": 2,
+          "summary": "初始化传统VirtIO虚拟队列（vring）的内存布局，通过将一段已清零的连续内存区域划分为描述符表、可用环和已用环三个部分。"
+        },
+        {
+          "name": "arch_halt",
+          "normalized_name": "arch_halt",
+          "file_path": "arch\\loongarch\\power.c",
+          "language": "c",
+          "start_line": "47",
+          "end_line": "51",
+          "outgoing_call_count": 2,
+          "summary": "实现系统停机（halt）功能，通过无限循环执行 LoongArch 架构的 idle 指令使 CPU 进入低功耗等待状态。"
+        },
+        {
+          "name": "w_pwch",
+          "normalized_name": "w_pwch",
+          "file_path": "include\\kernel\\loongarch.h",
+          "language": "c",
+          "start_line": "80",
+          "end_line": "80",
+          "outgoing_call_count": 1,
+          "summary": "这个函数是一个内联辅助函数，用于将给定的64位值 x 写入龙芯架构的 PWCH（Performance/Watchpoint?）CSR（控制和状态寄存器）。它封装了 csr_write 宏，提供了更简洁的接口。"
+        },
+        {
+          "name": "emit",
+          "normalized_name": "emit",
+          "file_path": "lib\\printf.c",
+          "language": "c",
+          "start_line": "21",
+          "end_line": "30",
+          "outgoing_call_count": 1,
+          "summary": "该函数用于向指定的输出目标写入一个字符。如果sink结构体中有缓冲区，则尝试将字符写入缓冲区（在缓冲区空间足够时），否则通过uart_putc串口输出；无论是否实际写入，都会递增位置计数器。"
+        },
+        {
+          "name": "r_time",
+          "normalized_name": "r_time",
+          "file_path": "include\\kernel\\riscv.h",
+          "language": "c",
+          "start_line": "55",
+          "end_line": "55",
+          "outgoing_call_count": 1,
+          "summary": "读取 RISC-V 架构中的 time CSR（控制和状态寄存器）的值，返回一个 u64 类型的时间计数。该函数通过内联汇编宏 CSRR 实现，通常用于获取系统启动以来的周期数或时间戳。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "elf_loader": {
+      "module_name": "elf_loader",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 1,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0014,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 106,
+      "outgoing_edge_count": 261,
+      "internal_edge_count": 237,
+      "external_edge_count": 24,
+      "internal_call_ratio": 0.908,
+      "external_call_ratio": 0.092,
+      "module_weight": 0.1951,
+      "files": [
+        "Makefile",
+        "arch\\loongarch\\power.c",
+        "drivers\\virtio_blk.c",
+        "fs/file.c",
+        "fs\\ext4\\ext4.c",
+        "fs\\file.c",
+        "fs\\pipe.c",
+        "include\\fs\\file.h",
+        "include\\fs\\stat.h",
+        "kernel\\exec.c",
+        "kernel\\main.c",
+        "kernel\\sysfile.c",
+        "tools\\smoke-basic-rv.sh",
+        "tools\\smoke-heavy-rv.sh",
+        "tools\\smoke-iozone-rv.sh",
+        "tools\\smoke-public-rv.sh",
+        "tools\\smoke-rv.sh"
+      ],
+      "file_count": 17,
+      "core_functions": [
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "81",
+          "outgoing_call_count": 15,
+          "summary": "该Makefile定义了构建操作系统内核的编译流程，支持RISC-V和LoongArch两种架构。它自动检测交叉编译器，设置编译和链接标志，整理源文件并生成对应架构的二进制内核映像。同时提供了清理、检查和QEMU仿真运行等目标。"
+        },
+        {
+          "name": "cleanup",
+          "normalized_name": "cleanup",
+          "file_path": "tools\\smoke-rv.sh",
+          "language": "bash",
+          "start_line": 10,
+          "end_line": 15,
+          "outgoing_call_count": 15,
+          "summary": "该函数用于在脚本结束时卸载并删除一个挂载点。它首先检查指定目录是否是一个挂载点，如果是则卸载它，然后尝试删除该目录，忽略任何错误。"
+        },
+        {
+          "name": "cleanup",
+          "normalized_name": "cleanup",
+          "file_path": "tools\\smoke-heavy-rv.sh",
+          "language": "bash",
+          "start_line": "8",
+          "end_line": "13",
+          "outgoing_call_count": 15,
+          "summary": "这是一个清理函数，用于卸载挂载点并删除相关目录，确保清理操作不会因错误而中断脚本执行。"
+        },
+        {
+          "name": "cleanup",
+          "normalized_name": "cleanup",
+          "file_path": "tools\\smoke-public-rv.sh",
+          "language": "bash",
+          "start_line": "13",
+          "end_line": "18",
+          "outgoing_call_count": 15,
+          "summary": "该函数用于卸载挂载点并移除对应的目录，清理临时挂载环境。"
+        },
+        {
+          "name": "cleanup",
+          "normalized_name": "cleanup",
+          "file_path": "tools\\smoke-iozone-rv.sh",
+          "language": "bash",
+          "start_line": "11",
+          "end_line": "16",
+          "outgoing_call_count": 15,
+          "summary": "该函数用于卸载文件系统并删除挂载点目录，实现资源清理。"
+        },
+        {
+          "name": "cleanup",
+          "normalized_name": "cleanup",
+          "file_path": "tools\\smoke-basic-rv.sh",
+          "language": "bash",
+          "start_line": "13",
+          "end_line": "18",
+          "outgoing_call_count": 15,
+          "summary": "卸载挂载点并删除目录，用于清理临时挂载的残留"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "351",
+          "end_line": "430",
+          "outgoing_call_count": 13,
+          "summary": "实现了sys_openat系统调用，解析用户态传入的路径、标志等参数，先进行路径解析和权限检查，然后根据文件类型（设备文件、RAMFS文件、ext4磁盘文件）创建或打开文件，分配文件描述符并返回给用户。"
+        },
+        {
+          "name": "ext4_readdir_from",
+          "normalized_name": "ext4_readdir_from",
+          "file_path": "fs\\ext4\\ext4.c",
+          "language": "c",
+          "start_line": 271,
+          "end_line": 322,
+          "outgoing_call_count": 9,
+          "summary": "{\n  \"block_id\": \"block_492\",\n  \"file_path\": \"fs\\\\ext4\\\\ext4.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"271\",\n  \"end_line\": \"322\",\n  \"name\": \"ext4_readdir_from\",\n  \"type\": \"function\",\n  \"summary\": \"遍历 ext4 目录项的读目录函数，从指定偏移开始读取目录条目，对每个非空条目调用回调函数执行操作，并更新偏移量。\",\n  \"logic_steps\": [\n    \"第1步：读取目录的 inode（160字节到u8 inode[160]），若失败返回 -1；从 inode 中获取目录文件的大小 size 和块大小 fs.block_size。\",\n    \"第2步：初始化偏移 off 为 offp 指向的值（如果 offp 非空）或 0；如果 off 超过目录大小，则对齐到 size。\",\n    \"第3步：进入循环，当 off < size 时：计算当前块基址 block_base = off & ~(block_size-1)，块内偏移 pos = off - block_base。\",\n    \"第4步：通过 extent_map 函数将逻辑块号（block_base / block_size）转换为物理块号 phys；若 phys == 0，则跳过整个块，off 前进一个块，继续下一轮循环。\",\n    \"第5步：调用 read_block(phys, blk) 读取物理块数据到 blk，失败返回 -1。\",\n    \"第6步：在块内 while 循环中，从 pos 开始解析目录条目：读取 child inode号（4字节）、rec_len（2字节）、name_len（1字节）、ftype（1字节）。若 rec_len < 8 则跳转到 done 标签结束遍历。\",\n    \"第7步：如果 child != 0 且 name_len > 0，则拷贝名字到 name 缓冲区并加 '\\0'，调用回调函数 cb(name, child, ftype, arg)。如果回调返回非0（表示用户希望停止），则更新 offp 并返回 0。\",\n    \"第8步：无论是否回调，更新 off = block_base + pos + rec_len，pos += rec_len，继续块内循环。\",\n    \"第9步：如果块内循环结束后 off 仍小于 block_base + block_size，则将其修正为该块末尾。\",\n    \"第10步：当整个 while 循环结束（off >= size）或提前跳转到 done 时，更新 offp，返回 0。\"\n  ],\n  \"called_functions\": [\n    \"read_inode\",\n    \"inode_size_bytes\",\n    \"extent_map\",\n    \"read_block\",\n    \"le16\",\n    \"le32\",\n    \"memcpy\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"代码读取 ext4 目录 inode，使用 extent_map 获取物理块，解析目录条目结构（inode号、rec_len、name_len、ftype），调用回调处理每一个有效的目录项，明显是文件系统子系统的目录遍历功能。\",\n  \"uncertainty\": \"无\"\n}"
+        },
+        {
+          "name": "sys_readlinkat",
+          "normalized_name": "sys_readlinkat",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "774",
+          "end_line": "811",
+          "outgoing_call_count": 9,
+          "summary": "实现 readlinkat 系统调用，读取符号链接的目标路径；针对 /proc/self/exe 等特殊路径模拟目标内容，否则从 ramfs 中查找符号链接节点并返回目标字符串。"
+        },
+        {
+          "name": "file_read",
+          "normalized_name": "file_read",
+          "file_path": "fs\\file.c",
+          "language": "c",
+          "start_line": "625",
+          "end_line": "671",
+          "outgoing_call_count": 8,
+          "summary": "从文件对象中读取数据到用户空间，根据文件类型（设备、管道、套接字、inode或ramfs）选择不同的底层读取函数，并处理分块拷贝与偏移更新。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 50,
+      "outgoing_edge_count": 77,
+      "internal_edge_count": 46,
+      "external_edge_count": 31,
+      "internal_call_ratio": 0.5974,
+      "external_call_ratio": 0.4026,
+      "module_weight": 0.0788,
+      "files": [
+        "arch/loongarch/trap.c",
+        "arch\\loongarch\\power.c",
+        "arch\\loongarch\\trap.c",
+        "arch\\loongarch\\trapentry.S",
+        "arch\\loongarch\\usertrap.c",
+        "arch\\riscv\\sbi.c",
+        "arch\\riscv\\timer.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trapentry.S",
+        "arch\\riscv\\usertrap.c",
+        "include\\kernel\\loongarch.h",
+        "include\\kernel\\proc.h",
+        "include\\kernel\\riscv.h"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "usertrap",
+          "normalized_name": "usertrap",
+          "file_path": "arch\\riscv\\usertrap.c",
+          "language": "c",
+          "start_line": "18",
+          "end_line": "57",
+          "outgoing_call_count": 31,
+          "summary": "该函数是用户态异常/中断的入口处理函数，负责从用户态捕获异常（系统调用、缺页异常等）和中断，并调度相应处理，最后返回用户态。"
+        },
+        {
+          "name": "usertrap",
+          "normalized_name": "usertrap",
+          "file_path": "arch\\loongarch\\usertrap.c",
+          "language": "c",
+          "start_line": "15",
+          "end_line": "45",
+          "outgoing_call_count": 31,
+          "summary": "用户态陷阱处理函数，处理系统调用、外部中断、缺页异常及未知异常，最终返回用户态。"
+        },
+        {
+          "name": "usertrapret",
+          "normalized_name": "usertrapret",
+          "file_path": "arch\\loongarch\\usertrap.c",
+          "language": "c",
+          "start_line": "47",
+          "end_line": "62",
+          "outgoing_call_count": 21,
+          "summary": "这个函数负责从内核陷阱处理返回到用户空间执行，它设置必要的寄存器（如S0/S1、页表基址、ASID、异常返回地址和权限模式），并最终恢复用户线程的上下文（trapframe）以跳回用户态。"
+        },
+        {
+          "name": "usertrapret",
+          "normalized_name": "usertrapret",
+          "file_path": "arch\\riscv\\usertrap.c",
+          "language": "c",
+          "start_line": "60",
+          "end_line": "84",
+          "outgoing_call_count": 21,
+          "summary": "该函数用于从内核态返回到用户态，设置相关控制寄存器并跳转到用户态返回代码。"
+        },
+        {
+          "name": "kerneltrap",
+          "normalized_name": "kerneltrap",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "33",
+          "end_line": "59",
+          "outgoing_call_count": 12,
+          "summary": "处理RISC-V内核态下的中断或异常（trap），检查合法性，分发设备中断，并在时钟中断时触发内核线程的抢占调度。"
+        },
+        {
+          "name": "timer_init",
+          "normalized_name": "timer_init",
+          "file_path": "arch\\loongarch\\trap.c",
+          "language": "c",
+          "start_line": "24",
+          "end_line": "29",
+          "outgoing_call_count": 8,
+          "summary": "该函数初始化定时器，通过清除定时器中断、禁用定时器配置、并在中断使能寄存器中屏蔽定时器中断来实现定时器的禁用或复位。"
+        },
+        {
+          "name": "timer_init",
+          "normalized_name": "timer_init",
+          "file_path": "arch\\riscv\\timer.c",
+          "language": "c",
+          "start_line": "14",
+          "end_line": "19",
+          "outgoing_call_count": 8,
+          "summary": "初始化RISC-V架构的时钟中断：使能监督模式定时器中断并设置第一个时钟滴答。"
+        },
+        {
+          "name": "dev_intr",
+          "normalized_name": "dev_intr",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "15",
+          "end_line": "31",
+          "outgoing_call_count": 5,
+          "summary": "该函数根据传入的异常原因（scause）判断是否为设备中断，并处理RISC-V特权级下的定时器中断和软件中断。如果中断类型为定时器中断，则调用timer_tick进行定时器滴答处理并返回2；若为软件中断，则清除SSIP位后返回1；对于外部中断，由于当前未使能外部中断源，仅返回1；其他非中断或未识别情况返回0。"
+        },
+        {
+          "name": "dev_intr",
+          "normalized_name": "dev_intr",
+          "file_path": "arch\\loongarch\\trap.c",
+          "language": "c",
+          "start_line": "31",
+          "end_line": "40",
+          "outgoing_call_count": 5,
+          "summary": "判断异常是否为设备中断，并处理定时器中断。"
+        },
+        {
+          "name": "trap_init",
+          "normalized_name": "trap_init",
+          "file_path": "arch/loongarch/trap.c",
+          "language": "c",
+          "start_line": "11",
+          "end_line": "16",
+          "outgoing_call_count": 4,
+          "summary": "初始化LoongArch架构的中断和异常处理入口，并启用浮点运算单元。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\proc.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "signal_terminates_remote",
+          "normalized_name": "signal_terminates_remote",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "283",
+          "end_line": "287",
+          "outgoing_call_count": 0,
+          "summary": "判断给定的信号编号是否会导致远程进程终止。该函数检查信号是否为SIGHUP(1)、SIGINT(2)、SIGQUIT(3)、SIGABRT(6)、SIGKILL(9)、SIGPIPE(13)、SIGALRM(14)或SIGTERM(15)，这些信号通常会导致进程终止。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "kernel (通用工具函数，可能被网络、存储或文件系统等模块使用)": {
+      "module_name": "kernel (通用工具函数，可能被网络、存储或文件系统等模块使用)",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0011,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "kernel_loader": {
+      "module_name": "kernel_loader",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 1,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0014,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "lib": {
+      "module_name": "lib",
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 2,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0017,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 88,
+      "outgoing_edge_count": 256,
+      "internal_edge_count": 170,
+      "external_edge_count": 86,
+      "internal_call_ratio": 0.6641,
+      "external_call_ratio": 0.3359,
+      "module_weight": 0.1733,
+      "files": [
+        "arch\\loongarch\\mmu.c",
+        "arch\\loongarch\\trapentry.S",
+        "arch\\riscv\\fdt.c",
+        "arch\\riscv\\mmu.c",
+        "fs\\ext4\\ext4.c",
+        "fs\\file.c",
+        "include\\kernel\\addr.h",
+        "include\\kernel\\loongarch.h",
+        "include\\kernel\\proc.h",
+        "include\\kernel\\riscv.h",
+        "kernel\\proc.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c",
+        "kernel\\sysproc.c",
+        "lib\\string.c",
+        "mm\\kheap.c",
+        "mm\\pmm.c"
+      ],
+      "file_count": 17,
+      "core_functions": [
+        {
+          "name": "uvmprotect",
+          "normalized_name": "uvmprotect",
+          "file_path": "arch\\loongarch\\mmu.c",
+          "language": "c",
+          "start_line": "238",
+          "end_line": "286",
+          "outgoing_call_count": 21,
+          "summary": "该函数用于修改或设置用户虚拟地址区间的页表权限，并可选地分配缺失的物理页。它遍历指定虚拟地址范围的所有页，检查每个页的PTE，根据权限参数调整页表项，处理写时复制（COW）页面的复制，并最终刷新TLB。"
+        },
+        {
+          "name": "uvmprotect",
+          "normalized_name": "uvmprotect",
+          "file_path": "arch\\riscv\\mmu.c",
+          "language": "c",
+          "start_line": "214",
+          "end_line": "263",
+          "outgoing_call_count": 21,
+          "summary": "修改或设置用户页表指定虚拟地址范围（va到va+len）的页权限（perm）。支持按需分配缺失页（alloc_missing），处理写入COW页时触发的复制，以及清除页（perm为0时释放物理页）。"
+        },
+        {
+          "name": "uvmcow",
+          "normalized_name": "uvmcow",
+          "file_path": "arch\\loongarch\\mmu.c",
+          "language": "c",
+          "start_line": "219",
+          "end_line": "236",
+          "outgoing_call_count": 19,
+          "summary": "实现写时复制（Copy-on-Write）页面异常处理：检查给定虚拟地址对应的页表项，如果是COW标记页，则分配新物理页，复制原页内容，更新页表权限为可写，并释放原物理页。"
+        },
+        {
+          "name": "uvmcow",
+          "normalized_name": "uvmcow",
+          "file_path": "arch\\riscv\\mmu.c",
+          "language": "c",
+          "start_line": "195",
+          "end_line": "212",
+          "outgoing_call_count": 19,
+          "summary": "实现写时复制（COW）处理：当用户页表发生写时复制页错误时，为指定虚拟地址分配新物理页并复制旧页内容，同时更新页表项以赋予写权限并清除COW标记。"
+        },
+        {
+          "name": "uvmcopy_cow",
+          "normalized_name": "uvmcopy_cow",
+          "file_path": "arch\\riscv\\mmu.c",
+          "language": "c",
+          "start_line": "173",
+          "end_line": "193",
+          "outgoing_call_count": 17,
+          "summary": "这个函数在复制页表时（通常用于fork）实现写时复制（Copy-on-Write）机制。它遍历旧页表的虚拟地址范围，将每个有效物理页的引用计数增加，并将旧页表中具有写权限的页表项修改为只读并置COW标志，然后将映射（相同物理地址、修改后的标志）添加到新页表中。如果映射失败，会释放刚增加的页引用。最后执行sfence_vma刷新TLB。"
+        },
+        {
+          "name": "uvmcopy_cow",
+          "normalized_name": "uvmcopy_cow",
+          "file_path": "arch\\loongarch\\mmu.c",
+          "language": "c",
+          "start_line": "195",
+          "end_line": "217",
+          "outgoing_call_count": 17,
+          "summary": "实现进程fork时页表的写时复制（Copy-on-Write）复制。对于旧页表中可写的页，清除脏位并设置COW标志，然后复制页表项到新页表，并增加物理页引用计数。遍历完成后刷新TLB。"
+        },
+        {
+          "name": "uvmcopy_page",
+          "normalized_name": "uvmcopy_page",
+          "file_path": "arch\\riscv\\mmu.c",
+          "language": "c",
+          "start_line": "139",
+          "end_line": "156",
+          "outgoing_call_count": 17,
+          "summary": "从旧页表复制一个物理页的内容到新页表，分配新物理页并拷贝内容，然后映射到新页表对应的虚拟地址上，用于进程 fork 等场景。"
+        },
+        {
+          "name": "uvmcopy_page",
+          "normalized_name": "uvmcopy_page",
+          "file_path": "arch\\loongarch\\mmu.c",
+          "language": "c",
+          "start_line": "161",
+          "end_line": "178",
+          "outgoing_call_count": 17,
+          "summary": "将指定虚拟地址对应的物理页复制到新页表中，实现页级复制（常用于进程fork时的内存复制）。"
+        },
+        {
+          "name": "uvmshare_page",
+          "normalized_name": "uvmshare_page",
+          "file_path": "arch\\loongarch\\mmu.c",
+          "language": "c",
+          "start_line": "180",
+          "end_line": "193",
+          "outgoing_call_count": 15,
+          "summary": "该函数用于在页表之间共享一个物理页面。它首先在旧页表中查找虚拟地址对应的页表项，如果存在且有效，则增加该物理页面的引用计数，然后在新页表中建立相同的映射。如果映射失败，则释放引用并返回错误。"
+        },
+        {
+          "name": "uvmshare_page",
+          "normalized_name": "uvmshare_page",
+          "file_path": "arch\\riscv\\mmu.c",
+          "language": "c",
+          "start_line": "158",
+          "end_line": "171",
+          "outgoing_call_count": 15,
+          "summary": "将旧页表中的一个虚拟页映射共享到新页表，增加物理页引用计数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "fs\\file.c",
+        "fs\\pipe.c",
+        "include\\kernel\\riscv.h",
+        "kernel\\exec.c",
+        "kernel\\main.c",
+        "kernel\\sysfile.c"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "script_phase",
+          "normalized_name": "script_phase",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "189",
+          "end_line": "214",
+          "outgoing_call_count": 10,
+          "summary": "该函数用于根据脚本路径判断脚本所属的测试阶段（phase），返回一个表示不同测试类型的整数。通过一系列后缀或专用函数检查，将路径映射到0到11的阶段编号。"
+        },
+        {
+          "name": "run_test_scripts",
+          "normalized_name": "run_test_scripts",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "254",
+          "end_line": "277",
+          "outgoing_call_count": 5,
+          "summary": "该函数遍历指定目录下收集到的测试脚本列表，排序后使用busybox的sh解释器依次执行每个脚本，并记录执行结果。"
+        },
+        {
+          "name": "pipe_alloc",
+          "normalized_name": "pipe_alloc",
+          "file_path": "fs\\pipe.c",
+          "language": "c",
+          "start_line": 20,
+          "end_line": 39,
+          "outgoing_call_count": 4,
+          "summary": "{\n  \"block_id\": \"block_471\",\n  \"file_path\": \"fs\\pipe.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"20\",\n  \"end_line\": \"39\",\n  \"name\": \"pipe_alloc\",\n  \"type\": \"function\",\n  \"summary\": \"分配并初始化一个管道，创建一对文件描述符分别用于读端和写端\",\n  \"logic_steps\": [\n    \"分配一个 struct pipe 结构体内存，若失败返回 -1\",\n    \"分配读端和写端两个 struct file 结构体，若有任一分配失败，则清理已分配的文件和管道内存后返回 -1\",\n    \"初始化管道状态：readopen 和 writeopen 都设为 1，nread 和 nwrite 设为 0\",\n    \"设置读端文件描述符：type 为 FD_PIPE，只读不可写，pipe 指向已分配的管道\",\n    \"设置写端文件描述符：type 为 FD_PIPE，只写不可读，pipe 指向同一管道\",\n    \"成功返回 0\"\n  ],\n  \"called_functions\": [\n    \"kzalloc\",\n    \"file_alloc\",\n    \"file_close\",\n    \"kfree\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"函数名为 pipe_alloc，操作了 struct pipe 和 struct file，设置文件类型为 FD_PIPE，并管理读/写权限，符合文件系统中管道分配的典型实现\",\n  \"uncertainty\": \"未知 kzalloc 是否包含错误处理或内存清零细节，但不影响整体逻辑判断\"\n}"
+        },
+        {
+          "name": "sort_scripts",
+          "normalized_name": "sort_scripts",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "216",
+          "end_line": "232",
+          "outgoing_call_count": 3,
+          "summary": "该函数实现了一个插入排序算法，用于按照脚本的阶段和路径字典序对脚本列表进行排序。它使用嵌套循环遍历列表，并通过比较相邻元素的阶段值（script_phase）和路径字符串（strcmp）来决定是否交换位置，最终使列表按阶段升序且同阶段按路径升序排列。"
+        },
+        {
+          "name": "add_script",
+          "normalized_name": "add_script",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "143",
+          "end_line": "151",
+          "outgoing_call_count": 2,
+          "summary": "该函数尝试向脚本列表添加一个新脚本，首先检查列表是否已满，若未满则增加计数并从路径参数复制脚本路径，同时调用 parent_dir 计算并存储脚本的当前工作目录（cwd）。"
+        },
+        {
+          "name": "socket_bind_ephemeral",
+          "normalized_name": "socket_bind_ephemeral",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "141",
+          "end_line": "162",
+          "outgoing_call_count": 2,
+          "summary": "将一个未绑定的套接字绑定到一个临时端口（ephemeral port）上，端口范围从49152开始，最多尝试16384个端口，成功则注册该套接字，失败则返回错误。"
+        },
+        {
+          "name": "socket_enqueue_user",
+          "normalized_name": "socket_enqueue_user",
+          "file_path": "fs\\file.c",
+          "language": "c",
+          "start_line": "595",
+          "end_line": "616",
+          "outgoing_call_count": 2,
+          "summary": "将用户空间的数据复制到目标文件（socket）的接收环形缓冲区中，处理空间不足和缓冲区环绕的情况，并更新缓冲区长度。"
+        },
+        {
+          "name": "socket_dequeue_user",
+          "normalized_name": "socket_dequeue_user",
+          "file_path": "fs\\file.c",
+          "language": "c",
+          "start_line": "574",
+          "end_line": "593",
+          "outgoing_call_count": 2,
+          "summary": "将socket接收缓冲区中的数据拷贝到用户态地址空间，每次拷贝一个连续块，直到满足请求长度或缓冲区为空。"
+        },
+        {
+          "name": "is_lua_script",
+          "normalized_name": "is_lua_script",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": 92,
+          "end_line": 95,
+          "outgoing_call_count": 1,
+          "summary": "{\n  \"block_id\": \"block_165\",\n  \"file_path\": \"kernel\\\\main.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"92\",\n  \"end_line\": \"95\",\n  \"name\": \"is_lua_script\",\n  \"type\": \"function\",\n  \"summary\": \"判断给定路径是否以'/lua_testcode.sh'结尾，用于检测是否为Lua脚本文件。\",\n  \"logic_steps\": [\n    \"调用has_suffix函数，检查path字符串是否以后缀'/lua_testcode.sh'结尾\",\n    \"返回检查结果（布尔值）\"\n  ],\n  \"called_functions\": [\n    \"has_suffix\"\n  ],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"函数体仅包含return has_suffix(path, \"/lua_testcode.sh\");，表示其功能为后缀匹配判断。没有其他上下文表明该函数属于哪个操作系统模块。\",\n  \"uncertainty\": \"由于函数名和实现与'lua脚本'的常见概念不一致（lua脚本通常以.lua结尾，而非.sh），且缺乏调用场景信息，无法确定其真实用途和所属模块。可能为测试或特殊用途函数。\"\n}"
+        },
+        {
+          "name": "is_netperf_script",
+          "normalized_name": "is_netperf_script",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "72",
+          "end_line": "75",
+          "outgoing_call_count": 1,
+          "summary": "检查给定路径是否以 '/netperf_testcode.sh' 结尾，用于判断该路径是否指向一个名为 netperf_testcode.sh 的脚本文件。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 60,
+      "outgoing_edge_count": 239,
+      "internal_edge_count": 197,
+      "external_edge_count": 42,
+      "internal_call_ratio": 0.8243,
+      "external_call_ratio": 0.1757,
+      "module_weight": 0.1368,
+      "files": [
+        "arch\\loongarch\\usertrap.c",
+        "arch\\riscv\\trampoline.S",
+        "arch\\riscv\\usertrap.c",
+        "fs\\file.c",
+        "include\\kernel\\elf.h",
+        "include\\kernel\\proc.h",
+        "kernel/proc.c",
+        "kernel\\cpu.c",
+        "kernel\\elf.c",
+        "kernel\\exec.c",
+        "kernel\\proc.c",
+        "kernel\\sysproc.c"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "setup_image_depth",
+          "normalized_name": "setup_image_depth",
+          "file_path": "kernel\\exec.c",
+          "language": "c",
+          "start_line": "308",
+          "end_line": "442",
+          "outgoing_call_count": 18,
+          "summary": "该函数解析并加载一个可执行映像（普通程序或脚本），为进程设置新的页表、栈、现场信息，并处理深度递归（如 busybox 软链接、shebang 脚本解释器）。支持从 ext4 或 ramfs 读取文件，加载 ELF 文件及其动态链接器，最终更新进程的页表、大小、中断帧等。"
+        },
+        {
+          "name": "clone",
+          "normalized_name": "clone",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "376",
+          "end_line": "484",
+          "outgoing_call_count": 16,
+          "summary": "实现Linux clone系统调用的核心逻辑，根据flags参数创建进程或线程（共享地址空间），复制父进程的资源（内存页、文件描述符、VMA、信号处理等），并设置子进程的陷阱帧、TLS、线程ID、父子关系等，最终将子进程状态设为RUNNABLE。"
+        },
+        {
+          "name": "elf_load",
+          "normalized_name": "elf_load",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "24",
+          "end_line": "120",
+          "outgoing_call_count": 10,
+          "summary": "该函数解析并加载ELF可执行文件到进程页表，支持ET_EXEC和ET_DYN类型，处理程序头中的PT_LOAD、PT_INTERP、PT_PHDR段，分配物理内存并拷贝文件内容，填充elf_info结构体。"
+        },
+        {
+          "name": "exec_replace",
+          "normalized_name": "exec_replace",
+          "file_path": "kernel\\exec.c",
+          "language": "c",
+          "start_line": "491",
+          "end_line": "513",
+          "outgoing_call_count": 7,
+          "summary": "该函数用于将当前进程的用户空间映像替换为一个新程序的映像，通过调用 setup_image 进行实际加载，并在失败时恢复中断状态，成功时释放旧映像并更新进程名称。"
+        },
+        {
+          "name": "proc",
+          "normalized_name": "proc",
+          "file_path": "include\\kernel\\proc.h",
+          "language": "c",
+          "start_line": "68",
+          "end_line": "101",
+          "outgoing_call_count": 7,
+          "summary": "定义了操作系统中进程控制块（PCB）的结构体，用于存储进程的完整状态信息，包括进程基本属性、调度上下文、内存管理、文件系统相关字段以及线程支持等。"
+        },
+        {
+          "name": "proc_handle_page_fault",
+          "normalized_name": "proc_handle_page_fault",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "174",
+          "end_line": "228",
+          "outgoing_call_count": 7,
+          "summary": "处理进程的页错误，通过尝试写时复制、共享内存、栈扩展、VMA权限调整以及跨进程页面复制等机制来解析虚拟地址的缺页。"
+        },
+        {
+          "name": "exec_user_cwd",
+          "normalized_name": "exec_user_cwd",
+          "file_path": "kernel\\exec.c",
+          "language": "c",
+          "start_line": "451",
+          "end_line": "483",
+          "outgoing_call_count": 7,
+          "summary": "分配进程结构体，设置标准文件描述符，加载用户程序镜像并初始化进程上下文，最后将进程状态设为可运行。"
+        },
+        {
+          "name": "proc_kill",
+          "normalized_name": "proc_kill",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "304",
+          "end_line": "345",
+          "outgoing_call_count": 7,
+          "summary": "向指定进程或进程组发送信号，并处理信号传递和进程终止逻辑。"
+        },
+        {
+          "name": "proc_exit_signal",
+          "normalized_name": "proc_exit_signal",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "267",
+          "end_line": "281",
+          "outgoing_call_count": 6,
+          "summary": "该函数处理进程因信号而退出的流程。它先关闭中断，如果是线程则释放线程资源并重新调度（不应返回），否则将进程标记为僵尸状态（状态码包含信号编号）并重新调度，两个路径后都应有panic表示不应返回。"
+        },
+        {
+          "name": "proc_exit",
+          "normalized_name": "proc_exit",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "251",
+          "end_line": "265",
+          "outgoing_call_count": 6,
+          "summary": "该函数实现进程退出逻辑，先关闭中断，对于线程调用proc_release_thread释放线程资源，否则将进程转变为僵尸状态，最终通过sched()调度到其他进程。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process / scheduler": {
+      "module_name": "process / scheduler",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 0,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0014,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process/scheduler": {
+      "module_name": "process/scheduler",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 3,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "report_generation": {
+      "module_name": "report_generation",
+      "function_count": 4,
+      "outgoing_edge_count": 8,
+      "internal_edge_count": 3,
+      "external_edge_count": 5,
+      "internal_call_ratio": 0.375,
+      "external_call_ratio": 0.625,
+      "module_weight": 0.0068,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 13,
+      "outgoing_edge_count": 20,
+      "internal_edge_count": 19,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.95,
+      "external_call_ratio": 0.05,
+      "module_weight": 0.0205,
+      "files": [
+        "arch\\loongarch\\power.c",
+        "arch\\loongarch\\swtch.S",
+        "arch\\riscv\\swtch.S",
+        "include\\kernel\\proc.h",
+        "kernel\\proc.c",
+        "kernel\\syscall.c"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "yield",
+          "normalized_name": "yield",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "596",
+          "end_line": "607",
+          "outgoing_call_count": 6,
+          "summary": "当前进程主动让出CPU，将状态设为RUNNABLE并调用调度器，同时管理中断状态以确保安全上下文切换。"
+        },
+        {
+          "name": "scheduler",
+          "normalized_name": "scheduler",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "656",
+          "end_line": "687",
+          "outgoing_call_count": 5,
+          "summary": "这个代码块是操作系统的核心调度器函数。它在一个无限循环中遍历进程表，选择处于RUNNABLE状态的进程，将其状态切换为RUNNING，并执行上下文切换到该进程。当进程主动让出CPU（通过swtch返回）后，调度器继续遍历。如果所有进程都不可运行，则检查是否有进程处于SLEEPING状态，若有则使CPU空闲等待中断，否则结束调度循环返回。"
+        },
+        {
+          "name": "sched",
+          "normalized_name": "sched",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "588",
+          "end_line": "594",
+          "outgoing_call_count": 5,
+          "summary": "执行进程上下文切换，将当前进程的CPU上下文保存后切换到当前CPU的调度器上下文中。"
+        },
+        {
+          "name": "arch_idle",
+          "normalized_name": "arch_idle",
+          "file_path": "arch\\loongarch\\power.c",
+          "language": "c",
+          "start_line": "99",
+          "end_line": "102",
+          "outgoing_call_count": 2,
+          "summary": "arch_idle函数用于执行LoongArch架构的空闲指令（idle 0），使处理器进入低功耗空闲状态，通常在没有任务可执行时由内核调度器调用。"
+        },
+        {
+          "name": "swtch",
+          "normalized_name": "swtch",
+          "file_path": "arch\\loongarch\\swtch.S",
+          "language": "assembly",
+          "start_line": "6",
+          "end_line": "33",
+          "outgoing_call_count": 0,
+          "summary": "保存当前执行上下文的被调用者保存寄存器（callee-saved registers）到旧任务栈中，然后从新任务栈中恢复这些寄存器，最后跳转回恢复后的返回地址，实现线程或进程的上下文切换。"
+        },
+        {
+          "name": "swtch",
+          "normalized_name": "swtch",
+          "file_path": "arch\\riscv\\swtch.S",
+          "language": "assembly",
+          "start_line": "5",
+          "end_line": "37",
+          "outgoing_call_count": 0,
+          "summary": "实现RISC-V架构下的任务上下文切换，将当前CPU寄存器状态保存到第一个参数指向的结构体中，并从第二个参数指向的结构体中恢复寄存器状态，然后返回。"
+        },
+        {
+          "name": "cpu",
+          "normalized_name": "cpu",
+          "file_path": "include\\kernel\\proc.h",
+          "language": "c",
+          "start_line": 106,
+          "end_line": 111,
+          "outgoing_call_count": 0,
+          "summary": "定义了CPU结构体，用于描述每个CPU核心的运行时状态，包括当前运行的进程、调度器上下文、中断嵌套深度以及中断使能标志。"
+        },
+        {
+          "name": "sched_policy_valid",
+          "normalized_name": "sched_policy_valid",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "305",
+          "end_line": "310",
+          "outgoing_call_count": 0,
+          "summary": "检查给定的调度策略值是否属于预定义的合法策略集合。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 95,
+      "outgoing_edge_count": 329,
+      "internal_edge_count": 322,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.9787,
+      "external_call_ratio": 0.0213,
+      "module_weight": 0.2023,
+      "files": [
+        "arch\\riscv\\sbi.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c",
+        "kernel\\sysproc.c",
+        "tools\\hello.S",
+        "tools\\init.S"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "558",
+          "end_line": "751",
+          "outgoing_call_count": 118,
+          "summary": "系统调用的主分发函数，从当前进程的 trapframe 中读取系统调用号，并通过 switch-case 调用对应的处理函数或直接返回固定值，最后将返回值写入 trapframe 的 a0 寄存器。"
+        },
+        {
+          "name": "sys_statx",
+          "normalized_name": "sys_statx",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "894",
+          "end_line": "948",
+          "outgoing_call_count": 13,
+          "summary": "实现 sys_statx 系统调用，获取文件或目录的统计信息（如 inode、大小、模式）并填入 statx 结构体返回给用户空间。"
+        },
+        {
+          "name": "sys_mmap",
+          "normalized_name": "sys_mmap",
+          "file_path": "kernel\\sysproc.c",
+          "language": "c",
+          "start_line": "592",
+          "end_line": "692",
+          "outgoing_call_count": 12,
+          "summary": "实现 mmap 系统调用的核心逻辑，用于将文件或匿名页映射到进程的虚拟地址空间。处理参数解析（地址、长度、保护标志、映射标志、文件描述符、偏移量），进行权限校验、映射地址计算（支持 MAP_FIXED、MAP_FIXED_NOREPLACE 和自动分配），管理虚拟内存区域（VMA），根据需要分配物理内存或借用 RAMFS 页面，并执行页面读取和数据映射。"
+        },
+        {
+          "name": "sys_shmat",
+          "normalized_name": "sys_shmat",
+          "file_path": "kernel\\sysproc.c",
+          "language": "c",
+          "start_line": "834",
+          "end_line": "877",
+          "outgoing_call_count": 8,
+          "summary": "实现共享内存的attach功能：通过进程的trapframe获取参数（共享内存id、请求地址、标志），查找共享内存段，计算并校验映射地址，最终将共享内存页映射到进程地址空间，并维护引用计数和VMA记录。"
+        },
+        {
+          "name": "sys_fstatat",
+          "normalized_name": "sys_fstatat",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "699",
+          "end_line": "729",
+          "outgoing_call_count": 8,
+          "summary": "实现系统调用 fstatat，根据进程参数获取文件或目录的状态信息（inode、大小、模式、块数等），并拷贝回用户空间。"
+        },
+        {
+          "name": "sys_connect",
+          "normalized_name": "sys_connect",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "1237",
+          "end_line": "1279",
+          "outgoing_call_count": 7,
+          "summary": "实现 connect 系统调用，用于将套接字连接到指定的远程端口。处理两种套接字类型：对于 SOCK_DGRAM（数据报）套接字，直接标记为已连接；对于 SOCK_STREAM（流）套接字，查找监听套接字并建立双向 peer 连接，同时将新的服务器端套接字存入监听套接字的 sock_pending 字段，代表待处理的连接。"
+        },
+        {
+          "name": "sys_sendto",
+          "normalized_name": "sys_sendto",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "1301",
+          "end_line": "1327",
+          "outgoing_call_count": 6,
+          "summary": "实现 sendto 系统调用，根据套接字类型（SOCK_STREAM 或 SOCK_DGRAM）执行不同的发送操作。对于 SOCK_STREAM 直接调用 file_write；对于 SOCK_DGRAM 则进行地址绑定、查找目标套接字，然后调用 socket_deliver_user 传送数据。"
+        },
+        {
+          "name": "sys_futex",
+          "normalized_name": "sys_futex",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "264",
+          "end_line": "297",
+          "outgoing_call_count": 6,
+          "summary": "实现futex系统调用，处理FUTEX_WAIT/FUTEX_WAIT_BITSET和FUTEX_WAKE/FUTEX_WAKE_BITSET操作，用于用户态线程同步。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "tools\\init.S",
+          "language": "assembly",
+          "start_line": "5",
+          "end_line": "18",
+          "outgoing_call_count": 6,
+          "summary": "该代码块是程序入口点_start，通过系统调用输出一条消息到标准输出，然后调用exit系统调用退出程序。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "tools\\hello.S",
+          "language": "assembly",
+          "start_line": "3",
+          "end_line": "16",
+          "outgoing_call_count": 6,
+          "summary": "该代码块是RISC-V汇编程序的入口点_start，通过系统调用输出一条消息，然后退出程序。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall / filesystem": {
+      "module_name": "syscall / filesystem",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 3,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "tools\\contest.sh"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "ensure_testsuite",
+          "normalized_name": "ensure_testsuite",
+          "file_path": "tools\\contest.sh",
+          "language": "bash",
+          "start_line": "18",
+          "end_line": "26",
+          "outgoing_call_count": 3,
+          "summary": "确保测试套件目录存在且包含有效内容，若目录无效则重新克隆指定分支的测试仓库。"
+        },
+        {
+          "name": "docker_run",
+          "normalized_name": "docker_run",
+          "file_path": "tools\\contest.sh",
+          "language": "bash",
+          "start_line": "10",
+          "end_line": "12",
+          "outgoing_call_count": 1,
+          "summary": "该函数定义了一个简易的 Docker 封装命令，用于在指定镜像中以 /work 工作目录运行传入的命令或脚本。它自动挂载一个外部目录（由变量 root 定义）到容器内的 /work 目录，并设置工作目录为 /work，容器运行后自动删除。"
+        },
+        {
+          "name": "testsuite_docker",
+          "normalized_name": "testsuite_docker",
+          "file_path": "tools\\contest.sh",
+          "language": "bash",
+          "start_line": "14",
+          "end_line": "16",
+          "outgoing_call_count": 1,
+          "summary": "定义了一个便利函数 testsuite_docker，用于在 Docker 容器中执行测试命令，简化 docker run 的调用参数。"
+        },
+        {
+          "name": "find_test_image",
+          "normalized_name": "find_test_image",
+          "file_path": "tools\\contest.sh",
+          "language": "bash",
+          "start_line": "28",
+          "end_line": "59",
+          "outgoing_call_count": 1,
+          "summary": "找到测试用的磁盘镜像文件，支持环境变量指定、指定架构的预压缩或未压缩镜像，以及通用查找，如果没有找到则报错退出。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 51,
+      "outgoing_edge_count": 80,
+      "internal_edge_count": 62,
+      "external_edge_count": 18,
+      "internal_call_ratio": 0.775,
+      "external_call_ratio": 0.225,
+      "module_weight": 0.0807,
+      "files": [
+        "arch/loongarch/boot.S",
+        "arch\\loongarch\\boot.S",
+        "arch\\loongarch\\power.c",
+        "arch\\riscv\\boot.S",
+        "arch\\riscv\\fdt.c",
+        "arch\\riscv\\sbi.c",
+        "include\\kernel\\loongarch.h",
+        "include\\kernel\\riscv.h",
+        "kernel\\elf.c",
+        "kernel\\main.c",
+        "lib\\printf.c",
+        "lib\\string.c",
+        "tools\\hello.S"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "arch\\riscv\\boot.S",
+          "language": "assembly",
+          "start_line": "7",
+          "end_line": "26",
+          "outgoing_call_count": 6,
+          "summary": "RISCV架构的启动入口点，检查当前hart是否为引导核心（hart0），若非则进入park循环；若为引导核心则设置栈指针、清零BSS段，然后跳转到kmain函数进入内核主流程。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "arch\\loongarch\\boot.S",
+          "language": "assembly",
+          "start_line": "7",
+          "end_line": "24",
+          "outgoing_call_count": 6,
+          "summary": "设置栈指针，清零BSS段（从__bss_start到__bss_end），然后调用kmain函数，传递参数hartid=0和dtb=0。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "lib\\printf.c",
+          "language": "c",
+          "start_line": 163,
+          "end_line": 173,
+          "outgoing_call_count": 6,
+          "summary": "该函数实现内核恐慌（panic）行为：格式化输出错误信息并终止系统运行。"
+        },
+        {
+          "name": "arch_shutdown",
+          "normalized_name": "arch_shutdown",
+          "file_path": "arch\\loongarch\\power.c",
+          "language": "c",
+          "start_line": "53",
+          "end_line": "62",
+          "outgoing_call_count": 5,
+          "summary": "该函数实现了龙架构下的系统关机操作，通过写寄存器尝试触发ACPI S5休眠状态，若失败则回退到RESET，最后执行无限暂停。"
+        },
+        {
+          "name": "do_format",
+          "normalized_name": "do_format",
+          "file_path": "lib\\printf.c",
+          "language": "c",
+          "start_line": 62,
+          "end_line": 134,
+          "outgoing_call_count": 4,
+          "summary": "{\n  \"block_id\": \"block_503\",\n  \"file_path\": \"lib\\\\printf.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"62\",\n  \"end_line\": \"134\",\n  \"name\": \"do_format\",\n  \"type\": \"function\",\n  \"summary\": \"实现自定义格式化输出函数，解析格式字符串并调用不同函数输出对应类型的数据（如整数、无符号数、十六进制、指针、字符、字符串等），支持填充字符、宽度、长整型修饰符和'z'修饰符。\",\n  \"logic_steps\": [\n    \"遍历格式字符串的每个字符。\",\n    \"遇到非'%'字符直接调用emit输出。\",\n    \"遇到'%'时，解析后续格式：先检测填充字符（'0'或空格，默认空格）。\",\n    \"解析数字宽度（多位数字转换为整数）。\",\n    \"解析长整型修饰符（连续' l'计数，或' z'视为长整型）。\",\n    \"根据格式字符（d/u/x/X/p/c/s/%/默认）处理：对'd'、'u'、'x'、'X'根据是否长整型从可变参数中取对应类型值，然后调用emit_num输出数字（基数为10或16，并支持负数、大写十六进制）；对'p'输出\"0x\"前缀后调用emit_num；对'c'输出字符；对's'输出字符串；对'%%'输出百分号；遇到'\\0'直接返回；其他情况输出'%'加原字符。\"\n  ],\n  \"called_functions\": [\n    \"emit\",\n    \"emit_num\",\n    \"emit_str\",\n    \"va_arg\"\n  ],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"代码中未出现任何与操作系统模块（如内存、进程、中断等）相关的操作或数据结构，仅包含纯格式化输出逻辑。\",\n  \"uncertainty\": \"根据代码内容无法确定该printf实现所属的具体操作系统模块，仅能推断为通用库函数。\"\n}"
+        },
+        {
+          "name": "find_busybox_for",
+          "normalized_name": "find_busybox_for",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": 234,
+          "end_line": 243,
+          "outgoing_call_count": 3,
+          "summary": "{\n  \"block_id\": \"block_176\",\n  \"file_path\": \"kernel\\\\main.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"234\",\n  \"end_line\": \"243\",\n  \"name\": \"find_busybox_for\",\n  \"type\": \"function\",\n  \"summary\": \"根据当前工作目录查找 busybox 可执行文件路径，先尝试当前目录下的 busybox，若不存在则尝试根目录下的 /busybox，若仍不存在则回退到 /bin/busybox。\",\n  \"logic_steps\": [\n    \"通过 join_path 构建 cwd 下的 \"busybox\" 路径，若路径长度合法且 ext4_lookup 返回真（文件存在），则将结果写入 out 并返回。\",\n    \"若上一步失败，则直接调用 ext4_lookup 检查根目录下的 \"/busybox\" 是否存在，若存在则将 \"/busybox\" 复制到 out。\",\n    \"若前两步均失败，则将 \"/bin/busybox\" 复制到 out 作为默认路径。\"\n  ],\n  \"called_functions\": [\n    \"join_path\",\n    \"ext4_lookup\",\n    \"strlcpy\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"函数内部调用了 ext4_lookup（ext4 文件系统查找函数）和 join_path（路径拼接），用于在不同位置查找 busybox 文件；返回路径最终用于执行。\",\n  \"uncertainty\": \"不确定 busybox 的具体用途（例如是否用于 shell 或 init 程序），但代码逻辑明确是文件路径搜索。\"\n}"
+        },
+        {
+          "name": "snprintk",
+          "normalized_name": "snprintk",
+          "file_path": "lib\\printf.c",
+          "language": "c",
+          "start_line": "145",
+          "end_line": "152",
+          "outgoing_call_count": 3,
+          "summary": "定义了一个变参函数 snprintk，它封装了 vsnprintk，用于将格式化的字符串写入指定大小的缓冲区，并返回写入的字符数。"
+        },
+        {
+          "name": "printk",
+          "normalized_name": "printk",
+          "file_path": "lib\\printf.c",
+          "language": "c",
+          "start_line": "154",
+          "end_line": "161",
+          "outgoing_call_count": 3,
+          "summary": "该函数实现了一个简单的内核打印功能，初始化一个sink结构体（缓冲区为空），然后使用可变参数列表解析格式字符串并输出格式化内容。"
+        },
+        {
+          "name": "sbi_ecall",
+          "normalized_name": "sbi_ecall",
+          "file_path": "arch\\riscv\\sbi.c",
+          "language": "c",
+          "start_line": "26",
+          "end_line": "38",
+          "outgoing_call_count": 2,
+          "summary": "该函数封装了RISC-V SBI（Supervisor Binary Interface）的ecall调用，通过汇编指令`ecall`触发机器模式下的服务调用，并返回包含错误码和值的结构体。"
+        },
+        {
+          "name": "strlcpy",
+          "normalized_name": "strlcpy",
+          "file_path": "lib\\string.c",
+          "language": "c",
+          "start_line": "86",
+          "end_line": "95",
+          "outgoing_call_count": 2,
+          "summary": "实现字符串安全拷贝功能，将源字符串复制到目标缓冲区，保证目标缓冲区以空字符结尾，函数返回源字符串长度。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arch\\loongarch\\trapentry.S",
+        "arch\\riscv\\trampoline.S",
+        "kernel\\main.c",
+        "kernel\\syscall.c",
+        "kernel\\sysproc.c",
+        "tools\\user-rv.ld",
+        "tools\\usertests\\hello.c",
+        "tools\\usertests\\init.c",
+        "tools\\usertests\\proctest.c",
+        "tools\\usertests\\runbasic.c"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\usertests\\proctest.c",
+          "language": "c",
+          "start_line": "9",
+          "end_line": "41",
+          "outgoing_call_count": 26,
+          "summary": "该代码块实现了一个用户态测试程序，用于验证进程管理（fork、wait、getpid、getppid）、管道通信、文件系统读写、系统信息获取（uname）等操作系统功能是否正常运行。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\usertests\\runbasic.c",
+          "language": "c",
+          "start_line": "16",
+          "end_line": "38",
+          "outgoing_call_count": 26,
+          "summary": "该函数作为测试调度器，遍历测试项数组 tests[]，为每个测试项创建子进程并执行对应的可执行文件，父进程等待子进程结束，最后输出完成信息。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\usertests\\init.c",
+          "language": "c",
+          "start_line": "4",
+          "end_line": "11",
+          "outgoing_call_count": 26,
+          "summary": "该代码块实现了用户态系统的初始化过程，尝试执行一个名为busybox的shell脚本，如果失败则输出错误信息并返回错误码。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\usertests\\hello.c",
+          "language": "c",
+          "start_line": "5",
+          "end_line": "9",
+          "outgoing_call_count": 26,
+          "summary": "定义一个简单的用户态测试程序入口函数，打印启动信息（参数个数和程序名）后返回0。"
+        },
+        {
+          "name": "kmain",
+          "normalized_name": "kmain",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "278",
+          "end_line": "324",
+          "outgoing_call_count": 18,
+          "summary": "该函数是操作系统内核的主入口函数，负责初始化各个子系统（架构、内存、虚拟内存、堆、进程、中断、定时器、文件系统）并尝试从磁盘加载测试脚本或用户程序执行，最后关闭系统。"
+        },
+        {
+          "name": "user-rv.ld",
+          "normalized_name": "ld",
+          "file_path": "tools\\user-rv.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "10",
+          "outgoing_call_count": 10,
+          "summary": "这个链接脚本定义了用户态程序（RISC-V架构）的内存布局：入口点为_start，代码段从0x10000开始，依次安排.text、.rodata、.data和.bss段。"
+        },
+        {
+          "name": "sleep_timespec_user",
+          "normalized_name": "sleep_timespec_user",
+          "file_path": "kernel\\sysproc.c",
+          "language": "c",
+          "start_line": "465",
+          "end_line": "485",
+          "outgoing_call_count": 2,
+          "summary": "该函数实现用户态 sleep 系统调用，接受用户空间传递的 timespec 结构体（秒和纳秒），将其转换为系统 tick 数，并通过忙等待（yield）或累加 g_ticks 的方式模拟延迟。"
+        },
+        {
+          "name": "uservec",
+          "normalized_name": "uservec",
+          "file_path": "arch\\riscv\\trampoline.S",
+          "language": "assembly",
+          "start_line": "16",
+          "end_line": "66",
+          "outgoing_call_count": 2,
+          "summary": "用户态陷入内核时的第一入口点，用于保存用户寄存器状态到trapframe，并切换到内核页表和栈，跳转到C语言trap处理函数usertrap。"
+        },
+        {
+          "name": "run_user_program",
+          "normalized_name": "run_user_program",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "245",
+          "end_line": "252",
+          "outgoing_call_count": 2,
+          "summary": "从当前工作目录执行用户程序，然后调用调度器，通常用于启动用户进程或切换到用户态"
+        },
+        {
+          "name": "validate_user_mask",
+          "normalized_name": "validate_user_mask",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "154",
+          "end_line": "164",
+          "outgoing_call_count": 1,
+          "summary": "验证用户传入的掩码地址是否有效：检查空指针，检查最大节点号参数，并尝试从用户空间读取一个内核字大小（8字节）的数据到内核栈，以确认该地址可读。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 0.0,
+    "score_level": "unknown",
+    "scores": {
+      "originality": 0,
+      "novelty": 0,
+      "practicality": 0,
+      "difficulty": 0,
+      "completion": 0
+    },
+    "summary": "",
+    "strengths": [],
+    "weaknesses": [],
+    "suggestions": []
+  },
+  "hybrid_top_results": [],
+  "comparison": {
+    "retrieval_mode": "structured",
+    "comparison_count": 0,
+    "comparisons": []
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026100069910965_final_report.md",
+    "work_detail_data": "/data/works/T2026100069910965.json",
+    "comparison_data": "/data/comparisons/T2026100069910965.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

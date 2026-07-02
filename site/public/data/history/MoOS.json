@@ -1,0 +1,1380 @@
+{
+  "repo_name": "MoOS",
+  "team_name": "MoOS",
+  "school": "哈尔滨工业大学（深圳）",
+  "repo_url": "https://gitlab.eduxiji.net/202318123101332/OSKernel2023-MoOS",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/202318123101332/oskernel2023-moos",
+  "year": "2023",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust",
+    "cpp",
+    "c",
+    "assembly",
+    "linker_script",
+    "cargo"
+  ],
+  "core_modules": [
+    "unknown",
+    "build",
+    "driver",
+    "filesystem",
+    "memory"
+  ],
+  "function_count": 628,
+  "node_count": 628,
+  "edge_count": 3236,
+  "internal_edge_count": 2055,
+  "external_edge_count": 1181,
+  "module_count": 11,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "build": 0.15,
+    "driver": 0.15,
+    "filesystem": 0.15,
+    "interrupt": 0.1,
+    "memory": 0.15,
+    "network": 0.05,
+    "process": 0.15,
+    "scheduler": 0.1,
+    "syscall": 0.15,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "unknown",
+      "module_weight": 1.0,
+      "completeness": 1.0,
+      "final_score": 1.0
+    },
+    {
+      "module_name": "build",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "driver",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    }
+  ],
+  "module_profiles": {
+    "build": {
+      "module_name": "build",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\Cargo.toml",
+        "os\\kernel\\src\\fs\\vfs.rs",
+        "os\\kernel\\src\\linker.ld",
+        "os\\user_c\\src\\lib\\linker.ld",
+        "os\\user_c\\src\\lib\\syscall.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "linker.ld",
+          "normalized_name": "ld",
+          "file_path": "os\\kernel\\src\\linker.ld",
+          "language": "linker_script",
+          "start_line": 1,
+          "end_line": 53,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "linker.ld",
+          "normalized_name": "ld",
+          "file_path": "os\\user_c\\src\\lib\\linker.ld",
+          "language": "linker_script",
+          "start_line": 1,
+          "end_line": 26,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "link",
+          "normalized_name": "link",
+          "file_path": "os\\kernel\\src\\fs\\vfs.rs",
+          "language": "rust",
+          "start_line": 71,
+          "end_line": 73,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "link",
+          "normalized_name": "link",
+          "file_path": "os\\user_c\\src\\lib\\syscall.c",
+          "language": "c",
+          "start_line": 152,
+          "end_line": 155,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "Cargo.toml",
+          "normalized_name": "toml",
+          "file_path": "os\\kernel\\Cargo.toml",
+          "language": "cargo",
+          "start_line": 1,
+          "end_line": 26,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\console.rs",
+        "os\\kernel\\src\\fs\\block_dev\\block_device.rs",
+        "os\\kernel\\src\\fs\\block_dev\\mod.rs",
+        "os\\kernel\\src\\fs\\block_dev\\virtio_block.rs",
+        "os\\kernel\\src\\fs\\dev\\block_cache.rs",
+        "os\\kernel\\src\\fs\\dev\\block_device.rs",
+        "os\\kernel\\src\\fs\\dev\\mod.rs",
+        "os\\kernel\\src\\fs\\util.rs",
+        "os\\kernel\\src\\sbi.rs"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "impl<T: BlockDevice> BlockCache<T> {",
+          "normalized_name": "impl<T: BlockDevice> BlockCache<T> {",
+          "file_path": "os\\kernel\\src\\fs\\dev\\block_cache.rs",
+          "language": "rust",
+          "start_line": 26,
+          "end_line": 83,
+          "outgoing_call_count": 30,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl<T: BlockDevice> BlockDevice for BlockCache<T> {",
+          "normalized_name": "impl<T: BlockDevice> BlockDevice for BlockCache<T> {",
+          "file_path": "os\\kernel\\src\\fs\\dev\\block_cache.rs",
+          "language": "rust",
+          "start_line": 91,
+          "end_line": 121,
+          "outgoing_call_count": 19,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl<T: BlockDevice> Device for T {",
+          "normalized_name": "impl<T: BlockDevice> Device for T {",
+          "file_path": "os\\kernel\\src\\fs\\dev\\mod.rs",
+          "language": "rust",
+          "start_line": 45,
+          "end_line": 103,
+          "outgoing_call_count": 17,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl ::block_device::BlockDevice for Nuclear{",
+          "normalized_name": "BlockDevice for Nuclear{",
+          "file_path": "os\\kernel\\src\\fs\\block_dev\\virtio_block.rs",
+          "language": "rust",
+          "start_line": 41,
+          "end_line": 66,
+          "outgoing_call_count": 14,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "virtio_dma_alloc",
+          "normalized_name": "virtio_dma_alloc",
+          "file_path": "os\\kernel\\src\\fs\\block_dev\\virtio_block.rs",
+          "language": "rust",
+          "start_line": 83,
+          "end_line": 92,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "BlockDevice",
+          "normalized_name": "BlockDevice",
+          "file_path": "os\\kernel\\src\\fs\\block_dev\\block_device.rs",
+          "language": "rust",
+          "start_line": 3,
+          "end_line": 8,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "virtio_virt_to_phys",
+          "normalized_name": "virtio_virt_to_phys",
+          "file_path": "os\\kernel\\src\\fs\\block_dev\\virtio_block.rs",
+          "language": "rust",
+          "start_line": 110,
+          "end_line": 112,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "BlockDevice",
+          "normalized_name": "BlockDevice",
+          "file_path": "os\\kernel\\src\\fs\\dev\\block_device.rs",
+          "language": "rust",
+          "start_line": 6,
+          "end_line": 9,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "BlockDevice",
+          "normalized_name": "BlockDevice",
+          "file_path": "os\\kernel\\src\\fs\\dev\\mod.rs",
+          "language": "rust",
+          "start_line": 20,
+          "end_line": 25,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl BlockDevice for Mutex<[u8; 16]> {",
+          "normalized_name": "impl BlockDevice for Mutex<[u8; 16]> {",
+          "file_path": "os\\kernel\\src\\fs\\dev\\mod.rs",
+          "language": "rust",
+          "start_line": 110,
+          "end_line": 131,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "Makefile",
+        "os\\Makefile",
+        "os\\kernel\\Makefile",
+        "os\\kernel\\src\\console.rs",
+        "os\\kernel\\src\\fs\\block_dev\\virtio_block.rs",
+        "os\\kernel\\src\\fs\\dev\\block_cache.rs",
+        "os\\kernel\\src\\fs\\dev\\mod.rs",
+        "os\\kernel\\src\\fs\\dirty.rs",
+        "os\\kernel\\src\\fs\\file.rs",
+        "os\\kernel\\src\\fs\\std.rs",
+        "os\\kernel\\src\\fs\\util.rs",
+        "os\\kernel\\src\\fs\\vfs.rs",
+        "os\\kernel\\src\\main.rs",
+        "os\\kernel\\src\\mm\\page_table.rs",
+        "os\\kernel\\src\\syscall\\fs.rs",
+        "os\\kernel\\src\\syscall\\raw_ptr.rs",
+        "os\\kernel\\src\\task\\mod.rs",
+        "os\\kernel\\src\\trap\\context.rs",
+        "os\\user_c\\Makefile",
+        "os\\user_c\\src\\lib\\stddef.h",
+        "os\\user_c\\src\\lib\\syscall.c"
+      ],
+      "file_count": 21,
+      "core_functions": [
+        {
+          "name": "impl Thread{",
+          "normalized_name": "impl Thread{",
+          "file_path": "os\\kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": 57,
+          "end_line": 763,
+          "outgoing_call_count": 503,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 22,
+          "end_line": 29,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 86,
+          "end_line": 89,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 107,
+          "end_line": 125,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 310,
+          "end_line": 328,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 392,
+          "end_line": 400,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 428,
+          "end_line": 450,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\block_dev\\virtio_block.rs",
+          "language": "rust",
+          "start_line": 71,
+          "end_line": 77,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\dev\\block_cache.rs",
+          "language": "rust",
+          "start_line": 27,
+          "end_line": 37,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\fs\\dev\\block_cache.rs",
+          "language": "rust",
+          "start_line": 131,
+          "end_line": 136,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\trap\\context.rs",
+        "os\\kernel\\src\\trap\\mod.rs",
+        "os\\kernel\\src\\trap\\trampoline.S"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "os\\kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": 27,
+          "end_line": 31,
+          "outgoing_call_count": 9,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl TrapFrame {",
+          "normalized_name": "impl TrapFrame {",
+          "file_path": "os\\kernel\\src\\trap\\context.rs",
+          "language": "rust",
+          "start_line": 23,
+          "end_line": 49,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "set_kernel_trap",
+          "normalized_name": "set_kernel_trap",
+          "file_path": "os\\kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": 43,
+          "end_line": 52,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "trap_from_kernel",
+          "normalized_name": "trap_from_kernel",
+          "file_path": "os\\kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": 34,
+          "end_line": 40,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "set_user_trap",
+          "normalized_name": "set_user_trap",
+          "file_path": "os\\kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": 54,
+          "end_line": 58,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "__alltraps",
+          "normalized_name": "__alltraps",
+          "file_path": "os\\kernel\\src\\trap\\trampoline.S",
+          "language": "assembly",
+          "start_line": 13,
+          "end_line": 62,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "__restore",
+          "normalized_name": "__restore",
+          "file_path": "os\\kernel\\src\\trap\\trampoline.S",
+          "language": "assembly",
+          "start_line": 62,
+          "end_line": 108,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "TrapFrame",
+          "normalized_name": "TrapFrame",
+          "file_path": "os\\kernel\\src\\trap\\context.rs",
+          "language": "rust",
+          "start_line": 8,
+          "end_line": 21,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\fs\\util.rs",
+        "os\\kernel\\src\\fs\\vfs.rs",
+        "os\\kernel\\src\\mm\\address.rs",
+        "os\\kernel\\src\\mm\\frame_allocator.rs",
+        "os\\kernel\\src\\mm\\heap_allocator.rs",
+        "os\\kernel\\src\\mm\\memory_set.rs",
+        "os\\kernel\\src\\mm\\mod.rs",
+        "os\\kernel\\src\\mm\\page_table.rs",
+        "os\\kernel\\src\\syscall\\mm.rs",
+        "os\\kernel\\src\\task\\mod.rs",
+        "os\\user_c\\src\\lib\\syscall.c"
+      ],
+      "file_count": 11,
+      "core_functions": [
+        {
+          "name": "impl MemorySet {",
+          "normalized_name": "impl MemorySet {",
+          "file_path": "os\\kernel\\src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": 45,
+          "end_line": 309,
+          "outgoing_call_count": 94,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": 320,
+          "end_line": 334,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\mm\\page_table.rs",
+          "language": "rust",
+          "start_line": 35,
+          "end_line": 39,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\mm\\page_table.rs",
+          "language": "rust",
+          "start_line": 71,
+          "end_line": 77,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\mm\\frame_allocator.rs",
+          "language": "rust",
+          "start_line": 18,
+          "end_line": 25,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\mm\\frame_allocator.rs",
+          "language": "rust",
+          "start_line": 60,
+          "end_line": 66,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\mm\\address.rs",
+          "language": "rust",
+          "start_line": 217,
+          "end_line": 220,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\mm\\address.rs",
+          "language": "rust",
+          "start_line": 250,
+          "end_line": 252,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "from",
+          "normalized_name": "from",
+          "file_path": "os\\kernel\\src\\mm\\address.rs",
+          "language": "rust",
+          "start_line": 61,
+          "end_line": 63,
+          "outgoing_call_count": 53,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "from",
+          "normalized_name": "from",
+          "file_path": "os\\kernel\\src\\mm\\address.rs",
+          "language": "rust",
+          "start_line": 66,
+          "end_line": 68,
+          "outgoing_call_count": 53,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\fs\\file.rs",
+        "os\\user_c\\src\\lib\\syscall.c"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "new_pipe",
+          "normalized_name": "new_pipe",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 460,
+          "end_line": 465,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "pipe",
+          "normalized_name": "pipe",
+          "file_path": "os\\user_c\\src\\lib\\syscall.c",
+          "language": "c",
+          "start_line": 185,
+          "end_line": 187,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "is_pipe",
+          "normalized_name": "is_pipe",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 198,
+          "end_line": 200,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "is_pipe",
+          "normalized_name": "is_pipe",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 289,
+          "end_line": 291,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "is_pipe",
+          "normalized_name": "is_pipe",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 377,
+          "end_line": 379,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "is_pipe",
+          "normalized_name": "is_pipe",
+          "file_path": "os\\kernel\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": 517,
+          "end_line": 519,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\main.rs",
+        "os\\kernel\\src\\mm\\page_table.rs",
+        "os\\kernel\\src\\signal\\sig.rs",
+        "os\\kernel\\src\\syscall\\interrupt.rs",
+        "os\\kernel\\src\\syscall\\mm.rs",
+        "os\\kernel\\src\\syscall\\mod.rs",
+        "os\\kernel\\src\\syscall\\process.rs",
+        "os\\kernel\\src\\syscall\\raw_ptr.rs",
+        "os\\kernel\\src\\task\\context.rs",
+        "os\\kernel\\src\\task\\cpu.rs",
+        "os\\kernel\\src\\task\\mod.rs",
+        "os\\kernel\\src\\task\\proc.rs",
+        "os\\kernel\\src\\task\\switch.S",
+        "os\\user_c\\src\\init.cc",
+        "os\\user_c\\src\\lib\\syscall.c"
+      ],
+      "file_count": 15,
+      "core_functions": [
+        {
+          "name": "impl Thread{",
+          "normalized_name": "impl Thread{",
+          "file_path": "os\\kernel\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": 83,
+          "end_line": 295,
+          "outgoing_call_count": 503,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl Thread{",
+          "normalized_name": "impl Thread{",
+          "file_path": "os\\kernel\\src\\syscall\\mm.rs",
+          "language": "rust",
+          "start_line": 16,
+          "end_line": 181,
+          "outgoing_call_count": 503,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl Thread{",
+          "normalized_name": "impl Thread{",
+          "file_path": "os\\kernel\\src\\syscall\\interrupt.rs",
+          "language": "rust",
+          "start_line": 55,
+          "end_line": 130,
+          "outgoing_call_count": 503,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl Thread{",
+          "normalized_name": "impl Thread{",
+          "file_path": "os\\kernel\\src\\task\\proc.rs",
+          "language": "rust",
+          "start_line": 17,
+          "end_line": 164,
+          "outgoing_call_count": 503,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl Thread{",
+          "normalized_name": "impl Thread{",
+          "file_path": "os\\kernel\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": 100,
+          "end_line": 222,
+          "outgoing_call_count": 503,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\task\\context.rs",
+          "language": "rust",
+          "start_line": 14,
+          "end_line": 20,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\task\\cpu.rs",
+          "language": "rust",
+          "start_line": 17,
+          "end_line": 22,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": 37,
+          "end_line": 41,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": 75,
+          "end_line": 89,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": 190,
+          "end_line": 197,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\syscall\\process.rs",
+        "os\\kernel\\src\\task\\switch.S",
+        "os\\user_c\\src\\lib\\syscall.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "impl Future for YieldFuture {",
+          "normalized_name": "impl Future for YieldFuture {",
+          "file_path": "os\\kernel\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": 29,
+          "end_line": 40,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "async_yield",
+          "normalized_name": "async_yield",
+          "file_path": "os\\kernel\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": 239,
+          "end_line": 241,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sched_yield",
+          "normalized_name": "sched_yield",
+          "file_path": "os\\user_c\\src\\lib\\syscall.c",
+          "language": "c",
+          "start_line": 41,
+          "end_line": 44,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "YieldFuture",
+          "normalized_name": "YieldFuture",
+          "file_path": "os\\kernel\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": 27,
+          "end_line": 27,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "__switch",
+          "normalized_name": "__switch",
+          "file_path": "os\\kernel\\src\\task\\switch.S",
+          "language": "assembly",
+          "start_line": 3,
+          "end_line": 39,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\signal\\sig.rs",
+        "os\\kernel\\src\\syscall\\fs.rs",
+        "os\\kernel\\src\\syscall\\interrupt.rs",
+        "os\\kernel\\src\\syscall\\mm.rs",
+        "os\\kernel\\src\\syscall\\mod.rs",
+        "os\\kernel\\src\\syscall\\process.rs",
+        "os\\kernel\\src\\syscall\\raw_ptr.rs",
+        "os\\user_c\\src\\lib\\syscall.c",
+        "os\\user_c\\src\\lib\\syscall_arch.h"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "os\\kernel\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": 120,
+          "end_line": 221,
+          "outgoing_call_count": 75,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\syscall\\interrupt.rs",
+          "language": "rust",
+          "start_line": 22,
+          "end_line": 52,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "from",
+          "normalized_name": "from",
+          "file_path": "os\\kernel\\src\\syscall\\raw_ptr.rs",
+          "language": "rust",
+          "start_line": 83,
+          "end_line": 88,
+          "outgoing_call_count": 53,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_getdents64",
+          "normalized_name": "sys_getdents64",
+          "file_path": "os\\kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": 392,
+          "end_line": 448,
+          "outgoing_call_count": 32,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_brk",
+          "normalized_name": "sys_brk",
+          "file_path": "os\\kernel\\src\\syscall\\mm.rs",
+          "language": "rust",
+          "start_line": 17,
+          "end_line": 68,
+          "outgoing_call_count": 22,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_fstatat",
+          "normalized_name": "sys_fstatat",
+          "file_path": "os\\kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": 614,
+          "end_line": 643,
+          "outgoing_call_count": 20,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_unlinkat",
+          "normalized_name": "sys_unlinkat",
+          "file_path": "os\\user_c\\src\\lib\\syscall.c",
+          "language": "c",
+          "start_line": 147,
+          "end_line": 150,
+          "outgoing_call_count": 20,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "translate",
+          "normalized_name": "translate",
+          "file_path": "os\\kernel\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": 101,
+          "end_line": 107,
+          "outgoing_call_count": 17,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_getcwd",
+          "normalized_name": "sys_getcwd",
+          "file_path": "os\\kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": 59,
+          "end_line": 79,
+          "outgoing_call_count": 15,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_pipe2",
+          "normalized_name": "sys_pipe2",
+          "file_path": "os\\kernel\\src\\syscall\\fs.rs",
+          "language": "rust",
+          "start_line": 743,
+          "end_line": 761,
+          "outgoing_call_count": 15,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 628,
+      "outgoing_edge_count": 3236,
+      "internal_edge_count": 2055,
+      "external_edge_count": 1181,
+      "internal_call_ratio": 0.635,
+      "external_call_ratio": 0.365,
+      "module_weight": 1.0,
+      "files": [
+        "os\\kernel\\src\\boards\\qemu.rs",
+        "os\\kernel\\src\\config.rs",
+        "os\\kernel\\src\\entry.asm",
+        "os\\kernel\\src\\lang_items.rs",
+        "os\\kernel\\src\\main.rs",
+        "os\\kernel\\src\\sbi.rs",
+        "os\\kernel\\src\\stacktrace\\mod.rs",
+        "os\\kernel\\src\\sync\\up.rs",
+        "os\\kernel\\src\\timer.rs"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": 170,
+          "end_line": 174,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\kernel\\src\\sync\\up.rs",
+          "language": "rust",
+          "start_line": 22,
+          "end_line": 26,
+          "outgoing_call_count": 62,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "os\\kernel\\src\\lang_items.rs",
+          "language": "rust",
+          "start_line": 5,
+          "end_line": 17,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "load_core_program",
+          "normalized_name": "load_core_program",
+          "file_path": "os\\kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": 144,
+          "end_line": 162,
+          "outgoing_call_count": 9,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "smp_v",
+          "normalized_name": "smp_v",
+          "file_path": "os\\kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": 189,
+          "end_line": 206,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl<T> UPSafeCell<T> {",
+          "normalized_name": "impl<T> UPSafeCell<T> {",
+          "file_path": "os\\kernel\\src\\sync\\up.rs",
+          "language": "rust",
+          "start_line": 19,
+          "end_line": 34,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "stack_trace",
+          "normalized_name": "stack_trace",
+          "file_path": "os\\kernel\\src\\stacktrace\\mod.rs",
+          "language": "rust",
+          "start_line": 1,
+          "end_line": 3,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "clear_bss",
+          "normalized_name": "clear_bss",
+          "file_path": "os\\kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": 266,
+          "end_line": 275,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl Booting{",
+          "normalized_name": "impl Booting{",
+          "file_path": "os\\kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": 169,
+          "end_line": 181,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "get_time",
+          "normalized_name": "get_time",
+          "file_path": "os\\kernel\\src\\timer.rs",
+          "language": "rust",
+          "start_line": 11,
+          "end_line": 13,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "os\\kernel\\src\\main.rs",
+        "os\\kernel\\src\\mm\\memory_set.rs",
+        "os\\kernel\\src\\syscall\\raw_ptr.rs",
+        "os\\kernel\\src\\trap\\mod.rs",
+        "os\\kernel\\src\\user_bin.S",
+        "os\\tools\\userbin_gen.cc",
+        "os\\user_c\\src\\argtest.cc",
+        "os\\user_c\\src\\forktest.cc",
+        "os\\user_c\\src\\init.cc",
+        "os\\user_c\\src\\iotest.cc",
+        "os\\user_c\\src\\lib\\entry.S",
+        "os\\user_c\\src\\lib\\entry_main.c",
+        "os\\user_c\\src\\lib\\stddef.h",
+        "os\\user_c\\src\\lib\\stdio.c",
+        "os\\user_c\\src\\lib\\string.c",
+        "os\\user_c\\src\\runtest.cc",
+        "os\\user_c\\src\\shell.cc"
+      ],
+      "file_count": 17,
+      "core_functions": [
+        {
+          "name": "user_loop",
+          "normalized_name": "user_loop",
+          "file_path": "os\\kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": 61,
+          "end_line": 193,
+          "outgoing_call_count": 40,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\user_c\\src\\init.cc",
+          "language": "cpp",
+          "start_line": 27,
+          "end_line": 43,
+          "outgoing_call_count": 26,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\user_c\\src\\shell.cc",
+          "language": "cpp",
+          "start_line": 14,
+          "end_line": 68,
+          "outgoing_call_count": 26,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\user_c\\src\\argtest.cc",
+          "language": "cpp",
+          "start_line": 7,
+          "end_line": 13,
+          "outgoing_call_count": 26,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\user_c\\src\\forktest.cc",
+          "language": "cpp",
+          "start_line": 7,
+          "end_line": 14,
+          "outgoing_call_count": 26,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\user_c\\src\\iotest.cc",
+          "language": "cpp",
+          "start_line": 7,
+          "end_line": 18,
+          "outgoing_call_count": 26,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\user_c\\src\\runtest.cc",
+          "language": "cpp",
+          "start_line": 40,
+          "end_line": 58,
+          "outgoing_call_count": 26,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\tools\\userbin_gen.cc",
+          "language": "cpp",
+          "start_line": 50,
+          "end_line": 104,
+          "outgoing_call_count": 26,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "rust_main",
+          "normalized_name": "rust_main",
+          "file_path": "os\\kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": 216,
+          "end_line": 263,
+          "outgoing_call_count": 19,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "from_existed_user",
+          "normalized_name": "from_existed_user",
+          "file_path": "os\\kernel\\src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": 282,
+          "end_line": 300,
+          "outgoing_call_count": 18,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/MoOS.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

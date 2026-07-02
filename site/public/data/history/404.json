@@ -1,0 +1,1996 @@
+{
+  "repo_name": "404",
+  "team_name": "404小队",
+  "school": "中国科学院大学",
+  "repo_url": "https://gitlab.eduxiji.net/HappyEric/oskernel2021-404",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/happyeric/oskernel2021-404",
+  "year": "2021",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "python",
+    "assembly",
+    "linker_script",
+    "makefile"
+  ],
+  "core_modules": [
+    "driver",
+    "filesystem",
+    "unknown",
+    "memory",
+    "process"
+  ],
+  "function_count": 800,
+  "node_count": 800,
+  "edge_count": 2854,
+  "internal_edge_count": 1312,
+  "external_edge_count": 1542,
+  "module_count": 21,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.85,
+    "build": 1.0,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "io": 0.18,
+    "ipc": 0.15,
+    "lock": 0.08,
+    "locking": 0.61,
+    "memory": 1.0,
+    "network": 0.15,
+    "process": 1.0,
+    "scheduler": 1.0,
+    "signal": 0.43,
+    "synchronization": 0.25,
+    "syscall": 1.0,
+    "test": 0.05,
+    "time": 0.53,
+    "timer": 0.51,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "driver",
+      "module_weight": 0.2656,
+      "completeness": 1.0,
+      "final_score": 0.5594
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1461,
+      "completeness": 1.0,
+      "final_score": 0.4877
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.1297,
+      "completeness": 1.0,
+      "final_score": 0.4778
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.1026,
+      "completeness": 1.0,
+      "final_score": 0.4616
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.0953,
+      "completeness": 1.0,
+      "final_score": 0.4572
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 21,
+      "outgoing_edge_count": 86,
+      "internal_edge_count": 53,
+      "external_edge_count": 33,
+      "internal_call_ratio": 0.6163,
+      "external_call_ratio": 0.3837,
+      "module_weight": 0.0278,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 34,
+      "outgoing_edge_count": 160,
+      "internal_edge_count": 43,
+      "external_edge_count": 117,
+      "internal_call_ratio": 0.2687,
+      "external_call_ratio": 0.7312,
+      "module_weight": 0.0479,
+      "files": [
+        "include\\os\\elf.h",
+        "kernel\\fat32\\link.c",
+        "libs\\printk.c",
+        "linker\\k210.ld",
+        "linker\\qemu.ld",
+        "linker\\riscv.lds",
+        "tools\\createimage.c",
+        "tools\\elf2char.c",
+        "tools\\generateMapping.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "riscv.lds",
+          "normalized_name": "lds",
+          "file_path": "linker\\riscv.lds",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "187",
+          "outgoing_call_count": 31,
+          "summary": "该链接脚本定义了RISC-V 64位小端格式操作系统的内存布局，设置起始地址为0x80020000，并详细安排了.text、.rodata、.data、.bss等段的放置顺序和符号定义，同时提供了全局指针__global_pointer$的计算，最后丢弃了不需要的段。"
+        },
+        {
+          "name": "encrypt",
+          "normalized_name": "encrypt",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "279",
+          "end_line": "286",
+          "outgoing_call_count": 19,
+          "summary": "执行AES加密的CBC模式中的一个块加密步骤：对16字节明文块与上一个密文块进行异或（XOR），然后用AES加密器加密得到新密文块，并返回字节串。"
+        },
+        {
+          "name": "k210.ld",
+          "normalized_name": "ld",
+          "file_path": "linker\\k210.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "66",
+          "outgoing_call_count": 18,
+          "summary": "这个链接脚本定义了RISC-V架构下K210平台内核的加载地址、各段（text、rodata、data、bss、init_array）在内存中的布局、对齐方式以及相关符号的导出，用于生成内核镜像。"
+        },
+        {
+          "name": "qemu.ld",
+          "normalized_name": "ld",
+          "file_path": "linker\\qemu.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "64",
+          "outgoing_call_count": 18,
+          "summary": "该链接脚本定义了RISC-V架构下内核在QEMU模拟器上的内存布局，指定入口点和各段的加载地址及顺序，并设置了内核起始、各段起始与结束符号，用于生成正确的内核镜像。"
+        },
+        {
+          "name": "_getTerminalSize_linux",
+          "normalized_name": "_getTerminalSize_linux",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "543",
+          "end_line": "564",
+          "outgoing_call_count": 13,
+          "summary": "获取Linux终端窗口的尺寸（列数和行数），通过多种方法尝试获取，最终返回 (宽度, 高度) 元组。"
+        },
+        {
+          "name": "create_image",
+          "normalized_name": "create_image",
+          "file_path": "tools\\createimage.c",
+          "language": "c",
+          "start_line": "61",
+          "end_line": "97",
+          "outgoing_call_count": 7,
+          "summary": "该函数根据一个或多个ELF输入文件创建操作系统内核映像文件。它从第一个输入文件读取ELF头和程序头，将每个可加载段写入映像文件，并记录总字节数。如果提供了扩展标志，则输出调试信息。最后将总字节数写入映像并关闭文件。函数还支持处理多个文件（通过递增files），但当前循环只处理第一个文件，后续处理似乎不完整。"
+        },
+        {
+          "name": "chunks",
+          "normalized_name": "chunks",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "461",
+          "end_line": "481",
+          "outgoing_call_count": 7,
+          "summary": "这是一个生成器函数，用于将列表l按指定大小n分块（chunk），并支持地址对齐逻辑。当提供address参数且地址未对齐到n时，会先产生一部分4KiB对齐的块，然后再产生剩余部分按大小n分块的序列。"
+        },
+        {
+          "name": "append_record",
+          "normalized_name": "append_record",
+          "file_path": "tools\\generateMapping.c",
+          "language": "c",
+          "start_line": "112",
+          "end_line": "125",
+          "outgoing_call_count": 6,
+          "summary": "向Records结构体中添加一条记录，包括简化后的变量名、原始变量名以及按规则构造的长度变量名。"
+        },
+        {
+          "name": "_vprints",
+          "normalized_name": "_vprints",
+          "file_path": "libs\\printk.c",
+          "language": "c",
+          "start_line": "219",
+          "end_line": "238",
+          "outgoing_call_count": 6,
+          "summary": "格式化字符串并将结果输出到指定的输出函数，过程中禁用抢占以确保输出操作的原子性。"
+        },
+        {
+          "name": "error",
+          "normalized_name": "error",
+          "file_path": "tools\\createimage.c",
+          "language": "c",
+          "start_line": "150",
+          "end_line": "161",
+          "outgoing_call_count": 5,
+          "summary": "该函数用于打印格式化错误信息，并在有系统错误时输出错误描述，然后以失败状态退出程序。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 171,
+      "outgoing_edge_count": 980,
+      "internal_edge_count": 225,
+      "external_edge_count": 755,
+      "internal_call_ratio": 0.2296,
+      "external_call_ratio": 0.7704,
+      "module_weight": 0.2656,
+      "files": [
+        "arch\\riscv\\boot\\bootblock.S",
+        "arch\\riscv\\include\\sbi.h",
+        "drivers\\screen.c",
+        "drivers\\sdcard\\disk.c",
+        "drivers\\sdcard\\fpioa.c",
+        "drivers\\sdcard\\gpiohs.c",
+        "drivers\\sdcard\\include\\buf.h",
+        "drivers\\sdcard\\include\\fpioa.h",
+        "drivers\\sdcard\\include\\gpio_common.h",
+        "drivers\\sdcard\\include\\gpiohs.h",
+        "drivers\\sdcard\\include\\plic.h",
+        "drivers\\sdcard\\include\\riscv.h",
+        "drivers\\sdcard\\include\\sdcard.h",
+        "drivers\\sdcard\\include\\spi.h",
+        "drivers\\sdcard\\include\\virtio.h",
+        "drivers\\sdcard\\sdcard.c",
+        "drivers\\sdcard\\spi.c",
+        "drivers\\sdcard\\utils.c",
+        "drivers\\sdcard\\virtio_disk.c",
+        "include\\os\\ring_buffer.h",
+        "kernel\\io\\io.c",
+        "kernel\\sched\\sched.c",
+        "kernel\\time\\utils.c",
+        "libs\\printk.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 25,
+      "core_functions": [
+        {
+          "name": "KFlash",
+          "normalized_name": "KFlash",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "21",
+          "end_line": "1552",
+          "outgoing_call_count": 284,
+          "summary": "KFlash类是一个用于通过串口烧录K210芯片固件的工具。它实现了AES加密、SLIP协议通信、ISP协议交互、Flash擦写、ELF/KFPKG文件解析等功能，支持多种开发板（如dan、bit、kd233、goE等）的复位和启动逻辑。"
+        },
+        {
+          "name": "MAIXLoader",
+          "normalized_name": "MAIXLoader",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "578",
+          "end_line": "1161",
+          "outgoing_call_count": 123,
+          "summary": "这是一个用于通过串口与K210芯片进行通信的加载器类，实现ISP协议，包括波特率切换、SLIP帧封装/解析、复位控制、固件下载（内存写入、Flash擦除/编程）等功能。"
+        },
+        {
+          "name": "parse",
+          "normalized_name": "parse",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "427",
+          "end_line": "458",
+          "outgoing_call_count": 15,
+          "summary": "解析从串口或其他数据源接收到的响应数据包，提取操作码、错误码和文本信息，并根据错误码映射为可读的错误描述文本。"
+        },
+        {
+          "name": "virtio_disk_rw",
+          "normalized_name": "virtio_disk_rw",
+          "file_path": "drivers\\sdcard\\virtio_disk.c",
+          "language": "c",
+          "start_line": "175",
+          "end_line": "260",
+          "outgoing_call_count": 12,
+          "summary": "实现 virtio 块设备的读写操作，通过分配描述符链、构建请求、通知设备并等待完成，最后释放描述符。"
+        },
+        {
+          "name": "spi_t",
+          "normalized_name": "spi_t",
+          "file_path": "drivers\\sdcard\\include\\spi.h",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "96",
+          "outgoing_call_count": 10,
+          "summary": "定义了一个名为 spi_t 的结构体，用于描述 SPI (Serial Peripheral Interface) 控制器的寄存器映射。该结构体将 SPI 控制器的所有寄存器按照其地址偏移顺序排列，并使用 volatile 关键字确保对硬件寄存器的直接访问不被编译器优化，同时通过 __attribute__((packed, aligned(4))) 保证结构体按4字节对齐且无填充。"
+        },
+        {
+          "name": "sd_init",
+          "normalized_name": "sd_init",
+          "file_path": "drivers\\sdcard\\sdcard.c",
+          "language": "c",
+          "start_line": "398",
+          "end_line": "481",
+          "outgoing_call_count": 10,
+          "summary": "初始化SD卡，将其置于SPI模式并获取卡信息。通过发送一系列命令（CMD0、CMD8、CMD55、ACMD41、CMD58）完成初始化过程，包括置位CS、发送伪字节、等待响应、读取数据，最后启用高速模式并获取卡信息。"
+        },
+        {
+          "name": "_getTerminalSize_windows",
+          "normalized_name": "_getTerminalSize_windows",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "502",
+          "end_line": "524",
+          "outgoing_call_count": 10,
+          "summary": "获取Windows命令行终端窗口的尺寸（列数和行数）。通过Windows API获取控制台屏幕缓冲区信息，并从中提取窗口的宽度和高度。"
+        },
+        {
+          "name": "_spi",
+          "normalized_name": "_spi",
+          "file_path": "drivers\\sdcard\\include\\spi.h",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "96",
+          "outgoing_call_count": 10,
+          "summary": "定义了SPI控制器寄存器的内存映射结构体，用于通过指针直接访问硬件寄存器，实现SPI通信控制。"
+        },
+        {
+          "name": "sd_get_cidregister",
+          "normalized_name": "sd_get_cidregister",
+          "file_path": "drivers\\sdcard\\sdcard.c",
+          "language": "c",
+          "start_line": "298",
+          "end_line": "364",
+          "outgoing_call_count": 9,
+          "summary": "该函数通过发送CMD10命令获取SD卡的CID寄存器（Card Identification Register）数据，并将其解析为结构体SD_CID的各个字段。函数最多重试255次，直到收到正确的数据起始令牌（SD_START_DATA_SINGLE_BLOCK_READ）为止。"
+        },
+        {
+          "name": "sd_get_csdregister",
+          "normalized_name": "sd_get_csdregister",
+          "file_path": "drivers\\sdcard\\sdcard.c",
+          "language": "c",
+          "start_line": "201",
+          "end_line": "287",
+          "outgoing_call_count": 9,
+          "summary": "该函数通过发送CMD9命令读取SD卡的CSD寄存器，并解析其内容填充到SD_CSD结构体中。它包含重试机制，最多尝试255次，直到成功获取数据起始标志或超时。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 113,
+      "outgoing_edge_count": 438,
+      "internal_edge_count": 346,
+      "external_edge_count": 92,
+      "internal_call_ratio": 0.79,
+      "external_call_ratio": 0.21,
+      "module_weight": 0.1461,
+      "files": [
+        "Makefile",
+        "arch\\riscv\\include\\pgtable.h",
+        "arch\\riscv\\include\\sbi.h",
+        "arch\\riscv\\sbi\\common.c",
+        "drivers\\sdcard\\include\\spi.h",
+        "drivers\\sdcard\\sdcard.c",
+        "include\\os\\elf.h",
+        "include\\os\\fat32.h",
+        "include\\os\\filemap.h",
+        "include\\os\\poll.h",
+        "include\\os\\ring_buffer.h",
+        "include\\os\\sched.h",
+        "include\\sys\\select.h",
+        "include\\user_programs.h",
+        "kernel\\fat32\\cache.c",
+        "kernel\\fat32\\directory.c",
+        "kernel\\fat32\\fat32.c",
+        "kernel\\fat32\\file.c",
+        "kernel\\fat32\\link.c",
+        "kernel\\fat32\\meta_data_cache.c",
+        "kernel\\fat32\\mount.c",
+        "kernel\\fat32\\pipe.c",
+        "kernel\\fat32\\poll.c",
+        "kernel\\fat32\\read.c",
+        "kernel\\fat32\\safe.c",
+        "kernel\\fat32\\stat.c",
+        "kernel\\fat32\\utils.c",
+        "kernel\\fat32\\write.c",
+        "kernel\\mm\\mm.c",
+        "kernel\\sched\\sched.c",
+        "kernel\\user_programs.c",
+        "tools\\createimage.c",
+        "tools\\elf2char.c",
+        "tools\\generateMapping.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 35,
+      "core_functions": [
+        {
+          "name": "fat32_renameat2",
+          "normalized_name": "fat32_renameat2",
+          "file_path": "kernel\\fat32\\file.c",
+          "language": "c",
+          "start_line": "5",
+          "end_line": "154",
+          "outgoing_call_count": 20,
+          "summary": "实现FAT32文件系统的renameat2系统调用，支持重命名和移动文件。该函数首先解析旧路径，找到并删除旧文件（保留其目录项内容），然后解析新路径，若存在同名文件则先删除，最后创建新的目录项并复制旧文件属性。"
+        },
+        {
+          "name": "fat32_write",
+          "normalized_name": "fat32_write",
+          "file_path": "kernel\\fat32\\write.c",
+          "language": "c",
+          "start_line": "52",
+          "end_line": "130",
+          "outgoing_call_count": 20,
+          "summary": "文件写入的系统调用底层实现，负责将用户缓冲区数据写入文件描述符对应的目标（标准输出、标准错误、空设备、管道或普通文件），包括处理特殊设备、管道重定向、文件截断、扇区读写以及FAT32目录项更新。"
+        },
+        {
+          "name": "fat32_unlinkat",
+          "normalized_name": "fat32_unlinkat",
+          "file_path": "kernel\\fat32\\link.c",
+          "language": "c",
+          "start_line": "14",
+          "end_line": "97",
+          "outgoing_call_count": 18,
+          "summary": "实现 FAT32 文件系统中删除文件或目录的操作（unlinkat 系统调用）。该函数根据路径解析并删除指定文件或目录，处理路径遍历、短文件名匹配、目录项标记删除以及 FAT 链的清理。"
+        },
+        {
+          "name": "fat32_openat",
+          "normalized_name": "fat32_openat",
+          "file_path": "kernel\\fat32\\fat32.c",
+          "language": "c",
+          "start_line": "82",
+          "end_line": "221",
+          "outgoing_call_count": 18,
+          "summary": "实现FAT32文件系统的openat系统调用，用于打开或创建文件/目录，包括对/dev/zero和/dev/null特殊设备的处理，以及路径解析、目录搜索和文件创建逻辑。"
+        },
+        {
+          "name": "fat32_getdents64",
+          "normalized_name": "fat32_getdents64",
+          "file_path": "kernel\\fat32\\directory.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "145",
+          "outgoing_call_count": 17,
+          "summary": "该函数实现了 FAT32 文件系统的 getdents64 系统调用，用于读取目录项并返回目录条目信息（如 inode、偏移量、类型和文件名）。它遍历当前目录的簇和扇区，处理长文件名和短文件名条目，并将结果填充到用户空间的缓冲区中。"
+        },
+        {
+          "name": "fat32_read",
+          "normalized_name": "fat32_read",
+          "file_path": "kernel\\fat32\\read.c",
+          "language": "c",
+          "start_line": "14",
+          "end_line": "101",
+          "outgoing_call_count": 16,
+          "summary": "该函数是FAT32文件系统读取操作的核心函数，用于从文件描述符中读取数据到用户缓冲区。它处理了多种文件描述符类型：标准输入（STDIN）、零设备（DEV_ZERO）、管道（piped）以及通过SD卡驱动的FAT32普通文件。当遇到标准输入、零设备和管道时，直接调用对应模块的函数。对于普通文件，函数根据文件当前位置和长度，通过SD卡读取扇区数据，并更新文件位置和当前扇区信息。此外，代码中还存在一段测试用的逻辑（在#ifndef K210块内），用于注入预设数据以模拟文件读取。通过实际的SD卡读取逻辑位于代码后半部分（在#endif之后），而其注释提示该部分只在非K210平台编译。整体上，函数涉及文件系统、设备驱动、管道机制以及进程文件描述符管理。"
+        },
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "154",
+          "outgoing_call_count": 16,
+          "summary": "这个代码块是构建系统的主Makefile，定义了编译内核、用户程序、生成镜像、烧录和清理等目标，用于构建和部署一个运行在K210或QEMU上的RISC-V操作系统。"
+        },
+        {
+          "name": "_create_new_dentry",
+          "normalized_name": "_create_new_dentry",
+          "file_path": "kernel\\fat32\\utils.c",
+          "language": "c",
+          "start_line": 727,
+          "end_line": 873,
+          "outgoing_call_count": 15,
+          "summary": "{\n  \"block_id\": \"block_275\",\n  \"file_path\": \"kernel\\\\fat32\\\\utils.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"727\",\n  \"end_line\": \"873\",\n  \"name\": \"_create_new_dentry\",\n  \"type\": \"function\",\n  \"summary\": \"在FAT32文件系统中创建一个新的目录项（dentry）。它根据文件名长度决定使用短目录项还是长目录项，填充短目录项和长目录项的各个字段（包括文件名、扩展名、属性、序列号、校验和等），在目录中查找空闲位置并写入，最后如果创建的是目录，则更新其“..”目录项指向新父目录。”\n  \"logic_steps\": [\n    \"1. 解析文件名：将输入文件名按点号分割为基本名（filename）和扩展名（extname），并计算各自长度。对于目录文件，忽略扩展名（noextname=1）。\",\n    \"2. 计算所需目录项数量：若基本名长度≤8，则只需一个短目录项（demand=1）；否则需要多个长目录项和1个短目录项（demand = (length-1)/13 + 2）。\",\n    \"3. 准备短目录项：从old_dentry拷贝信息，然后根据demand值填充文件名：若只需短目录项，将基本名大写并填充空格至8字符；否则取前6个大写字符后补'~1'作为短名。扩展名部分：若无扩展名则填充空格，否则大写并填充至3字符。\",\n    \"4. 准备长目录项（若demand>1）：依次填充每个长目录项的三段Unicode名称（name1/name2/name3），未满部分填充0x0000（结束）或0xffff（填充）。设置序列号（末项带0x40标志）、属性、保留字段、校验和（对短目录项前11字节计算）。\",\n    \"5. 查找空闲目录项：调用search_empty_entry找到足够容纳所有目录项的空闲连续位置，返回所在扇区sec。\",\n    \"6. 写入目录项：先读取扇区内容，按顺序写入长目录项（倒序写入，即长目录项的顺序为从最后一项到第一项），再写入短目录项，然后写回磁盘。\",\n    \"7. 记录目录位置：若dir_pos非空，则设置偏移、长度和扇区号。\",\n    \"8. 更新父目录（若新建的是目录）：找到新目录中“..”目录项的位置，将其簇号修改为父目录的簇号（parent_first_clus），并写回磁盘。\",\n    \"9. 返回文件的起始簇号（file_first_clus）。\"\n  ],\n  \"called_functions\": [\n    \"get_cluster_from_dentry\",\n    \"log\",\n    \"strlen\",\n    \"assert\",\n    \"char2unicode\",\n    \"search_empty_entry\",\n    \"clus_of_sec\",\n    \"first_sec_of_clus\",\n    \"sd_read\",\n    \"memcpy\",\n    \"get_next_dentry\",\n    \"sd_write\",\n    \"search\",\n    \"set_clusnum_of_dentry\",\n    \"BUFF_ALIGN\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"代码中操作了FAT32目录项结构（dentry_t、long_dentry_t），读写磁盘扇区（sd_read/sd_write），处理文件名大小写转换、长文件名短名生成、校验和计算，并更新目录项的“..”指向，这些都是FAT32文件系统核心功能。同时使用了文件类型宏（FILE_ATTRIBUTE_CHDIR、FILE_ATTRIBUTE_LONG）和目录项长度常量（LONG_DENTRY_NAME_LEN等）。\",\n  \"uncertainty\": \"函数内部调用的子函数（如get_cluster_from_dentry、search_empty_entry、search等）的具体实现未给出，不过其基本语义可从名称和调用上下文推断。此外，对于短名冲突（多个长文件名生成相同短名）未做处理，代码注释也提到‘dont think about 2 or more’。”\n}"
+        },
+        {
+          "name": "_create_new_file",
+          "normalized_name": "_create_new_file",
+          "file_path": "kernel\\fat32\\utils.c",
+          "language": "c",
+          "start_line": "514",
+          "end_line": "719",
+          "outgoing_call_count": 15,
+          "summary": "在FAT32文件系统中创建一个新的文件或目录项。该函数会解析文件名，分配短目录项和长目录项，将它们写入父目录的簇中，并为新创建的文件/目录分配一个空闲簇，然后初始化该簇的内容（对于目录会写入'.'和'..'项），最后更新FAT表。"
+        },
+        {
+          "name": "fat32_getcwd",
+          "normalized_name": "fat32_getcwd",
+          "file_path": "kernel\\fat32\\fat32.c",
+          "language": "c",
+          "start_line": 594,
+          "end_line": 670,
+          "outgoing_call_count": 13,
+          "summary": "{\n  \"block_id\": \"block_228\",\n  \"file_path\": \"kernel\\\\fat32\\\\fat32.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"594\",\n  \"end_line\": \"670\",\n  \"name\": \"fat32_getcwd\",\n  \"type\": \"function\",\n  \"summary\": \"获取当前工作目录的绝对路径字符串，并以空字符结尾存储到指定缓冲区中。如果缓冲区为NULL，则通过brk系统调用分配足够的内存。该实现通过反复查找当前目录的父目录（..）并拼接子目录名，直到回到根目录，从而逆向构造出完整路径。\",\n  \"logic_steps\": [\n    \"如果未定义K210宏，直接返回根目录字符串\"/\"。\",\n    \"检查size是否小于2（至少需要存储\"/\"和空字符），若是则返回NULL。\",\n    \"分配三个临时缓冲区：buff用于SD读取，output用于最终路径，temp_filename用于缓存中间路径。\",\n    \"初始化temp_filename为空字符串，存储当前簇号now_clus为全局变量cwd_first_clus。\",\n    \"进入循环，反复查找当前目录下的\"..\"目录项（父目录），若找不到（即已到根目录）则退出。\",\n    \"在循环内：保存当前簇号为old_clus，更新now_clus为父目录的起始簇号；调用get_filename_from_clus从old_clus和now_clus获取子目录名；构造路径字符串，依次拼接\"/\"、子目录名和之前缓存的路径；将拼接结果复制回temp_filename；如果用户提供了buf且当前路径长度不小于size，则释放内存并返回NULL。\",\n    \"循环结束后：如果从未进入循环（is_root_dir为真），则路径为\"/\"；否则路径为temp_filename。\",\n    \"释放temp_filename和buff。\",\n    \"如果用户提供的buf为NULL，则通过do_brk系统调用扩展堆以容纳路径字符串（包括空字符）。\",\n    \"将路径字符串复制到buf。\",\n    \"释放output，返回buf。\"\n  ],\n  \"called_functions\": [\n    \"debug\",\n    \"strcpy\",\n    \"kalloc\",\n    \"search\",\n    \"get_cluster_from_dentry\",\n    \"get_filename_from_clus\",\n    \"assert\",\n    \"strcat\",\n    \"strlen\",\n    \"kfree\",\n    \"do_brk\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"函数名'fat32_getcwd'中'cwd'暗示获取当前工作目录；代码内部分配缓冲区、遍历父目录项并拼接路径字符串符合常见getcwd实现模式；涉及文件系统搜索函数search和簇号处理；最后通过strcpy返回路径。\",\n  \"uncertainty\": \"代码中未显示对路径分隔符的转义或处理根目录特例的细节；K210平台下的简化路径返回是否为完全实现无法确定；do_brk的详细语义依赖于系统实现但未在此文件内说明。\"\n}"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 60,
+      "outgoing_edge_count": 93,
+      "internal_edge_count": 32,
+      "external_edge_count": 61,
+      "internal_call_ratio": 0.3441,
+      "external_call_ratio": 0.6559,
+      "module_weight": 0.058,
+      "files": [
+        "arch\\riscv\\include\\atomic.h",
+        "arch\\riscv\\include\\context.h",
+        "arch\\riscv\\include\\sbi.h",
+        "drivers\\sdcard\\gpiohs.c",
+        "drivers\\sdcard\\include\\plic.h",
+        "drivers\\sdcard\\include\\riscv.h",
+        "drivers\\sdcard\\include\\spi.h",
+        "drivers\\sdcard\\plic.c",
+        "include\\os\\irq.h",
+        "kernel\\irq\\irq.c",
+        "kernel\\sched\\init.c",
+        "kernel\\time\\timer.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "handle_pgfault",
+          "normalized_name": "handle_pgfault",
+          "file_path": "kernel\\irq\\irq.c",
+          "language": "c",
+          "start_line": "107",
+          "end_line": "212",
+          "outgoing_call_count": 31,
+          "summary": "处理页面错误异常，包括写时复制、文件映射页的按需调页、ELF程序段加载以及用户栈溢出检测，最后可能发送SIGSEGV信号终止进程。"
+        },
+        {
+          "name": "init_exception",
+          "normalized_name": "init_exception",
+          "file_path": "kernel\\irq\\irq.c",
+          "language": "c",
+          "start_line": "52",
+          "end_line": "77",
+          "outgoing_call_count": 6,
+          "summary": "初始化中断处理函数表（irq_table）和异常处理函数表（exc_table），为各种中断和异常类型分配对应的处理函数。"
+        },
+        {
+          "name": "handle_sext",
+          "normalized_name": "handle_sext",
+          "file_path": "kernel\\irq\\irq.c",
+          "language": "c",
+          "start_line": "83",
+          "end_line": "105",
+          "outgoing_call_count": 5,
+          "summary": "此函数是处理 supervisor 外部中断的入口，在非 K210 平台上的实现被完全注释掉，仅保留空返回体，因此实际上不执行任何操作。"
+        },
+        {
+          "name": "interrupt_helper",
+          "normalized_name": "interrupt_helper",
+          "file_path": "kernel\\irq\\irq.c",
+          "language": "c",
+          "start_line": "31",
+          "end_line": "45",
+          "outgoing_call_count": 5,
+          "summary": "中断/异常的统一处理函数，根据cause寄存器的高位判断是中断还是异常，并分别调用对应的处理函数表，同时统计用户态和内核态的时间计数。"
+        },
+        {
+          "name": "reset_irq_timer",
+          "normalized_name": "reset_irq_timer",
+          "file_path": "kernel\\irq\\irq.c",
+          "language": "c",
+          "start_line": "22",
+          "end_line": "29",
+          "outgoing_call_count": 5,
+          "summary": "处理时钟中断，包括检查计时器、刷新屏幕、设置下一次定时器中断，并触发调度器。"
+        },
+        {
+          "name": "gpiohs_set_irq",
+          "normalized_name": "gpiohs_set_irq",
+          "file_path": "drivers\\sdcard\\gpiohs.c",
+          "language": "c",
+          "start_line": "172",
+          "end_line": "181",
+          "outgoing_call_count": 4,
+          "summary": "设置GPIOHS引脚的实例参数（引脚号和回调函数），但实际中断配置部分已被注释掉。"
+        },
+        {
+          "name": "handle_other",
+          "normalized_name": "handle_other",
+          "file_path": "kernel\\irq\\irq.c",
+          "language": "c",
+          "start_line": 221,
+          "end_line": 243,
+          "outgoing_call_count": 3,
+          "summary": "该函数是RISC-V架构下处理未识别或特殊异常/中断的默认处理程序，用于打印当前进程和线程ID、所有通用寄存器的值以及关键的CSR寄存器（sstatus, sbadaddr, scause, sepc）信息，然后触发断言失败，导致系统停机或进入调试状态。"
+        },
+        {
+          "name": "plicinithart",
+          "normalized_name": "plicinithart",
+          "file_path": "drivers\\sdcard\\plic.c",
+          "language": "c",
+          "start_line": "20",
+          "end_line": "29",
+          "outgoing_call_count": 3,
+          "summary": "对当前CPU核心（hart）进行PLIC（平台级中断控制器）的初始化，使能UART和VIRTIO中断，并设置中断优先级阈值为0。"
+        },
+        {
+          "name": "gpiohs_irq_register",
+          "normalized_name": "gpiohs_irq_register",
+          "file_path": "drivers\\sdcard\\gpiohs.c",
+          "language": "c",
+          "start_line": "183",
+          "end_line": "192",
+          "outgoing_call_count": 3,
+          "summary": "初始化指定引脚的中断回调配置，但实际的PLIC中断注册逻辑被注释掉，因此该函数目前仅保存回调函数和上下文，未实际启用硬件中断。"
+        },
+        {
+          "name": "gpiohs_pin_onchange_isr",
+          "normalized_name": "gpiohs_pin_onchange_isr",
+          "file_path": "drivers\\sdcard\\gpiohs.c",
+          "language": "c",
+          "start_line": "131",
+          "end_line": "170",
+          "outgoing_call_count": 3,
+          "summary": "GPIOHS引脚电平变化中断服务程序，根据配置的边缘类型清除和重新使能相应中断，并调用回调函数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "io": {
+      "module_name": "io",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 1,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0009,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arch\\riscv\\kernel\\signal.S",
+        "drivers\\sdcard\\include\\sleeplock.h",
+        "drivers\\sdcard\\include\\spinlock.h",
+        "include/os/lock.h",
+        "include\\os\\lock.h",
+        "include\\sched\\signal.h",
+        "kernel\\locking\\lock.c",
+        "kernel\\sched\\signal.c",
+        "kernel\\time\\system_time.c"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "copy_kernel_stack_finish",
+          "normalized_name": "copy_kernel_stack_finish",
+          "file_path": "arch\\riscv\\kernel\\signal.S",
+          "language": "assembly",
+          "start_line": "159",
+          "end_line": "192",
+          "outgoing_call_count": 21,
+          "summary": "这个代码块包含两个标签：copy_kernel_stack_finish 是一个空函数（直接返回）；exit_signal_trampoline 是信号处理返回时恢复用户上下文的函数，它从信号上下文结构中恢复被保存的寄存器（包括返回地址、s0-s11 等被调用者保存寄存器），并恢复内核栈指针和用户栈指针到每个 CPU 的 PCB 中，然后跳转返回。"
+        },
+        {
+          "name": "handle_signal",
+          "normalized_name": "handle_signal",
+          "file_path": "kernel\\sched\\signal.c",
+          "language": "c",
+          "start_line": "47",
+          "end_line": "103",
+          "outgoing_call_count": 9,
+          "summary": "处理当前运行进程接收到的信号，包括提取信号、选择默认或用户定义的处理方式、设置信号栈帧和返回地址，并处理信号嵌套"
+        },
+        {
+          "name": "do_mutex_lock_acquire",
+          "normalized_name": "do_mutex_lock_acquire",
+          "file_path": "kernel\\locking\\lock.c",
+          "language": "c",
+          "start_line": "35",
+          "end_line": "43",
+          "outgoing_call_count": 4,
+          "summary": "尝试通过原子比较交换操作获取互斥锁，若锁已被占用则阻塞当前进程并调度，直到成功获取锁。"
+        },
+        {
+          "name": "do_clock_gettime",
+          "normalized_name": "do_clock_gettime",
+          "file_path": "kernel\\time\\system_time.c",
+          "language": "c",
+          "start_line": "36",
+          "end_line": "47",
+          "outgoing_call_count": 3,
+          "summary": "根据指定的时钟ID获取当前时间，但实际仅支持CLOCK_REALTIME和CLOCK_MONOTONIC，且两者均调用同一个底层函数do_gettimeofday，其他时钟ID会触发断言失败。"
+        },
+        {
+          "name": "do_mutex_lock_release",
+          "normalized_name": "do_mutex_lock_release",
+          "file_path": "kernel\\locking\\lock.c",
+          "language": "c",
+          "start_line": "45",
+          "end_line": "58",
+          "outgoing_call_count": 3,
+          "summary": "释放互斥锁：将锁状态从 LOCKED 原子地交换为 UNLOCKED，然后如果阻塞队列非空，唤醒队列中的第一个等待进程。"
+        },
+        {
+          "name": "send_signal",
+          "normalized_name": "send_signal",
+          "file_path": "kernel\\sched\\signal.c",
+          "language": "c",
+          "start_line": "105",
+          "end_line": "124",
+          "outgoing_call_count": 2,
+          "summary": "向指定进程发送信号，处理信号屏蔽、挂起和立即接收逻辑，并在进程阻塞时将其唤醒。"
+        },
+        {
+          "name": "change_signal_mask",
+          "normalized_name": "change_signal_mask",
+          "file_path": "kernel\\sched\\signal.c",
+          "language": "c",
+          "start_line": "135",
+          "end_line": "139",
+          "outgoing_call_count": 1,
+          "summary": "该函数用于修改指定进程的信号屏蔽字，并立即尝试将因新屏蔽字而变为未阻塞的挂起信号转化为待接收信号。"
+        },
+        {
+          "name": "spin_lock_t",
+          "normalized_name": "spin_lock_t",
+          "file_path": "include\\os\\lock.h",
+          "language": "c",
+          "start_line": "12",
+          "end_line": "15",
+          "outgoing_call_count": 0,
+          "summary": "定义了一种自旋锁类型 spin_lock_t，它是一个结构体，内部包含一个 volatile 修饰的 lock_status_t 类型的状态字段 status，用于表示锁的当前状态（如锁定或未锁定）。volatile 关键字提示编译器该字段可能被外部（如中断或其它 CPU）修改，需要每次访问都读取内存，从而支持并发访问。"
+        },
+        {
+          "name": "mutex_lock",
+          "normalized_name": "mutex_lock",
+          "file_path": "include\\os\\lock.h",
+          "language": "c",
+          "start_line": "18",
+          "end_line": "24",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为mutex_lock的结构体，用于表示一个互斥锁。该结构体包含一个自旋锁（spin_lock_t）用于底层同步，一个阻塞队列（list_head）用于管理等待该锁的进程，一个进程ID（pid_t）标识当前持有锁的进程，以及一个有效性标志（int32_t）用于指示锁是否有效。"
+        },
+        {
+          "name": "sleeplock",
+          "normalized_name": "sleeplock",
+          "file_path": "drivers\\sdcard\\include\\sleeplock.h",
+          "language": "c",
+          "start_line": "10",
+          "end_line": "17",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为sleeplock的结构体，用于实现睡眠锁。该结构体包含一个标志位locked指示锁是否被持有，一个自旋锁lk用于保护此睡眠锁的原子操作，以及用于调试的name和pid字段。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "lock": {
+      "module_name": "lock",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0008,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "locking": {
+      "module_name": "locking",
+      "function_count": 10,
+      "outgoing_edge_count": 20,
+      "internal_edge_count": 12,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.6,
+      "external_call_ratio": 0.4,
+      "module_weight": 0.0103,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 91,
+      "outgoing_edge_count": 245,
+      "internal_edge_count": 185,
+      "external_edge_count": 60,
+      "internal_call_ratio": 0.7551,
+      "external_call_ratio": 0.2449,
+      "module_weight": 0.1026,
+      "files": [
+        "arch/riscv/include/pgtable.h",
+        "arch\\riscv\\include\\pgtable.h",
+        "arch\\riscv\\include\\sbi.h",
+        "arch\\riscv\\kernel\\boot.c",
+        "drivers\\sdcard\\include\\riscv.h",
+        "drivers\\sdcard\\virtio_disk.c",
+        "include\\os\\lock.h",
+        "include\\os\\mm.h",
+        "include\\os\\ring_buffer.h",
+        "include\\os\\sched.h",
+        "include\\os\\time.h",
+        "kernel\\fat32\\fat32.c",
+        "kernel\\fat32\\mmap.c",
+        "kernel\\mm\\ioremap.c",
+        "kernel\\mm\\mm.c",
+        "kernel\\mm\\mman.c",
+        "kernel\\mm\\mmap.c",
+        "kernel\\mm\\pgtable.c",
+        "kernel\\sched\\sched.c",
+        "kernel\\system\\vm86.c",
+        "kernel\\time\\timer.c",
+        "libs\\string.c",
+        "tiny_libc\\string.c"
+      ],
+      "file_count": 23,
+      "core_functions": [
+        {
+          "name": "copy_page_table",
+          "normalized_name": "copy_page_table",
+          "file_path": "kernel\\mm\\pgtable.c",
+          "language": "c",
+          "start_line": "107",
+          "end_line": "157",
+          "outgoing_call_count": 12,
+          "summary": "这个函数用于复制用户进程的页表，以支持写时拷贝（Copy-on-Write, COW）机制。它会递归地遍历源页表的三级页表（假设使用3级页表），为每一级用户页表分配新页面，并复制页表项。对于末级页表项，它会将物理页设置为写时拷贝（如果原页可写），并在源页表中清除写权限，最后将映射指向相同的物理页。"
+        },
+        {
+          "name": "do_mmap",
+          "normalized_name": "do_mmap",
+          "file_path": "kernel\\mm\\mmap.c",
+          "language": "c",
+          "start_line": "34",
+          "end_line": "89",
+          "outgoing_call_count": 11,
+          "summary": "实现mmap系统调用的核心逻辑，用于在进程虚拟地址空间中映射内存区域，支持匿名映射和文件映射，并处理共享映射的页表共享。"
+        },
+        {
+          "name": "do_mprotect",
+          "normalized_name": "do_mprotect",
+          "file_path": "kernel\\mm\\mman.c",
+          "language": "c",
+          "start_line": "27",
+          "end_line": "78",
+          "outgoing_call_count": 10,
+          "summary": "实现mprotect系统调用，修改用户空间地址范围的页保护属性；若页面未映射，则尝试从ELF段中按需加载或分配匿名页面，然后设置页表属性。"
+        },
+        {
+          "name": "reset_va_page_attribute",
+          "normalized_name": "reset_va_page_attribute",
+          "file_path": "kernel\\mm\\pgtable.c",
+          "language": "c",
+          "start_line": "75",
+          "end_line": "103",
+          "outgoing_call_count": 9,
+          "summary": "该函数根据给定的虚拟地址和页目录物理地址，遍历三级页表（VPN2、VPN1、VPN0），找到对应的页表项，检查页表项是否存在且页面不是共享或写时复制（若设置写权限则打印警告），然后清除旧的权限位并设置新的权限位（掩码）。"
+        },
+        {
+          "name": "alloc_page_helper",
+          "normalized_name": "alloc_page_helper",
+          "file_path": "kernel\\mm\\mm.c",
+          "language": "c",
+          "start_line": "295",
+          "end_line": "340",
+          "outgoing_call_count": 9,
+          "summary": "在三级页表中处理虚拟地址（VA）的分配或获取物理页。根据VA的VPN2、VPN1、VPN0索引，依次遍历或创建页表目录和页表项，最终返回映射到的物理页的内核虚拟地址。"
+        },
+        {
+          "name": "map_normal_page",
+          "normalized_name": "map_normal_page",
+          "file_path": "kernel\\mm\\mm.c",
+          "language": "c",
+          "start_line": "173",
+          "end_line": "205",
+          "outgoing_call_count": 9,
+          "summary": "建立一个普通页（4KB大小）的页表映射：将虚拟地址va映射到物理页框，页表项写入三级页表结构中，并设置许可位。"
+        },
+        {
+          "name": "map_large_page",
+          "normalized_name": "map_large_page",
+          "file_path": "kernel\\mm\\ioremap.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "25",
+          "outgoing_call_count": 8,
+          "summary": "此函数用于将一个大页（大小为VA_VPN1_SHIFT对应的页大小）的虚拟地址va映射到物理地址pa，通过操作页表pgdir来建立映射。它会检查页目录项是否已存在，如果不存在则分配新页作为页表并初始化，然后设置相应的页表项属性（包含读写执行权限）。"
+        },
+        {
+          "name": "map_page",
+          "normalized_name": "map_page",
+          "file_path": "arch\\riscv\\kernel\\boot.c",
+          "language": "c",
+          "start_line": "35",
+          "end_line": "60",
+          "outgoing_call_count": 8,
+          "summary": "该函数用于在二级页表中建立虚拟地址到物理地址的映射，通过操作页目录和页表项实现。如果页目录项不存在，则分配新页并初始化页目录，然后设置页表项；否则直接使用已有的页表项。最终设置物理页帧号（PFN）和权限属性。"
+        },
+        {
+          "name": "swap_page",
+          "normalized_name": "swap_page",
+          "file_path": "kernel\\mm\\mm.c",
+          "language": "c",
+          "start_line": "461",
+          "end_line": "482",
+          "outgoing_call_count": 8,
+          "summary": "交换页面：将当前进程的某个页面换出到交换空间（磁盘），并分配或重用交换空间块。返回该页面在内存中的基址（内核虚拟地址）。"
+        },
+        {
+          "name": "do_brk",
+          "normalized_name": "do_brk",
+          "file_path": "kernel\\mm\\mman.c",
+          "language": "c",
+          "start_line": "82",
+          "end_line": "104",
+          "outgoing_call_count": 7,
+          "summary": "实现进程堆区（brk）的扩展或查询，用于动态内存分配。根据传入的ptr参数，检查合法性，若ptr为0则返回当前堆结束地址（探查），否则从当前堆结束地址逐步映射物理页直到ptr，并更新堆结束地址。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arch\\riscv\\include\\sbi.h",
+        "drivers\\sdcard\\include\\riscv.h",
+        "drivers\\sdcard\\include\\spi.h",
+        "include\\os\\pipe.h",
+        "kernel\\fat32\\pipe.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "fat32_pipe2",
+          "normalized_name": "fat32_pipe2",
+          "file_path": "kernel\\fat32\\pipe.c",
+          "language": "c",
+          "start_line": "42",
+          "end_line": "88",
+          "outgoing_call_count": 5,
+          "summary": "在进程的文件描述符表中分配两个未使用的文件描述符，在全局管道数组中找到一个空闲管道，将两个文件描述符绑定到该管道上，分别设置为读端和写端，并初始化管道相关数据结构和等待队列。"
+        },
+        {
+          "name": "sbi_clear_ipi",
+          "normalized_name": "sbi_clear_ipi",
+          "file_path": "arch\\riscv\\include\\sbi.h",
+          "language": "c",
+          "start_line": "74",
+          "end_line": "77",
+          "outgoing_call_count": 2,
+          "summary": "通过SBI调用清除当前处理器的核间中断（IPI）标志，以回应或取消之前设置的IPI。"
+        },
+        {
+          "name": "w_sip",
+          "normalized_name": "w_sip",
+          "file_path": "drivers\\sdcard\\include\\riscv.h",
+          "language": "c",
+          "start_line": 75,
+          "end_line": 79,
+          "outgoing_call_count": 1,
+          "summary": "{\n  \"block_id\": \"block_388\",\n  \"file_path\": \"drivers\\\\sdcard\\\\include\\\\riscv.h\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"75\",\n  \"end_line\": \"79\",\n  \"name\": \"w_sip\",\n  \"type\": \"function\",\n  \"summary\": \"该函数用于将指定的值写入RISC-V的sip（Supervisor Interrupt Pending）寄存器。sip寄存器用于记录当前待处理的中断（pending interrupts），写入该寄存器可以设置或清除特定中断的待处理状态。此函数通过内联汇编指令csrw实现写寄存器操作。\",\n  \"logic_steps\": [\n    \"使用内联汇编，执行RISC-V的特权指令csrw，将传入的64位整数x写入sip寄存器。\",\n    \"汇编指令中%0代表输入操作数，即x的值，被约束为寄存器（\"r\"），表示x被放入通用寄存器后写入。\"\n  ],\n  \"called_functions\": [],\n  \"related_os_module\": \"interrupt\",\n  \"evidence\": \"函数名w_sip暗示write sip，且使用了csrw指令直接写sip寄存器，该寄存器与中断待处理状态相关，因此属于中断模块。\",\n  \"uncertainty\": \"较低。虽然sip寄存器用于中断，但在S-Mode下也可能与S-mode软件中断等具体实现相关，但总体属于中断模块，不存在明显不确定性。\"\n}"
+        },
+        {
+          "name": "sbi_send_ipi",
+          "normalized_name": "sbi_send_ipi",
+          "file_path": "arch\\riscv\\include\\sbi.h",
+          "language": "c",
+          "start_line": "79",
+          "end_line": "82",
+          "outgoing_call_count": 1,
+          "summary": "这个函数用于通过SBI（Supervisor Binary Interface）发送处理器间中断（IPI）到指定的hart掩码对应的核心。它包装了SBI_CALL_1宏，将操作码SBI_SEND_IPI和hart_mask参数传递给SBI调用。"
+        },
+        {
+          "name": "r_sip",
+          "normalized_name": "r_sip",
+          "file_path": "drivers\\sdcard\\include\\riscv.h",
+          "language": "c",
+          "start_line": "67",
+          "end_line": "73",
+          "outgoing_call_count": 1,
+          "summary": "读取并返回 RISC-V 架构的 sip（Supervisor Interrupt Pending）寄存器的值。sip 寄存器用于指示当前正在等待处理的中断。"
+        },
+        {
+          "name": "_spi_chip_select",
+          "normalized_name": "_spi_chip_select",
+          "file_path": "drivers\\sdcard\\include\\spi.h",
+          "language": "c",
+          "start_line": "146",
+          "end_line": "153",
+          "outgoing_call_count": 0,
+          "summary": "定义SPI接口中可选的片选信号枚举，用于选择不同的从设备（如SD卡）。枚举值从0开始，最多支持4个片选信号（SPI_CHIP_SELECT_0到SPI_CHIP_SELECT_3），SPI_CHIP_SELECT_MAX作为计数或终止标记。"
+        },
+        {
+          "name": "pipe_t",
+          "normalized_name": "pipe_t",
+          "file_path": "include\\os\\pipe.h",
+          "language": "c",
+          "start_line": "17",
+          "end_line": "25",
+          "outgoing_call_count": 0,
+          "summary": "定义管道结构体pipe_t，包含环形缓冲区、相关进程ID、读写等待队列、读写有效性标志以及模式字段，用于实现进程间通信中的管道机制。"
+        },
+        {
+          "name": "spi_chip_select_t",
+          "normalized_name": "spi_chip_select_t",
+          "file_path": "drivers\\sdcard\\include\\spi.h",
+          "language": "c",
+          "start_line": "146",
+          "end_line": "153",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个枚举类型 spi_chip_select_t，用于表示 SPI 总线上可选的片选信号编号。"
+        },
+        {
+          "name": "pipe",
+          "normalized_name": "pipe",
+          "file_path": "include\\os\\pipe.h",
+          "language": "c",
+          "start_line": "17",
+          "end_line": "25",
+          "outgoing_call_count": 0,
+          "summary": "定义管道结构体，包含环形缓冲区、父进程ID、读写等待队列、有效标志和模式字段，用于进程间通信。"
+        },
+        {
+          "name": "init_pipe",
+          "normalized_name": "init_pipe",
+          "file_path": "kernel\\fat32\\pipe.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "14",
+          "outgoing_call_count": 0,
+          "summary": "初始化管道数组，将所有管道的读写有效性标记为无效。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 74,
+      "outgoing_edge_count": 284,
+      "internal_edge_count": 140,
+      "external_edge_count": 144,
+      "internal_call_ratio": 0.493,
+      "external_call_ratio": 0.507,
+      "module_weight": 0.0953,
+      "files": [
+        "arch\\riscv\\include\\context.h",
+        "arch\\riscv\\kernel\\entry.S",
+        "arch\\riscv\\kernel\\signal.S",
+        "drivers\\sdcard\\include\\riscv.h",
+        "include\\os\\elf.h",
+        "include\\os\\futex.h",
+        "include\\os\\mailbox.h",
+        "include\\os\\sched.h",
+        "include\\sched\\signal.h",
+        "init\\main.c",
+        "kernel\\elf\\elf.c",
+        "kernel\\fat32\\safe.c",
+        "kernel\\io\\ring_buffer.c",
+        "kernel\\locking\\futex.c",
+        "kernel\\sched\\exec.c",
+        "kernel\\sched\\id.c",
+        "kernel\\sched\\init.c",
+        "kernel\\sched\\sched.c",
+        "kernel\\sched\\signal.c",
+        "kernel\\time\\itimer.c",
+        "tiny_libc/mthread.c",
+        "tiny_libc\\include\\mthread.h",
+        "tiny_libc\\mthread.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 24,
+      "core_functions": [
+        {
+          "name": "process",
+          "normalized_name": "process",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "36",
+          "end_line": "1541",
+          "outgoing_call_count": 283,
+          "summary": "该函数是kflash烧录工具的核心流程，负责将固件下载到Kendryte K210芯片的Flash或SRAM中。它包含参数解析、自动检测串口和开发板类型、与芯片ISP引导程序通信、下载ISP加载器、擦除Flash、写入固件数据、以及重启芯片等功能。"
+        },
+        {
+          "name": "_from_kernel",
+          "normalized_name": "_from_kernel",
+          "file_path": "arch\\riscv\\kernel\\entry.S",
+          "language": "assembly",
+          "start_line": "25",
+          "end_line": "220",
+          "outgoing_call_count": 70,
+          "summary": "这个代码块定义了两个宏 SAVE_CONTEXT 和 RESTORE_CONTEXT，用于在 RISC-V 架构上保存和恢复处理器上下文（包括通用寄存器、CSR 寄存器和浮点寄存器）。_from_kernel 标签仅作为起始标记，实际逻辑由宏展开实现。代码负责中断/异常进入时的完整上下文保存、切换内核栈指针，以及恢复流程中的上下文恢复和栈切换。"
+        },
+        {
+          "name": "do_exec",
+          "normalized_name": "do_exec",
+          "file_path": "kernel\\sched\\exec.c",
+          "language": "c",
+          "start_line": "89",
+          "end_line": "229",
+          "outgoing_call_count": 31,
+          "summary": "该函数实现进程执行新程序的核心逻辑，包括处理特殊测试用例（lat_ctx、echo）、解析并执行脚本文件（支持#!解释器）、加载ELF二进制、设置新页表和栈，并最终调度到新进程。"
+        },
+        {
+          "name": "do_enable",
+          "normalized_name": "do_enable",
+          "file_path": "arch\\riscv\\kernel\\entry.S",
+          "language": "assembly",
+          "start_line": "231",
+          "end_line": "292",
+          "outgoing_call_count": 18,
+          "summary": "该代码块定义了多个内核函数，用于控制中断、抢占和浮点指令的启用/禁用，以及进程切换的核心逻辑（保存/恢复上下文）。"
+        },
+        {
+          "name": "do_clone",
+          "normalized_name": "do_clone",
+          "file_path": "kernel\\sched\\sched.c",
+          "language": "c",
+          "start_line": "260",
+          "end_line": "314",
+          "outgoing_call_count": 16,
+          "summary": "该函数实现了进程或线程的克隆操作。它遍历进程控制块(PCB)数组，找到一个空闲的PCB，初始化该PCB为内核线程（USER_THREAD），设置其父进程ID为当前运行进程的PID，为新进程分配内核栈和用户栈顶地址（用户栈地址固定为USER_STACK_ADDR），为子进程分配页目录并复制父进程的页表（仅复制用户栈区域），然后调用init_clone_pcb进行进一步的PCB设置，最后将子进程加入就绪队列并返回其TID。"
+        },
+        {
+          "name": "load_elf",
+          "normalized_name": "load_elf",
+          "file_path": "kernel\\elf\\elf.c",
+          "language": "c",
+          "start_line": "13",
+          "end_line": "110",
+          "outgoing_call_count": 12,
+          "summary": "该函数用于解析并加载ELF格式的可执行文件到内存中，它读取程序头（Program Header）中类型为PT_LOAD的段，将段内容复制到由回调函数prepare_page_for_va准备的页中，并处理未初始化的部分（清零），同时记录ELF的相关信息以便后续使用（如brk系统调用）。"
+        },
+        {
+          "name": "lazy_load_elf",
+          "normalized_name": "lazy_load_elf",
+          "file_path": "kernel\\elf\\elf.c",
+          "language": "c",
+          "start_line": "115",
+          "end_line": "176",
+          "outgoing_call_count": 12,
+          "summary": "该函数从文件描述符对应的ELF文件中解析程序头，并将关键信息保存到进程控制块（pcb）中，实现了ELF文件的惰性加载准备（只读取头部和程序头表，不实际加载段内容）。"
+        },
+        {
+          "name": "do_wait4",
+          "normalized_name": "do_wait4",
+          "file_path": "kernel\\sched\\sched.c",
+          "language": "c",
+          "start_line": "172",
+          "end_line": "235",
+          "outgoing_call_count": 10,
+          "summary": "实现进程等待功能，根据指定的 pid 等待子进程退出，并处理不同 pid 参数（具体子进程 pid 或 -1 表示任意子进程）的逻辑，包括阻塞当前进程、收集退出状态、分离子进程等操作。"
+        },
+        {
+          "name": "do_exit",
+          "normalized_name": "do_exit",
+          "file_path": "kernel\\sched\\sched.c",
+          "language": "c",
+          "start_line": "317",
+          "end_line": "359",
+          "outgoing_call_count": 9,
+          "summary": "实现线程退出流程：解除等待该线程的其他线程的阻塞，处理父线程的等待状态，记录退出状态并释放进程资源，然后处理子进程的孤儿或僵尸状态，最后调度其他线程运行。"
+        },
+        {
+          "name": "do_setitimer",
+          "normalized_name": "do_setitimer",
+          "file_path": "kernel\\time\\itimer.c",
+          "language": "c",
+          "start_line": "25",
+          "end_line": "67",
+          "outgoing_call_count": 9,
+          "summary": "实现设置进程间隔定时器的功能，支持获取旧值并设置新值（仅支持ITIMER_REAL类型），通过系统滴答数管理超时。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 44,
+      "outgoing_edge_count": 69,
+      "internal_edge_count": 32,
+      "external_edge_count": 37,
+      "internal_call_ratio": 0.4638,
+      "external_call_ratio": 0.5362,
+      "module_weight": 0.0427,
+      "files": [
+        "arch\\riscv\\include\\atomic.h",
+        "arch\\riscv\\include\\context.h",
+        "arch\\riscv\\kernel\\entry.S",
+        "drivers\\sdcard\\plic.c",
+        "include\\os\\futex.h",
+        "include\\os\\list.h",
+        "include\\os\\sched.h",
+        "include\\os\\time.h",
+        "include\\sched\\signal.h",
+        "kernel\\fat32\\utils.c",
+        "kernel\\sched\\id.c",
+        "kernel\\sched\\init.c",
+        "kernel\\sched\\sched.c",
+        "kernel\\sched\\signal.c",
+        "kernel\\time\\sleep.c",
+        "kernel\\time\\timer.c",
+        "kernel\\time\\utils.c"
+      ],
+      "file_count": 17,
+      "core_functions": [
+        {
+          "name": "switch_to_restore",
+          "normalized_name": "switch_to_restore",
+          "file_path": "arch\\riscv\\kernel\\entry.S",
+          "language": "assembly",
+          "start_line": "292",
+          "end_line": "319",
+          "outgoing_call_count": 15,
+          "summary": "恢复下一个进程（next）的执行上下文，包括页表基址、保存寄存器（s0-s11）、返回地址（ra），并切换到该进程的内核栈空间。"
+        },
+        {
+          "name": "do_scheduler",
+          "normalized_name": "do_scheduler",
+          "file_path": "kernel\\sched\\sched.c",
+          "language": "c",
+          "start_line": "81",
+          "end_line": "150",
+          "outgoing_call_count": 7,
+          "summary": "实现系统调度器的主函数，负责将当前运行态的任务（如果不是克隆切换）放回就绪队列、更新内核时间、按照优先级或FIFO策略选择下一个任务、调整优先级，并进行进程上下文切换。"
+        },
+        {
+          "name": "do_nanosleep",
+          "normalized_name": "do_nanosleep",
+          "file_path": "kernel\\time\\sleep.c",
+          "language": "c",
+          "start_line": "5",
+          "end_line": "24",
+          "outgoing_call_count": 6,
+          "summary": "阻塞当前进程，基于传入的timespec（秒和纳秒）计算需要的tick数并创建一个定时器来在超时时唤醒进程，然后重新调度。"
+        },
+        {
+          "name": "timer_create",
+          "normalized_name": "timer_create",
+          "file_path": "kernel\\time\\timer.c",
+          "language": "c",
+          "start_line": "43",
+          "end_line": "57",
+          "outgoing_call_count": 6,
+          "summary": "创建一个新的定时器，设置其超时时间、回调函数和参数，并启用该定时器。"
+        },
+        {
+          "name": "switch_to_ret",
+          "normalized_name": "switch_to_ret",
+          "file_path": "arch\\riscv\\kernel\\entry.S",
+          "language": "assembly",
+          "start_line": "319",
+          "end_line": "365",
+          "outgoing_call_count": 5,
+          "summary": "该代码块定义了异常处理入口、从中返回的路径以及进程切换返回点，实现了中断/异常的统一处理流程。"
+        },
+        {
+          "name": "handle_windows_switch_line",
+          "normalized_name": "handle_windows_switch_line",
+          "file_path": "kernel\\fat32\\utils.c",
+          "language": "c",
+          "start_line": "1052",
+          "end_line": "1061",
+          "outgoing_call_count": 3,
+          "summary": "这个函数试图处理字符串末尾可能由 Windows 换行符（\\r\\n）带来的回车符（\\r），将其替换为字符串结束符。但当前实现中 assert(0) 会立即触发断言失败，导致程序崩溃，后面的代码实际不可达。"
+        },
+        {
+          "name": "_back_to_kernel",
+          "normalized_name": "_back_to_kernel",
+          "file_path": "arch\\riscv\\kernel\\entry.S",
+          "language": "assembly",
+          "start_line": 220,
+          "end_line": 231,
+          "outgoing_call_count": 3,
+          "summary": "实现抢占计数器递减并决定是否启用抢占的功能。函数检查当前进程的抢占计数器，若计数器非零则减一，当计数器变为零时跳转到 do_enable 执行启用抢占操作；若计数器已为零，则直接启用抢占。"
+        },
+        {
+          "name": "do_rt_sigaction",
+          "normalized_name": "do_rt_sigaction",
+          "file_path": "kernel\\sched\\signal.c",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "36",
+          "outgoing_call_count": 3,
+          "summary": "该函数实现信号处理操作的设置与查询，用于修改或读取当前进程指定信号的处理动作结构。"
+        },
+        {
+          "name": "sigaction_t",
+          "normalized_name": "sigaction_t",
+          "file_path": "include\\sched\\signal.h",
+          "language": "c",
+          "start_line": "73",
+          "end_line": "79",
+          "outgoing_call_count": 2,
+          "summary": "定义sigaction结构体类型别名，用于描述信号处理动作，包含信号处理函数指针、标志位和信号屏蔽集。当前仅保留基本的sa_handler，注释掉了sa_sigaction和sa_restorer。"
+        },
+        {
+          "name": "do_set_tid_address",
+          "normalized_name": "do_set_tid_address",
+          "file_path": "kernel\\sched\\id.c",
+          "language": "c",
+          "start_line": "50",
+          "end_line": "54",
+          "outgoing_call_count": 2,
+          "summary": "这个函数用于设置线程ID地址，但当前实现仅调用调试函数并返回当前运行进程的tid，忽略了传入的参数tidptr，表明这是一个未完全实现或占位的函数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "signal": {
+      "module_name": "signal",
+      "function_count": 3,
+      "outgoing_edge_count": 32,
+      "internal_edge_count": 4,
+      "external_edge_count": 28,
+      "internal_call_ratio": 0.125,
+      "external_call_ratio": 0.875,
+      "module_weight": 0.0067,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "synchronization": {
+      "module_name": "synchronization",
+      "function_count": 11,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0083,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 32,
+      "outgoing_edge_count": 122,
+      "internal_edge_count": 93,
+      "external_edge_count": 29,
+      "internal_call_ratio": 0.7623,
+      "external_call_ratio": 0.2377,
+      "module_weight": 0.0411,
+      "files": [
+        "include/system/resource.h",
+        "include\\os\\system.h",
+        "include\\os\\time.h",
+        "include\\os\\uname.h",
+        "include\\sys\\select.h",
+        "include\\system\\resource.h",
+        "init\\main.c",
+        "kernel\\fat32\\poll.c",
+        "kernel\\io\\select.c",
+        "kernel\\sched\\id.c",
+        "kernel\\syscall\\syscall.c",
+        "kernel\\system\\resource.c",
+        "kernel\\system\\system.c",
+        "kernel\\system\\uname.c",
+        "kernel\\time\\system_time.c",
+        "tiny_libc\\syscall.c"
+      ],
+      "file_count": 16,
+      "core_functions": [
+        {
+          "name": "init_syscall",
+          "normalized_name": "init_syscall",
+          "file_path": "init\\main.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "160",
+          "outgoing_call_count": 68,
+          "summary": "初始化系统调用表，将系统调用编号映射到对应的处理函数指针。主要涉及文件系统操作、进程管理、信号处理、内存管理、时间相关等系统调用的注册。"
+        },
+        {
+          "name": "do_pselect6",
+          "normalized_name": "do_pselect6",
+          "file_path": "kernel\\io\\select.c",
+          "language": "c",
+          "start_line": "59",
+          "end_line": "114",
+          "outgoing_call_count": 9,
+          "summary": "实现 select 系统调用的核心逻辑，处理文件描述符的读、写和异常条件，支持超时和信号掩码参数，但代码中未使用信号掩码参数。该函数遍历文件描述符，按照读、写、异常顺序检查每个文件描述符，一旦某个描述符事件就绪则立即返回，否则超时返回。"
+        },
+        {
+          "name": "do_ppoll",
+          "normalized_name": "do_ppoll",
+          "file_path": "kernel\\fat32\\poll.c",
+          "language": "c",
+          "start_line": "17",
+          "end_line": "75",
+          "outgoing_call_count": 7,
+          "summary": "实现ppoll系统调用，轮询一组文件描述符（标准输入和管道）的可读事件。该函数会阻塞等待条件满足（如非空缓冲区），并返回发生事件的描述符数量。"
+        },
+        {
+          "name": "handle_select",
+          "normalized_name": "handle_select",
+          "file_path": "kernel\\io\\select.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "43",
+          "outgoing_call_count": 6,
+          "summary": "该函数根据文件描述符的模式（读/写）和类型（标准输入、标准输出、标准错误、管道或普通文件），调用相应的等待函数，直到缓冲区可读或可写，或超时。"
+        },
+        {
+          "name": "do_getrusage",
+          "normalized_name": "do_getrusage",
+          "file_path": "kernel\\time\\system_time.c",
+          "language": "c",
+          "start_line": "49",
+          "end_line": "90",
+          "outgoing_call_count": 4,
+          "summary": "实现系统调用getrusage，获取当前进程的资源使用情况，包括用户时间、系统时间、部分内存和I/O统计，以及自愿上下文切换次数。当who参数为RUSAGE_SELF时填充usage结构体；其他情况断言失败。"
+        },
+        {
+          "name": "handle_syscall",
+          "normalized_name": "handle_syscall",
+          "file_path": "kernel\\syscall\\syscall.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "28",
+          "outgoing_call_count": 4,
+          "summary": "处理系统调用的函数，将系统调用号对应的系统调用函数执行结果存入返回寄存器，并调整程序计数器以跳过ecall指令。"
+        },
+        {
+          "name": "do_prlimit",
+          "normalized_name": "do_prlimit",
+          "file_path": "kernel\\system\\resource.c",
+          "language": "c",
+          "start_line": "3",
+          "end_line": "14",
+          "outgoing_call_count": 3,
+          "summary": "该函数实现了简化版的进程资源限制设置/获取（prlimit）功能，仅支持PID为0（当前进程）且资源类型为RLIMIT_NOFILE（文件描述符数量限制）的情形。内部使用静态变量保存默认限制（软限制1024，硬限制1M），并根据传入的new_limit或old_limit进行赋值或读取。"
+        },
+        {
+          "name": "do_gettimeofday",
+          "normalized_name": "do_gettimeofday",
+          "file_path": "kernel\\time\\system_time.c",
+          "language": "c",
+          "start_line": "26",
+          "end_line": "33",
+          "outgoing_call_count": 3,
+          "summary": "该函数获取系统当前的滴答数，转换为时间戳，并加上一个固定的偏移量（Unix纪元以来的秒数，约2021年8月）以得到实际时间，最后将结果填入timespec结构体。"
+        },
+        {
+          "name": "do_uname",
+          "normalized_name": "do_uname",
+          "file_path": "kernel\\system\\uname.c",
+          "language": "c",
+          "start_line": "19",
+          "end_line": "31",
+          "outgoing_call_count": 2,
+          "summary": "该函数将全局变量 utsname 中的各个系统信息字段复制到传入的 struct utsname 结构体指针中，实现系统名称、节点名、内核发行版、内核版本、机器硬件名和域名信息的填充，并返回成功标志 0。"
+        },
+        {
+          "name": "rusage",
+          "normalized_name": "rusage",
+          "file_path": "include\\os\\time.h",
+          "language": "c",
+          "start_line": "78",
+          "end_line": "95",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个名为 rusage 的结构体，用于记录进程的资源使用统计数据，包括CPU时间、内存使用、缺页、I/O操作、上下文切换等字段。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\time\\timer.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "iteration_test_timer",
+          "normalized_name": "iteration_test_timer",
+          "file_path": "kernel\\time\\timer.c",
+          "language": "c",
+          "start_line": "80",
+          "end_line": "95",
+          "outgoing_call_count": 7,
+          "summary": "这是一个用于测试定时器功能的迭代测试函数。当全局标志 test_timer_stop 为假时，它每被调用一次就打印一条消息，分配一个定时器，设置其超时时间为当前时间加上 50000000 个 tick，并将自身设置为回调函数，然后启动定时器，从而实现每 5 秒（按 test_timer_gp 递增）重复触发的效果。当标志为真时，它会调用 fat32_fsync(0) 和 screen_reflush() 后触发断言失败以终止测试。"
+        },
+        {
+          "name": "do_set_test_timer",
+          "normalized_name": "do_set_test_timer",
+          "file_path": "kernel\\time\\timer.c",
+          "language": "c",
+          "start_line": 97,
+          "end_line": 106,
+          "outgoing_call_count": 5,
+          "summary": "分配一个定时器对象，设置其超时时间为当前 ticks 加上 50000000，指定回调函数为 iteration_test_timer，参数为 0，然后启用该定时器。这是一个测试辅助函数，用于在系统时间滴答后执行迭代测试。"
+        },
+        {
+          "name": "do_stop_test_timer",
+          "normalized_name": "do_stop_test_timer",
+          "file_path": "kernel\\time\\timer.c",
+          "language": "c",
+          "start_line": "108",
+          "end_line": "111",
+          "outgoing_call_count": 0,
+          "summary": "设置一个全局标志 test_timer_stop 为 1，用于停止测试计时器。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "time": {
+      "module_name": "time",
+      "function_count": 10,
+      "outgoing_edge_count": 11,
+      "internal_edge_count": 8,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.7273,
+      "external_call_ratio": 0.2727,
+      "module_weight": 0.0091,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "timer": {
+      "module_name": "timer",
+      "function_count": 6,
+      "outgoing_edge_count": 19,
+      "internal_edge_count": 14,
+      "external_edge_count": 5,
+      "internal_call_ratio": 0.7368,
+      "external_call_ratio": 0.2632,
+      "module_weight": 0.0072,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 118,
+      "outgoing_edge_count": 294,
+      "internal_edge_count": 124,
+      "external_edge_count": 170,
+      "internal_call_ratio": 0.4218,
+      "external_call_ratio": 0.5782,
+      "module_weight": 0.1297,
+      "files": [
+        "arch/riscv/kernel/head.S",
+        "arch\\riscv\\crt0.S",
+        "arch\\riscv\\include\\atomic.h",
+        "arch\\riscv\\include\\pgtable.h",
+        "arch\\riscv\\include\\sbi.h",
+        "arch\\riscv\\kernel\\boot.c",
+        "arch\\riscv\\kernel\\head.S",
+        "arch\\riscv\\kernel\\start.S",
+        "include/log.h",
+        "include\\assert.h",
+        "include\\hash.h",
+        "include\\os\\elf.h",
+        "include\\os\\list.h",
+        "include\\os\\lock.h",
+        "include\\os\\mailbox.h",
+        "include\\os\\ring_buffer.h",
+        "include\\os\\time.h",
+        "include\\time\\itimer.h",
+        "kernel\\io\\select.c",
+        "kernel\\locking\\futex.c",
+        "kernel\\time\\itimer.c",
+        "kernel\\time\\timer.c",
+        "kernel\\time\\utils.c",
+        "libs\\printk.c",
+        "libs\\string.c",
+        "tiny_libc\\include\\assert.h",
+        "tiny_libc\\include\\stdatomic.h",
+        "tiny_libc\\printf.c",
+        "tiny_libc\\string.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 30,
+      "core_functions": [
+        {
+          "name": "TerminalSize",
+          "normalized_name": "TerminalSize",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "483",
+          "end_line": "576",
+          "outgoing_call_count": 38,
+          "summary": "TerminalSize类提供静态方法用于获取终端的大小（列数和行数），支持Windows、Linux、macOS和Cygwin等操作系统，并提供了回退默认值。"
+        },
+        {
+          "name": "AES",
+          "normalized_name": "AES",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "91",
+          "end_line": "265",
+          "outgoing_call_count": 20,
+          "summary": "实现AES分组密码的加密和解密功能，支持128位、192位和256位密钥，包含密钥扩展和加解密轮变换。"
+        },
+        {
+          "name": "decrypt",
+          "normalized_name": "decrypt",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "288",
+          "end_line": "296",
+          "outgoing_call_count": 19,
+          "summary": "这个代码块是AES解密方法，属于CBC模式的解密部分。它接收一个16字节的密文块，使用AES ECB解密后与上一个密文块（作为IV）进行异或，得到明文，并更新上一个密文块为当前密文块。"
+        },
+        {
+          "name": "decrypt",
+          "normalized_name": "decrypt",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "233",
+          "end_line": "265",
+          "outgoing_call_count": 19,
+          "summary": "该代码块实现了AES（Rijndael）分组密码的解密算法，对16字节密文分组进行解密，包含密钥轮变换、逆S盒替换等步骤。"
+        },
+        {
+          "name": "encrypt",
+          "normalized_name": "encrypt",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "199",
+          "end_line": "231",
+          "outgoing_call_count": 19,
+          "summary": "实现AES块加密，使用T-box查找表和S-box进行轮变换，将16字节明文加密为16字节密文。"
+        },
+        {
+          "name": "AES_128_CBC",
+          "normalized_name": "AES_128_CBC",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "267",
+          "end_line": "296",
+          "outgoing_call_count": 17,
+          "summary": "实现AES-128-CBC模式的加密和解密功能，使用密钥和可选的初始化向量（IV）对16字节数据块进行加解密。"
+        },
+        {
+          "name": "parse",
+          "normalized_name": "parse",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "383",
+          "end_line": "404",
+          "outgoing_call_count": 15,
+          "summary": "解析从ISP（In-System Programming）设备接收的响应数据，提取操作码、原因码和可选文本信息，并处理Python版本差异（bytes vs str）。"
+        },
+        {
+          "name": "printProgressBar",
+          "normalized_name": "printProgressBar",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "302",
+          "end_line": "327",
+          "outgoing_call_count": 13,
+          "summary": "在终端中打印进度条，用于显示循环任务的进度，可选回调函数更新外部状态。"
+        },
+        {
+          "name": "FlashModeResponse",
+          "normalized_name": "FlashModeResponse",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "407",
+          "end_line": "458",
+          "outgoing_call_count": 12,
+          "summary": "定义 FlashMode 响应解析类，用于解析 K210 ISP 协议返回的二进制响应数据，提取操作码、错误码和文本信息。"
+        },
+        {
+          "name": "load_elf",
+          "normalized_name": "load_elf",
+          "file_path": "arch\\riscv\\kernel\\boot.c",
+          "language": "c",
+          "start_line": "104",
+          "end_line": "207",
+          "outgoing_call_count": 12,
+          "summary": "加载ELF可执行文件，解析程序头，将PT_LOAD段的内容按页映射到内存，并填充ELF信息结构体。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arch\\riscv\\boot\\bootblock.S",
+        "include\\os\\sched.h",
+        "init\\main.c",
+        "kernel\\sched\\init.c",
+        "kernel\\time\\utils.c",
+        "linker/user_riscv.lds",
+        "tools\\createimage.c",
+        "tools\\elf2char.c",
+        "tools\\generateMapping.c"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\generateMapping.c",
+          "language": "c",
+          "start_line": "164",
+          "end_line": "197",
+          "outgoing_call_count": 52,
+          "summary": "这个代码块是程序的入口点，负责根据用户输入的程序名，解析对应的头文件（.h）以提取所有以 'extern unsigned char' 开头的变量声明，然后调用 write_to_file 函数生成对应的 C 源文件（.c）映射。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\elf2char.c",
+          "language": "c",
+          "start_line": "58",
+          "end_line": "104",
+          "outgoing_call_count": 52,
+          "summary": "该函数是elf2char工具的入口点，用于将指定的二进制文件（如ELF文件）转换为C语言的头文件或源文件，生成对应的字节数组和长度变量，支持两种模式：--header-only 仅生成声明，否则生成完整定义。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "init\\main.c",
+          "language": "c",
+          "start_line": "163",
+          "end_line": "243",
+          "outgoing_call_count": 52,
+          "summary": "这是操作系统的入口函数，负责初始化各个子系统（内存管理、进程控制、异常处理、系统调用、定时器、IO映射、特权级页表共享、PLIC/磁盘驱动、屏幕），然后设置定时器中断与异常处理，最后进入循环等待中断或调度。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "arch\\riscv\\boot\\bootblock.S",
+          "language": "assembly",
+          "start_line": "10",
+          "end_line": "32",
+          "outgoing_call_count": 52,
+          "summary": "该代码块是RISC-V架构下bootblock的入口函数，主要完成全局指针加载、内存屏障、向控制台输出一个换行符、打印启动消息，并读取当前hart ID后跳转到boot_kernel函数。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\createimage.c",
+          "language": "c",
+          "start_line": "29",
+          "end_line": "59",
+          "outgoing_call_count": 52,
+          "summary": "程序的入口函数，解析命令行选项（--vm 和 --extended），验证参数数量并调用 create_image 函数创建镜像。"
+        },
+        {
+          "name": "user_riscv.lds",
+          "normalized_name": "lds",
+          "file_path": "linker/user_riscv.lds",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "188",
+          "outgoing_call_count": 31,
+          "summary": "该链接脚本用于定义RISC-V 64位用户态程序的内存布局，从地址0x10000开始，依次放置.text、.rodata、.data、.bss等段，并设置全局指针__global_pointer$，最后丢弃不需要的段。"
+        },
+        {
+          "name": "copy_above_user_stack",
+          "normalized_name": "copy_above_user_stack",
+          "file_path": "kernel\\sched\\init.c",
+          "language": "c",
+          "start_line": "169",
+          "end_line": "292",
+          "outgoing_call_count": 12,
+          "summary": "该函数用于在进程创建时，在用户栈之上复制并构建启动参数(包括 argv、envp、辅助向量、随机填充和执行文件名)，返回用户栈顶指针。它计算所需空间，从内核虚拟地址 sp_kva 向下分配内存，并逐项拷贝数据，同时将各指针转换为相对于用户栈的地址。"
+        },
+        {
+          "name": "user_time_count",
+          "normalized_name": "user_time_count",
+          "file_path": "kernel\\time\\utils.c",
+          "language": "c",
+          "start_line": "20",
+          "end_line": "25",
+          "outgoing_call_count": 1,
+          "summary": "该函数用于更新当前运行进程的用户态时间，通过记录两次调用间的tick差值累加到进程的utime字段中。"
+        },
+        {
+          "name": "set_user_addr_top",
+          "normalized_name": "set_user_addr_top",
+          "file_path": "include\\os\\sched.h",
+          "language": "c",
+          "start_line": "344",
+          "end_line": "351",
+          "outgoing_call_count": 1,
+          "summary": "设置进程控制块（pcb）的用户地址空间顶部地址（user_addr_top），包含合法性检查。"
+        },
+        {
+          "name": "get_user_addr_top",
+          "normalized_name": "get_user_addr_top",
+          "file_path": "include\\os\\sched.h",
+          "language": "c",
+          "start_line": "329",
+          "end_line": "334",
+          "outgoing_call_count": 0,
+          "summary": "获取进程控制块（pcb）中记录的 userspace 地址范围上限（user_addr_top），返回 pcb 结构体中的该字段值。其注释掉的代码试图通过父进程关系跟踪实际进程，但当前版本被注释，实际仅直接返回 pcb->user_addr_top。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/404.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

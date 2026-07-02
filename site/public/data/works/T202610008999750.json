@@ -1,0 +1,1990 @@
+{
+  "repo_name": "T202610008999750",
+  "team_name": "T202610008999750",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T202610008999750-417",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t202610008999750-417",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust",
+    "c",
+    "python",
+    "cmake",
+    "toml"
+  ],
+  "core_modules": [
+    "filesystem",
+    "syscall",
+    "process",
+    "unknown",
+    "memory"
+  ],
+  "function_count": 800,
+  "node_count": 800,
+  "edge_count": 5285,
+  "internal_edge_count": 2341,
+  "external_edge_count": 2944,
+  "module_count": 18,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.23,
+    "build": 0.7,
+    "driver": 0.9,
+    "filesystem": 1.0,
+    "interrupt": 0.33,
+    "ipc": 0.15,
+    "library": 0.08,
+    "memory": 1.0,
+    "network": 0.33,
+    "process": 1.0,
+    "report_generation": 0.51,
+    "scheduler": 0.9,
+    "synchronization": 0.31,
+    "syscall": 1.0,
+    "test": 0.15,
+    "time": 0.28,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.3414,
+      "completeness": 1.0,
+      "final_score": 0.6048
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.2336,
+      "completeness": 1.0,
+      "final_score": 0.5402
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.1658,
+      "completeness": 1.0,
+      "final_score": 0.4995
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.123,
+      "completeness": 1.0,
+      "final_score": 0.4738
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0598,
+      "completeness": 1.0,
+      "final_score": 0.4359
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 3,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 3,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0025,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 12,
+      "outgoing_edge_count": 79,
+      "internal_edge_count": 1,
+      "external_edge_count": 78,
+      "internal_call_ratio": 0.0127,
+      "external_call_ratio": 0.9873,
+      "module_weight": 0.015,
+      "files": [
+        "api/src/path.rs",
+        "api\\src\\imp\\task\\execve.rs",
+        "api\\src\\path.rs",
+        "apps\\nimbos\\c\\CMakeLists.txt",
+        "apps\\nimbos\\rust\\Cargo.toml",
+        "configs\\dummy.toml"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "impl HardlinkManager {",
+          "normalized_name": "impl HardlinkManager {",
+          "file_path": "api/src/path.rs",
+          "language": "rust",
+          "start_line": "191",
+          "end_line": "291",
+          "outgoing_call_count": 64,
+          "summary": "实现硬链接管理器，提供创建、移除、查询真实路径和链接计数的功能，内部使用读写锁保护并发访问，通过引用计数管理链接目标文件的删除。"
+        },
+        {
+          "name": "CMakeLists.txt",
+          "normalized_name": "txt",
+          "file_path": "apps\\nimbos\\c\\CMakeLists.txt",
+          "language": "cmake",
+          "start_line": "1",
+          "end_line": "80",
+          "outgoing_call_count": 18,
+          "summary": "构建用户态程序库和可执行文件的CMake配置，根据不同的CPU架构设置编译标志、选择系统调用头文件，并生成汇编反汇编文件。"
+        },
+        {
+          "name": "atomic_link_update",
+          "normalized_name": "atomic_link_update",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": "253",
+          "end_line": "262",
+          "outgoing_call_count": 16,
+          "summary": "原子性地更新符号链接映射：处理源路径到目标路径的链接关系，维护引用计数"
+        },
+        {
+          "name": "remove_link",
+          "normalized_name": "remove_link",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": 221,
+          "end_line": 228,
+          "outgoing_call_count": 14,
+          "summary": "尝试删除一个符号链接（或硬链接），如果原子链接删除失败，则退而删除普通文件。"
+        },
+        {
+          "name": "create_link",
+          "normalized_name": "create_link",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": "204",
+          "end_line": "215",
+          "outgoing_call_count": 12,
+          "summary": "创建一个链接（硬链接或符号链接？），首先检查目标路径存在且为目录，然后调用内部方法进行原子链接更新。"
+        },
+        {
+          "name": "link_count",
+          "normalized_name": "link_count",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": "239",
+          "end_line": "246",
+          "outgoing_call_count": 10,
+          "summary": "计算给定文件路径的硬链接数量，优先从内部缓存中获取，否则若文件存在则返回1，否则返回0。"
+        },
+        {
+          "name": "atomic_link_remove",
+          "normalized_name": "atomic_link_remove",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": "266",
+          "end_line": "270",
+          "outgoing_call_count": 8,
+          "summary": "从LinkManagerInner中删除指定的符号链接（src指向的链接），如果删除成功，则对目标路径（dst）进行引用计数减一操作。"
+        },
+        {
+          "name": "resolve_lmbench_build_path",
+          "normalized_name": "resolve_lmbench_build_path",
+          "file_path": "api\\src\\imp\\task\\execve.rs",
+          "language": "rust",
+          "start_line": 213,
+          "end_line": 228,
+          "outgoing_call_count": 7,
+          "summary": "将 lmbench 构建时记录的绝对路径（以 LMBENCH_BUILD_PREFIX 开头）重新映射到当前 libc 根目录下的对应文件，如果映射后的文件存在则返回映射路径，否则返回原路径。"
+        },
+        {
+          "name": "impl From<LinkError> for LinuxError {",
+          "normalized_name": "impl From<LinkError> for LinuxError {",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": "172",
+          "end_line": "176",
+          "outgoing_call_count": 3,
+          "summary": "实现将 LinkError 类型转换为 LinuxError 类型的 trait From，转换过程中先将 LinkError 转换为 AxError，再通过 into() 方法得到 LinuxError。"
+        },
+        {
+          "name": "dummy.toml",
+          "normalized_name": "toml",
+          "file_path": "configs\\dummy.toml",
+          "language": "toml",
+          "start_line": "1",
+          "end_line": "73",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块定义了一个名为“dummy”的虚拟平台的基础配置，包括架构、平台、任务栈大小、定时器频率、CPU数量、内存布局、内核和用户空间地址范围、设备MMIO区域等。由于所有内存和地址相关的值都设置为0，表明该配置主要用于测试或框架开发，不依赖具体硬件。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 19,
+      "outgoing_edge_count": 98,
+      "internal_edge_count": 26,
+      "external_edge_count": 72,
+      "internal_call_ratio": 0.2653,
+      "external_call_ratio": 0.7347,
+      "module_weight": 0.0217,
+      "files": [
+        "api\\src\\file\\fs.rs",
+        "api\\src\\file\\net.rs",
+        "api\\src\\file\\stdio.rs",
+        "api\\src\\imp\\fs\\mount.rs",
+        "apps\\nimbos\\c\\lib\\stdio.c",
+        "apps\\nimbos\\rust\\src\\console.rs",
+        "core\\src\\time.rs"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "accept",
+          "normalized_name": "accept",
+          "file_path": "api\\src\\file\\net.rs",
+          "language": "rust",
+          "start_line": "160",
+          "end_line": "177",
+          "outgoing_call_count": 23,
+          "summary": "实现TCP/UDP套接字的accept操作，对UDP返回不支持错误，对TCP则尝试优先匹配本地回环连接（模拟connect到本地监听端口的快速路径），否则调用底层套接字的accept获取新连接及对端地址。"
+        },
+        {
+          "name": "is_nonblocking",
+          "normalized_name": "is_nonblocking",
+          "file_path": "api\\src\\file\\net.rs",
+          "language": "rust",
+          "start_line": "185",
+          "end_line": "190",
+          "outgoing_call_count": 11,
+          "summary": "该函数检查当前套接字是否处于非阻塞模式，通过匹配套接字类型（UDP或TCP）并调用相应内部套接字的锁保护后的is_nonblocking方法来判断。"
+        },
+        {
+          "name": "set_nonblocking",
+          "normalized_name": "set_nonblocking",
+          "file_path": "api\\src\\file\\net.rs",
+          "language": "rust",
+          "start_line": "246",
+          "end_line": "252",
+          "outgoing_call_count": 9,
+          "summary": "根据套接字类型（UDP或TCP），设置其非阻塞模式。对每种套接字，先获取锁，然后调用其set_nonblocking方法设置指定状态，最后返回Ok(())表示成功。"
+        },
+        {
+          "name": "set_nonblocking",
+          "normalized_name": "set_nonblocking",
+          "file_path": "api\\src\\file\\stdio.rs",
+          "language": "rust",
+          "start_line": "135",
+          "end_line": "137",
+          "outgoing_call_count": 9,
+          "summary": "这是一个空操作函数，接受一个布尔参数_nonblocking，但没有任何实际操作，直接返回Ok(())，即始终成功但未实际设置非阻塞状态。"
+        },
+        {
+          "name": "set_nonblocking",
+          "normalized_name": "set_nonblocking",
+          "file_path": "api\\src\\file\\fs.rs",
+          "language": "rust",
+          "start_line": 184,
+          "end_line": 186,
+          "outgoing_call_count": 9,
+          "summary": "该函数是一个设置非阻塞模式的接口，但具体实现为空操作，即接受参数但不执行任何实际设置，总是返回成功。"
+        },
+        {
+          "name": "impl Stdin {",
+          "normalized_name": "impl Stdin {",
+          "file_path": "api\\src\\file\\stdio.rs",
+          "language": "rust",
+          "start_line": "58",
+          "end_line": "74",
+          "outgoing_call_count": 9,
+          "summary": "实现标准输入设备的阻塞读操作，确保至少读取一个字节才返回，若读取长度为0则不断重试并让出CPU。"
+        },
+        {
+          "name": "set_nonblocking",
+          "normalized_name": "set_nonblocking",
+          "file_path": "api\\src\\file\\stdio.rs",
+          "language": "rust",
+          "start_line": 167,
+          "end_line": 169,
+          "outgoing_call_count": 9,
+          "summary": "该函数是一个空操作，不执行任何设置非阻塞状态的实际操作，直接返回成功结果。"
+        },
+        {
+          "name": "set_nonblocking",
+          "normalized_name": "set_nonblocking",
+          "file_path": "api\\src\\file\\fs.rs",
+          "language": "rust",
+          "start_line": "113",
+          "end_line": "115",
+          "outgoing_call_count": 9,
+          "summary": "这是一个空的设置非阻塞标志的函数，直接返回成功，不执行任何实际操作。"
+        },
+        {
+          "name": "print",
+          "normalized_name": "print",
+          "file_path": "apps\\nimbos\\rust\\src\\console.rs",
+          "language": "rust",
+          "start_line": 17,
+          "end_line": 19,
+          "outgoing_call_count": 5,
+          "summary": "{\n  \"block_id\": \"block_131\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\console.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"17\",\n  \"end_line\": \"19\",\n  \"name\": \"print\",\n  \"type\": \"function\",\n  \"summary\": \"这个函数将格式化参数通过 Stdout 的 write_fmt 方法输出到标准输出，实现了类似 println 但低层级的输出功能。\",\n  \"logic_steps\": [\n    \"接收一个 fmt::Arguments 类型的格式化参数 args。\",\n    \"调用全局或模块内的 Stdout 实例的 write_fmt 方法，传入 args，并调用 unwrap 来忽略可能的错误。\"\n  ],\n  \"called_functions\": [\n    \"Stdout.write_fmt\",\n    \"unwrap\"\n  ],\n  \"related_os_module\": \"driver\",\n  \"evidence\": \"函数使用 fmt::Arguments 和 Stdout，Stdout 通常代表标准输出设备驱动，在操作系统上下文中属于驱动层。\",\n  \"uncertainty\": \"代码中没有定义 Stdout 的来源，可能是通过 use 导入的外部类型或模块内全局变量，因此不能完全确定其具体实现，但从用法看是标准输出驱动。\"\n}"
+        },
+        {
+          "name": "print",
+          "normalized_name": "print",
+          "file_path": "apps\\nimbos\\rust\\src\\console.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "26",
+          "outgoing_call_count": 5,
+          "summary": "定义了一个名为 print 的宏，用于格式化输出到控制台，它接受一个字面量格式字符串和可选参数，调用 console 模块的 print 函数将格式化后的字符串输出。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 272,
+      "outgoing_edge_count": 1816,
+      "internal_edge_count": 958,
+      "external_edge_count": 858,
+      "internal_call_ratio": 0.5275,
+      "external_call_ratio": 0.4725,
+      "module_weight": 0.3414,
+      "files": [
+        "Makefile",
+        "api/src/file/net.rs",
+        "api\\src\\file\\fs.rs",
+        "api\\src\\file\\mod.rs",
+        "api\\src\\file\\net.rs",
+        "api\\src\\file\\pipe.rs",
+        "api\\src\\file\\stdio.rs",
+        "api\\src\\imp\\fs\\ctl.rs",
+        "api\\src\\imp\\fs\\fd_ops.rs",
+        "api\\src\\imp\\fs\\io.rs",
+        "api\\src\\imp\\fs\\mount.rs",
+        "api\\src\\imp\\fs\\path_trace.rs",
+        "api\\src\\imp\\fs\\poll.rs",
+        "api\\src\\imp\\fs\\socket.rs",
+        "api\\src\\imp\\fs\\stat.rs",
+        "api\\src\\imp\\sys.rs",
+        "api\\src\\path.rs",
+        "api\\src\\socket.rs",
+        "apps\\junior\\Makefile",
+        "apps\\libc\\Makefile",
+        "apps\\nimbos\\Makefile",
+        "apps\\nimbos\\c\\Makefile",
+        "apps\\nimbos\\c\\lib\\stdio.c",
+        "apps\\nimbos\\c\\lib\\syscall.c",
+        "apps\\nimbos\\rust\\Makefile",
+        "apps\\nimbos\\rust\\src\\bin\\fantastic_text.rs",
+        "apps\\nimbos\\rust\\src\\console.rs",
+        "apps\\nimbos\\rust\\src\\lib.rs",
+        "apps\\oscomp\\Makefile",
+        "core\\src\\mm.rs"
+      ],
+      "file_count": 30,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": "21",
+          "end_line": "37",
+          "outgoing_call_count": 61,
+          "summary": "该函数用于创建一个表示路径的新实例，它接受一个字符串或可转换为字符串的路径，经过规范化和处理尾部斜杠后，通过 HARDLINK_MANAGER 获取真实路径，并返回包装后的结果。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\file\\mod.rs",
+          "language": "rust",
+          "start_line": "229",
+          "end_line": "231",
+          "outgoing_call_count": 61,
+          "summary": "这是一个关联函数，用于构造一个结构体实例，该结构体包含两个字段：cur 和 max，分别表示当前值和最大值。函数是 const 的，因此可以在编译期常量上下文中使用。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\file\\fs.rs",
+          "language": "rust",
+          "start_line": "127",
+          "end_line": "134",
+          "outgoing_call_count": 61,
+          "summary": "为 Dir（目录）结构体创建一个新的实例，包装底层的 axfs::fops::Directory 对象和路径字符串，并初始化内部同步原语和目录遍历状态。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\imp\\fs\\stat.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "57",
+          "outgoing_call_count": 61,
+          "summary": "定义了一个关联函数new，用于创建一个新的结构体实例，初始化了两个字段：paths和fds，分别包裹在RwLock中，且底层使用BTreeMap存储。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\path.rs",
+          "language": "rust",
+          "start_line": "192",
+          "end_line": "199",
+          "outgoing_call_count": 61,
+          "summary": "创建一个新的 `LinkManager` 实例，其中初始化了一个包含空 `BTreeMap` 的 `RwLock` 内部结构，用于管理链接和引用计数。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "api\\src\\imp\\fs\\fd_ops.rs",
+          "language": "rust",
+          "start_line": "99",
+          "end_line": "186",
+          "outgoing_call_count": 61,
+          "summary": "实现打开文件或目录的系统调用 sys_openat，处理路径解析、BusyBox 别名回退、文件与目录的区分打开，并分配文件描述符。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\file\\fs.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "26",
+          "outgoing_call_count": 61,
+          "summary": "初始化一个包含空BTreeMap的Fs结构体实例，并封装在RwLock中进行并发访问控制。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\imp\\fs\\ctl.rs",
+          "language": "rust",
+          "start_line": "99",
+          "end_line": "101",
+          "outgoing_call_count": 61,
+          "summary": "该函数用于创建一个结构体实例，初始化一个指向可变字节切片的引用和一个偏移量字段。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\file\\pipe.rs",
+          "language": "rust",
+          "start_line": "137",
+          "end_line": "143",
+          "outgoing_call_count": 61,
+          "summary": "创建一个新的管道（Pipe）实例，初始化内部缓冲区、读等待队列和写等待队列。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\file\\mod.rs",
+          "language": "rust",
+          "start_line": "31",
+          "end_line": "33",
+          "outgoing_call_count": 61,
+          "summary": "这个代码块是某个结构体的构造函数，接收秒和纳秒两个参数并初始化结构体实例。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 1,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0009,
+      "files": [
+        "api/src/ptr.rs",
+        "api\\src\\file\\mod.rs",
+        "api\\src\\imp\\time.rs",
+        "api\\src\\ptr.rs",
+        "api\\src\\signal.rs",
+        "apps\\nimbos\\rust\\src\\lang_items.rs",
+        "core\\src\\task.rs",
+        "core\\src\\time.rs"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "panic_handler",
+          "normalized_name": "panic_handler",
+          "file_path": "apps\\nimbos\\rust\\src\\lang_items.rs",
+          "language": "rust",
+          "start_line": "2",
+          "end_line": "15",
+          "outgoing_call_count": 16,
+          "summary": "这个函数是Rust语言中panic时的处理函数（lang item），当程序发生panic时被调用，它会打印包含文件和行号在内的错误信息，然后调用exit(1)终止进程。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api\\src\\imp\\time.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "40",
+          "outgoing_call_count": 14,
+          "summary": "该函数实现了为某个结构体提供默认值的 trait `Default`。它返回一个实例，其中两个字段 `it_interval` 和 `it_value` 都设置为 `Duration::ZERO` 转换后的时间值。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api\\src\\file\\mod.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "67",
+          "outgoing_call_count": 14,
+          "summary": "实现 Kstat 类型的 Default trait，为文件统计信息提供默认值，主要用于初始化一个根 inode 或默认的文件元数据结构。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api/src/ptr.rs",
+          "language": "rust",
+          "start_line": "98",
+          "end_line": "100",
+          "outgoing_call_count": 14,
+          "summary": "为某个类型实现 Default trait 的 default 方法，返回一个空指针 (null_mut()) 作为该类型的默认值。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "135",
+          "end_line": "137",
+          "outgoing_call_count": 14,
+          "summary": "为某个类型实现 Default trait，返回一个用新创建的 WaitQueue 包装的实例。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "37",
+          "end_line": "39",
+          "outgoing_call_count": 14,
+          "summary": "实现某种时间类型的默认构造函数，调用 Self::new() 创建一个默认实例。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api\\src\\ptr.rs",
+          "language": "rust",
+          "start_line": 149,
+          "end_line": 151,
+          "outgoing_call_count": 14,
+          "summary": "为包含裸指针的类型提供默认值，即空指针。"
+        },
+        {
+          "name": "impl<T> Default for UserConstPtr<T> {",
+          "normalized_name": "impl<T> Default for UserConstPtr<T> {",
+          "file_path": "api\\src\\ptr.rs",
+          "language": "rust",
+          "start_line": "148",
+          "end_line": "152",
+          "outgoing_call_count": 5,
+          "summary": "为 UserConstPtr<T> 实现 Default trait，使其在默认构造时生成一个空指针（null）的实例。"
+        },
+        {
+          "name": "impl Default for TimeStat {",
+          "normalized_name": "impl Default for TimeStat {",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "40",
+          "outgoing_call_count": 4,
+          "summary": "为 TimeStat 结构体实现 Default trait，使其支持默认构造，通过调用 TimeStat::new() 方法返回默认实例。"
+        },
+        {
+          "name": "impl<T> Default for UserPtr<T> {",
+          "normalized_name": "impl<T> Default for UserPtr<T> {",
+          "file_path": "api\\src\\ptr.rs",
+          "language": "rust",
+          "start_line": "97",
+          "end_line": "101",
+          "outgoing_call_count": 4,
+          "summary": "为 UserPtr<T> 类型实现 Default trait，提供默认构造方法，将内部指针初始化为空指针。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "api\\src\\file\\pipe.rs",
+        "api\\src\\imp\\signal.rs",
+        "api\\src\\imp\\time.rs",
+        "api\\src\\signal.rs",
+        "apps\\nimbos\\c\\lib\\time.c",
+        "apps\\nimbos\\rust\\src\\time.rs"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "send_signal_process_group",
+          "normalized_name": "send_signal_process_group",
+          "file_path": "api\\src\\signal.rs",
+          "language": "rust",
+          "start_line": "73",
+          "end_line": "84",
+          "outgoing_call_count": 15,
+          "summary": "向进程组中的所有进程发送信号，并返回成功发送的进程数量。"
+        },
+        {
+          "name": "make_queue_signal_info",
+          "normalized_name": "make_queue_signal_info",
+          "file_path": "api\\src\\imp\\signal.rs",
+          "language": "rust",
+          "start_line": "195",
+          "end_line": "209",
+          "outgoing_call_count": 14,
+          "summary": "该函数构造并验证一个信号信息（SignalInfo），用于信号队列操作。它解析信号编号、从用户态拷贝信号信息、设置信号编号，并检查调用进程是否有权限向目标进程发送信号，如果权限不足则返回 EPERM 错误。"
+        },
+        {
+          "name": "send_signal_thread",
+          "normalized_name": "send_signal_thread",
+          "file_path": "api\\src\\signal.rs",
+          "language": "rust",
+          "start_line": "55",
+          "end_line": "62",
+          "outgoing_call_count": 11,
+          "summary": "向指定线程发送信号，通过获取线程的ThreadData内部信号发送器来发送信号。"
+        },
+        {
+          "name": "send_signal_process",
+          "normalized_name": "send_signal_process",
+          "file_path": "api\\src\\signal.rs",
+          "language": "rust",
+          "start_line": "64",
+          "end_line": "71",
+          "outgoing_call_count": 10,
+          "summary": "向指定进程发送信号：先获取进程的 ProcessData 数据，然后通过 signal.send_signal 方法发送信号，若获取失败则返回 EPERM 错误。"
+        },
+        {
+          "name": "set_nonblocking",
+          "normalized_name": "set_nonblocking",
+          "file_path": "api\\src\\file\\pipe.rs",
+          "language": "rust",
+          "start_line": "337",
+          "end_line": "339",
+          "outgoing_call_count": 9,
+          "summary": "空操作函数，总是返回成功，忽略输入的非阻塞标志，实际上不改变任何状态。"
+        },
+        {
+          "name": "check_signals",
+          "normalized_name": "check_signals",
+          "file_path": "api\\src\\signal.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "44",
+          "outgoing_call_count": 7,
+          "summary": "检查当前线程是否有待处理信号，并根据信号操作类型执行相应动作（如退出、暂停、继续、处理），返回是否成功处理信号。"
+        },
+        {
+          "name": "has_pending_signal",
+          "normalized_name": "has_pending_signal",
+          "file_path": "api\\src\\file\\pipe.rs",
+          "language": "rust",
+          "start_line": "63",
+          "end_line": "71",
+          "outgoing_call_count": 6,
+          "summary": "检查当前线程是否有待处理的信号，用于判断阻塞式pipe操作是否应被信号打断。"
+        },
+        {
+          "name": "parse_signo",
+          "normalized_name": "parse_signo",
+          "file_path": "api\\src\\imp\\signal.rs",
+          "language": "rust",
+          "start_line": "28",
+          "end_line": "30",
+          "outgoing_call_count": 3,
+          "summary": "将 u32 类型的信号编号转换为自定义的 Signo 枚举类型，如果转换失败则返回 EINVAL 错误。"
+        },
+        {
+          "name": "clock_gettime",
+          "normalized_name": "clock_gettime",
+          "file_path": "apps\\nimbos\\rust\\src\\time.rs",
+          "language": "rust",
+          "start_line": 19,
+          "end_line": 21,
+          "outgoing_call_count": 2,
+          "summary": "{\n  \"block_id\": \"block_231\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\time.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"19\",\n  \"end_line\": \"21\",\n  \"name\": \"clock_gettime\",\n  \"type\": \"function\",\n  \"summary\": \"该函数是 clock_gettime 系统调用的用户态封装，直接转发请求到内核 sys_clock_gettime 系统调用。\",\n  \"logic_steps\": [\n    \"接收参数 clk（时钟ID）和 req（可变引用指向 TimeSpec，用于返回时间）\",\n    \"调用 sys_clock_gettime(clk, req) 执行实际系统调用并将结果返回\"\n  ],\n  \"called_functions\": [\n    \"sys_clock_gettime\"\n  ],\n  \"related_os_module\": \"syscall\",\n  \"evidence\": \"代码中只有一行对 sys_clock_gettime 的调用，且函数名称和参数与 POSIX clock_gettime 系统调用接口一致，表明这是一个系统调用封装层。\",\n  \"uncertainty\": \"函数体过于简单，无法判断内部是否包含错误处理或额外的日志；同时 sys_clock_gettime 的定义未在此代码段中，其具体实现不明确。\"\n}"
+        },
+        {
+          "name": "clock_nanosleep",
+          "normalized_name": "clock_nanosleep",
+          "file_path": "apps\\nimbos\\rust\\src\\time.rs",
+          "language": "rust",
+          "start_line": "33",
+          "end_line": "35",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块定义了一个名为 clock_nanosleep 的函数，它接收时钟ID、标志位和一个时间规格引用作为参数，直接调用 sys_clock_nanosleep 系统调用并返回其结果。实际上是系统调用的一个封装函数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "library": {
+      "module_name": "library",
+      "function_count": 2,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0015,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 42,
+      "outgoing_edge_count": 374,
+      "internal_edge_count": 91,
+      "external_edge_count": 283,
+      "internal_call_ratio": 0.2433,
+      "external_call_ratio": 0.7567,
+      "module_weight": 0.0598,
+      "files": [
+        "api\\src\\imp\\mm\\mmap.rs",
+        "api\\src\\imp\\task\\proc_trace.rs",
+        "api\\src\\ptr.rs",
+        "apps\\libc\\c\\mmap\\mmap.c",
+        "apps\\nimbos\\c\\lib\\string.c",
+        "core\\src\\mm.rs",
+        "core\\src\\task.rs",
+        "src\\mm.rs"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "sys_mmap",
+          "normalized_name": "sys_mmap",
+          "file_path": "api\\src\\imp\\mm\\mmap.rs",
+          "language": "rust",
+          "start_line": "70",
+          "end_line": "162",
+          "outgoing_call_count": 47,
+          "summary": "实现 Linux 系统调用 mmap，用于在进程的虚拟地址空间中映射文件或匿名内存区域。"
+        },
+        {
+          "name": "check_null_terminated",
+          "normalized_name": "check_null_terminated",
+          "file_path": "api\\src\\ptr.rs",
+          "language": "rust",
+          "start_line": "32",
+          "end_line": "84",
+          "outgoing_call_count": 28,
+          "summary": "检查从给定虚拟地址开始的连续内存区域是否为以默认零值结束的序列，并返回元素个数（不包括终止符）。同时验证内存对齐和访问权限。"
+        },
+        {
+          "name": "map_elf",
+          "normalized_name": "map_elf",
+          "file_path": "core\\src\\mm.rs",
+          "language": "rust",
+          "start_line": "115",
+          "end_line": "156",
+          "outgoing_call_count": 26,
+          "summary": "该函数负责将 ELF 文件中的各个段映射到用户空间的地址空间中，包括分配物理页、写入段数据，并返回入口点地址和辅助向量。"
+        },
+        {
+          "name": "drop",
+          "normalized_name": "drop",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "294",
+          "end_line": "302",
+          "outgoing_call_count": 23,
+          "summary": "释放用户地址空间映射，仅在非 aarch64 和 loongarch64 架构下执行内核地址空间映射清理，用于避免用户地址空间与内核地址空间之间的重叠冲突。"
+        },
+        {
+          "name": "check_region",
+          "normalized_name": "check_region",
+          "file_path": "api\\src\\ptr.rs",
+          "language": "rust",
+          "start_line": "9",
+          "end_line": "30",
+          "outgoing_call_count": 21,
+          "summary": "该函数用于检查一个内存区域（由起始虚拟地址、布局大小和对齐要求、访问权限标志定义）是否合法，并预填充相应的页表。它首先验证起始地址的对齐，然后检查进程的地址空间中该区域是否可访问（基于给定权限），最后向地址空间填充（populate）对应页范围的页表项。"
+        },
+        {
+          "name": "from",
+          "normalized_name": "from",
+          "file_path": "api\\src\\ptr.rs",
+          "language": "rust",
+          "start_line": "92",
+          "end_line": "94",
+          "outgoing_call_count": 21,
+          "summary": "这个函数是 `From<usize>` trait 的实现，用于将一个 `usize` 类型的整数转换为一个 `UserPtr` 类型的指针包装，实际上是将整数强制转换为一个可变裸指针并存储到 `UserPtr` 结构体中。"
+        },
+        {
+          "name": "from",
+          "normalized_name": "from",
+          "file_path": "api\\src\\imp\\mm\\mmap.rs",
+          "language": "rust",
+          "start_line": "30",
+          "end_line": "42",
+          "outgoing_call_count": 21,
+          "summary": "将 MmapProt 权限枚举转换为 MappingFlags 位标志，并默认添加 USER 权限。"
+        },
+        {
+          "name": "handle_page_fault",
+          "normalized_name": "handle_page_fault",
+          "file_path": "src\\mm.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "48",
+          "outgoing_call_count": 17,
+          "summary": "处理缺页异常的核心函数，判断异常是否可恢复，并根据访问来源（用户态或内核态）分别处理；对于用户态的保护页访问，发送SIGSEGV信号，否则直接结束进程。"
+        },
+        {
+          "name": "sys_munmap",
+          "normalized_name": "sys_munmap",
+          "file_path": "api\\src\\imp\\mm\\mmap.rs",
+          "language": "rust",
+          "start_line": "164",
+          "end_line": "173",
+          "outgoing_call_count": 14,
+          "summary": "实现系统调用sys_munmap，用于解除进程地址空间中指定虚拟地址范围的映射，并刷新TLB。"
+        },
+        {
+          "name": "test_file_mapping_hugepages",
+          "normalized_name": "test_file_mapping_hugepages",
+          "file_path": "apps\\libc\\c\\mmap\\mmap.c",
+          "language": "c",
+          "start_line": "149",
+          "end_line": "188",
+          "outgoing_call_count": 11,
+          "summary": "测试大页（hugepages）文件映射功能，先进行普通4KB页面文件映射并与内存读写测试，然后尝试进行2MB大页文件映射并测试，最后清理文件。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 1,
+      "outgoing_edge_count": 7,
+      "internal_edge_count": 0,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0013,
+      "files": [
+        "api\\src\\file\\net.rs",
+        "api\\src\\file\\pipe.rs",
+        "api\\src\\imp\\fs\\pipe.rs",
+        "api\\src\\imp\\fs\\socket.rs",
+        "api\\src\\imp\\task\\execve.rs",
+        "api\\src\\socket.rs"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "impl Socket {",
+          "normalized_name": "impl Socket {",
+          "file_path": "api\\src\\file\\net.rs",
+          "language": "rust",
+          "start_line": "105",
+          "end_line": "218",
+          "outgoing_call_count": 57,
+          "summary": "为 Socket 枚举实现了网络 I/O 和连接管理方法，包括 recv、sendto、recvfrom、listen、accept、send、poll、local_addr、peer_addr、shutdown、is_nonblocking、bind、connect。这些方法内部区分 UDP 和 TCP 套接字，并针对本地回环通信做了特殊处理（如自动绑定、回环数据包投递、TCP 本地连接模拟），以支持单机内多进程网络测试用例。"
+        },
+        {
+          "name": "impl SocketAddrExt for SocketAddrV6 {",
+          "normalized_name": "impl SocketAddrExt for SocketAddrV6 {",
+          "file_path": "api\\src\\socket.rs",
+          "language": "rust",
+          "start_line": "176",
+          "end_line": "234",
+          "outgoing_call_count": 34,
+          "summary": "为SocketAddrV6类型实现SocketAddrExt trait，提供从用户空间读取IPv6 socket地址、写入用户空间、获取协议族和编码长度的功能。"
+        },
+        {
+          "name": "impl SocketAddrExt for SocketAddrV4 {",
+          "normalized_name": "impl SocketAddrExt for SocketAddrV4 {",
+          "file_path": "api\\src\\socket.rs",
+          "language": "rust",
+          "start_line": "121",
+          "end_line": "174",
+          "outgoing_call_count": 33,
+          "summary": "为SocketAddrV4实现SocketAddrExt trait，提供从用户空间读取和写入IPv4 socket地址的功能，以及获取地址族和编码长度的方法。"
+        },
+        {
+          "name": "impl SocketAddrExt for SocketAddr {",
+          "normalized_name": "impl SocketAddrExt for SocketAddr {",
+          "file_path": "api\\src\\socket.rs",
+          "language": "rust",
+          "start_line": "54",
+          "end_line": "119",
+          "outgoing_call_count": 29,
+          "summary": "实现了 `SocketAddrExt` trait 对 `SocketAddr` 的方法，主要包括从用户空间读取 `SocketAddr`、写入用户空间、获取地址族和编码长度。"
+        },
+        {
+          "name": "impl Pipe {",
+          "normalized_name": "impl Pipe {",
+          "file_path": "api\\src\\file\\pipe.rs",
+          "language": "rust",
+          "start_line": "151",
+          "end_line": "189",
+          "outgoing_call_count": 21,
+          "summary": "为 `Pipe` 类型实现构造方法、读写方向判断、关闭状态检测以及状态导出方法。`new` 创建一对管道（读端和写端），共享一个内部缓冲区；`readable`/`writable` 基于布尔字段判断方向；`closed` 通过检查 `Arc` 的强引用计数是否为 1 来判断对端是否已关闭；`trace_state` 导出管道的当前状态，包括读写方向、关闭状态和缓冲区可用读写字节数。"
+        },
+        {
+          "name": "sys_socket",
+          "normalized_name": "sys_socket",
+          "file_path": "api\\src\\imp\\fs\\socket.rs",
+          "language": "rust",
+          "start_line": "43",
+          "end_line": "76",
+          "outgoing_call_count": 17,
+          "summary": "实现Linux系统调用sys_socket，根据参数domain、socktype和protocol创建对应的UDP或TCP套接字，并设置非阻塞和close-on-exec标志，最后将套接字注册为文件描述符。"
+        },
+        {
+          "name": "apply_shell_script_fallback",
+          "normalized_name": "apply_shell_script_fallback",
+          "file_path": "api\\src\\imp\\task\\execve.rs",
+          "language": "rust",
+          "start_line": "178",
+          "end_line": "193",
+          "outgoing_call_count": 13,
+          "summary": "当当前可执行文件路径以 '.sh' 结尾时，尝试将脚本执行转换为通过解释器（默认 /bin/sh）执行，并更新进程的 image_path 和 argv。"
+        },
+        {
+          "name": "impl PipeRingBuffer {",
+          "normalized_name": "impl PipeRingBuffer {",
+          "file_path": "api\\src\\file\\pipe.rs",
+          "language": "rust",
+          "start_line": "80",
+          "end_line": "128",
+          "outgoing_call_count": 12,
+          "summary": "实现 PipeRingBuffer 结构体的方法，包括新建环形缓冲区、写入字节、读取字节、计算可读长度和可写长度，用于管道通信中的数据缓冲。"
+        },
+        {
+          "name": "impl_socket",
+          "normalized_name": "impl_socket",
+          "file_path": "api\\src\\file\\net.rs",
+          "language": "rust",
+          "start_line": "94",
+          "end_line": "103",
+          "outgoing_call_count": 10,
+          "summary": "定义了一个宏 `impl_socket`，用于为 Socket 枚举的变体（Udp、Tcp）自动生成方法实现。该宏接受一个公共可见性、方法名、参数列表和返回类型，生成的函数会匹配当前 Socket 实例，调用对应 UDP 或 TCP socket 的加锁同名方法，并返回 `Ok` 包裹的结果。"
+        },
+        {
+          "name": "sys_pipe2",
+          "normalized_name": "sys_pipe2",
+          "file_path": "api\\src\\imp\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "10",
+          "end_line": "28",
+          "outgoing_call_count": 10,
+          "summary": "实现系统调用 sys_pipe2，创建一对管道文件描述符，并将读端和写端的文件描述符写入用户提供的数组中。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 109,
+      "outgoing_edge_count": 1110,
+      "internal_edge_count": 389,
+      "external_edge_count": 721,
+      "internal_call_ratio": 0.3505,
+      "external_call_ratio": 0.6495,
+      "module_weight": 0.1658,
+      "files": [
+        "api\\src\\imp\\signal.rs",
+        "api\\src\\imp\\task\\clone.rs",
+        "api\\src\\imp\\task\\execve.rs",
+        "api\\src\\imp\\task\\exit.rs",
+        "api\\src\\imp\\task\\proc_trace.rs",
+        "api\\src\\imp\\task\\thread.rs",
+        "api\\src\\imp\\task\\wait.rs",
+        "api\\src\\imp\\time.rs",
+        "apps\\nimbos\\c\\lib\\arch\\aarch64\\clone.S",
+        "apps\\nimbos\\c\\lib\\arch\\loongarch64\\clone.S",
+        "apps\\nimbos\\c\\lib\\arch\\riscv\\clone.S",
+        "apps\\nimbos\\c\\lib\\arch\\x86_64\\clone.S",
+        "apps\\nimbos\\c\\lib\\arch\\x86_64\\crt.S",
+        "apps\\nimbos\\c\\lib\\pthread.c",
+        "apps\\nimbos\\c\\lib\\syscall.c",
+        "apps\\nimbos\\c\\src\\cyclictest.c",
+        "apps\\nimbos\\rust\\src\\arch\\aarch64.rs",
+        "apps\\nimbos\\rust\\src\\arch\\loongarch64.rs",
+        "apps\\nimbos\\rust\\src\\arch\\riscv.rs",
+        "apps\\nimbos\\rust\\src\\arch\\x86_64.rs",
+        "apps\\nimbos\\rust\\src\\bin\\forktree.rs",
+        "apps\\nimbos\\rust\\src\\bin\\matrix.rs",
+        "apps\\nimbos\\rust\\src\\bin\\thread_simple.rs",
+        "apps\\nimbos\\rust\\src\\lib.rs",
+        "core\\src\\futex.rs",
+        "core\\src\\mm.rs",
+        "core\\src\\task.rs",
+        "core\\src\\time.rs",
+        "src\\entry.rs"
+      ],
+      "file_count": 29,
+      "core_functions": [
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "api\\src\\imp\\task\\clone.rs",
+          "language": "rust",
+          "start_line": 86,
+          "end_line": 243,
+          "outgoing_call_count": 112,
+          "summary": "实现 Linux sys_clone 系统调用，根据传入的标志和参数创建一个新任务（线程或进程），并初始化其内存空间、文件系统、信号处理等上下文，最后将新任务加入调度队列。"
+        },
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "apps\\nimbos\\rust\\src\\arch\\loongarch64.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "24",
+          "outgoing_call_count": 112,
+          "summary": "该函数定义了一个外部可调用的系统调用 sys_clone，但当前实现仅包含一个注释说明和 unimplemented!() 宏，表示该功能尚未实现，仅作为占位符。"
+        },
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "apps\\nimbos\\rust\\src\\arch\\riscv.rs",
+          "language": "rust",
+          "start_line": "21",
+          "end_line": "54",
+          "outgoing_call_count": 112,
+          "summary": "实现RISC-V架构下的sys_clone系统调用，用于创建新的子进程或线程。通过内联汇编执行ecall触发系统调用，并在子进程中跳转到指定的入口函数。"
+        },
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "apps\\nimbos\\rust\\src\\arch\\x86_64.rs",
+          "language": "rust",
+          "start_line": "23",
+          "end_line": "58",
+          "outgoing_call_count": 112,
+          "summary": "实现sys_clone系统调用，通过内联汇编执行x86_64的CLONE系统调用，创建新线程或进程，并在子线程中调用入口函数后退出。"
+        },
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "apps\\nimbos\\rust\\src\\arch\\aarch64.rs",
+          "language": "rust",
+          "start_line": "21",
+          "end_line": "51",
+          "outgoing_call_count": 112,
+          "summary": "实现AArch64架构下的clone系统调用，创建新线程或进程，并在子线程中执行指定的入口函数。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "241",
+          "end_line": "264",
+          "outgoing_call_count": 61,
+          "summary": "该代码块是一个构造函数，用于创建一个新的任务（或进程）对象。它接收可执行文件路径、地址空间、信号操作、退出信号等参数，并初始化任务的各种字段，包括地址空间、命名空间、堆的基址和顶址、子进程退出等待队列、退出信号、信号管理器以及futex表。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "178",
+          "end_line": "186",
+          "outgoing_call_count": 61,
+          "summary": "这是 ThreadData 结构体的构造函数，用于初始化线程相关的数据，包括清子线程 ID、健壮列表头和长度，以及线程信号管理器。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\src\\imp\\task\\execve.rs",
+          "language": "rust",
+          "start_line": "65",
+          "end_line": "85",
+          "outgoing_call_count": 61,
+          "summary": "构造一个与程序执行相关的结构体，主要处理参数列表 argv 并根据执行路径提取任务名。"
+        },
+        {
+          "name": "impl ExecPlan {",
+          "normalized_name": "impl ExecPlan {",
+          "file_path": "api\\src\\imp\\task\\execve.rs",
+          "language": "rust",
+          "start_line": "45",
+          "end_line": "194",
+          "outgoing_call_count": 60,
+          "summary": "ExecPlan 结构体的实现，负责根据 exec_path 和 args 构建执行计划，包括处理 /proc/self/exe、busybox 别名、shebang 展开以及 shell 脚本回退等逻辑。"
+        },
+        {
+          "name": "sys_waitpid",
+          "normalized_name": "sys_waitpid",
+          "file_path": "api\\src\\imp\\task\\wait.rs",
+          "language": "rust",
+          "start_line": "60",
+          "end_line": "115",
+          "outgoing_call_count": 60,
+          "summary": "实现系统调用waitpid，等待子进程状态变化，支持阻塞、非阻塞和pid筛选逻辑，返回子进程pid或错误码。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "report_generation": {
+      "module_name": "report_generation",
+      "function_count": 7,
+      "outgoing_edge_count": 29,
+      "internal_edge_count": 11,
+      "external_edge_count": 18,
+      "internal_call_ratio": 0.3793,
+      "external_call_ratio": 0.6207,
+      "module_weight": 0.0075,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 19,
+      "outgoing_edge_count": 89,
+      "internal_edge_count": 53,
+      "external_edge_count": 36,
+      "internal_call_ratio": 0.5955,
+      "external_call_ratio": 0.4045,
+      "module_weight": 0.021,
+      "files": [
+        "api\\src\\imp\\task\\schedule.rs",
+        "apps\\nimbos\\c\\lib\\syscall.c",
+        "apps\\nimbos\\rust\\src\\lib.rs",
+        "core\\src\\task.rs",
+        "core\\src\\time.rs"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "72",
+          "end_line": "77",
+          "outgoing_call_count": 61,
+          "summary": "创建一个新的Task实例，包含一个时间统计对象和一个线程引用"
+        },
+        {
+          "name": "impl TimeStat {",
+          "normalized_name": "impl TimeStat {",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "42",
+          "end_line": "125",
+          "outgoing_call_count": 13,
+          "summary": "实现了一个进程/任务的时间统计结构体，用于记录用户态和内核态的运行时间，并支持虚拟定时器（ITIMER）的递减更新。核心功能是在任务切换和模式切换时累计时间并更新定时器。"
+        },
+        {
+          "name": "time_stat_output",
+          "normalized_name": "time_stat_output",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "87",
+          "end_line": "89",
+          "outgoing_call_count": 9,
+          "summary": "此函数通过访问 self.time 字段（类型为 RefCell 包裹的时间统计对象），调用其 output 方法，返回一个包含两个 usize 值的元组，用于输出任务的时间统计信息。"
+        },
+        {
+          "name": "time_stat_output",
+          "normalized_name": "time_stat_output",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "121",
+          "end_line": "130",
+          "outgoing_call_count": 9,
+          "summary": "获取当前任务用户态和内核态的时间统计（以秒和微秒为单位）并返回四元组。"
+        },
+        {
+          "name": "sys_sched_yield",
+          "normalized_name": "sys_sched_yield",
+          "file_path": "api\\src\\imp\\task\\schedule.rs",
+          "language": "rust",
+          "start_line": "9",
+          "end_line": "12",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块实现了一个系统调用服务，用于主动让出当前任务的CPU执行权，调用axtask的yield_now函数触发任务调度切换，并返回成功标志0。"
+        },
+        {
+          "name": "sched_yield",
+          "normalized_name": "sched_yield",
+          "file_path": "apps\\nimbos\\c\\lib\\syscall.c",
+          "language": "c",
+          "start_line": "21",
+          "end_line": "24",
+          "outgoing_call_count": 2,
+          "summary": "实现一个用户态库函数 sched_yield，通过系统调用 SYS_yield 主动让出 CPU 执行权，触发调度器重新调度。"
+        },
+        {
+          "name": "sched_yield",
+          "normalized_name": "sched_yield",
+          "file_path": "apps\\nimbos\\rust\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "40",
+          "end_line": "42",
+          "outgoing_call_count": 2,
+          "summary": "该函数是用户态提供的包装函数，用于主动让出CPU执行权，内部直接调用系统调用sys_yield来触发调度。"
+        },
+        {
+          "name": "switch_into_user_mode",
+          "normalized_name": "switch_into_user_mode",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "76",
+          "end_line": "84",
+          "outgoing_call_count": 2,
+          "summary": "在进程切换到用户模式时，更新进程的时间统计信息，包括累加内核态到用户态的时间增量，并可能触发定时器更新。"
+        },
+        {
+          "name": "switch_into_kernel_mode",
+          "normalized_name": "switch_into_kernel_mode",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "66",
+          "end_line": "74",
+          "outgoing_call_count": 2,
+          "summary": "记录从用户态或空闲态进入内核模式的时间，更新用户态累计时间，并根据定时器类型更新定时器。"
+        },
+        {
+          "name": "notify_one",
+          "normalized_name": "notify_one",
+          "file_path": "core\\src\\task.rs",
+          "language": "rust",
+          "start_line": "149",
+          "end_line": "151",
+          "outgoing_call_count": 1,
+          "summary": "这是一个包装函数，调用底层条件变量（或类似同步原语）的 `notify_one` 方法，并传递 `false` 参数。该函数用于唤醒一个等待该条件变量的线程或任务，且不要求特定唤醒顺序（通常对应于 `pthread_cond_signal` 的行为，其中 `false` 可能表示不启用优先级继承或类似特性）。返回值 `bool` 表示操作是否成功（例如是否有等待者被唤醒）。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "synchronization": {
+      "module_name": "synchronization",
+      "function_count": 1,
+      "outgoing_edge_count": 19,
+      "internal_edge_count": 2,
+      "external_edge_count": 17,
+      "internal_call_ratio": 0.1053,
+      "external_call_ratio": 0.8947,
+      "module_weight": 0.0022,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 182,
+      "outgoing_edge_count": 1283,
+      "internal_edge_count": 637,
+      "external_edge_count": 646,
+      "internal_call_ratio": 0.4965,
+      "external_call_ratio": 0.5035,
+      "module_weight": 0.2336,
+      "files": [
+        "api/src/imp/signal.rs",
+        "api\\src\\file\\net.rs",
+        "api\\src\\imp\\fs\\ctl.rs",
+        "api\\src\\imp\\fs\\fd_ops.rs",
+        "api\\src\\imp\\fs\\io.rs",
+        "api\\src\\imp\\fs\\poll.rs",
+        "api\\src\\imp\\fs\\socket.rs",
+        "api\\src\\imp\\fs\\stat.rs",
+        "api\\src\\imp\\futex.rs",
+        "api\\src\\imp\\mm\\brk.rs",
+        "api\\src\\imp\\mm\\mmap.rs",
+        "api\\src\\imp\\signal.rs",
+        "api\\src\\imp\\sys.rs",
+        "api\\src\\imp\\task\\execve.rs",
+        "api\\src\\imp\\task\\schedule.rs",
+        "api\\src\\imp\\task\\thread.rs",
+        "api\\src\\imp\\time.rs",
+        "api\\src\\ptr.rs",
+        "api\\src\\socket.rs",
+        "api\\src\\time.rs",
+        "apps/nimbos/c/lib/arch/x86_64/syscall_arch.h",
+        "apps\\nimbos\\c\\include\\time.h",
+        "apps\\nimbos\\c\\lib\\arch\\aarch64\\syscall_arch.h",
+        "apps\\nimbos\\c\\lib\\arch\\loongarch64\\syscall_arch.h",
+        "apps\\nimbos\\c\\lib\\arch\\riscv\\syscall_arch.h",
+        "apps\\nimbos\\c\\lib\\arch\\x86_64\\syscall_arch.h",
+        "apps\\nimbos\\c\\lib\\stdio.c",
+        "apps\\nimbos\\c\\lib\\syscall.c",
+        "apps\\nimbos\\c\\lib\\time.c",
+        "apps\\nimbos\\rust\\src\\arch\\aarch64.rs",
+        "apps\\nimbos\\rust\\src\\arch\\loongarch64.rs",
+        "apps\\nimbos\\rust\\src\\arch\\riscv.rs",
+        "apps\\nimbos\\rust\\src\\arch\\x86_64.rs",
+        "apps\\nimbos\\rust\\src\\lib.rs",
+        "apps\\nimbos\\rust\\src\\syscall.rs",
+        "core\\src\\futex.rs",
+        "src\\syscall.rs"
+      ],
+      "file_count": 37,
+      "core_functions": [
+        {
+          "name": "handle_syscall",
+          "normalized_name": "handle_syscall",
+          "file_path": "src\\syscall.rs",
+          "language": "rust",
+          "start_line": "11",
+          "end_line": "328",
+          "outgoing_call_count": 121,
+          "summary": "实现系统调用分发处理，根据系统调用号匹配对应的内核函数，并处理返回值，同时进行统计和信号检查。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "core\\src\\futex.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "15",
+          "outgoing_call_count": 61,
+          "summary": "构造一个新的Futex实例，包含一个包裹在互斥锁内的空BTreeMap。"
+        },
+        {
+          "name": "sys_waitpid",
+          "normalized_name": "sys_waitpid",
+          "file_path": "apps\\nimbos\\rust\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "69",
+          "end_line": "75",
+          "outgoing_call_count": 60,
+          "summary": "将等待指定进程结束的系统调用请求封装为对底层 syscall 函数的调用，传递进程ID、退出码指针和选项参数。"
+        },
+        {
+          "name": "sys_getdents64",
+          "normalized_name": "sys_getdents64",
+          "file_path": "api\\src\\imp\\fs\\ctl.rs",
+          "language": "rust",
+          "start_line": "137",
+          "end_line": "203",
+          "outgoing_call_count": 35,
+          "summary": "实现系统调用getdents64，用于批量读取目录项，支持从上次读取位置继续，使用内部缓存优化循环读取性能。"
+        },
+        {
+          "name": "sys_futex",
+          "normalized_name": "sys_futex",
+          "file_path": "api\\src\\imp\\futex.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "81",
+          "outgoing_call_count": 30,
+          "summary": "实现了futex系统调用，支持FUTEX_WAIT、FUTEX_WAKE和FUTEX_REQUEUE/FUTEX_CMP_REQUEUE操作，用于用户态线程同步。"
+        },
+        {
+          "name": "recvfrom",
+          "normalized_name": "recvfrom",
+          "file_path": "api\\src\\file\\net.rs",
+          "language": "rust",
+          "start_line": "131",
+          "end_line": "146",
+          "outgoing_call_count": 26,
+          "summary": "这个代码块实现了UDP和TCP socket的接收数据功能，对于UDP会先尝试从本地回环队列中弹出匹配端口的数据包，若不存在则调用标准socket的recv_from；对于TCP则直接调用recv并包装返回格式。"
+        },
+        {
+          "name": "sys_statx",
+          "normalized_name": "sys_statx",
+          "file_path": "api\\src\\imp\\fs\\stat.rs",
+          "language": "rust",
+          "start_line": "295",
+          "end_line": "368",
+          "outgoing_call_count": 25,
+          "summary": "实现 Linux 系统调用 statx，根据路径、文件描述符和标志获取文件状态信息，并填充到用户提供的 statx 结构体中。支持绝对路径、相对路径、基于目录描述符的相对路径以及空路径（通过 AT_EMPTY_PATH 标志）四种模式。"
+        },
+        {
+          "name": "sys_renameat2",
+          "normalized_name": "sys_renameat2",
+          "file_path": "api\\src\\imp\\fs\\ctl.rs",
+          "language": "rust",
+          "start_line": "358",
+          "end_line": "415",
+          "outgoing_call_count": 25,
+          "summary": "实现Linux系统调用renameat2，用于重命名或移动文件/目录，支持交叉挂载路径解析和RENAME_NOREPLACE标志（但部分标志被拒绝）。"
+        },
+        {
+          "name": "sys_rt_sigsuspend",
+          "normalized_name": "sys_rt_sigsuspend",
+          "file_path": "api\\src\\imp\\signal.rs",
+          "language": "rust",
+          "start_line": "271",
+          "end_line": "299",
+          "outgoing_call_count": 23,
+          "summary": "实现Linux系统调用rt_sigsuspend，将当前线程的信号掩码替换为指定的信号集（排除SIGKILL和SIGSTOP），然后挂起线程直到某个信号被递送。"
+        },
+        {
+          "name": "get",
+          "normalized_name": "get",
+          "file_path": "core\\src\\futex.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "24",
+          "outgoing_call_count": 22,
+          "summary": "从FutexTable中根据地址获取对应的WaitQueueGuard，如果地址没有关联的等待队列则返回None。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "apps/nimbos/c/src/cyclictest.c",
+        "apps\\nimbos\\c\\src\\cyclictest.c",
+        "apps\\nimbos\\rust\\src\\bin\\usertests.rs",
+        "apps\\oscomp\\judge_basic.py",
+        "src\\main.rs"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "TestBase",
+          "normalized_name": "TestBase",
+          "file_path": "apps\\oscomp\\judge_basic.py",
+          "language": "python",
+          "start_line": "7",
+          "end_line": "67",
+          "outgoing_call_count": 25,
+          "summary": "定义一个测试基类，提供断言方法和结果记录功能，用于执行测试并统计通过/得分。"
+        },
+        {
+          "name": "testcase_envs",
+          "normalized_name": "testcase_envs",
+          "file_path": "src\\main.rs",
+          "language": "rust",
+          "start_line": 60,
+          "end_line": 92,
+          "outgoing_call_count": 12,
+          "summary": "根据命令行参数构建测试用例运行所需的环境变量列表，包括当前工作目录、根路径、PATH、HOME、PWD、SHELL，以及可选的LD_LIBRARY_PATH。"
+        },
+        {
+          "name": "print_stat",
+          "normalized_name": "print_stat",
+          "file_path": "apps\\nimbos\\c\\src\\cyclictest.c",
+          "language": "c",
+          "start_line": "150",
+          "end_line": "161",
+          "outgoing_call_count": 2,
+          "summary": "根据线程参数和统计信息，格式化并打印一行测试数据，包括线程ID、线程TID、优先级、间隔、循环次数、最小延迟、实际延迟、平均延迟和最大延迟。"
+        },
+        {
+          "name": "tsinc",
+          "normalized_name": "tsinc",
+          "file_path": "apps\\nimbos\\c\\src\\cyclictest.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "81",
+          "outgoing_call_count": 1,
+          "summary": "将一个 timespec 类型的时间增量加到另一个 timespec 类型的时间上，并对结果进行规范化处理。"
+        },
+        {
+          "name": "TESTS",
+          "normalized_name": "TESTS",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\usertests.rs",
+          "language": "rust",
+          "start_line": 7,
+          "end_line": 21,
+          "outgoing_call_count": 0,
+          "summary": "{\n  \"block_id\": \"block_794\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\bin\\usertests.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"7\",\n  \"end_line\": \"21\",\n  \"name\": \"TESTS\",\n  \"type\": \"static\",\n  \"summary\": \"定义了一个静态的测试用例名称列表，每个元素是以 null 结尾的字符串，用于后续用户程序测试的加载和执行。\",\n  \"logic_steps\": [\n    \"定义一个静态不可变切片 TESTS，类型为 &[&str]，存储测试程序名称数组。\",\n    \"数组中的每个字符串都显式追加了 null 终止符 '\\\\0'，表明这些名称可能被传递给底层系统调用或 C 接口，以字符串指针形式使用。\"\n  ],\n  \"called_functions\": [],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"代码中仅包含静态数组定义，未出现任何函数调用；而 '\\\\0' 终止符暗示这些名称会被用于与内核或用户态交互，但具体调用上下文在本代码块内无法确认。\",\n  \"uncertainty\": \"无法确定该列表在何处被遍历或传递给哪个系统调用，也无法确定每个测试程序的具体功能和运行机制。\"\n}"
+        },
+        {
+          "name": "tsnorm",
+          "normalized_name": "tsnorm",
+          "file_path": "apps\\nimbos\\c\\src\\cyclictest.c",
+          "language": "c",
+          "start_line": "68",
+          "end_line": "74",
+          "outgoing_call_count": 0,
+          "summary": "标准化一个 timespec 结构体，将其 tv_nsec 字段规范化到 [0, NSEC_PER_SEC) 范围内。具体地，当 tv_nsec 大于等于 NSEC_PER_SEC 时，循环减去 NSEC_PER_SEC 并增加 tv_sec，直到 tv_nsec 小于 NSEC_PER_SEC。"
+        },
+        {
+          "name": "tsdelta",
+          "normalized_name": "tsdelta",
+          "file_path": "apps\\nimbos\\c\\src\\cyclictest.c",
+          "language": "c",
+          "start_line": "84",
+          "end_line": "89",
+          "outgoing_call_count": 0,
+          "summary": "该函数计算两个 timespec 结构体表示的时间点之间的差值，并返回以微秒为单位的差值。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "apps\\oscomp\\judge_basic.py",
+          "language": "python",
+          "start_line": "16",
+          "end_line": "17",
+          "outgoing_call_count": 0,
+          "summary": "定义一个空函数test，接受data参数，但无任何操作，仅起占位或待实现的作用"
+        },
+        {
+          "name": "tsgreater",
+          "normalized_name": "tsgreater",
+          "file_path": "apps/nimbos/c/src/cyclictest.c",
+          "language": "c",
+          "start_line": "91",
+          "end_line": "94",
+          "outgoing_call_count": 0,
+          "summary": "比较两个timespec结构体表示的时间值，判断第一个是否大于第二个。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "time": {
+      "module_name": "time",
+      "function_count": 3,
+      "outgoing_edge_count": 10,
+      "internal_edge_count": 4,
+      "external_edge_count": 6,
+      "internal_call_ratio": 0.4,
+      "external_call_ratio": 0.6,
+      "module_weight": 0.003,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 127,
+      "outgoing_edge_count": 367,
+      "internal_edge_count": 165,
+      "external_edge_count": 202,
+      "internal_call_ratio": 0.4496,
+      "external_call_ratio": 0.5504,
+      "module_weight": 0.123,
+      "files": [
+        "api\\src\\imp\\time.rs",
+        "api\\src\\ptr.rs",
+        "api\\src\\time.rs",
+        "core\\src\\time.rs",
+        "src\\main.rs"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "43",
+          "end_line": "53",
+          "outgoing_call_count": 61,
+          "summary": "构造并返回一个默认的计时器结构体实例，将所有字段初始化为零值或默认枚举值。"
+        },
+        {
+          "name": "from",
+          "normalized_name": "from",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "23",
+          "outgoing_call_count": 21,
+          "summary": "实现从usize到某个自定义类型（可能是时间相关类型）的转换，通过try_from尝试将usize转换为i32后构造，如果失败则返回一个表示无效或空值的NONE常量。"
+        },
+        {
+          "name": "from",
+          "normalized_name": "from",
+          "file_path": "api\\src\\ptr.rs",
+          "language": "rust",
+          "start_line": "143",
+          "end_line": "145",
+          "outgoing_call_count": 21,
+          "summary": "实现从 usize 类型到 UserConstPtr 类型的转换，将裸指针包装为 UserConstPtr 结构体。"
+        },
+        {
+          "name": "from_time_value",
+          "normalized_name": "from_time_value",
+          "file_path": "api\\src\\time.rs",
+          "language": "rust",
+          "start_line": "17",
+          "end_line": "19",
+          "outgoing_call_count": 9,
+          "summary": "将TimeValue类型直接转换为Self类型，即实现了从TimeValue到当前类型的转换，可能是一个From trait的实现或类似辅助函数。"
+        },
+        {
+          "name": "from_time_value",
+          "normalized_name": "from_time_value",
+          "file_path": "api\\src\\time.rs",
+          "language": "rust",
+          "start_line": "27",
+          "end_line": "32",
+          "outgoing_call_count": 9,
+          "summary": "将 `TimeValue` 类型的对象转换为自定义时间结构体，提取秒数和纳秒数并赋值给 `tv_sec` 和 `tv_nsec` 字段。"
+        },
+        {
+          "name": "from_time_value",
+          "normalized_name": "from_time_value",
+          "file_path": "api\\src\\time.rs",
+          "language": "rust",
+          "start_line": "92",
+          "end_line": "97",
+          "outgoing_call_count": 9,
+          "summary": "将 `TimeValue` 类型转换为当前结构体类型，提取秒数和微秒数并赋值给 `tv_sec` 和 `tv_usec` 字段。"
+        },
+        {
+          "name": "from_time_value",
+          "normalized_name": "from_time_value",
+          "file_path": "api\\src\\time.rs",
+          "language": "rust",
+          "start_line": "53",
+          "end_line": "58",
+          "outgoing_call_count": 9,
+          "summary": "将 `TimeValue` 类型转换为当前结构体（可能是 `timespec` 或类似类型）的实例，其中包含秒数和纳秒数字段。"
+        },
+        {
+          "name": "from_time_value",
+          "normalized_name": "from_time_value",
+          "file_path": "api\\src\\time.rs",
+          "language": "rust",
+          "start_line": "40",
+          "end_line": "45",
+          "outgoing_call_count": 9,
+          "summary": "将一个外部的时间值类型（TimeValue）转换为内部表示的时间结构，取出秒和亚秒纳秒部分并赋值给自身字段。"
+        },
+        {
+          "name": "libc_root",
+          "normalized_name": "libc_root",
+          "file_path": "src\\main.rs",
+          "language": "rust",
+          "start_line": "48",
+          "end_line": "57",
+          "outgoing_call_count": 6,
+          "summary": "此函数根据传入的命令行参数路径判断其是否以特定前缀开头，从而返回对应的libc库根目录路径（/glibc或/musl），否则返回None。"
+        },
+        {
+          "name": "impl From<usize> for TimerType {",
+          "normalized_name": "impl From<usize> for TimerType {",
+          "file_path": "core\\src\\time.rs",
+          "language": "rust",
+          "start_line": "17",
+          "end_line": "24",
+          "outgoing_call_count": 5,
+          "summary": "实现从 usize 类型到 TimerType 的转换，通过尝试将 usize 转换为 i32 再调用 try_from，失败时返回默认的 NONE 变体。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "api\\src\\imp\\fs\\ctl.rs",
+        "api\\src\\imp\\task\\execve.rs",
+        "api\\src\\ptr.rs",
+        "api\\src\\socket.rs",
+        "apps/nimbos/c/lib/stdlib.c",
+        "apps\\libc\\c\\mmap\\mmap.c",
+        "apps\\nimbos\\c\\lib\\arch\\aarch64\\crt.S",
+        "apps\\nimbos\\c\\lib\\arch\\loongarch64\\crt.S",
+        "apps\\nimbos\\c\\lib\\arch\\riscv\\crt.S",
+        "apps\\nimbos\\c\\lib\\assert.c",
+        "apps\\nimbos\\c\\lib\\main.c",
+        "apps\\nimbos\\c\\lib\\stdio.c",
+        "apps\\nimbos\\c\\lib\\stdlib.c",
+        "apps\\nimbos\\c\\lib\\string.c",
+        "apps\\nimbos\\c\\src\\cyclictest.c",
+        "apps\\nimbos\\c\\src\\forktest_simple_c.c",
+        "apps\\nimbos\\c\\src\\hello_c.c",
+        "apps\\nimbos\\rust\\src\\bin\\exit.rs",
+        "apps\\nimbos\\rust\\src\\bin\\fantastic_text.rs",
+        "apps\\nimbos\\rust\\src\\bin\\forktest.rs",
+        "apps\\nimbos\\rust\\src\\bin\\forktest2.rs",
+        "apps\\nimbos\\rust\\src\\bin\\forktest_simple.rs",
+        "apps\\nimbos\\rust\\src\\bin\\forktree.rs",
+        "apps\\nimbos\\rust\\src\\bin\\hello_world.rs",
+        "apps\\nimbos\\rust\\src\\bin\\matrix.rs",
+        "apps\\nimbos\\rust\\src\\bin\\sleep.rs",
+        "apps\\nimbos\\rust\\src\\bin\\sleep_simple.rs",
+        "apps\\nimbos\\rust\\src\\bin\\stack_overflow.rs",
+        "apps\\nimbos\\rust\\src\\bin\\thread_simple.rs",
+        "apps\\nimbos\\rust\\src\\bin\\user_shell.rs",
+        "apps\\nimbos\\rust\\src\\bin\\usertests.rs",
+        "apps\\nimbos\\rust\\src\\bin\\yield.rs",
+        "apps\\nimbos\\rust\\src\\lib.rs",
+        "apps\\nimbos\\rust\\src\\time.rs",
+        "apps\\oscomp\\judge_basic.py",
+        "core\\src\\mm.rs",
+        "core\\src\\task.rs",
+        "src/main.rs",
+        "src\\entry.rs"
+      ],
+      "file_count": 39,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\user_shell.rs",
+          "language": "rust",
+          "start_line": 18,
+          "end_line": 64,
+          "outgoing_call_count": 102,
+          "summary": "{\n  \"block_id\": \"block_251\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\bin\\user_shell.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"18\",\n  \"end_line\": \"64\",\n  \"name\": \"main\",\n  \"type\": \"function\",\n  \"summary\": \"实现一个简单的用户态Shell主循环，从标准输入读取命令，通过fork和exec执行子进程，并等待子进程退出。\",\n  \"logic_steps\": [\n    \"初始化一个缓冲区line和光标cursor，打印提示符'>> '。\",\n    \"进入无限循环，调用getchar()获取一个字符。\",\n    \"如果字符是换行符(LF)或回车(CR)，且缓冲区非空，则将缓冲区以空字符结尾，调用fork()创建子进程。\",\n    \"在子进程中，将缓冲区内容转为字符串作为路径，调用exec()执行该命令；若exec失败则打印错误并返回-4。\",\n    \"在父进程中，调用waitpid()等待子进程退出，获取退出码并打印信息，然后重置光标并打印新提示符。\",\n    \"如果字符是退格(BS)或删除(DL)，且光标大于0，则输出退格序列擦除一个字符并减小光标。\",\n    \"其他字符则直接回显，存入缓冲区并增加光标。\"\n  ],\n  \"called_functions\": [\n    \"println!\",\n    \"print!\",\n    \"getchar\",\n    \"fork\",\n    \"exec\",\n    \"waitpid\",\n    \"core::str::from_utf8\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"代码中调用了fork()创建子进程、exec()加载新程序、waitpid()等待子进程，这是典型的进程管理功能；同时通过getchar()和print宏实现交互，属于用户态Shell的常见实现。\",\n  \"uncertainty\": \"代码中未定义MAX_CMD_LEN、LF、CR、BS、DL等常量的具体值，且getchar、fork、exec、waitpid为外部系统调用，但其具体实现细节未给出，因此分析仅基于代码本身的逻辑流程。\"\n}"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\forktest2.rs",
+          "language": "rust",
+          "start_line": 12,
+          "end_line": 39,
+          "outgoing_call_count": 102,
+          "summary": "{\n  \"block_id\": \"block_387\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\bin\\forktest2.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"12\",\n  \"end_line\": \"39\",\n  \"name\": \"main\",\n  \"type\": \"function\",\n  \"summary\": \"该函数是一个多进程测试的主函数，通过循环创建多个子进程，每个子进程根据当前时间计算一个随机睡眠时长并打印日志，父进程等待所有子进程结束后验证退出码为0，最后确认所有子进程已回收并打印测试通过。\",\n  \"logic_steps\": [\n    \"循环NUM次，每次调用fork()创建子进程；若fork返回0（子进程），则获取当前时间（微秒），根据当前时间计算一个随机的睡眠时长（范围1000000~1999999微秒），打印即将睡眠的毫秒数，调用usleep()睡眠，醒来后打印实际睡眠的毫秒数，然后调用exit(0)退出。\",\n    \"在父进程中，循环NUM次，每次调用wait()获取一个子进程的退出码，断言wait返回大于0且退出码等于0。\",\n    \"最后再调用一次wait(None)，断言返回小于0（没有更多子进程），打印测试通过信息，函数返回0。\"\n  ],\n  \"called_functions\": [\n    \"fork\",\n    \"get_time_us\",\n    \"getpid\",\n    \"println\",\n    \"usleep\",\n    \"exit\",\n    \"wait\",\n    \"assert\",\n    \"assert_eq\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"代码中反复使用fork创建进程，wait等待子进程，exit退出进程，get_time_us和usleep与时间相关但核心是进程创建和回收的测试逻辑。\",\n  \"uncertainty\": \"代码中使用了NUM常量，但未在给定代码块中声明，可能来自外部定义；get_time_us和usleep是否为系统调用或库函数无法完全确定，但不影响主逻辑判断。\"\n}"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\exit.rs",
+          "language": "rust",
+          "start_line": 11,
+          "end_line": 32,
+          "outgoing_call_count": 102,
+          "summary": "{\n  \"block_id\": \"block_237\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\bin\\exit.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"11\",\n  \"end_line\": \"32\",\n  \"name\": \"main\",\n  \"type\": \"function\",\n  \"summary\": \"测试 fork、waitpid、wait、exit 系统调用的正确性，验证子进程退出状态传递和父进程等待功能。\",\n  \"logic_steps\": [\n    \"打印提示信息并调用 fork() 创建子进程。\",\n    \"如果 fork 返回 0（子进程），则打印消息，循环调用 sched_yield 让出 CPU 7 次，然后以常量 MAGIC 作为退出状态调用 exit。\",\n    \"如果 fork 返回非 0（父进程），则打印子进程 PID。\",\n    \"父进程打印等待消息，调用 waitpid 等待该子进程，并断言返回的 pid 等于子进程 pid。\",\n    \"断言 waitpid 返回的状态值 xstate 等于 MAGIC，验证子进程退出状态传递正确。\",\n    \"再次调用 waitpid 使用 None 状态指针，断言返回值小于 0（表示没有更多子进程）。\",\n    \"调用 wait(None) 断言返回值小于等于 0（可能因为无子进程而返回 -1 或 0）。\",\n    \"打印成功信息并返回 0。\"\n  ],\n  \"called_functions\": [\n    \"fork\",\n    \"sched_yield\",\n    \"exit\",\n    \"waitpid\",\n    \"wait\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"代码中使用了 fork、waitpid、wait、exit 等典型的进程控制系统调用，并测试了子进程退出状态的传递和父进程等待行为。\",\n  \"uncertainty\": \"MAGIC 常量没有在代码块中定义，其具体值未知，但不影响逻辑分析。\"\n}"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\sleep_simple.rs",
+          "language": "rust",
+          "start_line": 10,
+          "end_line": 23,
+          "outgoing_call_count": 102,
+          "summary": "{\n  \"block_id\": \"block_248\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\bin\\sleep_simple.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"10\",\n  \"end_line\": \"23\",\n  \"name\": \"main\",\n  \"type\": \"function\",\n  \"summary\": \"测试睡眠功能的简单程序，通过测量睡眠前后的时间差来验证 sleep(1) 是否准确睡眠了1秒\",\n  \"logic_steps\": [\n    \"打印进入睡眠测试的提示信息\",\n    \"调用 get_time_us() 获取当前时间（微秒）并打印\",\n    \"调用 sleep(1) 睡眠1秒\",\n    \"再次调用 get_time_us() 获取睡眠后的时间并打印\",\n    \"计算时间差（结束时间 - 开始时间 - 1000000微秒），并打印以微秒为单位的睡眠误差\",\n    \"打印测试通过信息并返回0\"\n  ],\n  \"called_functions\": [\n    \"get_time_us\",\n    \"sleep\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"代码中调用了 sleep(1) 进行睡眠，get_time_us() 获取微秒级时间，用于测试 sleep 的准确性；这些功能与操作系统的进程调度或时间管理相关，所以属于 process 模块\",\n  \"uncertainty\": \"get_time_us 和 sleep 的具体实现不在当前代码块中，无法确定它们是否依赖系统调用或直接操作硬件，但根据上下文推测它们属于操作系统提供的接口\"\n}"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\forktest_simple.rs",
+          "language": "rust",
+          "start_line": 10,
+          "end_line": 26,
+          "outgoing_call_count": 102,
+          "summary": "{\n  \"block_id\": \"block_388\",\n  \"file_path\": \"apps\\nimbos\\rust\\src\\bin\\forktest_simple.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"10\",\n  \"end_line\": \"26\",\n  \"name\": \"main\",\n  \"type\": \"function\",\n  \"summary\": \"该代码块定义了一个简单的fork测试主函数，演示进程创建与父子进程分支执行逻辑。\",\n  \"logic_steps\": [\n    \"第1步：打印父进程的初始PID。\",\n    \"第2步：调用fork()创建子进程。\",\n    \"第3步：判断fork返回值，若为0则在子进程中打印子进程PID并返回100。\",\n    \"第4步：否则在父进程中打印父进程PID和子进程PID并返回0。\"\n  ],\n  \"called_functions\": [\n    \"println!\",\n    \"getpid\",\n    \"fork\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"代码使用了fork()创建进程，并检查返回值区分父子进程，典型的进程创建和控制逻辑。\",\n  \"uncertainty\": \"无\"\n}"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\sleep.rs",
+          "language": "rust",
+          "start_line": "19",
+          "end_line": "30",
+          "outgoing_call_count": 102,
+          "summary": "这是一个测试程序的主函数，用于测试进程睡眠功能。它记录当前时间，创建一个子进程，子进程执行sleepy函数（推测为睡眠操作），父进程等待子进程结束并检查其退出码是否为0，最后输出睡眠所耗时间并打印通过信息。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\stack_overflow.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "18",
+          "outgoing_call_count": 102,
+          "summary": "该函数是程序的入口点，主要功能是打印一条消息提示将触发段错误，然后调用递归函数 f(0) 并最终返回 0。由于函数 f 会无限递归直至栈溢出，预期行为是触发操作系统对栈溢出的处理（例如段错误）。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\c\\src\\forktest_simple_c.c",
+          "language": "c",
+          "start_line": "4",
+          "end_line": "14",
+          "outgoing_call_count": 102,
+          "summary": "这个代码块是 fork 功能的测试程序。主进程先打印父进程信息，然后调用 fork() 创建一个子进程。子进程输出自己的 PID 并返回 100，父进程输出自己和子进程的 PID 并返回 0。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "apps\\nimbos\\rust\\src\\bin\\forktest.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "33",
+          "outgoing_call_count": 102,
+          "summary": "该函数测试操作系统的进程创建（fork）和等待（wait）功能。它创建指定数量的子进程，每个子进程打印一条消息后退出，父进程等待所有子进程结束，并验证没有多余的子进程被等待。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "src/main.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "45",
+          "outgoing_call_count": 102,
+          "summary": "初始化一个进程，然后从环境变量 AX_TESTCASES_LIST 中读取测试用例列表（以逗号分隔），解析每个测试用例的参数和环境变量，并依次运行用户程序，最后打印退出码。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 0.0,
+    "score_level": "unknown",
+    "scores": {
+      "originality": 0,
+      "novelty": 0,
+      "practicality": 0,
+      "difficulty": 0,
+      "completion": 0
+    },
+    "summary": "",
+    "strengths": [],
+    "weaknesses": [],
+    "suggestions": []
+  },
+  "hybrid_top_results": [],
+  "comparison": {
+    "retrieval_mode": "structured",
+    "comparison_count": 0,
+    "comparisons": []
+  },
+  "urls": {
+    "report_markdown": "/reports/T202610008999750_final_report.md",
+    "work_detail_data": "/data/works/T202610008999750.json",
+    "comparison_data": "/data/comparisons/T202610008999750.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

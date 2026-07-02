@@ -1,0 +1,1657 @@
+{
+  "repo_name": "RuOK",
+  "team_name": "RuOK",
+  "school": "武汉大学",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-36002-2710490/T202510486995232-2402",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-36002-2710490/t202510486995232-2402",
+  "year": "2025",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "cpp",
+    "rust",
+    "c",
+    "cargo",
+    "assembly"
+  ],
+  "core_modules": [
+    "unknown",
+    "driver",
+    "filesystem",
+    "interrupt",
+    "memory"
+  ],
+  "function_count": 843,
+  "node_count": 843,
+  "edge_count": 5301,
+  "internal_edge_count": 2887,
+  "external_edge_count": 2414,
+  "module_count": 13,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "build": 0.1,
+    "driver": 0.15,
+    "filesystem": 0.15,
+    "interrupt": 0.15,
+    "ipc": 0.05,
+    "memory": 0.15,
+    "network": 0.15,
+    "process": 0.15,
+    "scheduler": 0.05,
+    "syscall": 0.1,
+    "test": 0.15,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "unknown",
+      "module_weight": 1.0,
+      "completeness": 1.0,
+      "final_score": 1.0
+    },
+    {
+      "module_name": "driver",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    }
+  ],
+  "module_profiles": {
+    "build": {
+      "module_name": "build",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\riscv\\SBI\\rustsbi-k210\\Cargo.toml",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\Cargo.toml",
+        "kernel\\fs\\path.cc"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "pathbuild",
+          "normalized_name": "pathbuild",
+          "file_path": "kernel\\fs\\path.cc",
+          "language": "cpp",
+          "start_line": 63,
+          "end_line": 107,
+          "outgoing_call_count": 11,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "Cargo.toml",
+          "normalized_name": "toml",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\Cargo.toml",
+          "language": "cargo",
+          "start_line": 1,
+          "end_line": 18,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "Cargo.toml",
+          "normalized_name": "toml",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-qemu\\Cargo.toml",
+          "language": "cargo",
+          "start_line": 1,
+          "end_line": 18,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\loongarch\\qemu\\disk_driver.cc",
+        "hal\\loongarch\\qemu\\interrupt_manager.cc",
+        "hal\\loongarch\\qemu\\pci.cc",
+        "hal\\loongarch\\qemu\\qemu.cc",
+        "hal\\loongarch\\qemu\\virtio_disk.cc",
+        "hal\\loongarch\\qemu_2k1000\\ahci_driver_ls.cc",
+        "hal\\loongarch\\qemu_2k1000\\ahci_port_driver_ls.cc",
+        "hal\\loongarch\\qemu_2k1000\\interrupt_manager.cc",
+        "hal\\riscv\\k210\\disk_driver.cc",
+        "hal\\riscv\\k210\\sdcard_driver.cc",
+        "hal\\riscv\\qemu\\disk_driver.cc",
+        "hsai\\ata\\ahci_driver.cc",
+        "hsai\\ata\\ahci_port_driver.cc",
+        "kernel\\fs\\buffer_manager.cc",
+        "kernel\\fs\\ext4\\ext4_block_group.cc",
+        "kernel\\fs\\ext4\\ext4_buffer.cc",
+        "kernel\\fs\\ext4\\ext4_inode.cc"
+      ],
+      "file_count": 17,
+      "core_functions": [
+        {
+          "name": "identify_device",
+          "normalized_name": "identify_device",
+          "file_path": "hal\\loongarch\\qemu\\disk_driver.cc",
+          "language": "cpp",
+          "start_line": 32,
+          "end_line": 62,
+          "outgoing_call_count": 55,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "identify_device",
+          "normalized_name": "identify_device",
+          "file_path": "hal\\loongarch\\qemu_2k1000\\ahci_driver_ls.cc",
+          "language": "cpp",
+          "start_line": 142,
+          "end_line": 213,
+          "outgoing_call_count": 55,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "identify_device",
+          "normalized_name": "identify_device",
+          "file_path": "hal\\riscv\\k210\\disk_driver.cc",
+          "language": "cpp",
+          "start_line": 32,
+          "end_line": 63,
+          "outgoing_call_count": 55,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "identify_device",
+          "normalized_name": "identify_device",
+          "file_path": "hal\\riscv\\qemu\\disk_driver.cc",
+          "language": "cpp",
+          "start_line": 31,
+          "end_line": 61,
+          "outgoing_call_count": 55,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "identify_device",
+          "normalized_name": "identify_device",
+          "file_path": "hsai\\ata\\ahci_driver.cc",
+          "language": "cpp",
+          "start_line": 323,
+          "end_line": 394,
+          "outgoing_call_count": 55,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "identify_device",
+          "normalized_name": "identify_device",
+          "file_path": "hal\\loongarch\\qemu\\qemu.cc",
+          "language": "cpp",
+          "start_line": 118,
+          "end_line": 123,
+          "outgoing_call_count": 55,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_check_mbr_partition",
+          "normalized_name": "_check_mbr_partition",
+          "file_path": "hal\\loongarch\\qemu\\disk_driver.cc",
+          "language": "cpp",
+          "start_line": 64,
+          "end_line": 111,
+          "outgoing_call_count": 54,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_check_mbr_partition",
+          "normalized_name": "_check_mbr_partition",
+          "file_path": "hal\\loongarch\\qemu_2k1000\\ahci_driver_ls.cc",
+          "language": "cpp",
+          "start_line": 215,
+          "end_line": 263,
+          "outgoing_call_count": 54,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_check_mbr_partition",
+          "normalized_name": "_check_mbr_partition",
+          "file_path": "hal\\riscv\\k210\\disk_driver.cc",
+          "language": "cpp",
+          "start_line": 65,
+          "end_line": 112,
+          "outgoing_call_count": 54,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_check_mbr_partition",
+          "normalized_name": "_check_mbr_partition",
+          "file_path": "hal\\riscv\\qemu\\disk_driver.cc",
+          "language": "cpp",
+          "start_line": 63,
+          "end_line": 110,
+          "outgoing_call_count": 54,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "Makefile",
+        "hal\\loongarch\\Makefile",
+        "hal\\loongarch\\exception_manager.cc",
+        "hal\\loongarch\\la_cpu.cc",
+        "hal\\loongarch\\page.cc",
+        "hal\\loongarch\\qemu\\Makefile",
+        "hal\\loongarch\\qemu\\pci.cc",
+        "hal\\loongarch\\qemu_2k1000\\Makefile",
+        "hal\\loongarch\\qemu_2k1000\\ahci_port_driver_ls.cc",
+        "hal\\loongarch\\uservec.S",
+        "hal\\riscv\\Makefile",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\serial.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\hal\\ns16550a.rs",
+        "hal\\riscv\\k210\\Makefile",
+        "hal\\riscv\\k210\\sdcard_driver.cc",
+        "hal\\riscv\\qemu\\Makefile",
+        "hsai\\Makefile",
+        "hsai\\ata\\ahci_port_driver.cc",
+        "kernel\\Makefile",
+        "kernel\\fs\\buffer.cc",
+        "kernel\\fs\\buffer_manager.cc",
+        "kernel\\fs\\dentry.cc",
+        "kernel\\fs\\dentrycache.cc",
+        "kernel\\fs\\ext4\\ext4_block_group.cc",
+        "kernel\\fs\\ext4\\ext4_buffer.cc",
+        "kernel\\fs\\ext4\\ext4_fs.cc",
+        "kernel\\fs\\ext4\\ext4_inode.cc",
+        "kernel\\fs\\ext4\\ext4_sb.cc",
+        "kernel\\fs\\fat\\fat32Sb.cc",
+        "kernel\\fs\\fat\\fat32_dir_entry.cc",
+        "kernel\\fs\\fat\\fat32_file_system.cc",
+        "kernel\\fs\\fat\\fat32fs.cc",
+        "kernel\\fs\\fat\\fat32inode.cc",
+        "kernel\\fs\\file.cc",
+        "kernel\\fs\\file\\device.cc",
+        "kernel\\fs\\file\\file.cc",
+        "kernel\\fs\\file\\normal.cc",
+        "kernel\\fs\\path.cc",
+        "kernel\\fs\\ramfs\\ramfs.cc",
+        "kernel\\fs\\ramfs\\ramfsSb.cc",
+        "kernel\\fs\\ramfs\\ramfsinode.cc",
+        "kernel\\mm\\userspace_stream.cc",
+        "kernel\\mm\\userstack_stream.cc",
+        "kernel\\pm\\ipc\\pipe.cc",
+        "kernel\\pm\\process_manager.cc",
+        "user\\Makefile",
+        "user\\user_init.c"
+      ],
+      "file_count": 47,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\dentrycache.cc",
+          "language": "cpp",
+          "start_line": 16,
+          "end_line": 26,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\fat\\fat32_dir_entry.cc",
+          "language": "cpp",
+          "start_line": 26,
+          "end_line": 132,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\ext4\\ext4_fs.cc",
+          "language": "cpp",
+          "start_line": 32,
+          "end_line": 153,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\fat\\fat32fs.cc",
+          "language": "cpp",
+          "start_line": 23,
+          "end_line": 51,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\file.cc",
+          "language": "cpp",
+          "start_line": 211,
+          "end_line": 219,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\fat\\fat32_file_system.cc",
+          "language": "cpp",
+          "start_line": 19,
+          "end_line": 58,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\buffer.cc",
+          "language": "cpp",
+          "start_line": 47,
+          "end_line": 90,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\buffer_manager.cc",
+          "language": "cpp",
+          "start_line": 26,
+          "end_line": 35,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\fs\\fat\\fat32inode.cc",
+          "language": "cpp",
+          "start_line": 16,
+          "end_line": 65,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "kernel\\fs\\file.cc",
+          "language": "cpp",
+          "start_line": 177,
+          "end_line": 205,
+          "outgoing_call_count": 46,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\loongarch\\exception_manager.cc",
+        "hal\\loongarch\\kernelvec.S",
+        "hal\\loongarch\\la_cpu.cc",
+        "hal\\loongarch\\loongarch.cc",
+        "hal\\loongarch\\qemu\\interrupt_manager.cc",
+        "hal\\loongarch\\qemu\\qemu.cc",
+        "hal\\loongarch\\qemu_2k1000\\interrupt_manager.cc",
+        "hal\\loongarch\\trap_wrapper.cc",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "hal\\riscv\\k210\\interrupt_manager.cc",
+        "hal\\riscv\\qemu\\interrupt_manager.cc",
+        "hal\\riscv\\trap_wrapper.cc",
+        "hsai\\ata\\ahci_port_driver.cc",
+        "hsai\\intr\\virtual_interrupt_manager.cc",
+        "kernel\\fs\\dentry.cc",
+        "kernel\\pm\\process_interface.cc",
+        "user\\user_init.c"
+      ],
+      "file_count": 19,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "hal\\loongarch\\exception_manager.cc",
+          "language": "cpp",
+          "start_line": 57,
+          "end_line": 89,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "start_trap_rust",
+          "normalized_name": "start_trap_rust",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": 362,
+          "end_line": 511,
+          "outgoing_call_count": 132,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "start_trap_rust",
+          "normalized_name": "start_trap_rust",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": 364,
+          "end_line": 537,
+          "outgoing_call_count": 132,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "start_trap_rust",
+          "normalized_name": "start_trap_rust",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-qemu\\src\\main.rs",
+          "language": "rust",
+          "start_line": 386,
+          "end_line": 482,
+          "outgoing_call_count": 132,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "InterruptManager",
+          "normalized_name": "InterruptManager",
+          "file_path": "hal\\loongarch\\qemu\\interrupt_manager.cc",
+          "language": "cpp",
+          "start_line": 28,
+          "end_line": 60,
+          "outgoing_call_count": 50,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "InterruptManager",
+          "normalized_name": "InterruptManager",
+          "file_path": "hal\\loongarch\\qemu_2k1000\\interrupt_manager.cc",
+          "language": "cpp",
+          "start_line": 28,
+          "end_line": 61,
+          "outgoing_call_count": 50,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "InterruptManager",
+          "normalized_name": "InterruptManager",
+          "file_path": "hal\\riscv\\k210\\interrupt_manager.cc",
+          "language": "cpp",
+          "start_line": 20,
+          "end_line": 40,
+          "outgoing_call_count": 50,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "InterruptManager",
+          "normalized_name": "InterruptManager",
+          "file_path": "hal\\riscv\\qemu\\interrupt_manager.cc",
+          "language": "cpp",
+          "start_line": 19,
+          "end_line": 37,
+          "outgoing_call_count": 50,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "handle_dev_intr",
+          "normalized_name": "handle_dev_intr",
+          "file_path": "hal\\loongarch\\qemu\\interrupt_manager.cc",
+          "language": "cpp",
+          "start_line": 98,
+          "end_line": 124,
+          "outgoing_call_count": 39,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "handle_dev_intr",
+          "normalized_name": "handle_dev_intr",
+          "file_path": "hal\\loongarch\\qemu_2k1000\\interrupt_manager.cc",
+          "language": "cpp",
+          "start_line": 99,
+          "end_line": 123,
+          "outgoing_call_count": 39,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\tm\\timer_manager.cc"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "clock_gettime",
+          "normalized_name": "clock_gettime",
+          "file_path": "kernel\\tm\\timer_manager.cc",
+          "language": "cpp",
+          "start_line": 110,
+          "end_line": 132,
+          "outgoing_call_count": 11,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "handle_clock_intr",
+          "normalized_name": "handle_clock_intr",
+          "file_path": "kernel\\tm\\timer_manager.cc",
+          "language": "cpp",
+          "start_line": 44,
+          "end_line": 53,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\loongarch\\exception_manager.cc",
+        "hal\\loongarch\\page.cc",
+        "hal\\loongarch\\qemu\\la_mem.cc",
+        "hal\\loongarch\\qemu\\pci.cc",
+        "hal\\loongarch\\qemu\\qemu.cc",
+        "hal\\loongarch\\qemu\\virtio_disk.cc",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "hsai\\mem\\virtual_memory.cc",
+        "kernel\\fs\\buffer.cc",
+        "kernel\\fs\\dentrycache.cc",
+        "kernel\\fs\\ext4\\ext4_buffer.cc",
+        "kernel\\klib\\common.cc",
+        "kernel\\klib\\klib.cc",
+        "kernel\\mm\\buddy_algorithmn\\buddy_allocator.cc",
+        "kernel\\mm\\heap_memory_manager.cc",
+        "kernel\\mm\\liballoc_algorithmn\\liballoc_allocator.cc",
+        "kernel\\mm\\memory_interface.cc",
+        "kernel\\mm\\page_table.cc",
+        "kernel\\mm\\physical_memory_manager.cc",
+        "kernel\\mm\\userspace_stream.cc",
+        "kernel\\mm\\userstack_stream.cc",
+        "kernel\\mm\\virtual_memory_manager.cc",
+        "kernel\\pm\\ipc\\pipe.cc",
+        "kernel\\pm\\process.cc",
+        "kernel\\pm\\process_manager.cc",
+        "kernel\\pm\\shmmanager.cc"
+      ],
+      "file_count": 26,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\mm\\heap_memory_manager.cc",
+          "language": "cpp",
+          "start_line": 21,
+          "end_line": 36,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\mm\\virtual_memory_manager.cc",
+          "language": "cpp",
+          "start_line": 33,
+          "end_line": 52,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\pm\\shmmanager.cc",
+          "language": "cpp",
+          "start_line": 12,
+          "end_line": 19,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\mm\\liballoc_algorithmn\\liballoc_allocator.cc",
+          "language": "cpp",
+          "start_line": 20,
+          "end_line": 28,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "vm_copy",
+          "normalized_name": "vm_copy",
+          "file_path": "kernel\\mm\\virtual_memory_manager.cc",
+          "language": "cpp",
+          "start_line": 430,
+          "end_line": 468,
+          "outgoing_call_count": 23,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "vm_copy",
+          "normalized_name": "vm_copy",
+          "file_path": "kernel\\mm\\virtual_memory_manager.cc",
+          "language": "cpp",
+          "start_line": 470,
+          "end_line": 516,
+          "outgoing_call_count": 23,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "free_pages",
+          "normalized_name": "free_pages",
+          "file_path": "kernel\\mm\\memory_interface.cc",
+          "language": "cpp",
+          "start_line": 23,
+          "end_line": 23,
+          "outgoing_call_count": 22,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "free_pages",
+          "normalized_name": "free_pages",
+          "file_path": "kernel\\mm\\physical_memory_manager.cc",
+          "language": "cpp",
+          "start_line": 54,
+          "end_line": 62,
+          "outgoing_call_count": 22,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "free_pages",
+          "normalized_name": "free_pages",
+          "file_path": "kernel\\mm\\buddy_algorithmn\\buddy_allocator.cc",
+          "language": "cpp",
+          "start_line": 134,
+          "end_line": 206,
+          "outgoing_call_count": 22,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "walk",
+          "normalized_name": "walk",
+          "file_path": "kernel\\mm\\page_table.cc",
+          "language": "cpp",
+          "start_line": 28,
+          "end_line": 82,
+          "outgoing_call_count": 21,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+        "kernel\\pm\\ipc\\signal.cc",
+        "kernel\\pm\\process_manager.cc"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "send_ipi_many",
+          "normalized_name": "send_ipi_many",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": 159,
+          "end_line": 167,
+          "outgoing_call_count": 18,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "send_ipi_many",
+          "normalized_name": "send_ipi_many",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": 161,
+          "end_line": 169,
+          "outgoing_call_count": 18,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "send_ipi_many",
+          "normalized_name": "send_ipi_many",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+          "language": "rust",
+          "start_line": 52,
+          "end_line": 58,
+          "outgoing_call_count": 18,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl rustsbi::Ipi for Ipi {",
+          "normalized_name": "Ipi for Ipi {",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": 155,
+          "end_line": 168,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl rustsbi::Ipi for Ipi {",
+          "normalized_name": "Ipi for Ipi {",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": 157,
+          "end_line": 170,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "impl Ipi for Clint {",
+          "normalized_name": "impl Ipi for Clint {",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+          "language": "rust",
+          "start_line": 46,
+          "end_line": 59,
+          "outgoing_call_count": 9,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "pipe",
+          "normalized_name": "pipe",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 2033,
+          "end_line": 2059,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sigAction",
+          "normalized_name": "sigAction",
+          "file_path": "kernel\\pm\\ipc\\signal.cc",
+          "language": "cpp",
+          "start_line": 10,
+          "end_line": 22,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\loongarch\\context.cc",
+        "hal\\loongarch\\entry.S",
+        "hal\\loongarch\\page.cc",
+        "hal\\loongarch\\qemu\\qemu.cc",
+        "kernel\\klib\\__cxx_abi.cc",
+        "kernel\\pm\\ipc\\signal.cc",
+        "kernel\\pm\\process.cc",
+        "kernel\\pm\\process_interface.cc",
+        "kernel\\pm\\process_manager.cc",
+        "user\\loongarch\\usys.S"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\pm\\process.cc",
+          "language": "cpp",
+          "start_line": 27,
+          "end_line": 53,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 73,
+          "end_line": 85,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "execve",
+          "normalized_name": "execve",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 804,
+          "end_line": 1344,
+          "outgoing_call_count": 84,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fork_ret",
+          "normalized_name": "fork_ret",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 678,
+          "end_line": 743,
+          "outgoing_call_count": 47,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fork",
+          "normalized_name": "fork",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 364,
+          "end_line": 515,
+          "outgoing_call_count": 35,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fork",
+          "normalized_name": "fork",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 362,
+          "end_line": 362,
+          "outgoing_call_count": 35,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fork",
+          "normalized_name": "fork",
+          "file_path": "user\\loongarch\\usys.S",
+          "language": "assembly",
+          "start_line": 46,
+          "end_line": 51,
+          "outgoing_call_count": 35,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "clone",
+          "normalized_name": "clone",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 568,
+          "end_line": 676,
+          "outgoing_call_count": 33,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "exit_proc",
+          "normalized_name": "exit_proc",
+          "file_path": "kernel\\pm\\process_interface.cc",
+          "language": "cpp",
+          "start_line": 81,
+          "end_line": 84,
+          "outgoing_call_count": 23,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "exit_proc",
+          "normalized_name": "exit_proc",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 1441,
+          "end_line": 1497,
+          "outgoing_call_count": 23,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\riscv\\k210\\sdcard_driver.cc",
+        "kernel\\pm\\scheduler.cc"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\pm\\scheduler.cc",
+          "language": "cpp",
+          "start_line": 20,
+          "end_line": 23,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "start_schedule",
+          "normalized_name": "start_schedule",
+          "file_path": "kernel\\pm\\scheduler.cc",
+          "language": "cpp",
+          "start_line": 40,
+          "end_line": 81,
+          "outgoing_call_count": 15,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "call_sched",
+          "normalized_name": "call_sched",
+          "file_path": "kernel\\pm\\scheduler.cc",
+          "language": "cpp",
+          "start_line": 93,
+          "end_line": 107,
+          "outgoing_call_count": 14,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "yield",
+          "normalized_name": "yield",
+          "file_path": "kernel\\pm\\scheduler.cc",
+          "language": "cpp",
+          "start_line": 83,
+          "end_line": 91,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "get_highest_proirity",
+          "normalized_name": "get_highest_proirity",
+          "file_path": "kernel\\pm\\scheduler.cc",
+          "language": "cpp",
+          "start_line": 25,
+          "end_line": 38,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "switch_to_SPI_mode",
+          "normalized_name": "switch_to_SPI_mode",
+          "file_path": "hal\\riscv\\k210\\sdcard_driver.cc",
+          "language": "cpp",
+          "start_line": 44,
+          "end_line": 60,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\loongarch\\exception_manager.cc",
+        "kernel\\syscall\\syscall_handler.cc",
+        "kernel\\syscall\\syscall_interface.cc"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 56,
+          "end_line": 154,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_execve",
+          "normalized_name": "_sys_execve",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 625,
+          "end_line": 686,
+          "outgoing_call_count": 25,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_syscall",
+          "normalized_name": "_syscall",
+          "file_path": "hal\\loongarch\\exception_manager.cc",
+          "language": "cpp",
+          "start_line": 771,
+          "end_line": 803,
+          "outgoing_call_count": 25,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_write",
+          "normalized_name": "_sys_write",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 232,
+          "end_line": 270,
+          "outgoing_call_count": 19,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_faccessat",
+          "normalized_name": "_sys_faccessat",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 1819,
+          "end_line": 1866,
+          "outgoing_call_count": 19,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_getrusage",
+          "normalized_name": "_sys_getrusage",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 1960,
+          "end_line": 2130,
+          "outgoing_call_count": 18,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_getdents",
+          "normalized_name": "_sys_getdents",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 939,
+          "end_line": 965,
+          "outgoing_call_count": 17,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_readlinkat",
+          "normalized_name": "_sys_readlinkat",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 1330,
+          "end_line": 1368,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_sigaction",
+          "normalized_name": "_sys_sigaction",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 1406,
+          "end_line": 1442,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_sys_utimensat",
+          "normalized_name": "_sys_utimensat",
+          "file_path": "kernel\\syscall\\syscall_handler.cc",
+          "language": "cpp",
+          "start_line": 2132,
+          "end_line": 2192,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\klib\\common.cc",
+        "kernel\\mm\\physical_memory_manager.cc",
+        "kernel\\pm\\process_manager.cc",
+        "kernel\\xn6_start_kernel.cc",
+        "user\\user_init.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "vectortest",
+          "normalized_name": "vectortest",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 2208,
+          "end_line": 2270,
+          "outgoing_call_count": 33,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "stringtest",
+          "normalized_name": "stringtest",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 2272,
+          "end_line": 2318,
+          "outgoing_call_count": 27,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "test_buffer",
+          "normalized_name": "test_buffer",
+          "file_path": "kernel\\xn6_start_kernel.cc",
+          "language": "cpp",
+          "start_line": 366,
+          "end_line": 753,
+          "outgoing_call_count": 19,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "hashtest",
+          "normalized_name": "hashtest",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 2354,
+          "end_line": 2386,
+          "outgoing_call_count": 18,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "debug_test_buddy",
+          "normalized_name": "debug_test_buddy",
+          "file_path": "kernel\\mm\\physical_memory_manager.cc",
+          "language": "cpp",
+          "start_line": 126,
+          "end_line": 184,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "test_libctest",
+          "normalized_name": "test_libctest",
+          "file_path": "user\\user_init.c",
+          "language": "c",
+          "start_line": 402,
+          "end_line": 420,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "test_lua",
+          "normalized_name": "test_lua",
+          "file_path": "user\\user_init.c",
+          "language": "c",
+          "start_line": 234,
+          "end_line": 242,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "test_busybox",
+          "normalized_name": "test_busybox",
+          "file_path": "user\\user_init.c",
+          "language": "c",
+          "start_line": 224,
+          "end_line": 232,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "basic_test",
+          "normalized_name": "basic_test",
+          "file_path": "user\\user_init.c",
+          "language": "c",
+          "start_line": 254,
+          "end_line": 290,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "test_lmbench",
+          "normalized_name": "test_lmbench",
+          "file_path": "user\\user_init.c",
+          "language": "c",
+          "start_line": 244,
+          "end_line": 252,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 843,
+      "outgoing_edge_count": 5301,
+      "internal_edge_count": 2887,
+      "external_edge_count": 2414,
+      "internal_call_ratio": 0.5446,
+      "external_call_ratio": 0.4554,
+      "module_weight": 1.0,
+      "files": [
+        "hal\\loongarch\\entry.S",
+        "hal\\loongarch\\include\\la_csr.h",
+        "hal\\loongarch\\include\\la_estat.h",
+        "hal\\loongarch\\kernelvec.S",
+        "hal\\loongarch\\la_cpu.cc",
+        "hal\\loongarch\\loongarch.cc",
+        "hal\\loongarch\\merrvec.S",
+        "hal\\loongarch\\qemu\\acpi_controller.cc",
+        "hal\\loongarch\\qemu\\la_mem.cc",
+        "hal\\loongarch\\qemu\\pci.cc",
+        "hal\\loongarch\\qemu\\qemu.cc",
+        "hal\\loongarch\\swtch.S",
+        "hal\\loongarch\\tlb_manager.cc",
+        "hal\\loongarch\\tlbrefill.S",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\serial.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\hal.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\hal\\ns16550a.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "hal\\riscv\\k210\\entry.S",
+        "hal\\riscv\\kernelvec.S",
+        "hal\\riscv\\qemu\\entry.S",
+        "kernel\\klib\\__cxx_abi.cc",
+        "kernel\\klib\\back_trace.cc",
+        "kernel\\klib\\function.cc",
+        "kernel\\klib\\global_operator.cc",
+        "kernel\\klib\\klib.cc",
+        "kernel\\klib\\printer.cc",
+        "kernel\\klib\\virtual_function.cc",
+        "kernel\\pm\\sharemem.cc",
+        "kernel\\pm\\sleep_lock.cc",
+        "kernel\\tm\\timer_interface.cc",
+        "kernel\\tm\\timer_manager.cc",
+        "kernel\\xn6_start_kernel.cc"
+      ],
+      "file_count": 36,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\pm\\sleep_lock.cc",
+          "language": "cpp",
+          "start_line": 15,
+          "end_line": 21,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\tm\\timer_manager.cc",
+          "language": "cpp",
+          "start_line": 19,
+          "end_line": 26,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\klib\\printer.cc",
+          "language": "cpp",
+          "start_line": 27,
+          "end_line": 48,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\pm\\sharemem.cc",
+          "language": "cpp",
+          "start_line": 9,
+          "end_line": 18,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\serial.rs",
+          "language": "rust",
+          "start_line": 59,
+          "end_line": 65,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "hal\\loongarch\\tlb_manager.cc",
+          "language": "cpp",
+          "start_line": 21,
+          "end_line": 29,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "hal\\loongarch\\qemu\\acpi_controller.cc",
+          "language": "cpp",
+          "start_line": 18,
+          "end_line": 22,
+          "outgoing_call_count": 213,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "xn6_start_kernel",
+          "normalized_name": "xn6_start_kernel",
+          "file_path": "kernel\\xn6_start_kernel.cc",
+          "language": "cpp",
+          "start_line": 74,
+          "end_line": 357,
+          "outgoing_call_count": 113,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "mp_hook",
+          "normalized_name": "mp_hook",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": 43,
+          "end_line": 71,
+          "outgoing_call_count": 35,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "mp_hook",
+          "normalized_name": "mp_hook",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": 47,
+          "end_line": 75,
+          "outgoing_call_count": 35,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "hal\\loongarch\\exception_manager.cc",
+        "hal\\loongarch\\page.cc",
+        "hal\\loongarch\\qemu\\qemu.cc",
+        "hal\\loongarch\\uservec.S",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+        "hal\\riscv\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "kernel\\mm\\userspace_stream.cc",
+        "kernel\\mm\\userstack_stream.cc",
+        "kernel\\pm\\process_manager.cc",
+        "kernel\\xn6_start_kernel.cc",
+        "user\\user_init.c"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kernel\\xn6_start_kernel.cc",
+          "language": "cpp",
+          "start_line": 58,
+          "end_line": 58,
+          "outgoing_call_count": 269,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": 75,
+          "end_line": 265,
+          "outgoing_call_count": 269,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": 79,
+          "end_line": 267,
+          "outgoing_call_count": 269,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "hal\\riscv\\SBI\\rustsbi-qemu\\src\\main.rs",
+          "language": "rust",
+          "start_line": 126,
+          "end_line": 231,
+          "outgoing_call_count": 269,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "user_init",
+          "normalized_name": "user_init",
+          "file_path": "kernel\\pm\\process_manager.cc",
+          "language": "cpp",
+          "start_line": 239,
+          "end_line": 350,
+          "outgoing_call_count": 36,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "init_main",
+          "normalized_name": "init_main",
+          "file_path": "user\\user_init.c",
+          "language": "c",
+          "start_line": 462,
+          "end_line": 476,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "_get_user_data",
+          "normalized_name": "_get_user_data",
+          "file_path": "hal\\loongarch\\exception_manager.cc",
+          "language": "cpp",
+          "start_line": 805,
+          "end_line": 811,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "UserspaceStream",
+          "normalized_name": "UserspaceStream",
+          "file_path": "kernel\\mm\\userspace_stream.cc",
+          "language": "cpp",
+          "start_line": 15,
+          "end_line": 19,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "UserstackStream",
+          "normalized_name": "UserstackStream",
+          "file_path": "kernel\\mm\\userstack_stream.cc",
+          "language": "cpp",
+          "start_line": 14,
+          "end_line": 18,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "set_user_plv",
+          "normalized_name": "set_user_plv",
+          "file_path": "hal\\loongarch\\page.cc",
+          "language": "cpp",
+          "start_line": 32,
+          "end_line": 32,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/RuOK.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

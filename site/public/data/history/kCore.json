@@ -1,0 +1,1789 @@
+{
+  "repo_name": "kCore",
+  "team_name": "kCore",
+  "school": "中国科学技术大学",
+  "repo_url": "https://gitlab.eduxiji.net/kcore2021/kcore",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/kcore2021/kcore",
+  "year": "2021",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust",
+    "linker_script",
+    "assembly",
+    "cargo"
+  ],
+  "core_modules": [
+    "driver",
+    "filesystem",
+    "memory",
+    "process",
+    "interrupt"
+  ],
+  "function_count": 800,
+  "node_count": 800,
+  "edge_count": 5100,
+  "internal_edge_count": 2808,
+  "external_edge_count": 2292,
+  "module_count": 17,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.23,
+    "build": 0.9,
+    "console": 0.28,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "ipc": 0.1,
+    "loader": 0.23,
+    "memory": 1.0,
+    "network": 0.1,
+    "process": 1.0,
+    "report_generation": 0.51,
+    "scheduler": 1.0,
+    "syscall": 1.0,
+    "test": 0.05,
+    "unknown": 1.0,
+    "user": 0.43
+  },
+  "core_module_details": [
+    {
+      "module_name": "driver",
+      "module_weight": 0.4666,
+      "completeness": 1.0,
+      "final_score": 0.68
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1655,
+      "completeness": 1.0,
+      "final_score": 0.4993
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.1605,
+      "completeness": 1.0,
+      "final_score": 0.4963
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.0596,
+      "completeness": 1.0,
+      "final_score": 0.4358
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.0404,
+      "completeness": 1.0,
+      "final_score": 0.4242
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 3,
+      "outgoing_edge_count": 5,
+      "internal_edge_count": 1,
+      "external_edge_count": 4,
+      "internal_call_ratio": 0.2,
+      "external_call_ratio": 0.8,
+      "module_weight": 0.0026,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 12,
+      "outgoing_edge_count": 91,
+      "internal_edge_count": 22,
+      "external_edge_count": 69,
+      "internal_call_ratio": 0.2418,
+      "external_call_ratio": 0.7582,
+      "module_weight": 0.0161,
+      "files": [
+        "os\\Cargo.toml",
+        "os\\build.rs",
+        "os\\src\\lang_items.rs",
+        "os\\src\\linker-k210.ld",
+        "os\\src\\linker-qemu.ld",
+        "os\\src\\loader.rs"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "insert_app_data",
+          "normalized_name": "insert_app_data",
+          "file_path": "os\\build.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "67",
+          "outgoing_call_count": 24,
+          "summary": "该函数用于在构建过程中生成一个汇编文件 `src/link_app.S`，其中包含用户程序的元数据（程序数量、起始/结束地址标签、名称字符串）以及通过 `.incbin` 指令嵌入的二进制程序数据，以辅助操作系统在启动时加载用户程序。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "os\\src\\lang_items.rs",
+          "language": "rust",
+          "start_line": "5",
+          "end_line": "17",
+          "outgoing_call_count": 17,
+          "summary": "实现Rust语言中panic处理函数，当程序发生不可恢复错误时记录错误信息并关闭系统"
+        },
+        {
+          "name": "linker-qemu.ld",
+          "normalized_name": "ld",
+          "file_path": "os\\src\\linker-qemu.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "53",
+          "outgoing_call_count": 6,
+          "summary": "该链接脚本定义了RISC-V架构下QEMU目标的内核镜像布局，将起始虚拟地址设为0x80200000，并指定入口点为_start。它依次排列了文本段（含入口代码和跳板代码）、只读数据段、数据段、BSS段（含栈），最后丢弃.eh_frame段。通过定义多个符号（如stext、etext等）记录各段边界，便于内核在运行时获取内存布局信息。"
+        },
+        {
+          "name": "linker-k210.ld",
+          "normalized_name": "ld",
+          "file_path": "os\\src\\linker-k210.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "48",
+          "outgoing_call_count": 6,
+          "summary": "这是为K210开发板定制的链接脚本，定义了内核镜像的内存布局，将代码、只读数据、数据和BSS段分别放置在从0x80020000开始的连续地址空间中，并在每个段起始和结束处定义了符号，用于内核初始化（如清理BSS段）。"
+        },
+        {
+          "name": "get_app_data",
+          "normalized_name": "get_app_data",
+          "file_path": "os\\src\\loader.rs",
+          "language": "rust",
+          "start_line": "11",
+          "end_line": "25",
+          "outgoing_call_count": 6,
+          "summary": "根据应用ID获取对应应用的数据（字节切片），数据来自链接器定义的符号数组"
+        },
+        {
+          "name": "get_app_data_by_name",
+          "normalized_name": "get_app_data_by_name",
+          "file_path": "os\\src\\loader.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "57",
+          "outgoing_call_count": 4,
+          "summary": "给定应用名称，在全局应用列表中找到匹配的应用，并返回其对应的数据切片。"
+        },
+        {
+          "name": "Cargo.toml",
+          "normalized_name": "toml",
+          "file_path": "os\\Cargo.toml",
+          "language": "cargo",
+          "start_line": "1",
+          "end_line": "21",
+          "outgoing_call_count": 0,
+          "summary": "定义操作系统内核包（os）的元信息和依赖关系，包括RISC-V底层支持、常用Rust库、K210板级支持包（PAC/HAL/SOC），以及两个特性开关（board_qemu和board_k210），用于构建时选择目标平台。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "console": {
+      "module_name": "console",
+      "function_count": 2,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 5,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.8333,
+      "external_call_ratio": 0.1667,
+      "module_weight": 0.002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 363,
+      "outgoing_edge_count": 2478,
+      "internal_edge_count": 1222,
+      "external_edge_count": 1256,
+      "internal_call_ratio": 0.4931,
+      "external_call_ratio": 0.5069,
+      "module_weight": 0.4666,
+      "files": [
+        "k210_component\\k210-hal\\src\\aes.rs",
+        "k210_component\\k210-hal\\src\\cache.rs",
+        "k210_component\\k210-hal\\src\\clock.rs",
+        "k210_component\\k210-hal\\src\\dmac.rs",
+        "k210_component\\k210-hal\\src\\fpioa.rs",
+        "k210_component\\k210-hal\\src\\gpio.rs",
+        "k210_component\\k210-hal\\src\\gpiohs.rs",
+        "k210_component\\k210-hal\\src\\lib.rs",
+        "k210_component\\k210-hal\\src\\plic.rs",
+        "k210_component\\k210-hal\\src\\serial.rs",
+        "k210_component\\k210-hal\\src\\sha256.rs",
+        "k210_component\\k210-hal\\src\\spi.rs",
+        "k210_component\\k210-hal\\src\\stdout.rs",
+        "k210_component\\k210-hal\\src\\sysctl.rs",
+        "k210_component\\k210-hal\\src\\time.rs",
+        "k210_component\\k210-soc\\src\\dmac.rs",
+        "k210_component\\k210-soc\\src\\fpioa.rs",
+        "k210_component\\k210-soc\\src\\gpiohs.rs",
+        "k210_component\\k210-soc\\src\\sleep.rs",
+        "k210_component\\k210-soc\\src\\spi.rs",
+        "k210_component\\k210-soc\\src\\sysctl.rs",
+        "k210_component\\k210-soc\\src\\sysctl\\pll_compute.rs",
+        "kcore-fs\\src\\block_cache.rs",
+        "kcore-fs\\src\\block_dev.rs",
+        "kcore-fs\\src\\kfs.rs",
+        "kcore-fs\\src\\layout.rs",
+        "os\\src\\config.rs",
+        "os\\src\\console.rs",
+        "os\\src\\drivers\\block\\sdcard.rs",
+        "os\\src\\drivers\\block\\virtio_blk.rs",
+        "os\\src\\sbi.rs",
+        "os\\src\\timer.rs",
+        "user\\src\\console.rs"
+      ],
+      "file_count": 33,
+      "core_functions": [
+        {
+          "name": "impl DMAC {",
+          "normalized_name": "impl DMAC {",
+          "file_path": "k210_component\\k210-soc\\src\\dmac.rs",
+          "language": "rust",
+          "start_line": "62",
+          "end_line": "637",
+          "outgoing_call_count": 143,
+          "summary": "这个代码块实现了DMAC（DMA控制器）结构体的方法，包括初始化和配置DMA通道、启用/禁用DMA及通道、设置通道参数（源地址、目的地址、增量模式、突发长度、传输宽度、块大小）、中断控制（使能/禁止/清除）、等待通道空闲、启动单次传输等功能。其中`set_single_mode`是主要的单次传输入口，它依次完成清除中断、禁用通道、等待空闲、设置参数、使能控制器、使能通道的序列。代码块中也包含了大量被注释掉的历史C SDK函数（用于链表传输、影子寄存器更新等），表明当前版本可能未实现或移除了散列/聚集（scatter/gather）功能。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\drivers\\block\\sdcard.rs",
+          "language": "rust",
+          "start_line": 158,
+          "end_line": 168,
+          "outgoing_call_count": 90,
+          "summary": "构造函数，用于初始化 SD 卡驱动结构体，接收 SPI 控制器实例、片选引脚编号和 GPIO 引脚编号作为参数，并存储为结构体字段。注释部分表明原本有 DMA 相关字段，但当前已被注释掉，说明该版本未使用 DMA。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "k210_component\\k210-hal\\src\\gpio.rs",
+          "language": "rust",
+          "start_line": "116",
+          "end_line": "118",
+          "outgoing_call_count": 90,
+          "summary": "这是一个构造函数，用于创建一个新的Gpio实例，该实例包含GPIO端口、引脚编号，并且初始模式为Unknown（未知状态），利用PhantomData标记泛型参数。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\drivers\\block\\virtio_blk.rs",
+          "language": "rust",
+          "start_line": "26",
+          "end_line": "30",
+          "outgoing_call_count": 90,
+          "summary": "创建并返回一个封装了VirtIO块设备的驱动实例，其中包含一个通过Mutex保护的VirtIOBlk对象。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "k210_component\\k210-soc\\src\\spi.rs",
+          "language": "rust",
+          "start_line": "88",
+          "end_line": "90",
+          "outgoing_call_count": 90,
+          "summary": "构造函数，接收一个名为 spi 的参数，并将其存储为结构体的字段，返回一个新的实例。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\drivers\\block\\sdcard.rs",
+          "language": "rust",
+          "start_line": "700",
+          "end_line": "702",
+          "outgoing_call_count": 90,
+          "summary": "创建一个新的 SD 卡驱动实例，内部通过互斥锁包装初始化函数的结果。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "k210_component\\k210-soc\\src\\dmac.rs",
+          "language": "rust",
+          "start_line": "63",
+          "end_line": "67",
+          "outgoing_call_count": 90,
+          "summary": "创建DMAC结构体实例并调用初始化方法"
+        },
+        {
+          "name": "impl<IF: SPI01> SPI for SPIImpl<IF> {",
+          "normalized_name": "impl<IF: SPI01> SPI for SPIImpl<IF> {",
+          "file_path": "k210_component\\k210-soc\\src\\spi.rs",
+          "language": "rust",
+          "start_line": "101",
+          "end_line": "316",
+          "outgoing_call_count": 88,
+          "summary": "实现了SPI（Serial Peripheral Interface）接口的SPIImpl结构体，提供了SPI通信的配置、时钟设置、数据收发（普通和DMA方式）、填充数据等功能，针对K210 SoC硬件平台，使用MMIO寄存器操作。"
+        },
+        {
+          "name": "clock_device_en",
+          "normalized_name": "clock_device_en",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "260",
+          "end_line": "305",
+          "outgoing_call_count": 82,
+          "summary": "根据传入的时钟源枚举值和使能布尔值，通过操作系统控制寄存器的特定位来启用或禁用对应设备或模块的时钟。"
+        },
+        {
+          "name": "impl</*'a,*/ X: SPI> SDCard</*'a,*/ X> {",
+          "normalized_name": "impl</*'a,*/ X: SPI> SDCard</*'a,*/ X> {",
+          "file_path": "os\\src\\drivers\\block\\sdcard.rs",
+          "language": "rust",
+          "start_line": "157",
+          "end_line": "655",
+          "outgoing_call_count": 82,
+          "summary": "实现SDCard结构体的方法，包含SPI模式下SD卡的初始化、寄存器读取、单/多块读写扇区等操作。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 119,
+      "outgoing_edge_count": 973,
+      "internal_edge_count": 626,
+      "external_edge_count": 347,
+      "internal_call_ratio": 0.6434,
+      "external_call_ratio": 0.3566,
+      "module_weight": 0.1655,
+      "files": [
+        "Makefile",
+        "k210_component\\k210-hal\\src\\clint.rs",
+        "k210_component\\k210-hal\\src\\gpio.rs",
+        "k210_component\\k210-hal\\src\\serial.rs",
+        "k210_component\\k210-hal\\src\\sha256.rs",
+        "k210_component\\k210-hal\\src\\spi.rs",
+        "k210_component\\k210-hal\\src\\stdout.rs",
+        "k210_component\\k210-soc\\src\\dmac.rs",
+        "k210_component\\k210-soc\\src\\gpio.rs",
+        "k210_component\\k210-soc\\src\\gpiohs.rs",
+        "k210_component\\k210-soc\\src\\sysctl\\pll_compute.rs",
+        "kcore-fs-fuse\\Cargo.toml",
+        "kcore-fs-fuse\\src\\main.rs",
+        "kcore-fs/src/block_cache.rs",
+        "kcore-fs/src/vfs.rs",
+        "kcore-fs\\Cargo.toml",
+        "kcore-fs\\src\\bitmap.rs",
+        "kcore-fs\\src\\block_cache.rs",
+        "kcore-fs\\src\\kfs.rs",
+        "kcore-fs\\src\\layout.rs",
+        "kcore-fs\\src\\vfs.rs",
+        "os\\src\\console.rs",
+        "os\\src\\drivers\\block\\sdcard.rs",
+        "os\\src\\fs\\inode.rs",
+        "os\\src\\fs\\mod.rs",
+        "os\\src\\fs\\pipe.rs",
+        "os\\src\\fs\\stdio.rs",
+        "os\\src\\mem\\page.rs",
+        "os\\src\\syscall\\fs.rs",
+        "user\\Makefile",
+        "user\\src\\console.rs"
+      ],
+      "file_count": 31,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "85",
+          "outgoing_call_count": 90,
+          "summary": "这个代码块实际上是一个结构体实现块（impl block）中的多个方法的集合，包括new初始化方法以及read_byte、write_byte、available_read、available_write、set_write_end、all_write_ends_closed等操作环形缓冲区的方法。new方法创建一个新的环形缓冲区实例，初始化为空状态。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kcore-fs\\src\\layout.rs",
+          "language": "rust",
+          "start_line": "402",
+          "end_line": "409",
+          "outgoing_call_count": 90,
+          "summary": "此函数创建一个新的目录项（DirectoryEntry，由Self指代），将传入的名称字符串截取或填充到固定长度的字节数组，并保存对应的inode编号。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kcore-fs\\src\\vfs.rs",
+          "language": "rust",
+          "start_line": "37",
+          "end_line": "49",
+          "outgoing_call_count": 90,
+          "summary": "该代码块是一个构造函数，用于创建一个结构体实例，该结构体包含块设备的元数据（块ID和块内偏移）以及文件系统和块设备的引用。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\fs\\inode.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "49",
+          "outgoing_call_count": 90,
+          "summary": "创建一个新的OSInode实例，用于封装文件描述符的读写权限、偏移量和底层的Inode对象。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kcore-fs\\src\\bitmap.rs",
+          "language": "rust",
+          "start_line": "26",
+          "end_line": "31",
+          "outgoing_call_count": 90,
+          "summary": "构造一个新的 Bitmap 实例，记录位图在磁盘或内存中的起始块编号和占用的块数量。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kcore-fs\\src\\block_cache.rs",
+          "language": "rust",
+          "start_line": "91",
+          "end_line": "93",
+          "outgoing_call_count": 90,
+          "summary": "创建一个新的 BlockCache 实例，初始化其内部队列为空的双端队列。"
+        },
+        {
+          "name": "impl Inode {",
+          "normalized_name": "impl Inode {",
+          "file_path": "kcore-fs/src/vfs.rs",
+          "language": "rust",
+          "start_line": "23",
+          "end_line": "196",
+          "outgoing_call_count": 89,
+          "summary": "该代码块实现了Inode结构体的方法，包括对磁盘inode的读写、查找目录项、列出目录内容、创建文件、清除inode、调整大小以及读写文件内容，构成了虚拟文件系统中inode操作的核心逻辑。"
+        },
+        {
+          "name": "kcore_fs_pack",
+          "normalized_name": "kcore_fs_pack",
+          "file_path": "kcore-fs-fuse\\src\\main.rs",
+          "language": "rust",
+          "start_line": "37",
+          "end_line": "95",
+          "outgoing_call_count": 58,
+          "summary": "该函数实现一个打包工具，将指定源目录中的可执行文件（去除扩展名）打包到一个自定义文件系统镜像（fs.img）中，镜像大小为4MiB（8192*512字节），最多支持4095个文件。"
+        },
+        {
+          "name": "create",
+          "normalized_name": "create",
+          "file_path": "kcore-fs\\src\\kfs.rs",
+          "language": "rust",
+          "start_line": "26",
+          "end_line": "87",
+          "outgoing_call_count": 57,
+          "summary": "此函数是KFS文件系统的构造函数，用于格式化并创建一个新的文件系统实例。它计算各区域（inode位图、inode区、数据位图、数据区）所需块数，初始化位图，清空所有块，写入超级块，并创建根目录inode。"
+        },
+        {
+          "name": "create",
+          "normalized_name": "create",
+          "file_path": "kcore-fs\\src\\vfs.rs",
+          "language": "rust",
+          "start_line": "109",
+          "end_line": "153",
+          "outgoing_call_count": 57,
+          "summary": "在根目录下创建一个新文件，返回Inode，如果文件已存在则返回None。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 34,
+      "outgoing_edge_count": 190,
+      "internal_edge_count": 112,
+      "external_edge_count": 78,
+      "internal_call_ratio": 0.5895,
+      "external_call_ratio": 0.4105,
+      "module_weight": 0.0404,
+      "files": [
+        "k210_component\\k210-hal\\src\\fpioa.rs",
+        "k210_component\\k210-hal\\src\\gpiohs.rs",
+        "k210_component\\k210-hal\\src\\plic.rs",
+        "k210_component\\k210-soc\\src\\dmac.rs",
+        "k210_component\\k210-soc\\src\\fpioa.rs",
+        "os\\src\\sbi.rs",
+        "os\\src\\task\\context.rs",
+        "os\\src\\task\\processor.rs",
+        "os\\src\\task\\task.rs",
+        "os\\src\\trap\\context.rs",
+        "os\\src\\trap\\mod.rs",
+        "os\\src\\trap\\trap.S",
+        "user\\src\\lang_items.rs"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "os\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "20",
+          "outgoing_call_count": 62,
+          "summary": "初始化内核陷阱处理，通过调用 set_kernel_trap_entry 函数设置内核陷井入口点。"
+        },
+        {
+          "name": "impl PlicExt for PLIC {",
+          "normalized_name": "impl PlicExt for PLIC {",
+          "file_path": "k210_component\\k210-hal\\src\\plic.rs",
+          "language": "rust",
+          "start_line": "39",
+          "end_line": "106",
+          "outgoing_call_count": 31,
+          "summary": "为PLIC结构体实现PlicExt trait，提供对RISC-V平台级中断控制器（PLIC）的底层操作函数，包括使能、屏蔽、优先级、阈值、claim/complete和挂起状态查询。"
+        },
+        {
+          "name": "clear_interrupt_pending_bits",
+          "normalized_name": "clear_interrupt_pending_bits",
+          "file_path": "k210_component\\k210-hal\\src\\gpiohs.rs",
+          "language": "rust",
+          "start_line": "93",
+          "end_line": "114",
+          "outgoing_call_count": 24,
+          "summary": "清空GPIOHS（高速GPIO）的中断挂起位。函数首先检查每种中断类型（上升沿、下降沿、高电平、低电平）的中断使能状态，如果使能，则暂时禁用该中断，清除对应的挂起位，然后重新使能中断，以确保挂起位被可靠清除。"
+        },
+        {
+          "name": "trap_handler",
+          "normalized_name": "trap_handler",
+          "file_path": "os\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": "41",
+          "end_line": "89",
+          "outgoing_call_count": 16,
+          "summary": "RISC-V 架构下的内核陷阱处理函数，负责根据不同陷阱原因分发处理逻辑，包括系统调用、异常和定时器中断。"
+        },
+        {
+          "name": "panic_handler",
+          "normalized_name": "panic_handler",
+          "file_path": "user\\src\\lang_items.rs",
+          "language": "rust",
+          "start_line": "2",
+          "end_line": "15",
+          "outgoing_call_count": 13,
+          "summary": "定义用户态 panic 处理函数，用于捕获运行时错误并打印位置信息，然后进入死循环。"
+        },
+        {
+          "name": "get_threshold",
+          "normalized_name": "get_threshold",
+          "file_path": "k210_component\\k210-hal\\src\\plic.rs",
+          "language": "rust",
+          "start_line": "75",
+          "end_line": "80",
+          "outgoing_call_count": 11,
+          "summary": "读取指定处理器的PLIC中断阈值寄存器，返回对应的Priority值。"
+        },
+        {
+          "name": "PlicExt",
+          "normalized_name": "PlicExt",
+          "file_path": "k210_component\\k210-hal\\src\\plic.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "37",
+          "outgoing_call_count": 10,
+          "summary": "定义了一个平台级中断控制器(PLIC)的扩展trait，提供了操作中断的接口规范，包括中断启用/禁用、优先级设置、阈值设置、claim和complete操作等。"
+        },
+        {
+          "name": "enable_common_interrupt_signal",
+          "normalized_name": "enable_common_interrupt_signal",
+          "file_path": "k210_component\\k210-soc\\src\\dmac.rs",
+          "language": "rust",
+          "start_line": "214",
+          "end_line": "222",
+          "outgoing_call_count": 9,
+          "summary": "这个函数通过修改DMAC（直接内存访问控制器）的中断信号使能寄存器（com_intsignal_en），一次性使能多个常见的中断信号位，具体包括：从接口解码错误、从接口写只读错误、从接口读只写错误、从接口写保持错误、从接口未定义寄存器解码错误。"
+        },
+        {
+          "name": "enable_common_interrupt_status",
+          "normalized_name": "enable_common_interrupt_status",
+          "file_path": "k210_component\\k210-soc\\src\\dmac.rs",
+          "language": "rust",
+          "start_line": "204",
+          "end_line": "212",
+          "outgoing_call_count": 9,
+          "summary": "该函数通过修改DMAC的控制寄存器（com_intstatus_en），启用多个常见的从设备接口错误中断状态位，包括解码错误、写只读错误、读只写错误、保持时写入错误和未定义寄存器解码错误。"
+        },
+        {
+          "name": "get_priority",
+          "normalized_name": "get_priority",
+          "file_path": "k210_component\\k210-hal\\src\\plic.rs",
+          "language": "rust",
+          "start_line": "62",
+          "end_line": "68",
+          "outgoing_call_count": 9,
+          "summary": "该函数根据传入的中断编号，从PLIC（平台级中断控制器）的优先级寄存器中读取当前优先级值，并转换为Priority枚举类型返回。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "k210_component\\k210-hal\\src\\clock.rs",
+        "k210_component\\k210-soc\\src\\sysctl.rs",
+        "os\\src\\allocator\\mod.rs",
+        "os\\src\\task\\task.rs"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "clock_set_threshold",
+          "normalized_name": "clock_set_threshold",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "318",
+          "end_line": "361",
+          "outgoing_call_count": 67,
+          "summary": "该函数根据传入的时钟阈值枚举和阈值数值，设置 K210 芯片内不同外设的时钟分频参数（阈值），通过匹配枚举选择对应的寄存器及位段进行修改。"
+        },
+        {
+          "name": "clock_get_threshold",
+          "normalized_name": "clock_get_threshold",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "364",
+          "end_line": "407",
+          "outgoing_call_count": 42,
+          "summary": "通过读取系统控制寄存器（SYSCTL）中各个时钟分频或选择字段的值，返回指定时钟阈值（分频因子或选择值），字段位宽从2位到16位不等。"
+        },
+        {
+          "name": "clock_get_clock_select",
+          "normalized_name": "clock_get_clock_select",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "528",
+          "end_line": "552",
+          "outgoing_call_count": 31,
+          "summary": "根据给定的时钟选择枚举值，从系统控制器寄存器中读取对应的位域或字段，返回一个 u8 值，用于表示时钟源选择或旁路状态。"
+        },
+        {
+          "name": "clock_set_clock_select",
+          "normalized_name": "clock_set_clock_select",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "508",
+          "end_line": "526",
+          "outgoing_call_count": 27,
+          "summary": "该函数通过匹配枚举`clock_select`的不同变体，设置K210系统控制器的时钟选择寄存器。具体根据变体类型，调用`modify`方法修改相应寄存器的指定位域，其中大多数变体使用布尔值（`bit(select != 0)`），而`PLL2`变体使用直接数值（`bits(select)`）。"
+        },
+        {
+          "name": "pll_is_lock",
+          "normalized_name": "pll_is_lock",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "689",
+          "end_line": "697",
+          "outgoing_call_count": 15,
+          "summary": "检查指定PLL（锁相环）是否锁定，通过读取硬件寄存器中的锁定状态位并判断锁定值是否满足条件。"
+        },
+        {
+          "name": "clock_bus_en",
+          "normalized_name": "clock_bus_en",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "195",
+          "end_line": "258",
+          "outgoing_call_count": 11,
+          "summary": "启用指定外设时钟的APB总线时钟使能位，仅当参数en为true时执行。根据不同的外设时钟类型，设置对应的APB0、APB1或APB2时钟使能寄存器位。"
+        },
+        {
+          "name": "impl Clocks {",
+          "normalized_name": "impl Clocks {",
+          "file_path": "k210_component\\k210-hal\\src\\clock.rs",
+          "language": "rust",
+          "start_line": "15",
+          "end_line": "42",
+          "outgoing_call_count": 7,
+          "summary": "为Clocks结构体实现new、cpu和apb0方法，用于初始化和获取固定的时钟频率值（cpu:403MHz, apb0:195MHz），实测注释中的频率与代码提供的频率有差异。"
+        },
+        {
+          "name": "impl LockedHeap {",
+          "normalized_name": "impl LockedHeap {",
+          "file_path": "os\\src\\allocator\\mod.rs",
+          "language": "rust",
+          "start_line": "165",
+          "end_line": "170",
+          "outgoing_call_count": 5,
+          "summary": "为LockedHeap结构体实现一个公开的、常量构造函数new，用于创建一个空的LockedHeap实例，内部通过Mutex封装一个Heap::new()调用。"
+        },
+        {
+          "name": "clock_get_freq",
+          "normalized_name": "clock_get_freq",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "554",
+          "end_line": "626",
+          "outgoing_call_count": 3,
+          "summary": "根据给定的时钟枚举，计算并返回对应时钟的频率。函数通过匹配不同的时钟类型，选择合适的时钟源并应用分频器或阈值除数来得到最终频率。"
+        },
+        {
+          "name": "sysctl_clock_disable",
+          "normalized_name": "sysctl_clock_disable",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "312",
+          "end_line": "315",
+          "outgoing_call_count": 2,
+          "summary": "该函数通过禁用时钟总线和设备使能来关闭指定的时钟。它调用 clock_bus_en 和 clock_device_en 并将 enable 参数设为 false。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "loader": {
+      "module_name": "loader",
+      "function_count": 2,
+      "outgoing_edge_count": 5,
+      "internal_edge_count": 2,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.4,
+      "external_call_ratio": 0.6,
+      "module_weight": 0.0019,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 133,
+      "outgoing_edge_count": 774,
+      "internal_edge_count": 427,
+      "external_edge_count": 347,
+      "internal_call_ratio": 0.5517,
+      "external_call_ratio": 0.4483,
+      "module_weight": 0.1605,
+      "files": [
+        "k210_component\\k210-hal\\src\\aes.rs",
+        "k210_component\\k210-hal\\src\\cache.rs",
+        "k210_component\\k210-hal\\src\\gpio.rs",
+        "k210_component\\k210-hal\\src\\serial.rs",
+        "k210_component\\k210-hal\\src\\sha256.rs",
+        "k210_component\\k210-soc\\src\\dmac.rs",
+        "kcore-fs\\src\\bitmap.rs",
+        "kcore-fs\\src\\kfs.rs",
+        "os/src/mem/page.rs",
+        "os/src/mem/page_allocator.rs",
+        "os\\src\\allocator\\list.rs",
+        "os\\src\\allocator\\mod.rs",
+        "os\\src\\mem\\heap_allocator.rs",
+        "os\\src\\mem\\mem_set.rs",
+        "os\\src\\mem\\mod.rs",
+        "os\\src\\mem\\page.rs",
+        "os\\src\\mem\\page_allocator.rs",
+        "os\\src\\mem\\page_table.rs",
+        "os\\src\\task\\pid.rs",
+        "user\\src\\lib.rs"
+      ],
+      "file_count": 20,
+      "core_functions": [
+        {
+          "name": "impl MemorySet {",
+          "normalized_name": "impl MemorySet {",
+          "file_path": "os\\src\\mem\\mem_set.rs",
+          "language": "rust",
+          "start_line": "127",
+          "end_line": "339",
+          "outgoing_call_count": 104,
+          "summary": "实现了MemorySet结构体的核心方法，包括创建、页表操作、映射区域管理、内核地址空间初始化、用户地址空间创建（基于ELF加载或克隆）、以及地址空间激活。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\mem\\mem_set.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "60",
+          "outgoing_call_count": 90,
+          "summary": "创建一个新的 MapBlock 结构体实例，用于管理一段连续的虚拟地址范围对应的物理页映射。该函数将传入的虚拟地址起始和结束值转换为按页对齐的虚拟页号（VPN），并初始化一个空的 BTreeMap 用于存储数据页，同时保存映射类型和标志。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\allocator\\mod.rs",
+          "language": "rust",
+          "start_line": "167",
+          "end_line": "169",
+          "outgoing_call_count": 90,
+          "summary": "定义 LockedHeap 的常量构造函数 new，它创建一个 LockedHeap 实例，内部持有包装了 Mutex 的 Heap 对象，用于线程安全的堆分配器初始化。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\mem\\page_allocator.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "27",
+          "outgoing_call_count": 90,
+          "summary": "为给定的物理页号（PhyPageNum）分配并初始化一个新的页分配器实例，具体操作是将该页对应的内存区域清零，然后返回包含该页号的结构体。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os/src/mem/page_allocator.rs",
+          "language": "rust",
+          "start_line": "64",
+          "end_line": "70",
+          "outgoing_call_count": 90,
+          "summary": "初始化一个页面分配器的实例，将内部状态设置为初始值：当前分配位置(cur)和结束位置(end)均为0，回收列表(recycled)为空。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\mem\\page_table.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "24",
+          "outgoing_call_count": 90,
+          "summary": "该函数是 page_table 类型的构造函数，负责分配一个物理页并初始化页表实例，包含该页的物理页号及页本身的所有权。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\allocator\\mod.rs",
+          "language": "rust",
+          "start_line": "30",
+          "end_line": "37",
+          "outgoing_call_count": 90,
+          "summary": "初始化一个 Heap 结构体，包含一个大小为32的空闲链表数组、用户数、已分配字节数和总字节数，所有字段均设为默认值。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\mem\\page_table.rs",
+          "language": "rust",
+          "start_line": "166",
+          "end_line": "168",
+          "outgoing_call_count": 90,
+          "summary": "创建一个新的 PageTable 实例，接受一个 Vec 向量作为缓冲区并存储到 self.buf 中。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\mem\\page.rs",
+          "language": "rust",
+          "start_line": "107",
+          "end_line": "109",
+          "outgoing_call_count": 90,
+          "summary": "该函数是PageTableEntry结构体的构造函数，通过传入物理页号和标志位，构造一个页表项值。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\mem\\mem_set.rs",
+          "language": "rust",
+          "start_line": "128",
+          "end_line": "133",
+          "outgoing_call_count": 90,
+          "summary": "构造一个新的 MemSet 实例，内部包含一个初始化的页表和空的段向量。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "k210_component\\k210-hal\\src\\clint.rs",
+        "k210_component\\k210-hal\\src\\gpiohs.rs",
+        "k210_component\\k210-soc\\src\\sysctl.rs",
+        "os\\src\\fs\\pipe.rs"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "impl PipeRingBuffer {",
+          "normalized_name": "impl PipeRingBuffer {",
+          "file_path": "os\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "168",
+          "outgoing_call_count": 44,
+          "summary": "实现了一个环形缓冲区（PipeRingBuffer），用于管道（Pipe）的内核端读写操作，并提供了管道文件对应的读写接口（File trait）"
+        },
+        {
+          "name": "make_pipe",
+          "normalized_name": "make_pipe",
+          "file_path": "os\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "104",
+          "end_line": "114",
+          "outgoing_call_count": 15,
+          "summary": "创建一个管道，返回一对读写端，内部共享同一个环形缓冲区。"
+        },
+        {
+          "name": "pll_clear_slip",
+          "normalized_name": "pll_clear_slip",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl.rs",
+          "language": "rust",
+          "start_line": "700",
+          "end_line": "712",
+          "outgoing_call_count": 13,
+          "summary": "清除指定PLL（锁相环）的滑动(slip)状态位，然后检查该PLL是否锁定。"
+        },
+        {
+          "name": "set_ipi",
+          "normalized_name": "set_ipi",
+          "file_path": "k210_component\\k210-hal\\src\\clint.rs",
+          "language": "rust",
+          "start_line": "19",
+          "end_line": "24",
+          "outgoing_call_count": 7,
+          "summary": "设置指定 hart 的软件中断（IPI）寄存器，向该核心发送处理器间中断请求。"
+        },
+        {
+          "name": "clear_ipi",
+          "normalized_name": "clear_ipi",
+          "file_path": "k210_component\\k210-hal\\src\\clint.rs",
+          "language": "rust",
+          "start_line": "26",
+          "end_line": "31",
+          "outgoing_call_count": 6,
+          "summary": "清除指定hart（硬件线程）的核间中断（IPI）标志。该函数通过向CLINT（Core Local Interruptor）的msip寄存器写入0来清除指定hart的软件中断（IPI）。"
+        },
+        {
+          "name": "impl Pipe {",
+          "normalized_name": "impl Pipe {",
+          "file_path": "os\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "87",
+          "end_line": "102",
+          "outgoing_call_count": 5,
+          "summary": "这个代码块为 Pipe 结构体提供了两个构造函数，分别用于创建管道的读端和写端，两者共享同一个底层环形缓冲区，通过设置 readable 和 writable 字段来区分端类型。"
+        },
+        {
+          "name": "has_fall_ip",
+          "normalized_name": "has_fall_ip",
+          "file_path": "k210_component\\k210-hal\\src\\gpiohs.rs",
+          "language": "rust",
+          "start_line": "319",
+          "end_line": "324",
+          "outgoing_call_count": 4,
+          "summary": "检查指定索引的GPIOHS引脚是否发生了下降沿中断挂起（falling edge interrupt pending）。"
+        },
+        {
+          "name": "clear_low_ip",
+          "normalized_name": "clear_low_ip",
+          "file_path": "k210_component\\k210-hal\\src\\gpiohs.rs",
+          "language": "rust",
+          "start_line": "277",
+          "end_line": "282",
+          "outgoing_call_count": 4,
+          "summary": "清除指定索引的中断挂起标志位（低电平中断挂起），通过将 low_ip 寄存器的对应位设为 1 来实现。"
+        },
+        {
+          "name": "has_rise_ip",
+          "normalized_name": "has_rise_ip",
+          "file_path": "k210_component\\k210-hal\\src\\gpiohs.rs",
+          "language": "rust",
+          "start_line": "312",
+          "end_line": "317",
+          "outgoing_call_count": 4,
+          "summary": "检查指定索引的 GPIOHS 上升沿中断挂起位是否被设置"
+        },
+        {
+          "name": "clear_rise_ip",
+          "normalized_name": "clear_rise_ip",
+          "file_path": "k210_component\\k210-hal\\src\\gpiohs.rs",
+          "language": "rust",
+          "start_line": "235",
+          "end_line": "240",
+          "outgoing_call_count": 4,
+          "summary": "清除指定 GPIOHS 引脚的上升沿中断挂起位"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 47,
+      "outgoing_edge_count": 311,
+      "internal_edge_count": 228,
+      "external_edge_count": 83,
+      "internal_call_ratio": 0.7331,
+      "external_call_ratio": 0.2669,
+      "module_weight": 0.0596,
+      "files": [
+        "k210_component\\k210-soc\\src\\dmac.rs",
+        "os\\src\\mem\\page.rs",
+        "os\\src\\syscall\\process.rs",
+        "os\\src\\task\\context.rs",
+        "os\\src\\task\\manager.rs",
+        "os\\src\\task\\mod.rs",
+        "os\\src\\task\\pid.rs",
+        "os\\src\\task\\processor.rs",
+        "os\\src\\task\\task.rs"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "51",
+          "end_line": "89",
+          "outgoing_call_count": 90,
+          "summary": "该函数是 TaskControlBlock 的构造函数，从 ELF 数据中创建新任务。它解析 ELF 生成用户内存空间，分配 PID 和内核栈，在内核栈顶压入跳转到 trap_return 的任务上下文，初始化任务控制块，并在用户空间的陷阱上下文区域设置初始陷阱上下文（包含入口点、用户栈指针、内核页表 token、内核栈顶和陷阱处理函数地址）。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\task\\pid.rs",
+          "language": "rust",
+          "start_line": "67",
+          "end_line": "76",
+          "outgoing_call_count": 90,
+          "summary": "这个代码块是KernelStack结构体的构造函数，用于根据给定的PidHandle创建一个新的内核栈，并在内核空间中分配映射一个可读写的内存区域作为栈空间。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\task\\pid.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "18",
+          "outgoing_call_count": 90,
+          "summary": "创建一个新的 PidAllocator 实例，初始化 current 为 0，recycled 为空向量。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "21",
+          "end_line": "28",
+          "outgoing_call_count": 90,
+          "summary": "创建一个新的 Processor 实例，初始化内部状态：当前无运行任务且空闲任务上下文指针为0。"
+        },
+        {
+          "name": "impl TaskControlBlock {",
+          "normalized_name": "impl TaskControlBlock {",
+          "file_path": "os\\src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "47",
+          "end_line": "159",
+          "outgoing_call_count": 48,
+          "summary": "实现 TaskControlBlock 结构体，提供进程控制块的核心操作，包括创建新进程、执行新程序、复制进程（fork）以及获取进程 ID。"
+        },
+        {
+          "name": "fork",
+          "normalized_name": "fork",
+          "file_path": "os\\src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "115",
+          "end_line": "155",
+          "outgoing_call_count": 29,
+          "summary": "该函数实现了进程的fork操作，创建一个与当前进程几乎完全相同的新进程（子进程），包括用户空间、文件描述符表等，并设置子进程的内核栈和任务上下文，同时将子进程添加到父进程的子进程列表中。"
+        },
+        {
+          "name": "impl Processor {",
+          "normalized_name": "impl Processor {",
+          "file_path": "os\\src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "20",
+          "end_line": "60",
+          "outgoing_call_count": 24,
+          "summary": "该代码块实现了处理器（Processor）的核心调度逻辑，包含初始化、任务获取与切换、当前任务管理等操作，是操作系统中进程/任务调度的关键部分。"
+        },
+        {
+          "name": "sys_waitpid",
+          "normalized_name": "sys_waitpid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "56",
+          "end_line": "90",
+          "outgoing_call_count": 23,
+          "summary": "实现了waitpid系统调用，等待指定PID的子进程退出并获取其退出码。"
+        },
+        {
+          "name": "exec",
+          "normalized_name": "exec",
+          "file_path": "os\\src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "90",
+          "end_line": "114",
+          "outgoing_call_count": 21,
+          "summary": "该函数实现进程的exec功能，即用新的ELF可执行文件替换当前进程的内存映像和上下文，重新初始化陷井帧以开始执行新程序。"
+        },
+        {
+          "name": "exit_current_and_run_next",
+          "normalized_name": "exit_current_and_run_next",
+          "file_path": "os\\src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": "40",
+          "end_line": "71",
+          "outgoing_call_count": 20,
+          "summary": "该函数将当前正在运行的任务标记为僵尸状态，记录退出码，将其所有子进程移交给 initproc（init 进程），清理子进程列表，回收用户空间内存页，最后调度下一个任务执行。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "report_generation": {
+      "module_name": "report_generation",
+      "function_count": 1,
+      "outgoing_edge_count": 15,
+      "internal_edge_count": 15,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0019,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 20,
+      "outgoing_edge_count": 88,
+      "internal_edge_count": 47,
+      "external_edge_count": 41,
+      "internal_call_ratio": 0.5341,
+      "external_call_ratio": 0.4659,
+      "module_weight": 0.0219,
+      "files": [
+        "os\\src\\task\\manager.rs",
+        "os\\src\\task\\mod.rs",
+        "os\\src\\task\\processor.rs",
+        "os\\src\\task\\switch.S",
+        "os\\src\\task\\switch.rs",
+        "os\\src\\timer.rs"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "os\\src\\task\\manager.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "16",
+          "outgoing_call_count": 90,
+          "summary": "这是任务管理器（TaskManager）的构造函数，用于创建一个新的空实例，初始化一个空的就绪队列（ready_queue）。"
+        },
+        {
+          "name": "run",
+          "normalized_name": "run",
+          "file_path": "os\\src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "33",
+          "end_line": "49",
+          "outgoing_call_count": 11,
+          "summary": "这是处理器运行循环，负责不断从任务队列中获取任务，并切换到新任务执行，实现任务调度。"
+        },
+        {
+          "name": "suspend_current_and_run_next",
+          "normalized_name": "suspend_current_and_run_next",
+          "file_path": "os\\src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "38",
+          "outgoing_call_count": 9,
+          "summary": "挂起当前正在运行的任务，将其状态改为就绪态并放回就绪队列，然后触发调度循环切换到下一个任务。"
+        },
+        {
+          "name": "take_current",
+          "normalized_name": "take_current",
+          "file_path": "os\\src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": 50,
+          "end_line": 52,
+          "outgoing_call_count": 5,
+          "summary": "从处理器结构中取出并移除当前正在执行的任务控制块（TaskControlBlock）的 Arc 指针。该方法使用内部可变性（RefCell）获取 self.inner 的可变借用，然后调用 take() 方法将 Option<Arc<TaskControlBlock>> 类型的 current 字段取出并替换为 None，返回被取出的值。"
+        },
+        {
+          "name": "schedule",
+          "normalized_name": "schedule",
+          "file_path": "os\\src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "88",
+          "end_line": "93",
+          "outgoing_call_count": 3,
+          "summary": "该函数执行调度操作，将当前任务切换为idle任务。"
+        },
+        {
+          "name": "add",
+          "normalized_name": "add",
+          "file_path": "os\\src\\task\\manager.rs",
+          "language": "rust",
+          "start_line": "17",
+          "end_line": "19",
+          "outgoing_call_count": 3,
+          "summary": "将给定的任务控制块添加到任务管理器的就绪队列尾部。"
+        },
+        {
+          "name": "__switch",
+          "normalized_name": "__switch",
+          "file_path": "os\\src\\task\\switch.rs",
+          "language": "rust",
+          "start_line": "4",
+          "end_line": "6",
+          "outgoing_call_count": 2,
+          "summary": "声明一个外部函数 `__switch`，用于在任务调度时切换当前任务上下文到下一个任务。函数接受两个指向 usize 的指针参数，分别代表当前任务上下文指针的指针和下一个任务上下文指针的指针。"
+        },
+        {
+          "name": "fetch",
+          "normalized_name": "fetch",
+          "file_path": "os\\src\\task\\manager.rs",
+          "language": "rust",
+          "start_line": "20",
+          "end_line": "22",
+          "outgoing_call_count": 2,
+          "summary": "从任务管理器（TaskManager）的 ready_queue 中取出一个任务控制块（TaskControlBlock），用于任务调度中的下一个可运行任务获取。"
+        },
+        {
+          "name": "__switch",
+          "normalized_name": "__switch",
+          "file_path": "os\\src\\task\\switch.S",
+          "language": "assembly",
+          "start_line": "10",
+          "end_line": "38",
+          "outgoing_call_count": 2,
+          "summary": "实现任务切换核心功能：保存当前任务的上下文（TaskContext）到其栈中，并从下一个任务的栈中恢复上下文，然后跳转到下一个任务继续执行。"
+        },
+        {
+          "name": "set_next_trigger",
+          "normalized_name": "set_next_trigger",
+          "file_path": "os\\src\\timer.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "18",
+          "outgoing_call_count": 2,
+          "summary": "设置下一次定时器触发的时间，通过当前时间加上一个基于时钟频率和每秒滴答数计算出的间隔来实现。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 21,
+      "outgoing_edge_count": 81,
+      "internal_edge_count": 57,
+      "external_edge_count": 24,
+      "internal_call_ratio": 0.7037,
+      "external_call_ratio": 0.2963,
+      "module_weight": 0.0221,
+      "files": [
+        "k210_component\\k210-soc\\src\\sysctl\\pll_compute.rs",
+        "os\\src\\syscall\\gettimeoftoday.rs",
+        "os\\src\\syscall\\mem.rs",
+        "os\\src\\syscall\\mod.rs",
+        "os\\src\\syscall\\process.rs",
+        "user/src/syscall.rs",
+        "user\\src\\console.rs",
+        "user\\src\\syscall.rs"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "sys_waitpid",
+          "normalized_name": "sys_waitpid",
+          "file_path": "user\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "60",
+          "end_line": "62",
+          "outgoing_call_count": 23,
+          "summary": "该函数是一个用户态系统调用封装，用于发起 waitpid 系统调用，等待指定子进程退出并获取退出码。"
+        },
+        {
+          "name": "sys_brk",
+          "normalized_name": "sys_brk",
+          "file_path": "os\\src\\syscall\\mem.rs",
+          "language": "rust",
+          "start_line": 5,
+          "end_line": 48,
+          "outgoing_call_count": 20,
+          "summary": "实现用户程序 brk 系统调用，调整堆空间大小（以页为单位），可能分配新物理页并映射，或释放多余页并取消映射，在分配失败时回滚已分配的部分并返回错误。"
+        },
+        {
+          "name": "sys_write",
+          "normalized_name": "sys_write",
+          "file_path": "user\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "31",
+          "end_line": "33",
+          "outgoing_call_count": 12,
+          "summary": "实现用户态的写系统调用，通过调用底层syscall函数传递SYSCALL_WRITE编号和参数（文件描述符、缓冲区指针、长度）来发起写入操作。"
+        },
+        {
+          "name": "sys_exec",
+          "normalized_name": "sys_exec",
+          "file_path": "user/src/syscall.rs",
+          "language": "rust",
+          "start_line": "56",
+          "end_line": "58",
+          "outgoing_call_count": 12,
+          "summary": "这是一个用户态的 exec 系统调用封装函数，将路径字符串指针作为参数传递给 syscall 函数，发起系统调用执行可执行文件。"
+        },
+        {
+          "name": "sys_read",
+          "normalized_name": "sys_read",
+          "file_path": "user\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "29",
+          "outgoing_call_count": 11,
+          "summary": "封装了系统调用 SYSCALL_READ，用于从文件描述符读取数据到缓冲区。"
+        },
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "user\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "11",
+          "end_line": "22",
+          "outgoing_call_count": 9,
+          "summary": "这个代码块定义了一个通用的系统调用函数，通过 RISC-V 的 ecall 指令陷入内核，并传递系统调用编号和最多三个参数，返回内核的处理结果。"
+        },
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "os\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": "20",
+          "end_line": "33",
+          "outgoing_call_count": 9,
+          "summary": "根据系统调用号分发并执行对应的系统调用，将调用参数转换为适当类型后传递给具体的处理函数。"
+        },
+        {
+          "name": "sys_fork",
+          "normalized_name": "sys_fork",
+          "file_path": "user\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "54",
+          "outgoing_call_count": 9,
+          "summary": "封装了一个系统调用，发起SYSCALL_FORK请求，无其他参数。"
+        },
+        {
+          "name": "sys_sbrk",
+          "normalized_name": "sys_sbrk",
+          "file_path": "os\\src\\syscall\\mem.rs",
+          "language": "rust",
+          "start_line": "50",
+          "end_line": "58",
+          "outgoing_call_count": 5,
+          "summary": "实现sbrk系统调用，通过调用sys_brk调整当前任务的堆内存大小，并返回新的堆顶地址。"
+        },
+        {
+          "name": "sys_getpid",
+          "normalized_name": "sys_getpid",
+          "file_path": "os\\src\\syscall\\process.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "26",
+          "outgoing_call_count": 3,
+          "summary": "获取当前任务的进程ID（PID）。它通过调用`current_task()`函数获取当前任务，然后返回任务结构体中pid字段的第一个元素（元组索引0）转换为`isize`类型作为结果。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "k210_component\\k210-soc\\src\\sysctl\\pll_compute.rs"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "test_compute_params",
+          "normalized_name": "test_compute_params",
+          "file_path": "k210_component\\k210-soc\\src\\sysctl\\pll_compute.rs",
+          "language": "rust",
+          "start_line": "551",
+          "end_line": "568",
+          "outgoing_call_count": 2,
+          "summary": "这是一个测试函数，用于验证 PLL 参数计算函数 compute_params 和 verify_compute_params 的正确性。它测试了无效输入时 compute_params 返回 None 的情况，以及有效输入时 verify_compute_params 返回 true 的情况。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 42,
+      "outgoing_edge_count": 75,
+      "internal_edge_count": 41,
+      "external_edge_count": 34,
+      "internal_call_ratio": 0.5467,
+      "external_call_ratio": 0.4533,
+      "module_weight": 0.0374,
+      "files": [
+        "k210_component\\k210-hal\\src\\aes.rs",
+        "k210_component\\k210-hal\\src\\clock.rs",
+        "k210_component\\k210-hal\\src\\gpiohs.rs",
+        "k210_component\\k210-hal\\src\\serial.rs",
+        "k210_component\\k210-hal\\src\\sha256.rs",
+        "k210_component\\k210-hal\\src\\time.rs",
+        "k210_component\\k210-soc\\src\\gpiohs.rs",
+        "k210_component\\k210-soc\\src\\spi.rs",
+        "k210_component\\k210-soc\\src\\utils.rs",
+        "os\\src\\entry.asm",
+        "os\\src\\loader.rs",
+        "os\\src\\main.rs"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "k210_component\\k210-hal\\src\\clock.rs",
+          "language": "rust",
+          "start_line": "17",
+          "end_line": "31",
+          "outgoing_call_count": 90,
+          "summary": "这个代码块是一个构造函数，返回一个预定义的时钟配置结构体，硬编码了 CPU 和 APB0 时钟频率。注释显示了实际硬件可能使用的频率值，但返回的数值与注释不一致。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "os\\src\\entry.asm",
+          "language": "assembly",
+          "start_line": "3",
+          "end_line": "9",
+          "outgoing_call_count": 9,
+          "summary": "设置栈指针并跳转到 rust_main 函数，同时声明 BSS 段中的栈空间起始符号。"
+        },
+        {
+          "name": "set_pin",
+          "normalized_name": "set_pin",
+          "file_path": "k210_component\\k210-soc\\src\\gpiohs.rs",
+          "language": "rust",
+          "start_line": 26,
+          "end_line": 33,
+          "outgoing_call_count": 7,
+          "summary": "{\n  \"block_id\": \"block_716\",\n  \"file_path\": \"k210_component\\\\k210-soc\\\\src\\\\gpiohs.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"26\",\n  \"end_line\": \"33\",\n  \"name\": \"set_pin\",\n  \"type\": \"function\",\n  \"summary\": \"该函数用于设置 K210 芯片 GPIOHS 外设的某个引脚输出值。它通过修改 OUTPUT_VAL 寄存器的相应位来实现，使用 `set_bit` 辅助函数构造新的位值。\",\n  \"logic_steps\": [\n    \"获取 GPIOHS 外设的寄存器结构体指针。\",\n    \"调用 `modify` 方法对 OUTPUT_VAL 寄存器进行读-修改-写操作。\",\n    \"在修改闭包中，利用 `set_bit` 函数将当前寄存器值中的 `pin` 位设置为指定的布尔值 `value`，并返回新的寄存器值。\"\n  ],\n  \"called_functions\": [\n    \"pac::GPIOHS::ptr\",\n    \"set_bit\"\n  ],\n  \"related_os_module\": \"driver\",\n  \"evidence\": \"代码通过操作 GPIOHS 外设的寄存器（OUTPUT_VAL）来控制引脚输出，这是典型的驱动程序行为。K210 的 GPIOHS 是硬件外设，该函数直接修改硬件寄存器，属于底层驱动模块。\",\n  \"uncertainty\": \"无法确认 `set_bit` 函数的具体实现，但根据上下文判断其作用为设置或清除指定 bit。`\n}`"
+        },
+        {
+          "name": "list_apps",
+          "normalized_name": "list_apps",
+          "file_path": "os\\src\\loader.rs",
+          "language": "rust",
+          "start_line": "59",
+          "end_line": "65",
+          "outgoing_call_count": 6,
+          "summary": "打印所有应用名称的列表，用星号边框装饰。"
+        },
+        {
+          "name": "impl Digest {",
+          "normalized_name": "impl Digest {",
+          "file_path": "k210_component\\k210-hal\\src\\sha256.rs",
+          "language": "rust",
+          "start_line": "38",
+          "end_line": "52",
+          "outgoing_call_count": 4,
+          "summary": "该代码块定义了一个名为 `Digest` 的结构体的实现，提供了三个方法：`write_u32` 和 `finish` 方法目前均未实现功能（包含 `todo!()` 宏），而 `free` 方法将 `Digest` 实例转换为 `Sha256` 结构体，可能用于释放或转移资源。"
+        },
+        {
+          "name": "clear_bss",
+          "normalized_name": "clear_bss",
+          "file_path": "os\\src\\main.rs",
+          "language": "rust",
+          "start_line": "31",
+          "end_line": "37",
+          "outgoing_call_count": 4,
+          "summary": "清零BSS段，将BSS段（由外部符号sbss和ebss界定的内存区域）中的每个字节通过volatile写入0，以初始化未初始化数据。"
+        },
+        {
+          "name": "impl Into<Hertz> for MegaHertz {",
+          "normalized_name": "impl Into<Hertz> for MegaHertz {",
+          "file_path": "k210_component\\k210-hal\\src\\time.rs",
+          "language": "rust",
+          "start_line": "58",
+          "end_line": "62",
+          "outgoing_call_count": 3,
+          "summary": "实现了从 `MegaHertz` 类型到 `Hertz` 类型的转换，将频率单位从兆赫兹转换为赫兹。"
+        },
+        {
+          "name": "set_output_xor",
+          "normalized_name": "set_output_xor",
+          "file_path": "k210_component\\k210-hal\\src\\gpiohs.rs",
+          "language": "rust",
+          "start_line": "207",
+          "end_line": "212",
+          "outgoing_call_count": 3,
+          "summary": "设置GPIOHS输出异或寄存器中指定索引位的值（true或false）"
+        },
+        {
+          "name": "get_num_app",
+          "normalized_name": "get_num_app",
+          "file_path": "os\\src\\loader.rs",
+          "language": "rust",
+          "start_line": "4",
+          "end_line": "9",
+          "outgoing_call_count": 2,
+          "summary": "从内存中读取一个指定的符号（_num_app），将其作为指针解引用并读取 volatile 值，返回应用的数量。"
+        },
+        {
+          "name": "bps",
+          "normalized_name": "bps",
+          "file_path": "k210_component\\k210-hal\\src\\time.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "37",
+          "outgoing_call_count": 2,
+          "summary": "该方法是Bps类型的一个转换函数，将当前值（可能是一个数值类型）封装为Bps结构体实例。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 1,
+      "outgoing_edge_count": 8,
+      "internal_edge_count": 3,
+      "external_edge_count": 5,
+      "internal_call_ratio": 0.375,
+      "external_call_ratio": 0.625,
+      "module_weight": 0.0014,
+      "files": [
+        "kcore-fs-fuse\\src\\main.rs",
+        "os\\build.rs",
+        "os\\src\\main.rs",
+        "os\\src\\mem\\mem_set.rs",
+        "os\\src\\task\\processor.rs",
+        "os\\src\\task\\task.rs",
+        "user\\src\\bin\\initproc.rs",
+        "user\\src\\lib.rs"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "from_existed_user",
+          "normalized_name": "from_existed_user",
+          "file_path": "os\\src\\mem\\mem_set.rs",
+          "language": "rust",
+          "start_line": "248",
+          "end_line": "266",
+          "outgoing_call_count": 22,
+          "summary": "根据已存在的用户空间MemorySet创建一个新的MemorySet，映射trampoline，并逐页复制所有段的数据到新空间。"
+        },
+        {
+          "name": "rust_main",
+          "normalized_name": "rust_main",
+          "file_path": "os\\src\\main.rs",
+          "language": "rust",
+          "start_line": "40",
+          "end_line": "55",
+          "outgoing_call_count": 15,
+          "summary": "操作系统内核入口函数，依次完成BSS段清零、内存初始化、打印欢迎信息、创建初始进程、初始化中断和定时器、加载应用列表、运行任务，最后在任务结束后恐慌关机。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "os\\build.rs",
+          "language": "rust",
+          "start_line": "4",
+          "end_line": "8",
+          "outgoing_call_count": 10,
+          "summary": "这个代码块是构建脚本（build.rs）的入口函数，用于在每次构建时，指示 Cargo 检查特定路径的变化以决定是否重新执行构建，并调用 insert_app_data 函数插入应用数据。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\src\\bin\\initproc.rs",
+          "language": "rust",
+          "start_line": "10",
+          "end_line": "32",
+          "outgoing_call_count": 10,
+          "summary": "实现初始进程（initproc）的主逻辑：先打印启动信息，然后fork出一个子进程执行用户shell，父进程循环等待子进程退出并回收僵尸进程。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kcore-fs-fuse\\src\\main.rs",
+          "language": "rust",
+          "start_line": "33",
+          "end_line": "35",
+          "outgoing_call_count": 10,
+          "summary": "主函数，调用 kcore_fs_pack 函数执行文件系统打包操作，如果失败则 panic 并输出错误信息。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "39",
+          "end_line": "41",
+          "outgoing_call_count": 10,
+          "summary": "定义用户程序的默认入口函数main，该函数直接触发panic，表明当前执行环境缺失用户主程序入口。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "user\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "29",
+          "end_line": "35",
+          "outgoing_call_count": 9,
+          "summary": "这是用户程序的入口函数，负责初始化堆内存并调用用户主函数后退出。"
+        },
+        {
+          "name": "current_user_token",
+          "normalized_name": "current_user_token",
+          "file_path": "os\\src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "78",
+          "end_line": "82",
+          "outgoing_call_count": 5,
+          "summary": "获取当前任务（线程/进程）的用户空间页表 token（通常是 satp 或类似寄存器值），用于地址空间切换。"
+        },
+        {
+          "name": "get_user_token",
+          "normalized_name": "get_user_token",
+          "file_path": "os\\src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "38",
+          "outgoing_call_count": 3,
+          "summary": "返回当前任务的内存映射 token，用于内核态切换至用户态时页表的切换。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/kCore.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

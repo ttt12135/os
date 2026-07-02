@@ -1,0 +1,1552 @@
+{
+  "repo_name": "RuOS",
+  "team_name": "RuOS",
+  "school": "武汉大学",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-38066-3006609/T202510486997674-3675",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-38066-3006609/t202510486997674-3675",
+  "year": "2025",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "linker_script",
+    "assembly"
+  ],
+  "core_modules": [
+    "unknown",
+    "driver",
+    "filesystem",
+    "interrupt",
+    "ipc"
+  ],
+  "function_count": 521,
+  "node_count": 521,
+  "edge_count": 1611,
+  "internal_edge_count": 1350,
+  "external_edge_count": 261,
+  "module_count": 13,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "build": 0.05,
+    "driver": 0.15,
+    "filesystem": 0.15,
+    "interrupt": 0.15,
+    "ipc": 0.15,
+    "memory": 0.15,
+    "network": 0.15,
+    "process": 0.15,
+    "scheduler": 0.05,
+    "syscall": 0.15,
+    "test": 0.05,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "unknown",
+      "module_weight": 1.0,
+      "completeness": 1.0,
+      "final_score": 1.0
+    },
+    {
+      "module_name": "driver",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    },
+    {
+      "module_name": "ipc",
+      "module_weight": 0.0,
+      "completeness": 0.15,
+      "final_score": 0.06
+    }
+  ],
+  "module_profiles": {
+    "build": {
+      "module_name": "build",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\linker\\kernel.ld",
+        "src\\syscall\\sysfile.c"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "kernel.ld",
+          "normalized_name": "ld",
+          "file_path": "src\\linker\\kernel.ld",
+          "language": "linker_script",
+          "start_line": 1,
+          "end_line": 52,
+          "outgoing_call_count": 13,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "build_cwd_path",
+          "normalized_name": "build_cwd_path",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 36,
+          "end_line": 122,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\devs\\console.c",
+        "src\\devs\\plic.c",
+        "src\\devs\\uart.c",
+        "src\\fs\\fs.h",
+        "src\\virtIO\\virtio.h",
+        "src\\virtIO\\virtio_disk.c",
+        "user\\sh.c"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "virtio_disk_rw",
+          "normalized_name": "virtio_disk_rw",
+          "file_path": "src\\virtIO\\virtio_disk.c",
+          "language": "c",
+          "start_line": 180,
+          "end_line": 265,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "consoleread",
+          "normalized_name": "consoleread",
+          "file_path": "src\\devs\\console.c",
+          "language": "c",
+          "start_line": 184,
+          "end_line": 232,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "virtio_disk_init",
+          "normalized_name": "virtio_disk_init",
+          "file_path": "src\\virtIO\\virtio_disk.c",
+          "language": "c",
+          "start_line": 53,
+          "end_line": 124,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "virtio_disk_intr",
+          "normalized_name": "virtio_disk_intr",
+          "file_path": "src\\virtIO\\virtio_disk.c",
+          "language": "c",
+          "start_line": 267,
+          "end_line": 286,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "parseblock",
+          "normalized_name": "parseblock",
+          "file_path": "user\\sh.c",
+          "language": "c",
+          "start_line": 399,
+          "end_line": 413,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "consoleintr",
+          "normalized_name": "consoleintr",
+          "file_path": "src\\devs\\console.c",
+          "language": "c",
+          "start_line": 50,
+          "end_line": 82,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "consolewrite",
+          "normalized_name": "consolewrite",
+          "file_path": "src\\devs\\console.c",
+          "language": "c",
+          "start_line": 161,
+          "end_line": 176,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "uart_write",
+          "normalized_name": "uart_write",
+          "file_path": "src\\devs\\uart.c",
+          "language": "c",
+          "start_line": 46,
+          "end_line": 56,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "uartputc_sync",
+          "normalized_name": "uartputc_sync",
+          "file_path": "src\\devs\\uart.c",
+          "language": "c",
+          "start_line": 68,
+          "end_line": 77,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "uartintr",
+          "normalized_name": "uartintr",
+          "file_path": "src\\devs\\uart.c",
+          "language": "c",
+          "start_line": 124,
+          "end_line": 135,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "Makefile",
+        "src\\fs\\bio.c",
+        "src\\fs\\buf.h",
+        "src\\fs\\fat32.c",
+        "src\\fs\\file.c",
+        "src\\fs\\file.h",
+        "src\\fs\\fs.c",
+        "src\\fs\\fs.h",
+        "src\\fs\\log.c",
+        "src\\fs\\pipe.c",
+        "src\\fs\\stat.h",
+        "src\\mkfs\\mkfs.c",
+        "src\\syscall\\sysfile.c",
+        "user\\sh.c",
+        "user\\ulib.c"
+      ],
+      "file_count": 15,
+      "core_functions": [
+        {
+          "name": "sys_unlinkat",
+          "normalized_name": "sys_unlinkat",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 1046,
+          "end_line": 1194,
+          "outgoing_call_count": 25,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_unlinkat",
+          "normalized_name": "sys_unlinkat",
+          "file_path": "user\\ulib.c",
+          "language": "c",
+          "start_line": 200,
+          "end_line": 203,
+          "outgoing_call_count": 25,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 591,
+          "end_line": 726,
+          "outgoing_call_count": 19,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_open",
+          "normalized_name": "sys_open",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 510,
+          "end_line": 588,
+          "outgoing_call_count": 15,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fat32_createat",
+          "normalized_name": "fat32_createat",
+          "file_path": "src\\fs\\fat32.c",
+          "language": "c",
+          "start_line": 1042,
+          "end_line": 1210,
+          "outgoing_call_count": 14,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_unlink",
+          "normalized_name": "sys_unlink",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 404,
+          "end_line": 459,
+          "outgoing_call_count": 13,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "writei",
+          "normalized_name": "writei",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 562,
+          "end_line": 610,
+          "outgoing_call_count": 12,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "namex",
+          "normalized_name": "namex",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 721,
+          "end_line": 769,
+          "outgoing_call_count": 12,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_chdir",
+          "normalized_name": "sys_chdir",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 764,
+          "end_line": 792,
+          "outgoing_call_count": 12,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fat32_getdents64",
+          "normalized_name": "fat32_getdents64",
+          "file_path": "src\\fs\\fat32.c",
+          "language": "c",
+          "start_line": 502,
+          "end_line": 643,
+          "outgoing_call_count": 12,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\boot\\start.c",
+        "src\\proc\\proc.h",
+        "src\\trap\\kernelvec.S",
+        "src\\trap\\trampoline.S",
+        "src\\trap\\trap.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "usertrap",
+          "normalized_name": "usertrap",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 53,
+          "end_line": 104,
+          "outgoing_call_count": 17,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "usertrapret",
+          "normalized_name": "usertrapret",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 109,
+          "end_line": 152,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "kerneltrap",
+          "normalized_name": "kerneltrap",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 156,
+          "end_line": 187,
+          "outgoing_call_count": 12,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "devintr",
+          "normalized_name": "devintr",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 274,
+          "end_line": 316,
+          "outgoing_call_count": 11,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "handle_exception",
+          "normalized_name": "handle_exception",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 228,
+          "end_line": 254,
+          "outgoing_call_count": 9,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "setup_interrupt_delegation",
+          "normalized_name": "setup_interrupt_delegation",
+          "file_path": "src\\boot\\start.c",
+          "language": "c",
+          "start_line": 72,
+          "end_line": 88,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "trapinithart",
+          "normalized_name": "trapinithart",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 40,
+          "end_line": 47,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "print_trap_info",
+          "normalized_name": "print_trap_info",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 193,
+          "end_line": 197,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "timervec",
+          "normalized_name": "timervec",
+          "file_path": "src\\trap\\kernelvec.S",
+          "language": "assembly",
+          "start_line": 106,
+          "end_line": 145,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "handle_instruction_page_fault",
+          "normalized_name": "handle_instruction_page_fault",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 207,
+          "end_line": 212,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\devs\\console.c",
+        "src\\fs\\bio.c",
+        "src\\fs\\file.c",
+        "src\\fs\\fs.c",
+        "src\\lib\\printf.c",
+        "src\\mm\\kalloc.c",
+        "src\\sync\\sleeplock.c",
+        "src\\sync\\sleeplock.h",
+        "src\\sync\\spinlock.c",
+        "src\\sync\\spinlock.h",
+        "src\\trap\\trap.c"
+      ],
+      "file_count": 11,
+      "core_functions": [
+        {
+          "name": "ilock",
+          "normalized_name": "ilock",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 323,
+          "end_line": 371,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "clockintr",
+          "normalized_name": "clockintr",
+          "file_path": "src\\trap\\trap.c",
+          "language": "c",
+          "start_line": 256,
+          "end_line": 267,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "iunlock",
+          "normalized_name": "iunlock",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 374,
+          "end_line": 381,
+          "outgoing_call_count": 3,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "iunlockput",
+          "normalized_name": "iunlockput",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 419,
+          "end_line": 424,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "initsleeplock",
+          "normalized_name": "initsleeplock",
+          "file_path": "src\\sync\\sleeplock.c",
+          "language": "c",
+          "start_line": 18,
+          "end_line": 25,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "spinlock",
+          "normalized_name": "spinlock",
+          "file_path": "src\\mm\\kalloc.c",
+          "language": "c",
+          "start_line": 92,
+          "end_line": 98,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "spinlock",
+          "normalized_name": "spinlock",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 196,
+          "end_line": 199,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "initlock",
+          "normalized_name": "initlock",
+          "file_path": "src\\sync\\spinlock.c",
+          "language": "c",
+          "start_line": 8,
+          "end_line": 14,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "spinlock",
+          "normalized_name": "spinlock",
+          "file_path": "src\\fs\\file.c",
+          "language": "c",
+          "start_line": 18,
+          "end_line": 21,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "spinlock",
+          "normalized_name": "spinlock",
+          "file_path": "src\\sync\\spinlock.h",
+          "language": "c",
+          "start_line": 7,
+          "end_line": 13,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\boot\\start.c",
+        "src\\fs\\fat32.c",
+        "src\\fs\\fs.c",
+        "src\\lib\\string.c",
+        "src\\mkfs\\mkfs.c",
+        "src\\mm\\kalloc.c",
+        "src\\mm\\vm.c",
+        "src\\proc\\proc.c",
+        "src\\riscv.h",
+        "src\\syscall\\sysfile.c",
+        "src\\virtIO\\virtio_disk.c",
+        "user\\ulib.c",
+        "user\\umalloc.c"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "walk",
+          "normalized_name": "walk",
+          "file_path": "src\\mm\\vm.c",
+          "language": "c",
+          "start_line": 151,
+          "end_line": 230,
+          "outgoing_call_count": 11,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "ialloc",
+          "normalized_name": "ialloc",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 223,
+          "end_line": 243,
+          "outgoing_call_count": 11,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "ialloc",
+          "normalized_name": "ialloc",
+          "file_path": "src\\mkfs\\mkfs.c",
+          "language": "c",
+          "start_line": 238,
+          "end_line": 250,
+          "outgoing_call_count": 11,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "balloc",
+          "normalized_name": "balloc",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 86,
+          "end_line": 108,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "balloc",
+          "normalized_name": "balloc",
+          "file_path": "src\\mkfs\\mkfs.c",
+          "language": "c",
+          "start_line": 252,
+          "end_line": 266,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "uvmcopy",
+          "normalized_name": "uvmcopy",
+          "file_path": "src\\mm\\vm.c",
+          "language": "c",
+          "start_line": 616,
+          "end_line": 649,
+          "outgoing_call_count": 9,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "uvmfirst",
+          "normalized_name": "uvmfirst",
+          "file_path": "src\\mm\\vm.c",
+          "language": "c",
+          "start_line": 423,
+          "end_line": 484,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "slab_free_object",
+          "normalized_name": "slab_free_object",
+          "file_path": "src\\mm\\kalloc.c",
+          "language": "c",
+          "start_line": 545,
+          "end_line": 596,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "mappages",
+          "normalized_name": "mappages",
+          "file_path": "src\\mm\\vm.c",
+          "language": "c",
+          "start_line": 310,
+          "end_line": 343,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "uvmunmap",
+          "normalized_name": "uvmunmap",
+          "file_path": "src\\mm\\vm.c",
+          "language": "c",
+          "start_line": 380,
+          "end_line": 405,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\fs\\fs.c",
+        "src\\fs\\pipe.c",
+        "src\\riscv.h",
+        "user\\sh.c",
+        "user\\ulib.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "iput",
+          "normalized_name": "iput",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 390,
+          "end_line": 416,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "pipealloc",
+          "normalized_name": "pipealloc",
+          "file_path": "src\\fs\\pipe.c",
+          "language": "c",
+          "start_line": 22,
+          "end_line": 56,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "parsepipe",
+          "normalized_name": "parsepipe",
+          "file_path": "user\\sh.c",
+          "language": "c",
+          "start_line": 361,
+          "end_line": 372,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "pipecmd",
+          "normalized_name": "pipecmd",
+          "file_path": "user\\sh.c",
+          "language": "c",
+          "start_line": 35,
+          "end_line": 39,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "pipecmd",
+          "normalized_name": "pipecmd",
+          "file_path": "user\\sh.c",
+          "language": "c",
+          "start_line": 222,
+          "end_line": 233,
+          "outgoing_call_count": 2,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "skipelem",
+          "normalized_name": "skipelem",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 692,
+          "end_line": 715,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "nameiparent",
+          "normalized_name": "nameiparent",
+          "file_path": "src\\fs\\fs.c",
+          "language": "c",
+          "start_line": 816,
+          "end_line": 820,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "pipe",
+          "normalized_name": "pipe",
+          "file_path": "src\\fs\\pipe.c",
+          "language": "c",
+          "start_line": 13,
+          "end_line": 20,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "r_sip",
+          "normalized_name": "r_sip",
+          "file_path": "src\\riscv.h",
+          "language": "c",
+          "start_line": 71,
+          "end_line": 77,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "w_sip",
+          "normalized_name": "w_sip",
+          "file_path": "src\\riscv.h",
+          "language": "c",
+          "start_line": 79,
+          "end_line": 83,
+          "outgoing_call_count": 1,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\proc\\elf.h",
+        "src\\proc\\exec.c",
+        "src\\proc\\proc.c",
+        "src\\proc\\proc.h",
+        "src\\proc\\swtch.S",
+        "src\\syscall\\sysproc.c",
+        "user\\sh.c",
+        "user\\ulib.c"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "exec",
+          "normalized_name": "exec",
+          "file_path": "src\\proc\\exec.c",
+          "language": "c",
+          "start_line": 26,
+          "end_line": 155,
+          "outgoing_call_count": 22,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "exec",
+          "normalized_name": "exec",
+          "file_path": "user\\ulib.c",
+          "language": "c",
+          "start_line": 157,
+          "end_line": 160,
+          "outgoing_call_count": 22,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "exit",
+          "normalized_name": "exit",
+          "file_path": "src\\proc\\proc.c",
+          "language": "c",
+          "start_line": 644,
+          "end_line": 687,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "exit",
+          "normalized_name": "exit",
+          "file_path": "user\\ulib.c",
+          "language": "c",
+          "start_line": 122,
+          "end_line": 125,
+          "outgoing_call_count": 16,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_wait4",
+          "normalized_name": "sys_wait4",
+          "file_path": "src\\syscall\\sysproc.c",
+          "language": "c",
+          "start_line": 253,
+          "end_line": 326,
+          "outgoing_call_count": 13,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_execve",
+          "normalized_name": "sys_execve",
+          "file_path": "src\\syscall\\sysproc.c",
+          "language": "c",
+          "start_line": 201,
+          "end_line": 249,
+          "outgoing_call_count": 12,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fork",
+          "normalized_name": "fork",
+          "file_path": "src\\proc\\proc.c",
+          "language": "c",
+          "start_line": 386,
+          "end_line": 441,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "wait",
+          "normalized_name": "wait",
+          "file_path": "src\\proc\\proc.c",
+          "language": "c",
+          "start_line": 507,
+          "end_line": 555,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "fork",
+          "normalized_name": "fork",
+          "file_path": "user\\ulib.c",
+          "language": "c",
+          "start_line": 116,
+          "end_line": 120,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "wait",
+          "normalized_name": "wait",
+          "file_path": "user\\ulib.c",
+          "language": "c",
+          "start_line": 131,
+          "end_line": 134,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\proc\\proc.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "scheduler",
+          "normalized_name": "scheduler",
+          "file_path": "src\\proc\\proc.c",
+          "language": "c",
+          "start_line": 301,
+          "end_line": 356,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "yield",
+          "normalized_name": "yield",
+          "file_path": "src\\proc\\proc.c",
+          "language": "c",
+          "start_line": 359,
+          "end_line": 367,
+          "outgoing_call_count": 4,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\syscall\\syscall.c",
+        "src\\syscall\\syscall.h",
+        "src\\syscall\\sysfile.c",
+        "src\\syscall\\sysproc.c",
+        "src\\syscall\\systime.c",
+        "src\\trap\\trap.c"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "sys_sched_yield",
+          "normalized_name": "sys_sched_yield",
+          "file_path": "src\\syscall\\sysproc.c",
+          "language": "c",
+          "start_line": 502,
+          "end_line": 524,
+          "outgoing_call_count": 13,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_fstatat",
+          "normalized_name": "sys_fstatat",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 281,
+          "end_line": 335,
+          "outgoing_call_count": 13,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_link",
+          "normalized_name": "sys_link",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 339,
+          "end_line": 386,
+          "outgoing_call_count": 11,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_fstat",
+          "normalized_name": "sys_fstat",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 243,
+          "end_line": 279,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_exec",
+          "normalized_name": "sys_exec",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 838,
+          "end_line": 879,
+          "outgoing_call_count": 10,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_mmap",
+          "normalized_name": "sys_mmap",
+          "file_path": "src\\syscall\\sysproc.c",
+          "language": "c",
+          "start_line": 367,
+          "end_line": 451,
+          "outgoing_call_count": 9,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_nanosleep",
+          "normalized_name": "sys_nanosleep",
+          "file_path": "src\\syscall\\sysproc.c",
+          "language": "c",
+          "start_line": 581,
+          "end_line": 621,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "syscall_handler",
+          "normalized_name": "syscall_handler",
+          "file_path": "src\\syscall\\syscall.c",
+          "language": "c",
+          "start_line": 444,
+          "end_line": 481,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_mknod",
+          "normalized_name": "sys_mknod",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 744,
+          "end_line": 762,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "sys_pipe",
+          "normalized_name": "sys_pipe",
+          "file_path": "src\\syscall\\sysfile.c",
+          "language": "c",
+          "start_line": 881,
+          "end_line": 910,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\mm\\kalloc.c",
+        "user\\initcode.c"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "test_",
+          "normalized_name": "test_",
+          "file_path": "user\\initcode.c",
+          "language": "c",
+          "start_line": 8,
+          "end_line": 35,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "test_busybox",
+          "normalized_name": "test_busybox",
+          "file_path": "user\\initcode.c",
+          "language": "c",
+          "start_line": 37,
+          "end_line": 57,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "slab_test_bit",
+          "normalized_name": "slab_test_bit",
+          "file_path": "src\\mm\\kalloc.c",
+          "language": "c",
+          "start_line": 411,
+          "end_line": 415,
+          "outgoing_call_count": 0,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 521,
+      "outgoing_edge_count": 1611,
+      "internal_edge_count": 1350,
+      "external_edge_count": 261,
+      "internal_call_ratio": 0.838,
+      "external_call_ratio": 0.162,
+      "module_weight": 1.0,
+      "files": [
+        "docker-run.sh",
+        "run.sh",
+        "src\\boot\\initcode.S",
+        "src\\boot\\ruos.c",
+        "src\\boot\\start.c",
+        "src\\lib\\printf.c",
+        "src\\lib\\sbi.c",
+        "src\\lib\\string.c",
+        "src\\riscv.h",
+        "src\\sync\\sleeplock.c",
+        "src\\sync\\spinlock.c",
+        "src\\types.h"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "timer_init",
+          "normalized_name": "timer_init",
+          "file_path": "src\\boot\\start.c",
+          "language": "c",
+          "start_line": 106,
+          "end_line": 127,
+          "outgoing_call_count": 8,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "start",
+          "normalized_name": "start",
+          "file_path": "src\\boot\\start.c",
+          "language": "c",
+          "start_line": 28,
+          "end_line": 48,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "printf",
+          "normalized_name": "printf",
+          "file_path": "src\\lib\\printf.c",
+          "language": "c",
+          "start_line": 212,
+          "end_line": 228,
+          "outgoing_call_count": 7,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "acquire",
+          "normalized_name": "acquire",
+          "file_path": "src\\sync\\spinlock.c",
+          "language": "c",
+          "start_line": 18,
+          "end_line": 42,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "printf_color",
+          "normalized_name": "printf_color",
+          "file_path": "src\\lib\\printf.c",
+          "language": "c",
+          "start_line": 184,
+          "end_line": 207,
+          "outgoing_call_count": 6,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "release",
+          "normalized_name": "release",
+          "file_path": "src\\sync\\spinlock.c",
+          "language": "c",
+          "start_line": 45,
+          "end_line": 71,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "vprintf_internal",
+          "normalized_name": "vprintf_internal",
+          "file_path": "src\\lib\\printf.c",
+          "language": "c",
+          "start_line": 128,
+          "end_line": 172,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "log_info",
+          "normalized_name": "log_info",
+          "file_path": "src\\lib\\printf.c",
+          "language": "c",
+          "start_line": 231,
+          "end_line": 245,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "log_warn",
+          "normalized_name": "log_warn",
+          "file_path": "src\\lib\\printf.c",
+          "language": "c",
+          "start_line": 247,
+          "end_line": 260,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "log_error",
+          "normalized_name": "log_error",
+          "file_path": "src\\lib\\printf.c",
+          "language": "c",
+          "start_line": 262,
+          "end_line": 275,
+          "outgoing_call_count": 5,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\boot\\main.c",
+        "src\\mkfs\\mkfs.c",
+        "src\\mm\\vm.c",
+        "src\\proc\\proc.c",
+        "src\\trap\\trampoline.S",
+        "user\\cat.c",
+        "user\\echo.c",
+        "user\\entry.S",
+        "user\\initcode.c",
+        "user\\ls.c",
+        "user\\mkdir.c",
+        "user\\printf.c",
+        "user\\sh.c",
+        "user\\ulib.c",
+        "user\\user-riscv.ld",
+        "user\\user.ld"
+      ],
+      "file_count": 16,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "src\\boot\\main.c",
+          "language": "c",
+          "start_line": 12,
+          "end_line": 80,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "src\\mkfs\\mkfs.c",
+          "language": "c",
+          "start_line": 68,
+          "end_line": 191,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\initcode.c",
+          "language": "c",
+          "start_line": 59,
+          "end_line": 117,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\cat.c",
+          "language": "c",
+          "start_line": 24,
+          "end_line": 43,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\echo.c",
+          "language": "c",
+          "start_line": 5,
+          "end_line": 19,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\ls.c",
+          "language": "c",
+          "start_line": 73,
+          "end_line": 85,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\mkdir.c",
+          "language": "c",
+          "start_line": 5,
+          "end_line": 23,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\sh.c",
+          "language": "c",
+          "start_line": 144,
+          "end_line": 172,
+          "outgoing_call_count": 80,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "user-riscv.ld",
+          "normalized_name": "ld",
+          "file_path": "user\\user-riscv.ld",
+          "language": "linker_script",
+          "start_line": 1,
+          "end_line": 43,
+          "outgoing_call_count": 13,
+          "summary": "该代码块分析失败。"
+        },
+        {
+          "name": "user.ld",
+          "normalized_name": "ld",
+          "file_path": "user\\user.ld",
+          "language": "linker_script",
+          "start_line": 1,
+          "end_line": 36,
+          "outgoing_call_count": 13,
+          "summary": "该代码块分析失败。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/RuOS.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

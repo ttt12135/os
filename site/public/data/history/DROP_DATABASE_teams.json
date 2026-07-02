@@ -1,0 +1,1546 @@
+{
+  "repo_name": "DROP_DATABASE_teams",
+  "team_name": "啊普鲁派哒哒哒哒哒\"; DROP DATABASE teams;",
+  "school": "哈尔滨工业大学（深圳）",
+  "repo_url": "https://gitlab.eduxiji.net/willson0v0/oscomp_handin",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/willson0v0/oscomp_handin",
+  "year": "2021",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust",
+    "assembly"
+  ],
+  "core_modules": [
+    "filesystem",
+    "memory",
+    "process",
+    "driver",
+    "syscall"
+  ],
+  "function_count": 898,
+  "node_count": 898,
+  "edge_count": 5996,
+  "internal_edge_count": 3625,
+  "external_edge_count": 2371,
+  "module_count": 14,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.18,
+    "build": 0.05,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 0.9,
+    "ipc": 0.15,
+    "memory": 1.0,
+    "network": 0.1,
+    "process": 1.0,
+    "scheduler": 0.54,
+    "syscall": 1.0,
+    "test": 0.05,
+    "unknown": 0.8,
+    "user": 0.1
+  },
+  "core_module_details": [
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.5322,
+      "completeness": 1.0,
+      "final_score": 0.7193
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.2249,
+      "completeness": 1.0,
+      "final_score": 0.5349
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.1066,
+      "completeness": 1.0,
+      "final_score": 0.464
+    },
+    {
+      "module_name": "driver",
+      "module_weight": 0.0602,
+      "completeness": 1.0,
+      "final_score": 0.4361
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.0383,
+      "completeness": 1.0,
+      "final_score": 0.423
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 1,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0007,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\devfs.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\fat32_wrapper.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "sym_link",
+          "normalized_name": "sym_link",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\fat32_wrapper.rs",
+          "language": "rust",
+          "start_line": "101",
+          "end_line": "103",
+          "outgoing_call_count": 3,
+          "summary": "这是一个文件系统符号链接操作的封装函数，它将调用包装在 FAT32 实现中的 sym_link 函数，并传递相关的参数。"
+        },
+        {
+          "name": "sym_link",
+          "normalized_name": "sym_link",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\devfs\\devfs.rs",
+          "language": "rust",
+          "start_line": "183",
+          "end_line": "185",
+          "outgoing_call_count": 3,
+          "summary": "这个函数实现了 sym_link 方法，但总是返回错误，表明在 devfs 中不支持符号链接操作。"
+        },
+        {
+          "name": "link",
+          "normalized_name": "link",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\devfs\\devfs.rs",
+          "language": "rust",
+          "start_line": "179",
+          "end_line": "181",
+          "outgoing_call_count": 0,
+          "summary": "该代码块是 devfs 文件系统中 link 方法的实现，直接返回一个错误，表明在 devfs 中不支持创建硬链接操作。"
+        },
+        {
+          "name": "link",
+          "normalized_name": "link",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\fat32_wrapper.rs",
+          "language": "rust",
+          "start_line": "97",
+          "end_line": "99",
+          "outgoing_call_count": 0,
+          "summary": "这个函数是FAT32文件系统包装器中link方法的实现，直接返回错误，表示FAT32不支持硬链接操作。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 53,
+      "outgoing_edge_count": 371,
+      "internal_edge_count": 176,
+      "external_edge_count": 195,
+      "internal_call_ratio": 0.4744,
+      "external_call_ratio": 0.5256,
+      "module_weight": 0.0602,
+      "files": [
+        "oshit_kernel/src/fs/deprecated/block_cache/mod.rs",
+        "oshit_kernel\\src\\drivers\\mod.rs",
+        "oshit_kernel\\src\\drivers\\sdcard.rs",
+        "oshit_kernel\\src\\drivers\\virt.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\block_cache\\blkcache.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\block_cache\\mod.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\cache_mgr\\blkcache.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\cache_mgr\\mod.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\block_device.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\char_device.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\device_file.rs"
+      ],
+      "file_count": 11,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\drivers\\virt.rs",
+          "language": "rust",
+          "start_line": "47",
+          "end_line": "51",
+          "outgoing_call_count": 158,
+          "summary": "创建一个新的VirtIO块设备驱动实例，通过将虚拟地址VIRTIO0转换为可变引用后初始化VirtIOBlk，并用Mutex封装以保证线程安全。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\devfs\\char_device.rs",
+          "language": "rust",
+          "start_line": "33",
+          "end_line": "43",
+          "outgoing_call_count": 158,
+          "summary": "构造并返回一个`CharDevice`结构体的新实例，初始化缓冲区大小为4096，并创建空的读和写VecDeque缓冲区。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\drivers\\sdcard.rs",
+          "language": "rust",
+          "start_line": 707,
+          "end_line": 709,
+          "outgoing_call_count": 158,
+          "summary": "该代码块定义了一个 SD 卡驱动相关结构体的 new 方法，用于初始化 SD 卡并返回互斥锁包装的实例。"
+        },
+        {
+          "name": "impl SDCard0 {",
+          "normalized_name": "impl SDCard0 {",
+          "file_path": "oshit_kernel\\src\\drivers\\sdcard.rs",
+          "language": "rust",
+          "start_line": "164",
+          "end_line": "650",
+          "outgoing_call_count": 78,
+          "summary": "实现SDCard0结构体的底层驱动方法，包括初始化、读写扇区、获取寄存器信息等功能，基于SPI协议与SD卡通信。"
+        },
+        {
+          "name": "impl BlockCacheManager {",
+          "normalized_name": "impl BlockCacheManager {",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\block_cache\\mod.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "88",
+          "outgoing_call_count": 70,
+          "summary": "实现了一个块缓存管理器，使用队列存储缓存条目，支持获取、清除和刷新缓存。当缓存满时，会尝试释放强引用计数为1的缓存（即未被外部持有的缓存），如果无法释放则触发panic。"
+        },
+        {
+          "name": "impl BlockCacheManager {",
+          "normalized_name": "impl BlockCacheManager {",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\cache_mgr\\mod.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "88",
+          "outgoing_call_count": 70,
+          "summary": "实现块缓存管理器，提供块缓存的创建、获取、清除和刷写功能，并采用固定大小的先进先出缓存替换策略，在缓存满时尝试回收强引用计数为1的缓存项，否则panic。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "oshit_kernel\\src\\drivers\\sdcard.rs",
+          "language": "rust",
+          "start_line": "471",
+          "end_line": "530",
+          "outgoing_call_count": 56,
+          "summary": "该函数实现SD卡的初始化流程，包括低级初始化、发送CMD0进入空闲状态、CMD8验证SD卡版本、通过CMD55+ACMD41循环等待卡就绪、CMD58读取OCR寄存器并判断是否支持块寻址，最后启用高速模式并获取卡信息。"
+        },
+        {
+          "name": "get_block_cache",
+          "normalized_name": "get_block_cache",
+          "file_path": "oshit_kernel/src/fs/deprecated/block_cache/mod.rs",
+          "language": "rust",
+          "start_line": "32",
+          "end_line": "62",
+          "outgoing_call_count": 47,
+          "summary": "从块缓存中获取指定块ID的缓存块，如果缓存已满则淘汰引用计数为1的缓存块，若没有可淘汰的则panic；未命中时创建新缓存块并加入队列尾部。"
+        },
+        {
+          "name": "get_block_cache",
+          "normalized_name": "get_block_cache",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\block_cache\\mod.rs",
+          "language": "rust",
+          "start_line": "98",
+          "end_line": "104",
+          "outgoing_call_count": 47,
+          "summary": "获取指定 block_id 对应的 BlockCache 实例，通过全局块缓存管理器 BLOCK_CACHE_MANAGER 实现。"
+        },
+        {
+          "name": "get_block_cache",
+          "normalized_name": "get_block_cache",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\cache_mgr\\mod.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "65",
+          "outgoing_call_count": 47,
+          "summary": "根据块ID获取或创建块缓存，通过LRU类似策略（从队首到队尾检查引用计数）淘汰引用计数为1的缓存块，若无法淘汰则panic。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 494,
+      "outgoing_edge_count": 3030,
+      "internal_edge_count": 1862,
+      "external_edge_count": 1168,
+      "internal_call_ratio": 0.6145,
+      "external_call_ratio": 0.3855,
+      "module_weight": 0.5322,
+      "files": [
+        "oshit_kernel/src/fs/deprecated/fat/mbr.rs",
+        "oshit_kernel/src/fs/deprecated/file.rs",
+        "oshit_kernel/src/fs/deprecated/path.rs",
+        "oshit_kernel/src/fs/deprecated/pipe.rs",
+        "oshit_kernel/src/fs/deprecated/stdio.rs",
+        "oshit_kernel/src/fs/fs_impl/devfs/block_device.rs",
+        "oshit_kernel/src/fs/fs_impl/devfs/char_device.rs",
+        "oshit_kernel/src/fs/fs_impl/devfs/devfs.rs",
+        "oshit_kernel/src/fs/fs_impl/fat32/chain.rs",
+        "oshit_kernel/src/fs/fs_impl/fat32/file.rs",
+        "oshit_kernel/src/fs/fs_impl/path.rs",
+        "oshit_kernel/src/fs/fs_impl/utils.rs",
+        "oshit_kernel/src/fs/pipe.rs",
+        "oshit_kernel/src/memory/pagetable.rs",
+        "oshit_kernel\\src\\drivers\\sdcard.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\block_cache\\blkcache.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\block_cache\\mod.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\dirent.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\fat\\dbr.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\fat\\fat.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\fat\\fsinfo.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\fat\\mbr.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\fat\\mod.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\file.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\file_with_lock.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\mod.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\path.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\pipe.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\stdio.rs",
+        "oshit_kernel\\src\\fs\\file.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\cache_mgr\\blkcache.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\cache_mgr\\mod.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\block_device.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\char_device.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\devfs.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\devfs\\device_file.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\fat32\\chain.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\fat32\\dbr.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\fat32\\dirent.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\fat32\\file.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\fat32_wrapper.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\fs_files.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\path.rs",
+        "oshit_kernel\\src\\fs\\fs_impl\\vfs.rs",
+        "oshit_kernel\\src\\fs\\pipe.rs",
+        "oshit_kernel\\src\\memory\\layout.rs",
+        "oshit_kernel\\src\\memory\\pagetable.rs",
+        "oshit_kernel\\src\\memory\\userbuffer.rs",
+        "oshit_kernel\\src\\process\\pcb.rs",
+        "oshit_kernel\\src\\syscall\\fs_syscall.rs"
+      ],
+      "file_count": 50,
+      "core_functions": [
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\path.rs",
+          "language": "rust",
+          "start_line": "139",
+          "end_line": "232",
+          "outgoing_call_count": 163,
+          "summary": "这是一个状态机驱动的路径解析函数，用于逐个字符读取并解析文件路径。它处理绝对路径（以'/'开头）、相对路径、当前目录（.）、父目录（..）以及文件名，同时进行合法性检查，如文件名长度限制（不超过255字符）和字符有效性。当遇到错误（如文件名过长或非法字符）时，会立即返回错误。该函数每次接收一个字符，根据当前状态更新解析进度，并在路径完成后或出错时返回结果。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "33",
+          "end_line": "39",
+          "outgoing_call_count": 163,
+          "summary": "从环形缓冲区（pipe）中读取数据到用户提供的buffer中。它计算可读取的最小长度（buffer长度与缓冲区当前长度），然后将缓冲区中的元素逐个弹出并复制到buffer中，返回成功读取的字节数。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\stdio.rs",
+          "language": "rust",
+          "start_line": "25",
+          "end_line": "44",
+          "outgoing_call_count": 163,
+          "summary": "从标准输入循环读取字节，将读取到的字节填充到用户缓冲区中，并在遇到换行符或缓冲区满时返回读取的字节数。当读取到空字节（值为0）时，会主动让出CPU（suspend_switch），实现非阻塞等待。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\devfs\\block_device.rs",
+          "language": "rust",
+          "start_line": "224",
+          "end_line": "226",
+          "outgoing_call_count": 163,
+          "summary": "这个代码块定义了一个 `read` 方法，该方法将读取操作委托给内部字段 `self.inner` 的 `read` 方法，传入用户提供的缓冲区 `buffer`，并返回读取的字节数或错误信息。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\path.rs",
+          "language": "rust",
+          "start_line": "124",
+          "end_line": "217",
+          "outgoing_call_count": 163,
+          "summary": "该函数是一个路径解析器的状态机，逐个字符读取路径字符串，并将其解析为路径组件（如目录名、文件名），同时处理特殊路径（当前目录`.`和父目录`..`），并验证字符合法性及文件名长度。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\stdio.rs",
+          "language": "rust",
+          "start_line": "121",
+          "end_line": "129",
+          "outgoing_call_count": 163,
+          "summary": "该函数实现一个自旋等待的读操作：循环尝试获取内部锁，成功后调用内层对象的read方法从用户缓冲区读取数据，获取锁失败则主动挂起当前任务（suspend_switch）。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\file_with_lock.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "43",
+          "outgoing_call_count": 163,
+          "summary": "该函数实现了带锁的文件读取操作，通过遍历用户提供的缓冲区片段，调用内部文件的read_file方法读取数据，并根据读取结果决定是否提前停止读取。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\block_cache\\blkcache.rs",
+          "language": "rust",
+          "start_line": "148",
+          "end_line": "150",
+          "outgoing_call_count": 163,
+          "summary": "该函数通过给定的偏移量获取一个类型为T的引用，并对该引用应用提供的闭包函数f，返回闭包的计算结果V。它封装了对缓存中数据的读取和自定义处理逻辑。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\pipe.rs",
+          "language": "rust",
+          "start_line": "162",
+          "end_line": "195",
+          "outgoing_call_count": 163,
+          "summary": "这个代码块实现了从管道中读取数据的功能，它通过加锁管道、循环等待数据可用、处理写端关闭等逻辑，将数据复制到用户缓冲区，并返回实际读取的字节数。"
+        },
+        {
+          "name": "read",
+          "normalized_name": "read",
+          "file_path": "oshit_kernel\\src\\fs\\fs_impl\\devfs\\char_device.rs",
+          "language": "rust",
+          "start_line": "58",
+          "end_line": "66",
+          "outgoing_call_count": 163,
+          "summary": "该函数实现了字符设备的读取操作，从输入源逐个读取字节到缓冲区中，遇到换行符（\\n）时提前返回已读取的字节数，否则填满缓冲区后返回缓冲区长度。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 15,
+      "outgoing_edge_count": 113,
+      "internal_edge_count": 56,
+      "external_edge_count": 57,
+      "internal_call_ratio": 0.4956,
+      "external_call_ratio": 0.5044,
+      "module_weight": 0.0175,
+      "files": [
+        "oshit_kernel/src/trap/trap_handler.rs",
+        "oshit_kernel\\src\\process\\mod.rs",
+        "oshit_kernel\\src\\process\\pcb.rs",
+        "oshit_kernel\\src\\process\\processor.rs",
+        "oshit_kernel\\src\\trap\\trap.asm",
+        "oshit_kernel\\src\\trap\\trap_context.rs",
+        "oshit_kernel\\src\\trap\\trap_handler.rs"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "oshit_kernel\\src\\trap\\trap_context.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "42",
+          "outgoing_call_count": 56,
+          "summary": "初始化一个 TrapContext 结构体实例，设置寄存器、sstatus、sepc 以及内核相关的控制字段（kernel_satp、kernel_sp、user_trap），最后通过 set_sp 方法设置用户栈指针。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "oshit_kernel\\src\\trap\\trap_handler.rs",
+          "language": "rust",
+          "start_line": "27",
+          "end_line": "40",
+          "outgoing_call_count": 56,
+          "summary": "初始化陷阱处理机制，包括设置陷阱向量表、启用定时器中断并重置定时器触发。"
+        },
+        {
+          "name": "trap_return",
+          "normalized_name": "trap_return",
+          "file_path": "oshit_kernel\\src\\trap\\trap_handler.rs",
+          "language": "rust",
+          "start_line": "175",
+          "end_line": "274",
+          "outgoing_call_count": 31,
+          "summary": "该函数负责处理从内核态返回用户态时的任务，主要功能是检查当前进程是否有待处理的信号，如果有则设置信号处理函数的执行环境并通过跳转到信号处理代码返回，否则直接恢复用户态上下文。"
+        },
+        {
+          "name": "user_trap",
+          "normalized_name": "user_trap",
+          "file_path": "oshit_kernel\\src\\trap\\trap_handler.rs",
+          "language": "rust",
+          "start_line": "71",
+          "end_line": "151",
+          "outgoing_call_count": 28,
+          "summary": "这个函数是用户态陷入（trap）的主处理函数，根据陷入原因分发处理：系统调用、定时器中断、缺页异常、非法指令等，最终调用 trap_return 返回用户态。"
+        },
+        {
+          "name": "default_sig_handlers",
+          "normalized_name": "default_sig_handlers",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "189",
+          "end_line": "237",
+          "outgoing_call_count": 18,
+          "summary": "生成一个预设的默认信号处理函数映射表，为每个标准信号分配默认的 SigAction，包括终止自身、忽略、转储 core、继续或停止等行为。"
+        },
+        {
+          "name": "__restore",
+          "normalized_name": "__restore",
+          "file_path": "oshit_kernel\\src\\trap\\trap.asm",
+          "language": "assembly",
+          "start_line": "53",
+          "end_line": "106",
+          "outgoing_call_count": 11,
+          "summary": "从TrapContext恢复用户线程的寄存器状态并返回用户态。该过程首先切换到用户地址空间（satp），然后将TrapContext地址写入sscratch，并将栈指针指向TrapContext；接着从TrapContext中恢复sstatus、sepc、通用寄存器（x0/x2/x4除外），最后切换到用户栈并通过sret返回用户态。"
+        },
+        {
+          "name": "get_trap_context",
+          "normalized_name": "get_trap_context",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "145",
+          "end_line": "149",
+          "outgoing_call_count": 9,
+          "summary": "该函数通过PCB中保存的物理页号（trap_context_ppn）构造一个物理地址，然后将其转换为可变指针并解引用为`&'static mut TrapContext`，从而返回指向进程陷阱上下文的可变引用。"
+        },
+        {
+          "name": "get_trap_context",
+          "normalized_name": "get_trap_context",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "492",
+          "end_line": "494",
+          "outgoing_call_count": 9,
+          "summary": "获取当前进程控制块中保存的陷阱上下文的可变引用，用于在陷入内核时访问或修改进程的寄存器状态。"
+        },
+        {
+          "name": "impl TrapContext {",
+          "normalized_name": "impl TrapContext {",
+          "file_path": "oshit_kernel\\src\\trap\\trap_context.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "43",
+          "outgoing_call_count": 8,
+          "summary": "为 TrapContext 结构体实现两个方法：set_sp 用于设置用户栈指针（sp），init 用于初始化完整的 TrapContext 实例，包括用户入口地址、栈指针、内核页表、内核栈以及用户陷入处理入口。"
+        },
+        {
+          "name": "current_trap_context",
+          "normalized_name": "current_trap_context",
+          "file_path": "oshit_kernel\\src\\process\\processor.rs",
+          "language": "rust",
+          "start_line": "200",
+          "end_line": "202",
+          "outgoing_call_count": 6,
+          "summary": "获取当前线程的陷阱上下文的可变静态引用。该方法通过获取处理器当前正在运行的线程，锁定其内部状态，然后获取陷阱上下文，供中断或异常处理使用。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "oshit_kernel/src/process/pcb.rs",
+        "oshit_kernel\\src\\drivers\\sdcard.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\file_with_lock.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\stdio.rs",
+        "oshit_kernel\\src\\process\\pcb.rs"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "recv_signal",
+          "normalized_name": "recv_signal",
+          "file_path": "oshit_kernel/src/process/pcb.rs",
+          "language": "rust",
+          "start_line": "516",
+          "end_line": "519",
+          "outgoing_call_count": 7,
+          "summary": "这是一个PCB（进程控制块）上的方法，用于接收一个信号，内部通过加锁获取内部结构并调用内部结构的recv_signal方法处理信号。"
+        },
+        {
+          "name": "recv_signal",
+          "normalized_name": "recv_signal",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "178",
+          "end_line": "187",
+          "outgoing_call_count": 7,
+          "summary": "该函数为进程控制块（PCB）接收一个信号，将其加入待处理信号队列，前提是信号编号小于64且未被屏蔽。"
+        },
+        {
+          "name": "get_inner_locked",
+          "normalized_name": "get_inner_locked",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "485",
+          "end_line": "487",
+          "outgoing_call_count": 5,
+          "summary": "获取当前 ProcessControlBlock 内部数据的互斥锁保护下的访问权，即返回一个 MutexGuard，用于安全地访问内部结构体 ProcessControlBlockInner。"
+        },
+        {
+          "name": "get_inner_locked",
+          "normalized_name": "get_inner_locked",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\file_with_lock.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "20",
+          "outgoing_call_count": 5,
+          "summary": "获取内部FILE对象的互斥锁保护，返回一个MutexGuard，允许安全访问内部数据结构。"
+        },
+        {
+          "name": "impl SDCard0WithLock {",
+          "normalized_name": "impl SDCard0WithLock {",
+          "file_path": "oshit_kernel\\src\\drivers\\sdcard.rs",
+          "language": "rust",
+          "start_line": "705",
+          "end_line": "710",
+          "outgoing_call_count": 4,
+          "summary": "为 SDCard0WithLock 结构体实现一个名为 new 的公有构造方法，该方法内部通过 Mutex 包装 init_sdcard() 的返回值来初始化 SD 卡，并返回封装后的实例。"
+        },
+        {
+          "name": "SDCard0WithLock",
+          "normalized_name": "SDCard0WithLock",
+          "file_path": "oshit_kernel\\src\\drivers\\sdcard.rs",
+          "language": "rust",
+          "start_line": "703",
+          "end_line": "703",
+          "outgoing_call_count": 1,
+          "summary": "定义一个带有锁的SDCard0结构体，用于线程安全地访问SDCard0实例。"
+        },
+        {
+          "name": "LockedStdout",
+          "normalized_name": "LockedStdout",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\stdio.rs",
+          "language": "rust",
+          "start_line": "110",
+          "end_line": "112",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个包装了互斥锁的 stdout 结构体，用于提供线程安全的 stdout 访问。"
+        },
+        {
+          "name": "LockedStderr",
+          "normalized_name": "LockedStderr",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\stdio.rs",
+          "language": "rust",
+          "start_line": "115",
+          "end_line": "117",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个被互斥锁保护的标准错误输出结构体，用于线程安全的写操作。"
+        },
+        {
+          "name": "LockedStdin",
+          "normalized_name": "LockedStdin",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\stdio.rs",
+          "language": "rust",
+          "start_line": "105",
+          "end_line": "107",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个封装了互斥锁的标准输入结构体，用于提供线程安全的访问"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 200,
+      "outgoing_edge_count": 1368,
+      "internal_edge_count": 845,
+      "external_edge_count": 523,
+      "internal_call_ratio": 0.6177,
+      "external_call_ratio": 0.3823,
+      "module_weight": 0.2249,
+      "files": [
+        "oshit_kernel/src/memory/addresses.rs",
+        "oshit_kernel/src/memory/frame_alloc.rs",
+        "oshit_kernel/src/memory/layout.rs",
+        "oshit_kernel/src/memory/pagetable.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\fat\\fat.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\fat\\mod.rs",
+        "oshit_kernel\\src\\memory\\addresses.rs",
+        "oshit_kernel\\src\\memory\\frame_alloc.rs",
+        "oshit_kernel\\src\\memory\\kernel_heap.rs",
+        "oshit_kernel\\src\\memory\\layout.rs",
+        "oshit_kernel\\src\\memory\\mod.rs",
+        "oshit_kernel\\src\\memory\\pagetable.rs",
+        "oshit_kernel\\src\\memory\\userbuffer.rs",
+        "oshit_kernel\\src\\process\\kernel_stack.rs",
+        "oshit_kernel\\src\\process\\pcb.rs",
+        "oshit_kernel\\src\\process\\pid.rs"
+      ],
+      "file_count": 16,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\memory\\layout.rs",
+          "language": "rust",
+          "start_line": "120",
+          "end_line": "131",
+          "outgoing_call_count": 158,
+          "summary": "定义 Segment 结构体的构造函数，根据传入的虚拟地址范围、映射类型、段标志、VMA 标志、可选文件引用及偏移量创建一个新的 Segment 实例。构造函数内部将虚拟地址转换为 VPN（虚拟页号）并生成 VPN 范围，同时初始化一个空的 BTreeMap 用于存放物理帧。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": "56",
+          "end_line": "60",
+          "outgoing_call_count": 158,
+          "summary": "该代码块是 PageTableEntry 结构体的构造函数，通过将物理页号（PhysPageNum）左移 10 位，并与页表项标志（PTEFlags）的整数值进行按位或运算，组合成一个完整的页表项条目 bits 字段。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": "116",
+          "end_line": "122",
+          "outgoing_call_count": 158,
+          "summary": "创建一个新的页表（PageTable）实例，分配一个物理页帧作为根页表，并初始化根物理页号（root_ppn）和包含该帧的帧列表。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\memory\\userbuffer.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "14",
+          "outgoing_call_count": 158,
+          "summary": "构造UserBuffer实例，接收一个Vec<&'static mut [u8]>类型的parts并存储为结构体字段。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\memory\\frame_alloc.rs",
+          "language": "rust",
+          "start_line": "117",
+          "end_line": "123",
+          "outgoing_call_count": 158,
+          "summary": "创建并返回一个 FrameAllocator 实例，初始化当前物理页号、结束物理页号以及空的已释放页向量。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\memory\\frame_alloc.rs",
+          "language": "rust",
+          "start_line": "92",
+          "end_line": "97",
+          "outgoing_call_count": 158,
+          "summary": "这个函数用于创建一个新的物理页帧对象，并将该页帧对应的物理内存区域清零（初始化为0）。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\process\\kernel_stack.rs",
+          "language": "rust",
+          "start_line": "30",
+          "end_line": "48",
+          "outgoing_call_count": 158,
+          "summary": "为给定PID的进程分配和映射内核栈，返回KernelStack实例。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\memory\\layout.rs",
+          "language": "rust",
+          "start_line": "367",
+          "end_line": "372",
+          "outgoing_call_count": 158,
+          "summary": "创建一个新的内存布局实例，初始化包含一个页表和一个空的段向量。"
+        },
+        {
+          "name": "impl MemLayout {",
+          "normalized_name": "impl MemLayout {",
+          "file_path": "oshit_kernel\\src\\memory\\layout.rs",
+          "language": "rust",
+          "start_line": "365",
+          "end_line": "886",
+          "outgoing_call_count": 157,
+          "summary": "该代码块定义了MemLayout结构体的实现，核心功能包括内存布局的创建、分段管理、页表操作、内核/用户空间布局构建、VMA（虚拟内存区域）管理、用户内存访问以及内存拷贝等，是操作系统中虚拟内存管理的核心组件。"
+        },
+        {
+          "name": "impl Segment {",
+          "normalized_name": "impl Segment {",
+          "file_path": "oshit_kernel\\src\\memory\\layout.rs",
+          "language": "rust",
+          "start_line": "109",
+          "end_line": "355",
+          "outgoing_call_count": 98,
+          "summary": "实现了 Segment 结构体的一系列方法，包括新建、映射/取消映射页面、调整末尾、读取写入数据以及克隆等基础操作，支持 Identity 映射、Framed 映射和 VMA 映射三种模式，其中 VMA 模式增加了文件支持的后备存储与懒加载/回写机制。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "oshit_kernel/src/fs/deprecated/pipe.rs",
+        "oshit_kernel/src/fs/pipe.rs",
+        "oshit_kernel\\src\\fs\\deprecated\\pipe.rs",
+        "oshit_kernel\\src\\fs\\pipe.rs"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "impl Pipe {",
+          "normalized_name": "impl Pipe {",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\pipe.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "138",
+          "outgoing_call_count": 85,
+          "summary": "这个代码块定义了`Pipe`结构体的方法，用于创建和操作管道环形缓冲区，包括初始化管道、写入数据、读取数据、注册读写端、检查写端是否全部关闭以及检查缓冲区是否为空。管道内部使用`VecDeque`作为缓冲区，并用`Mutex`和`Arc`包装以实现共享和线程安全。"
+        },
+        {
+          "name": "impl Pipe {",
+          "normalized_name": "impl Pipe {",
+          "file_path": "oshit_kernel\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "20",
+          "end_line": "104",
+          "outgoing_call_count": 85,
+          "summary": "实现了Pipe结构体的核心方法，包含管道创建、读写操作、读写端注册及状态检查等功能，pipe内部使用VecDeque作为环形缓冲区，并提供面向用户缓冲区的读写接口。"
+        },
+        {
+          "name": "impl PipeEnd {",
+          "normalized_name": "impl PipeEnd {",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\pipe.rs",
+          "language": "rust",
+          "start_line": "140",
+          "end_line": "158",
+          "outgoing_call_count": 25,
+          "summary": "这个代码块为 PipeEnd 结构体实现了两个关联函数 new_read 和 new_write，用于创建管道端点（读端或写端），并将自身注册到管道对象中。"
+        },
+        {
+          "name": "impl PipeEnd {",
+          "normalized_name": "impl PipeEnd {",
+          "file_path": "oshit_kernel\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "114",
+          "end_line": "170",
+          "outgoing_call_count": 25,
+          "summary": "实现了PipeEnd结构体的构造方法，分别为读端和写端创建新的PipeEnd实例，并注册到管道中。"
+        },
+        {
+          "name": "make_pipe",
+          "normalized_name": "make_pipe",
+          "file_path": "oshit_kernel\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "247",
+          "end_line": "252",
+          "outgoing_call_count": 12,
+          "summary": "创建一个管道，返回一对读写端（PipeEnd），分别封装在一个Arc中。"
+        },
+        {
+          "name": "make_pipe",
+          "normalized_name": "make_pipe",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\pipe.rs",
+          "language": "rust",
+          "start_line": "229",
+          "end_line": "234",
+          "outgoing_call_count": 12,
+          "summary": "创建一对管道端点，并返回读端点与写端点的引用计数指针。"
+        },
+        {
+          "name": "PipeEnd",
+          "normalized_name": "PipeEnd",
+          "file_path": "oshit_kernel/src/fs/deprecated/pipe.rs",
+          "language": "rust",
+          "start_line": "29",
+          "end_line": "34",
+          "outgoing_call_count": 2,
+          "summary": "定义了管道的一端，包含标识读写权限的标志和一个共享、可互斥访问的管道环缓冲区引用"
+        },
+        {
+          "name": "PipeEnd",
+          "normalized_name": "PipeEnd",
+          "file_path": "oshit_kernel/src/fs/pipe.rs",
+          "language": "rust",
+          "start_line": "107",
+          "end_line": "112",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个管道端点结构体，包含访问权限标志和对共享管道（环形缓冲区）的引用。"
+        },
+        {
+          "name": "impl Drop for PipeEnd {",
+          "normalized_name": "impl Drop for PipeEnd {",
+          "file_path": "oshit_kernel\\src\\fs\\pipe.rs",
+          "language": "rust",
+          "start_line": "226",
+          "end_line": "230",
+          "outgoing_call_count": 1,
+          "summary": "为PipeEnd类型实现Drop trait，但其drop方法体为空，即释放PipeEnd时不做任何清理操作。"
+        },
+        {
+          "name": "Pipe",
+          "normalized_name": "Pipe",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\pipe.rs",
+          "language": "rust",
+          "start_line": "19",
+          "end_line": "26",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个用于管道通信的核心数据结构，包含环形缓冲区以及读写端弱引用列表。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 88,
+      "outgoing_edge_count": 716,
+      "internal_edge_count": 431,
+      "external_edge_count": 285,
+      "internal_call_ratio": 0.602,
+      "external_call_ratio": 0.398,
+      "module_weight": 0.1066,
+      "files": [
+        "oshit_kernel/src/process/processor.rs",
+        "oshit_kernel\\src\\memory\\layout.rs",
+        "oshit_kernel\\src\\memory\\pagetable.rs",
+        "oshit_kernel\\src\\memory\\userbuffer.rs",
+        "oshit_kernel\\src\\process\\default_handlers.rs",
+        "oshit_kernel\\src\\process\\kernel_stack.rs",
+        "oshit_kernel\\src\\process\\kernel_stored_app_loader.rs",
+        "oshit_kernel\\src\\process\\manager.rs",
+        "oshit_kernel\\src\\process\\mod.rs",
+        "oshit_kernel\\src\\process\\pcb.rs",
+        "oshit_kernel\\src\\process\\pid.rs",
+        "oshit_kernel\\src\\process\\proc0.rs",
+        "oshit_kernel\\src\\process\\processor.rs",
+        "oshit_kernel\\src\\syscall\\process_syscall.rs"
+      ],
+      "file_count": 14,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\process\\pid.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "29",
+          "outgoing_call_count": 158,
+          "summary": "该代码块是PidAllocator结构体的构造函数，用于初始化一个PID分配器实例，将空闲指针nxt_free设置为0，并创建一个空的回收PID向量recycled。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "246",
+          "end_line": "301",
+          "outgoing_call_count": 158,
+          "summary": "创建一个新的进程控制块（PCB），包括初始化内存布局、分配PID、创建内核栈、创建标准输入输出文件描述符，并设置初始的陷阱上下文。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\process\\processor.rs",
+          "language": "rust",
+          "start_line": "54",
+          "end_line": "61",
+          "outgoing_call_count": 158,
+          "summary": "构造Processor结构体的实例，初始化内部状态，包括当前进程为空和空闲上下文指针为0。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "oshit_kernel\\src\\process\\manager.rs",
+          "language": "rust",
+          "start_line": "27",
+          "end_line": "31",
+          "outgoing_call_count": 158,
+          "summary": "创建一个新的进程管理器实例，初始化一个空的进程队列。"
+        },
+        {
+          "name": "impl ProcessControlBlock {",
+          "normalized_name": "impl ProcessControlBlock {",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "239",
+          "end_line": "520",
+          "outgoing_call_count": 103,
+          "summary": "进程控制块（ProcessControlBlock）的实现，提供了新建进程（new）、复制进程（fork）、执行新程序（exec）、获取内部锁（get_inner_locked）、获取陷阱上下文（get_trap_context）、获取PID（get_pid）、获取父进程PID（get_ppid）、分配文件描述符（alloc_fd）和接收信号（recv_signal）等功能。"
+        },
+        {
+          "name": "impl Processor {",
+          "normalized_name": "impl Processor {",
+          "file_path": "oshit_kernel\\src\\process\\processor.rs",
+          "language": "rust",
+          "start_line": "50",
+          "end_line": "203",
+          "outgoing_call_count": 61,
+          "summary": "Processor结构体实现了进程调度的核心操作，包括：新建处理器、获取/取出当前进程、获取空闲上下文指针、获取当前进程的SATP和TrapContext、切换进程、挂起当前进程、退出当前进程、以及运行调度循环。其中调度循环通过`__switch`进行上下文切换，依赖外部队列函数`dequeue`和`enqueue`。"
+        },
+        {
+          "name": "exec",
+          "normalized_name": "exec",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "401",
+          "end_line": "471",
+          "outgoing_call_count": 58,
+          "summary": "该函数是进程的exec实现，用于加载一个新的ELF可执行文件到当前进程地址空间，设置用户栈（包括参数argv和环境变量envp的布局），初始化陷入上下文（TrapContext）以开始执行新程序，并更新进程控制块（PCB）中的相关字段。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "oshit_kernel\\src\\process\\pcb.rs",
+          "language": "rust",
+          "start_line": "65",
+          "end_line": "71",
+          "outgoing_call_count": 56,
+          "summary": "初始化一个PCB实例，设置ra为`trap_return`函数的地址，并将s寄存器数组初始化为全零。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "oshit_kernel\\src\\process\\mod.rs",
+          "language": "rust",
+          "start_line": 47,
+          "end_line": 53,
+          "outgoing_call_count": 56,
+          "summary": "该函数是进程控制单元的初始化入口，依次初始化进程0（proc0）并启动第一个处理器核心的运行循环。"
+        },
+        {
+          "name": "sys_exec",
+          "normalized_name": "sys_exec",
+          "file_path": "oshit_kernel\\src\\syscall\\process_syscall.rs",
+          "language": "rust",
+          "start_line": "72",
+          "end_line": "145",
+          "outgoing_call_count": 43,
+          "summary": "实现了进程执行系统调用（sys_exec），负责根据应用名加载二进制文件，解析用户空间传递的参数和环境变量，并调用进程的exec方法执行该程序。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 4,
+      "outgoing_edge_count": 17,
+      "internal_edge_count": 9,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.5294,
+      "external_call_ratio": 0.4706,
+      "module_weight": 0.0038,
+      "files": [
+        "oshit_kernel\\src\\process\\manager.rs",
+        "oshit_kernel\\src\\process\\mod.rs",
+        "oshit_kernel\\src\\process\\processor.rs",
+        "oshit_kernel\\src\\process\\switch.asm"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "suspend_switch",
+          "normalized_name": "suspend_switch",
+          "file_path": "oshit_kernel\\src\\process\\mod.rs",
+          "language": "rust",
+          "start_line": "59",
+          "end_line": "61",
+          "outgoing_call_count": 12,
+          "summary": "调用全局处理器对象PROCESSOR0的suspend_switch方法，用于挂起当前进程并切换到其他进程。"
+        },
+        {
+          "name": "suspend_switch",
+          "normalized_name": "suspend_switch",
+          "file_path": "oshit_kernel\\src\\process\\processor.rs",
+          "language": "rust",
+          "start_line": "111",
+          "end_line": "123",
+          "outgoing_call_count": 12,
+          "summary": "该函数将当前正在运行的进程挂起（放入就绪队列），然后切换到 idle 上下文。"
+        },
+        {
+          "name": "run",
+          "normalized_name": "run",
+          "file_path": "oshit_kernel\\src\\process\\processor.rs",
+          "language": "rust",
+          "start_line": "156",
+          "end_line": "173",
+          "outgoing_call_count": 11,
+          "summary": "线程调度主循环：不断从就绪队列取出进程，切换为运行状态，并通过上下文切换执行该进程。"
+        },
+        {
+          "name": "enqueue",
+          "normalized_name": "enqueue",
+          "file_path": "oshit_kernel\\src\\process\\manager.rs",
+          "language": "rust",
+          "start_line": "60",
+          "end_line": "62",
+          "outgoing_call_count": 6,
+          "summary": "该函数对外公开一个接口，用于将进程控制块（Arc<ProcessControlBlock>）加入全局进程管理器（PROCESS_MANAGER）的队列中。它具体先对全局的进程管理器实例加锁，然后调用其内部的 enqueue 方法执行入队操作。"
+        },
+        {
+          "name": "__switch",
+          "normalized_name": "__switch",
+          "file_path": "oshit_kernel\\src\\process\\switch.asm",
+          "language": "assembly",
+          "start_line": "48",
+          "end_line": "76",
+          "outgoing_call_count": 2,
+          "summary": "保存当前进程的上下文到栈中，并恢复下一个进程的上下文，实现进程切换"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 28,
+      "outgoing_edge_count": 293,
+      "internal_edge_count": 194,
+      "external_edge_count": 99,
+      "internal_call_ratio": 0.6621,
+      "external_call_ratio": 0.3379,
+      "module_weight": 0.0383,
+      "files": [
+        "oshit_kernel/src/syscall/fs_syscall.rs",
+        "oshit_kernel/src/syscall/process_syscall.rs",
+        "oshit_kernel\\src\\process\\default_handlers.rs",
+        "oshit_kernel\\src\\syscall\\fs_syscall.rs",
+        "oshit_kernel\\src\\syscall\\mod.rs",
+        "oshit_kernel\\src\\syscall\\process_syscall.rs",
+        "oshit_kernel\\src\\syscall\\trivial_syscall.rs"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "oshit_kernel\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": "91",
+          "end_line": "132",
+          "outgoing_call_count": 34,
+          "summary": "该函数是系统调用处理入口，根据系统调用编号分发到具体的系统调用处理函数。"
+        },
+        {
+          "name": "sys_getdents64",
+          "normalized_name": "sys_getdents64",
+          "file_path": "oshit_kernel/src/syscall/fs_syscall.rs",
+          "language": "rust",
+          "start_line": "253",
+          "end_line": "289",
+          "outgoing_call_count": 19,
+          "summary": "实现系统调用getdents64，用于读取目录项。它根据文件描述符获取目录文件，遍历目录中的每个文件，构造dirent结构体，并将每个结构体写入用户空间的缓冲区。"
+        },
+        {
+          "name": "sys_fstat",
+          "normalized_name": "sys_fstat",
+          "file_path": "oshit_kernel\\src\\syscall\\fs_syscall.rs",
+          "language": "rust",
+          "start_line": "410",
+          "end_line": "444",
+          "outgoing_call_count": 14,
+          "summary": "实现系统调用 fstat，根据文件描述符获取文件状态信息，并将结果写入用户空间指定的内存地址。"
+        },
+        {
+          "name": "sys_brk",
+          "normalized_name": "sys_brk",
+          "file_path": "oshit_kernel\\src\\syscall\\process_syscall.rs",
+          "language": "rust",
+          "start_line": "225",
+          "end_line": "240",
+          "outgoing_call_count": 12,
+          "summary": "实现 brk 系统调用，用于修改进程数据段的大小。如果传入 sz 为 0，则返回当前进程的数据段大小；否则尝试将数据段大小调整为 sz，成功返回 0，失败返回 -1。"
+        },
+        {
+          "name": "sys_time",
+          "normalized_name": "sys_time",
+          "file_path": "oshit_kernel\\src\\syscall\\trivial_syscall.rs",
+          "language": "rust",
+          "start_line": "19",
+          "end_line": "37",
+          "outgoing_call_count": 12,
+          "summary": "该系统调用实现了获取当前进程及子进程的时间统计信息（用户态、内核态时间）并写入用户空间，同时返回当前系统时间。"
+        },
+        {
+          "name": "sys_sigreturn",
+          "normalized_name": "sys_sigreturn",
+          "file_path": "oshit_kernel\\src\\syscall\\process_syscall.rs",
+          "language": "rust",
+          "start_line": "360",
+          "end_line": "368",
+          "outgoing_call_count": 12,
+          "summary": "从用户栈中恢复之前保存的 TrapContext，用于信号处理程序返回时恢复被中断进程的上下文。"
+        },
+        {
+          "name": "sys_kill",
+          "normalized_name": "sys_kill",
+          "file_path": "oshit_kernel\\src\\syscall\\process_syscall.rs",
+          "language": "rust",
+          "start_line": "267",
+          "end_line": "311",
+          "outgoing_call_count": 11,
+          "summary": "实现系统调用 kill，根据目标进程标识符发送信号，分别处理 pid=0（发送给所有子进程）、pid=-1（发送给除 init 进程外的所有进程）、pid<0（未实现）、pid>0（发送给特定进程）的情况，返回 0 表示成功，-1 表示失败。"
+        },
+        {
+          "name": "sys_dup3",
+          "normalized_name": "sys_dup3",
+          "file_path": "oshit_kernel\\src\\syscall\\fs_syscall.rs",
+          "language": "rust",
+          "start_line": "218",
+          "end_line": "239",
+          "outgoing_call_count": 11,
+          "summary": "该函数实现了sys_dup3系统调用，通过复制旧文件描述符到新文件描述符，实现文件描述符的复制功能。"
+        },
+        {
+          "name": "sys_gettimeofday",
+          "normalized_name": "sys_gettimeofday",
+          "file_path": "oshit_kernel\\src\\syscall\\trivial_syscall.rs",
+          "language": "rust",
+          "start_line": "48",
+          "end_line": "55",
+          "outgoing_call_count": 11,
+          "summary": "实现 `gettimeofday` 系统调用，获取当前时间（秒和纳秒）并写入用户空间指定的虚拟地址。"
+        },
+        {
+          "name": "sys_chdir",
+          "normalized_name": "sys_chdir",
+          "file_path": "oshit_kernel\\src\\syscall\\process_syscall.rs",
+          "language": "rust",
+          "start_line": "207",
+          "end_line": "223",
+          "outgoing_call_count": 11,
+          "summary": "实现系统调用sys_chdir，尝试更改当前进程的工作目录。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "oshit_kernel\\src\\fs\\deprecated\\mod.rs",
+        "oshit_kernel\\src\\memory\\kernel_heap.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "fs_test",
+          "normalized_name": "fs_test",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\mod.rs",
+          "language": "rust",
+          "start_line": "213",
+          "end_line": "338",
+          "outgoing_call_count": 29,
+          "summary": "该函数执行一系列文件系统操作测试，包括文件读写、创建、删除、目录操作和错误处理，用于验证文件系统的基本功能。"
+        },
+        {
+          "name": "heap_test",
+          "normalized_name": "heap_test",
+          "file_path": "oshit_kernel\\src\\memory\\kernel_heap.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "39",
+          "outgoing_call_count": 18,
+          "summary": "测试内核堆内存分配器是否正常工作。函数通过分配Box、向量等动态内存，验证堆内存是否位于BSS段范围内，并检查分配和释放的正确性。"
+        },
+        {
+          "name": "sdcard_test",
+          "normalized_name": "sdcard_test",
+          "file_path": "oshit_kernel\\src\\fs\\deprecated\\mod.rs",
+          "language": "rust",
+          "start_line": "115",
+          "end_line": "128",
+          "outgoing_call_count": 5,
+          "summary": "测试块设备（sdcard）的读写功能：先写入10个块，每个块填充相同字节（索引值），然后读取并验证特定字节是否与索引一致。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 15,
+      "outgoing_edge_count": 87,
+      "internal_edge_count": 51,
+      "external_edge_count": 36,
+      "internal_call_ratio": 0.5862,
+      "external_call_ratio": 0.4138,
+      "module_weight": 0.0158,
+      "files": [
+        "oshit_kernel\\src\\entry.asm"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "oshit_kernel\\src\\entry.asm",
+          "language": "assembly",
+          "start_line": "3",
+          "end_line": "12",
+          "outgoing_call_count": 1,
+          "summary": "RISC-V 架构内核的入口点，设置栈指针并跳转到 Rust 主函数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "oshit_kernel/src/main.rs",
+        "oshit_kernel\\src\\memory\\layout.rs",
+        "oshit_kernel\\src\\memory\\pagetable.rs",
+        "oshit_kernel\\src\\memory\\userbuffer.rs"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "impl UserBuffer {",
+          "normalized_name": "impl UserBuffer {",
+          "file_path": "oshit_kernel\\src\\memory\\userbuffer.rs",
+          "language": "rust",
+          "start_line": "10",
+          "end_line": "99",
+          "outgoing_call_count": 42,
+          "summary": "实现了一个用户缓冲区（UserBuffer）结构体，用于在操作系统内核中表示和操作分散的物理内存区域。提供了构造、长度获取、读写任意类型对象、字节克隆和字节序列写入等功能，主要用于用户态内存的读写操作。"
+        },
+        {
+          "name": "get_user_data",
+          "normalized_name": "get_user_data",
+          "file_path": "oshit_kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": "234",
+          "end_line": "252",
+          "outgoing_call_count": 42,
+          "summary": "根据给定的 satp 值，将一段连续的虚拟地址空间（从 start 开始，长度为 len）按页映射到物理内存，返回一个由可变的字节切片引用组成的向量，每个切片对应一页中与虚拟地址范围重叠的部分。"
+        },
+        {
+          "name": "get_user_data",
+          "normalized_name": "get_user_data",
+          "file_path": "oshit_kernel\\src\\memory\\layout.rs",
+          "language": "rust",
+          "start_line": "700",
+          "end_line": "717",
+          "outgoing_call_count": 42,
+          "summary": "从当前地址空间对象中获取指定虚拟地址范围内用户数据的不安全可变引用片段（Vec<&'static mut [u8]>），通过逐页翻译并切取适当偏移来实现。"
+        },
+        {
+          "name": "get_user_cstr",
+          "normalized_name": "get_user_cstr",
+          "file_path": "oshit_kernel\\src\\memory\\layout.rs",
+          "language": "rust",
+          "start_line": "725",
+          "end_line": "743",
+          "outgoing_call_count": 32,
+          "summary": "从用户空间虚拟地址开始，逐页翻译并复制字节到一个Vec<u8>，直到遇到空字节(0)为止，最后在末尾追加一个空字节，返回一个以空字符结尾的字节向量，类似于从用户空间读取C风格字符串。"
+        },
+        {
+          "name": "get_user_cstr",
+          "normalized_name": "get_user_cstr",
+          "file_path": "oshit_kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": 311,
+          "end_line": 321,
+          "outgoing_call_count": 32,
+          "summary": "通过指定的页表（satp）逐字节读取用户空间的字符串，直到遇到空字符，并返回一个 Rust 拥有所有权的字符串。"
+        },
+        {
+          "name": "rust_main",
+          "normalized_name": "rust_main",
+          "file_path": "oshit_kernel/src/main.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "86",
+          "outgoing_call_count": 29,
+          "summary": "内核主函数，初始化内存、中断、文件系统和进程，然后进入不可恢复的终止状态。"
+        },
+        {
+          "name": "translate_user_va",
+          "normalized_name": "translate_user_va",
+          "file_path": "oshit_kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": "296",
+          "end_line": "302",
+          "outgoing_call_count": 17,
+          "summary": "将用户空间的虚拟地址转换为对应的物理地址，并返回可变指针。"
+        },
+        {
+          "name": "get_user_buffer",
+          "normalized_name": "get_user_buffer",
+          "file_path": "oshit_kernel\\src\\memory\\layout.rs",
+          "language": "rust",
+          "start_line": "750",
+          "end_line": "752",
+          "outgoing_call_count": 7,
+          "summary": "这个函数通过调用 self.get_user_data(start, len) 获取内存区的数据切片，并将其包装成 UserBuffer 类型返回，用于提供用户态可访问的缓冲区视图。"
+        },
+        {
+          "name": "impl IndexMut<usize> for UserBuffer {",
+          "normalized_name": "impl IndexMut<usize> for UserBuffer {",
+          "file_path": "oshit_kernel\\src\\memory\\userbuffer.rs",
+          "language": "rust",
+          "start_line": "154",
+          "end_line": "165",
+          "outgoing_call_count": 7,
+          "summary": "为UserBuffer实现可变索引操作，允许通过usize索引获取可变引用，内部遍历parts切片并根据偏移量定位到具体元素。"
+        },
+        {
+          "name": "get_user_buffer",
+          "normalized_name": "get_user_buffer",
+          "file_path": "oshit_kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": "259",
+          "end_line": "261",
+          "outgoing_call_count": 7,
+          "summary": "该函数通过调用 get_user_data 获取用户空间的数据切片，然后将其包装成 UserBuffer 并返回。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/DROP_DATABASE_teams.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

@@ -1,0 +1,1965 @@
+{
+  "repo_name": "T2026100079911061",
+  "team_name": "T2026100079911061",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026100079911061-2137",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026100079911061-2137",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust"
+  ],
+  "core_modules": [
+    "syscall",
+    "filesystem",
+    "process",
+    "memory",
+    "scheduler"
+  ],
+  "function_count": 2482,
+  "node_count": 2482,
+  "edge_count": 15451,
+  "internal_edge_count": 9556,
+  "external_edge_count": 5895,
+  "module_count": 19,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.65,
+    "build": 0.51,
+    "driver": 0.9,
+    "elf_loader": 0.08,
+    "filesystem": 1.0,
+    "interrupt": 0.9,
+    "ipc": 0.15,
+    "memory": 1.0,
+    "network": 0.15,
+    "process": 1.0,
+    "process / scheduler / filesystem": 0.28,
+    "scheduler": 1.0,
+    "signal": 0.85,
+    "syscall": 1.0,
+    "syscall / filesystem": 0.36,
+    "task": 0.23,
+    "time": 0.13,
+    "unknown": 0.9,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "syscall",
+      "module_weight": 0.4233,
+      "completeness": 1.0,
+      "final_score": 0.654
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.2207,
+      "completeness": 1.0,
+      "final_score": 0.5324
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.1799,
+      "completeness": 1.0,
+      "final_score": 0.5079
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0892,
+      "completeness": 1.0,
+      "final_score": 0.4535
+    },
+    {
+      "module_name": "scheduler",
+      "module_weight": 0.0499,
+      "completeness": 1.0,
+      "final_score": 0.4299
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 8,
+      "outgoing_edge_count": 237,
+      "internal_edge_count": 166,
+      "external_edge_count": 71,
+      "internal_call_ratio": 0.7004,
+      "external_call_ratio": 0.2996,
+      "module_weight": 0.008,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 2,
+      "outgoing_edge_count": 8,
+      "internal_edge_count": 8,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0007,
+      "files": [
+        "kernel\\src\\procfs.rs",
+        "kernel\\src\\rootfs.rs",
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\exec_ops.rs",
+        "kernel\\src\\syscall\\fs_mutation.rs",
+        "kernel\\src\\syscall\\fs_ops.rs",
+        "kernel\\src\\syscall\\fs_path.rs",
+        "kernel\\src\\syscall\\proc_fd.rs",
+        "kernel\\src\\task\\scratchfs.rs"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "fd_kind_link_target",
+          "normalized_name": "fd_kind_link_target",
+          "file_path": "kernel\\src\\syscall\\proc_fd.rs",
+          "language": "rust",
+          "start_line": "367",
+          "end_line": "422",
+          "outgoing_call_count": 74,
+          "summary": "该函数根据文件描述符的种类（FdKind）生成对应的符号链接目标路径，并将路径写入指定的输出缓冲区。它通过匹配不同的 FdKind 变体，调用辅助函数将各种类型（控制台、空设备、随机数、文件系统节点、进程文件、管道、套接字、事件 fd、epoll、timerfd 等）映射为路径字符串。"
+        },
+        {
+          "name": "smoke_check_scratch_symlink_opath_link_fd",
+          "normalized_name": "smoke_check_scratch_symlink_opath_link_fd",
+          "file_path": "kernel\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "145",
+          "end_line": "147",
+          "outgoing_call_count": 26,
+          "summary": "该函数是一个简单的封装，直接调用 `fs_ops::smoke_check_scratch_symlink_opath_link_fd()` 并返回其布尔值结果，用于检查符号链接的 O_PATH 和 linkat 操作是否正常。"
+        },
+        {
+          "name": "smoke_check_scratch_symlink_opath_link_fd",
+          "normalized_name": "smoke_check_scratch_symlink_opath_link_fd",
+          "file_path": "kernel\\src\\syscall\\fs_ops.rs",
+          "language": "rust",
+          "start_line": "946",
+          "end_line": "1008",
+          "outgoing_call_count": 26,
+          "summary": "该函数对 'scratchfs' 中的符号链接（symlink）进行一系列烟雾测试，验证 O_PATH 和 O_NOFOLLOW 标志下的打开、元数据获取、路径操作、读取链接、删除以及关闭操作的正确性。"
+        },
+        {
+          "name": "cwd_link_target",
+          "normalized_name": "cwd_link_target",
+          "file_path": "kernel\\src\\procfs.rs",
+          "language": "rust",
+          "start_line": "646",
+          "end_line": "658",
+          "outgoing_call_count": 15,
+          "summary": "该函数用于获取进程当前工作目录（cwd）的链接目标路径。它尝试从cwd中获取一个临时目录（scratch_dir），如果存在则通过scratchfs模块解析目录路径；如果路径不存在但目录的元数据可获取，则构造一个标记了inode编号的路径并附加\"(deleted)\"后缀，表示该目录已被删除。最终将路径写入输出缓冲区out，并返回写入的字节数。"
+        },
+        {
+          "name": "resolve_final_magic_link",
+          "normalized_name": "resolve_final_magic_link",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "520",
+          "end_line": "559",
+          "outgoing_call_count": 14,
+          "summary": "解析路径中可能出现的最后一种“magic link”（魔术链接），包括 procfs 中的 /proc/pid/fd/ 链接和 /proc/pid/ 下的其他链接，并根据查找策略（Follow/Keep/Reject）决定是跟随链接还是返回链接本身或拒绝访问。"
+        },
+        {
+          "name": "nlink_for_kind",
+          "normalized_name": "nlink_for_kind",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "957",
+          "end_line": "964",
+          "outgoing_call_count": 14,
+          "summary": "根据文件描述符的类型（FdKind）计算硬链接数（nlink），对于ScratchFS类型的目录、文件、符号链接，调用scratchfs::nlink查询其硬链接数；其他类型返回默认值1。"
+        },
+        {
+          "name": "symlinkat",
+          "normalized_name": "symlinkat",
+          "file_path": "kernel\\src\\syscall\\fs_mutation.rs",
+          "language": "rust",
+          "start_line": "108",
+          "end_line": "140",
+          "outgoing_call_count": 14,
+          "summary": "实现 symlinkat 系统调用，在指定目录下创建符号链接。"
+        },
+        {
+          "name": "push_path_with_intermediate_symlinks",
+          "normalized_name": "push_path_with_intermediate_symlinks",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "596",
+          "end_line": "621",
+          "outgoing_call_count": 12,
+          "summary": "按路径段逐段解析路径，并在满足条件时处理中间符号链接（包括临时符号链接、ext4符号链接和proc fd魔术链接），最终将路径组件压入当前路径上下文中。用于支持符号链接的中间解析，避免在路径末尾跟随符号链接（取决于follow_intermediate_symlinks标志）。"
+        },
+        {
+          "name": "follow_intermediate_ext4_symlink",
+          "normalized_name": "follow_intermediate_ext4_symlink",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "677",
+          "end_line": "691",
+          "outgoing_call_count": 12,
+          "summary": "该函数在一个循环中持续检查当前路径是否为 ext4 符号链接，如果是且未超过最大跟踪深度，则读取链接目标并规范化替换当前路径；否则直接返回或返回 ELOOP 错误。它用于处理路径解析过程中遇到的中间符号链接（非最后一个路径分量）。"
+        },
+        {
+          "name": "normalized_path_has_stage1_symlink_component",
+          "normalized_name": "normalized_path_has_stage1_symlink_component",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "763",
+          "end_line": "787",
+          "outgoing_call_count": 12,
+          "summary": "检查一个以'/'开头的规范化路径中是否存在由scratchfs或ext4文件系统管理的符号链接组件。函数通过逐段扫描路径的每个子路径，查找是否有组件被注册为符号链接，若找到则返回true，否则返回false。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 13,
+      "outgoing_edge_count": 36,
+      "internal_edge_count": 25,
+      "external_edge_count": 11,
+      "internal_call_ratio": 0.6944,
+      "external_call_ratio": 0.3056,
+      "module_weight": 0.004,
+      "files": [
+        "kernel/src/procfs.rs",
+        "kernel\\src\\console.rs",
+        "kernel\\src\\procfs.rs",
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\event_ops.rs",
+        "kernel\\src\\syscall\\fcntl_lock.rs",
+        "kernel\\src\\syscall\\fd_readiness.rs",
+        "kernel\\src\\syscall\\fs_ops.rs",
+        "kernel\\src\\syscall\\fs_path.rs",
+        "kernel\\src\\syscall\\futex_ops.rs",
+        "kernel\\src\\syscall\\io_ops.rs",
+        "kernel\\src\\syscall\\io_ops\\special_fd.rs",
+        "kernel\\src\\syscall\\io_transfer\\splice.rs",
+        "kernel\\src\\syscall\\poll_ops.rs",
+        "kernel\\src\\syscall\\socket_ops.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scheduler.rs",
+        "kernel\\src\\task\\scratchfs.rs",
+        "kernel\\src\\task\\timerfd.rs",
+        "kernel\\src\\trap.rs"
+      ],
+      "file_count": 20,
+      "core_functions": [
+        {
+          "name": "block_reason_matches",
+          "normalized_name": "block_reason_matches",
+          "file_path": "kernel\\src\\syscall\\fd_readiness.rs",
+          "language": "rust",
+          "start_line": "274",
+          "end_line": "304",
+          "outgoing_call_count": 24,
+          "summary": "判断两个阻塞原因（BlockReason）是否匹配，用于决定是否可以唤醒因特定原因阻塞的进程。函数通过模式匹配处理不同种类的阻塞原因（如管道、套接字、事件fd、定时器fd等），比较其内部标识符或端点信息，如果特定模式不匹配则回退到比较整个枚举值。"
+        },
+        {
+          "name": "BlockReason",
+          "normalized_name": "BlockReason",
+          "file_path": "kernel\\src\\task\\process.rs",
+          "language": "rust",
+          "start_line": "2146",
+          "end_line": "2258",
+          "outgoing_call_count": 16,
+          "summary": "定义了任务（进程/线程）可能因等待各种系统调用或事件而进入阻塞状态的原因枚举。每个变体携带恢复执行所需的上下文数据，例如等待的子进程信息、信号、I/O操作、锁或超时等。"
+        },
+        {
+          "name": "smoke_check_pidfd_generation_blocks_pid_reuse",
+          "normalized_name": "smoke_check_pidfd_generation_blocks_pid_reuse",
+          "file_path": "kernel\\src\\syscall\\event_ops.rs",
+          "language": "rust",
+          "start_line": "390",
+          "end_line": "429",
+          "outgoing_call_count": 15,
+          "summary": "这是一个烟雾测试函数，用于检查 PID 文件描述符（pidfd）的 generation（代）机制是否能防止 PID 重用。它通过创建具有相同 PID 但不同 generation 的旧和新 pidfd，插入一个具有新 generation 的临时进程，然后验证旧 pidfd 是否仍然表示目标已退出，新 pidfd 是否表示目标存活，以及基于旧 pidfd 的查询能否定位到新进程。最后清理临时进程。"
+        },
+        {
+          "name": "block_on_signalfd",
+          "normalized_name": "block_on_signalfd",
+          "file_path": "kernel\\src\\syscall\\io_ops\\special_fd.rs",
+          "language": "rust",
+          "start_line": "194",
+          "end_line": "218",
+          "outgoing_call_count": 15,
+          "summary": "该函数用于在信号文件描述符（signalfd）上阻塞当前进程，等待信号事件。它首先验证信号掩码是否有效，然后检查是否可以通过等待未来信号来处理，接着将进程状态设为阻塞并设置阻塞原因，如果有信号定时器截止时间则启动定时器，最后触发调度器切换进程。"
+        },
+        {
+          "name": "smoke_check_pidfd_generation_blocks_pid_reuse",
+          "normalized_name": "smoke_check_pidfd_generation_blocks_pid_reuse",
+          "file_path": "kernel\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "209",
+          "end_line": "211",
+          "outgoing_call_count": 15,
+          "summary": "该函数是一个薄封装，将调用委托给 `event_ops::smoke_check_pidfd_generation_blocks_pid_reuse()`，用于检查 pidfd generation 是否阻止了 PID 重用。"
+        },
+        {
+          "name": "socket_block_reason",
+          "normalized_name": "socket_block_reason",
+          "file_path": "kernel\\src\\syscall\\io_ops.rs",
+          "language": "rust",
+          "start_line": "614",
+          "end_line": "651",
+          "outgoing_call_count": 14,
+          "summary": "该函数根据套接字操作是否阻塞、等待方向以及超时设置，返回一个可选的BlockReason枚举，用于指示当前线程需要阻塞的原因（或不需要阻塞）。"
+        },
+        {
+          "name": "block_on_select_fdset_until",
+          "normalized_name": "block_on_select_fdset_until",
+          "file_path": "kernel\\src\\syscall\\poll_ops.rs",
+          "language": "rust",
+          "start_line": "859",
+          "end_line": "888",
+          "outgoing_call_count": 13,
+          "summary": "此函数实现将当前进程阻塞（挂起）直到 select 文件描述符集合中有文件变为可操作（可读/可写/异常），或达到 deadline 超时。它首先检查指定文件描述符集合中是否有需要阻塞等待的文件，若没有则返回 ENOSYS；若已超时则立即返回 0；否则阻塞进程并设置阻塞原因为 Select，记录文件描述符集合信息，然后设置超时定时器并调度其他进程运行。"
+        },
+        {
+          "name": "impl Uart16550 {",
+          "normalized_name": "impl Uart16550 {",
+          "file_path": "kernel\\src\\console.rs",
+          "language": "rust",
+          "start_line": "7",
+          "end_line": "36",
+          "outgoing_call_count": 12,
+          "summary": "该代码块实现了UART 16550串口的基本输入输出操作，包括发送单个字符、发送字符串、读取单个字符，以及通过内存映射寄存器进行读写。"
+        },
+        {
+          "name": "blocked_fd_kind",
+          "normalized_name": "blocked_fd_kind",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "1131",
+          "end_line": "1136",
+          "outgoing_call_count": 12,
+          "summary": "获取指定文件描述符在被阻塞时对应的文件类型（FdKind）。优先检查阻塞中的打开文件，若没有则从进程的文件描述符表中查询。"
+        },
+        {
+          "name": "block_reason_can_wake_later",
+          "normalized_name": "block_reason_can_wake_later",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "1187",
+          "end_line": "1212",
+          "outgoing_call_count": 12,
+          "summary": "判断进程是否可以在将来被唤醒，即是否具有超时机制或可以被重新激活的条件。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "elf_loader": {
+      "module_name": "elf_loader",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 533,
+      "outgoing_edge_count": 3551,
+      "internal_edge_count": 2073,
+      "external_edge_count": 1478,
+      "internal_call_ratio": 0.5838,
+      "external_call_ratio": 0.4162,
+      "module_weight": 0.2207,
+      "files": [
+        "kernel/src/main.rs",
+        "kernel/src/syscall/io_ops.rs",
+        "kernel/src/syscall/io_ops/special_fd.rs",
+        "kernel/src/syscall/time_ops.rs",
+        "kernel\\src\\console.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\mm\\page_table.rs",
+        "kernel\\src\\procfs.rs",
+        "kernel\\src\\rootfs.rs",
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\abi.rs",
+        "kernel\\src\\syscall\\cwd_ops.rs",
+        "kernel\\src\\syscall\\device_ops.rs",
+        "kernel\\src\\syscall\\ext4_fd.rs",
+        "kernel\\src\\syscall\\fcntl_lock.rs",
+        "kernel\\src\\syscall\\fd_readiness.rs",
+        "kernel\\src\\syscall\\fd_util.rs",
+        "kernel\\src\\syscall\\fs_mutation.rs",
+        "kernel\\src\\syscall\\fs_ops.rs",
+        "kernel\\src\\syscall\\fs_path.rs",
+        "kernel\\src\\syscall\\futex_ops.rs",
+        "kernel\\src\\syscall\\identity_ops.rs",
+        "kernel\\src\\syscall\\io_ops.rs",
+        "kernel\\src\\syscall\\io_ops\\special_fd.rs",
+        "kernel\\src\\syscall\\io_transfer\\copy_range.rs",
+        "kernel\\src\\syscall\\io_transfer\\vectored.rs",
+        "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+        "kernel\\src\\syscall\\memory_ops\\mempolicy.rs",
+        "kernel\\src\\syscall\\misc_ops.rs",
+        "kernel\\src\\syscall\\mount_ops.rs",
+        "kernel\\src\\syscall\\poll_ops.rs",
+        "kernel\\src\\syscall\\proc_fd.rs",
+        "kernel\\src\\syscall\\process_lookup.rs",
+        "kernel\\src\\syscall\\process_ops.rs",
+        "kernel\\src\\syscall\\regular_file.rs",
+        "kernel\\src\\syscall\\signal.rs",
+        "kernel\\src\\syscall\\socket_ops.rs",
+        "kernel\\src\\syscall\\socket_ops\\addr.rs",
+        "kernel\\src\\syscall\\socket_ops\\msg.rs",
+        "kernel\\src\\syscall\\system_ops.rs",
+        "kernel\\src\\syscall\\time_ops.rs",
+        "kernel\\src\\syscall\\time_util.rs",
+        "kernel\\src\\syscall\\user_layout.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scheduler.rs",
+        "kernel\\src\\task\\scratchfs.rs",
+        "kernel\\src\\task\\timerfd.rs",
+        "kernel\\src\\task\\trapframe.rs",
+        "kernel\\src\\timer.rs"
+      ],
+      "file_count": 49,
+      "core_functions": [
+        {
+          "name": "ino_for_kind",
+          "normalized_name": "ino_for_kind",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "1064",
+          "end_line": "1097",
+          "outgoing_call_count": 84,
+          "summary": "将文件描述符种类（FdKind）映射到对应的 inode 编号（u64），用于表示伪文件系统和设备文件中的虚拟 inode 或实际文件系统 inode。"
+        },
+        {
+          "name": "fdinfo_ino",
+          "normalized_name": "fdinfo_ino",
+          "file_path": "kernel\\src\\procfs.rs",
+          "language": "rust",
+          "start_line": "1986",
+          "end_line": "2021",
+          "outgoing_call_count": 83,
+          "summary": "根据文件描述符种类（FdKind）返回对应的inode号，用于procfs中fdinfo文件的ino字段。该函数将各种FdKind枚举映射到具体的inode值，这些值来源于根文件系统、procfs内部、扩展文件系统、scratchfs、管道、套接字、事件、epoll、定时器、信号、进程fd、inotify等模块的预定义或计算出的inode编号。"
+        },
+        {
+          "name": "poll_file_revents",
+          "normalized_name": "poll_file_revents",
+          "file_path": "kernel\\src\\syscall\\fd_readiness.rs",
+          "language": "rust",
+          "start_line": "28",
+          "end_line": "186",
+          "outgoing_call_count": 77,
+          "summary": "该函数根据文件描述符的类型（FdKind）和当前状态（如状态标志、管道状态、套接字状态等），计算出在给定poll事件（events）下哪些事件已经就绪（revents）。它主要用于实现poll/select系统调用中设备文件、伪设备、文件系统文件、管道、套接字、定时器fd等的可读可写状态判断。"
+        },
+        {
+          "name": "metadata_for_kind",
+          "normalized_name": "metadata_for_kind",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "1011",
+          "end_line": "1062",
+          "outgoing_call_count": 71,
+          "summary": "根据给定的文件描述符种类（FdKind）返回对应的文件元数据，包括文件类型和权限的组合值以及文件大小（或链接目标长度）。主要用于处理系统调用中获取文件属性的需求。"
+        },
+        {
+          "name": "write_kernel_bytes",
+          "normalized_name": "write_kernel_bytes",
+          "file_path": "kernel\\src\\syscall\\io_ops.rs",
+          "language": "rust",
+          "start_line": "220",
+          "end_line": "286",
+          "outgoing_call_count": 65,
+          "summary": "该函数是内核中用于向文件描述符写入字节数据的通用接口，根据文件类型分发到不同的具体写入逻辑。"
+        },
+        {
+          "name": "impl NormalizedPath {",
+          "normalized_name": "impl NormalizedPath {",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "566",
+          "end_line": "701",
+          "outgoing_call_count": 58,
+          "summary": "这个代码块定义了NormalizedPath结构体的方法，用于构建、操作（例如拼接组件、弹出组件、跟随符号链接）一个规范化（以'/'开头，无冗余分隔符或'..'、'.'）的路径。它支持中间符号链接的解析，包括对临时文件系统（scratchfs）和ext4文件系统符号链接的处理，以及/proc/fd伪文件系统路径的转换。"
+        },
+        {
+          "name": "render_file",
+          "normalized_name": "render_file",
+          "file_path": "kernel\\src\\procfs.rs",
+          "language": "rust",
+          "start_line": "463",
+          "end_line": "521",
+          "outgoing_call_count": 49,
+          "summary": "该函数根据传入的 ProcFile 枚举值，调用对应的渲染函数将系统信息或进程信息写入输出缓冲区，并返回实际写入的字节数。"
+        },
+        {
+          "name": "dirent_for_kind",
+          "normalized_name": "dirent_for_kind",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "1099",
+          "end_line": "1170",
+          "outgoing_call_count": 40,
+          "summary": "该函数根据文件描述符类型（FdKind）和索引（idx）生成对应的目录项（Stage1Dirent），用于在虚拟文件系统层（如rootfs、procfs、ext4、scratchfs）中遍历目录时返回目录条目。"
+        },
+        {
+          "name": "dir_entry",
+          "normalized_name": "dir_entry",
+          "file_path": "kernel\\src\\procfs.rs",
+          "language": "rust",
+          "start_line": "415",
+          "end_line": "432",
+          "outgoing_call_count": 39,
+          "summary": "根据传入的ProcDir枚举类型和索引，匹配对应的目录变体，并调用相应的子目录条目函数返回Option<ProcDirent>。这是一个调度函数，用于从procfs虚拟文件系统的不同层级目录中获取指定索引的目录项。"
+        },
+        {
+          "name": "dir_entry",
+          "normalized_name": "dir_entry",
+          "file_path": "kernel\\src\\task\\scratchfs.rs",
+          "language": "rust",
+          "start_line": "860",
+          "end_line": "884",
+          "outgoing_call_count": 39,
+          "summary": "根据索引 `idx` 查找并返回 ScratchDir 目录下的一个目录项（`ScratchDirent`）。索引 0 总是返回当前目录条目（'.'），后续索引对应目录下的直接子节点。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 10,
+      "outgoing_edge_count": 77,
+      "internal_edge_count": 67,
+      "external_edge_count": 10,
+      "internal_call_ratio": 0.8701,
+      "external_call_ratio": 0.1299,
+      "module_weight": 0.0044,
+      "files": [
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\dispatcher.rs",
+        "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+        "kernel\\src\\syscall\\poll_ops.rs",
+        "kernel\\src\\syscall\\signal.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scratchfs.rs",
+        "kernel\\src\\task\\trapframe.rs",
+        "kernel\\src\\timer.rs",
+        "kernel\\src\\trap.rs"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "trap_handler",
+          "normalized_name": "trap_handler",
+          "file_path": "kernel\\src\\trap.rs",
+          "language": "rust",
+          "start_line": "93",
+          "end_line": "175",
+          "outgoing_call_count": 46,
+          "summary": "处理中断和异常的顶层分发函数，从 trap 入口获取陷入原因，根据中断位区分时钟中断和异常（系统调用、缺页、其他同步异常），并执行相应的内核逻辑如唤醒睡眠进程、调度、系统调用分发、缺页处理等。"
+        },
+        {
+          "name": "dispatch_trap",
+          "normalized_name": "dispatch_trap",
+          "file_path": "kernel\\src\\syscall\\dispatcher.rs",
+          "language": "rust",
+          "start_line": "3",
+          "end_line": "70",
+          "outgoing_call_count": 29,
+          "summary": "根据系统调用号分派系统调用到对应的模块处理函数，支持执行、进程、时间、信号、调度和轮询相关的系统调用，未匹配的调用转发到通用dispatch函数。"
+        },
+        {
+          "name": "handle_cow_fault",
+          "normalized_name": "handle_cow_fault",
+          "file_path": "kernel\\src\\trap.rs",
+          "language": "rust",
+          "start_line": "269",
+          "end_line": "295",
+          "outgoing_call_count": 25,
+          "summary": "处理写时复制（Copy-on-Write）缺页异常：根据页面的引用计数决定是分配新帧并拷贝数据（多进程共享时），还是直接恢复写权限（唯一拥有者时）。"
+        },
+        {
+          "name": "page_fault_handler",
+          "normalized_name": "page_fault_handler",
+          "file_path": "kernel\\src\\trap.rs",
+          "language": "rust",
+          "start_line": "190",
+          "end_line": "221",
+          "outgoing_call_count": 24,
+          "summary": "处理页错误异常，依次尝试mmap页面缺失、写时复制（COW）、栈增长、信号段错误传递，最后触发实际段错误。"
+        },
+        {
+          "name": "handle_current_stack_growth_fault",
+          "normalized_name": "handle_current_stack_growth_fault",
+          "file_path": "kernel\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "315",
+          "end_line": "321",
+          "outgoing_call_count": 20,
+          "summary": "这个函数是处理当前栈增长故障的外部接口，它直接委托给 memory_ops 模块中的同名函数来执行具体逻辑。"
+        },
+        {
+          "name": "handle_current_stack_growth_fault",
+          "normalized_name": "handle_current_stack_growth_fault",
+          "file_path": "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+          "language": "rust",
+          "start_line": "39",
+          "end_line": "81",
+          "outgoing_call_count": 20,
+          "summary": "处理当前线程的栈增长缺页异常，通过映射新页来扩展栈空间，但需通过多层安全检查。"
+        },
+        {
+          "name": "impl TrapFrame {",
+          "normalized_name": "impl TrapFrame {",
+          "file_path": "kernel\\src\\task\\trapframe.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "91",
+          "outgoing_call_count": 12,
+          "summary": "实现了TrapFrame结构体的方法，包括初始化用户态陷阱帧、设置寄存器、以及从内核栈复制或写入陷阱帧的功能。"
+        },
+        {
+          "name": "kernel_trap_handler",
+          "normalized_name": "kernel_trap_handler",
+          "file_path": "kernel\\src\\trap.rs",
+          "language": "rust",
+          "start_line": "21",
+          "end_line": "83",
+          "outgoing_call_count": 9,
+          "summary": "处理内核陷阱（trap）的中断处理函数，保存相关寄存器值并打印调试信息，最后关闭系统。"
+        },
+        {
+          "name": "deliver_or_finish_sigsegv",
+          "normalized_name": "deliver_or_finish_sigsegv",
+          "file_path": "kernel\\src\\trap.rs",
+          "language": "rust",
+          "start_line": "237",
+          "end_line": "243",
+          "outgoing_call_count": 6,
+          "summary": "尝试递送当前进程的SIGSEGV信号，若递送失败（通常是信号被忽略或处理函数返回），则调用finish_current_sigsegv来结束当前进程或执行默认处理。"
+        },
+        {
+          "name": "deliver_or_finish_sigill",
+          "normalized_name": "deliver_or_finish_sigill",
+          "file_path": "kernel\\src\\trap.rs",
+          "language": "rust",
+          "start_line": "253",
+          "end_line": "259",
+          "outgoing_call_count": 6,
+          "summary": "尝试交付一个非法指令信号（SIGILL）给当前进程，如果交付失败（例如没有注册信号处理函数），则结束当前进程的SIGILL处理。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\event_ops.rs",
+        "kernel\\src\\syscall\\fcntl_lock.rs",
+        "kernel\\src\\syscall\\futex_ops.rs",
+        "kernel\\src\\syscall\\poll_ops.rs",
+        "kernel\\src\\syscall\\signal.rs",
+        "kernel\\src\\syscall\\socket_ops.rs",
+        "kernel\\src\\syscall\\socket_ops\\msg.rs",
+        "kernel\\src\\syscall\\time_ops.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\thread_group.rs"
+      ],
+      "file_count": 11,
+      "core_functions": [
+        {
+          "name": "impl PendingSignalSet {",
+          "normalized_name": "impl PendingSignalSet {",
+          "file_path": "kernel\\src\\task\\process.rs",
+          "language": "rust",
+          "start_line": 276,
+          "end_line": 450,
+          "outgoing_call_count": 35,
+          "summary": "实现了待处理信号集的管理，包括标准信号和实时信号的挂起、清除、信息查询以及基于信号源的丢弃和检查。"
+        },
+        {
+          "name": "block_reason_is_signal_interruptible",
+          "normalized_name": "block_reason_is_signal_interruptible",
+          "file_path": "kernel\\src\\syscall\\signal.rs",
+          "language": "rust",
+          "start_line": "2667",
+          "end_line": "2704",
+          "outgoing_call_count": 31,
+          "summary": "判断给定的阻塞原因（BlockReason）是否可以被信号中断。函数通过matches!宏列出所有可被信号中断的阻塞原因，这些原因涵盖等待子进程、信号相关等待、睡眠、管道、套接字、事件fd、定时器fd、信号fd、pidfd、inotify、文件锁、poll、select、futex等阻塞场景。"
+        },
+        {
+          "name": "block_reason_is_sa_restartable",
+          "normalized_name": "block_reason_is_sa_restartable",
+          "file_path": "kernel\\src\\syscall\\signal.rs",
+          "language": "rust",
+          "start_line": "2706",
+          "end_line": "2729",
+          "outgoing_call_count": 30,
+          "summary": "判断给定的BlockReason是否属于可被SA_RESTART标志重新启动的阻塞原因类型。该函数通过模式匹配列举了所有允许自动重启系统调用的阻塞场景，包括等待子进程、管道I/O、套接字I/O（多种协议）、事件fd、定时器fd、pidfd、signalfd、inotify以及不带超时（deadline为0）的futex相关操作。"
+        },
+        {
+          "name": "prepare_signal_return",
+          "normalized_name": "prepare_signal_return",
+          "file_path": "kernel\\src\\syscall\\signal.rs",
+          "language": "rust",
+          "start_line": "851",
+          "end_line": "894",
+          "outgoing_call_count": 28,
+          "summary": "在进程或线程即将从内核返回用户态时，检查并递送一个待处理的信号。它从当前线程的待决信号集中选出优先级最高的信号，根据信号动作（忽略、默认或自定义处理）执行相应操作：忽略则清除信号；默认终止则终止线程组；默认停止则尝试停止线程组；自定义处理则在用户栈上设置信号返回帧，更新信号掩码，并根据SA_RESETHAND标志重置动作为默认。成功递送一个信号后立即返回，否则在循环中继续检查下一个信号。"
+        },
+        {
+          "name": "impl SignalContext {",
+          "normalized_name": "impl SignalContext {",
+          "file_path": "kernel\\src\\task\\process.rs",
+          "language": "rust",
+          "start_line": "1396",
+          "end_line": "1496",
+          "outgoing_call_count": 28,
+          "summary": "SignalContext 结构体的实现，提供了信号上下文（包括信号状态和信号处理表）的创建、复制、共享、释放等管理方法，用于进程的信号处理机制。"
+        },
+        {
+          "name": "signal_thread_group_with_info",
+          "normalized_name": "signal_thread_group_with_info",
+          "file_path": "kernel\\src\\syscall\\signal.rs",
+          "language": "rust",
+          "start_line": "2059",
+          "end_line": "2103",
+          "outgoing_call_count": 23,
+          "summary": "向指定线程组发送信号（携带附加信息），根据信号效果执行对应操作（无操作、挂起、停止或终止进程）。"
+        },
+        {
+          "name": "setup_rt_signal_frame",
+          "normalized_name": "setup_rt_signal_frame",
+          "file_path": "kernel\\src\\syscall\\signal.rs",
+          "language": "rust",
+          "start_line": "896",
+          "end_line": "939",
+          "outgoing_call_count": 18,
+          "summary": "为当前进程在用户栈上设置一个实时信号处理帧（rt_sigframe），包含保存的信号信息、寄存器上下文和信号掩码，然后修改陷阱帧（TrapFrame）以在信号处理函数返回后自动执行 sigreturn 处理。"
+        },
+        {
+          "name": "smoke_check_nonrealtime_queued_signal_clear_all",
+          "normalized_name": "smoke_check_nonrealtime_queued_signal_clear_all",
+          "file_path": "kernel\\src\\syscall\\signal.rs",
+          "language": "rust",
+          "start_line": "3079",
+          "end_line": "3121",
+          "outgoing_call_count": 18,
+          "summary": "该函数用于测试清除所有非实时排队信号的功能是否正确。它通过构造包含多个排队信号（两个内核源信号和一个标准信号）的待处理信号集，调用清除函数，然后验证清除结果是否符合预期（计数为3、信号源匹配、掩码清零）。"
+        },
+        {
+          "name": "smoke_check_nonrealtime_queued_signal_clear_all",
+          "normalized_name": "smoke_check_nonrealtime_queued_signal_clear_all",
+          "file_path": "kernel\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "233",
+          "end_line": "235",
+          "outgoing_call_count": 18,
+          "summary": "这是一个系统调用相关的函数，它直接委托给内核信号模块中的同名函数来执行实际逻辑，用于检查或测试非实时信号队列的清除状态。"
+        },
+        {
+          "name": "mark_signal_pending_index",
+          "normalized_name": "mark_signal_pending_index",
+          "file_path": "kernel\\src\\syscall\\signal.rs",
+          "language": "rust",
+          "start_line": "2478",
+          "end_line": "2519",
+          "outgoing_call_count": 17,
+          "summary": "该函数通过进程索引标记信号为待处理状态，并处理信号传递、唤醒等待者及清理逻辑。它首先获取目标进程的有效信号动作，然后在线程组中替换该动作并执行实际的标记、唤醒和清理操作。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 221,
+      "outgoing_edge_count": 1384,
+      "internal_edge_count": 991,
+      "external_edge_count": 393,
+      "internal_call_ratio": 0.716,
+      "external_call_ratio": 0.284,
+      "module_weight": 0.0892,
+      "files": [
+        "kernel/src/mm/frame.rs",
+        "kernel/src/mm/page_table.rs",
+        "kernel\\src\\elf.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\mm\\frame.rs",
+        "kernel\\src\\mm\\page_table.rs",
+        "kernel\\src\\procfs.rs",
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\abi.rs",
+        "kernel\\src\\syscall\\fcntl_lock.rs",
+        "kernel\\src\\syscall\\fs_mutation.rs",
+        "kernel\\src\\syscall\\memory_ops.rs",
+        "kernel\\src\\syscall\\memory_ops\\advice.rs",
+        "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+        "kernel\\src\\syscall\\memory_ops\\mempolicy.rs",
+        "kernel\\src\\syscall\\memory_ops\\range.rs",
+        "kernel\\src\\syscall\\process_ops.rs",
+        "kernel\\src\\syscall\\socket_ops\\msg.rs",
+        "kernel\\src\\syscall\\system_ops.rs",
+        "kernel\\src\\syscall\\usermem.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scheduler.rs",
+        "kernel\\src\\task\\scratchfs.rs",
+        "kernel\\src\\task\\thread_group.rs",
+        "kernel\\src\\task\\timerfd.rs"
+      ],
+      "file_count": 25,
+      "core_functions": [
+        {
+          "name": "impl PageTable {",
+          "normalized_name": "impl PageTable {",
+          "file_path": "kernel\\src\\mm\\page_table.rs",
+          "language": "rust",
+          "start_line": "172",
+          "end_line": "361",
+          "outgoing_call_count": 69,
+          "summary": "实现了RISC-V SV39三级页表的操作，包括页表项的查找（自动分配中间页表或不分配）、遍历指定范围内的叶子页表项、映射和解除映射物理页，以及生成satp寄存器的值用于切换页表。"
+        },
+        {
+          "name": "sys_mmap",
+          "normalized_name": "sys_mmap",
+          "file_path": "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+          "language": "rust",
+          "start_line": "198",
+          "end_line": "408",
+          "outgoing_call_count": 52,
+          "summary": "实现Linux系统调用mmap的核心逻辑，负责在用户虚拟地址空间中映射内存区域（文件或匿名），包括参数校验、地址选择、页表属性设置、文件背板处理、预填充（MAP_POPULATE）以及最终的mmap区域管理（合并或插入）。"
+        },
+        {
+          "name": "free_intermediate_frames",
+          "normalized_name": "free_intermediate_frames",
+          "file_path": "kernel\\src\\syscall\\process_ops.rs",
+          "language": "rust",
+          "start_line": "3201",
+          "end_line": "3245",
+          "outgoing_call_count": 29,
+          "summary": "该函数用于递归释放两级页表（L2和L1）中指定VPN2范围内的中间页表帧，仅释放非叶节点（即不可读、写、执行的页表项指向的帧），并处理非法或不可管理帧的情况。"
+        },
+        {
+          "name": "fallocate",
+          "normalized_name": "fallocate",
+          "file_path": "kernel\\src\\syscall\\fs_mutation.rs",
+          "language": "rust",
+          "start_line": "577",
+          "end_line": "622",
+          "outgoing_call_count": 28,
+          "summary": "实现fallocate系统调用，根据文件描述符分配或释放磁盘空间，仅支持一种模式（FALLOCATE_SUPPORTED_MODE），对ScratchFile类型文件允许扩展大小（通过truncate实现），对其他类型文件返回只读文件系统错误。"
+        },
+        {
+          "name": "copy_anonymous_private_mremap_pages",
+          "normalized_name": "copy_anonymous_private_mremap_pages",
+          "file_path": "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+          "language": "rust",
+          "start_line": "2518",
+          "end_line": "2574",
+          "outgoing_call_count": 26,
+          "summary": "该函数用于在匿名私有内存重映射（mremap）过程中复制页面。它首先校验新地址范围内没有有效映射，然后从旧地址复制页面到新地址，复制长度取 old_len 和 new_len 的最小值。复制时检查每个旧页面的属性（用户可访问且不可写复制），并通过增加引用计数和映射新地址来共享物理页面。如果遇到不支持的情况（如 COW 页面或非托管帧），则回滚新增映射并返回错误。最后执行 sfence.vma 刷新 TLB。"
+        },
+        {
+          "name": "ensure_address_space_range",
+          "normalized_name": "ensure_address_space_range",
+          "file_path": "kernel\\src\\syscall\\usermem.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "100",
+          "outgoing_call_count": 26,
+          "summary": "确保给定的用户空间地址范围（ptr 到 ptr+len-1）在地址空间中有效且可访问，根据需要检查写权限、COW 处理以及物理页框的有效性。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\mm\\page_table.rs",
+          "language": "rust",
+          "start_line": "128",
+          "end_line": "143",
+          "outgoing_call_count": 26,
+          "summary": "创建一个新的页表项标志位（Flag），根据读、写、执行、用户权限参数设置对应的位，并始终设置有效位（V）。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\mm\\page_table.rs",
+          "language": "rust",
+          "start_line": "174",
+          "end_line": "176",
+          "outgoing_call_count": 26,
+          "summary": "构造一个页表结构体，包含根物理地址和帧分配器函数指针。"
+        },
+        {
+          "name": "for_each_leaf",
+          "normalized_name": "for_each_leaf",
+          "file_path": "kernel\\src\\mm\\page_table.rs",
+          "language": "rust",
+          "start_line": "247",
+          "end_line": "292",
+          "outgoing_call_count": 24,
+          "summary": "遍历多级页表中指定VPN2范围的叶子页表项，对每个叶节点（大页或4K页）调用回调函数，传入虚拟地址和页表项引用。"
+        },
+        {
+          "name": "retain_scratch_shared_frame",
+          "normalized_name": "retain_scratch_shared_frame",
+          "file_path": "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+          "language": "rust",
+          "start_line": "2111",
+          "end_line": "2170",
+          "outgoing_call_count": 22,
+          "summary": "获取或创建一个与scratch文件映射关联的物理页帧，用于共享内存映射。尝试在现有缓存条目中查找匹配项，若找到则增加引用计数并返回；否则分配新页帧，清零并填充尾部数据，然后插入缓存。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\src\\procfs.rs",
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\fs_mutation.rs",
+        "kernel\\src\\syscall\\fs_path.rs",
+        "kernel\\src\\syscall\\io_ops.rs",
+        "kernel\\src\\syscall\\io_transfer\\splice.rs",
+        "kernel\\src\\syscall\\proc_fd.rs",
+        "kernel\\src\\syscall\\socket_ops.rs",
+        "kernel\\src\\syscall\\socket_ops\\addr.rs",
+        "kernel\\src\\syscall\\socket_ops\\msg.rs",
+        "kernel\\src\\syscall\\socket_ops\\sockopt.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scratchfs.rs"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "transfer_socket_datagram_iovecs",
+          "normalized_name": "transfer_socket_datagram_iovecs",
+          "file_path": "kernel\\src\\syscall\\socket_ops\\msg.rs",
+          "language": "rust",
+          "start_line": "742",
+          "end_line": "821",
+          "outgoing_call_count": 26,
+          "summary": "该函数实现数据报socket的IO向量传输，根据from_user标志区分发送（数据从用户态复制到内核并写入socket）或接收（从socket读取数据并分散到用户态IO向量），处理阻塞、截断、MSG_PEEK和MSG_TRUNC等标志。"
+        },
+        {
+          "name": "recvmsg_inet_socket",
+          "normalized_name": "recvmsg_inet_socket",
+          "file_path": "kernel\\src\\syscall\\socket_ops\\msg.rs",
+          "language": "rust",
+          "start_line": "543",
+          "end_line": "621",
+          "outgoing_call_count": 22,
+          "summary": "该函数实现recvmsg系统调用中针对inet套接字的接收逻辑，处理流套接字和数据报套接字的接收、元数据写入及错误处理。"
+        },
+        {
+          "name": "splice_pipe_to_fd",
+          "normalized_name": "splice_pipe_to_fd",
+          "file_path": "kernel\\src\\syscall\\io_transfer\\splice.rs",
+          "language": "rust",
+          "start_line": "274",
+          "end_line": "308",
+          "outgoing_call_count": 22,
+          "summary": "从管道读取数据并写入到文件描述符（普通文件）中，处理非阻塞、阻塞等待和错误情况。"
+        },
+        {
+          "name": "get_inet_protocol_sockopt",
+          "normalized_name": "get_inet_protocol_sockopt",
+          "file_path": "kernel\\src\\syscall\\socket_ops\\sockopt.rs",
+          "language": "rust",
+          "start_line": "180",
+          "end_line": "240",
+          "outgoing_call_count": 21,
+          "summary": "根据传入的套接字引用、协议层级和选项名称，从 INET 套接字中读取并写入相应的 socket 选项值，支持 IPv4、TCP、UDP 和 IPv6 协议选项。"
+        },
+        {
+          "name": "splice_pipe_to_pipe",
+          "normalized_name": "splice_pipe_to_pipe",
+          "file_path": "kernel\\src\\syscall\\io_transfer\\splice.rs",
+          "language": "rust",
+          "start_line": "194",
+          "end_line": "241",
+          "outgoing_call_count": 20,
+          "summary": "从一个pipe读取数据，并写入另一个pipe，处理可能的阻塞、错误和部分写入情况。"
+        },
+        {
+          "name": "smoke_check_scratch_chown_ownership",
+          "normalized_name": "smoke_check_scratch_chown_ownership",
+          "file_path": "kernel\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "153",
+          "end_line": "155",
+          "outgoing_call_count": 18,
+          "summary": "这是一个包装函数，它调用 `fs_mutation::smoke_check_scratch_chown_ownership()` 并返回其布尔结果。该函数可能用于验证对某个暂存文件的 chown 操作的所有权检查是否正确，但具体逻辑完全由被调用的函数实现。"
+        },
+        {
+          "name": "smoke_check_scratch_chown_ownership",
+          "normalized_name": "smoke_check_scratch_chown_ownership",
+          "file_path": "kernel\\src\\syscall\\fs_mutation.rs",
+          "language": "rust",
+          "start_line": "1039",
+          "end_line": "1086",
+          "outgoing_call_count": 18,
+          "summary": "对 scratch 文件系统进行 chown 操作的功能性测试，验证所有权变更、部分变更、无效参数和不改变等场景的正确性。"
+        },
+        {
+          "name": "socket_ref",
+          "normalized_name": "socket_ref",
+          "file_path": "kernel\\src\\syscall\\socket_ops.rs",
+          "language": "rust",
+          "start_line": "510",
+          "end_line": "521",
+          "outgoing_call_count": 16,
+          "summary": "根据文件描述符获取对应的套接字引用，用于后续的套接字操作。该函数首先通过文件描述符获取文件对象，检查路径类型，然后根据文件的内核类型（FdKind）返回对应的套接字引用类型（Unix、UnixSocket、Inet），如果文件不是套接字则返回错误。"
+        },
+        {
+          "name": "ownership_for_kind",
+          "normalized_name": "ownership_for_kind",
+          "file_path": "kernel\\src\\syscall\\fs_path.rs",
+          "language": "rust",
+          "start_line": "932",
+          "end_line": "942",
+          "outgoing_call_count": 16,
+          "summary": "根据给定的文件描述符类型(FdKind)返回对应的Scratch所有权(ScratchOwnership)，如果无法获取则默认返回ROOT所有权。"
+        },
+        {
+          "name": "splice_fd_to_pipe",
+          "normalized_name": "splice_fd_to_pipe",
+          "file_path": "kernel\\src\\syscall\\io_transfer\\splice.rs",
+          "language": "rust",
+          "start_line": 243,
+          "end_line": 272,
+          "outgoing_call_count": 16,
+          "summary": "实现从文件描述符（fd）向管道（pipe）进行数据拼接（splice），通过读取源文件数据块并写入目标管道。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 494,
+      "outgoing_edge_count": 2337,
+      "internal_edge_count": 1676,
+      "external_edge_count": 661,
+      "internal_call_ratio": 0.7172,
+      "external_call_ratio": 0.2828,
+      "module_weight": 0.1799,
+      "files": [
+        "kernel/src/syscall/process_ops.rs",
+        "kernel/src/syscall/signal.rs",
+        "kernel/src/task/process.rs",
+        "kernel\\src\\elf.rs",
+        "kernel\\src\\procfs.rs",
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\abi.rs",
+        "kernel\\src\\syscall\\exec_ops.rs",
+        "kernel\\src\\syscall\\fcntl_lock.rs",
+        "kernel\\src\\syscall\\fd_readiness.rs",
+        "kernel\\src\\syscall\\fs_ops.rs",
+        "kernel\\src\\syscall\\fs_path.rs",
+        "kernel\\src\\syscall\\futex_ops.rs",
+        "kernel\\src\\syscall\\identity_ops.rs",
+        "kernel\\src\\syscall\\io_ops.rs",
+        "kernel\\src\\syscall\\io_ops\\special_fd.rs",
+        "kernel\\src\\syscall\\misc_ops.rs",
+        "kernel\\src\\syscall\\poll_ops.rs",
+        "kernel\\src\\syscall\\proc_fd.rs",
+        "kernel\\src\\syscall\\process_lookup.rs",
+        "kernel\\src\\syscall\\process_ops.rs",
+        "kernel\\src\\syscall\\sched_ops.rs",
+        "kernel\\src\\syscall\\signal.rs",
+        "kernel\\src\\syscall\\system_ops.rs",
+        "kernel\\src\\syscall\\time_ops.rs",
+        "kernel\\src\\syscall\\time_util.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scheduler.rs",
+        "kernel\\src\\task\\scratchfs.rs",
+        "kernel\\src\\task\\thread_group.rs",
+        "kernel\\src\\task\\timerfd.rs",
+        "kernel\\src\\task\\trapframe.rs"
+      ],
+      "file_count": 32,
+      "core_functions": [
+        {
+          "name": "sys_fork_like_clone",
+          "normalized_name": "sys_fork_like_clone",
+          "file_path": "kernel\\src\\syscall\\process_ops.rs",
+          "language": "rust",
+          "start_line": "1207",
+          "end_line": "1488",
+          "outgoing_call_count": 116,
+          "summary": "实现了类似fork或clone的系统调用核心逻辑，创建子进程或线程，包括分配PID、复制页表、设置内核栈、复制或共享资源（文件系统、信号处理、文件描述符等）、初始化子进程控制块，并在成功时返回子进程PID给父进程。"
+        },
+        {
+          "name": "impl Process {",
+          "normalized_name": "impl Process {",
+          "file_path": "kernel\\src\\task\\process.rs",
+          "language": "rust",
+          "start_line": "2324",
+          "end_line": "2537",
+          "outgoing_call_count": 76,
+          "summary": "实现 Process 结构体的常量 STAGING（用于初始化/占位）以及多个与进程阻塞状态管理、内核栈验证、进程身份标识、可等待 PID 等相关的辅助方法。"
+        },
+        {
+          "name": "sys_shared_vm_clone",
+          "normalized_name": "sys_shared_vm_clone",
+          "file_path": "kernel\\src\\syscall\\process_ops.rs",
+          "language": "rust",
+          "start_line": "1504",
+          "end_line": "1671",
+          "outgoing_call_count": 58,
+          "summary": "实现共享虚拟内存的进程/线程克隆系统调用（类似于Linux的clone系统调用，但共享地址空间）。该函数创建新进程或线程，复制或共享父进程的资源（文件系统、信号处理、文件描述符等），并初始化子进程的陷阱帧、内核栈和进程控制块。"
+        },
+        {
+          "name": "fd_kind_wait_matches",
+          "normalized_name": "fd_kind_wait_matches",
+          "file_path": "kernel\\src\\syscall\\fd_readiness.rs",
+          "language": "rust",
+          "start_line": "216",
+          "end_line": "272",
+          "outgoing_call_count": 57,
+          "summary": "该函数判断一个给定文件描述符类型（FdKind）和兴趣事件（FdInterest）是否与当前的阻塞原因（BlockReason）匹配，用于决定是否唤醒等待该文件描述符事件的任务。如果兴趣事件（如读/写）与阻塞原因的类型和具体资源标识一致，则返回true，否则返回false。"
+        },
+        {
+          "name": "smoke_check_fork_prot_none_leaf_refcount",
+          "normalized_name": "smoke_check_fork_prot_none_leaf_refcount",
+          "file_path": "kernel\\src\\syscall\\process_ops.rs",
+          "language": "rust",
+          "start_line": "258",
+          "end_line": "300",
+          "outgoing_call_count": 33,
+          "summary": "该函数是一个测试函数，用于验证在进程 fork 过程中，处理 PROT_NONE 属性的叶子页表项时，引用计数机制的正确性。它创建一个父页表和一个子页表，模拟 fork 时复制一个非用户页表项，并检查子页表中对应项的属性和数据帧的引用计数是否为预期值（2）。"
+        },
+        {
+          "name": "smoke_check_fork_prot_none_leaf_refcount",
+          "normalized_name": "smoke_check_fork_prot_none_leaf_refcount",
+          "file_path": "kernel\\src\\syscall.rs",
+          "language": "rust",
+          "start_line": "281",
+          "end_line": "283",
+          "outgoing_call_count": 33,
+          "summary": "该函数是一个包装器，它直接调用 process_ops 模块中的同名函数，用于进行进程操作相关的检查（根据函数名推测与 fork 和页表相关，但代码本身仅显示调用）。"
+        },
+        {
+          "name": "impl FsContext {",
+          "normalized_name": "impl FsContext {",
+          "file_path": "kernel/src/task/process.rs",
+          "language": "rust",
+          "start_line": "580",
+          "end_line": "675",
+          "outgoing_call_count": 31,
+          "summary": "实现文件系统上下文（FsContext）结构体的方法，用于管理每个进程的文件系统状态，包括当前工作目录（cwd）和 umask。该结构体支持引用计数共享、写时复制分离、以及通过全局槽位存储/释放上下文。"
+        },
+        {
+          "name": "fd_kind_can_wait",
+          "normalized_name": "fd_kind_can_wait",
+          "file_path": "kernel\\src\\syscall\\fd_readiness.rs",
+          "language": "rust",
+          "start_line": "188",
+          "end_line": "214",
+          "outgoing_call_count": 30,
+          "summary": "根据文件描述符的类型（FdKind）和感兴趣的事件（FdInterest），判断该描述符是否能够被等待（即可用于 poll/select 等 I/O 多路复用机制）。返回布尔值表示是否可以等待。"
+        },
+        {
+          "name": "zero_process_user_bytes",
+          "normalized_name": "zero_process_user_bytes",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "527",
+          "end_line": "567",
+          "outgoing_call_count": 30,
+          "summary": "将指定进程用户空间的一段连续内存区域清零，处理写时复制（CoW）页表项，并检查页表权限和物理页的可写性，成功返回true，否则返回false。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\task\\process.rs",
+          "language": "rust",
+          "start_line": "583",
+          "end_line": "585",
+          "outgoing_call_count": 26,
+          "summary": "该函数是 Process 结构体的构造方法，它接受当前工作目录（Cwd）和 umask 值作为参数，并调用 register_fs_context(cwd, umask) 函数来初始化 Process 实例。返回类型为 Self，即 Process 类型。从函数体仅包含一个调用来看，register_fs_context 可能负责进程的文件系统上下文（如根目录、工作目录、权限掩码等）的注册或设置。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process / scheduler / filesystem": {
+      "module_name": "process / scheduler / filesystem",
+      "function_count": 1,
+      "outgoing_edge_count": 5,
+      "internal_edge_count": 5,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0004,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 136,
+      "outgoing_edge_count": 657,
+      "internal_edge_count": 363,
+      "external_edge_count": 294,
+      "internal_call_ratio": 0.5525,
+      "external_call_ratio": 0.4475,
+      "module_weight": 0.0499,
+      "files": [
+        "kernel\\src\\syscall\\sched_ops.rs",
+        "kernel\\src\\syscall\\time_ops.rs",
+        "kernel\\src\\syscall\\time_util.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scheduler.rs",
+        "kernel\\src\\task\\timerfd.rs"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "schedule",
+          "normalized_name": "schedule",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "1586",
+          "end_line": "1641",
+          "outgoing_call_count": 21,
+          "summary": "实现进程调度核心逻辑：先保存当前进程的 TrapFrame，然后循环选取下一个就绪进程，处理信号投递可能导致的进程停止状态，最后切换页表和栈空间跳转到trap_exit_restore恢复用户态执行。"
+        },
+        {
+          "name": "EMPTY",
+          "normalized_name": "EMPTY",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "37",
+          "end_line": "40",
+          "outgoing_call_count": 16,
+          "summary": "定义进程槽的空闲状态常量，用于标记调度器中可用的进程槽，其中进程状态设为Empty，进程实例设为STAGING状态。"
+        },
+        {
+          "name": "EMPTY",
+          "normalized_name": "EMPTY",
+          "file_path": "kernel\\src\\task\\timerfd.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "22",
+          "outgoing_call_count": 16,
+          "summary": "定义了一个名为EMPTY的常量，用于初始化一个TimerFd结构体的默认空状态。该常量设置了所有字段为初始值。"
+        },
+        {
+          "name": "wake_sleepers",
+          "normalized_name": "wake_sleepers",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "381",
+          "end_line": "509",
+          "outgoing_call_count": 12,
+          "summary": "遍历所有进程，检查被阻塞（Blocked）的进程是否因为超时或其他条件（如timerfd可读、poll/select有就绪timerfd）满足而需要被唤醒。如果满足条件，则通过 make_ready 或 rerun_blocked_syscall 等函数将进程重新置为就绪状态，并设置 woke 标志。"
+        },
+        {
+          "name": "timerfd_deadline",
+          "normalized_name": "timerfd_deadline",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "1245",
+          "end_line": "1251",
+          "outgoing_call_count": 12,
+          "summary": "计算给定 timerfd 的下一个到期时间戳（以时钟 tick 为单位）。如果 timerfd 当前可读（已到期），则返回当前时间；否则尝试获取状态并计算剩余 ticks 对应的未来时间。"
+        },
+        {
+          "name": "next_kernel_timer_deadline",
+          "normalized_name": "next_kernel_timer_deadline",
+          "file_path": "kernel\\src\\syscall\\time_ops.rs",
+          "language": "rust",
+          "start_line": "861",
+          "end_line": "870",
+          "outgoing_call_count": 12,
+          "summary": "计算下一个内核定时器截止时间，综合考虑调度器心跳、POSIX定时器、legacy itimer和任务唤醒截止时间，返回最早的有效截止时间或默认心跳时间。"
+        },
+        {
+          "name": "next_wakeup_deadline",
+          "normalized_name": "next_wakeup_deadline",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "1166",
+          "end_line": "1185",
+          "outgoing_call_count": 12,
+          "summary": "遍历所有进程，找出所有处于阻塞状态且具有唤醒截止时间的进程，返回这些截止时间中的最小值。"
+        },
+        {
+          "name": "for_each_priority_target",
+          "normalized_name": "for_each_priority_target",
+          "file_path": "kernel\\src\\syscall\\sched_ops.rs",
+          "language": "rust",
+          "start_line": "418",
+          "end_line": "436",
+          "outgoing_call_count": 11,
+          "summary": "遍历系统中的所有进程，对每个未消失且符合优先级目标的进程调用指定的闭包函数。如果目标无效则返回错误，闭包通过返回Result来提前终止遍历。"
+        },
+        {
+          "name": "poll_has_pending_timerfd",
+          "normalized_name": "poll_has_pending_timerfd",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "1301",
+          "end_line": "1321",
+          "outgoing_call_count": 11,
+          "summary": "检查指定进程是否因 poll 阻塞，并且其读文件描述符集合中是否存在至少一个 TimerFd 当前有可读事件或剩余滴答数大于 0。"
+        },
+        {
+          "name": "select_has_pending_timerfd",
+          "normalized_name": "select_has_pending_timerfd",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "1323",
+          "end_line": "1343",
+          "outgoing_call_count": 11,
+          "summary": "检查进程是否因 select 系统调用阻塞，且有可读的定时器文件描述符（TimerFd）等待处理。用于判断是否应将进程提前唤醒。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "signal": {
+      "module_name": "signal",
+      "function_count": 21,
+      "outgoing_edge_count": 154,
+      "internal_edge_count": 120,
+      "external_edge_count": 34,
+      "internal_call_ratio": 0.7792,
+      "external_call_ratio": 0.2208,
+      "module_weight": 0.0091,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 1011,
+      "outgoing_edge_count": 6913,
+      "internal_edge_count": 4021,
+      "external_edge_count": 2892,
+      "internal_call_ratio": 0.5817,
+      "external_call_ratio": 0.4183,
+      "module_weight": 0.4233,
+      "files": [
+        "kernel/src/syscall/proc_fd.rs",
+        "kernel/src/syscall/signal.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\procfs.rs",
+        "kernel\\src\\syscall.rs",
+        "kernel\\src\\syscall\\abi.rs",
+        "kernel\\src\\syscall\\cwd_ops.rs",
+        "kernel\\src\\syscall\\device_ops.rs",
+        "kernel\\src\\syscall\\dispatcher.rs",
+        "kernel\\src\\syscall\\errno.rs",
+        "kernel\\src\\syscall\\event_ops.rs",
+        "kernel\\src\\syscall\\exec_ops.rs",
+        "kernel\\src\\syscall\\ext4_fd.rs",
+        "kernel\\src\\syscall\\fcntl_lock.rs",
+        "kernel\\src\\syscall\\fd_ops.rs",
+        "kernel\\src\\syscall\\fd_readiness.rs",
+        "kernel\\src\\syscall\\fd_util.rs",
+        "kernel\\src\\syscall\\fs_mutation.rs",
+        "kernel\\src\\syscall\\fs_ops.rs",
+        "kernel\\src\\syscall\\fs_path.rs",
+        "kernel\\src\\syscall\\futex_ops.rs",
+        "kernel\\src\\syscall\\identity_ops.rs",
+        "kernel\\src\\syscall\\io_ops.rs",
+        "kernel\\src\\syscall\\io_ops\\special_fd.rs",
+        "kernel\\src\\syscall\\io_transfer\\copy_range.rs",
+        "kernel\\src\\syscall\\io_transfer\\positioned.rs",
+        "kernel\\src\\syscall\\io_transfer\\splice.rs",
+        "kernel\\src\\syscall\\io_transfer\\vectored.rs",
+        "kernel\\src\\syscall\\klog.rs",
+        "kernel\\src\\syscall\\memory_ops\\advice.rs",
+        "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+        "kernel\\src\\syscall\\memory_ops\\mempolicy.rs",
+        "kernel\\src\\syscall\\misc_ops.rs",
+        "kernel\\src\\syscall\\mount_ops.rs",
+        "kernel\\src\\syscall\\poll_ops.rs",
+        "kernel\\src\\syscall\\proc_fd.rs",
+        "kernel\\src\\syscall\\process_ops.rs",
+        "kernel\\src\\syscall\\regular_file.rs",
+        "kernel\\src\\syscall\\sched_ops.rs",
+        "kernel\\src\\syscall\\signal.rs",
+        "kernel\\src\\syscall\\socket_ops.rs",
+        "kernel\\src\\syscall\\socket_ops\\addr.rs",
+        "kernel\\src\\syscall\\socket_ops\\msg.rs",
+        "kernel\\src\\syscall\\socket_ops\\sockopt.rs",
+        "kernel\\src\\syscall\\system_ops.rs",
+        "kernel\\src\\syscall\\time_ops.rs",
+        "kernel\\src\\syscall\\time_util.rs",
+        "kernel\\src\\syscall\\user_layout.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scheduler.rs",
+        "kernel\\src\\task\\timerfd.rs",
+        "kernel\\src\\trap.rs"
+      ],
+      "file_count": 52,
+      "core_functions": [
+        {
+          "name": "dispatch",
+          "normalized_name": "dispatch",
+          "file_path": "kernel\\src\\syscall\\dispatcher.rs",
+          "language": "rust",
+          "start_line": "72",
+          "end_line": "385",
+          "outgoing_call_count": 421,
+          "summary": "系统调用分派函数，根据调用号匹配到具体的实现函数，将参数类型转换后分发执行。"
+        },
+        {
+          "name": "sys_read",
+          "normalized_name": "sys_read",
+          "file_path": "kernel\\src\\syscall\\io_ops.rs",
+          "language": "rust",
+          "start_line": "39",
+          "end_line": "128",
+          "outgoing_call_count": 77,
+          "summary": "实现系统调用 read 的核心逻辑，根据文件描述符的类型分发到对应的读操作。"
+        },
+        {
+          "name": "sys_write_inner",
+          "normalized_name": "sys_write_inner",
+          "file_path": "kernel\\src\\syscall\\io_ops.rs",
+          "language": "rust",
+          "start_line": "139",
+          "end_line": "218",
+          "outgoing_call_count": 65,
+          "summary": "实现写入系统调用的内部逻辑，根据文件描述符的类型（如控制台、普通文件、管道、套接字等）分发到不同的写入处理函数，并处理权限检查、追加模式支持等。"
+        },
+        {
+          "name": "sys_connect",
+          "normalized_name": "sys_connect",
+          "file_path": "kernel\\src\\syscall\\socket_ops.rs",
+          "language": "rust",
+          "start_line": "282",
+          "end_line": "351",
+          "outgoing_call_count": 43,
+          "summary": "该函数是系统调用 connect 的实现，用于将套接字文件描述符连接到指定的 Unix 或 Internet 地址。对于 Unix 套接字，它处理数据报和流类型连接，并在成功时用 FdKind::Socket 替换打开的文件；对于 Internet 套接字，它根据类型（数据报或流）执行连接，并处理非阻塞和队列满等特殊情况。"
+        },
+        {
+          "name": "sys_accept4",
+          "normalized_name": "sys_accept4",
+          "file_path": "kernel\\src\\syscall\\socket_ops.rs",
+          "language": "rust",
+          "start_line": 376,
+          "end_line": 473,
+          "outgoing_call_count": 37,
+          "summary": "实现了 sys_accept4 系统调用，处理 UNIX 域套接字和 INET 流套接字的 accept 操作，支持非阻塞和 CLOEXEC 标志，并返回新文件描述符。"
+        },
+        {
+          "name": "sys_lseek",
+          "normalized_name": "sys_lseek",
+          "file_path": "kernel\\src\\syscall\\fd_ops.rs",
+          "language": "rust",
+          "start_line": "267",
+          "end_line": "327",
+          "outgoing_call_count": 34,
+          "summary": "实现 lseek 系统调用，用于调整文件描述符的读写位置，支持 SEEK_SET、SEEK_CUR、SEEK_END、SEEK_DATA 和 SEEK_HOLE，并对不可寻址的文件类型（如管道、套接字等）返回 ESPIPE 错误。"
+        },
+        {
+          "name": "deliver_due_posix_timers",
+          "normalized_name": "deliver_due_posix_timers",
+          "file_path": "kernel\\src\\syscall\\time_ops.rs",
+          "language": "rust",
+          "start_line": "397",
+          "end_line": "494",
+          "outgoing_call_count": 32,
+          "summary": "该函数遍历所有进程，检查每个进程的POSIX定时器是否有到期的，若有则准备发送信号。它优先处理同一进程组（通过tgid和owner_id去重），收集所有到期定时器的信号信息，然后调用信号标记函数进行实际发送，并根据信号标记的结果（成功标记、丢弃、队列满）更新定时器状态或重试。最后，如果存在队列满的情况，会重新设置一个定时器用于重试。"
+        },
+        {
+          "name": "sys_pselect6",
+          "normalized_name": "sys_pselect6",
+          "file_path": "kernel\\src\\syscall\\poll_ops.rs",
+          "language": "rust",
+          "start_line": "449",
+          "end_line": "592",
+          "outgoing_call_count": 31,
+          "summary": "实现 pselect6 系统调用，用于监视多个文件描述符的状态变化，支持指定信号掩码和超时。该函数首先验证参数，读取信号掩码和超时设置，然后检查所有文件描述符的就绪状态，若无就绪且非立即返回则阻塞等待，最后将就绪结果写回用户空间。"
+        },
+        {
+          "name": "resolve_path",
+          "normalized_name": "resolve_path",
+          "file_path": "kernel\\src\\syscall\\ext4_fd.rs",
+          "language": "rust",
+          "start_line": "4",
+          "end_line": "15",
+          "outgoing_call_count": 31,
+          "summary": "根据给定的路径解析 ext4 文件系统中的路径，将路径结果转换为对应的文件描述符类型，或在失败时返回合适的 Linux 错误码。"
+        },
+        {
+          "name": "smoke_check_inotify_remove_ignored_watch",
+          "normalized_name": "smoke_check_inotify_remove_ignored_watch",
+          "file_path": "kernel\\src\\syscall\\event_ops.rs",
+          "language": "rust",
+          "start_line": "228",
+          "end_line": "366",
+          "outgoing_call_count": 30,
+          "summary": "该函数是一组针对inotify机制的冒烟测试，验证在文件删除、重创建、硬链接场景下，inotify watch的移除、事件生成（如IN_DELETE_SELF、IN_IGNORED、IN_ATTRIB）以及后续操作的正确性。具体包括：1) 删除监视文件后是否正确生成IN_DELETE_SELF和IN_IGNORED事件，且无法再通过已移除的wd操作；2) 重新创建同名文件后，旧watch不会自动重定向到新文件；3) 手动移除watch后生成IN_IGNORED事件；4) 对硬链接文件，先删除一个链接（primary）应产生IN_ATTRIB而非IN_IGNORED，只有删除最后一个链接（alias）后才生成IN_DELETE_SELF和IN_IGNORED，且之后watch失效。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall / filesystem": {
+      "module_name": "syscall / filesystem",
+      "function_count": 1,
+      "outgoing_edge_count": 14,
+      "internal_edge_count": 11,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.7857,
+      "external_call_ratio": 0.2143,
+      "module_weight": 0.0006,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "task": {
+      "module_name": "task",
+      "function_count": 2,
+      "outgoing_edge_count": 13,
+      "internal_edge_count": 1,
+      "external_edge_count": 12,
+      "internal_call_ratio": 0.0769,
+      "external_call_ratio": 0.9231,
+      "module_weight": 0.0008,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "time": {
+      "module_name": "time",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 0,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0003,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 27,
+      "outgoing_edge_count": 64,
+      "internal_edge_count": 29,
+      "external_edge_count": 35,
+      "internal_call_ratio": 0.4531,
+      "external_call_ratio": 0.5469,
+      "module_weight": 0.0082,
+      "files": [
+        "kernel\\src\\elf.rs",
+        "kernel\\src\\main.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": "382",
+          "end_line": "392",
+          "outgoing_call_count": 15,
+          "summary": "该函数是内核的恐慌处理函数，当系统发生不可恢复错误时被调用。它打印恐慌信息（包括文件名和行号），然后关闭系统。"
+        },
+        {
+          "name": "fdt_prop_name_eq",
+          "normalized_name": "fdt_prop_name_eq",
+          "file_path": "kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": "206",
+          "end_line": "224",
+          "outgoing_call_count": 5,
+          "summary": "检查 Flattened Device Tree (FDT) 中某个属性名称是否与期望的字节序列相等，同时确保名称以 null 结尾。"
+        },
+        {
+          "name": "impl Iterator for LoadSegments<'_> {",
+          "normalized_name": "impl Iterator for LoadSegments<'_> {",
+          "file_path": "kernel\\src\\elf.rs",
+          "language": "rust",
+          "start_line": "210",
+          "end_line": "228",
+          "outgoing_call_count": 3,
+          "summary": "实现了 `LoadSegments` 结构的迭代器，用于逐个读取并返回 ELF 文件中类型为 `PT_LOAD` 的程序头表项，将每个这样的表项转换为 `LoadSegment` 结构，或者返回解析错误。迭代器会跳过非 `PT_LOAD` 的表项，当所有表项处理完毕后返回 `None`。"
+        },
+        {
+          "name": "can_run_without_interpreter",
+          "normalized_name": "can_run_without_interpreter",
+          "file_path": "kernel\\src\\elf.rs",
+          "language": "rust",
+          "start_line": "132",
+          "end_line": "183",
+          "outgoing_call_count": 3,
+          "summary": "检查动态链接的ELF文件是否可以在没有解释器的情况下运行。通过遍历程序头中的动态段，检查是否存在NEEDED、TEXTREL标记，或者存在非空的重定位表，这些情况表明需要动态链接器，因此无法在无解释器（static-pie-like）下运行。"
+        },
+        {
+          "name": "fdt_cstr_len",
+          "normalized_name": "fdt_cstr_len",
+          "file_path": "kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": "177",
+          "end_line": "187",
+          "outgoing_call_count": 3,
+          "summary": "这个函数从给定起始地址开始，逐字节读取内存直到遇到空字符（0）或达到结束地址，返回空字符前的字节长度（即C风格字符串的长度）。如果未找到空字符，则返回None。"
+        },
+        {
+          "name": "ProgramHeader",
+          "normalized_name": "ProgramHeader",
+          "file_path": "kernel\\src\\elf.rs",
+          "language": "rust",
+          "start_line": "231",
+          "end_line": "238",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个结构体，用于解析和存储ELF文件中程序头表（Program Header Table）中每个程序头的字段信息，包含类型、标志、偏移、虚拟地址、文件大小和内存大小。"
+        },
+        {
+          "name": "LoadSegments",
+          "normalized_name": "LoadSegments",
+          "file_path": "kernel\\src\\elf.rs",
+          "language": "rust",
+          "start_line": "204",
+          "end_line": "208",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个用于遍历和加载ELF文件中各个程序段（segments）的迭代器结构体。它持有一个对ELF文件二进制数据的引用、当前遍历位置，以及剩余未处理的段数量。"
+        },
+        {
+          "name": "LoadSegment",
+          "normalized_name": "LoadSegment",
+          "file_path": "kernel\\src\\elf.rs",
+          "language": "rust",
+          "start_line": "187",
+          "end_line": "195",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个用于描述ELF文件加载段的结构体，包含段的文件偏移、文件大小、内存起始地址、内存大小、页边界地址以及加载标志。"
+        },
+        {
+          "name": "ElfKind",
+          "normalized_name": "ElfKind",
+          "file_path": "kernel\\src\\elf.rs",
+          "language": "rust",
+          "start_line": "55",
+          "end_line": "58",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个枚举类型，用于表示ELF文件的两种类型：可执行文件（Exec）和动态链接文件（Dyn）。"
+        },
+        {
+          "name": "phnum",
+          "normalized_name": "phnum",
+          "file_path": "kernel\\src\\elf.rs",
+          "language": "rust",
+          "start_line": "73",
+          "end_line": "75",
+          "outgoing_call_count": 0,
+          "summary": "该函数是一个简单的getter方法，返回当前ELF结构体中存储的程序头表数量（phnum字段）。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\src\\main.rs",
+        "kernel\\src\\syscall\\fs_mutation.rs",
+        "kernel\\src\\syscall\\fs_ops.rs",
+        "kernel\\src\\syscall\\fs_path.rs",
+        "kernel\\src\\syscall\\identity_ops.rs",
+        "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+        "kernel\\src\\syscall\\misc_ops.rs",
+        "kernel\\src\\syscall\\process_ops.rs",
+        "kernel\\src\\syscall\\socket_ops.rs",
+        "kernel\\src\\syscall\\socket_ops\\msg.rs",
+        "kernel\\src\\syscall\\usermem.rs",
+        "kernel\\src\\task\\trapframe.rs"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "rust_main",
+          "normalized_name": "rust_main",
+          "file_path": "kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": "395",
+          "end_line": "720",
+          "outgoing_call_count": 215,
+          "summary": "这是内核启动后的主初始化函数。它负责初始化内存管理、页表、各种驱动和子系统，执行大量烟雾测试，并最终创建 init 进程并切换到用户模式。"
+        },
+        {
+          "name": "release_user_leaf_frames_in_range",
+          "normalized_name": "release_user_leaf_frames_in_range",
+          "file_path": "kernel\\src\\syscall\\process_ops.rs",
+          "language": "rust",
+          "start_line": "3120",
+          "end_line": "3163",
+          "outgoing_call_count": 34,
+          "summary": "该函数在给定的用户页表中，从根页表项地址开始，遍历指定二级VPN范围（vpn2_min到vpn2_max）内所有页表项，释放用户态的叶子页框（即映射到物理页框的PTE）。它处理多级页表结构（根页表、L2页表、L1页表），仅释放标记为可读、可写或可执行的叶子项，跳过无效或非托管帧，并将非叶子页表项清空。其作用是回收用户进程的页面映射，用于进程退出或地址空间释放。"
+        },
+        {
+          "name": "user_phys_addr",
+          "normalized_name": "user_phys_addr",
+          "file_path": "kernel\\src\\syscall\\usermem.rs",
+          "language": "rust",
+          "start_line": "285",
+          "end_line": "302",
+          "outgoing_call_count": 16,
+          "summary": "将用户空间虚拟地址转换为物理地址，同时进行权限和有效性检查。"
+        },
+        {
+          "name": "recv_unix_datagram_to_user",
+          "normalized_name": "recv_unix_datagram_to_user",
+          "file_path": "kernel\\src\\syscall\\socket_ops.rs",
+          "language": "rust",
+          "start_line": "630",
+          "end_line": "671",
+          "outgoing_call_count": 15,
+          "summary": "从Unix域数据报套接字接收数据，并将数据复制到用户空间缓冲区，同时处理阻塞、错误和截断标志。"
+        },
+        {
+          "name": "process_user_phys_addr",
+          "normalized_name": "process_user_phys_addr",
+          "file_path": "kernel\\src\\syscall\\usermem.rs",
+          "language": "rust",
+          "start_line": "248",
+          "end_line": "261",
+          "outgoing_call_count": 14,
+          "summary": "将用户进程的虚拟地址转换为物理地址，并进行权限和有效性检查。"
+        },
+        {
+          "name": "release_user_leaf_entry",
+          "normalized_name": "release_user_leaf_entry",
+          "file_path": "kernel\\src\\syscall\\memory_ops\\mapping.rs",
+          "language": "rust",
+          "start_line": "2231",
+          "end_line": "2241",
+          "outgoing_call_count": 11,
+          "summary": "释放一个用户页表叶子项，如果该项映射的是受管理的物理帧，则释放共享映射并减少引用计数，最后将该页表项清零。"
+        },
+        {
+          "name": "write_user_bytes",
+          "normalized_name": "write_user_bytes",
+          "file_path": "kernel\\src\\syscall\\usermem.rs",
+          "language": "rust",
+          "start_line": "139",
+          "end_line": "158",
+          "outgoing_call_count": 11,
+          "summary": "将字节切片复制到用户空间指定的地址，处理页边界并确保用户地址范围有效。成功返回0，失败返回错误码。"
+        },
+        {
+          "name": "write_process_user_bytes",
+          "normalized_name": "write_process_user_bytes",
+          "file_path": "kernel\\src\\syscall\\usermem.rs",
+          "language": "rust",
+          "start_line": "218",
+          "end_line": "237",
+          "outgoing_call_count": 11,
+          "summary": "将字节切片写入指定进程的用户空间虚拟地址，以页为单位逐段复制，返回0表示成功，否则返回错误码。"
+        },
+        {
+          "name": "read_user_bytes",
+          "normalized_name": "read_user_bytes",
+          "file_path": "kernel\\src\\syscall\\usermem.rs",
+          "language": "rust",
+          "start_line": "160",
+          "end_line": "174",
+          "outgoing_call_count": 11,
+          "summary": "从用户空间地址读取指定长度的字节到内核缓冲区，处理页边界并转换为物理地址进行拷贝。"
+        },
+        {
+          "name": "read_process_user_bytes",
+          "normalized_name": "read_process_user_bytes",
+          "file_path": "kernel\\src\\syscall\\usermem.rs",
+          "language": "rust",
+          "start_line": "198",
+          "end_line": "216",
+          "outgoing_call_count": 11,
+          "summary": "从用户进程的虚拟地址空间读取指定长度的数据到内核缓冲区，支持跨页拷贝。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 0.0,
+    "score_level": "unknown",
+    "scores": {
+      "originality": 0,
+      "novelty": 0,
+      "practicality": 0,
+      "difficulty": 0,
+      "completion": 0
+    },
+    "summary": "",
+    "strengths": [],
+    "weaknesses": [],
+    "suggestions": []
+  },
+  "hybrid_top_results": [],
+  "comparison": {
+    "retrieval_mode": "structured",
+    "comparison_count": 0,
+    "comparisons": []
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026100079911061_final_report.md",
+    "work_detail_data": "/data/works/T2026100079911061.json",
+    "comparison_data": "/data/comparisons/T2026100079911061.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

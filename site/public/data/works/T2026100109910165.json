@@ -1,0 +1,1554 @@
+{
+  "repo_name": "T2026100109910165",
+  "team_name": "T2026100109910165",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026100109910165-2460",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026100109910165-2460",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "assembly"
+  ],
+  "core_modules": [
+    "filesystem",
+    "syscall",
+    "process",
+    "memory",
+    "interrupt"
+  ],
+  "function_count": 800,
+  "node_count": 800,
+  "edge_count": 1923,
+  "internal_edge_count": 1575,
+  "external_edge_count": 348,
+  "module_count": 14,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.51,
+    "driver": 0.33,
+    "elf_loader": 0.28,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "ipc": 0.1,
+    "memory": 1.0,
+    "network": 0.1,
+    "process": 1.0,
+    "scheduler": 0.83,
+    "signal": 0.23,
+    "syscall": 1.0,
+    "unknown": 0.95,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.3343,
+      "completeness": 1.0,
+      "final_score": 0.6006
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.2053,
+      "completeness": 1.0,
+      "final_score": 0.5232
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.1823,
+      "completeness": 1.0,
+      "final_score": 0.5094
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.1035,
+      "completeness": 1.0,
+      "final_score": 0.4621
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.0948,
+      "completeness": 1.0,
+      "final_score": 0.4569
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 9,
+      "outgoing_edge_count": 21,
+      "internal_edge_count": 14,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.0111,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 3,
+      "outgoing_edge_count": 4,
+      "internal_edge_count": 1,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.25,
+      "external_call_ratio": 0.75,
+      "module_weight": 0.0031,
+      "files": [
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trapbk.c",
+        "kernel\\console.c",
+        "kernel\\mm.c",
+        "kernel\\vfs.h"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "console_file_write",
+          "normalized_name": "console_file_write",
+          "file_path": "kernel\\console.c",
+          "language": "c",
+          "start_line": "7",
+          "end_line": "18",
+          "outgoing_call_count": 2,
+          "summary": "实现文件写入控制台的功能：从用户空间读取指定长度的字节，并逐个通过kputc输出到控制台。"
+        },
+        {
+          "name": "pipe_fd_nonblock",
+          "normalized_name": "pipe_fd_nonblock",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "2779",
+          "end_line": "2783",
+          "outgoing_call_count": 2,
+          "summary": "检查给定的文件描述符是否对应一个设置了非阻塞标志的打开文件"
+        },
+        {
+          "name": "pipe_fd_nonblock",
+          "normalized_name": "pipe_fd_nonblock",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "2536",
+          "end_line": "2540",
+          "outgoing_call_count": 2,
+          "summary": "检查给定的文件描述符对应的管道是否设置了非阻塞标志。"
+        },
+        {
+          "name": "heap_block",
+          "normalized_name": "heap_block",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "11",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个堆块结构体，用于表示动态内存分配中的空闲块或已分配块。结构体包含两个字段：size 表示当前块的大小（可能包括元数据），next 指针指向下一个堆块，从而形成一个链表结构。"
+        },
+        {
+          "name": "super_block",
+          "normalized_name": "super_block",
+          "file_path": "kernel\\vfs.h",
+          "language": "c",
+          "start_line": "51",
+          "end_line": "58",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个表示文件系统超级块的数据结构，用于存储和管理挂载的文件系统实例的全局信息，包括根目录、文件系统类型、块大小、私有数据、文件系统特定信息和操作函数指针。"
+        },
+        {
+          "name": "heap_insert_block",
+          "normalized_name": "heap_insert_block",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "34",
+          "end_line": "65",
+          "outgoing_call_count": 0,
+          "summary": "将一个堆块插入到空闲链表中，并尝试与相邻的空闲块合并。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "elf_loader": {
+      "module_name": "elf_loader",
+      "function_count": 1,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 4,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 294,
+      "outgoing_edge_count": 547,
+      "internal_edge_count": 435,
+      "external_edge_count": 112,
+      "internal_call_ratio": 0.7952,
+      "external_call_ratio": 0.2048,
+      "module_weight": 0.3343,
+      "files": [
+        "arch\riscv\trap.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trapbk.c",
+        "kernel\tmpfs.c",
+        "kernel/devfs.c",
+        "kernel/devfs.h",
+        "kernel/ext4.c",
+        "kernel\\devfs.c",
+        "kernel\\elf.c",
+        "kernel\\ext4.c",
+        "kernel\\main.c",
+        "kernel\\proc.c",
+        "kernel\\tmpfs.c",
+        "kernel\\vfs.c",
+        "kernel\\vfs.h"
+      ],
+      "file_count": 15,
+      "core_functions": [
+        {
+          "name": "sys_read",
+          "normalized_name": "sys_read",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "4000",
+          "end_line": "4172",
+          "outgoing_call_count": 30,
+          "summary": "该系统调用实现多种文件描述符类型的读操作，包括管道、文本文件、tmpfs文件、proc_mem文件、ext4文件、proc文件、设备文件、目录文件以及socket。它根据文件描述符的类型和文件操作结构体选择不同的读取路径，并处理错误情况（如EBADF、EINVAL、EIO）。"
+        },
+        {
+          "name": "sys_read",
+          "normalized_name": "sys_read",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "3754",
+          "end_line": "3926",
+          "outgoing_call_count": 30,
+          "summary": "该函数实现了系统调用`read`，根据文件描述符的类型和文件操作函数表，从不同来源读取数据并拷贝到用户缓冲区。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "3892",
+          "end_line": "3978",
+          "outgoing_call_count": 28,
+          "summary": "实现 openat 系统调用，根据 dirfd 和路径打开文件，支持普通文件系统和内存文件（mem_file）两种模式，并处理路径拼接、权限检查及错误回退。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "3649",
+          "end_line": "3732",
+          "outgoing_call_count": 28,
+          "summary": "实现系统调用 openat，根据目录文件描述符（或当前工作目录）和路径打开文件，支持普通文件、内存文件、proc 文件等，并返回文件描述符。"
+        },
+        {
+          "name": "read_fd_to_kernel",
+          "normalized_name": "read_fd_to_kernel",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "4174",
+          "end_line": "4266",
+          "outgoing_call_count": 24,
+          "summary": "根据文件描述符类型（文本、文件/目录、ext4文件、管道、设备），将数据从内核内部表示读取到内核缓冲区（dst），用于系统调用read的底层实现。"
+        },
+        {
+          "name": "read_fd_to_kernel",
+          "normalized_name": "read_fd_to_kernel",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "3928",
+          "end_line": "4020",
+          "outgoing_call_count": 24,
+          "summary": "根据文件描述符的类型，从文件、管道、设备或内存文件中读取数据到内核缓冲区。"
+        },
+        {
+          "name": "sys_write",
+          "normalized_name": "sys_write",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "3336",
+          "end_line": "3511",
+          "outgoing_call_count": 22,
+          "summary": "该系统调用sys_write实现了对不同类型文件描述符（控制台、管道、普通文件、目录、proc文件、设备文件、套接字）的写入操作，处理权限检查、用户态数据拷贝、循环分块写入等逻辑。"
+        },
+        {
+          "name": "sys_write",
+          "normalized_name": "sys_write",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "3579",
+          "end_line": "3754",
+          "outgoing_call_count": 22,
+          "summary": "实现了系统调用write的通用分发逻辑，根据文件描述符的类型和底层文件操作接口，将用户缓冲区数据写入不同的目标（文件、管道、设备、socket等）。"
+        },
+        {
+          "name": "write_fd_from_kernel",
+          "normalized_name": "write_fd_from_kernel",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "4038",
+          "end_line": "4115",
+          "outgoing_call_count": 20,
+          "summary": "该函数用于在内核空间中根据文件描述符（fd）的类型向对应的文件、设备或管道写入数据，返回写入的字节数或错误码。"
+        },
+        {
+          "name": "write_fd_from_kernel",
+          "normalized_name": "write_fd_from_kernel",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "4268",
+          "end_line": "4345",
+          "outgoing_call_count": 20,
+          "summary": "从内核空间向文件描述符写入数据，根据文件描述符的类型（控制台、文件/目录、管道、设备）分发至不同的写入逻辑。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 39,
+      "outgoing_edge_count": 315,
+      "internal_edge_count": 254,
+      "external_edge_count": 61,
+      "internal_call_ratio": 0.8063,
+      "external_call_ratio": 0.1937,
+      "module_weight": 0.0948,
+      "files": [
+        "arch\\loongarch\\trap.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trap.h",
+        "arch\\riscv\\trap_entry.S",
+        "arch\\riscv\\trapbk.c",
+        "kernel\\vfs.c"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "riscv_trap_handler",
+          "normalized_name": "riscv_trap_handler",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5754",
+          "end_line": "6795",
+          "outgoing_call_count": 244,
+          "summary": "RISC-V 架构的陷阱处理函数，负责处理所有异常和中断。首先设置内核陷阱向量，然后根据 scause 区分处理：1）定时器中断，进行时间处理并可能让出 CPU；2）用户态缺页错误（加载/存储/指令），尝试惰性 mmap 处理，失败则终止进程；3）用户态环境调用（ecall），即系统调用，跳转至庞大 switch 分发执行具体系统调用；4）其他未识别陷阱则打印调试信息并退出进程。"
+        },
+        {
+          "name": "riscv_trap_handler",
+          "normalized_name": "riscv_trap_handler",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "5985",
+          "end_line": "7064",
+          "outgoing_call_count": 244,
+          "summary": "RISC-V 内核的陷阱处理函数，处理定时器中断、用户态缺页异常、系统调用以及未知陷阱。"
+        },
+        {
+          "name": "riscv_trap_frame",
+          "normalized_name": "riscv_trap_frame",
+          "file_path": "arch\\riscv\\trap.h",
+          "language": "c",
+          "start_line": "9",
+          "end_line": "26",
+          "outgoing_call_count": 32,
+          "summary": "定义了RISC-V架构下用于保存陷入（trap）上下文的栈帧结构，包含所有通用寄存器、异常返回所需的状态寄存器、页表基址、陷阱处理入口、内核/用户栈帧指针及栈顶指针等字段，用于在用户态与内核态切换时完整保存和恢复CPU状态。"
+        },
+        {
+          "name": "handle_lazy_mmap_fault",
+          "normalized_name": "handle_lazy_mmap_fault",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1911",
+          "end_line": "2000",
+          "outgoing_call_count": 13,
+          "summary": "处理mmap惰性页错误：在访问未分配的mmap虚拟页时分配物理页面，从文件或匿名页填充数据，并映射到进程地址空间。"
+        },
+        {
+          "name": "handle_lazy_mmap_fault",
+          "normalized_name": "handle_lazy_mmap_fault",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1689",
+          "end_line": "1704",
+          "outgoing_call_count": 13,
+          "summary": "处理由于 mmap 延迟分配导致的缺页故障，在验证访问权限后按需映射物理页框。"
+        },
+        {
+          "name": "terminate_user_fault",
+          "normalized_name": "terminate_user_fault",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1706",
+          "end_line": "1720",
+          "outgoing_call_count": 10,
+          "summary": "处理用户态故障（如段错误），尝试发送信号并交付，若失败则终止当前进程并返回调度器。"
+        },
+        {
+          "name": "terminate_user_fault",
+          "normalized_name": "terminate_user_fault",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "2002",
+          "end_line": "2016",
+          "outgoing_call_count": 10,
+          "summary": "处理用户态故障导致进程终止的逻辑，负责发送信号、尝试递送、并最终退出进程"
+        },
+        {
+          "name": "sleep_until_usec",
+          "normalized_name": "sleep_until_usec",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "5845",
+          "end_line": "5853",
+          "outgoing_call_count": 6,
+          "summary": "该函数忙等待直到指定的微秒时间点，其间检查定时器中断信号并让出CPU给内核，如果有信号中断则提前返回错误码"
+        },
+        {
+          "name": "sleep_until_usec",
+          "normalized_name": "sleep_until_usec",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5614",
+          "end_line": "5622",
+          "outgoing_call_count": 6,
+          "summary": "该函数实现忙等待，直到系统时间达到指定的微秒截止时间，期间检查是否被信号中断，并主动让出CPU给内核。"
+        },
+        {
+          "name": "riscv_trap_entry",
+          "normalized_name": "riscv_trap_entry",
+          "file_path": "arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "17",
+          "end_line": "76",
+          "outgoing_call_count": 5,
+          "summary": "RISC-V 架构下陷入口处理程序，负责保存异常/中断上下文（通用寄存器、CSR 寄存器），然后切换到内核页表和内核栈，并调用高级陷处理函数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arch/riscv/trapbk.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trapbk.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "setup_signal_frame",
+          "normalized_name": "setup_signal_frame",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1081",
+          "end_line": "1115",
+          "outgoing_call_count": 12,
+          "summary": "设置信号处理框架，准备用户态信号处理程序执行的上下文。该函数构造一个用户态信号帧结构体，将其写入用户栈，并修改陷阱帧寄存器，以在恢复用户态执行时跳转到信号处理程序。"
+        },
+        {
+          "name": "setup_signal_frame",
+          "normalized_name": "setup_signal_frame",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1061",
+          "end_line": "1095",
+          "outgoing_call_count": 12,
+          "summary": "设置信号处理时的用户态栈帧，将信号信息、进程信号掩码和陷阱帧复制到用户栈，并修改陷阱帧的各寄存器以跳转到信号处理函数，并为 sigreturn 做好准备。"
+        },
+        {
+          "name": "deliver_pending_signal",
+          "normalized_name": "deliver_pending_signal",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1117",
+          "end_line": "1162",
+          "outgoing_call_count": 10,
+          "summary": "这个函数负责向进程传递一个待处理的信号。它根据信号的编号和对应的处理动作（忽略、默认终止、用户处理）来决定如何处理信号，包括设置信号帧或终止进程。"
+        },
+        {
+          "name": "deliver_pending_signal",
+          "normalized_name": "deliver_pending_signal",
+          "file_path": "arch/riscv/trapbk.c",
+          "language": "c",
+          "start_line": "1097",
+          "end_line": "1142",
+          "outgoing_call_count": 10,
+          "summary": "检查并交付当前进程的一个待处理信号，根据信号处理方式（忽略、默认、自定义处理）执行相应操作，包括进程退出或信号帧设置。"
+        },
+        {
+          "name": "signal_user_mask",
+          "normalized_name": "signal_user_mask",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "989",
+          "end_line": "992",
+          "outgoing_call_count": 2,
+          "summary": "这个函数从给定的信号掩码中移除 SIGKILL 和 SIGSTOP 两个信号的位，返回新的掩码。这是因为 SIGKILL 和 SIGSTOP 是强制性的、不可被用户进程阻塞或忽略的信号，因此在设置用户可操控的信号掩码时必须将其排除。"
+        },
+        {
+          "name": "signal_user_mask",
+          "normalized_name": "signal_user_mask",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "969",
+          "end_line": "972",
+          "outgoing_call_count": 2,
+          "summary": "移除信号掩码中表示SIGKILL和SIGSTOP的位，确保这两个信号不能被用户阻塞或忽略。"
+        },
+        {
+          "name": "signal_stack_pointer",
+          "normalized_name": "signal_stack_pointer",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1048",
+          "end_line": "1059",
+          "outgoing_call_count": 0,
+          "summary": "根据进程的信号处理栈设置情况，返回合适的栈指针，用于执行信号处理函数。若进程启用了SA_ONSTACK标志且备选栈有效，则返回备选栈顶；否则返回trap帧中保存的栈指针（sp寄存器值）。"
+        },
+        {
+          "name": "is_cancel_signal",
+          "normalized_name": "is_cancel_signal",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "4544",
+          "end_line": "4546",
+          "outgoing_call_count": 0,
+          "summary": "判断给定的信号值是否为线程取消信号（SIGCANCEL），支持 glibc 和 musl 两种 libc 的取消信号宏定义。"
+        },
+        {
+          "name": "signal_user_frame",
+          "normalized_name": "signal_user_frame",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "496",
+          "end_line": "501",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个用于在用户态信号处理上下文中保存和恢复状态的帧结构，包含幻数、信号编号、旧信号掩码以及一个RISC-V陷阱帧。"
+        },
+        {
+          "name": "signal_user_frame",
+          "normalized_name": "signal_user_frame",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "492",
+          "end_line": "497",
+          "outgoing_call_count": 0,
+          "summary": "定义了用户态信号处理帧的结构，包含魔法数、信号编号、旧信号掩码和陷阱帧，用于在用户态信号处理上下文中保存和恢复状态。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 101,
+      "outgoing_edge_count": 133,
+      "internal_edge_count": 118,
+      "external_edge_count": 15,
+      "internal_call_ratio": 0.8872,
+      "external_call_ratio": 0.1128,
+      "module_weight": 0.1035,
+      "files": [
+        "arch/riscv/trap.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trapbk.c",
+        "kernel\tmpfs.c",
+        "kernel\\elf.c",
+        "kernel\\ext4.c",
+        "kernel\\mm.c",
+        "kernel\\tmpfs.c"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "map_user_page_if_absent",
+          "normalized_name": "map_user_page_if_absent",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1717",
+          "end_line": "1756",
+          "outgoing_call_count": 14,
+          "summary": "在用户地址空间中，当指定虚拟地址的页表项不存在或需要更新时，分配物理页并建立映射。遍历多级页表（第2级到第0级），缺失的中间页表项会分配页并填充，最后在第0级分配物理页并设置用户可访问的页表项。"
+        },
+        {
+          "name": "map_user_page_if_absent",
+          "normalized_name": "map_user_page_if_absent",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1527",
+          "end_line": "1566",
+          "outgoing_call_count": 14,
+          "summary": "该函数为给定用户空间中的虚拟地址映射一个物理页面。它遍历多级页表，在缺失的中间层级分配并填入页表页，并在最后一级检查或创建叶子PTE，确保映射满足指定标志且为用户页。"
+        },
+        {
+          "name": "map_user_existing_page",
+          "normalized_name": "map_user_existing_page",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1758",
+          "end_line": "1789",
+          "outgoing_call_count": 12,
+          "summary": "这个函数负责在用户空间的页表中映射一个已经存在的物理页框（即不新分配页），它遍历多级页表（RISC-V Sv39，从 level 2 到 level 1）确保路径上的中间页表存在，若中间页表缺失则分配新页表页并清零，同时检查路径上的页表项是否已被映射为可读/写/可执行（如果已具备权限则报错），最后在 level 0（叶子页表）设置用户页表项，若该位置已有映射则校验是否与所需一致，否则写入新的页表项。"
+        },
+        {
+          "name": "map_user_existing_page",
+          "normalized_name": "map_user_existing_page",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1568",
+          "end_line": "1599",
+          "outgoing_call_count": 12,
+          "summary": "在用户空间（由 `user_space` 结构表示）的页表中，将给定的物理页（已存在于某处，由 `page` 指针指向）映射到指定的虚拟地址 `va`，并设置标志 `flags`。该函数负责创建或复用中间页表（s2、s1级），最终在末级页表（第0级）中插入页表项（PTE）。"
+        },
+        {
+          "name": "unmap_user_range",
+          "normalized_name": "unmap_user_range",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1645",
+          "end_line": "1678",
+          "outgoing_call_count": 10,
+          "summary": "解除用户空间指定虚拟地址范围内的页映射，释放相应的物理页并清除页表项。它遍历虚拟地址区间，逐页检查页表条目，仅当页表项有效且包含读、写或执行权限时才进行释放和清零操作。"
+        },
+        {
+          "name": "alloc_fd_file",
+          "normalized_name": "alloc_fd_file",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "2233",
+          "end_line": "2262",
+          "outgoing_call_count": 10,
+          "summary": "分配并初始化一个文件对象（struct file），同时为其分配关联的dentry和inode，若任一分配失败则回滚已分配资源。"
+        },
+        {
+          "name": "unmap_user_range",
+          "normalized_name": "unmap_user_range",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1492",
+          "end_line": "1525",
+          "outgoing_call_count": 10,
+          "summary": "这个函数用于解除用户空间指定虚拟地址范围内的页映射，遍历每个页面，检查页表层级并释放叶级页对应的物理页框，然后清除页表项。"
+        },
+        {
+          "name": "alloc_fd_file",
+          "normalized_name": "alloc_fd_file",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1997",
+          "end_line": "2026",
+          "outgoing_call_count": 10,
+          "summary": "分配并初始化一个文件结构体，同时为其分配关联的目录项和索引节点，若任一分配失败则回滚已分配的资源。"
+        },
+        {
+          "name": "populate_mmap_page",
+          "normalized_name": "populate_mmap_page",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1722",
+          "end_line": "1781",
+          "outgoing_call_count": 9,
+          "summary": "该函数用于填充mmap系统调用中的单个页面。根据是否匿名映射、文件描述符类型（进程内存文件或ext4文件），从文件或内存中读取数据到分配的页，并将该页映射到用户空间。"
+        },
+        {
+          "name": "open_mem_file_fd",
+          "normalized_name": "open_mem_file_fd",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "2238",
+          "end_line": "2280",
+          "outgoing_call_count": 8,
+          "summary": "该函数实现基于内存的文件系统的打开操作。它根据路径查找或创建内存文件，处理打开标志（如 O_CREAT、O_EXCL、O_TRUNC），然后分配一个文件描述符，并设置对应的 inode 信息（包括文件类型、模式、大小）和文件状态标志。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trapbk.c",
+        "kernel\\ext4.c",
+        "kernel\\proc.c"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "pipe_for_fd",
+          "normalized_name": "pipe_for_fd",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "2488",
+          "end_line": "2501",
+          "outgoing_call_count": 2,
+          "summary": "该函数通过文件描述符查找对应的管道结构体。它首先获取文件描述符对应的文件描述符条目，检查文件是否有效以及文件描述符的类型是否为管道读或写，然后从文件的私有字段中解析出管道索引，最后验证该索引的有效性，并返回指向全局管道表中对应管道结构的指针，如果任何一步失败则返回0。"
+        },
+        {
+          "name": "inherit_pipe_fds",
+          "normalized_name": "inherit_pipe_fds",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "301",
+          "end_line": "357",
+          "outgoing_call_count": 2,
+          "summary": "这个函数在fork进程时，遍历子进程的文件描述符表，对于其中的管道读写文件描述符，增加相应管道在全局管道表（proc_pipe_table）中的引用计数（read_open或write_open），确保父进程管道引用被正确继承。"
+        },
+        {
+          "name": "pipe_get_fd",
+          "normalized_name": "pipe_get_fd",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "2532",
+          "end_line": "2534",
+          "outgoing_call_count": 2,
+          "summary": "该函数是一个简单的包装函数，用于获取当前进程在指定文件描述符上的管道信息。它直接调用 pipe_get_proc_fd 函数，并将当前进程控制块（current_process）和文件描述符 fd 作为参数传递。"
+        },
+        {
+          "name": "fd_is_socket",
+          "normalized_name": "fd_is_socket",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "3017",
+          "end_line": "3021",
+          "outgoing_call_count": 2,
+          "summary": "检查给定的文件描述符（fd）是否对应一个 socket 类型的文件。它通过获取文件描述符条目，检查 file 指针非空且 fd_kind 字段为 PROCESS_FD_SOCKET 来判断。"
+        },
+        {
+          "name": "pipe_get_fd",
+          "normalized_name": "pipe_get_fd",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "2775",
+          "end_line": "2777",
+          "outgoing_call_count": 2,
+          "summary": "该函数通过调用 pipe_get_proc_fd，获取当前进程指定文件描述符对应的管道信息。"
+        },
+        {
+          "name": "pipe_for_fd",
+          "normalized_name": "pipe_for_fd",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "2731",
+          "end_line": "2744",
+          "outgoing_call_count": 2,
+          "summary": "根据文件描述符获取对应的管道结构指针，如果无效则返回0。"
+        },
+        {
+          "name": "fd_is_socket",
+          "normalized_name": "fd_is_socket",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": 3260,
+          "end_line": 3264,
+          "outgoing_call_count": 2,
+          "summary": "检查给定的文件描述符是否为套接字类型。"
+        },
+        {
+          "name": "test_script_priority",
+          "normalized_name": "test_script_priority",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "119",
+          "end_line": "157",
+          "outgoing_call_count": 1,
+          "summary": "根据传入的测试脚本名称返回一个优先级数值，用于控制测试脚本的执行顺序。名称与优先级映射通过一系列if语句硬编码，未匹配的脚本默认返回50。"
+        },
+        {
+          "name": "sort_test_scripts",
+          "normalized_name": "sort_test_scripts",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "198",
+          "end_line": "210",
+          "outgoing_call_count": 1,
+          "summary": "该函数使用插入排序算法，根据每个测试脚本的优先级对全局数组 `test_scripts` 中的脚本进行升序排序。"
+        },
+        {
+          "name": "is_testcode_script",
+          "normalized_name": "is_testcode_script",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "115",
+          "end_line": "117",
+          "outgoing_call_count": 1,
+          "summary": "判断给定的文件名是否以EXT4_TEST_SUFFIX结尾，即是否为测试代码脚本。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 157,
+      "outgoing_edge_count": 310,
+      "internal_edge_count": 242,
+      "external_edge_count": 68,
+      "internal_call_ratio": 0.7806,
+      "external_call_ratio": 0.2194,
+      "module_weight": 0.1823,
+      "files": [
+        "arch\\loongarch\\trap.c",
+        "arch\\riscv\\sched.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trap_entry.S",
+        "arch\\riscv\\trapbk.c",
+        "include/process.h",
+        "include\\process.h",
+        "kernel/proc.c",
+        "kernel/vfs.c",
+        "kernel\\elf.c",
+        "kernel\\main.c",
+        "kernel\\proc.c",
+        "kernel\\vfs.c"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "sys_execve",
+          "normalized_name": "sys_execve",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "4760",
+          "end_line": "4881",
+          "outgoing_call_count": 41,
+          "summary": "实现 execve 系统调用的主要逻辑，包括检查参数、复制用户路径、收集参数和环境变量、查找可执行文件（支持 shebang 和 .sh 脚本）、加载 ELF 到新用户空间、构建执行栈、切换进程地址空间、设置 trap frame，并关闭设置了 FD_CLOEXEC 的文件描述符。"
+        },
+        {
+          "name": "sys_execve",
+          "normalized_name": "sys_execve",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "4990",
+          "end_line": "5112",
+          "outgoing_call_count": 41,
+          "summary": "实现sys_execve系统调用，负责加载并执行新程序；包括从用户空间复制路径、收集命令行参数和环境变量、查找文件（支持busybox软链接、shebang脚本、.sh脚本）、解析ELF、构建用户栈、切换地址空间，并设置新进程的寄存器状态。"
+        },
+        {
+          "name": "sys_rt_sigtimedwait",
+          "normalized_name": "sys_rt_sigtimedwait",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1260",
+          "end_line": "1305",
+          "outgoing_call_count": 24,
+          "summary": "实现 rt_sigtimedwait 系统调用，用于等待指定信号集中的某个信号到来，支持超时设置。如果超时，返回 -EAGAIN；如果被其他信号中断，返回 -EINTR。"
+        },
+        {
+          "name": "sys_rt_sigtimedwait",
+          "normalized_name": "sys_rt_sigtimedwait",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1280",
+          "end_line": "1325",
+          "outgoing_call_count": 24,
+          "summary": "实现了 sys_rt_sigtimedwait 系统调用，用于在指定超时时间内等待信号集中的一个信号，并在超时或中断后返回。"
+        },
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5445",
+          "end_line": "5499",
+          "outgoing_call_count": 14,
+          "summary": "这个函数实现了系统调用 sys_clone，用于创建一个新进程（子进程）。它首先检查当前进程是否存在，然后调用 proc_fork 创建子进程，复制陷阱帧，并根据传入的标志设置子进程的线程组 ID、线程本地存储、线程 ID 等属性。最后返回子进程的 PID。"
+        },
+        {
+          "name": "sys_clone",
+          "normalized_name": "sys_clone",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "5676",
+          "end_line": "5730",
+          "outgoing_call_count": 14,
+          "summary": "实现 clone 系统调用，创建一个子进程并复制父进程的 trap frame 和指定资源，根据 flags 设置子进程的线程组 ID、线程指针、TID 清理/设置地址等属性。"
+        },
+        {
+          "name": "sys_wait4",
+          "normalized_name": "sys_wait4",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "5732",
+          "end_line": "5784",
+          "outgoing_call_count": 12,
+          "summary": "实现系统调用sys_wait4，用于等待子进程结束（回收僵尸子进程）。函数会轮询查找符合条件的子进程，若找到则回收并返回其PID；若没有找到但存在子进程，根据options判断是否阻塞或立即返回0；若没有符合条件的子进程则返回错误码。"
+        },
+        {
+          "name": "collect_exec_envs",
+          "normalized_name": "collect_exec_envs",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "4704",
+          "end_line": "4760",
+          "outgoing_call_count": 12,
+          "summary": "该函数从用户空间收集执行环境变量（envp），复制到内核的 exec_arg_block 结构中，并确保不超过限制。如果环境变量中缺少标准路径环境变量，则自动添加默认路径。"
+        },
+        {
+          "name": "collect_exec_envs",
+          "normalized_name": "collect_exec_envs",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "4474",
+          "end_line": "4530",
+          "outgoing_call_count": 12,
+          "summary": "从用户态环境变量指针envp中收集环境变量字符串，存储到exec_arg_block结构体envs中，并确保包含默认的PATH环境变量，同时进行大小和数量限制检查。"
+        },
+        {
+          "name": "sys_wait4",
+          "normalized_name": "sys_wait4",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5501",
+          "end_line": "5553",
+          "outgoing_call_count": 12,
+          "summary": "实现系统调用wait4，用于等待子进程状态变化，处理僵尸子进程的回收。如果指定了WNOHANG选项且没有僵尸子进程则立即返回0，否则阻塞父进程直到有僵尸子进程出现。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 12,
+      "outgoing_edge_count": 23,
+      "internal_edge_count": 23,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0138,
+      "files": [
+        "arch/loongarch/trap.c",
+        "arch/riscv/sched.c",
+        "arch\\riscv\\sched.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trap_entry.S",
+        "arch\\riscv\\trapbk.c",
+        "kernel\\proc.c"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "scheduler",
+          "normalized_name": "scheduler",
+          "file_path": "arch\\riscv\\sched.c",
+          "language": "c",
+          "start_line": "68",
+          "end_line": "101",
+          "outgoing_call_count": 5,
+          "summary": "该函数实现了一个简单的轮询调度器，循环遍历进程表，依次将处于就绪状态的进程切换为运行状态，并在进程执行完成后根据其状态进行相应处理（如销毁或跳过）。如果没有任何进程处于就绪状态，则返回。"
+        },
+        {
+          "name": "scheduler",
+          "normalized_name": "scheduler",
+          "file_path": "arch/loongarch/trap.c",
+          "language": "c",
+          "start_line": "5",
+          "end_line": "6",
+          "outgoing_call_count": 5,
+          "summary": "该代码块定义了一个空的调度器函数，函数体内没有任何语句，未实现任何调度逻辑。"
+        },
+        {
+          "name": "return_to_scheduler",
+          "normalized_name": "return_to_scheduler",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "558",
+          "end_line": "564",
+          "outgoing_call_count": 4,
+          "summary": "这个函数用于将当前进程的执行流切换回调度器。它检查当前进程是否存在，如果存在则调用 riscv_return_to_kernel 函数，传递一个代码、当前进程的上下文指针以及调度器上下文，以实现从当前进程或异常处理返回到调度器的过程。"
+        },
+        {
+          "name": "switch_to_user_trampoline",
+          "normalized_name": "switch_to_user_trampoline",
+          "file_path": "arch\\riscv\\sched.c",
+          "language": "c",
+          "start_line": "43",
+          "end_line": "55",
+          "outgoing_call_count": 4,
+          "summary": "此函数用于将当前进程切换到用户态执行，通过获取进程的 trap frame 和用户页表，调用 riscv_user_resume 完成模式切换。"
+        },
+        {
+          "name": "yield_to_kernel",
+          "normalized_name": "yield_to_kernel",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "5633",
+          "end_line": "5636",
+          "outgoing_call_count": 4,
+          "summary": "让当前进程主动让出CPU，并通过调度器切换到下一个进程，同时返回调度器循环（参数0表示从正常yield路径返回）。"
+        },
+        {
+          "name": "weak",
+          "normalized_name": "weak",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "45",
+          "end_line": "46",
+          "outgoing_call_count": 4,
+          "summary": "定义了一个空的弱符号调度器函数，作为默认实现，允许用户在其他地方覆盖它。"
+        },
+        {
+          "name": "return_to_scheduler",
+          "normalized_name": "return_to_scheduler",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "550",
+          "end_line": "556",
+          "outgoing_call_count": 4,
+          "summary": "检查当前进程是否存在，若存在则调用函数将控制权返回给调度器。"
+        },
+        {
+          "name": "yield_to_kernel",
+          "normalized_name": "yield_to_kernel",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5402",
+          "end_line": "5405",
+          "outgoing_call_count": 4,
+          "summary": "当前进程主动让出CPU，切换到内核调度器进行进程调度。"
+        },
+        {
+          "name": "riscv_context_switch",
+          "normalized_name": "riscv_context_switch",
+          "file_path": "arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "165",
+          "end_line": "171",
+          "outgoing_call_count": 2,
+          "summary": "执行 RISC-V 架构下的上下文切换，保存当前 CPU 上下文（通过 save_kernel_context 并传入 a0 参数），然后加载新上下文的寄存器状态（通过 load_kernel_context 并传入 a1 参数），最后返回。"
+        },
+        {
+          "name": "riscv_scheduler_context",
+          "normalized_name": "riscv_scheduler_context",
+          "file_path": "arch/riscv/sched.c",
+          "language": "c",
+          "start_line": "16",
+          "end_line": "18",
+          "outgoing_call_count": 0,
+          "summary": "返回当前调度器上下文结构体的指针，该上下文用于保存调度器执行时的寄存器状态。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "signal": {
+      "module_name": "signal",
+      "function_count": 2,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 3,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0021,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 135,
+      "outgoing_edge_count": 500,
+      "internal_edge_count": 437,
+      "external_edge_count": 63,
+      "internal_call_ratio": 0.874,
+      "external_call_ratio": 0.126,
+      "module_weight": 0.2053,
+      "files": [
+        "arch\riscv\\trapbk.c",
+        "arch/riscv/trap.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trap_entry.S",
+        "arch\\riscv\\trapbk.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "sys_fstatat",
+          "normalized_name": "sys_fstatat",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": 5331,
+          "end_line": 5448,
+          "outgoing_call_count": 42,
+          "summary": "{\n  \"block_id\": \"block_457\",\n  \"file_path\": \"arch\\\\riscv\\\\trap.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"5331\",\n  \"end_line\": \"5448\",\n  \"name\": \"sys_fstatat\",\n  \"type\": \"function\",\n  \"summary\": \"实现fstatat系统调用，根据给定的目录fd、路径和标志位，获取文件或目录的状态信息并填充到用户空间的stat结构体中。该函数支持多种文件系统（ext4、procfs、devfs、内存文件）以及特殊路径的处理。\",\n  \"logic_steps\": [\n    \"第一步：初始化size、dev、ino、mode等变量，mode默认设为STAT_MODE_REG。\",\n    \"第二步：检查flags是否包含AT_EMPTY_PATH标志。如果包含，则直接通过dirfd对应的文件描述符获取状态信息：验证fd是否打开，获取size、mode、dev；尝试从file->f_dentry->d_inode获取ino，并根据fd种类（PROCESS_FD_EXT4_FILE、PROCESS_FD_FILE、PROCESS_FD_DIR、PROCESS_FD_DEV、PROCESS_FD_DEV_DIR、PROCESS_FD_PROC_DIR、PROCESS_FD_TEXT）分别设置dev和ino，然后调用write_stat_full返回。\",\n    \"第三步：如果不包含AT_EMPTY_PATH，则从用户空间复制路径字符串到内核缓冲区path。\",\n    \"第四步：检查路径是否为调试用的特殊路径（如\\\"./ltp/testcases/bin/huges\\\"），如果是则输出\"hello\"。\",\n    \"第五步：调用devfs_path_lookup尝试在devfs中查找路径。若找到，根据节点类型（目录或字符设备）设置mode，dev固定为4U，ino为(dev_node + 1U)，调用write_stat_full返回。\",\n    \"第六步：通过path_lookup_dentry查找路径对应的dentry。若dentry有效且属于procfs文件系统，则读取inode的size和mode，dev固定为5U，ino为d_inode->i_ino，调用write_stat_full返回。\",\n    \"第七步：判断路径是否为当前目录或根目录（调用path_is_current_or_root_dir），若是，则写stat：size=0，mode=STAT_MODE_DIR，dev=3U，ino=1U。\",\n    \"第八步：判断路径是否为伪bin目录（调用path_is_fake_bin_dir），若是，则写stat同上。\",\n    \"第九步：判断路径是否为busybox applet（调用path_is_busybox_applet）且busybox inode号非零，若是，则写stat：size=4096，mode=STAT_MODE_REG，dev=3U，ino取ext4_get_busybox_inode_no()。\",\n    \"第十步：调用find_mem_file在内存文件表中查找路径。如果找到，设置size、mode（根据是否是目录）、dev=3U、ino=file_index+1。否则检查路径是否为\\\"/\\\"或\\\".\\\"，若是，写stat同上。否则调用lookup_ext4_user_path在ext4文件系统中查找路径对应的inode号。若查找失败返回-ENOENT。若成功，读取inode的size和mode，dev=2U，ino=inode_no。\",\n    \"第十一步：调用write_stat_full将最终得到的size、mode、dev、ino写入用户空间的stat结构体，并返回0。\"\n  ],\n  \"called_functions\": [\n    \"fd_is_open\",\n    \"stat_size_for_fd\",\n    \"stat_mode_for_fd\",\n    \"fd_file_desc\",\n    \"write_stat_full\",\n    \"copy_user_cstr\",\n    \"kstrcmp\",\n    \"devfs_path_lookup\",\n    \"devfs_node_size\",\n    \"devfs_node_is_dir\",\n    \"path_lookup_dentry\",\n    \"cstr_equal\",\n    \"path_is_current_or_root_dir\",\n    \"path_is_fake_bin_dir\",\n    \"path_is_busybox_applet\",\n    \"ext4_get_busybox_inode_no\",\n    \"find_mem_file\",\n    \"lookup_ext4_user_path\",\n    \"ext4_inode_size\",\n    \"ext4_stat_mode_for_inode\",\n    \"kputs\"\n  ],\n  \"related_os_module\": \"syscall\",\n  \"evidence\": \"函数名以sys_开头，实现系统调用fstatat；内部通过flags分支处理AT_EMPTY_PATH路径；涵盖devfs、procfs、ext4、内存文件系统等多种文件系统状态获取；调用write_stat_full填充用户态stat结构体。\",\n  \"uncertainty\": \"不确定函数write_stat_full的具体实现（是否写入用户空间安全），也不确定devfs_path_lookup等辅助函数是否跨调用正确同步。\"\n}"
+        },
+        {
+          "name": "sys_fstatat",
+          "normalized_name": "sys_fstatat",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5100",
+          "end_line": "5217",
+          "outgoing_call_count": 42,
+          "summary": "该函数实现了fstatat系统调用，用于获取文件状态信息。它首先处理AT_EMPTY_PATH标志（通过文件描述符获取信息），然后尝试在devfs、虚拟文件系统（procfs、内存文件表、特殊目录、busybox软链接）、以及ext4用户文件系统中查找路径对应的文件，并将获取到的size、mode、dev、inode等信息写入用户提供的stat结构体。"
+        },
+        {
+          "name": "sys_ppoll",
+          "normalized_name": "sys_ppoll",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "2772",
+          "end_line": "2839",
+          "outgoing_call_count": 22,
+          "summary": "实现ppoll系统调用，轮询一组文件描述符的事件，支持超时和信号中断。"
+        },
+        {
+          "name": "sys_ppoll",
+          "normalized_name": "sys_ppoll",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "3015",
+          "end_line": "3082",
+          "outgoing_call_count": 22,
+          "summary": "实现系统调用ppoll，用于轮询文件描述符事件，支持超时和阻塞等待。"
+        },
+        {
+          "name": "sys_pselect6",
+          "normalized_name": "sys_pselect6",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "3084",
+          "end_line": "3234",
+          "outgoing_call_count": 20,
+          "summary": "实现系统调用pselect6，用于监视多个文件描述符的状态变化（可读、可写、异常），支持超时和信号掩码替换。"
+        },
+        {
+          "name": "sys_pselect6",
+          "normalized_name": "sys_pselect6",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "2841",
+          "end_line": "2991",
+          "outgoing_call_count": 20,
+          "summary": "实现 pselect6 系统调用，监控多个文件描述符的可读、可写和异常事件，支持定时和信号掩码替换。"
+        },
+        {
+          "name": "sys_faccessat",
+          "normalized_name": "sys_faccessat",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": 5450,
+          "end_line": 5499,
+          "outgoing_call_count": 16,
+          "summary": "{\n  \"block_id\": \"block_458\",\n  \"file_path\": \"arch\\\\riscv\\\\trap.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"5450\",\n  \"end_line\": \"5499\",\n  \"name\": \"sys_faccessat\",\n  \"type\": \"function\",\n  \"summary\": \"该系统调用的作用是检查文件或目录是否可访问。它接收目录文件描述符、路径地址、模式和标志位，依次验证标志和模式的合法性，处理空路径标志，从用户空间拷贝路径字符串，然后依次检查当前进程、设备文件系统路径、procfs路径、ext4文件系统路径、内存文件以及特定硬编码路径，如果任何一步找到匹配路径则返回0表示可访问，否则返回-ENOENT表示不存在。\",\n  \"logic_steps\": [\n    \"验证flags是否只包含AT_EMPTY_PATH（即~(AT_EMPTY_PATH)外的位为0），否则返回-EINVAL。\",\n    \"验证mode是否只有低3位（~7ULL）被设置，否则返回-EINVAL。\",\n    \"如果设置了AT_EMPTY_PATH且路径为\".\"，则检查dirfd：若为AT_FDCWD，则根据current_process是否为0返回0或-EBADF；否则直接返回0。\",\n    \"从用户空间拷贝路径字符串到内核缓冲区path，若失败返回-EFAULT。\",\n    \"检查current_process是否为0，若是则返回-EBADF。\",\n    \"调用devfs_path_lookup检查路径是否对应devfs节点，若是则返回0。\",\n    \"调用vfs_path_is_procfs或path_is_current_or_root_dir检查是否为procfs路径或当前/根目录，若是则返回0。\",\n    \"调用lookup_ext4_user_path在ext4文件系统中查找路径，使用当前进程的cwd_inode_no，若找到则返回0。\",\n    \"调用find_mem_file检查是否为内存文件，若找到则返回0。\",\n    \"检查路径是否为硬编码的\"text.txt\"或\"/busybox\"，若是则返回0。\",\n    \"若以上均未匹配，返回-ENOENT。\"\n  ],\n  \"called_functions\": [\n    \"user_path_is_dot\",\n    \"copy_user_cstr\",\n    \"devfs_path_lookup\",\n    \"vfs_path_is_procfs\",\n    \"path_is_current_or_root_dir\",\n    \"lookup_ext4_user_path\",\n    \"find_mem_file\",\n    \"cstr_equal\"\n  ],\n  \"related_os_module\": \"syscall\",\n  \"evidence\": \"函数名sys_faccessat符合系统调用命名惯例；函数实现中对用户传参进行合法性检查、路径解析、多文件系统查找，属于典型的文件访问权限检查系统调用。\",\n  \"uncertainty\": \"代码中没有实际检查文件的权限模式（如读、写、执行），只检查了模式合法性；实际可访问性检查是基于文件是否存在，而非权限校验。可能当前版本只实现了存在性检查。\"\n}"
+        },
+        {
+          "name": "sys_faccessat",
+          "normalized_name": "sys_faccessat",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5219",
+          "end_line": "5268",
+          "outgoing_call_count": 16,
+          "summary": "实现 faccessat 系统调用，检查指定路径文件的可访问性。首先校验参数合法性，处理空路径标志，然后依次通过 devfs、procfs、ext4 文件系统、内存文件系统以及硬编码的特殊文件名（\"text.txt\"、\"/busybox\"）查找路径。一旦找到路径则返回 0，否则返回 -ENOENT。"
+        },
+        {
+          "name": "sys_chmodat",
+          "normalized_name": "sys_chmodat",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "5501",
+          "end_line": "5567",
+          "outgoing_call_count": 14,
+          "summary": "该函数实现系统调用 sys_chmodat，用于修改文件或目录的权限模式（mode）。它支持两种场景：通过 AT_EMPTY_PATH 标志基于文件描述符修改，否则通过路径字符串解析文件。最终修改存储在 proc_mem_file_table 表中的对应条目的 mode 字段。"
+        },
+        {
+          "name": "sys_chownat",
+          "normalized_name": "sys_chownat",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "5338",
+          "end_line": "5375",
+          "outgoing_call_count": 14,
+          "summary": "系统调用 chownat 的实现，用于更改文件所有者，但当前实现实际并未执行真正的所有权更改，而是进行了一系列参数校验和条件检查后返回 0（成功）或错误码。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 47,
+      "outgoing_edge_count": 61,
+      "internal_edge_count": 44,
+      "external_edge_count": 17,
+      "internal_call_ratio": 0.7213,
+      "external_call_ratio": 0.2787,
+      "module_weight": 0.0479,
+      "files": [
+        "arch\\loongarch\\entry.S",
+        "arch\\riscv\\entry.S",
+        "kernel\\elf.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "parse_header",
+          "normalized_name": "parse_header",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "140",
+          "end_line": "187",
+          "outgoing_call_count": 6,
+          "summary": "解析ELF文件头部，验证其合法性、正确性和与当前内核的兼容性，并提取关键的头部字段到header结构体中。"
+        },
+        {
+          "name": "elf_probe_image",
+          "normalized_name": "elf_probe_image",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "330",
+          "end_line": "356",
+          "outgoing_call_count": 4,
+          "summary": "该函数用于探测（验证）一个给定的内存映像是否是有效的 ELF 可执行映像。它首先解析 ELF 头部，然后检查程序头部是否在映像范围内，接着汇总所有可加载段的虚拟地址范围，最后如果这些步骤都成功则返回 true，否则返回 false。实际上最后没有使用汇总结果，只作为一次完整性检查。"
+        },
+        {
+          "name": "summarize_loads",
+          "normalized_name": "summarize_loads",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "273",
+          "end_line": "320",
+          "outgoing_call_count": 3,
+          "summary": "遍历ELF程序头表，收集所有PT_LOAD段的加载信息：统计段数量、记录第一个段的虚拟地址和内存大小、计算所有段的最小起始虚拟地址和最大结束地址，同时进行有效性检查（地址溢出、filesz <= memsz、至少有1个load段）。"
+        },
+        {
+          "name": "machine_matches_kernel",
+          "normalized_name": "machine_matches_kernel",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "129",
+          "end_line": "138",
+          "outgoing_call_count": 2,
+          "summary": "这个函数判断给定的机器类型是否与当前内核架构匹配。它通过预编译宏检查当前内核的架构（如RISC-V或LoongArch），然后与传入的机器类型参数进行比较。如果架构未定义，则无条件返回true。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "arch\\loongarch\\entry.S",
+          "language": "assembly",
+          "start_line": "4",
+          "end_line": "19",
+          "outgoing_call_count": 2,
+          "summary": "这是一个操作系统的启动入口代码，设置栈指针，保存启动参数，然后跳转到kmain函数执行，并在kmain返回后进入无限循环等待。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "arch\\riscv\\entry.S",
+          "language": "assembly",
+          "start_line": "4",
+          "end_line": "19",
+          "outgoing_call_count": 2,
+          "summary": "RISC-V架构的启动入口点，设置栈指针，保存启动参数，调用kmain函数，并在kmain返回后进入无限等待循环。"
+        },
+        {
+          "name": "boot_stack",
+          "normalized_name": "boot_stack",
+          "file_path": "arch\\loongarch\\entry.S",
+          "language": "assembly",
+          "start_line": "19",
+          "end_line": "21",
+          "outgoing_call_count": 0,
+          "summary": "这个代码块通过 .space 16384 指令在汇编阶段预留了 16384 字节（16KB）的连续内存空间，用于作为引导阶段的栈空间。标签 boot_stack 标识这段空间的起始地址，通常会被加载到栈指针寄存器（如 sp）中，为后续的函数调用提供栈支持。"
+        },
+        {
+          "name": "machine_name",
+          "normalized_name": "machine_name",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "119",
+          "end_line": "127",
+          "outgoing_call_count": 0,
+          "summary": "根据传入的机器类型标识（machine）返回对应的字符串名称。用于将 ELF 文件头的 e_machine 字段映射为可读的架构名称，以支持后续解析或错误提示。"
+        },
+        {
+          "name": "boot_stack",
+          "normalized_name": "boot_stack",
+          "file_path": "arch\\riscv\\entry.S",
+          "language": "assembly",
+          "start_line": "19",
+          "end_line": "21",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为 boot_stack 的标签，并为其分配了 16384 字节（16KB）的栈空间，用于系统启动时的栈内存预留。"
+        },
+        {
+          "name": "phdrs_fit_image",
+          "normalized_name": "phdrs_fit_image",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "269",
+          "end_line": "271",
+          "outgoing_call_count": 0,
+          "summary": "检查ELF文件的程序头表（Program Header Table）是否完全包含在给定长度范围内，防止越界访问。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "arch/riscv/trap.c",
+        "arch\\riscv\\sched.c",
+        "arch\\riscv\\trap.c",
+        "arch\\riscv\\trap_entry.S",
+        "arch\\riscv\\trapbk.c",
+        "kernel\\elf.c",
+        "kernel\\main.c"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "kmain",
+          "normalized_name": "kmain",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "48",
+          "end_line": "68",
+          "outgoing_call_count": 12,
+          "summary": "操作系统的内核主函数，依次初始化系统各个子系统并执行测试后关机。"
+        },
+        {
+          "name": "elf_load_user_space",
+          "normalized_name": "elf_load_user_space",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "629",
+          "end_line": "712",
+          "outgoing_call_count": 10,
+          "summary": "该函数负责加载ELF可执行文件（可能包含动态链接器）到用户进程的地址空间中，构建用户空间描述结构（user_space），并处理动态链接器（interpreter）的加载和映射。"
+        },
+        {
+          "name": "riscv_user_resume",
+          "normalized_name": "riscv_user_resume",
+          "file_path": "arch\\riscv\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "283",
+          "end_line": "312",
+          "outgoing_call_count": 10,
+          "summary": "恢复用户态执行：保存当前内核上下文，从内存中加载用户态寄存器和环境，并跳转到用户态入口点（通过trampoline页切换页表）。"
+        },
+        {
+          "name": "user_addr_in_space",
+          "normalized_name": "user_addr_in_space",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "603",
+          "end_line": "624",
+          "outgoing_call_count": 6,
+          "summary": "该函数用于在给定的用户地址空间中，检查一个虚拟地址是否有效且满足指定的权限标志，如果有效则返回对应的物理地址（或映射后的线性地址），否则返回NULL。"
+        },
+        {
+          "name": "user_addr_in_space",
+          "normalized_name": "user_addr_in_space",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "616",
+          "end_line": "637",
+          "outgoing_call_count": 6,
+          "summary": "检查给定虚拟地址是否属于指定的用户地址空间，并满足权限要求，返回对应的物理地址偏移指针。"
+        },
+        {
+          "name": "protect_user_range",
+          "normalized_name": "protect_user_range",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1680",
+          "end_line": "1715",
+          "outgoing_call_count": 4,
+          "summary": "该函数遍历用户空间指定地址范围内的页表，对叶子页表项修改权限掩码（flags），并确保用户页（U位）被设置（若flags非零），最后刷新TLB。它主要用于动态调整用户内存区域的访问权限。"
+        },
+        {
+          "name": "riscv_user_finish_return",
+          "normalized_name": "riscv_user_finish_return",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1161",
+          "end_line": "1165",
+          "outgoing_call_count": 4,
+          "summary": "完成用户态的返回过程，先调用 riscv_user_complete_wait 完成等待，再调用 riscv_user_prepare_return 准备返回，最终返回准备操作的结果。"
+        },
+        {
+          "name": "user_path_contains",
+          "normalized_name": "user_path_contains",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1945",
+          "end_line": "1969",
+          "outgoing_call_count": 4,
+          "summary": "从用户空间地址读取一个以 null 结尾的字符串（最多 128 字节），检查其中是否包含另一个给定的子串（needle）。如果找到完全匹配，返回 1；否则返回 0。"
+        },
+        {
+          "name": "riscv_user_prepare_return",
+          "normalized_name": "riscv_user_prepare_return",
+          "file_path": "arch\\riscv\\trap.c",
+          "language": "c",
+          "start_line": "1164",
+          "end_line": "1179",
+          "outgoing_call_count": 4,
+          "summary": "准备从内核返回到用户态前的最终检查和处理，包括有效性验证、实时计时器检查、待处理信号投递，以及根据进程状态决定是否允许返回。"
+        },
+        {
+          "name": "riscv_user_prepare_return",
+          "normalized_name": "riscv_user_prepare_return",
+          "file_path": "arch\\riscv\\trapbk.c",
+          "language": "c",
+          "start_line": "1144",
+          "end_line": "1159",
+          "outgoing_call_count": 4,
+          "summary": "这个函数在用户态返回前做准备工作，检查进程状态、处理定时器、传递待处理信号，并确保进程仍处于可运行状态。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 0.0,
+    "score_level": "unknown",
+    "scores": {
+      "originality": 0,
+      "novelty": 0,
+      "practicality": 0,
+      "difficulty": 0,
+      "completion": 0
+    },
+    "summary": "",
+    "strengths": [],
+    "weaknesses": [],
+    "suggestions": []
+  },
+  "hybrid_top_results": [],
+  "comparison": {
+    "retrieval_mode": "structured",
+    "comparison_count": 0,
+    "comparisons": []
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026100109910165_final_report.md",
+    "work_detail_data": "/data/works/T2026100109910165.json",
+    "comparison_data": "/data/comparisons/T2026100109910165.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

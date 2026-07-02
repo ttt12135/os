@@ -1,0 +1,1922 @@
+{
+  "repo_name": "T202610055999826",
+  "team_name": "T202610055999826",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T202610055999826-3679",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t202610055999826-3679",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust",
+    "assembly",
+    "linker_script",
+    "toml",
+    "bash",
+    "cargo"
+  ],
+  "core_modules": [
+    "memory",
+    "process",
+    "filesystem",
+    "syscall",
+    "scheduler"
+  ],
+  "function_count": 764,
+  "node_count": 764,
+  "edge_count": 4770,
+  "internal_edge_count": 3181,
+  "external_edge_count": 1589,
+  "module_count": 21,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.51,
+    "build": 0.68,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "interrupt and syscall": 0.58,
+    "ipc": 0.05,
+    "loader": 0.75,
+    "logging": 0.13,
+    "memory": 1.0,
+    "network": 0.15,
+    "process": 1.0,
+    "process or scheduler": 0.18,
+    "process/scheduler": 0.44,
+    "scheduler": 1.0,
+    "syscall": 1.0,
+    "task": 0.23,
+    "test": 0.1,
+    "trap": 0.08,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "memory",
+      "module_weight": 0.2634,
+      "completeness": 1.0,
+      "final_score": 0.558
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.1866,
+      "completeness": 1.0,
+      "final_score": 0.512
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1195,
+      "completeness": 1.0,
+      "final_score": 0.4717
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.1143,
+      "completeness": 1.0,
+      "final_score": 0.4686
+    },
+    {
+      "module_name": "scheduler",
+      "module_weight": 0.1084,
+      "completeness": 1.0,
+      "final_score": 0.465
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 6,
+      "outgoing_edge_count": 21,
+      "internal_edge_count": 11,
+      "external_edge_count": 10,
+      "internal_call_ratio": 0.5238,
+      "external_call_ratio": 0.4762,
+      "module_weight": 0.0065,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 15,
+      "outgoing_edge_count": 26,
+      "internal_edge_count": 5,
+      "external_edge_count": 21,
+      "internal_call_ratio": 0.1923,
+      "external_call_ratio": 0.8077,
+      "module_weight": 0.014,
+      "files": [
+        "Cargo.toml",
+        "cargo-config\\config.toml",
+        "linker-loongarch64-qemu.ld",
+        "linker-riscv64-qemu.ld",
+        "rust-toolchain.toml",
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\arch\\riscv64\\mod.rs",
+        "src\\fs\\test_scanner.rs",
+        "src\\loader\\elf.rs",
+        "user\\loongarch64\\linker.ld",
+        "user\\riscv64\\initproc_brk.S",
+        "user\\riscv64\\linker.ld"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "linker.ld",
+          "normalized_name": "ld",
+          "file_path": "user\\riscv64\\linker.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "43",
+          "outgoing_call_count": 16,
+          "summary": "这个代码块是一个链接脚本，用于定义RISC-V用户态程序的布局。它指定了输出架构为riscv，入口点为_start，基地址为0x10000。定义了三个PHDRS段（text、rodata、data）对应不同的权限，并在SECTIONS中按顺序排列.text、.rodata、.data和.bss段，每个段4K对齐，其中.bss段归属于data的PHDRS。"
+        },
+        {
+          "name": "linker-loongarch64-qemu.ld",
+          "normalized_name": "ld",
+          "file_path": "linker-loongarch64-qemu.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "61",
+          "outgoing_call_count": 16,
+          "summary": "这个链接脚本定义了LoongArch64架构下操作系统的内存布局，将内核从物理地址0x200000开始加载，并在高虚拟地址偏移0x9000000000000000处运行。它划分了入口代码段、文本段、只读数据段、数据段、BSS段以及内核堆区，并设置了相应的符号供内核代码使用。"
+        },
+        {
+          "name": "linker.ld",
+          "normalized_name": "ld",
+          "file_path": "user\\loongarch64\\linker.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "38",
+          "outgoing_call_count": 16,
+          "summary": "这个链接脚本定义了用户态程序在LoongArch64架构下的内存布局，指定了可执行文件的起始地址为0x10000，并组织了.text、.rodata、.data、.bss等段的放置顺序和对齐方式，同时丢弃了.eh_frame和.debug*等调试信息段。"
+        },
+        {
+          "name": "linker-riscv64-qemu.ld",
+          "normalized_name": "ld",
+          "file_path": "linker-riscv64-qemu.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "50",
+          "outgoing_call_count": 16,
+          "summary": "这个链接脚本定义了 rv64 qemu 内核的链接布局，指定入口点为 _start，将内核加载到基址 0x80200000，并依次安排了 .text、.rodata、.data、.bss 段，同时预留了 2MB（0x200000）的堆空间。"
+        },
+        {
+          "name": "build_scan_command",
+          "normalized_name": "build_scan_command",
+          "file_path": "src\\fs\\test_scanner.rs",
+          "language": "rust",
+          "start_line": "4",
+          "end_line": "34",
+          "outgoing_call_count": 15,
+          "summary": "扫描文件系统中以 _testcode.sh 结尾的文件，并构造一个由分号分隔的路径列表字符串，用于后续测试执行。首先扫描根目录（扁平布局），然后扫描多个常见的测试子目录（层次布局）。"
+        },
+        {
+          "name": "Cargo.toml",
+          "normalized_name": "toml",
+          "file_path": "Cargo.toml",
+          "language": "cargo",
+          "start_line": "1",
+          "end_line": "26",
+          "outgoing_call_count": 1,
+          "summary": "定义了项目lemoncore的基本元数据、特性配置、依赖和构建配置文件。主要内容包括包名、版本、特性开关（默认启用riscv64架构）、无条件依赖为空、以及debug和release下panic处理方式为abort，release模式下设置优化级别为0并关闭调试信息以避免virtio块设备初始化挂起的问题。"
+        },
+        {
+          "name": "rust-toolchain.toml",
+          "normalized_name": "toml",
+          "file_path": "rust-toolchain.toml",
+          "language": "toml",
+          "start_line": "1",
+          "end_line": "19",
+          "outgoing_call_count": 1,
+          "summary": "配置 Rust 工具链，指定使用 2025 年 1 月 18 日的 nightly 版本，设置最小化配置文件，并定义三个交叉编译目标架构。"
+        },
+        {
+          "name": "config.toml",
+          "normalized_name": "toml",
+          "file_path": "cargo-config\\config.toml",
+          "language": "toml",
+          "start_line": "1",
+          "end_line": "2",
+          "outgoing_call_count": 1,
+          "summary": "这个代码块的主要作用：设置Cargo构建的目标目录为'target'，即指定编译输出目录。"
+        },
+        {
+          "name": "ProgramHeader",
+          "normalized_name": "ProgramHeader",
+          "file_path": "src\\loader\\elf.rs",
+          "language": "rust",
+          "start_line": "869",
+          "end_line": "876",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个表示ELF程序头（Program Header）的数据结构，用于描述ELF文件中各个段（segment）的信息，如类型、标志、文件偏移、虚拟地址、文件大小和内存大小。"
+        },
+        {
+          "name": "msg",
+          "normalized_name": "msg",
+          "file_path": "user\\riscv64\\initproc_brk.S",
+          "language": "assembly",
+          "start_line": "56",
+          "end_line": "58",
+          "outgoing_call_count": 0,
+          "summary": "定义一个标签为msg的字符串数据，内容为\"hello from initproc elf\\n\"，用于在程序运行时输出或存储该字符串。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 78,
+      "outgoing_edge_count": 302,
+      "internal_edge_count": 149,
+      "external_edge_count": 153,
+      "internal_call_ratio": 0.4934,
+      "external_call_ratio": 0.5066,
+      "module_weight": 0.0866,
+      "files": [
+        "src/drivers/virtio_mmio.rs",
+        "src/drivers/virtio_pci.rs",
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\drivers\\mod.rs",
+        "src\\drivers\\serial.rs",
+        "src\\drivers\\virtio_mmio.rs",
+        "src\\drivers\\virtio_pci.rs",
+        "src\\fs\\ext4.rs",
+        "src\\loader\\elf.rs",
+        "src\\logging.rs",
+        "src\\mm\\heap_allocator.rs",
+        "src\\task\\mod.rs",
+        "src\\task\\scheduler.rs",
+        "src\\task\\task.rs"
+      ],
+      "file_count": 14,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\drivers\\virtio_pci.rs",
+          "language": "rust",
+          "start_line": 194,
+          "end_line": 252,
+          "outgoing_call_count": 109,
+          "summary": "初始化 Virtio PCI 设备：扫描设备、映射 MMIO 区域、复位设备、协商特性（无特性）、配置并启用单个描述符队列（队列 0），最后标记驱动正常工作并读取 ISR 状态。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\drivers\\mod.rs",
+          "language": "rust",
+          "start_line": "9",
+          "end_line": "18",
+          "outgoing_call_count": 109,
+          "summary": "根据编译时特性选择初始化不同架构下的驱动程序：RISC-V 64 初始化 virtio-mmio 驱动，LoongArch64 初始化 virtio-pci 驱动。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\drivers\\virtio_mmio.rs",
+          "language": "rust",
+          "start_line": "303",
+          "end_line": "356",
+          "outgoing_call_count": 109,
+          "summary": "初始化VirtIO块设备驱动：扫描设备、找到块设备并初始化，若启用内核日志功能则读取第0块和ext4魔数进行验证输出。"
+        },
+        {
+          "name": "load_elf_from_disk_streaming",
+          "normalized_name": "load_elf_from_disk_streaming",
+          "file_path": "src\\loader\\elf.rs",
+          "language": "rust",
+          "start_line": "91",
+          "end_line": "309",
+          "outgoing_call_count": 70,
+          "summary": "从磁盘以流式方式加载ELF可执行文件，解析ELF头部和程序头部，将LOAD段映射到用户虚拟地址空间并拷贝数据，设置用户栈、堆，构建argv和环境变量（含auxv辅助向量），最终返回内存集合、入口地址、用户栈指针和进程ID（此处为0）。"
+        },
+        {
+          "name": "read_block",
+          "normalized_name": "read_block",
+          "file_path": "src\\drivers\\virtio_mmio.rs",
+          "language": "rust",
+          "start_line": "358",
+          "end_line": "449",
+          "outgoing_call_count": 44,
+          "summary": "通过Virtio MMIO接口从块设备读取指定扇区的数据，支持小于等于512字节和更大数据的处理，使用静态缓冲区进行数据交互，并完成状态校验与数据拷贝。"
+        },
+        {
+          "name": "read_block",
+          "normalized_name": "read_block",
+          "file_path": "src\\drivers\\virtio_pci.rs",
+          "language": "rust",
+          "start_line": "256",
+          "end_line": "306",
+          "outgoing_call_count": 44,
+          "summary": "通过Virtio块设备驱动从指定扇区读取数据到缓冲区，使用虚拟队列描述符链并轮询等待完成，支持单扇区和批量读取。"
+        },
+        {
+          "name": "write_block",
+          "normalized_name": "write_block",
+          "file_path": "src\\drivers\\virtio_mmio.rs",
+          "language": "rust",
+          "start_line": "455",
+          "end_line": "522",
+          "outgoing_call_count": 38,
+          "summary": "向virtio块设备写入一个或多个扇区（每个扇区512字节），通过virtqueue提交请求并等待完成。"
+        },
+        {
+          "name": "write_block",
+          "normalized_name": "write_block",
+          "file_path": "src\\drivers\\virtio_pci.rs",
+          "language": "rust",
+          "start_line": "308",
+          "end_line": "356",
+          "outgoing_call_count": 38,
+          "summary": "该函数是virtio块设备驱动的写块操作，向指定扇区写入数据，通过虚拟队列机制与设备通信。"
+        },
+        {
+          "name": "handle_block",
+          "normalized_name": "handle_block",
+          "file_path": "src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "204",
+          "end_line": "242",
+          "outgoing_call_count": 26,
+          "summary": "该函数处理一个已被标记为Blocked状态的任务，根据其阻塞目标（BlockTarget）将任务放入对应的等待队列，然后调度下一个任务或进入空闲循环。"
+        },
+        {
+          "name": "kernel_block_on_test_queue",
+          "normalized_name": "kernel_block_on_test_queue",
+          "file_path": "src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": "353",
+          "end_line": "372",
+          "outgoing_call_count": 17,
+          "summary": "将当前内核线程阻塞在一个测试队列上，并主动让出 CPU，等待被恢复执行。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 87,
+      "outgoing_edge_count": 610,
+      "internal_edge_count": 397,
+      "external_edge_count": 213,
+      "internal_call_ratio": 0.6508,
+      "external_call_ratio": 0.3492,
+      "module_weight": 0.1195,
+      "files": [
+        "Makefile",
+        "src/fs/ext4.rs",
+        "src/syscall/fd.rs",
+        "src/syscall/task.rs",
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\arch\\riscv64\\mod.rs",
+        "src\\drivers\\serial.rs",
+        "src\\drivers\\virtio_mmio.rs",
+        "src\\drivers\\virtio_pci.rs",
+        "src\\fs\\ext4.rs",
+        "src\\fs\\mod.rs",
+        "src\\loader\\elf.rs",
+        "src\\mm\\memory_set.rs",
+        "src\\syscall\\fd.rs",
+        "src\\syscall\\task.rs",
+        "src\\syscall\\time.rs",
+        "src\\task\\manager.rs",
+        "src\\task\\mod.rs",
+        "src\\task\\task.rs"
+      ],
+      "file_count": 19,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\fs\\mod.rs",
+          "language": "rust",
+          "start_line": "5",
+          "end_line": "10",
+          "outgoing_call_count": 109,
+          "summary": "在特定架构（riscv64 或 loongarch64）下调用 ext4 文件系统的初始化函数。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "234",
+          "end_line": "264",
+          "outgoing_call_count": 109,
+          "summary": "初始化 Ext4 文件系统，读取超级块并检查根 inode，输出相关日志信息。"
+        },
+        {
+          "name": "read_file_range",
+          "normalized_name": "read_file_range",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": 699,
+          "end_line": 791,
+          "outgoing_call_count": 32,
+          "summary": "实现从 ext4 文件系统中读取指定文件的一段字节范围，首先尝试从 VFS 页面缓存获取，如果未命中则直接通过 ext4 的 extent 结构从磁盘读取或处理稀疏文件的空洞填零。"
+        },
+        {
+          "name": "create_file",
+          "normalized_name": "create_file",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "812",
+          "end_line": "872",
+          "outgoing_call_count": 30,
+          "summary": "在ext4文件系统中创建一个新文件：先分配一个新的inode号（简单递增），初始化inode结构体并写入磁盘，然后找到父目录的块，在目录项中查找合适的空闲位置插入新文件的目录项（内容为文件名、inode号、文件类型等），返回新inode号。"
+        },
+        {
+          "name": "read_bytes",
+          "normalized_name": "read_bytes",
+          "file_path": "src\\drivers\\virtio_mmio.rs",
+          "language": "rust",
+          "start_line": "524",
+          "end_line": "570",
+          "outgoing_call_count": 25,
+          "summary": "从VirtIO MMIO设备中读取指定偏移量和长度的字节数据到缓冲区，支持对齐扇区时的批量读取优化"
+        },
+        {
+          "name": "read_bytes",
+          "normalized_name": "read_bytes",
+          "file_path": "src\\drivers\\virtio_pci.rs",
+          "language": "rust",
+          "start_line": "358",
+          "end_line": "384",
+          "outgoing_call_count": 25,
+          "summary": "从 virtio 块设备中读取多个字节到缓冲区，支持任意偏移和长度，处理跨扇区和对齐批量读取优化。"
+        },
+        {
+          "name": "read_file_from_inode",
+          "normalized_name": "read_file_from_inode",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "442",
+          "end_line": "552",
+          "outgoing_call_count": 24,
+          "summary": "该函数根据传入的Ext4超级块信息和inode信息，读取文件内容并返回为字节向量。它首先检查inode是否为目录或不合法的文件类型，然后根据文件大小分配缓冲区，解析extent头，遍历每个extent及其包含的物理块，从磁盘读取数据并复制到缓冲区中。"
+        },
+        {
+          "name": "write_file",
+          "normalized_name": "write_file",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "874",
+          "end_line": "906",
+          "outgoing_call_count": 23,
+          "summary": "在 ext4 文件系统中实现向指定路径文件写入数据的功能。它通过查找路径对应的 inode，将数据写入一个固定数据块（4000），并更新 inode 的元数据（文件大小、块数、直接块指针等），但存在严重简化：未分配新块、未处理多级间接块、未写入位图，且硬编码数据块号。"
+        },
+        {
+          "name": "dir_entry_names",
+          "normalized_name": "dir_entry_names",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "951",
+          "end_line": "975",
+          "outgoing_call_count": 19,
+          "summary": "该函数返回给定路径下的所有目录项名称（文件名和子目录名），如果没有任何条目，则返回当前目录标记 '.'。"
+        },
+        {
+          "name": "normalize_path",
+          "normalized_name": "normalize_path",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "837",
+          "end_line": "859",
+          "outgoing_call_count": 18,
+          "summary": "根据当前进程的文件描述符和路径字符串，获取标准化的绝对路径。如果路径以./开头则去掉前缀；如果路径已经是绝对路径则直接标准化；否则根据dirfd指向的目录或当前工作目录拼接并标准化。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 43,
+      "outgoing_edge_count": 90,
+      "internal_edge_count": 43,
+      "external_edge_count": 47,
+      "internal_call_ratio": 0.4778,
+      "external_call_ratio": 0.5222,
+      "module_weight": 0.0413,
+      "files": [
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\arch\\loongarch64\\trap.S",
+        "src\\arch\\riscv64\\mod.rs",
+        "src\\arch\\riscv64\\trap.S",
+        "src\\task\\kernel_stack.rs",
+        "src\\task\\task.rs",
+        "src\\trap\\context.rs",
+        "src\\trap\\handler.rs",
+        "src\\trap\\mod.rs"
+      ],
+      "file_count": 9,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": "5",
+          "end_line": "22",
+          "outgoing_call_count": 109,
+          "summary": "初始化trap处理，设置trap入口，验证stvec寄存器值与入口地址一致，确保trap机制正确配置"
+        },
+        {
+          "name": "rust_trap_handler",
+          "normalized_name": "rust_trap_handler",
+          "file_path": "src\\trap\\handler.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "142",
+          "outgoing_call_count": 45,
+          "summary": "RISC-V 陷阱处理函数，处理中断和异常。根据陷阱原因（中断号/异常码）分发处理：定时器中断触发时间片轮转和唤醒睡眠任务；环境调用（ecall from U-mode）处理系统调用，包含 yield 特殊处理和 execve 成功后的上下文替换；断点异常跳过指令；缺页异常（指令/加载/存储页缺失）打印信息并杀死用户进程；其他未处理陷阱直接杀死进程。"
+        },
+        {
+          "name": "impl TrapContext {",
+          "normalized_name": "impl TrapContext {",
+          "file_path": "src\\trap\\context.rs",
+          "language": "rust",
+          "start_line": "31",
+          "end_line": "113",
+          "outgoing_call_count": 10,
+          "summary": "为 TrapContext 结构体提供基于 RISC-V 和 LoongArch64 架构的条件编译方法，用于检查陷阱来源、提取异常码、判断是否为中断，以及初始化应用程序上下文。"
+        },
+        {
+          "name": "loongarch64_kernel_trap_handler",
+          "normalized_name": "loongarch64_kernel_trap_handler",
+          "file_path": "src\\arch\\loongarch64\\mod.rs",
+          "language": "rust",
+          "start_line": "207",
+          "end_line": "267",
+          "outgoing_call_count": 8,
+          "summary": "LoongArch64 架构的内核陷入处理函数，处理来自用户态或内核态的异常和系统调用。对于用户态的系统调用，执行分发并处理特殊系统调用（如SYS_YIELD和SYS_EXECVE），并更新寄存器；对于其他异常（用户态异常）则打印信息并终止进程；内核态异常则跳过指令继续执行。"
+        },
+        {
+          "name": "set_trap_entry",
+          "normalized_name": "set_trap_entry",
+          "file_path": "src\\arch\\riscv64\\mod.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "45",
+          "outgoing_call_count": 6,
+          "summary": "该函数用于设置RISC-V架构的陷阱向量基址寄存器（stvec），通过内联汇编将陷阱入口地址写入该寄存器，以配置中断和异常的处理入口。"
+        },
+        {
+          "name": "set_trap_entry",
+          "normalized_name": "set_trap_entry",
+          "file_path": "src\\arch\\loongarch64\\mod.rs",
+          "language": "rust",
+          "start_line": "78",
+          "end_line": "90",
+          "outgoing_call_count": 6,
+          "summary": "设置LoongArch64架构的陷阱入口（异常/中断处理入口），并清零中断使能配置寄存器ECFG，以初始化或复位异常处理状态。"
+        },
+        {
+          "name": "TrapContext",
+          "normalized_name": "TrapContext",
+          "file_path": "src\\trap\\context.rs",
+          "language": "rust",
+          "start_line": "3",
+          "end_line": "29",
+          "outgoing_call_count": 5,
+          "summary": "定义了一个TrapContext结构体，用于保存陷阱（中断或异常）发生时的上下文寄存器状态，支持RISC-V64和LoongArch64两种架构，通过条件编译字段适配不同架构的特殊寄存器。"
+        },
+        {
+          "name": "__save_context_common",
+          "normalized_name": "__save_context_common",
+          "file_path": "src\\arch\\riscv64\\trap.S",
+          "language": "assembly",
+          "start_line": "50",
+          "end_line": "98",
+          "outgoing_call_count": 5,
+          "summary": "该代码块是RISC-V架构下中断/异常的通用上下文保存例程，负责将通用寄存器和关键CSR（控制状态寄存器）保存到堆栈上，然后调用Rust编写的中断处理函数。"
+        },
+        {
+          "name": "enable_timer_interrupt",
+          "normalized_name": "enable_timer_interrupt",
+          "file_path": "src\\arch\\loongarch64\\mod.rs",
+          "language": "rust",
+          "start_line": "115",
+          "end_line": "126",
+          "outgoing_call_count": 4,
+          "summary": "该函数通过修改LoongArch64架构的特殊寄存器（CSR）来启用定时器中断，并同时设置全局中断使能位。它使用两条csrxchg指令：第一条将ECFG_TIMER位写入中断配置寄存器（CSR.ECFG），以允许定时器中断；第二条将CRMD_IE位写入当前模式寄存器（CSR.CRMD）的对应位（位0），以置位中断使能标志。"
+        },
+        {
+          "name": "sbi_set_timer",
+          "normalized_name": "sbi_set_timer",
+          "file_path": "src\\arch\\riscv64\\mod.rs",
+          "language": "rust",
+          "start_line": "128",
+          "end_line": "139",
+          "outgoing_call_count": 4,
+          "summary": "通过SBI（Supervisor Binary Interface）的ecall调用设置一个定时器中断，参数time_value作为触发时间写入a0寄存器，功能号0（通常对应SBI_SET_TIMER）写入a7寄存器。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt and syscall": {
+      "module_name": "interrupt and syscall",
+      "function_count": 1,
+      "outgoing_edge_count": 45,
+      "internal_edge_count": 38,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.8444,
+      "external_call_ratio": 0.1556,
+      "module_weight": 0.0045,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\mm\\heap_allocator.rs",
+        "src\\task\\mod.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "send_signal_to_pid",
+          "normalized_name": "send_signal_to_pid",
+          "file_path": "src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": 256,
+          "end_line": 287,
+          "outgoing_call_count": 15,
+          "summary": "根据进程ID发送信号，支持发送给当前进程、自身（pid=0或等于当前pid）以及就绪队列中的指定进程，如果目标进程处于阻塞状态则唤醒它。"
+        },
+        {
+          "name": "impl<T> Locked<T> {",
+          "normalized_name": "impl<T> Locked<T> {",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "32",
+          "outgoing_call_count": 6,
+          "summary": "实现了 `Locked<T>` 泛型结构体的 `new` 和 `lock` 方法，`new` 方法用于创建一个封装了初始值的 `Locked` 实例，`lock` 方法通过裸指针获取内部值的可变引用，本质是一个无锁的包装器。"
+        },
+        {
+          "name": "lock",
+          "normalized_name": "lock",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "29",
+          "end_line": "31",
+          "outgoing_call_count": 3,
+          "summary": "该函数通过裸指针获取内部数据的可变引用，实现类似不可变方法返回可变引用的效果，通常用于内部可变性模式下的加锁或访问操作。"
+        },
+        {
+          "name": "unsafe impl<T> Sync for Locked<T> {}",
+          "normalized_name": "unsafe impl<T> Sync for Locked<T> {}",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "20",
+          "end_line": "20",
+          "outgoing_call_count": 0,
+          "summary": "显式实现 Sync trait 的 unsafe impl，声明 Locked<T> 类型在多线程环境下是安全的可共享引用。"
+        },
+        {
+          "name": "Locked",
+          "normalized_name": "Locked",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "15",
+          "end_line": "17",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个泛型结构体Locked，用于封装一个UnsafeCell<T>，提供内部可变性但无同步机制。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "loader": {
+      "module_name": "loader",
+      "function_count": 14,
+      "outgoing_edge_count": 64,
+      "internal_edge_count": 29,
+      "external_edge_count": 35,
+      "internal_call_ratio": 0.4531,
+      "external_call_ratio": 0.5469,
+      "module_weight": 0.0163,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "logging": {
+      "module_name": "logging",
+      "function_count": 1,
+      "outgoing_edge_count": 2,
+      "internal_edge_count": 0,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0009,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 202,
+      "outgoing_edge_count": 1249,
+      "internal_edge_count": 846,
+      "external_edge_count": 403,
+      "internal_call_ratio": 0.6773,
+      "external_call_ratio": 0.3227,
+      "module_weight": 0.2634,
+      "files": [
+        "src/mm/address.rs",
+        "src/mm/heap_allocator.rs",
+        "src/mm/page_table.rs",
+        "src\\arch\\loongarch64\\mm.rs",
+        "src\\arch\\loongarch64\\trap.S",
+        "src\\arch\\riscv64\\mm.rs",
+        "src\\drivers\\virtio_mmio.rs",
+        "src\\drivers\\virtio_pci.rs",
+        "src\\fs\\ext4.rs",
+        "src\\loader\\initproc.rs",
+        "src\\main.rs",
+        "src\\mm\\address.rs",
+        "src\\mm\\frame_allocator.rs",
+        "src\\mm\\heap_allocator.rs",
+        "src\\mm\\memory_set.rs",
+        "src\\mm\\mod.rs",
+        "src\\mm\\page_table.rs",
+        "src\\syscall\\fd.rs",
+        "src\\task\\kernel_stack.rs",
+        "src\\task\\mod.rs",
+        "src\\task\\task.rs",
+        "user\\riscv64\\initproc_brk.S"
+      ],
+      "file_count": 22,
+      "core_functions": [
+        {
+          "name": "impl MemorySet {",
+          "normalized_name": "impl MemorySet {",
+          "file_path": "src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": "236",
+          "end_line": "755",
+          "outgoing_call_count": 171,
+          "summary": "实现 MemorySet 结构体的方法，包括用户堆初始化与扩展（brk）、MMAP 固定地址与匿名映射、fork 时地址空间拷贝、内核段映射、以及用户态与内核态之间的数据拷贝与权限校验。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\mm\\mod.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "52",
+          "outgoing_call_count": 109,
+          "summary": "初始化内存管理子系统，包括帧分配器、堆分配器，并创建内核页表（基于架构条件选择不同的创建方式），激活页表，打印状态信息，并在激活页表前后进行堆测试。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "62",
+          "end_line": "76",
+          "outgoing_call_count": 109,
+          "summary": "初始化堆分配器，对齐堆起始和结束地址，验证堆区域有效，设置链表头指针和初始化标记，并添加第一个空闲区域。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\mm\\frame_allocator.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "40",
+          "outgoing_call_count": 109,
+          "summary": "初始化帧分配器，设置物理页号起始、结束和回收栈顶指针为0。"
+        },
+        {
+          "name": "impl HeapAllocator {",
+          "normalized_name": "impl HeapAllocator {",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "51",
+          "end_line": "541",
+          "outgoing_call_count": 51,
+          "summary": "实现了堆内存分配器的核心功能，包括初始化、分配、释放、空闲块管理、合并、校验和转储。"
+        },
+        {
+          "name": "impl MapArea {",
+          "normalized_name": "impl MapArea {",
+          "file_path": "src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": "81",
+          "end_line": "206",
+          "outgoing_call_count": 42,
+          "summary": "这个代码块定义了 MapArea 结构体的方法，用于管理一段连续的虚拟地址空间映射，包括创建、映射、扩展、克隆元数据和拷贝数据。它支持两种映射类型：Identical（直接映射）和Framed（按需分配物理页帧并映射）。"
+        },
+        {
+          "name": "impl PageTable for RiscvPageTable {",
+          "normalized_name": "impl PageTable for RiscvPageTable {",
+          "file_path": "src\\arch\\riscv64\\mm.rs",
+          "language": "rust",
+          "start_line": "117",
+          "end_line": "197",
+          "outgoing_call_count": 36,
+          "summary": "这个代码块为 RiscvPageTable 结构实现了 PageTable trait，提供了页表的创建、映射、解映射、地址转换和获取SATP token的功能。其中 new 函数从 frame_alloc 分配一个物理页框作为根页表并清零，map 函数在需要时创建页表项并支持覆盖用户页（用于 MAP_FIXED 或 COW），unmap 函数清除页表项，translate 函数通过遍历页表获取物理页号，token 函数返回带有 SV39 模式的 SATP 值。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "src\\arch\\riscv64\\mm.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "37",
+          "outgoing_call_count": 36,
+          "summary": "构造一个RISC-V页表项（Page Table Entry, PTE）或类似物理地址表示，通过将物理页号（PPN）左移10位并与标志位（flags）按位或操作，组合成一个64位值。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "60",
+          "outgoing_call_count": 36,
+          "summary": "这个代码块定义了一个公有常量函数 `new`，用于创建并返回一个 `HeapAllocator` 结构体的实例，其中包含一个空的自由链表头节点和一个未初始化标志。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "src\\mm\\page_table.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "21",
+          "outgoing_call_count": 36,
+          "summary": "构造一个权限结构体的实例，该结构体包含读、写、执行和用户态四个布尔字段，这里只是将构造参数直接赋值给对应字段，没有额外的逻辑或默认值。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "scripts\\run-la-oj.sh",
+        "scripts\\run-rv-oj.sh",
+        "src\\fs\\ext4.rs",
+        "src\\syscall\\task.rs",
+        "user\\loongarch64\\initproc.S",
+        "user\\riscv64\\initproc.S"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "find_test_scripts",
+          "normalized_name": "find_test_scripts",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "673",
+          "end_line": "694",
+          "outgoing_call_count": 7,
+          "summary": "遍历 /musl 和 /glibc 两个目录，调用 find_test_scripts_in_dir 收集其中的测试脚本信息，并忽略单个目录的失败错误，最终返回所有收集到的脚本信息列表。"
+        },
+        {
+          "name": "run_basic_script",
+          "normalized_name": "run_basic_script",
+          "file_path": "user\\riscv64\\initproc.S",
+          "language": "assembly",
+          "start_line": "26",
+          "end_line": "62",
+          "outgoing_call_count": 5,
+          "summary": "该代码块实现一个用户态初始化进程，尝试更改当前工作目录到传入的路径，如果失败则跳过；然后创建子进程执行基本脚本，父进程等待子进程退出并获取退出码。"
+        },
+        {
+          "name": "run_basic_script",
+          "normalized_name": "run_basic_script",
+          "file_path": "user\\loongarch64\\initproc.S",
+          "language": "assembly",
+          "start_line": "26",
+          "end_line": "62",
+          "outgoing_call_count": 5,
+          "summary": "尝试打开并执行指定路径的脚本，若失败则跳过，然后创建子进程执行系统命令以运行基础脚本，并等待子进程结束。"
+        },
+        {
+          "name": "is_test_script_name",
+          "normalized_name": "is_test_script_name",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "948",
+          "end_line": "950",
+          "outgoing_call_count": 3,
+          "summary": "判断给定的字符串是否以 '_testcode.sh' 结尾，用于识别测试脚本文件名。"
+        },
+        {
+          "name": "busybox_for_script",
+          "normalized_name": "busybox_for_script",
+          "file_path": "src\\syscall\\task.rs",
+          "language": "rust",
+          "start_line": "408",
+          "end_line": "416",
+          "outgoing_call_count": 2,
+          "summary": "根据脚本路径的前缀决定使用哪个目录下的 busybox 程序路径，用于支持不同 libc 环境下的脚本执行。"
+        },
+        {
+          "name": "run_scripts",
+          "normalized_name": "run_scripts",
+          "file_path": "scripts\\run-la-oj.sh",
+          "language": "bash",
+          "start_line": "6",
+          "end_line": "23",
+          "outgoing_call_count": 0,
+          "summary": "该函数接收一个目录路径作为参数，进入该目录后，依次执行一系列名为 basic_testcode.sh 等的测试脚本，每次执行前输出正在执行的文件信息，最后返回根目录。"
+        },
+        {
+          "name": "run_scripts",
+          "normalized_name": "run_scripts",
+          "file_path": "scripts\\run-rv-oj.sh",
+          "language": "bash",
+          "start_line": "9",
+          "end_line": "26",
+          "outgoing_call_count": 0,
+          "summary": "遍历指定目录，依次执行其中存在的多个测试脚本文件（如basic_testcode.sh、busybox_testcode.sh等）"
+        },
+        {
+          "name": "Ext4TestScriptInfo",
+          "normalized_name": "Ext4TestScriptInfo",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "94",
+          "end_line": "98",
+          "outgoing_call_count": 0,
+          "summary": "定义一个结构体，用于存储 ext4 文件系统测试脚本的相关信息，包括根目录、脚本名称和完整路径。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 142,
+      "outgoing_edge_count": 895,
+      "internal_edge_count": 593,
+      "external_edge_count": 302,
+      "internal_call_ratio": 0.6626,
+      "external_call_ratio": 0.3374,
+      "module_weight": 0.1866,
+      "files": [
+        "src/mm/memory_set.rs",
+        "src/task/mod.rs",
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\arch\\loongarch64\\switch.S",
+        "src\\arch\\loongarch64\\trap.S",
+        "src\\arch\\riscv64\\context.rs",
+        "src\\arch\\riscv64\\mod.rs",
+        "src\\arch\\riscv64\\switch.S",
+        "src\\loader\\elf.rs",
+        "src\\loader\\initproc.rs",
+        "src\\mm\\memory_set.rs",
+        "src\\syscall\\task.rs",
+        "src\\task\\context.rs",
+        "src\\task\\context_test.rs",
+        "src\\task\\kernel_stack.rs",
+        "src\\task\\manager.rs",
+        "src\\task\\mod.rs",
+        "src\\task\\processor.rs",
+        "src\\task\\scheduler.rs",
+        "src\\task\\task.rs",
+        "src\\task\\wait_queue.rs",
+        "src\\trap\\context.rs",
+        "user\\loongarch64\\childproc.S",
+        "user\\loongarch64\\initproc.S",
+        "user\\riscv64\\childproc.S",
+        "user\\riscv64\\initproc.S",
+        "user\\riscv64\\initproc_fault.S",
+        "user\\riscv64\\intproc_timer.S"
+      ],
+      "file_count": 28,
+      "core_functions": [
+        {
+          "name": "impl TaskControlBlock {",
+          "normalized_name": "impl TaskControlBlock {",
+          "file_path": "src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "71",
+          "end_line": "596",
+          "outgoing_call_count": 152,
+          "summary": "进程控制块TCB的实现，包含进程的创建、执行、资源回收、文件操作等核心功能，支持用户进程和内核线程。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": 49,
+          "end_line": 106,
+          "outgoing_call_count": 109,
+          "summary": "初始化任务子系统，包括加载用户程序列表、可能的测试任务创建、处理器初始化、内核线程创建（根据编译时条件）以及打印状态信息。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "46",
+          "end_line": "50",
+          "outgoing_call_count": 109,
+          "summary": "初始化处理器，将给定的任务控制块设置为当前任务。"
+        },
+        {
+          "name": "load_elf_with_argv",
+          "normalized_name": "load_elf_with_argv",
+          "file_path": "src\\loader\\elf.rs",
+          "language": "rust",
+          "start_line": "315",
+          "end_line": "764",
+          "outgoing_call_count": 93,
+          "summary": "解析并加载ELF文件到内存，构建用户态运行环境，包括可执行程序及其可能的动态链接器（interpreter）的加载，配置用户栈、堆、TLS区域，并设置命令行参数、环境变量和辅助向量（auxv）布局，最终返回内存集合、入口地址、栈指针和TLS指针。"
+        },
+        {
+          "name": "sys_execve",
+          "normalized_name": "sys_execve",
+          "file_path": "src\\syscall\\task.rs",
+          "language": "rust",
+          "start_line": "161",
+          "end_line": "326",
+          "outgoing_call_count": 64,
+          "summary": "该函数实现了sys_execve系统调用，负责加载并执行用户程序。它从用户空间复制路径和参数，支持动态测试脚本扫描，处理ELF二进制、shebang脚本以及普通文本文件（通过busybox sh解释执行），并尝试从磁盘加载文件。"
+        },
+        {
+          "name": "exec_script",
+          "normalized_name": "exec_script",
+          "file_path": "src\\syscall\\task.rs",
+          "language": "rust",
+          "start_line": "328",
+          "end_line": "406",
+          "outgoing_call_count": 52,
+          "summary": "该函数负责解析脚本文件的 shebang 行（以 #! 开头），确定解释器路径和参数，然后构造新的 argv 并尝试通过内置应用或磁盘加载执行脚本，若解释器找不到则返回错误。"
+        },
+        {
+          "name": "fork_user_space",
+          "normalized_name": "fork_user_space",
+          "file_path": "src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": "325",
+          "end_line": "384",
+          "outgoing_call_count": 43,
+          "summary": "该函数实现了用户空间的进程 fork 操作，通过复制当前 MemorySet 中的用户态内存区域 (不包括内核态区域) 到新的 MemorySet 中，完成内存空间的深拷贝。它首先创建一个新的用户 MemorySet，然后遍历原空间的 areas 列表，跳过非用户权限的区域，对每个用户区域克隆元数据、映射页表、复制实际数据，最后返回新的 MemorySet。"
+        },
+        {
+          "name": "impl WaitQueue {",
+          "normalized_name": "impl WaitQueue {",
+          "file_path": "src\\task\\wait_queue.rs",
+          "language": "rust",
+          "start_line": "10",
+          "end_line": "99",
+          "outgoing_call_count": 38,
+          "summary": "实现了WaitQueue结构体的方法，用于管理阻塞任务的FIFO队列，支持入队、出队、唤醒单个、唤醒全部和按PID唤醒操作。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "src\\task\\context.rs",
+          "language": "rust",
+          "start_line": 13,
+          "end_line": 19,
+          "outgoing_call_count": 36,
+          "summary": "{\n  \"block_id\": \"block_678\",\n  \"file_path\": \"src\\task\\context.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"13\",\n  \"end_line\": \"19\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"创建一个新的上下文实例，使用常量上下文，并初始化调度栈为全零数组。\",\n  \"logic_steps\": [\n    \"返回 Self 类型的实例，其中 stack 字段初始化为 SchedulerStack 结构体，其 data 字段长度为 SCHEDULER_STACK_SIZE 的全零数组。\"\n  ],\n  \"called_functions\": [],\n  \"related_os_module\": \"scheduler\",\n  \"evidence\": \"函数创建了 Self 类型的实例，其中包含 SchedulerStack，且使用了 SCHEDULER_STACK_SIZE 常量，表明与调度模块相关。\",\n  \"uncertainty\": \"由于上下文结构体完整定义未给出，无法确定其他字段的初始化方式；函数为 const 函数，表明可以在编译期计算，但具体用途需结合上下文使用场景判断。\"\n}"
+        },
+        {
+          "name": "handle_exit",
+          "normalized_name": "handle_exit",
+          "file_path": "src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "97",
+          "end_line": "189",
+          "outgoing_call_count": 36,
+          "summary": "处理进程退出的逻辑：根据退出任务的状态（Zombie或Exited）进行资源回收、内核栈释放、记录僵尸信息，并唤醒等待子进程退出的父进程，然后调度下一个任务。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process or scheduler": {
+      "module_name": "process or scheduler",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 2,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.001,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process/scheduler": {
+      "module_name": "process/scheduler",
+      "function_count": 1,
+      "outgoing_edge_count": 15,
+      "internal_edge_count": 10,
+      "external_edge_count": 5,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 78,
+      "outgoing_edge_count": 562,
+      "internal_edge_count": 437,
+      "external_edge_count": 125,
+      "internal_call_ratio": 0.7776,
+      "external_call_ratio": 0.2224,
+      "module_weight": 0.1084,
+      "files": [
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\arch\\loongarch64\\switch.S",
+        "src\\arch\\riscv64\\mod.rs",
+        "src\\arch\\riscv64\\switch.S",
+        "src\\task\\context.rs",
+        "src\\task\\manager.rs",
+        "src\\task\\mod.rs",
+        "src\\task\\processor.rs",
+        "src\\task\\scheduler.rs",
+        "src\\task\\sleep_queue.rs",
+        "src\\task\\task.rs",
+        "src\\task\\wait_queue.rs"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "impl Scheduler {",
+          "normalized_name": "impl Scheduler {",
+          "file_path": "src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "79",
+          "end_line": "374",
+          "outgoing_call_count": 97,
+          "summary": "Scheduler 实现的核心调度逻辑，包括任务退出、挂起、阻塞处理以及任务切换和内核线程返回处理。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "src\\task\\sleep_queue.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "20",
+          "outgoing_call_count": 36,
+          "summary": "该函数是 SleepQueue 的构造器，用于创建一个空的睡眠队列实例，其内部字段 entries 初始化为一个空的 Vec（向量）。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "21",
+          "outgoing_call_count": 36,
+          "summary": "构造 Processor 结构体的实例，初始化 current 为 None，调度器上下文为零初始化。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "src\\task\\manager.rs",
+          "language": "rust",
+          "start_line": "10",
+          "end_line": "14",
+          "outgoing_call_count": 36,
+          "summary": "初始化一个任务管理器实例，创建一个空的就绪队列（Vec<...>）。"
+        },
+        {
+          "name": "schedule_next_or_idle",
+          "normalized_name": "schedule_next_or_idle",
+          "file_path": "src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "244",
+          "end_line": "287",
+          "outgoing_call_count": 31,
+          "summary": "陷入一个无限循环，不断从任务管理器中获取下一个可运行任务。如果获取到，则根据任务类型（用户进程或内核线程）执行相应调度，并在内核线程返回时处理其状态；如果无任务，则尝试唤醒过期睡眠任务，若仍无则关机。"
+        },
+        {
+          "name": "impl SleepQueue {",
+          "normalized_name": "impl SleepQueue {",
+          "file_path": "src\\task\\sleep_queue.rs",
+          "language": "rust",
+          "start_line": "15",
+          "end_line": "76",
+          "outgoing_call_count": 27,
+          "summary": "该代码块实现了SleepQueue结构体的方法，包括创建、添加睡眠任务、唤醒到期任务、查询长度和判空。SleepQueue用于管理因sleep系统调用而被阻塞的任务队列，定时检查并唤醒到期任务。"
+        },
+        {
+          "name": "push",
+          "normalized_name": "push",
+          "file_path": "src\\task\\sleep_queue.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "39",
+          "outgoing_call_count": 23,
+          "summary": "向睡眠队列中添加一个任务，并验证任务当前状态为阻塞态。"
+        },
+        {
+          "name": "run_kernel_current",
+          "normalized_name": "run_kernel_current",
+          "file_path": "src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "155",
+          "end_line": "193",
+          "outgoing_call_count": 22,
+          "summary": "该函数用于将当前任务切换为一个内核线程执行。它从当前任务（必须是内核线程）中获取内核栈顶，设置任务状态为运行中，切换到内核页表，然后通过上下文切换从调度器上下文跳转到该内核线程的上下文。当内核线程主动让出或退出时，它会切回调度器并打印返回信息。"
+        },
+        {
+          "name": "kernel_yield",
+          "normalized_name": "kernel_yield",
+          "file_path": "src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": "332",
+          "end_line": "351",
+          "outgoing_call_count": 18,
+          "summary": "该函数用于内核线程主动让出CPU，将其状态置为Ready并切换到调度器上下文，等待下次被调度。"
+        },
+        {
+          "name": "wake_pid",
+          "normalized_name": "wake_pid",
+          "file_path": "src\\task\\wait_queue.rs",
+          "language": "rust",
+          "start_line": "78",
+          "end_line": "90",
+          "outgoing_call_count": 18,
+          "summary": "根据PID唤醒等待队列中的任务，将其状态设为Ready并重新加入调度队列。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 62,
+      "outgoing_edge_count": 782,
+      "internal_edge_count": 555,
+      "external_edge_count": 227,
+      "internal_call_ratio": 0.7097,
+      "external_call_ratio": 0.2903,
+      "module_weight": 0.1143,
+      "files": [
+        "src/syscall/task.rs",
+        "src\\syscall\\errno.rs",
+        "src\\syscall\\fd.rs",
+        "src\\syscall\\mm.rs",
+        "src\\syscall\\mod.rs",
+        "src\\syscall\\task.rs",
+        "src\\syscall\\time.rs",
+        "user\\loongarch64\\childproc.S",
+        "user\\riscv64\\childproc.S",
+        "user\\riscv64\\intproc_timer.S"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": "82",
+          "end_line": "163",
+          "outgoing_call_count": 110,
+          "summary": "这个代码块是系统调用分发函数，根据系统调用号(id)将请求分派到对应的处理函数或返回默认值，实现了多种文件系统、任务、内存、时间等相关系统调用的处理。"
+        },
+        {
+          "name": "sys_read",
+          "normalized_name": "sys_read",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "87",
+          "end_line": "162",
+          "outgoing_call_count": 37,
+          "summary": "实现系统调用sys_read，从文件描述符读取数据到用户缓冲区，处理常规文件、管道、标准输入/输出、目录及/dev/null等特殊文件类型。"
+        },
+        {
+          "name": "sys_getdents64",
+          "normalized_name": "sys_getdents64",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "262",
+          "end_line": "310",
+          "outgoing_call_count": 35,
+          "summary": "实现 getdents64 系统调用，用于读取目录项。该函数从当前任务的文件描述符中获取目录路径和偏移量，读取目录项名称，构造目录项结构（包括 inode 号、偏移量、记录长度、文件类型和名称），并拷贝到用户空间，同时更新文件偏移量。"
+        },
+        {
+          "name": "sys_mmap",
+          "normalized_name": "sys_mmap",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "561",
+          "end_line": "627",
+          "outgoing_call_count": 33,
+          "summary": "实现 mmap 系统调用，用于内存映射。支持匿名映射和基于文件描述符的映射，可指定固定地址或由系统分配地址，并检查权限和长度。"
+        },
+        {
+          "name": "sys_write",
+          "normalized_name": "sys_write",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "19",
+          "end_line": "85",
+          "outgoing_call_count": 30,
+          "summary": "实现系统调用write的功能，向文件描述符写入数据，支持标准输出、标准错误、管道、普通文件以及/dev/null设备，处理写操作中的数据拷贝和错误返回。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "172",
+          "end_line": "260",
+          "outgoing_call_count": 28,
+          "summary": "实现sys_openat系统调用，根据路径和标志打开或创建文件，支持路径规范化、目录判断、特殊设备/dev/null处理、EXT4文件懒加载、虚拟文件读取及内置应用查找，最终分配用户文件描述符。"
+        },
+        {
+          "name": "sys_statx",
+          "normalized_name": "sys_statx",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "644",
+          "end_line": "691",
+          "outgoing_call_count": 26,
+          "summary": "实现Linux系统调用statx，用于获取文件状态信息。该函数首先检查statx_ptr是否为空，然后从用户空间复制路径字符串。如果路径为空，则使用dirfd文件描述符获取文件信息并检查是否为目录；否则，通过normalize_path和read_virtual_file获取文件信息。最后，填充statx结构体（包括文件类型、权限、大小、块数等）并复制到用户空间。"
+        },
+        {
+          "name": "sys_fstatat",
+          "normalized_name": "sys_fstatat",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "716",
+          "end_line": "761",
+          "outgoing_call_count": 21,
+          "summary": "实现系统调用 fstatat，根据文件路径或目录文件描述符获取文件状态信息，并填充一个简化的 riscv64 格式 stat 结构体返回给用户空间。"
+        },
+        {
+          "name": "sys_writev",
+          "normalized_name": "sys_writev",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "693",
+          "end_line": "714",
+          "outgoing_call_count": 20,
+          "summary": "实现 sys_writev 系统调用，从用户空间读取 iovec 数组并依次写入标准输出（文件描述符 1 或 2）到串口，同时累加写入的总字节数。"
+        },
+        {
+          "name": "sys_pwrite",
+          "normalized_name": "sys_pwrite",
+          "file_path": "src\\syscall\\fd.rs",
+          "language": "rust",
+          "start_line": "1107",
+          "end_line": "1118",
+          "outgoing_call_count": 19,
+          "summary": "实现从用户空间向文件描述符指定偏移处写入数据的系统调用（Pwrite），处理文件偏移范围检查与扩展、用户内存拷贝。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "task": {
+      "module_name": "task",
+      "function_count": 4,
+      "outgoing_edge_count": 9,
+      "internal_edge_count": 2,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.2222,
+      "external_call_ratio": 0.7778,
+      "module_weight": 0.0039,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src\\fs\\ext4.rs",
+        "src\\mm\\heap_allocator.rs",
+        "src\\task\\context_test.rs",
+        "src\\task\\mod.rs"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "parse_run_all_tests",
+          "normalized_name": "parse_run_all_tests",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "990",
+          "end_line": "1029",
+          "outgoing_call_count": 18,
+          "summary": "从字节切片中解析出以 `tests=\"` 开头、双引号结尾的测试名称列表，按空白字符分割后返回每个测试名称的字符串向量。"
+        },
+        {
+          "name": "find_basic_test_programs",
+          "normalized_name": "find_basic_test_programs",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "1031",
+          "end_line": "1052",
+          "outgoing_call_count": 17,
+          "summary": "该函数读取指定根目录下basic子目录中的run-all.sh文件，解析其中的测试程序名称，并为每个名称构建包含根目录、basic目录、名称和完整路径的Ext4BasicTestProgramInfo结构体，最终返回这些结构体的向量。"
+        },
+        {
+          "name": "kernel_context_switch_test",
+          "normalized_name": "kernel_context_switch_test",
+          "file_path": "src\\task\\context_test.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "73",
+          "outgoing_call_count": 16,
+          "summary": "该函数用于测试内核上下文切换的正确性。它分配内核栈，初始化两个 TaskContext（引导上下文和内核线程上下文），通过 switch_task_context 从引导上下文切换到内核线程，然后期望内核线程的入口函数（kernel_thread_entry）通过再次切换上下文返回，最后验证状态并释放栈。"
+        },
+        {
+          "name": "heap_test",
+          "normalized_name": "heap_test",
+          "file_path": "src\\mm\\heap_allocator.rs",
+          "language": "rust",
+          "start_line": "587",
+          "end_line": "624",
+          "outgoing_call_count": 16,
+          "summary": "该函数在堆分配器初始化后执行一系列动态内存分配和释放测试，验证堆分配器能否正确分配、读写和释放内存，包括Box分配、Vec动态数组扩容以及内存重用测试。"
+        },
+        {
+          "name": "wake_test_queue_one",
+          "normalized_name": "wake_test_queue_one",
+          "file_path": "src\\task\\mod.rs",
+          "language": "rust",
+          "start_line": "548",
+          "end_line": "561",
+          "outgoing_call_count": 6,
+          "summary": "从全局测试等待队列TEST_WAIT_QUEUE中唤醒一个任务，并打印唤醒状态和队列长度。"
+        },
+        {
+          "name": "Ext4BasicTestProgramInfo",
+          "normalized_name": "Ext4BasicTestProgramInfo",
+          "file_path": "src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "101",
+          "end_line": "106",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为Ext4BasicTestProgramInfo的结构体，用于存储Ext4基本测试程序的相关信息，包含根目录、目录、名称和路径四个字段。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "trap": {
+      "module_name": "trap",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0008,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 28,
+      "outgoing_edge_count": 95,
+      "internal_edge_count": 64,
+      "external_edge_count": 31,
+      "internal_call_ratio": 0.6737,
+      "external_call_ratio": 0.3263,
+      "module_weight": 0.0299,
+      "files": [
+        "src/loader/elf.rs",
+        "src\\arch\\loongarch64\\entry.S",
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\arch\\riscv64\\mod.rs",
+        "src\\loader\\elf.rs",
+        "src\\logging.rs",
+        "src\\main.rs"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "src\\arch\\loongarch64\\entry.S",
+          "language": "assembly",
+          "start_line": "4",
+          "end_line": "39",
+          "outgoing_call_count": 16,
+          "summary": "LoongArch64架构操作系统的启动入口点，负责初始化CSR寄存器、配置内存映射（直接映射窗口）、设置栈指针，并跳转到内核主函数kernel_main。"
+        },
+        {
+          "name": "parse_elf_header",
+          "normalized_name": "parse_elf_header",
+          "file_path": "src\\loader\\elf.rs",
+          "language": "rust",
+          "start_line": "775",
+          "end_line": "838",
+          "outgoing_call_count": 13,
+          "summary": "解析 ELF64 文件头，验证魔数、类别、字节序、类型、机器架构、程序头表，并返回 ElfHeader 结构体。"
+        },
+        {
+          "name": "shutdown",
+          "normalized_name": "shutdown",
+          "file_path": "src\\arch\\riscv64\\mod.rs",
+          "language": "rust",
+          "start_line": "141",
+          "end_line": "174",
+          "outgoing_call_count": 10,
+          "summary": "该函数尝试通过多种方式关闭系统：首先使用 SBI v0.2+ SRST 扩展进行系统复位，若失败则回退到 legacy SBI v0.1 关机调用，最后在无法关机时执行无限循环的 wfi 指令并打印错误信息。"
+        },
+        {
+          "name": "debug_parse_program_headers",
+          "normalized_name": "debug_parse_program_headers",
+          "file_path": "src\\loader\\elf.rs",
+          "language": "rust",
+          "start_line": 914,
+          "end_line": 950,
+          "outgoing_call_count": 8,
+          "summary": "该函数用于调试解析ELF文件的程序头（Program Headers），输出ELF文件头部信息和每个程序头的详细信息，包括类型、标志、偏移、虚拟地址、文件大小和内存大小。主要用于在操作系统启动loader阶段打印ELF加载信息，便于调试。"
+        },
+        {
+          "name": "parse_program_header",
+          "normalized_name": "parse_program_header",
+          "file_path": "src\\loader\\elf.rs",
+          "language": "rust",
+          "start_line": "878",
+          "end_line": "894",
+          "outgoing_call_count": 4,
+          "summary": "从字节切片中解析一个 ELF 程序头 (Program Header) 结构体，包括类型、标志、偏移、虚拟地址、文件大小和内存大小。"
+        },
+        {
+          "name": "cpucfg",
+          "normalized_name": "cpucfg",
+          "file_path": "src\\arch\\loongarch64\\mod.rs",
+          "language": "rust",
+          "start_line": "166",
+          "end_line": "177",
+          "outgoing_call_count": 3,
+          "summary": "该函数通过内联汇编执行 LoongArch64 架构的 cpucfg 指令，读取指定编号的 CPU 配置寄存器，并将结果返回。"
+        },
+        {
+          "name": "debug_parse_elf_header",
+          "normalized_name": "debug_parse_elf_header",
+          "file_path": "src\\loader\\elf.rs",
+          "language": "rust",
+          "start_line": "841",
+          "end_line": "858",
+          "outgoing_call_count": 3,
+          "summary": "这是一个调试用的函数，用于解析ELF文件头部并在内核控制台打印相关信息，最后返回解析后的头部结构。"
+        },
+        {
+          "name": "kprint",
+          "normalized_name": "kprint",
+          "file_path": "src\\logging.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "29",
+          "outgoing_call_count": 2,
+          "summary": "这个宏定义了一个条件编译的打印函数，当启用'kernel_log'特性时，会调用`$crate::print!`宏来输出日志信息。其作用是仅在特定内核日志配置下执行打印操作。"
+        },
+        {
+          "name": "println",
+          "normalized_name": "println",
+          "file_path": "src\\logging.rs",
+          "language": "rust",
+          "start_line": "9",
+          "end_line": "19",
+          "outgoing_call_count": 2,
+          "summary": "这个代码块定义了一个自定义的 println! 宏，它会在调用 $crate::print! 宏时自动在末尾添加换行符 '\n'，实现了类似标准库 println! 的功能。"
+        },
+        {
+          "name": "kprintln",
+          "normalized_name": "kprintln",
+          "file_path": "src\\logging.rs",
+          "language": "rust",
+          "start_line": "32",
+          "end_line": "45",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个名为 kprintln 的宏，该宏在启用 'kernel_log' 特性时调用底层的 println! 宏来输出日志，并支持格式化参数和空参数调用。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "src/arch/loongarch64/trap.S",
+        "src/syscall/fd.rs",
+        "src\\arch\\loongarch64\\mod.rs",
+        "src\\arch\\loongarch64\\trap.S",
+        "src\\arch\\riscv64\\mod.rs",
+        "src\\arch\\riscv64\\trap.S",
+        "src\\loader\\initproc.rs",
+        "src\\main.rs",
+        "src\\mm\\memory_set.rs",
+        "src\\mm\\page_table.rs",
+        "src\\syscall\\task.rs",
+        "src\\task\\processor.rs",
+        "src\\task\\task.rs",
+        "src\\trap\\context.rs"
+      ],
+      "file_count": 14,
+      "core_functions": [
+        {
+          "name": "install_user_image",
+          "normalized_name": "install_user_image",
+          "file_path": "src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "201",
+          "end_line": "258",
+          "outgoing_call_count": 36,
+          "summary": "该函数用于在当前用户进程中安装新的用户程序映像（例如 exec 系统调用），主要完成以下工作：检查当前任务是否为用户进程，记录新旧页表令牌，更换内存集，清除文件描述符、子线程 tid 和 robust list，激活新页表，丢弃旧页表，根据 LoongArch 架构的 ABI 约定解析用户栈上的 argc 并更新陷阱上下文，最后打印日志。"
+        },
+        {
+          "name": "run_user_current",
+          "normalized_name": "run_user_current",
+          "file_path": "src\\task\\processor.rs",
+          "language": "rust",
+          "start_line": "106",
+          "end_line": "153",
+          "outgoing_call_count": 32,
+          "summary": "此函数用于运行当前用户进程，在恢复其执行前检查并修复可能损坏的陷阱上下文，然后通过汇编指令 __restore_user 切换到用户态执行。"
+        },
+        {
+          "name": "copy_user_cstr",
+          "normalized_name": "copy_user_cstr",
+          "file_path": "src/syscall/fd.rs",
+          "language": "rust",
+          "start_line": "1006",
+          "end_line": "1030",
+          "outgoing_call_count": 29,
+          "summary": "该函数从用户空间指定地址复制一个以空字符结尾的字符串到内核缓冲区，并返回该字符串的引用。处理了空指针、缓冲区为空、复制失败和字符串编码无效等错误情况。"
+        },
+        {
+          "name": "copy_user_cstr",
+          "normalized_name": "copy_user_cstr",
+          "file_path": "src\\syscall\\task.rs",
+          "language": "rust",
+          "start_line": "124",
+          "end_line": "159",
+          "outgoing_call_count": 29,
+          "summary": "从用户空间复制一个以null结尾的字符串到内核缓冲区，并返回Rust字符串切片。该函数逐字节读取用户空间内存，直到遇到null字节或缓冲区填满。"
+        },
+        {
+          "name": "new_user_app",
+          "normalized_name": "new_user_app",
+          "file_path": "src\\task\\task.rs",
+          "language": "rust",
+          "start_line": "76",
+          "end_line": "118",
+          "outgoing_call_count": 23,
+          "summary": "创建一个新的用户应用任务结构体，包含加载用户程序、分配内核栈、初始化陷阱上下文和任务信息。"
+        },
+        {
+          "name": "kernel_main",
+          "normalized_name": "kernel_main",
+          "file_path": "src\\main.rs",
+          "language": "rust",
+          "start_line": 55,
+          "end_line": 73,
+          "outgoing_call_count": 11,
+          "summary": "{\n  \"block_id\": \"block_367\",\n  \"file_path\": \"src\\\\main.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"55\",\n  \"end_line\": \"73\",\n  \"name\": \"kernel_main\",\n  \"type\": \"function\",\n  \"summary\": \"操作系统内核初始化和启动的主函数，依次初始化内存管理、页表、中断、驱动、文件系统和任务调度，最后启动任务调度循环。\",\n  \"logic_steps\": [\n    \"打印启动信息，表明内核主函数已进入且串口正常。\",\n    \"初始化内存管理模块（mm::init()），并打印完成信息。\",\n    \"为架构相关模块初始化页表（crate::arch::mm::init_page_walker()）。\",\n    \"初始化中断处理（trap::init()），并打印开始和完成信息。\",\n    \"初始化驱动程序（drivers::init()）。\",\n    \"初始化文件系统（fs::init()）。\",\n    \"初始化任务调度器（task::init()）。\",\n    \"启动任务调度循环（task::run()），此函数不返回（通过返回类型 `!` 体现）。\"\n  ],\n  \"called_functions\": [\n    \"mm::init\",\n    \"crate::arch::mm::init_page_walker\",\n    \"trap::init\",\n    \"drivers::init\",\n    \"fs::init\",\n    \"task::init\",\n    \"task::run\"\n  ],\n  \"related_os_module\": \"boot\",\n  \"evidence\": \"函数被标记为 `extern \"C\"` 且返回类型为 `!`，符合内核入口点的特征；函数体内连续调用了 mm、arch::mm、trap、drivers、fs、task 等模块的初始化函数，最后调用 task::run() 进入调度循环，表明这是一个从引导到调度的完整启动流程。\",\n  \"uncertainty\": \"无\"\n}"
+        },
+        {
+          "name": "kernel_main",
+          "normalized_name": "kernel_main",
+          "file_path": "src\\main.rs",
+          "language": "rust",
+          "start_line": "77",
+          "end_line": "92",
+          "outgoing_call_count": 11,
+          "summary": "该函数是内核入口点，负责按顺序初始化各个子系统（异常处理、内存管理、驱动、文件系统、任务管理）后启动任务调度，函数返回类型为永不返回（!）。"
+        },
+        {
+          "name": "init_user_heap",
+          "normalized_name": "init_user_heap",
+          "file_path": "src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": "237",
+          "end_line": "257",
+          "outgoing_call_count": 9,
+          "summary": "初始化用户堆，设置堆起始地址并预分配初始堆空间（256KB），同时更新程序断点（brk）。"
+        },
+        {
+          "name": "grow_user_heap",
+          "normalized_name": "grow_user_heap",
+          "file_path": "src\\mm\\memory_set.rs",
+          "language": "rust",
+          "start_line": "294",
+          "end_line": "302",
+          "outgoing_call_count": 8,
+          "summary": "这个函数扩展用户堆的末尾边界，将新的堆结束地址（new_brk）设置到对应的堆区域中，并通过 page_table 更新映射。"
+        },
+        {
+          "name": "list_user_apps",
+          "normalized_name": "list_user_apps",
+          "file_path": "src\\loader\\initproc.rs",
+          "language": "rust",
+          "start_line": "26",
+          "end_line": "32",
+          "outgoing_call_count": 7,
+          "summary": "打印用户应用的数量和每个应用的名称与数据长度，然后调用预加载页缓存函数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 0.0,
+    "score_level": "unknown",
+    "scores": {
+      "originality": 0,
+      "novelty": 0,
+      "practicality": 0,
+      "difficulty": 0,
+      "completion": 0
+    },
+    "summary": "",
+    "strengths": [],
+    "weaknesses": [],
+    "suggestions": []
+  },
+  "hybrid_top_results": [],
+  "comparison": {
+    "retrieval_mode": "structured",
+    "comparison_count": 0,
+    "comparisons": []
+  },
+  "urls": {
+    "report_markdown": "/reports/T202610055999826_final_report.md",
+    "work_detail_data": "/data/works/T202610055999826.json",
+    "comparison_data": "/data/comparisons/T202610055999826.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

@@ -1,0 +1,1312 @@
+{
+  "repo_name": "TeamNameNotFound",
+  "team_name": "TeamNameNotFound",
+  "school": "重庆邮电大学",
+  "repo_url": "https://gitlab.eduxiji.net/qq976243638/xos",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/qq976243638/xos",
+  "year": "2021",
+  "track": "kernel",
+  "status": "indexed_history",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "python",
+    "assembly",
+    "linker_script",
+    "makefile"
+  ],
+  "core_modules": [
+    "driver",
+    "unknown",
+    "filesystem",
+    "process",
+    "memory"
+  ],
+  "function_count": 186,
+  "node_count": 186,
+  "edge_count": 1557,
+  "internal_edge_count": 708,
+  "external_edge_count": 849,
+  "module_count": 14,
+  "structure_complexity": 0.92,
+  "module_completeness": {
+    "boot": 0.51,
+    "build": 0.85,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 0.66,
+    "ipc": 0.05,
+    "kernel_core": 0.08,
+    "memory": 1.0,
+    "process": 1.0,
+    "scheduler": 0.63,
+    "syscall": 0.41,
+    "test": 0.05,
+    "unknown": 1.0,
+    "user": 0.05
+  },
+  "core_module_details": [
+    {
+      "module_name": "driver",
+      "module_weight": 0.3884,
+      "completeness": 1.0,
+      "final_score": 0.633
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.1642,
+      "completeness": 1.0,
+      "final_score": 0.4985
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1049,
+      "completeness": 1.0,
+      "final_score": 0.4629
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.0919,
+      "completeness": 1.0,
+      "final_score": 0.4551
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0777,
+      "completeness": 1.0,
+      "final_score": 0.4466
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 4,
+      "outgoing_edge_count": 24,
+      "internal_edge_count": 16,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.0191,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 13,
+      "outgoing_edge_count": 119,
+      "internal_edge_count": 32,
+      "external_edge_count": 87,
+      "internal_call_ratio": 0.2689,
+      "external_call_ratio": 0.7311,
+      "module_weight": 0.0725,
+      "files": [
+        "kernel\\libs\\list.h",
+        "tools/kflash.py",
+        "tools\\kernel.lds",
+        "tools\\kflash.py"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "encrypt",
+          "normalized_name": "encrypt",
+          "file_path": "tools/kflash.py",
+          "language": "python",
+          "start_line": "279",
+          "end_line": "286",
+          "outgoing_call_count": 21,
+          "summary": "该函数实现了AES加密的CBC（密码分组链接）模式中的一个块加密步骤。它接收16字节的明文块，将其与前一个密文块（_last_cipherblock）异或，然后对异或结果进行AES加密，并更新内部保存的最后一个密文块，最后返回加密后的16字节密文。"
+        },
+        {
+          "name": "encrypt",
+          "normalized_name": "encrypt",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "199",
+          "end_line": "231",
+          "outgoing_call_count": 21,
+          "summary": "使用AES分组密码对16字节明文块进行加密。该函数实现了标准的AES加密流程，包括轮密钥加、字节代换（通过查找表T1-T4和S盒）、行移位和列混合操作，最后返回加密后的字节列表。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "127",
+          "end_line": "197",
+          "outgoing_call_count": 19,
+          "summary": "实现AES密钥扩展算法，初始化加密和解密轮密钥数组，并根据密钥长度（128/192/256位）进行不同处理。"
+        },
+        {
+          "name": "load_elf_to_sram",
+          "normalized_name": "load_elf_to_sram",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1067",
+          "end_line": "1088",
+          "outgoing_call_count": 15,
+          "summary": "该函数通过pyelftools解析ELF文件，提取程序段数据并写入SRAM，用于将ELF加载到目标板内存。"
+        },
+        {
+          "name": "_getTerminalSize_linux",
+          "normalized_name": "_getTerminalSize_linux",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": 538,
+          "end_line": 559,
+          "outgoing_call_count": 13,
+          "summary": "获取Linux终端窗口的大小（列数和行数），通过ioctl系统调用、CTTY文件描述符或环境变量逐一尝试，最终返回(width, height)元组。"
+        },
+        {
+          "name": "ISPResponse",
+          "normalized_name": "ISPResponse",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "365",
+          "end_line": "402",
+          "outgoing_call_count": 13,
+          "summary": "定义K210芯片ISP协议的响应解析类，包含操作码和错误码枚举，以及一个静态解析方法，用于从原始字节数据中提取操作码、错误码和可选的调试信息文本。"
+        },
+        {
+          "name": "recv_debug",
+          "normalized_name": "recv_debug",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "891",
+          "end_line": "901",
+          "outgoing_call_count": 12,
+          "summary": "解析从设备接收到的ISP响应，根据错误码判断是否成功，并记录调试信息"
+        },
+        {
+          "name": "_getTerminalSize_windows",
+          "normalized_name": "_getTerminalSize_windows",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "497",
+          "end_line": "519",
+          "outgoing_call_count": 10,
+          "summary": "获取 Windows 终端窗口的大小（列数和行数），通过调用 Windows API 的 GetConsoleScreenBufferInfo 函数实现。如果失败或非 Windows 环境，返回 None。"
+        },
+        {
+          "name": "reset_to_boot_kd233",
+          "normalized_name": "reset_to_boot_kd233",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "732",
+          "end_line": "745",
+          "outgoing_call_count": 10,
+          "summary": "该函数通过操作串口的DTR和RTS信号线，按照特定时序将Kendryte KD233开发板复位并进入下载模式（BOOT模式），用于后续固件烧录。"
+        },
+        {
+          "name": "kernel.lds",
+          "normalized_name": "lds",
+          "file_path": "tools\\kernel.lds",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "49",
+          "outgoing_call_count": 4,
+          "summary": "该链接脚本定义了RISC-V架构内核的虚拟内存布局，指定入口点为kentry，基地址为0x80200000，并安排.text、.rodata、.data、.bss及自定义.disk段的位置，最终丢弃.eh_frame段。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 41,
+      "outgoing_edge_count": 997,
+      "internal_edge_count": 412,
+      "external_edge_count": 585,
+      "internal_call_ratio": 0.4132,
+      "external_call_ratio": 0.5868,
+      "module_weight": 0.3884,
+      "files": [
+        "kernel\\driver\\clock.c",
+        "kernel\\driver\\virt_disk.c",
+        "kernel\\libs\\sbi.c",
+        "kernel\\libs\\stdio.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "KFlash",
+          "normalized_name": "KFlash",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "21",
+          "end_line": "1534",
+          "outgoing_call_count": 286,
+          "summary": "KFlash 类封装了通过串口引导并烧录固件到 K210 微控制器（包含 flash 和 SRAM）的逻辑，支持自动检测开发板类型、下载 ISP 程序、加密烧录、终端交互等功能。核心流程是：进入 ISP 模式 → 下载 ISP 到 SRAM → 切换波特率 → 初始化 flash → 烧录固件 → 复位启动。"
+        },
+        {
+          "name": "MAIXLoader",
+          "normalized_name": "MAIXLoader",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "573",
+          "end_line": "1150",
+          "outgoing_call_count": 130,
+          "summary": "MAIXLoader 是一个通过串口与 K210 芯片通信的闪存烧录工具类，负责实现波特率切换、复位控制、SLIP 协议收发、芯片问候、闪存初始化、数据写入、擦除、固件下载等功能。"
+        },
+        {
+          "name": "flash_firmware",
+          "normalized_name": "flash_firmware",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1090",
+          "end_line": "1141",
+          "outgoing_call_count": 30,
+          "summary": "该函数用于将固件数据烧录到设备闪存中。它可选地对固件进行AES-128-CBC加密，并添加包含AES加密标志、固件长度、固件数据及SHA256校验头的报头；然后将数据按固定大小分块，每块填充到4K对齐后通过`dump_to_flash`函数写入闪存，并实时打印烧录进度。"
+        },
+        {
+          "name": "flash_dataframe",
+          "normalized_name": "flash_dataframe",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "969",
+          "end_line": "999",
+          "outgoing_call_count": 28,
+          "summary": "该函数用于将数据分块并通过UART（推测）发送到设备（如K210）的ISP协议烧写，实现数据帧的传输与进度显示。"
+        },
+        {
+          "name": "flash_erase",
+          "normalized_name": "flash_erase",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1045",
+          "end_line": "1061",
+          "outgoing_call_count": 22,
+          "summary": "向SPI Flash发送擦除命令（包含起始地址和长度），等待并解析响应，根据返回码判断擦除是否成功，若失败则抛出异常，成功则记录日志。"
+        },
+        {
+          "name": "dump_to_flash",
+          "normalized_name": "dump_to_flash",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1001",
+          "end_line": "1041",
+          "outgoing_call_count": 21,
+          "summary": "该函数将数据分片发送到Flash，通过生成特定格式的报文（包含帧头、校验和、地址、数据长度和数据），并在发送失败时进行重试，直至成功或超过最大重试次数。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "634",
+          "end_line": "648",
+          "outgoing_call_count": 19,
+          "summary": "初始化KFlash类的实例，配置串口连接并创建SLIP读取器和杀死进程标志。"
+        },
+        {
+          "name": "change_baudrate_stage0",
+          "normalized_name": "change_baudrate_stage0",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "593",
+          "end_line": "632",
+          "outgoing_call_count": 18,
+          "summary": "根据不同的开发板类型（goE、trainer、dan、bit、kd233等）设置并改变stage0阶段的波特率，通过发送特定格式的数据包来配置硬件，并验证通信是否成功。"
+        },
+        {
+          "name": "recv_one_return",
+          "normalized_name": "recv_one_return",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "675",
+          "end_line": "715",
+          "outgoing_call_count": 16,
+          "summary": "该函数从串口接收一个SLIP协议编码的数据帧，返回解码后的原始数据。它先寻找帧起始标志0xC0，然后读取数据直到遇到下一个0xC0，同时处理转义序列（0xDB 0xDC -> 0xC0，0xDB 0xDD -> 0xDB），超时则抛出异常。"
+        },
+        {
+          "name": "parse",
+          "normalized_name": "parse",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "383",
+          "end_line": "402",
+          "outgoing_call_count": 16,
+          "summary": "解析从ISP通信中接收的二进制数据，提取操作码、原因码和文本信息。根据Python版本差异使用不同方式解码前两个字节，尝试将操作码转换为枚举值，如果匹配调试信息操作码则解码后续文本。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 29,
+      "outgoing_edge_count": 44,
+      "internal_edge_count": 41,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.9318,
+      "external_call_ratio": 0.0682,
+      "module_weight": 0.1049,
+      "files": [
+        "Makefile",
+        "kernel\\fs\\elf.h",
+        "kernel\\fs\\fat32.c",
+        "kernel\\fs\\fat32.h",
+        "kernel\\fs\\fs.c",
+        "kernel\\fs\\fs.h",
+        "tools\\kflash.py"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "read_loop",
+          "normalized_name": "read_loop",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "664",
+          "end_line": "673",
+          "outgoing_call_count": 17,
+          "summary": "这个函数实现一个无限循环，从串口读取一个字节并以十六进制格式输出到标准输出，用于调试或监视串口接收的原始数据。注释部分显示之前曾尝试批量读取，但当前版本仅逐个读取并打印。"
+        },
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "122",
+          "outgoing_call_count": 16,
+          "summary": "该Makefile定义了用于构建、运行和调试一个基于RISC-V架构的操作系统内核的编译、链接、清理、模拟运行、打包烧录及文件系统创建等构建任务。通过设置交叉编译工具链、编译选项、链接脚本和QEMU运行参数，实现了从源文件到可执行内核镜像，再到可烧录二进制文件的完整构建流程。"
+        },
+        {
+          "name": "slip_reader",
+          "normalized_name": "slip_reader",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "329",
+          "end_line": "362",
+          "outgoing_call_count": 13,
+          "summary": "实现一个生成器函数，从串口读取SLIP协议数据包，处理转义和分包，返回完整的数据包内容。"
+        },
+        {
+          "name": "fat32_openat",
+          "normalized_name": "fat32_openat",
+          "file_path": "kernel\\fs\\fat32.c",
+          "language": "c",
+          "start_line": "242",
+          "end_line": "296",
+          "outgoing_call_count": 8,
+          "summary": "实现FAT32文件系统的打开文件操作，支持绝对路径、相对路径和基于文件描述符的路径解析，递归处理路径中的目录分隔符，并分配文件描述符和文件信息结构体。"
+        },
+        {
+          "name": "write",
+          "normalized_name": "write",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "657",
+          "end_line": "662",
+          "outgoing_call_count": 8,
+          "summary": "将数据包进行COBS编码（类似SLIP协议）后通过串口写入"
+        },
+        {
+          "name": "fat32_init",
+          "normalized_name": "fat32_init",
+          "file_path": "kernel\\fs\\fat32.c",
+          "language": "c",
+          "start_line": "32",
+          "end_line": "62",
+          "outgoing_call_count": 7,
+          "summary": "初始化FAT32文件系统，从磁盘读取BPB（BIOS参数块）信息，验证文件系统类型为FAT32，解析并存储关键的磁盘布局参数（每簇扇区数、每扇区字节数、FAT表起始扇区、数据区起始扇区、根目录簇号），并将当前目录设置为根目录。"
+        },
+        {
+          "name": "dir_search",
+          "normalized_name": "dir_search",
+          "file_path": "kernel\\fs\\fat32.c",
+          "language": "c",
+          "start_line": "182",
+          "end_line": "216",
+          "outgoing_call_count": 6,
+          "summary": "在FAT32文件系统中，根据给定的簇号和文件名，在目录中搜索匹配的短目录项。函数会遍历目录簇中的每个目录项，找到匹配项后返回指向该项的指针。"
+        },
+        {
+          "name": "open_terminal",
+          "normalized_name": "open_terminal",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1152",
+          "end_line": "1160",
+          "outgoing_call_count": 5,
+          "summary": "该函数通过配置串口终端参数（波特率、DTR/RTS信号、过滤模式）并启动miniterm工具，实现串口终端会话的打开，并在会话结束后退出程序。"
+        },
+        {
+          "name": "load_file",
+          "normalized_name": "load_file",
+          "file_path": "kernel\\fs\\fat32.c",
+          "language": "c",
+          "start_line": "304",
+          "end_line": "323",
+          "outgoing_call_count": 4,
+          "summary": "从 FAT32 文件系统中按簇加载一个文件到新分配的内存中，返回该内存地址。"
+        },
+        {
+          "name": "fat32_read",
+          "normalized_name": "fat32_read",
+          "file_path": "kernel\\fs\\fat32.c",
+          "language": "c",
+          "start_line": "331",
+          "end_line": "337",
+          "outgoing_call_count": 3,
+          "summary": "实现从FAT32文件系统中读取文件数据的功能。通过文件描述符获取文件的起始簇号，调用load_file将文件内容加载到内存，然后复制到用户缓冲区，最后释放临时内存并返回读取的字节数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 8,
+      "outgoing_edge_count": 19,
+      "internal_edge_count": 11,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.5789,
+      "external_call_ratio": 0.4211,
+      "module_weight": 0.0307,
+      "files": [
+        "kernel/trap/trap.c",
+        "kernel\\libs\\sbi.c",
+        "kernel\\proc\\proc.c",
+        "kernel\\trap\\trap.c",
+        "kernel\\trap\\trap.h",
+        "kernel\\trap\\trap_pack.S",
+        "tools\\kflash.py"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "trap",
+          "normalized_name": "trap",
+          "file_path": "kernel/trap/trap.c",
+          "language": "c",
+          "start_line": "20",
+          "end_line": "54",
+          "outgoing_call_count": 8,
+          "summary": "这个函数是RISC-V架构下的陷阱处理函数，用于区分中断和异常，并根据不同类型进行相应的处理。它通过读取scause寄存器判断陷阱来源，如果是中断则处理定时器中断（设置下一次定时器、输出信息、进程切换、返回用户态），如果是异常则处理用户环境调用异常（增加epc跳过陷阱指令、执行系统调用、返回用户态）。"
+        },
+        {
+          "name": "trap_ret_user",
+          "normalized_name": "trap_ret_user",
+          "file_path": "kernel\\trap\\trap.c",
+          "language": "c",
+          "start_line": "58",
+          "end_line": "68",
+          "outgoing_call_count": 3,
+          "summary": "该函数用于设置从陷阱（trap）返回用户态时的寄存器状态，包括恢复 sepc 和清除 sstatus 中的 SPP 位，然后调用 trap_end 完成返回。"
+        },
+        {
+          "name": "raise_exception",
+          "normalized_name": "raise_exception",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "61",
+          "end_line": "67",
+          "outgoing_call_count": 3,
+          "summary": "这个函数用于在关闭串口资源后，重新抛出传入的异常。它尝试关闭 self.loader._port 连接，如果关闭失败则忽略异常，最终确保异常被向上传递。"
+        },
+        {
+          "name": "trap_init",
+          "normalized_name": "trap_init",
+          "file_path": "kernel\\trap\\trap.c",
+          "language": "c",
+          "start_line": "9",
+          "end_line": "16",
+          "outgoing_call_count": 2,
+          "summary": "初始化陷阱处理，设置陷阱向量表地址为 trap_entry，并清除 S 模式的全局中断使能位。"
+        },
+        {
+          "name": "trap_end",
+          "normalized_name": "trap_end",
+          "file_path": "kernel\\trap\\trap_pack.S",
+          "language": "assembly",
+          "start_line": "55",
+          "end_line": "95",
+          "outgoing_call_count": 1,
+          "summary": "这个代码块是陷阱处理（trap handling）的返回路径，负责从陷阱帧（trap frame）中恢复所有通用寄存器（除a0外），并通过sscratch寄存器的交换技巧恢复a0寄存器，最后执行sret指令返回到用户态或内核态。"
+        },
+        {
+          "name": "trap_entry",
+          "normalized_name": "trap_entry",
+          "file_path": "kernel\\trap\\trap_pack.S",
+          "language": "assembly",
+          "start_line": "9",
+          "end_line": "55",
+          "outgoing_call_count": 1,
+          "summary": "trap_entry是RISC-V架构下的陷阱（中断/异常）入口汇编例程，负责保存当前CPU上下文（通用寄存器、sepc等），并从用户态/内核态切换到内核栈，然后调用C函数trap进行后续处理。"
+        },
+        {
+          "name": "copy_trapframe",
+          "normalized_name": "copy_trapframe",
+          "file_path": "kernel\\proc\\proc.c",
+          "language": "c",
+          "start_line": "167",
+          "end_line": "169",
+          "outgoing_call_count": 1,
+          "summary": "将源 trapframe 结构的内容完全复制到目标 trapframe 结构。"
+        },
+        {
+          "name": "set_timer",
+          "normalized_name": "set_timer",
+          "file_path": "kernel\\libs\\sbi.c",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "25",
+          "outgoing_call_count": 1,
+          "summary": "设置定时器，通过 SBI 调用请求设置下一个定时器中断的时间点。"
+        },
+        {
+          "name": "trapframe",
+          "normalized_name": "trapframe",
+          "file_path": "kernel\\trap\\trap.h",
+          "language": "c",
+          "start_line": "7",
+          "end_line": "44",
+          "outgoing_call_count": 0,
+          "summary": "定义了trapframe结构体，用于保存陷阱（trap）或中断发生时的CPU寄存器状态，包括内核栈指针、用户栈指针、程序计数器（epc）以及所有通用寄存器，以便在从陷阱返回后恢复进程的执行上下文。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\driver\\clock.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "clock_init",
+          "normalized_name": "clock_init",
+          "file_path": "kernel\\driver\\clock.c",
+          "language": "c",
+          "start_line": "11",
+          "end_line": "17",
+          "outgoing_call_count": 3,
+          "summary": "初始化时钟，通过禁用 SIE_TIMER 中断并设置下一个定时器来配置时钟中断行为。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "kernel_core": {
+      "module_name": "kernel_core",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0032,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 21,
+      "outgoing_edge_count": 39,
+      "internal_edge_count": 26,
+      "external_edge_count": 13,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.0777,
+      "files": [
+        "kernel\\fs\\elf.c",
+        "kernel\\init\\entry.S",
+        "kernel\\libs\\string.c",
+        "kernel\\mem\\page.c",
+        "kernel\\mem\\page.h",
+        "kernel\\mem\\pmm.c",
+        "kernel\\mem\\pmm.h",
+        "kernel\\proc\\proc.c"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "map_a_page",
+          "normalized_name": "map_a_page",
+          "file_path": "kernel\\mem\\page.c",
+          "language": "c",
+          "start_line": "59",
+          "end_line": "82",
+          "outgoing_call_count": 6,
+          "summary": "映射一个虚拟地址到物理地址的页表项，支持三级页表结构，并刷新TLB。"
+        },
+        {
+          "name": "page_init",
+          "normalized_name": "page_init",
+          "file_path": "kernel\\mem\\page.c",
+          "language": "c",
+          "start_line": "18",
+          "end_line": "28",
+          "outgoing_call_count": 4,
+          "summary": "初始化页表管理功能，包括允许S模式访问U模式页、创建内核页表并启用SV39分页模式。"
+        },
+        {
+          "name": "kalloc",
+          "normalized_name": "kalloc",
+          "file_path": "kernel\\mem\\pmm.c",
+          "language": "c",
+          "start_line": "77",
+          "end_line": "83",
+          "outgoing_call_count": 4,
+          "summary": "向上取整到页大小后分配连续物理页"
+        },
+        {
+          "name": "va2pa",
+          "normalized_name": "va2pa",
+          "file_path": "kernel\\mem\\page.c",
+          "language": "c",
+          "start_line": "109",
+          "end_line": "134",
+          "outgoing_call_count": 3,
+          "summary": "该函数通过遍历三级页表，将虚拟地址va转换为物理地址。函数从顶级页表table_ptr3开始，逐级检查页表项的有效性。如果某一级页表项无效（check_pde返回0），则跳转到not_mapping并返回0；否则，继续下一级查找，直到最后一级页表项，提取并返回其物理地址。"
+        },
+        {
+          "name": "map_pages",
+          "normalized_name": "map_pages",
+          "file_path": "kernel\\mem\\page.c",
+          "language": "c",
+          "start_line": "88",
+          "end_line": "102",
+          "outgoing_call_count": 3,
+          "summary": "将一段连续的虚拟地址空间映射到物理地址空间，以页为单位进行映射。该函数将输入的虚拟地址和物理地址向下对齐到页边界，然后循环调用 map_a_page 为每一页建立映射。"
+        },
+        {
+          "name": "pmm_init",
+          "normalized_name": "pmm_init",
+          "file_path": "kernel\\mem\\pmm.c",
+          "language": "c",
+          "start_line": "22",
+          "end_line": "35",
+          "outgoing_call_count": 3,
+          "summary": "初始化物理内存管理器，将内核结束地址到最大QEMU地址范围内的物理页逐个释放到空闲页链表中，但使用物理地址直接操作，因为此时分页机制尚未开启。"
+        },
+        {
+          "name": "alloc_a_page",
+          "normalized_name": "alloc_a_page",
+          "file_path": "kernel\\mem\\pmm.c",
+          "language": "c",
+          "start_line": "40",
+          "end_line": "48",
+          "outgoing_call_count": 3,
+          "summary": "从空闲页链表 frpg_list 的头部取出一个节点作为物理页，检查其地址是否按 PGSIZE 对齐，然后将该页清零并返回其物理地址。"
+        },
+        {
+          "name": "kfree",
+          "normalized_name": "kfree",
+          "file_path": "kernel\\mem\\pmm.c",
+          "language": "c",
+          "start_line": "120",
+          "end_line": "125",
+          "outgoing_call_count": 3,
+          "summary": "释放指定起始地址和大小（字节数）的物理内存页，通过计算页数调用 free_pages 实现。"
+        },
+        {
+          "name": "free_pages",
+          "normalized_name": "free_pages",
+          "file_path": "kernel\\mem\\pmm.c",
+          "language": "c",
+          "start_line": "102",
+          "end_line": "112",
+          "outgoing_call_count": 2,
+          "summary": "释放指定虚拟地址范围内的连续物理页面。通过遍历每个虚拟地址，将其转换为物理地址，然后调用 free_a_page 释放对应的物理页。"
+        },
+        {
+          "name": "free_vma_list",
+          "normalized_name": "free_vma_list",
+          "file_path": "kernel\\proc\\proc.c",
+          "language": "c",
+          "start_line": "106",
+          "end_line": "112",
+          "outgoing_call_count": 2,
+          "summary": "释放一个VMA（虚拟内存区域）链表中的所有节点，并回收每个节点所占用的内存。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 23,
+      "outgoing_edge_count": 69,
+      "internal_edge_count": 61,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.8841,
+      "external_call_ratio": 0.1159,
+      "module_weight": 0.0919,
+      "files": [
+        "kernel\\batch\\app.c",
+        "kernel\\fs\\elf.c",
+        "kernel\\proc\\proc.c",
+        "kernel\\proc\\proc.h",
+        "kernel\\proc\\sche_fifo.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "process",
+          "normalized_name": "process",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "36",
+          "end_line": "1523",
+          "outgoing_call_count": 272,
+          "summary": "这是一个固件烧录工具的主流程函数，用于将固件通过串口烧录到K210芯片中。它包括参数解析、端口检测、ISP模式进入、引导加载程序下载、固件下载、擦除、启动等步骤。"
+        },
+        {
+          "name": "app_init",
+          "normalized_name": "app_init",
+          "file_path": "kernel\\batch\\app.c",
+          "language": "c",
+          "start_line": "17",
+          "end_line": "87",
+          "outgoing_call_count": 12,
+          "summary": "初始化并加载下一个用户态应用程序，包括创建页表、从文件系统读取ELF文件、解析ELF、分配用户栈和内核栈、创建trapframe和context、分配进程结构体、初始化文件描述符表，并将进程设为可运行状态，最后切换到该进程执行。"
+        },
+        {
+          "name": "proc_clone",
+          "normalized_name": "proc_clone",
+          "file_path": "kernel\\proc\\proc.c",
+          "language": "c",
+          "start_line": "203",
+          "end_line": "265",
+          "outgoing_call_count": 10,
+          "summary": "该函数实现进程克隆（fork/clone）的核心逻辑，分配新进程的页表、栈、陷阱帧、上下文，并设置内核栈和用户栈，最后将新进程加入可运行队列并返回子进程PID。"
+        },
+        {
+          "name": "load_elf",
+          "normalized_name": "load_elf",
+          "file_path": "kernel\\fs\\elf.c",
+          "language": "c",
+          "start_line": "50",
+          "end_line": "121",
+          "outgoing_call_count": 9,
+          "summary": "解析并加载ELF可执行文件，验证ELF头部格式与类型，将PT_LOAD类型的段按页映射到虚拟地址空间，并返回程序入口地址。"
+        },
+        {
+          "name": "proc_execve",
+          "normalized_name": "proc_execve",
+          "file_path": "kernel\\proc\\proc.c",
+          "language": "c",
+          "start_line": "273",
+          "end_line": "304",
+          "outgoing_call_count": 8,
+          "summary": "该函数实现程序执行（execve）的核心逻辑：释放当前进程的原有代码段和VMA列表，从文件系统打开并读取一个ELF可执行文件，加载ELF文件到内存中，更新进程的陷阱帧入口地址和用户态返回地址，以便切换到新程序执行。"
+        },
+        {
+          "name": "proc_switch",
+          "normalized_name": "proc_switch",
+          "file_path": "kernel\\proc\\proc.c",
+          "language": "c",
+          "start_line": "174",
+          "end_line": "193",
+          "outgoing_call_count": 7,
+          "summary": "此函数实现进程切换：先通过调度器获取下一个要运行的进程，若获取失败则切换到初始进程并等待；若切换到的进程与当前进程相同则直接返回；否则更新进程状态、切换页表，并执行上下文切换。"
+        },
+        {
+          "name": "proc_exit",
+          "normalized_name": "proc_exit",
+          "file_path": "kernel\\proc\\proc.c",
+          "language": "c",
+          "start_line": "366",
+          "end_line": "386",
+          "outgoing_call_count": 6,
+          "summary": "进程退出函数，释放进程资源（虚拟内存段和文件描述符表），为父进程创建僵尸节点，循环回收当前进程已有的僵尸子进程，将自身状态设为 ZOMBIE，然后切换到 init_proc 并触发调度。"
+        },
+        {
+          "name": "copy_segments",
+          "normalized_name": "copy_segments",
+          "file_path": "kernel\\proc\\proc.c",
+          "language": "c",
+          "start_line": "129",
+          "end_line": "161",
+          "outgoing_call_count": 5,
+          "summary": "遍历VMA链表，将每个VMA描述的内存区域（可能未对齐页边界）逐页复制到新分配的物理页上，并为新页建立页表映射，从而实现进程地址空间（段）的深拷贝。"
+        },
+        {
+          "name": "checkKillExit",
+          "normalized_name": "checkKillExit",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1146",
+          "end_line": "1150",
+          "outgoing_call_count": 5,
+          "summary": "检查内部标志 _kill_process，如果为 True 则关闭串口端口并引发异常以终止当前操作"
+        },
+        {
+          "name": "checkKillExit",
+          "normalized_name": "checkKillExit",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1530",
+          "end_line": "1534",
+          "outgoing_call_count": 5,
+          "summary": "检查是否设置了killProcess标志，如果设置了则关闭loader的端口并抛出异常以终止操作。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 10,
+      "outgoing_edge_count": 11,
+      "internal_edge_count": 8,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.7273,
+      "external_call_ratio": 0.2727,
+      "module_weight": 0.0351,
+      "files": [
+        "kernel\\proc\\context.S",
+        "kernel\\proc\\proc.h",
+        "kernel\\proc\\sche_fifo.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "scheduler",
+          "normalized_name": "scheduler",
+          "file_path": "kernel\\proc\\proc.h",
+          "language": "c",
+          "start_line": "58",
+          "end_line": "62",
+          "outgoing_call_count": 4,
+          "summary": "定义了一个名为 scheduler 的结构体，包含三个函数指针，用于实现一个可定制的调度器接口。init 用于初始化调度器，next_proc 用于返回下一个要执行的进程，runnable 用于将进程标记为可运行状态。"
+        },
+        {
+          "name": "runnable",
+          "normalized_name": "runnable",
+          "file_path": "kernel\\proc\\sche_fifo.c",
+          "language": "c",
+          "start_line": "63",
+          "end_line": "65",
+          "outgoing_call_count": 1,
+          "summary": "将一个进程控制块（proc_in）放入就绪队列（proc_queue）中，使其成为可运行状态。"
+        },
+        {
+          "name": "dequeue",
+          "normalized_name": "dequeue",
+          "file_path": "kernel\\proc\\sche_fifo.c",
+          "language": "c",
+          "start_line": "36",
+          "end_line": "45",
+          "outgoing_call_count": 1,
+          "summary": "从先进先出队列中移除并返回位于队首的进程。若队列为空则返回NULL。"
+        },
+        {
+          "name": "sche_init",
+          "normalized_name": "sche_init",
+          "file_path": "kernel\\proc\\sche_fifo.c",
+          "language": "c",
+          "start_line": "47",
+          "end_line": "49",
+          "outgoing_call_count": 1,
+          "summary": "初始化调度器所需的进程队列，为后续的进程调度做准备。"
+        },
+        {
+          "name": "context_switch",
+          "normalized_name": "context_switch",
+          "file_path": "kernel\\proc\\context.S",
+          "language": "assembly",
+          "start_line": "5",
+          "end_line": "21",
+          "outgoing_call_count": 0,
+          "summary": "保存当前 CPU 上下文中被调用者保存的寄存器（callee-saved registers）到内存中，为后续的进程切换做准备。具体地，将 ra（返回地址）、sp（栈指针）以及 s0-s11 共 13 个寄存器的值依次存储到地址 a0 所指向的结构体中。"
+        },
+        {
+          "name": "context_switch_ret",
+          "normalized_name": "context_switch_ret",
+          "file_path": "kernel\\proc\\context.S",
+          "language": "assembly",
+          "start_line": "21",
+          "end_line": "37",
+          "outgoing_call_count": 0,
+          "summary": "该代码块用于恢复进程上下文（即恢复被保存的寄存器值），然后返回到恢复后的地址继续执行。它从第二个参数（a1寄存器指向的结构体）中依次加载返回地址（ra）、栈指针（sp）和被调用者保存的寄存器（s0-s11），最后通过ret指令跳转到加载的ra地址。"
+        },
+        {
+          "name": "isfull",
+          "normalized_name": "isfull",
+          "file_path": "kernel\\proc\\sche_fifo.c",
+          "language": "c",
+          "start_line": "26",
+          "end_line": "28",
+          "outgoing_call_count": 0,
+          "summary": "判断队列是否已满，通过比较队列结构中的最大元素数（max_num）和当前元素数（in_num）是否相等来实现。"
+        },
+        {
+          "name": "queue_init",
+          "normalized_name": "queue_init",
+          "file_path": "kernel\\proc\\sche_fifo.c",
+          "language": "c",
+          "start_line": "11",
+          "end_line": "20",
+          "outgoing_call_count": 0,
+          "summary": "初始化一个队列结构体，设置其最大容量、当前元素个数、头尾指针，并将进程指针数组的所有元素初始化为NULL。"
+        },
+        {
+          "name": "queue",
+          "normalized_name": "queue",
+          "file_path": "kernel\\proc\\sche_fifo.c",
+          "language": "c",
+          "start_line": "3",
+          "end_line": "9",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个固定大小的进程队列结构，用于管理进程指针数组，包含队列容量、当前元素数量、头尾索引等字段。"
+        },
+        {
+          "name": "isempty",
+          "normalized_name": "isempty",
+          "file_path": "kernel\\proc\\sche_fifo.c",
+          "language": "c",
+          "start_line": "22",
+          "end_line": "24",
+          "outgoing_call_count": 0,
+          "summary": "检查队列是否为空，通过比较队列的in_num字段与0来判断。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 3,
+      "outgoing_edge_count": 10,
+      "internal_edge_count": 9,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.9,
+      "external_call_ratio": 0.1,
+      "module_weight": 0.0122,
+      "files": [
+        "kernel\\libs\\sbi.c",
+        "kernel\\trap\\syscall.c"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "kernel\\trap\\syscall.c",
+          "language": "c",
+          "start_line": "32",
+          "end_line": "71",
+          "outgoing_call_count": 8,
+          "summary": "该函数是系统调用分发处理函数，根据陷阱帧（trapframe）中的系统调用号（a7寄存器）选择对应的内核函数执行，并将返回值存入陷阱帧的a0寄存器。"
+        },
+        {
+          "name": "sbi_ecall",
+          "normalized_name": "sbi_ecall",
+          "file_path": "kernel\\libs\\sbi.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "21",
+          "outgoing_call_count": 1,
+          "summary": "封装RISC-V的ecall指令，用于向SBI（Supervisor Binary Interface）发起系统调用。将参数分别放入a7、a0、a1、a2寄存器后执行ecall，最后从a7寄存器读取返回值。"
+        },
+        {
+          "name": "sys_write",
+          "normalized_name": "sys_write",
+          "file_path": "kernel\\trap\\syscall.c",
+          "language": "c",
+          "start_line": "15",
+          "end_line": "28",
+          "outgoing_call_count": 1,
+          "summary": "系统调用sys_write的实现，处理向标准输出或标准错误输出的写入操作，通过console_putchar逐个字符输出，不支持文件写入则返回-1。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\fs\\elf.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "magic_test",
+          "normalized_name": "magic_test",
+          "file_path": "kernel\\fs\\elf.c",
+          "language": "c",
+          "start_line": "12",
+          "end_line": "25",
+          "outgoing_call_count": 1,
+          "summary": "这个函数验证传入的ELF文件头部魔数是否正确，包括ELF标识、类别、数据编码、版本、OS ABI及ABI版本，若检查失败则调用panic终止系统。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 33,
+      "outgoing_edge_count": 225,
+      "internal_edge_count": 92,
+      "external_edge_count": 133,
+      "internal_call_ratio": 0.4089,
+      "external_call_ratio": 0.5911,
+      "module_weight": 0.1642,
+      "files": [
+        "kernel\\init\\entry.S",
+        "kernel\\libs\\list.c",
+        "kernel\\libs\\panic.c",
+        "kernel\\libs\\stdio.c",
+        "kernel\\libs\\string.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "TerminalSize",
+          "normalized_name": "TerminalSize",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "478",
+          "end_line": "571",
+          "outgoing_call_count": 38,
+          "summary": "获取终端窗口的尺寸（列数和行数），支持 Windows、Linux、macOS 和 Cygwin 环境，并提供备用默认值。"
+        },
+        {
+          "name": "init_flash",
+          "normalized_name": "init_flash",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "917",
+          "end_line": "967",
+          "outgoing_call_count": 24,
+          "summary": "初始化Flash设备，通过发送包含芯片类型和CRC校验码的命令包，并重试直到收到成功的初始化响应或超过最大重试次数。"
+        },
+        {
+          "name": "flash_greeting",
+          "normalized_name": "flash_greeting",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "830",
+          "end_line": "879",
+          "outgoing_call_count": 23,
+          "summary": "尝试与K210芯片建立通信握手，发送一个特定字节序列（刷写问候包），并解析响应。若响应正确（ISP_NOP且ISP_RET_OK）则退出循环表示成功；否则在重试次数内持续重试，超过最大次数则抛出异常。"
+        },
+        {
+          "name": "AES",
+          "normalized_name": "AES",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "91",
+          "end_line": "265",
+          "outgoing_call_count": 20,
+          "summary": "AES 类封装了 AES 分组密码算法的核心实现，包括密钥扩展（支持 128/192/256 位密钥）、加密和解密操作。它通过预计算查找表（T1-T8、U1-U4）和 S 盒来加速变换，加密时使用 T 表轮变换，解密时使用反向 T 表轮变换，最后一轮直接使用 S 盒/逆 S 盒与轮密钥异或。"
+        },
+        {
+          "name": "AES_128_CBC",
+          "normalized_name": "AES_128_CBC",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "267",
+          "end_line": "296",
+          "outgoing_call_count": 20,
+          "summary": "实现了AES-128-CBC模式的加密和解密功能，使用16字节的初始向量（IV）或全零默认IV，对16字节的数据块进行CBC模式操作。"
+        },
+        {
+          "name": "decrypt",
+          "normalized_name": "decrypt",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "288",
+          "end_line": "296",
+          "outgoing_call_count": 20,
+          "summary": "该函数实现了一个AES解密操作，使用CBC模式的解密逻辑（通过异或前一个密文块），每次处理16字节的密文块，返回解密后的明文。"
+        },
+        {
+          "name": "decrypt",
+          "normalized_name": "decrypt",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "233",
+          "end_line": "265",
+          "outgoing_call_count": 20,
+          "summary": "实现AES解密算法，用于解密16字节的密文块，使用查找表(T5-T8)和逆S盒(Si)进行轮变换，最后与轮密钥异或得到明文。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "269",
+          "end_line": "276",
+          "outgoing_call_count": 19,
+          "summary": "初始化加密对象，设置AES密钥并初始化最后一个密文块（用于CBC模式或类似链式加密）。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "24",
+          "end_line": "27",
+          "outgoing_call_count": 19,
+          "summary": "初始化KFlash类实例，设置实例变量并给类属性赋值打印回调函数。"
+        },
+        {
+          "name": "parse",
+          "normalized_name": "parse",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "425",
+          "end_line": "457",
+          "outgoing_call_count": 16,
+          "summary": "解析从闪存协议响应中接收到的字节数据，提取操作码、原因码，并根据原因码或操作类型生成可读的文本描述。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\init\\main.c",
+        "tools\\kflash.py"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kernel\\init\\main.c",
+          "language": "c",
+          "start_line": "17",
+          "end_line": "29",
+          "outgoing_call_count": 21,
+          "summary": "这个代码块是操作系统内核的入口函数main()，它按顺序执行了一系列初始化操作，然后进行进程切换。具体包括：清零BSS段、输出欢迎信息、初始化陷阱处理、物理内存管理、分页管理、文件系统、进程管理、应用程序初始化，最后切换到第一个进程。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\kflash.py",
+          "language": "python",
+          "start_line": "1537",
+          "end_line": "1545",
+          "outgoing_call_count": 21,
+          "summary": "主函数入口，实例化KFlash类并执行process()方法，处理异常并控制程序退出状态。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "urls": {
+    "history_detail_data": "/data/history/TeamNameNotFound.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}

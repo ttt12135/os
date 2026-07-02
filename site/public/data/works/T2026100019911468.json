@@ -1,0 +1,2303 @@
+{
+  "repo_name": "T2026100019911468",
+  "team_name": "T2026100019911468",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026100019911468-282",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026100019911468-282",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "rust",
+    "assembly",
+    "cargo"
+  ],
+  "core_modules": [
+    "driver",
+    "filesystem",
+    "interrupt",
+    "syscall",
+    "process"
+  ],
+  "function_count": 958,
+  "node_count": 958,
+  "edge_count": 2820,
+  "internal_edge_count": 1757,
+  "external_edge_count": 1063,
+  "module_count": 20,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.85,
+    "build": 0.93,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "ipc": 0.15,
+    "kernel": 0.08,
+    "memory": 1.0,
+    "memory / process": 0.28,
+    "network": 0.15,
+    "process": 1.0,
+    "report_generation": 0.68,
+    "scheduler": 1.0,
+    "startup": 0.13,
+    "synchronization": 0.58,
+    "syscall": 0.95,
+    "test": 0.1,
+    "trap": 0.18,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "driver",
+      "module_weight": 0.3308,
+      "completeness": 1.0,
+      "final_score": 0.5985
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1478,
+      "completeness": 1.0,
+      "final_score": 0.4887
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.1057,
+      "completeness": 1.0,
+      "final_score": 0.4634
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.1009,
+      "completeness": 0.95,
+      "final_score": 0.4405
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.0639,
+      "completeness": 1.0,
+      "final_score": 0.4383
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 32,
+      "outgoing_edge_count": 412,
+      "internal_edge_count": 65,
+      "external_edge_count": 347,
+      "internal_call_ratio": 0.1578,
+      "external_call_ratio": 0.8422,
+      "module_weight": 0.0785,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 25,
+      "outgoing_edge_count": 55,
+      "internal_edge_count": 14,
+      "external_edge_count": 41,
+      "internal_call_ratio": 0.2545,
+      "external_call_ratio": 0.7455,
+      "module_weight": 0.0235,
+      "files": [
+        "xv6-k210/bootloader/SBI/rustsbi-qemu/src/main.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\Cargo.toml",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\Cargo.toml",
+        "xv6-k210\\kernel\\include\\elf.h",
+        "xv6-k210\\kernel\\include\\sysctl.h",
+        "xv6-k210\\kernel\\rv_public_output_data.S",
+        "xv6-k210\\kernel\\sysctl.c"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "compiled_max_hartid",
+          "normalized_name": "compiled_max_hartid",
+          "file_path": "xv6-k210/bootloader/SBI/rustsbi-qemu/src/main.rs",
+          "language": "rust",
+          "start_line": "285",
+          "end_line": "292",
+          "outgoing_call_count": 3,
+          "summary": "该函数通过内联汇编读取链接脚本中定义的符号 `_max_hart_id` 的地址值，并作为 `usize` 类型返回。"
+        },
+        {
+          "name": "_sysctl_git_id",
+          "normalized_name": "_sysctl_git_id",
+          "file_path": "xv6-k210\\kernel\\include\\sysctl.h",
+          "language": "c",
+          "start_line": 315,
+          "end_line": 318,
+          "outgoing_call_count": 2,
+          "summary": "这个代码块定义了一个名为_sysctl_git_id的结构体，其唯一成员是一个32位无符号整数类型的位域git_id，用于存储Git提交ID（哈希值）。该结构体应用了`__attribute__((packed, aligned(4)))`属性，确保结构体紧凑且按4字节对齐。"
+        },
+        {
+          "name": "sysctl_git_id_t",
+          "normalized_name": "sysctl_git_id_t",
+          "file_path": "xv6-k210\\kernel\\include\\sysctl.h",
+          "language": "c",
+          "start_line": "315",
+          "end_line": "318",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个名为sysctl_git_id_t的结构体类型，用于存储32位的Git ID（可能是软件版本或系统控制标识），结构体被指定为打包且以4字节对齐。"
+        },
+        {
+          "name": "rv_ltp_musl_output",
+          "normalized_name": "rv_ltp_musl_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "72",
+          "end_line": "74",
+          "outgoing_call_count": 0,
+          "summary": "该汇编代码定义了一个名为 rv_ltp_musl_output 的全局标签，并使用 .incbin 伪指令将外部文本文件 \"../la-minimal/ltp_musl_output.txt\" 的二进制内容直接嵌入到该标签所在的内存位置，通常用于在操作系统内核中打包包含测试输出或数据。"
+        },
+        {
+          "name": "rv_ltp_glibc_output",
+          "normalized_name": "rv_ltp_glibc_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "68",
+          "end_line": "70",
+          "outgoing_call_count": 0,
+          "summary": "定义一个名为 rv_ltp_glibc_output 的标签，该标签通过 .incbin 指令将外部文件 'la-minimal/ltp_glibc_output.txt' 的二进制内容嵌入到当前汇编文件中，通常用于在二进制镜像中静态包含文件数据。"
+        },
+        {
+          "name": "rv_iozone_musl_output",
+          "normalized_name": "rv_iozone_musl_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "64",
+          "end_line": "66",
+          "outgoing_call_count": 0,
+          "summary": "定义一个标签 rv_iozone_musl_output，并通过 .incbin 指令将文件 '../la-minimal/iozone_musl_output.txt' 的二进制内容直接嵌入到当前汇编文件的该位置，用于在程序中引用这些数据。"
+        },
+        {
+          "name": "Cargo.toml",
+          "normalized_name": "toml",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\Cargo.toml",
+          "language": "cargo",
+          "start_line": "1",
+          "end_line": "18",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为\"rustsbi-qemu\"的Rust软件包，声明了其元数据（名称、版本、作者、版本、发布设置）以及依赖项，用于构建在QEMU上运行的SBI（Supervisor Binary Interface）实现。"
+        },
+        {
+          "name": "rv_iozone_glibc_output",
+          "normalized_name": "rv_iozone_glibc_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "60",
+          "end_line": "62",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个汇编标签，并使用 .incbin 指令将外部文件 'iozone_glibc_output.txt' 的二进制内容嵌入到当前汇编输出中，通常用于在操作系统或固件中包含测试数据或输出结果。"
+        },
+        {
+          "name": "proghdr",
+          "normalized_name": "proghdr",
+          "file_path": "xv6-k210\\kernel\\include\\elf.h",
+          "language": "c",
+          "start_line": "28",
+          "end_line": "37",
+          "outgoing_call_count": 0,
+          "summary": "定义ELF程序头结构体，用于描述ELF文件中的段信息，包括类型、标志、偏移、虚拟地址、物理地址、文件大小、内存大小和对齐方式。"
+        },
+        {
+          "name": "sysctl_get_git_id",
+          "normalized_name": "sysctl_get_git_id",
+          "file_path": "xv6-k210\\kernel\\sysctl.c",
+          "language": "c",
+          "start_line": "50",
+          "end_line": "53",
+          "outgoing_call_count": 0,
+          "summary": "该函数返回系统控制结构（sysctl）中 git_id 结构体的 git_id 字段值，用于获取当前构建的 Git 标识符。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 386,
+      "outgoing_edge_count": 628,
+      "internal_edge_count": 357,
+      "external_edge_count": 271,
+      "internal_call_ratio": 0.5685,
+      "external_call_ratio": 0.4315,
+      "module_weight": 0.3308,
+      "files": [
+        "la-minimal\\main.c",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\serial.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\ns16550a.rs",
+        "xv6-k210\\kernel\\console.c",
+        "xv6-k210\\kernel\\disk.c",
+        "xv6-k210\\kernel\\dmac.c",
+        "xv6-k210\\kernel\\entry_vf2.S",
+        "xv6-k210\\kernel\\ext4.c",
+        "xv6-k210\\kernel\\fpioa.c",
+        "xv6-k210\\kernel\\gpiohs.c",
+        "xv6-k210\\kernel\\include\\dmac.h",
+        "xv6-k210\\kernel\\include\\file.h",
+        "xv6-k210\\kernel\\include\\fpioa.h",
+        "xv6-k210\\kernel\\include\\gpiohs.h",
+        "xv6-k210\\kernel\\include\\sbi.h",
+        "xv6-k210\\kernel\\include\\spi.h",
+        "xv6-k210\\kernel\\include\\sysctl.h",
+        "xv6-k210\\kernel\\include\\virtio.h",
+        "xv6-k210\\kernel\\main.c",
+        "xv6-k210\\kernel\\printf.c",
+        "xv6-k210\\kernel\\rv_public_output.c",
+        "xv6-k210\\kernel\\sdcard.c",
+        "xv6-k210\\kernel\\spi.c",
+        "xv6-k210\\kernel\\syscall.c",
+        "xv6-k210\\kernel\\sysctl.c",
+        "xv6-k210\\kernel\\uart.c",
+        "xv6-k210\\kernel\\utils.c",
+        "xv6-k210\\kernel\\vf2_uart.c",
+        "xv6-k210\\kernel\\virtio_disk.c"
+      ],
+      "file_count": 32,
+      "core_functions": [
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\serial.rs",
+          "language": "rust",
+          "start_line": "59",
+          "end_line": "65",
+          "outgoing_call_count": 12,
+          "summary": "初始化串口硬件，通过调用串口对象的 split 方法分离发送和接收端，并将其包装后存储到全局静态变量 UARTHS 中，最后打印一条初始化信息。"
+        },
+        {
+          "name": "print",
+          "normalized_name": "print",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\serial.rs",
+          "language": "rust",
+          "start_line": "95",
+          "end_line": "99",
+          "outgoing_call_count": 11,
+          "summary": "定义了一个名为 `print` 的宏，用于格式化输出字符串到串行端口。该宏接受一个格式化字符串和可选的参数，内部调用 `$crate::serial::print` 函数并传入通过 `format_args!` 构造的参数。"
+        },
+        {
+          "name": "virtio_disk_rw",
+          "normalized_name": "virtio_disk_rw",
+          "file_path": "xv6-k210\\kernel\\virtio_disk.c",
+          "language": "c",
+          "start_line": "175",
+          "end_line": "256",
+          "outgoing_call_count": 11,
+          "summary": "实现virtio块设备的读写请求。函数从缓冲区获取扇区号，分配三个描述符链，构造virtio块请求头，设置数据描述符和状态描述符，通过available ring通知设备，然后等待中断完成，最后释放描述符并解锁。"
+        },
+        {
+          "name": "print",
+          "normalized_name": "print",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\serial.rs",
+          "language": "rust",
+          "start_line": "84",
+          "end_line": "92",
+          "outgoing_call_count": 11,
+          "summary": "通过UARTHS串口输出格式化的文本，使用全局锁保证并发安全。"
+        },
+        {
+          "name": "_spi",
+          "normalized_name": "_spi",
+          "file_path": "xv6-k210\\kernel\\include\\spi.h",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "96",
+          "outgoing_call_count": 10,
+          "summary": "定义了SPI控制器硬件的寄存器映射结构体，用于通过内存映射I/O访问SPI外设的各个控制、状态、数据及扩展功能寄存器。"
+        },
+        {
+          "name": "spi_t",
+          "normalized_name": "spi_t",
+          "file_path": "xv6-k210\\kernel\\include\\spi.h",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "96",
+          "outgoing_call_count": 10,
+          "summary": "定义了一个SPI硬件控制器的寄存器映射结构体，用于直接访问SPI外设的各个控制和状态寄存器。"
+        },
+        {
+          "name": "sd_init",
+          "normalized_name": "sd_init",
+          "file_path": "xv6-k210\\kernel\\sdcard.c",
+          "language": "c",
+          "start_line": "291",
+          "end_line": "315",
+          "outgoing_call_count": 9,
+          "summary": "初始化SD卡，包括底层初始化、发送80个时钟周期的伪字节、切换SPI模式、验证操作条件、读取OCR、设置SDXC容量、检查块大小，成功返回0，失败返回0xff。"
+        },
+        {
+          "name": "consoleintr",
+          "normalized_name": "consoleintr",
+          "file_path": "xv6-k210\\kernel\\console.c",
+          "language": "c",
+          "start_line": "140",
+          "end_line": "187",
+          "outgoing_call_count": 8,
+          "summary": "处理控制台输入的中断字符，包括特殊命令（如按P打印进程列表）、行编辑（如退格、清除行）以及普通字符的输入回显和缓冲存储，当遇到换行或缓冲区满时唤醒读取进程。"
+        },
+        {
+          "name": "impl rustsbi::Reset for Reset {",
+          "normalized_name": "Reset for Reset {",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal.rs",
+          "language": "rust",
+          "start_line": "18",
+          "end_line": "40",
+          "outgoing_call_count": 8,
+          "summary": "为Reset类型实现rustsbi::Reset trait，定义系统复位行为，通过向固定内存地址写入不同值来触发QEMU虚拟机的关机、重启或失败信号。"
+        },
+        {
+          "name": "printf",
+          "normalized_name": "printf",
+          "file_path": "xv6-k210\\kernel\\printf.c",
+          "language": "c",
+          "start_line": "67",
+          "end_line": "119",
+          "outgoing_call_count": 8,
+          "summary": "这是一个可变参数格式化输出函数，支持基本的格式说明符%d、%x、%p、%s和%%进行输出，并且通过自旋锁保证多核环境下的互斥访问。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 135,
+      "outgoing_edge_count": 446,
+      "internal_edge_count": 431,
+      "external_edge_count": 15,
+      "internal_call_ratio": 0.9664,
+      "external_call_ratio": 0.0336,
+      "module_weight": 0.1478,
+      "files": [
+        "Makefile",
+        "la-minimal\\main.c",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\serial.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\ns16550a.rs",
+        "xv6-k210\\kernel\\bio.c",
+        "xv6-k210\\kernel\\dmac.c",
+        "xv6-k210\\kernel\\ext4.c",
+        "xv6-k210\\kernel\\fat32.c",
+        "xv6-k210\\kernel\\file.c",
+        "xv6-k210\\kernel\\include\\buf.h",
+        "xv6-k210\\kernel\\include\\fat32.h",
+        "xv6-k210\\kernel\\include\\file.h",
+        "xv6-k210\\kernel\\include\\spi.h",
+        "xv6-k210\\kernel\\include\\stat.h",
+        "xv6-k210\\kernel\\proc.c",
+        "xv6-k210\\kernel\\sdcard.c",
+        "xv6-k210\\kernel\\syscall.c",
+        "xv6-k210\\kernel\\sysfile.c"
+      ],
+      "file_count": 18,
+      "core_functions": [
+        {
+          "name": "lookup_path",
+          "normalized_name": "lookup_path",
+          "file_path": "xv6-k210\\kernel\\ext4.c",
+          "language": "c",
+          "start_line": "682",
+          "end_line": "718",
+          "outgoing_call_count": 14,
+          "summary": "这个函数用于在 ext4 文件系统中解析路径并查找对应的目录项。它支持绝对路径和相对路径，并且可以根据参数决定返回最终路径的目录项还是其父目录的目录项。"
+        },
+        {
+          "name": "lookup_path",
+          "normalized_name": "lookup_path",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": "936",
+          "end_line": "971",
+          "outgoing_call_count": 14,
+          "summary": "根据路径字符串解析并返回对应的目录项（dirent），支持获取父目录或最终项。从根目录或当前工作目录开始，逐层查找路径组件，并检查目录属性。"
+        },
+        {
+          "name": "eput",
+          "normalized_name": "eput",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": "701",
+          "end_line": "741",
+          "outgoing_call_count": 13,
+          "summary": "该函数用于释放一个目录项（dirent）的引用，并在特定条件下执行缓存回写或回收操作。它首先检查是否使用ext4文件系统，若是则委托给ext4_eput。否则，通过锁机制维护一个全局的目录项缓存（ecache），当引用计数为1且有效时，将条目移动到链表头部（LRU-like），并根据其valid状态决定是截断（eremove标记）还是更新父目录。最后递减引用计数，若降为0则递归释放父目录。"
+        },
+        {
+          "name": "sys_open",
+          "normalized_name": "sys_open",
+          "file_path": "xv6-k210\\kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "199",
+          "end_line": "255",
+          "outgoing_call_count": 13,
+          "summary": "实现sys_open系统调用，根据路径和打开模式打开或创建文件/设备，返回文件描述符。"
+        },
+        {
+          "name": "fat32_init",
+          "normalized_name": "fat32_init",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": "78",
+          "end_line": "138",
+          "outgoing_call_count": 11,
+          "summary": "初始化FAT32文件系统，读取引导扇区，解析BPB参数，初始化entry缓存和根目录节点。若检测到非FAT32格式，则尝试EXT4初始化。"
+        },
+        {
+          "name": "emake",
+          "normalized_name": "emake",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": 491,
+          "end_line": 556,
+          "outgoing_call_count": 10,
+          "summary": "在 FAT32 文件系统中创建一个目录项。该函数根据传入的目录项 dp 和待创建项 ep，在指定偏移 off 处写入目录项。对于短文件名（前两个目录项'.'和'..'）直接写入短目录项；对于长文件名，则先写入多个长文件名条目，再写入对应的短文件名条目。"
+        },
+        {
+          "name": "sdcard_write_sector",
+          "normalized_name": "sdcard_write_sector",
+          "file_path": "xv6-k210\\kernel\\sdcard.c",
+          "language": "c",
+          "start_line": "375",
+          "end_line": "445",
+          "outgoing_call_count": 10,
+          "summary": "该函数向SD卡写入一个扇区的数据。首先根据SD卡类型（标准SD或非标准）计算地址，然后通过发送写命令（CMD24）启动写入操作，接着发送起始令牌、数据块和伪CRC，等待SD卡完成编程并检查响应，最后发送CMD13验证写入是否正确完成。"
+        },
+        {
+          "name": "dirlookup",
+          "normalized_name": "dirlookup",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": "866",
+          "end_line": "911",
+          "outgoing_call_count": 10,
+          "summary": "在FAT32文件系统中查找指定名称的文件或目录项。支持特殊目录项'.'和'..'的快速返回，使用缓存加速查找，并支持返回空闲目录项位置以供创建新条目。"
+        },
+        {
+          "name": "sdcard_read_sector",
+          "normalized_name": "sdcard_read_sector",
+          "file_path": "xv6-k210\\kernel\\sdcard.c",
+          "language": "c",
+          "start_line": "331",
+          "end_line": "373",
+          "outgoing_call_count": 9,
+          "summary": "该函数用于从SD卡读取一个扇区的数据到指定缓冲区。根据SD卡类型（标准SD或非标准）计算扇区地址，发送读命令，等待响应，通过DMA读取扇区数据并忽略CRC，然后结束命令。"
+        },
+        {
+          "name": "ext4_init",
+          "normalized_name": "ext4_init",
+          "file_path": "xv6-k210\\kernel\\ext4.c",
+          "language": "c",
+          "start_line": "467",
+          "end_line": "509",
+          "outgoing_call_count": 9,
+          "summary": "初始化ext4文件系统，包括读取超级块、解析参数、初始化缓存和根目录inode，最后标记文件系统为活动状态。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 77,
+      "outgoing_edge_count": 405,
+      "internal_edge_count": 125,
+      "external_edge_count": 280,
+      "internal_call_ratio": 0.3086,
+      "external_call_ratio": 0.6914,
+      "module_weight": 0.1057,
+      "files": [
+        "la-minimal\\entry.S",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "xv6-k210\\kernel\\dmac.c",
+        "xv6-k210\\kernel\\include\\dmac.h",
+        "xv6-k210\\kernel\\include\\riscv.h",
+        "xv6-k210\\kernel\\include\\sbi.h",
+        "xv6-k210\\kernel\\include\\spi.h",
+        "xv6-k210\\kernel\\include\\trap.h",
+        "xv6-k210\\kernel\\intr.c",
+        "xv6-k210\\kernel\\kernelvec.S",
+        "xv6-k210\\kernel\\plic.c",
+        "xv6-k210\\kernel\\timer.c",
+        "xv6-k210\\kernel\\trap.c"
+      ],
+      "file_count": 16,
+      "core_functions": [
+        {
+          "name": "start_trap_rust",
+          "normalized_name": "start_trap_rust",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "362",
+          "end_line": "511",
+          "outgoing_call_count": 137,
+          "summary": "RustSBI-K210的中断和异常处理函数，根据mcause寄存器读取的陷阱类型，分别处理S级环境调用、机器软中断、机器定时器中断、机器外部中断以及非法指令异常，并转发或模拟特定指令以适应K210芯片所使用的v1.9.1特权级规范。"
+        },
+        {
+          "name": "start_trap_rust",
+          "normalized_name": "start_trap_rust",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+          "language": "rust",
+          "start_line": "386",
+          "end_line": "482",
+          "outgoing_call_count": 137,
+          "summary": "RustSBI 的机器模式陷阱处理函数，根据陷阱原因分发处理：处理 S 态环境调用（ecall）、转发机器软件中断和机器定时器中断到 S 态、模拟 rdtime 指令（处理非法指令异常），其他未处理原因则 panic。"
+        },
+        {
+          "name": "start_trap_rust",
+          "normalized_name": "start_trap_rust",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "364",
+          "end_line": "537",
+          "outgoing_call_count": 137,
+          "summary": "这是RustSBI-K210的M模式陷阱处理函数，负责处理M模式下的各种异常和中断，包括SBI调用、计时器中断、软件中断、外部中断以及非法指令异常，并实现了一些K210特有的兼容性逻辑。"
+        },
+        {
+          "name": "mp_hook",
+          "normalized_name": "mp_hook",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+          "language": "rust",
+          "start_line": "59",
+          "end_line": "87",
+          "outgoing_call_count": 39,
+          "summary": "该函数用于非0号hart（CPU核心）的初始化钩子，使其等待软件中断（IPI）信号，收到后清除中断并返回false，而0号hart直接返回true。"
+        },
+        {
+          "name": "set_timer",
+          "normalized_name": "set_timer",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+          "language": "rust",
+          "start_line": "62",
+          "end_line": "65",
+          "outgoing_call_count": 23,
+          "summary": "该函数读取当前hart（硬件线程）的ID，并调用另一个同名但带hartID参数的set_timer函数，以设置该hart的定时器。"
+        },
+        {
+          "name": "set_timer",
+          "normalized_name": "set_timer",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+          "language": "rust",
+          "start_line": "22",
+          "end_line": "27",
+          "outgoing_call_count": 23,
+          "summary": "设置指定hart的CLINT定时器比较值，从而触发定时器中断"
+        },
+        {
+          "name": "set_timer",
+          "normalized_name": "set_timer",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "173",
+          "end_line": "178",
+          "outgoing_call_count": 23,
+          "summary": "设置定时器，写入比较寄存器并清除挂起的定时器中断位"
+        },
+        {
+          "name": "set_timer",
+          "normalized_name": "set_timer",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "175",
+          "end_line": "180",
+          "outgoing_call_count": 23,
+          "summary": "设置定时器，写入比较值并清除挂起的定时器中断位"
+        },
+        {
+          "name": "usertrap",
+          "normalized_name": "usertrap",
+          "file_path": "xv6-k210\\kernel\\trap.c",
+          "language": "c",
+          "start_line": "65",
+          "end_line": "125",
+          "outgoing_call_count": 20,
+          "summary": "处理用户态陷阱（异常或中断）的入口函数，根据 scause 区分系统调用、缺页异常、设备中断等，并执行相应操作，最终调用 usertrapret 返回用户态。"
+        },
+        {
+          "name": "impl Clint {",
+          "normalized_name": "impl Clint {",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+          "language": "rust",
+          "start_line": "8",
+          "end_line": "42",
+          "outgoing_call_count": 15,
+          "summary": "实现了对RISC-V CLINT（Core Local Interruptor）硬件寄存器的操作，包括读取当前时间mtime、设置定时器比较值、发送和清除软件中断。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "xv6-k210\\kernel\\bio.c",
+        "xv6-k210\\kernel\\console.c",
+        "xv6-k210\\kernel\\ext4.c",
+        "xv6-k210\\kernel\\fat32.c",
+        "xv6-k210\\kernel\\file.c",
+        "xv6-k210\\kernel\\include\\dmac.h",
+        "xv6-k210\\kernel\\include\\sleeplock.h",
+        "xv6-k210\\kernel\\include\\spinlock.h",
+        "xv6-k210\\kernel\\include\\sysctl.h",
+        "xv6-k210\\kernel\\kalloc.c",
+        "xv6-k210\\kernel\\printf.c",
+        "xv6-k210\\kernel\\proc.c",
+        "xv6-k210\\kernel\\sleeplock.c",
+        "xv6-k210\\kernel\\spinlock.c",
+        "xv6-k210\\kernel\\sysctl.c"
+      ],
+      "file_count": 15,
+      "core_functions": [
+        {
+          "name": "eunlock",
+          "normalized_name": "eunlock",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": "690",
+          "end_line": "699",
+          "outgoing_call_count": 5,
+          "summary": "释放目录项锁（eunlock），用于保护目录项并发访问的解锁操作。"
+        },
+        {
+          "name": "elock",
+          "normalized_name": "elock",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": "679",
+          "end_line": "688",
+          "outgoing_call_count": 4,
+          "summary": "这是一个给目录项（struct dirent）加锁的函数，用于保护对目录项的并发访问。它首先检查ext4文件系统是否激活，如果激活则调用ext4_elock；否则进行参数校验，如果entry为空或引用计数小于1则触发panic，然后获取该entry的睡眠锁。"
+        },
+        {
+          "name": "sysctl_pll_lock_t",
+          "normalized_name": "sysctl_pll_lock_t",
+          "file_path": "xv6-k210\\kernel\\include\\sysctl.h",
+          "language": "c",
+          "start_line": "397",
+          "end_line": "411",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个结构体类型，用于描述PLL（锁相环）锁定状态寄存器中的位字段，包含三组PLL的锁定状态、滑移清除标志和测试时钟输出位，以及保留位，并使用 packed 和 aligned(4) 属性确保紧凑对齐。"
+        },
+        {
+          "name": "_sysctl_pll_lock",
+          "normalized_name": "_sysctl_pll_lock",
+          "file_path": "xv6-k210\\kernel\\include\\sysctl.h",
+          "language": "c",
+          "start_line": 397,
+          "end_line": 411,
+          "outgoing_call_count": 2,
+          "summary": "定义了一个位域结构体，用于描述K210芯片中PLL（锁相环）锁定状态相关的硬件寄存器布局，包含三个PLL通道的锁定状态位、滑动清除位、测试时钟输出位以及保留位。"
+        },
+        {
+          "name": "dmac_commonreg_intsignal_enable_t",
+          "normalized_name": "dmac_commonreg_intsignal_enable_t",
+          "file_path": "xv6-k210\\kernel\\include\\dmac.h",
+          "language": "c",
+          "start_line": "692",
+          "end_line": "733",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个结构体类型，用于配置DMA控制器公共寄存器的中断信号使能位，每个位控制特定中断信号的启用或禁用。"
+        },
+        {
+          "name": "_dmac_commonreg_intsignal_enable",
+          "normalized_name": "_dmac_commonreg_intsignal_enable",
+          "file_path": "xv6-k210\\kernel\\include\\dmac.h",
+          "language": "c",
+          "start_line": "692",
+          "end_line": "733",
+          "outgoing_call_count": 2,
+          "summary": "定义DMAC通用寄存器中断信号使能位的结构体，用于控制各类从接口错误中断信号的启用/禁用。"
+        },
+        {
+          "name": "sysctl_clock_enable",
+          "normalized_name": "sysctl_clock_enable",
+          "file_path": "xv6-k210\\kernel\\sysctl.c",
+          "language": "c",
+          "start_line": "280",
+          "end_line": "287",
+          "outgoing_call_count": 2,
+          "summary": "启用指定的时钟，通过调用总线使能和设备使能函数来打开时钟。"
+        },
+        {
+          "name": "mlfq_maybe_update_locked",
+          "normalized_name": "mlfq_maybe_update_locked",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "1331",
+          "end_line": "1344",
+          "outgoing_call_count": 1,
+          "summary": "该函数根据进程的CPU运行时间和睡眠时间，判断是否达到窗口阈值，并据此调整进程优先级（MLFQ调度策略的一部分）。"
+        },
+        {
+          "name": "ext4_elock",
+          "normalized_name": "ext4_elock",
+          "file_path": "xv6-k210\\kernel\\ext4.c",
+          "language": "c",
+          "start_line": "563",
+          "end_line": "567",
+          "outgoing_call_count": 1,
+          "summary": "对给定的目录项（struct dirent）进行加锁操作，具体为获取其锁对象的睡眠锁（acquiresleep）。"
+        },
+        {
+          "name": "initsleeplock",
+          "normalized_name": "initsleeplock",
+          "file_path": "xv6-k210\\kernel\\sleeplock.c",
+          "language": "c",
+          "start_line": "12",
+          "end_line": "19",
+          "outgoing_call_count": 1,
+          "summary": "初始化一个睡眠锁结构体，设置其内嵌自旋锁、名称、锁定状态和持有进程ID"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "kernel": {
+      "module_name": "kernel",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0006,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 56,
+      "outgoing_edge_count": 162,
+      "internal_edge_count": 122,
+      "external_edge_count": 40,
+      "internal_call_ratio": 0.7531,
+      "external_call_ratio": 0.2469,
+      "module_weight": 0.0581,
+      "files": [
+        "xv6-k210/kernel/virtio_disk.c",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "xv6-k210\\kernel\\dmac.c",
+        "xv6-k210\\kernel\\ext4.c",
+        "xv6-k210\\kernel\\fat32.c",
+        "xv6-k210\\kernel\\include\\riscv.h",
+        "xv6-k210\\kernel\\include\\sbi.h",
+        "xv6-k210\\kernel\\kalloc.c",
+        "xv6-k210\\kernel\\proc.c",
+        "xv6-k210\\kernel\\string.c",
+        "xv6-k210\\kernel\\sysfile.c",
+        "xv6-k210\\kernel\\virtio_disk.c",
+        "xv6-k210\\kernel\\vm.c"
+      ],
+      "file_count": 14,
+      "core_functions": [
+        {
+          "name": "ealloc",
+          "normalized_name": "ealloc",
+          "file_path": "xv6-k210\\kernel\\fat32.c",
+          "language": "c",
+          "start_line": "561",
+          "end_line": "600",
+          "outgoing_call_count": 12,
+          "summary": "在FAT32文件系统中分配或查找一个目录项（dirent）。如果指定名称的目录项已存在则返回它，否则创建一个新的目录项并初始化其属性。如果属性是目录，还会创建'.'和'..'子目录项。"
+        },
+        {
+          "name": "uvmcopy",
+          "normalized_name": "uvmcopy",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": "465",
+          "end_line": "509",
+          "outgoing_call_count": 9,
+          "summary": "将旧页表（old）中的用户映射复制到新页表（new）和内核页表（knew）中，同时处理写时复制（COW）映射。如果遇到写权限的页，则在旧页表中将其标记为COW，并同步更新进程的内核页表（kpagetable）映射。对于每一页，依次映射到new和knew，并增加物理页引用计数。"
+        },
+        {
+          "name": "cow_alloc_page",
+          "normalized_name": "cow_alloc_page",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": "279",
+          "end_line": "316",
+          "outgoing_call_count": 9,
+          "summary": "复制时分配函数，用于按需复制写时复制（COW）页面。当进程尝试写入一个标记为COW的页面时，该函数会为进程分配一个新物理页，拷贝原页面内容，并根据引用计数决定是共享还是复制。"
+        },
+        {
+          "name": "lazy_alloc_page",
+          "normalized_name": "lazy_alloc_page",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": "253",
+          "end_line": "277",
+          "outgoing_call_count": 7,
+          "summary": "该函数实现了一个延迟页面分配机制：在用户进程缺页时，检查虚拟地址是否位于允许的稀疏堆区域或用户栈附近，若是则分配物理内存并建立用户页表和内核页表的映射，否则返回-1表示不处理。"
+        },
+        {
+          "name": "uvmalloc",
+          "normalized_name": "uvmalloc",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": "378",
+          "end_line": "408",
+          "outgoing_call_count": 7,
+          "summary": "在用户页表和对应的内核页表中分配物理内存并建立映射，从oldsz向上扩展到newsz。"
+        },
+        {
+          "name": "extent_map_from_disk",
+          "normalized_name": "extent_map_from_disk",
+          "file_path": "xv6-k210\\kernel\\ext4.c",
+          "language": "c",
+          "start_line": "223",
+          "end_line": "278",
+          "outgoing_call_count": 6,
+          "summary": "这个函数用于从磁盘上读取ext4文件系统的extent树，根据给定的逻辑块号（lblock）查找对应的物理块号（pblock）。它通过递归遍历extent树的节点（深度depth指示层级），在叶子节点中匹配逻辑块范围并计算物理块偏移，在内节点中则根据逻辑块号选择正确的子节点继续递归。"
+        },
+        {
+          "name": "walk",
+          "normalized_name": "walk",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": "119",
+          "end_line": "138",
+          "outgoing_call_count": 6,
+          "summary": "在页表中逐级查找虚拟地址对应的页表项（PTE），如果路径上的中间页表不存在且alloc参数为真，则分配新的页表页并填充PTE。最终返回最低级页表中对应虚拟地址的PTE指针。"
+        },
+        {
+          "name": "uvminit",
+          "normalized_name": "uvminit",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": 358,
+          "end_line": 374,
+          "outgoing_call_count": 6,
+          "summary": "为用户态进程初始化一个物理页，并在页表中建立用户虚拟地址0到该物理页的映射，同时在内核页表中也建立相同的映射，然后将src数据拷贝到该物理页中。"
+        },
+        {
+          "name": "kvmfree",
+          "normalized_name": "kvmfree",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": "743",
+          "end_line": "755",
+          "outgoing_call_count": 6,
+          "summary": "释放内核页表及其相关映射，包含可选的内核栈页表释放和用户页表释放。"
+        },
+        {
+          "name": "kvminit",
+          "normalized_name": "kvminit",
+          "file_path": "xv6-k210\\kernel\\vm.c",
+          "language": "c",
+          "start_line": 22,
+          "end_line": 92,
+          "outgoing_call_count": 5,
+          "summary": "初始化内核页表，分配一页物理内存作为根页表，并通过条件编译映射不同硬件平台的设备寄存器地址、内核代码段、数据段以及跳动板页，同时包含可选的调试打印。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory / process": {
+      "module_name": "memory / process",
+      "function_count": 1,
+      "outgoing_edge_count": 5,
+      "internal_edge_count": 5,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0013,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+        "xv6-k210\\kernel\\ext4.c",
+        "xv6-k210\\kernel\\fat32.c",
+        "xv6-k210\\kernel\\include\\pipe.h",
+        "xv6-k210\\kernel\\include\\riscv.h",
+        "xv6-k210\\kernel\\include\\sbi.h",
+        "xv6-k210\\kernel\\include\\spi.h",
+        "xv6-k210\\kernel\\pipe.c",
+        "xv6-k210\\kernel\\rv_public_output_data.S"
+      ],
+      "file_count": 11,
+      "core_functions": [
+        {
+          "name": "impl rustsbi::Ipi for Ipi {",
+          "normalized_name": "Ipi for Ipi {",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "157",
+          "end_line": "170",
+          "outgoing_call_count": 21,
+          "summary": "为Ipi结构体实现rustsbi::Ipi trait，提供最大hart ID和发送核间中断的功能，具体实现为限制hart数量为2，并通过设置和清除MSIP寄存器触发中断。"
+        },
+        {
+          "name": "send_ipi_many",
+          "normalized_name": "send_ipi_many",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "161",
+          "end_line": "169",
+          "outgoing_call_count": 21,
+          "summary": "该函数实现向指定的一组硬件线程（hart）发送处理器间中断（IPI），通过设置和立即清除CLINT的MSIP寄存器来触发中断信号。"
+        },
+        {
+          "name": "impl rustsbi::Ipi for Ipi {",
+          "normalized_name": "Ipi for Ipi {",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "155",
+          "end_line": "168",
+          "outgoing_call_count": 21,
+          "summary": "实现 rustsbi::Ipi trait，用于向指定 hart 发送核间中断（IPI）。"
+        },
+        {
+          "name": "send_ipi_many",
+          "normalized_name": "send_ipi_many",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+          "language": "rust",
+          "start_line": 52,
+          "end_line": 58,
+          "outgoing_call_count": 21,
+          "summary": "遍历所有hart ID，对hart_mask中标记为有效的hart发送软件中断（IPI）。"
+        },
+        {
+          "name": "send_ipi_many",
+          "normalized_name": "send_ipi_many",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "159",
+          "end_line": "167",
+          "outgoing_call_count": 21,
+          "summary": "向指定的多个hart（CPU核心）发送并立即清除核间中断（IPI）信号。"
+        },
+        {
+          "name": "impl Ipi for Clint {",
+          "normalized_name": "impl Ipi for Clint {",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+          "language": "rust",
+          "start_line": "46",
+          "end_line": "59",
+          "outgoing_call_count": 12,
+          "summary": "该代码块为CLINT硬件实现了IPI接口，用于在多个hart之间发送核间中断。max_hart_id方法通过设备树获取最大的hart id，send_ipi_many方法则根据hart掩码向指定的所有hart发送软件中断。"
+        },
+        {
+          "name": "piperead",
+          "normalized_name": "piperead",
+          "file_path": "xv6-k210\\kernel\\pipe.c",
+          "language": "c",
+          "start_line": "94",
+          "end_line": "120",
+          "outgoing_call_count": 7,
+          "summary": "从管道中读取数据到用户空间。如果管道为空且写端仍打开，则阻塞等待；否则，从管道环形缓冲区读取最多 n 字节，并通过 copyout2 复制到用户地址，最后唤醒可能等待写空间的写进程。"
+        },
+        {
+          "name": "pipewrite",
+          "normalized_name": "pipewrite",
+          "file_path": "xv6-k210\\kernel\\pipe.c",
+          "language": "c",
+          "start_line": "67",
+          "end_line": "92",
+          "outgoing_call_count": 7,
+          "summary": "向管道写入数据的函数，通过循环从用户空间复制数据到管道缓冲区，处理缓冲区满、读端关闭或进程被杀死等情况，并在最后唤醒等待的读者。"
+        },
+        {
+          "name": "pipealloc",
+          "normalized_name": "pipealloc",
+          "file_path": "xv6-k210\\kernel\\pipe.c",
+          "language": "c",
+          "start_line": "13",
+          "end_line": "47",
+          "outgoing_call_count": 5,
+          "summary": "分配并初始化一个管道，返回两个文件描述符分别用于读和写。分配失败时清理已分配的资源。"
+        },
+        {
+          "name": "pipeclose",
+          "normalized_name": "pipeclose",
+          "file_path": "xv6-k210\\kernel\\pipe.c",
+          "language": "c",
+          "start_line": "49",
+          "end_line": "65",
+          "outgoing_call_count": 4,
+          "summary": "关闭管道的一端，当两端的读写都关闭时释放管道内存并唤醒等待的进程。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 56,
+      "outgoing_edge_count": 203,
+      "internal_edge_count": 181,
+      "external_edge_count": 22,
+      "internal_call_ratio": 0.8916,
+      "external_call_ratio": 0.1084,
+      "module_weight": 0.0639,
+      "files": [
+        "xv6-k210\\kernel\\dmac.c",
+        "xv6-k210\\kernel\\exec.c",
+        "xv6-k210\\kernel\\include\\elf.h",
+        "xv6-k210\\kernel\\include\\proc.h",
+        "xv6-k210\\kernel\\include\\riscv.h",
+        "xv6-k210\\kernel\\proc.c",
+        "xv6-k210\\kernel\\swtch.S",
+        "xv6-k210\\kernel\\syscall.c",
+        "xv6-k210\\kernel\\sysproc.c",
+        "xv6-k210\\kernel\\trampoline.S",
+        "xv6-k210\\xv6-user\\init.c",
+        "xv6-k210\\xv6-user\\initcode.S",
+        "xv6-k210\\xv6-user\\test_proc_mlfq.c",
+        "xv6-k210\\xv6-user\\test_proc_priority.c",
+        "xv6-k210\\xv6-user\\test_proc_rr.c"
+      ],
+      "file_count": 15,
+      "core_functions": [
+        {
+          "name": "exec",
+          "normalized_name": "exec",
+          "file_path": "xv6-k210\\kernel\\exec.c",
+          "language": "c",
+          "start_line": "42",
+          "end_line": "245",
+          "outgoing_call_count": 29,
+          "summary": "该函数实现从文件系统加载一个ELF格式的可执行文件，创建新页表、复制内核页表、映射用户栈，准备用户栈（包括参数、环境变量、auxv辅助向量），最后切换到新进程映像，并返回参数个数（argc）。"
+        },
+        {
+          "name": "exit",
+          "normalized_name": "exit",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "1071",
+          "end_line": "1138",
+          "outgoing_call_count": 15,
+          "summary": "实现进程退出操作，包括关闭文件、释放当前目录、重设子进程父进程为init、唤醒init和父进程、设置进程状态为ZOMBIE并调度出去。"
+        },
+        {
+          "name": "exit",
+          "normalized_name": "exit",
+          "file_path": "xv6-k210\\xv6-user\\initcode.S",
+          "language": "assembly",
+          "start_line": "15",
+          "end_line": "21",
+          "outgoing_call_count": 15,
+          "summary": "定义一个退出系统调用的汇编代码段，通过系统调用实现程序退出，并在退出后无限循环（以防系统调用失败）。"
+        },
+        {
+          "name": "unused",
+          "normalized_name": "unused",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "490",
+          "end_line": "664",
+          "outgoing_call_count": 13,
+          "summary": "该函数负责依次执行操作系统比赛的测试用例，包括init测试、Lua脚本测试、Busybox命令测试和libctest测试。它通过尝试执行不同的可执行文件或脚本，并处理测试结果的状态，确保所有测试组按顺序运行。函数返回值0表示成功启动了一个新测试，-1表示所有测试已完成。"
+        },
+        {
+          "name": "reg_info",
+          "normalized_name": "reg_info",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "255",
+          "end_line": "269",
+          "outgoing_call_count": 12,
+          "summary": "该函数用于打印当前CPU的若干关键控制状态寄存器的值，包括sstatus、sip、sie、sepc、stvec、satp、scause、stval、sp、tp和ra，以调试或信息展示为目的。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "xv6-k210\\xv6-user\\initcode.S",
+          "language": "assembly",
+          "start_line": "21",
+          "end_line": "26",
+          "outgoing_call_count": 12,
+          "summary": "定义字符串常量 \"/init\\0\"，用于作为 init 进程路径名，并通过对齐指令保证后续数据对齐，为构造 argv 数组做准备。"
+        },
+        {
+          "name": "sys_exec",
+          "normalized_name": "sys_exec",
+          "file_path": "xv6-k210\\kernel\\sysproc.c",
+          "language": "c",
+          "start_line": "16",
+          "end_line": "56",
+          "outgoing_call_count": 9,
+          "summary": "实现sys_exec系统调用，从用户空间获取程序路径和参数列表，加载并执行新程序，最后释放参数内存"
+        },
+        {
+          "name": "fork_at",
+          "normalized_name": "fork_at",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "972",
+          "end_line": "1026",
+          "outgoing_call_count": 8,
+          "summary": "该函数实现了一个类似于fork的系统调用，创建一个新进程（子进程），并允许指定子进程的栈指针（child_stack）。它分配进程结构、复制父进程的内存、寄存器、文件描述符等资源，最后将子进程设置为可运行状态并返回其PID。"
+        },
+        {
+          "name": "forkret",
+          "normalized_name": "forkret",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "1481",
+          "end_line": "1501",
+          "outgoing_call_count": 8,
+          "summary": "forkret 是进程第一次被调度返回用户空间前执行的函数，主要工作包括释放进程锁，并在首次执行时初始化文件系统并设置进程当前工作目录为根目录，最后通过 usertrapret 返回用户态。"
+        },
+        {
+          "name": "allocproc",
+          "normalized_name": "allocproc",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "752",
+          "end_line": "800",
+          "outgoing_call_count": 8,
+          "summary": "分配并初始化一个新的进程控制块，包括分配pid、trapframe、页表、内核栈，并设置上下文为forkret，同时初始化调度相关字段（时间片、优先级、MLFQ统计）。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "report_generation": {
+      "module_name": "report_generation",
+      "function_count": 15,
+      "outgoing_edge_count": 29,
+      "internal_edge_count": 26,
+      "external_edge_count": 3,
+      "internal_call_ratio": 0.8966,
+      "external_call_ratio": 0.1034,
+      "module_weight": 0.0135,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 26,
+      "outgoing_edge_count": 86,
+      "internal_edge_count": 73,
+      "external_edge_count": 13,
+      "internal_call_ratio": 0.8488,
+      "external_call_ratio": 0.1512,
+      "module_weight": 0.0285,
+      "files": [
+        "xv6-k210/kernel/proc.c",
+        "xv6-k210\\kernel\\include\\proc.h",
+        "xv6-k210\\kernel\\include\\riscv.h",
+        "xv6-k210\\kernel\\proc.c",
+        "xv6-k210\\kernel\\sdcard.c",
+        "xv6-k210\\kernel\\timer.c",
+        "xv6-k210\\xv6-user\\test_proc_mlfq.c"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "scheduler",
+          "normalized_name": "scheduler",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "1257",
+          "end_line": "1291",
+          "outgoing_call_count": 10,
+          "summary": "这个代码块是操作系统的调度器主循环函数。它不断挑选下一个可运行的进程，如果是时间片轮转调度算法则设置时间片，然后切换页表和上下文到该进程运行；如果没有可运行进程则执行WFI指令等待中断。"
+        },
+        {
+          "name": "sched",
+          "normalized_name": "sched",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "1300",
+          "end_line": "1318",
+          "outgoing_call_count": 6,
+          "summary": "执行进程上下文切换，保存当前进程状态并切换到调度器上下文。"
+        },
+        {
+          "name": "timer_tick",
+          "normalized_name": "timer_tick",
+          "file_path": "xv6-k210\\kernel\\timer.c",
+          "language": "c",
+          "start_line": "34",
+          "end_line": "40",
+          "outgoing_call_count": 4,
+          "summary": "这个代码块实现了定时器中断处理函数，在每次定时器滴答时增加全局 ticks 计数、唤醒等待 ticks 变化的进程，并设置下一次超时中断。"
+        },
+        {
+          "name": "cpu",
+          "normalized_name": "cpu",
+          "file_path": "xv6-k210\\kernel\\include\\proc.h",
+          "language": "c",
+          "start_line": "33",
+          "end_line": "38",
+          "outgoing_call_count": 4,
+          "summary": "定义CPU结构体，用于存储每个CPU核心的运行状态，包括当前运行的进程、调度切换上下文、中断嵌套深度以及中断使能状态。"
+        },
+        {
+          "name": "switch_to_SPI_mode",
+          "normalized_name": "switch_to_SPI_mode",
+          "file_path": "xv6-k210\\kernel\\sdcard.c",
+          "language": "c",
+          "start_line": "125",
+          "end_line": "141",
+          "outgoing_call_count": 4,
+          "summary": "该函数尝试将SD卡切换到SPI模式，通过发送CMD0命令并检查响应是否为0x01来判断是否成功，若超时则返回错误。"
+        },
+        {
+          "name": "yield",
+          "normalized_name": "yield",
+          "file_path": "xv6-k210/kernel/proc.c",
+          "language": "c",
+          "start_line": "1321",
+          "end_line": "1329",
+          "outgoing_call_count": 4,
+          "summary": "当前进程主动让出CPU，将自己状态设为RUNNABLE并触发调度，之后重新获得CPU时释放锁"
+        },
+        {
+          "name": "print_done",
+          "normalized_name": "print_done",
+          "file_path": "xv6-k210\\xv6-user\\test_proc_mlfq.c",
+          "language": "c",
+          "start_line": 32,
+          "end_line": 47,
+          "outgoing_call_count": 4,
+          "summary": "该函数打印进程完成信息，包括进程ID、初始优先级和最终优先级。"
+        },
+        {
+          "name": "r_time",
+          "normalized_name": "r_time",
+          "file_path": "xv6-k210\\kernel\\include\\riscv.h",
+          "language": "c",
+          "start_line": "255",
+          "end_line": "263",
+          "outgoing_call_count": 1,
+          "summary": "该函数通过内联汇编读取RISC-V时间计数器（time CSR）的值，并返回当前时间戳。"
+        },
+        {
+          "name": "clamp_priority",
+          "normalized_name": "clamp_priority",
+          "file_path": "xv6-k210\\kernel\\proc.c",
+          "language": "c",
+          "start_line": "666",
+          "end_line": "674",
+          "outgoing_call_count": 0,
+          "summary": "将输入的优先级限制在允许的最小和最大范围（PRIO_MIN 和 PRIO_MAX）内，并返回裁剪后的值。如果输入小于最小值则返回最小值，如果输入大于最大值则返回最大值，否则返回原值。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "startup": {
+      "module_name": "startup",
+      "function_count": 1,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 0,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0008,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "synchronization": {
+      "module_name": "synchronization",
+      "function_count": 9,
+      "outgoing_edge_count": 22,
+      "internal_edge_count": 18,
+      "external_edge_count": 4,
+      "internal_call_ratio": 0.8182,
+      "external_call_ratio": 0.1818,
+      "module_weight": 0.0088,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 88,
+      "outgoing_edge_count": 323,
+      "internal_edge_count": 317,
+      "external_edge_count": 6,
+      "internal_call_ratio": 0.9814,
+      "external_call_ratio": 0.0186,
+      "module_weight": 0.1009,
+      "files": [
+        "xv6-k210\\kernel\\include\\sysinfo.h",
+        "xv6-k210\\kernel\\syscall.c",
+        "xv6-k210\\kernel\\sysfile.c",
+        "xv6-k210\\kernel\\sysproc.c"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "linux_dispatch",
+          "normalized_name": "linux_dispatch",
+          "file_path": "xv6-k210\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "1484",
+          "end_line": "1667",
+          "outgoing_call_count": 53,
+          "summary": "根据系统调用号分发到对应的Linux兼容系统调用处理函数，返回执行结果；未识别的调用返回0。"
+        },
+        {
+          "name": "sys_rename",
+          "normalized_name": "sys_rename",
+          "file_path": "xv6-k210\\kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "461",
+          "end_line": "542",
+          "outgoing_call_count": 14,
+          "summary": "实现文件或目录的重命名/移动操作，处理源路径到目标路径的原子性更新，并检查目录循环、目标存在冲突等错误情况。"
+        },
+        {
+          "name": "linux_sys_newfstatat",
+          "normalized_name": "linux_sys_newfstatat",
+          "file_path": "xv6-k210\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "1254",
+          "end_line": "1299",
+          "outgoing_call_count": 13,
+          "summary": "实现 Linux 系统调用 newfstatat，用于获取文件或目录的状态信息（如文件大小、权限等），支持通过文件描述符和路径操作，并处理内置设备文件。"
+        },
+        {
+          "name": "linux_sys_getdents64",
+          "normalized_name": "linux_sys_getdents64",
+          "file_path": "xv6-k210\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "1340",
+          "end_line": "1380",
+          "outgoing_call_count": 10,
+          "summary": "这个函数实现了 Linux 系统调用 getdents64，用于读取目录项。它从用户空间获取文件描述符、缓冲区地址和长度，遍历目录中的条目，读取一个目录项并复制到用户空间。"
+        },
+        {
+          "name": "sys_remove",
+          "normalized_name": "sys_remove",
+          "file_path": "xv6-k210\\kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "422",
+          "end_line": "457",
+          "outgoing_call_count": 9,
+          "summary": "实现删除文件或目录的系统调用，包括路径参数获取、路径规范化、检查是否为当前目录或父目录、锁定目录项、检查目录是否为空、锁定父目录、执行删除操作并解锁释放资源。"
+        },
+        {
+          "name": "linux_sys_mmap",
+          "normalized_name": "linux_sys_mmap",
+          "file_path": "xv6-k210\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "1427",
+          "end_line": "1459",
+          "outgoing_call_count": 8,
+          "summary": "该函数实现了mmap系统调用的简化版本，主要用于将文件内容映射到进程地址空间。它忽略参数start、prot和flags，通过growproc增加进程堆大小，并将文件内容读取到新分配的内存区域。"
+        },
+        {
+          "name": "linux_sys_readlinkat",
+          "normalized_name": "linux_sys_readlinkat",
+          "file_path": "xv6-k210\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "970",
+          "end_line": "1003",
+          "outgoing_call_count": 8,
+          "summary": "实现 readlinkat 系统调用，读取符号链接指向的目标路径，特殊处理 /proc/self/exe 和 /proc/ 前缀的路径，将其替换为当前进程名作为目标。"
+        },
+        {
+          "name": "linux_sys_openat",
+          "normalized_name": "linux_sys_openat",
+          "file_path": "xv6-k210\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "506",
+          "end_line": "533",
+          "outgoing_call_count": 7,
+          "summary": "这个函数实现了 Linux 兼容的 openat 系统调用，它接收一个相对路径参数，通过修改寄存器来劫持 xv6 原生的 sys_open 调用，并处理当前工作目录（CWD）的上下文切换，最终返回打开的文件描述符。"
+        },
+        {
+          "name": "linux_sys_fstat",
+          "normalized_name": "linux_sys_fstat",
+          "file_path": "xv6-k210\\kernel\\syscall.c",
+          "language": "c",
+          "start_line": "1225",
+          "end_line": "1252",
+          "outgoing_call_count": 7,
+          "summary": "实现Linux风格的fstat系统调用，通过文件描述符获取文件状态信息，并复制到用户空间。"
+        },
+        {
+          "name": "sys_pipe",
+          "normalized_name": "sys_pipe",
+          "file_path": "xv6-k210\\kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "293",
+          "end_line": "324",
+          "outgoing_call_count": 7,
+          "summary": "实现系统调用pipe，创建一对管道文件描述符，用于进程间通信。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "xv6-k210\\kernel\\rv_public_output_data.S",
+        "xv6-k210\\kernel\\sdcard.c",
+        "xv6-k210\\xv6-user\\init.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "run_test",
+          "normalized_name": "run_test",
+          "file_path": "xv6-k210\\xv6-user\\init.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "130",
+          "outgoing_call_count": 7,
+          "summary": "尝试以多种路径格式执行一个程序（name或替代alt），若全部失败则报错退出；父进程等待子进程结束。"
+        },
+        {
+          "name": "test_sdcard",
+          "normalized_name": "test_sdcard",
+          "file_path": "xv6-k210\\kernel\\sdcard.c",
+          "language": "c",
+          "start_line": "448",
+          "end_line": "474",
+          "outgoing_call_count": 3,
+          "summary": "测试SD卡读写功能的函数，向0到4号扇区写入固定数据（0xaa），然后读取并打印出来，验证读写正确性。"
+        },
+        {
+          "name": "rv_libctest_musl_output",
+          "normalized_name": "rv_libctest_musl_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "40",
+          "end_line": "42",
+          "outgoing_call_count": 0,
+          "summary": "通过 .incbin 指令将外部文本文件 'la-minimal/libctest_musl_output.txt' 的二进制内容嵌入到本汇编文件的当前位置，并定义一个标签 rv_libctest_musl_output 指向该数据的起始地址。该数据块预期用于后续程序访问，例如打印或比较测试输出。"
+        },
+        {
+          "name": "rv_cyclictest_glibc_output",
+          "normalized_name": "rv_cyclictest_glibc_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "92",
+          "end_line": "94",
+          "outgoing_call_count": 0,
+          "summary": "定义一个全局标签 rv_cyclictest_glibc_output，并通过 .incbin 指令将外部文件 cyclictest_glibc_output.txt 的二进制内容嵌入到该位置，用于在链接时将测试输出数据包含进内核二进制中，可能用于后续在系统调用或输出缓冲区中提供测试结果或数据。"
+        },
+        {
+          "name": "rv_libctest_glibc_output",
+          "normalized_name": "rv_libctest_glibc_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "36",
+          "end_line": "38",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个汇编标签 rv_libctest_glibc_output，该标签通过 .incbin 指令将外部文本文件 ../la-minimal/libctest_glibc_output.txt 的二进制内容直接嵌入到当前汇编文件的该位置，用于在运行时将测试输出数据以字节形式包含在代码段中。"
+        },
+        {
+          "name": "rv_libcbench_musl_output",
+          "normalized_name": "rv_libcbench_musl_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "56",
+          "end_line": "58",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个标签 rv_libcbench_musl_output，并通过 .incbin 指令将外部文件 'la-minimal/libcbench_musl_output.txt' 的二进制内容嵌入到当前汇编代码的该位置。这个标签通常作为该数据块的起始地址符号，供其他代码引用。"
+        },
+        {
+          "name": "rv_lmbench_musl_output",
+          "normalized_name": "rv_lmbench_musl_output",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "48",
+          "end_line": "50",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个标签 rv_lmbench_musl_output，并通过 .incbin 指令将一个文本文件 (lmbench_musl_output.txt) 的二进制内容直接包含到当前汇编文件中。该标签通常作为数据段的起始地址，用于在运行时引用该文本数据。"
+        },
+        {
+          "name": "rv_cyclictest_musl_output_end",
+          "normalized_name": "rv_cyclictest_musl_output_end",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "98",
+          "end_line": "99",
+          "outgoing_call_count": 0,
+          "summary": "定义标签 'rv_cyclictest_musl_output_end'，标记 cyclictest 测试程序（使用 musl 库）输出数据的结束位置。该标签本身不执行任何指令，仅作为符号供其他代码引用，例如用于计算输出数据的长度或作为边界标记。"
+        },
+        {
+          "name": "rv_cyclictest_glibc_output_end",
+          "normalized_name": "rv_cyclictest_glibc_output_end",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "94",
+          "end_line": "96",
+          "outgoing_call_count": 0,
+          "summary": "这个代码块定义了一个标签（label），作为 rv_cyclictest_glibc_output 数据区域的结束标记。它本身不包含任何指令或数据，仅用于在汇编代码中标记一个位置的符号地址，通常用于计算区域大小或作为循环、跳转的目标。"
+        },
+        {
+          "name": "rv_libcbench_musl_output_end",
+          "normalized_name": "rv_libcbench_musl_output_end",
+          "file_path": "xv6-k210\\kernel\\rv_public_output_data.S",
+          "language": "assembly",
+          "start_line": "58",
+          "end_line": "60",
+          "outgoing_call_count": 0,
+          "summary": "该代码块仅定义了一个汇编标签 rv_libcbench_musl_output_end，作为数据或代码段的结束标记。没有实际指令或数据，其具体作用需要结合上下文才能确定。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "trap": {
+      "module_name": "trap",
+      "function_count": 2,
+      "outgoing_edge_count": 1,
+      "internal_edge_count": 1,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0014,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 48,
+      "outgoing_edge_count": 42,
+      "internal_edge_count": 22,
+      "external_edge_count": 20,
+      "internal_call_ratio": 0.5238,
+      "external_call_ratio": 0.4762,
+      "module_weight": 0.036,
+      "files": [
+        "la-minimal\\entry.S",
+        "la-minimal\\main.c",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\hal\\clint.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "xv6-k210\\kernel\\entry_k210.S",
+        "xv6-k210\\kernel\\entry_qemu.S",
+        "xv6-k210\\kernel\\entry_vf2.S",
+        "xv6-k210\\kernel\\include\\riscv.h",
+        "xv6-k210\\kernel\\logo.c",
+        "xv6-k210\\kernel\\main.c",
+        "xv6-k210\\kernel\\printf.c",
+        "xv6-k210\\kernel\\rv_public_output.c",
+        "xv6-k210\\kernel\\rv_public_output_data.S",
+        "xv6-k210\\kernel\\sleeplock.c",
+        "xv6-k210\\kernel\\spinlock.c",
+        "xv6-k210\\kernel\\string.c",
+        "xv6-k210\\kernel\\utils.c"
+      ],
+      "file_count": 19,
+      "core_functions": [
+        {
+          "name": "mp_hook",
+          "normalized_name": "mp_hook",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "43",
+          "end_line": "71",
+          "outgoing_call_count": 39,
+          "summary": "多核启动过程中的钩子函数，用于非主核（hartid != 0）等待主核通过软件中断唤醒。如果当前核是主核（hartid == 0）则直接返回 true，否则进入忙等循环等待软件中断，在接收到中断后清除中断状态并返回 false。该函数用于初始化阶段同步多核启动顺序。"
+        },
+        {
+          "name": "mp_hook",
+          "normalized_name": "mp_hook",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "47",
+          "end_line": "75",
+          "outgoing_call_count": 39,
+          "summary": "非第0号核心（hart）的启动钩子函数，通过等待软件中断来同步多核启动，然后返回false表示非主核心。"
+        },
+        {
+          "name": "count_harts",
+          "normalized_name": "count_harts",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+          "language": "rust",
+          "start_line": "245",
+          "end_line": "282",
+          "outgoing_call_count": 16,
+          "summary": "从设备树二进制（DTB）数据中解析并统计处理器核心（hart）数量，若解析失败则返回默认最大hart ID值。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+          "language": "rust",
+          "start_line": "33",
+          "end_line": "44",
+          "outgoing_call_count": 10,
+          "summary": "当 RustSBI 发生不可恢复错误时，该函数负责打印包含 hart ID 和错误信息的 panic 消息，并触发系统关机重启（以关机模式，原因标记为系统故障），最后进入无限循环确保程序终止。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "38",
+          "outgoing_call_count": 10,
+          "summary": "定义 panic 处理函数，当程序发生恐慌时打印恐慌信息并进入无限循环，用于调试和提示用户。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "31",
+          "end_line": "34",
+          "outgoing_call_count": 10,
+          "summary": "定义 panic 处理函数，当程序出现不可恢复错误时，打印 panic 信息并进入死循环。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "xv6-k210\\kernel\\printf.c",
+          "language": "c",
+          "start_line": "121",
+          "end_line": "131",
+          "outgoing_call_count": 10,
+          "summary": "实现内核恐慌函数，打印错误信息、调用栈回溯，并阻止后续输出，最后进入死循环以停止执行。"
+        },
+        {
+          "name": "impl rustsbi::Reset for Reset {",
+          "normalized_name": "Reset for Reset {",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "184",
+          "end_line": "189",
+          "outgoing_call_count": 8,
+          "summary": "为Reset结构体实现rustsbi::Reset trait中的system_reset方法，该方法用于处理系统重置请求，但当前实现只是打印调试信息并进入死循环，并未实际执行重置或关机操作。"
+        },
+        {
+          "name": "impl rustsbi::Reset for Reset {",
+          "normalized_name": "Reset for Reset {",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "186",
+          "end_line": "191",
+          "outgoing_call_count": 8,
+          "summary": "为 Reset 结构体实现 rustsbi::Reset trait 的 system_reset 方法，该方法仅打印调试信息并进入无限循环，未实现实际的关机或重启操作。"
+        },
+        {
+          "name": "get_vaddr_u32",
+          "normalized_name": "get_vaddr_u32",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "514",
+          "end_line": "518",
+          "outgoing_call_count": 7,
+          "summary": "该函数从给定的虚拟地址(vaddr)读取一个32位无符号整数。它通过两次调用 get_vaddr_u16 来分别读取低16位(从vaddr开始)和高16位(从vaddr+2开始)，然后将高16位左移16位并与低16位进行按位或运算，组合成一个u32值。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "la-minimal\\entry.S",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\build.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\build.rs",
+        "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+        "xv6-k210\\kernel\\main.c",
+        "xv6-k210\\kernel\\proc.c",
+        "xv6-k210\\kernel\\trampoline.S",
+        "xv6-k210\\xv6-user\\init.c",
+        "xv6-k210\\xv6-user\\stressfs.c",
+        "xv6-k210\\xv6-user\\test_proc_mlfq.c",
+        "xv6-k210\\xv6-user\\test_proc_priority.c",
+        "xv6-k210\\xv6-user\\test_proc_rr.c"
+      ],
+      "file_count": 14,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\xv6-user\\stressfs.c",
+          "language": "c",
+          "start_line": "16",
+          "end_line": "49",
+          "outgoing_call_count": 415,
+          "summary": "这个代码块实现了一个简单的文件系统压力测试程序。主进程会创建最多4个子进程（通过fork），每个进程（包括父进程）都会打开一个以进程ID（i）为后缀的独立文件，连续写入20次512字节数据，然后重新打开文件读取20次，最后等待所有子进程结束退出。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\xv6-user\\test_proc_rr.c",
+          "language": "c",
+          "start_line": "31",
+          "end_line": "59",
+          "outgoing_call_count": 415,
+          "summary": "这是一个测试进程时间片轮转（Round-Robin）调度策略的程序。它先设置调度算法为RR，然后创建三个子进程，分别设置不同的时间片长度（1、2、3），每个子进程执行task函数后退出，父进程等待所有子进程结束。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\build.rs",
+          "language": "rust",
+          "start_line": "6",
+          "end_line": "18",
+          "outgoing_call_count": 415,
+          "summary": "该函数是Rust构建脚本（build.rs）的主函数，用于在构建时动态生成链接器脚本的路径，并指示Cargo将该路径添加到链接器搜索目录中，同时声明构建依赖的文件以触发重新构建。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.back.rs",
+          "language": "rust",
+          "start_line": "75",
+          "end_line": "265",
+          "outgoing_call_count": 415,
+          "summary": "内核入口函数，初始化SBI固件环境，包括多核栈、BSS/数据段、中断委托、外设（UART、IPI、Timer、Reset）、PLIC、委托CSR寄存器，最后跳转到S模式入口。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\kernel\\main.c",
+          "language": "c",
+          "start_line": "40",
+          "end_line": "133",
+          "outgoing_call_count": 415,
+          "summary": "操作系统内核的入口函数，根据不同的目标平台（VISIONFIVE2 或其他）执行不同的初始化流程，包括硬件初始化、内存管理、中断系统、进程管理等，最终进入调度器或空闲循环。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\xv6-user\\test_proc_mlfq.c",
+          "language": "c",
+          "start_line": "87",
+          "end_line": "131",
+          "outgoing_call_count": 415,
+          "summary": "该main函数作为测试程序的入口，首先设置调度算法为MLFQ，然后创建多个子进程并分别设置不同的优先级，执行CPU密集型或IO密集型的任务，最后等待所有子进程结束并退出。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\src\\main.rs",
+          "language": "rust",
+          "start_line": "79",
+          "end_line": "267",
+          "outgoing_call_count": 415,
+          "summary": "RustSBI for K210 的入口函数，完成硬件初始化、SBI 服务注册（IPI、Timer、Reset）、中断委托配置，并最终跳转到 S-Mode 启动地址。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\xv6-user\\init.c",
+          "language": "c",
+          "start_line": "132",
+          "end_line": "164",
+          "outgoing_call_count": 415,
+          "summary": "初始化用户环境，设置标准输入输出和错误，切换到测试目录，根据编译时宏RUN_TEST_ID选择性地运行单个测试或运行所有预定义的测试用例，并在测试完成后退出。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-k210\\build.rs",
+          "language": "rust",
+          "start_line": "7",
+          "end_line": "19",
+          "outgoing_call_count": 415,
+          "summary": "该代码块是构建脚本的主要函数，用于在构建时生成链接脚本文件并将其路径输出给 Cargo，同时指示 Cargo 监听特定文件的变化。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "xv6-k210\\bootloader\\SBI\\rustsbi-qemu\\src\\main.rs",
+          "language": "rust",
+          "start_line": "126",
+          "end_line": "231",
+          "outgoing_call_count": 415,
+          "summary": "QEMU平台上RustSBI的主函数，完成SBI初始化、中断委托、外设初始化、打印信息并启动S-Mode操作系统。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 78.0,
+    "score_level": "good",
+    "scores": {
+      "originality": 13.0,
+      "novelty": 13.0,
+      "practicality": 16.0,
+      "difficulty": 19.0,
+      "completion": 17.0
+    },
+    "summary": "",
+    "strengths": [
+      "核心模块（driver、filesystem、interrupt、process、scheduler、memory）完成度极高（接近或达到1.0），功能实现稳健。",
+      "调度器完成度（1.0）优于多个相似历史项目（如SOS的0.8、no_stay_up_late的0.75），具备竞争力。",
+      "项目规模适中，模块划分清晰（20个模块），便于维护和扩展。"
+    ],
+    "weaknesses": [
+      "IPC、网络、用户态支持等辅助模块完成度极低（均为0.15），功能覆盖不全。",
+      "测试基础设施薄弱（test模块完成度仅0.1），缺乏自动化测试保障。",
+      "系统调用模块完成度（0.95）略低于部分历史项目（如SOS的1.0），可能存在缺失。"
+    ],
+    "suggestions": []
+  },
+  "hybrid_top_results": [
+    {
+      "repo_name": "SOS",
+      "hybrid_score": 0.6589,
+      "structured_score": 0.8522,
+      "semantic_score": 0.3,
+      "rank": null,
+      "source": [
+        "structured",
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 8,
+          "doc_id": "SOS__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.3954133987426758,
+          "semantic_score": 0.30000000000000004,
+          "content_preview": "历史项目 SOS 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 c、python、rust、linker_script、assembly。系统识别到该项目包含 800 个函数节点、3882 条调用边、20 个模块。核心模块包括 driver、filesystem、unknown、interrupt、syscall。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "HDACP",
+      "hybrid_score": 0.5669,
+      "structured_score": 0.8721,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "no_stay_up_late",
+      "hybrid_score": 0.558,
+      "structured_score": 0.8584,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "Refill",
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 1,
+          "doc_id": "Refill__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.38352760672569275,
+          "semantic_score": 1.0,
+          "content_preview": "历史项目 Refill 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 c、assembly、linker_script。系统识别到该项目包含 821 个函数节点、1797 条调用边、13 个模块。核心模块包括 unknown、driver、filesystem、ipc、memory。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "StarryX",
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 2,
+          "doc_id": "StarryX__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.38428425788879395,
+          "semantic_score": 0.9,
+          "content_preview": "历史项目 StarryX 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 rust。系统识别到该项目包含 2857 个函数节点、14175 条调用边、13 个模块。核心模块包括 unknown、build、driver、filesystem、interrupt。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    }
+  ],
+  "comparison": {
+    "retrieval_mode": "hybrid",
+    "comparison_count": 5,
+    "comparisons": [
+      {
+        "history_repo_name": "SOS",
+        "similarity_score": 0.6589,
+        "hybrid_score": 0.6589,
+        "structured_score": 0.8522,
+        "semantic_score": 0.3,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "目标仓库 T2026100019911468 与历史仓库 SOS 均为 teaching_os_or_general_kernel 类型的操作系统项目，核心模块高度重叠（driver、filesystem、interrupt、syscall），项目规模（函数数量、模块数量）接近，各模块完成度分布类似，结构复杂度均为 1.0，整体结构相似度较高（结构化分数 0.8522）。",
+        "main_similarities": [
+          "项目类型相同，均为 teaching_os_or_general_kernel。",
+          "核心模块高度重合，包括 driver、filesystem、interrupt、syscall。",
+          "项目规模接近：目标仓库有 958 个函数、20 个模块；历史仓库有 800 个函数、20 个模块。",
+          "模块完成度分布相似：driver、filesystem、interrupt 等模块在两者中均达到 1.0 完成度，synchronization 均为 0.58 等。",
+          "结构复杂度均为 1.0。"
+        ],
+        "main_differences": [
+          "模块划分有差异：目标仓库有明确的 syscall、process、memory、scheduler 等模块且完成度较高；历史仓库的模块划分包含 shell、shell_parser、user_shell 等，且未单独列出 process、scheduler、memory 等模块的完成度或权重。",
+          "语言组成有差异：目标仓库主要语言为 c、rust、assembly、cargo；历史仓库增加了 python、linker_script。",
+          "函数数量和调用边数量不同：目标仓库 958 函数/2820 边，历史仓库 800 函数/3882 边。",
+          "目标仓库的 syscall 模块完成度为 0.95，历史仓库为 1.0；目标仓库的 scheduler 模块完成度为 1.0，历史仓库为 0.8。",
+          "历史仓库有 shell 相关模块（shell 0.75），目标仓库无此模块。"
+        ],
+        "target_advantages": [
+          "目标仓库的 process 模块完成度 1.0，而历史仓库未明确列出该模块，表明目标仓库在进程管理方面可能更完善。",
+          "目标仓库的 scheduler 模块完成度 1.0，高于历史仓库的 0.8，表明目标仓库在调度器上更成熟。",
+          "目标仓库的 memory 模块完成度 1.0，历史仓库虽也有 memory 模块完成度 1.0，但目标仓库的 memory 模块在核心模块列表中未被列出，而历史仓库将其作为非核心模块，目标仓库的实际内存管理完整性可能更高。",
+          "目标仓库的 function_count 更多（958 vs 800），可能功能覆盖面更广。"
+        ],
+        "target_weaknesses": [
+          "目标仓库的 syscall 完成度为 0.95，低于历史仓库的 1.0，可能存在缺陷。",
+          "目标仓库的 ipc 完成度仅为 0.15，与历史仓库相同，没有改进。",
+          "目标仓库的 network 完成度仅为 0.15，与历史仓库相同，网络功能较弱。",
+          "目标仓库的 test 完成度仅为 0.1，与历史仓库相同，测试基础设施薄弱。",
+          "目标仓库缺少 shell 或用户交互相关模块，而历史仓库有 shell（0.75）等模块。"
+        ],
+        "borrowable_designs": [
+          "历史仓库的 shell 或 user_shell 模块设计可以借鉴，以增强目标仓库的用户交互能力。",
+          "历史仓库的 syscall 模块完成度更高（1.0），其系统调用实现或接口设计可供参考。",
+          "历史仓库的 build 模块完成度 1.0，高于目标仓库的 0.93，其构建系统或自动化流程可能更优。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "HDACP",
+        "similarity_score": 0.5669,
+        "hybrid_score": 0.5669,
+        "structured_score": 0.8721,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为教学型或通用操作系统内核，核心模块高度重合，包括driver、filesystem、interrupt和syscall，在模块完成度和功能规模上也很接近，结构复杂度和语言组成相似，因此整体相似度较高。",
+        "main_similarities": [
+          "项目类型相同，均为teaching_os_or_general_kernel",
+          "核心模块高度重合，共有driver、filesystem、interrupt、syscall四个模块",
+          "函数数量、调用边数量和模块数量规模接近（目标958函数/20模块，历史800函数/19模块）",
+          "结构复杂度均为1.0，项目结构复杂度一致",
+          "共同模块的完成度分布较接近，如driver、filesystem、interrupt模块完成度均为1.0"
+        ],
+        "main_differences": [
+          "核心模块不同：目标仓库核心模块包含process，历史仓库核心模块包含memory",
+          "模块覆盖不同：目标仓库拥有scheduler模块完成度为1.0，历史仓库scheduler完成度为0.9；目标仓库有build模块完成度0.93，历史仓库build完成度0.65；历史仓库有debug模块(0.18)而目标仓库没有",
+          "syscall模块完成度不同：目标为0.95，历史为1.0",
+          "language_score差异：目标语言相似度得分为0.8，历史得分为0.8，但语言组成略有不同（历史多了一个linker_script语言）"
+        ],
+        "target_advantages": [
+          "目标仓库在scheduler模块完成度上更高（1.0 vs 0.9），调度功能更完整",
+          "目标仓库的build模块完成度更高（0.93 vs 0.65），构建系统更完善",
+          "目标仓库拥有更高系统调用调用边数（internal_edge_count 1757 vs 1183）以及更丰富的内部模块交互"
+        ],
+        "target_weaknesses": [
+          "目标仓库syscall模块完成度低于历史仓库（0.95 vs 1.0），系统调用功能可能略不完整",
+          "目标仓库缺少debug模块，历史仓库有debug模块（完成度0.18）",
+          "目标仓库没有与trap/interrupt对应的模块，历史仓库有trap/interrupt模块（完成度0.13）"
+        ],
+        "borrowable_designs": [
+          "历史仓库在syscall模块完成度为1.0，目标仓库可借鉴其系统调用实现设计",
+          "历史仓库的memory模块为核心模块且完成度为1.0，可参考其内存管理设计",
+          "历史仓库的debug模块（完成度0.18）可作为目标仓库添加调试功能的参考"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "no_stay_up_late",
+        "similarity_score": 0.558,
+        "hybrid_score": 0.558,
+        "structured_score": 0.8584,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为教学型操作系统内核，使用C、Rust、汇编语言开发，在核心模块（驱动、文件系统、中断）的完成度上均为100%，函数数量、调用边数、模块数量等规模指标接近，结构复杂度相同，且项目类型一致，表明二者在整体设计思路和功能完备程度上高度相似。",
+        "main_similarities": [
+          "项目类型一致，均为 teaching_os_or_general_kernel。",
+          "核心模块均涵盖 driver、filesystem、interrupt，且这些模块的完成度均为100%。",
+          "函数数量、调用边数和模块数量规模接近。",
+          "结构复杂度均为1.0。",
+          "使用C、Rust和汇编作为主要编程语言。"
+        ],
+        "main_differences": [
+          "目标仓库在 syscall 模块的完成度为0.95，低于历史仓库的1.0。",
+          "目标仓库引入了 memory 模块并为1.0，而历史仓库也有 memory 模块为1.0，但目标仓库还有 memory / process 子模块且完成度仅0.28，历史仓库无此子模块。",
+          "目标仓库在 scheduler 模块的完成度为1.0，高于历史仓库的0.75。",
+          "目标仓库启用了 cargo 作为语言工具，而历史仓库还使用了 linker_script 和 makefile。",
+          "目标仓库的 external_edge_count（1063）略低于历史仓库的1197，但 internal_edge_count（1757）更高。"
+        ],
+        "target_advantages": [
+          "调度器模块完成度更高（1.0 vs 0.75），说明调度功能可能更完善。",
+          "内存 / 进程子模块的存在表明在进程内存管理方面有额外设计，尽管完成度不高。",
+          "内部调用边更多，可能意味着模块内集成度或内聚性更高。"
+        ],
+        "target_weaknesses": [
+          "系统调用模块完成度略低（0.95 vs 1.0），可能缺少部分系统调用实现。",
+          "模块数量虽多1个，但完成度分布中有多个模块（如 ipc、kernel、network、user）低于历史仓库。",
+          "未使用 linker_script 和 makefile，可能在构建灵活性或可移植性上有所欠缺。"
+        ],
+        "borrowable_designs": [
+          "历史仓库的 syscall 模块实现完整（1.0），可为目标仓库补充缺失的系统调用功能。",
+          "历史仓库的同步模块完成度0.43，虽低于目标仓库的0.58，但其实现方式值得参考以提升同步机制。",
+          "历史仓库在 build 模块使用 makefile 和 linker_script，目标仓库可借鉴其构建系统设计以增强可配置性。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "Refill",
+        "similarity_score": 0.35,
+        "hybrid_score": 0.35,
+        "structured_score": 0.0,
+        "semantic_score": 1.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "目标仓库 T2026100019911468 与历史仓库 Refill 在项目类型上相同，均为教学操作系统或通用内核，且均包含 driver、filesystem 等核心模块。它们的语义相似度较高（1.0），表明在仓库描述或整体功能上存在关联，但结构相似度为 0，说明具体实现架构差异较大。",
+        "main_similarities": [
+          "两者均属于 teaching_os_or_general_kernel 类型的操作系统项目",
+          "两者都包含了 driver、filesystem、process、scheduler、syscall 等操作系统核心模块",
+          "两者都使用 C 和汇编语言进行开发"
+        ],
+        "main_differences": [
+          "目标仓库模块数量更多（20个），结构更完整，而历史仓库仅有13个模块",
+          "目标仓库的 driver、filesystem、interrupt、memory 等模块完整度均为 1.0，远高于历史仓库对应模块（多为0.15）",
+          "目标仓库引入了 Rust 语言，而历史仓库仅使用 C 和汇编",
+          "目标仓库的内边数（1757）与历史仓库（1510）相近，但目标仓库的外边数（1063）远高于历史仓库（287），表明目标仓库的外部依赖或接口调用更多"
+        ],
+        "target_advantages": [
+          "目标仓库各核心模块（driver、filesystem、interrupt、memory、process、scheduler）的完整度接近或达到 1.0，表示功能实现更为完善",
+          "目标仓库具有更大的函数数量（958 vs 821）和更高的边数（2820 vs 1797），表明系统规模更大、功能更丰富",
+          "目标仓库支持 Rust 语言，可能带来更好的内存安全性和开发效率"
+        ],
+        "target_weaknesses": [
+          "目标仓库在 ipc、network、user 等模块的完整度较低（均为0.15），存在明显的功能缺失",
+          "目标仓库的 boot、startup、trap、test 模块完整度较低（<0.2），可能缺乏对启动过程、异常处理和测试的完整支持",
+          "目标仓库在 synchronization 模块完整度为0.58，尚未达到完全实现"
+        ],
+        "borrowable_designs": [
+          "历史仓库的 ipc 模块完整度为0.15，与目标仓库相近，但历史仓库可能有部分 IPC 设计可参考",
+          "历史仓库的 network 模块完整度为0.10，与目标仓库接近，可借鉴其在网络子系统的架构设计",
+          "历史仓库在 user 模块完整度为0.15，同样较低，若目标仓库希望改进用户态支持，可对比两者实现"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "StarryX",
+        "similarity_score": 0.315,
+        "hybrid_score": 0.315,
+        "structured_score": 0.0,
+        "semantic_score": 0.9,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为teaching_os_or_general_kernel类型的操作系统内核项目，在核心模块（driver、filesystem、interrupt）上有语义重叠，且结构复杂度均为1.0。",
+        "main_similarities": [
+          "二者均为教学或通用操作系统内核项目",
+          "核心模块均包括driver、filesystem、interrupt，且语义相似度高",
+          "结构复杂度均为1.0，表明整体结构复杂度等级相同"
+        ],
+        "main_differences": [
+          "目标仓库使用C、Rust、Assembly、Cargo多语言，历史仓库仅使用Rust",
+          "目标仓库函数数958个、边数2820条，历史仓库函数数2857个、边数14175条，规模差距较大",
+          "目标仓库模块数20个，历史仓库模块数13个，模块划分更细",
+          "历史仓库几乎所有模块（除unknown外）completeness仅为0.15，而目标仓库多数模块completeness接近1.0，模块完善度差异显著"
+        ],
+        "target_advantages": [
+          "目标仓库模块完善度更高，driver、filesystem、interrupt等核心模块均达到1.0，而历史仓库仅0.15",
+          "目标仓库模块划分更细（20个模块 vs 13个），可能更便于开发和维护",
+          "目标仓库包含完整的memory、scheduler、syscall模块（均≥0.95），历史仓库对应模块仅0.15"
+        ],
+        "target_weaknesses": [
+          "目标仓库规模（函数、边数）远小于历史仓库，功能丰富度可能不足",
+          "目标仓库缺少明确的technical_features和weaknesses记录，而历史仓库同样缺乏，但规模差异暗示目标仓库可能功能覆盖不全",
+          "历史仓库在unknown模块权重极高（1.0），可能包含大量未归类但功能丰富的代码，目标仓库unknown模块权重为1.0但completeness为1.0，含义可能不同，需注意误判"
+        ],
+        "borrowable_designs": [
+          "历史仓库规模较大，其模块化代码组织方式（13个模块）可供目标仓库参考，以优化当前20个模块的划分合理性",
+          "历史仓库在unknown模块中可能包含杂项功能，目标仓库可借鉴其归类策略，减少未知代码比例"
+        ],
+        "comparison_confidence": "medium"
+      }
+    ]
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026100019911468_final_report.md",
+    "work_detail_data": "/data/works/T2026100019911468.json",
+    "comparison_data": "/data/comparisons/T2026100019911468.json"
+  },
+  "generated_at": "2026-07-02 10:13:25"
+}
