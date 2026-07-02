@@ -1,0 +1,194 @@
+{
+  "retrieval_mode": "hybrid",
+  "comparison_count": 5,
+  "comparisons": [
+    {
+      "history_repo_name": "UltraOS",
+      "similarity_score": 0.7108,
+      "hybrid_score": 0.7108,
+      "structured_score": 0.8243,
+      "semantic_score": 0.5,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库T2026104229910571与历史仓库UltraOS在项目类型上一致，均为teaching_os_or_general_kernel，且核心模块高度重合（包括driver、filesystem、process、syscall），函数数量、调用边数量和模块数量规模接近，结构复杂度相同，共同模块的完成度分布较为接近，因此整体结构相似度较高（结构化分数0.8243）。",
+      "main_similarities": [
+        "项目类型相同，均为teaching_os_or_general_kernel。",
+        "核心模块高度重合：driver、filesystem、process、syscall。",
+        "函数数量（1088 vs 1044）、调用边数量（9807 vs 8166）和模块数量（18 vs 21）规模相近。",
+        "结构复杂度均为1.0。",
+        "核心模块如filesystem、driver、process、syscall的完成度均为1.0。"
+      ],
+      "main_differences": [
+        "目标仓库主要语言仅为Rust，历史仓库使用Rust、Python、C、Assembly等多种语言。",
+        "目标仓库外部调用边（4748）占比高于历史仓库（3138），显示更多外部依赖。",
+        "目标仓库模块数量较少（18 vs 21），但模块内聚度可能更高（内部边比例更接近）。",
+        "历史仓库包含memory模块且权重较高（0.229），目标仓库memory模块权重未进入前五，侧重不同。",
+        "历史仓库在boot(0.75)、build(1.0)、scheduler(1.0)等模块的完成度高于目标仓库。"
+      ],
+      "target_advantages": [
+        "核心模块filesystem的权重和最终分数更高（0.6292 vs 0.546），表明其在整体架构中可能更成熟或更关键。",
+        "syscall模块的权重和最终分数更高（0.5712 vs 0.4889），syscall实现可能更完善。",
+        "外部调用边更多（4748 vs 3138），可能意味着对外部库或接口的利用更充分。"
+      ],
+      "target_weaknesses": [
+        "boot、build、scheduler等基础模块的完成度低于历史仓库（如boot:0.58 vs 0.75, scheduler:0.95 vs 1.0）。",
+        "语言多样性不足，仅使用Rust，可能在某些底层操作（如汇编优化）上缺乏灵活性。",
+        "未突出memory模块作为核心模块，历史仓库的memory模块权重高且完成度1.0，目标仓库可能内存管理较弱。",
+        "模块数量较少（18 vs 21），可能缺少某些独立模块（如timer、resource、task等）的精细化设计。"
+      ],
+      "borrowable_designs": [
+        "历史仓库的boot模块完成度更高（0.75），可借鉴其启动流程设计。",
+        "历史仓库的scheduler模块完成度为1.0，可参考其调度策略实现。",
+        "历史仓库的memory模块权重高且完成度1.0，可为目标仓库的内存管理提供设计参考。",
+        "历史仓库使用多语言（Assembly、C）进行底层操作，可借鉴其汇编和C代码的集成方式以提升性能。"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "ATOM",
+      "similarity_score": 0.6345,
+      "hybrid_score": 0.6345,
+      "structured_score": 0.8146,
+      "semantic_score": 0.3,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库均为教学型或通用操作系统内核项目，主要使用 Rust 语言，核心模块高度重合，包括 filesystem、driver、process、syscall；模块完成度分布接近，结构复杂度均为 1.0，整体结构和功能设计具有相似性。",
+      "main_similarities": [
+        "项目类型相同，均为 teaching_os_or_general_kernel。",
+        "核心模块高度重合，均包含 filesystem、driver、process、syscall。",
+        "模块完成度分布接近，filesystem、memory、process、driver、syscall 等核心模块完成度均为 1.0。",
+        "结构复杂度相同，均为 1.0。"
+      ],
+      "main_differences": [
+        "目标仓库函数数量（1088）和调用边数量（9807）明显多于历史仓库（800 函数、6167 边），规模更大。",
+        "目标仓库核心模块还包括 interrupt，而历史仓库核心模块包含 memory 但不包含 interrupt。",
+        "目标仓库模块数量（18）略多于历史仓库（17）。",
+        "目标仓库主要语言仅为 Rust，而历史仓库还使用了 assembly、linker_script、cargo。"
+      ],
+      "target_advantages": [
+        "目标仓库整体规模更大，函数和调用边数量更多，可能表示功能更丰富或实现更细化。",
+        "目标仓库的 interrupt 模块完成度为 1.0，而历史仓库 interrupt 完成度为 0.9，更完整。",
+        "目标仓库的 syscall 模块权重更高（0.2854 vs 0.0735），说明 syscall 在系统中占比更大。"
+      ],
+      "target_weaknesses": [
+        "目标仓库的 boot 模块完成度（0.58）低于历史仓库（0.65）。",
+        "目标仓库的 build 模块完成度（0.59）低于历史仓库（0.7）。",
+        "目标仓库的 scheduler 模块完成度（0.95）略低于历史仓库（0.9，但实际略低信息不足；基于数据：目标为 0.95，历史为 0.9，目标略高；更正：此处无显著劣势）。",
+        "历史仓库有专门的 memory 核心模块，而目标仓库画像中未将 memory 列为核心模块，可能在内存管理方面的强调不足。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可以借鉴历史仓库在 boot 和 build 模块的更高完成度实现，提升启动和构建流程的完整性。",
+        "历史仓库使用了多种语言（assembly、linker_script、cargo），目标仓库可参考其多语言协作的工程实践。",
+        "历史仓库的 memory 模块作为核心模块且完成度高，目标仓库可学习其内存管理设计。"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "kCore",
+      "similarity_score": 0.5266,
+      "hybrid_score": 0.5266,
+      "structured_score": 0.8102,
+      "semantic_score": 0.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库 T2026104229910571 与历史仓库 kCore 同属 teaching_os_or_general_kernel 类型，核心模块在 driver、filesystem、interrupt 和 process 上高度重合，结构复杂度均为 1.0，且模块完成度分布较为接近（如 filesystem、interrupt、process 模块完成度均为 1.0），导致结构化相似度高达 0.8102，整体相似度分数为 0.5266。",
+      "main_similarities": [
+        "项目类型相同，均为 teaching_os_or_general_kernel。",
+        "核心模块存在重合：driver、filesystem、interrupt、process。",
+        "结构复杂度均为 1.0。",
+        "共同模块（如 filesystem、interrupt、process、syscall）的完成度均达到 1.0。"
+      ],
+      "main_differences": [
+        "目标仓库主语言仅为 Rust，历史仓库包含 Rust、linker_script、assembly、cargo 等多种语言。",
+        "目标仓库函数数量（1088）及边数量（9807）均显著高于历史仓库（函数 800，边 5100），表明其代码规模更大。",
+        "目标仓库的核心模块文件系统权重（0.382）远高于历史仓库（0.1655），而历史仓库的驱动模块权重（0.4666）远高于目标仓库（0.0984），表明关注点不同。",
+        "目标仓库在 memory 模块的完成度（1.0）更高，而历史仓库的 memory 完成度也为 1.0，但历史仓库在 scheduler 模块完成度（1.0）高于目标仓库（0.95），且历史仓库在 user、boot 等模块完成度略高。"
+      ],
+      "target_advantages": [
+        "目标仓库代码规模更大，函数和边数量更多，可能实现功能更丰富或代码更细化。",
+        "目标仓库文件系统模块权重高且完成度 1.0，表明其文件系统是重点且实现完整。",
+        "目标仓库在 memory、filesystem、syscall 等模块完成度均为 1.0，与历史仓库持平甚至更优。"
+      ],
+      "target_weaknesses": [
+        "目标仓库缺少对 linker_script、assembly 等底层语言的使用，可能在某些底层操作上依赖较少。",
+        "目标仓库在 scheduler 模块完成度（0.95）略低于历史仓库（1.0），可能存在调度器功能上的不足。",
+        "目标仓库在 user 模块完成度（0.15）远低于历史仓库（0.43），用户态支持可能较弱。",
+        "目标仓库在 boot、build 等基础设施模块的完成度（0.58、0.59）低于历史仓库（0.23、0.9，注意 build 历史更高），需注意 build 完成度差异方向。",
+        "目标仓库无 technical_features 和 weaknesses 信息，可能缺乏对自身局限性的记录。"
+      ],
+      "borrowable_designs": [
+        "历史仓库的驱动模块权重高且完成度高，目标仓库可以借鉴其驱动框架的设计思路。",
+        "历史仓库在 scheduler 模块完成度为 1.0，目标仓库可参考其调度器实现以提升自身 scheduler 模块。",
+        "历史仓库在 user 模块完成度更高，目标仓库可学习其用户态接口或进程管理设计。",
+        "历史仓库使用了多种语言（汇编、链接脚本），目标仓库可以引入类似底层支持以增强硬件交互能力。"
+      ],
+      "comparison_confidence": "high"
+    },
+    {
+      "history_repo_name": "OS",
+      "similarity_score": 0.35,
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个项目均为教学或通用操作系统内核，主要使用 Rust 语言开发，具有类似的内核模块（如文件系统、驱动、中断），在语义上高度相似（语义相似度 1.0），但结构特征差异明显（结构相似度 0.0），整体相似度较低（0.35）。",
+      "main_similarities": [
+        "项目类型均为 teaching_os_or_general_kernel，专注于操作系统内核开发",
+        "主要开发语言均包含 Rust",
+        "核心模块都涉及 filesystem、driver、interrupt 等操作系统关键组件"
+      ],
+      "main_differences": [
+        "目标仓库使用纯 Rust 语言，历史仓库混合使用 Rust、C、linker_script 和 cargo",
+        "目标仓库模块数量更多（18个 vs 13个），结构更复杂，函数调用边数（9807 vs 3991）和内部边数（5059 vs 1960）显著更高",
+        "目标仓库核心模块完整性更高（如 filesystem、syscall、memory 均为 1.0），历史仓库多数核心模块完整性仅 0.15，且存在大量未分类模块（unknown 权重占比 1.0）",
+        "目标仓库的 module_completeness 数据更精细，覆盖更多子模块（如 boot、ipc、network、scheduler 等），历史仓库缺乏这些细粒度指标"
+      ],
+      "target_advantages": [
+        "目标仓库在核心模块（文件系统、系统调用、内存、驱动、进程、中断）上实现了更高的完整性（均为 1.0），远超历史仓库（多为 0.15）",
+        "目标仓库模块划分更细（18个 vs 13个），且具有更丰富的模块覆盖（如 boot、scheduler、signal 等），表明结构更成熟",
+        "目标仓库代码规模更大（1088 函数节点 vs 1000），内部调用关系更密集，系统复杂度更高"
+      ],
+      "target_weaknesses": [
+        "目标仓库在 ipc、network、signal、test、trap 等模块的完整性较低（均≤0.13），历史仓库未提供这些模块的详细分数，无法直接比较，但表明目标仓库在这些方面仍有提升空间",
+        "目标仓库的 user 模块完整性仅 0.15，历史仓库为 0.15，两者相当，但目标仓库未包含用户态相关功能的明显优势"
+      ],
+      "borrowable_designs": [
+        "历史仓库的模块分类方式较为简单，但其中未知模块（unknown）占比极高（权重 1.0），可能隐藏着设计模式，目标仓库可以分析其代码组织方式，了解其如何将大量功能归类为 unknown，以改进自身模块分类",
+        "历史仓库混合使用 C 和 linker_script，目标仓库可以借鉴其在底层硬件交互或启动代码方面的实现（如果存在），以增强底层兼容性"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "OSakura",
+      "similarity_score": 0.315,
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库都属于教学操作系统或通用内核类型，都是操作系统内核实现，因此语义上高度相似（语义相似度0.9），尤其在文件系统和驱动等核心模块目标上一致。",
+      "main_similarities": [
+        "两者均实现了文件系统（filesystem）和驱动（driver）模块。",
+        "两者均包含中断处理（interrupt）和进程管理相关模块（process）。"
+      ],
+      "main_differences": [
+        "目标仓库使用Rust语言开发，历史仓库使用C、汇编和链接脚本。",
+        "目标仓库模块数量更多（18个vs13个），且核心模块更明确（filesystem、syscall、driver等），历史仓库核心模块中包含大量'unknown'模块。",
+        "目标仓库函数数量（1088）和调用边数量（9807）远大于历史仓库（621函数，1633边），显示更复杂的结构。",
+        "目标仓库各核心模块完整性均为1.0，而历史仓库核心模块完整性仅为0.15（除unknown外）。",
+        "目标仓库结构复杂度基于内部边和外部边较高，显示更强模块间耦合或依赖，历史仓库结构更简单。"
+      ],
+      "target_advantages": [
+        "目标仓库模块完整性更高，所有核心模块（filesystem、syscall、driver、process、interrupt）均达到1.0完整性，而历史仓库仅unknown模块为1.0，其他核心模块仅为0.15。",
+        "目标仓库支持的文件系统（filesystem模块权重0.382，完整性1.0）和系统调用（syscall模块权重0.2854，完整性1.0）更完善。",
+        "目标仓库使用Rust语言，比历史仓库的C语言可能具有更强的内存安全性和现代语言特性。"
+      ],
+      "target_weaknesses": [
+        "目标仓库在网络（network）和进程间通信（ipc）模块完整性较低（均为0.1），历史仓库这些模块的完整性也仅为0.15，但历史仓库在ipc模块上被识别为核心模块，目标仓库则没有。",
+        "目标仓库的信号（signal）模块完整性仅为0.13，相对较低。",
+        "目标仓库的测试（test）模块完整性仅为0.05，可能需要加强测试覆盖。"
+      ],
+      "borrowable_designs": [
+        "历史仓库的ipc模块虽然完整性低，但被列为核心模块，目标仓库可以借鉴其ipc设计思路以增强ipc支持。",
+        "历史仓库在user模块完整性为0.15，目标仓库为0.15，两者相当，但历史仓库可能包含用户态相关的简单设计，可供目标仓库参考。"
+      ],
+      "comparison_confidence": "high"
+    }
+  ]
+}

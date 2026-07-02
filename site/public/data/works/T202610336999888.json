@@ -1,0 +1,2873 @@
+{
+  "repo_name": "T202610336999888",
+  "team_name": "T202610336999888",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T202610336999888-3470",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t202610336999888-3470",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust",
+    "python"
+  ],
+  "core_modules": [
+    "filesystem",
+    "unknown",
+    "syscall",
+    "process",
+    "memory"
+  ],
+  "function_count": 2928,
+  "node_count": 2928,
+  "edge_count": 22548,
+  "internal_edge_count": 12754,
+  "external_edge_count": 9794,
+  "module_count": 32,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "arch": 0.23,
+    "boot": 0.85,
+    "build": 1.0,
+    "diagnostics": 0.58,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "io": 0.08,
+    "ipc": 0.15,
+    "memory": 1.0,
+    "namespace": 0.51,
+    "net": 0.85,
+    "network": 1.0,
+    "networking": 0.08,
+    "process": 1.0,
+    "report_generation": 0.85,
+    "scheduler": 1.0,
+    "signal": 0.51,
+    "smp": 0.08,
+    "startup": 0.23,
+    "stdio": 0.28,
+    "sync": 0.28,
+    "synchronization": 0.75,
+    "syscall": 1.0,
+    "syscall / network": 0.28,
+    "task": 0.44,
+    "task management": 0.08,
+    "test": 0.15,
+    "time": 0.28,
+    "unknown": 1.0,
+    "unkown": 0.28,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.223,
+      "completeness": 1.0,
+      "final_score": 0.5338
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.177,
+      "completeness": 1.0,
+      "final_score": 0.5062
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.1283,
+      "completeness": 1.0,
+      "final_score": 0.477
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.1062,
+      "completeness": 1.0,
+      "final_score": 0.4637
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0998,
+      "completeness": 1.0,
+      "final_score": 0.4599
+    }
+  ],
+  "module_profiles": {
+    "arch": {
+      "module_name": "arch",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 3,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "boot": {
+      "module_name": "boot",
+      "function_count": 23,
+      "outgoing_edge_count": 159,
+      "internal_edge_count": 80,
+      "external_edge_count": 79,
+      "internal_call_ratio": 0.5031,
+      "external_call_ratio": 0.4969,
+      "module_weight": 0.0076,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 80,
+      "outgoing_edge_count": 847,
+      "internal_edge_count": 362,
+      "external_edge_count": 485,
+      "internal_call_ratio": 0.4274,
+      "external_call_ratio": 0.5726,
+      "module_weight": 0.0314,
+      "files": [
+        "api\\arceos_api\\Cargo.toml",
+        "api\\arceos_posix_api\\build.rs",
+        "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+        "api\\arceos_posix_api\\src\\imp\\fs.rs",
+        "configs\\dummy.toml",
+        "kernel\namespace\\axns\\src\\link.rs",
+        "kernel\\arch\\axhal\\Cargo.toml",
+        "kernel\\arch\\axhal\\build.rs",
+        "kernel\\config\\axconfig\\Cargo.toml",
+        "kernel\\diagnostics\\axlog\\Cargo.toml",
+        "kernel\\drivers\\axdriver\\build.rs",
+        "kernel\\namespace\\axns\\Cargo.toml",
+        "kernel\\net\\axnet\\Cargo.toml",
+        "kernel\\runtime\\axruntime\\Cargo.toml",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\sync\\axsync\\Cargo.toml",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "scripts\\ltp_summary.py",
+        "scripts\\make\\riscv64-kernel-wrap.lds",
+        "scripts\\test_g010_real_kernel_semantics.py",
+        "scripts\\test_ltp_summary.py",
+        "tools/deptool/src/cmd_parser.rs",
+        "tools\\deptool\\src\\cmd_builder.rs",
+        "tools\\deptool\\src\\cmd_parser.rs",
+        "tools\\deptool\\src\\d2_generator.rs",
+        "tools\\deptool\\src\\lib.rs",
+        "tools\\deptool\\src\\mermaid_generator.rs",
+        "tools\\raspi4\\chainloader\\src\\bsp\\raspberrypi.rs",
+        "tools\\raspi4\\chainloader\\src\\bsp\\raspberrypi\\kernel.ld",
+        "tools\\raspi4\\chainloader\\src\\main.rs"
+      ],
+      "file_count": 30,
+      "core_functions": [
+        {
+          "name": "gen_c_to_rust_bindings",
+          "normalized_name": "gen_c_to_rust_bindings",
+          "file_path": "api\\arceos_posix_api\\build.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "119",
+          "outgoing_call_count": 47,
+          "summary": "该函数用于构建阶段自动生成从C头文件到Rust的FFI绑定（bindings），通过bindgen工具分析指定的C头文件并根据白名单筛选类型和变量，最终输出绑定文件。"
+        },
+        {
+          "name": "_",
+          "normalized_name": "_",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "683",
+          "end_line": "694",
+          "outgoing_call_count": 38,
+          "summary": "使用编译时断言检查 pthread_attr_t__bindgen_ty_1 结构体的大小、对齐以及字段偏移是否符合预期期望值（大小56字节、对齐8字节、所有字段偏移0）。如果断言失败，代码会在编译时报错。"
+        },
+        {
+          "name": "_",
+          "normalized_name": "_",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "460",
+          "end_line": "470",
+          "outgoing_call_count": 38,
+          "summary": "这是一个编译时断言块，用于验证结构体 `in6_addr__bindgen_ty_1` 的大小、对齐以及各字段的偏移量是否符合预期值。如果断言失败（即实际值与期望值不符），会导致编译错误。"
+        },
+        {
+          "name": "_",
+          "normalized_name": "_",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "481",
+          "end_line": "486",
+          "outgoing_call_count": 38,
+          "summary": "这个代码块通过编译期断言检查 in6_addr 结构体的大小、对齐以及字段偏移是否符合预期，确保类型定义与 C 兼容。"
+        },
+        {
+          "name": "make_tree",
+          "normalized_name": "make_tree",
+          "file_path": "scripts\\test_g010_real_kernel_semantics.py",
+          "language": "python",
+          "start_line": "47",
+          "end_line": "54",
+          "outgoing_call_count": 30,
+          "summary": "该函数创建一个临时目录，并将指定的目标文件（TARGETS）从源路径复制到该临时目录中，以便进行测试。"
+        },
+        {
+          "name": "parse_cmd",
+          "normalized_name": "parse_cmd",
+          "file_path": "tools\\deptool\\src\\cmd_parser.rs",
+          "language": "rust",
+          "start_line": "15",
+          "end_line": "66",
+          "outgoing_call_count": 26,
+          "summary": "解析命令行参数，构建配置对象（Config），用于生成ArceOS依赖关系图。"
+        },
+        {
+          "name": "manifest_package_name",
+          "normalized_name": "manifest_package_name",
+          "file_path": "tools\\deptool\\src\\cmd_parser.rs",
+          "language": "rust",
+          "start_line": "202",
+          "end_line": "233",
+          "outgoing_call_count": 26,
+          "summary": "从Cargo.toml文件中解析出package的name字段值"
+        },
+        {
+          "name": "nearest_arceos_parent",
+          "normalized_name": "nearest_arceos_parent",
+          "file_path": "tools\\deptool\\src\\mermaid_generator.rs",
+          "language": "rust",
+          "start_line": "47",
+          "end_line": "54",
+          "outgoing_call_count": 18,
+          "summary": "这个函数用于在给定的层级依赖映射中，查找并返回指定层级的最近父级依赖。它从当前层级向低层级递减搜索，找到第一个存在的键对应的值（即依赖名称），并返回该值的引用。"
+        },
+        {
+          "name": "nearest_arceos_parent",
+          "normalized_name": "nearest_arceos_parent",
+          "file_path": "tools\\deptool\\src\\d2_generator.rs",
+          "language": "rust",
+          "start_line": "49",
+          "end_line": "56",
+          "outgoing_call_count": 18,
+          "summary": "根据给定的层级编号 level，在 deps_by_level 字典中查找从 level-1 递减到 0 的第一个存在的父级依赖项引用，并返回它。"
+        },
+        {
+          "name": "gen_linker_script",
+          "normalized_name": "gen_linker_script",
+          "file_path": "kernel\\arch\\axhal\\build.rs",
+          "language": "rust",
+          "start_line": 17,
+          "end_line": 40,
+          "outgoing_call_count": 18,
+          "summary": "根据架构和平台生成链接脚本文件，读取模板并替换架构、内核基址、CPU数量等占位符，写入输出目录。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "diagnostics": {
+      "module_name": "diagnostics",
+      "function_count": 3,
+      "outgoing_edge_count": 51,
+      "internal_edge_count": 17,
+      "external_edge_count": 34,
+      "internal_call_ratio": 0.3333,
+      "external_call_ratio": 0.6667,
+      "module_weight": 0.0015,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 301,
+      "outgoing_edge_count": 1517,
+      "internal_edge_count": 924,
+      "external_edge_count": 593,
+      "internal_call_ratio": 0.6091,
+      "external_call_ratio": 0.3909,
+      "module_weight": 0.0886,
+      "files": [
+        "api\\arceos_api\\src\\imp\\display.rs",
+        "api\\arceos_api\\src\\imp\\net.rs",
+        "api\\arceos_api\\src\\lib.rs",
+        "api\\arceos_posix_api\\src\\imp\\fs.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\epoll.rs",
+        "api\\arceos_posix_api\\src\\imp\\net.rs",
+        "api\\arceos_posix_api\\src\\imp\\stdio.rs",
+        "kernel/fs/axfs/src/fs/ext4fs.rs",
+        "kernel/net/axnet/src/smoltcp_impl/loopback.rs",
+        "kernel/net/axnet/src/smoltcp_impl/udp.rs",
+        "kernel\\arch\\axhal\\src\\dummy.rs",
+        "kernel\\drivers\\axdisplay\\Cargo.toml",
+        "kernel\\drivers\\axdisplay\\src\\lib.rs",
+        "kernel\\drivers\\axdma\\Cargo.toml",
+        "kernel\\drivers\\axdma\\src\\dma.rs",
+        "kernel\\drivers\\axdma\\src\\lib.rs",
+        "kernel\\drivers\\axdriver\\Cargo.toml",
+        "kernel\\drivers\\axdriver\\src\\bus\\mmio.rs",
+        "kernel\\drivers\\axdriver\\src\\bus\\pci.rs",
+        "kernel\\drivers\\axdriver\\src\\drivers.rs",
+        "kernel\\drivers\\axdriver\\src\\dummy.rs",
+        "kernel\\drivers\\axdriver\\src\\ixgbe.rs",
+        "kernel\\drivers\\axdriver\\src\\lib.rs",
+        "kernel\\drivers\\axdriver\\src\\macros.rs",
+        "kernel\\drivers\\axdriver\\src\\structs\\dyn.rs",
+        "kernel\\drivers\\axdriver\\src\\structs\\mod.rs",
+        "kernel\\drivers\\axdriver\\src\\structs\\static.rs",
+        "kernel\\drivers\\axdriver\\src\\virtio.rs",
+        "kernel\\fs\\axfs\\src\\api\\file.rs",
+        "kernel\\fs\\axfs\\src\\dev.rs",
+        "kernel\\fs\\axfs\\src\\fs\\fatfs.rs",
+        "kernel\\fs\\axfs\\tests\\test_fatfs.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\bench.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\dns.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\listen_table.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\udp.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\udp_loopback.rs",
+        "kernel\\smp\\axipi\\src\\event.rs",
+        "kernel\\smp\\axipi\\src\\queue.rs",
+        "kernel\\task\\axtask\\src\\run_queue.rs",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "scripts\\check_g012_syscall_review_hotspots.py",
+        "scripts\\ltp_summary.py",
+        "tools\\bwbench_client\\src\\device.rs",
+        "tools\\raspi4\\chainloader\\src\\_arch\\aarch64\\cpu.rs",
+        "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\bcm\\bcm2xxx_gpio.rs",
+        "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\bcm\\bcm2xxx_pl011_uart.rs",
+        "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\common.rs",
+        "tools\\raspi4\\chainloader\\src\\bsp\\raspberrypi\\driver.rs",
+        "tools\\raspi4\\chainloader\\src\\console.rs",
+        "tools\\raspi4\\chainloader\\src\\console\\null_console.rs",
+        "tools\\raspi4\\chainloader\\src\\driver.rs",
+        "tools\\raspi4\\chainloader\\src\\main.rs",
+        "tools\\raspi4\\chainloader\\src\\print.rs",
+        "ulib\\axlibc\\include\\termios.h",
+        "ulib\\axstd\\src\\fs\\file.rs",
+        "ulib\\axstd\\src\\io\\stdio.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs"
+      ],
+      "file_count": 60,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\drivers\\axdma\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "76",
+          "end_line": "78",
+          "outgoing_call_count": 221,
+          "summary": "这个代码块定义了一个常量构造函数 `new`，它接收一个 `u64` 类型的地址参数，并返回一个包装了该地址的 `Self` 类型实例。该函数被标记为 `const`，因此可以在编译期常量环境中调用。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\bcm\\bcm2xxx_gpio.rs",
+          "language": "rust",
+          "start_line": "134",
+          "end_line": "138",
+          "outgoing_call_count": 221,
+          "summary": "该函数是 GPIO 驱动结构体的构造函数，通过给定的 MMIO 基地址创建一个新的 GPIO 实例，内部委托给 Registers::new 完成底层寄存器映射。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\driver.rs",
+          "language": "rust",
+          "start_line": "101",
+          "end_line": "105",
+          "outgoing_call_count": 221,
+          "summary": "构造一个 DriverManager 实例，内部封装了 NullLock 和 DriverManagerInner 的新实例，用于初始化驱动程序管理器。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\bcm\\bcm2xxx_gpio.rs",
+          "language": "rust",
+          "start_line": "207",
+          "end_line": "211",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的 GPIO 实例，通过传入 MMIO 基地址初始化内部 GPIOInner 结构，并用 NullLock 封装以实现无锁的不可变访问。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\driver.rs",
+          "language": "rust",
+          "start_line": "69",
+          "end_line": "74",
+          "outgoing_call_count": 221,
+          "summary": "创建一个 DriverList 实例，初始化 next_index 为 0，并将所有驱动描述符（descriptors）填充为 None。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\bcm\\bcm2xxx_pl011_uart.rs",
+          "language": "rust",
+          "start_line": "195",
+          "end_line": "201",
+          "outgoing_call_count": 221,
+          "summary": "这个代码块定义了 UART 驱动结构体的构造函数 `new`，用于创建一个新的 `Self` 实例，初始化寄存器映射和读写计数器。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\bwbench_client\\src\\device.rs",
+          "language": "rust",
+          "start_line": "61",
+          "end_line": "109",
+          "outgoing_call_count": 221,
+          "summary": "在Linux系统上创建一个网络设备对象，通过原始套接字获取设备的MAC地址和MTU，并绑定接口；在其他系统上返回错误。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\bcm\\bcm2xxx_pl011_uart.rs",
+          "language": "rust",
+          "start_line": "333",
+          "end_line": "337",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的PL011 UART实例，通过调用其内部初始化函数并包装在NullLock中，实现无锁并发访问。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\driver.rs",
+          "language": "rust",
+          "start_line": "83",
+          "end_line": "91",
+          "outgoing_call_count": 221,
+          "summary": "这个代码块定义了一个构造函数 `new`，用于创建包含设备驱动引用和可选的后初始化回调的结构体实例。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\common.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "29",
+          "outgoing_call_count": 221,
+          "summary": "定义一个公共的不安全构造函数，用于初始化一个包含起始地址和 PhantomData 的结构体实例。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 667,
+      "outgoing_edge_count": 4868,
+      "internal_edge_count": 2915,
+      "external_edge_count": 1953,
+      "internal_call_ratio": 0.5988,
+      "external_call_ratio": 0.4012,
+      "module_weight": 0.223,
+      "files": [
+        "Makefile",
+        "api/arceos_posix_api/src/imp/fs.rs",
+        "api\\arceos_api\\src\\imp\\fs.rs",
+        "api\\arceos_api\\src\\imp\\mod.rs",
+        "api\\arceos_api\\src\\lib.rs",
+        "api\\arceos_api\\src\\macros.rs",
+        "api\\arceos_posix_api\\build.rs",
+        "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+        "api\\arceos_posix_api\\src\\imp\\fd_ops.rs",
+        "api\\arceos_posix_api\\src\\imp\\fs.rs",
+        "api\\arceos_posix_api\\src\\imp\\io.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\epoll.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\select.rs",
+        "api\\arceos_posix_api\\src\\imp\\net.rs",
+        "api\\arceos_posix_api\\src\\imp\\pipe.rs",
+        "api\\arceos_posix_api\\src\\imp\\resources.rs",
+        "api\\arceos_posix_api\\src\\imp\\stdio.rs",
+        "api\\arceos_posix_api\\src\\imp\\time.rs",
+        "api\\arceos_posix_api\\src\\utils.rs",
+        "kernel/fs/axfs/src/fops.rs",
+        "kernel/fs/axfs/src/fs/ext4fs.rs",
+        "kernel\\arch\\axhal\\src\\dummy.rs",
+        "kernel\\diagnostics\\axlog\\src\\lib.rs",
+        "kernel\\fs\\axfs\\Cargo.toml",
+        "kernel\\fs\\axfs\\src\\api\\dir.rs",
+        "kernel\\fs\\axfs\\src\\api\\file.rs",
+        "kernel\\fs\\axfs\\src\\api\\mod.rs",
+        "kernel\\fs\\axfs\\src\\dev.rs",
+        "kernel\\fs\\axfs\\src\\fops.rs",
+        "kernel\\fs\\axfs\\src\\fs\\ext4fs.rs",
+        "kernel\\fs\\axfs\\src\\fs\\fatfs.rs",
+        "kernel\\fs\\axfs\\src\\fs\\myfs.rs",
+        "kernel\\fs\\axfs\\src\\lib.rs",
+        "kernel\\fs\\axfs\\src\\mounts.rs",
+        "kernel\\fs\\axfs\\src\\root.rs",
+        "kernel\\fs\\axfs\\tests\\test_common\\mod.rs",
+        "kernel\\fs\\axfs\\tests\\test_ramfs.rs",
+        "kernel\\memory\\axmm\\src\\aspace.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\loopback.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\task\\axtask\\src\\task.rs",
+        "kernel\\task\\axtask\\src\\task_ext.rs",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "scripts\\check_g012_syscall_review_hotspots.py",
+        "tools\\deptool\\Makefile",
+        "tools\\deptool\\src\\cmd_parser.rs",
+        "tools\\raspi4\\chainloader\\Makefile",
+        "tools\\raspi4\\chainloader\\src\\bsp\\device_driver\\bcm\\bcm2xxx_pl011_uart.rs",
+        "tools\\raspi4\\chainloader\\src\\console.rs",
+        "tools\\raspi4\\chainloader\\src\\console\\null_console.rs",
+        "ulib/axlibc/src/io.rs",
+        "ulib/axlibc/src/strftime.rs",
+        "ulib/axstd/src/fs/dir.rs",
+        "ulib/axstd/src/fs/file.rs",
+        "ulib/axstd/src/fs/mod.rs",
+        "ulib/axstd/src/io/stdio.rs",
+        "ulib\\axlibc\\src\\fd_ops.rs",
+        "ulib\\axlibc\\src\\fs.rs",
+        "ulib\\axlibc\\src\\io.rs",
+        "ulib\\axlibc\\src\\strftime.rs",
+        "ulib\\axstd\\src\\env.rs",
+        "ulib\\axstd\\src\\fs\\dir.rs",
+        "ulib\\axstd\\src\\fs\\file.rs",
+        "ulib\\axstd\\src\\fs\\mod.rs",
+        "ulib\\axstd\\src\\io\\stdio.rs",
+        "ulib\\axstd\\src\\net\\tcp.rs",
+        "user\\shell\\src\\main.rs",
+        "user\\shell\\src\\ramfs.rs",
+        "user\\shell\\src\\uspace\\memory_map.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs",
+        "user\\shell\\src\\uspace\\process_lifecycle.rs",
+        "user\\shell\\src\\uspace\\synthetic_fs.rs",
+        "user\\shell\\src\\uspace\\user_memory.rs"
+      ],
+      "file_count": 74,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\fs\\axfs\\src\\fs\\ext4fs.rs",
+          "language": "rust",
+          "start_line": "430",
+          "end_line": "437",
+          "outgoing_call_count": 221,
+          "summary": "该函数是某个结构体的构造函数，用于创建一个新的实例，初始化其中的四个字段：entries（BTreeMap）、lru（VecDeque）、observed_reads（BTreeMap）和uncacheable（BTreeMap），所有字段均为空容器。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "user\\shell\\src\\uspace\\synthetic_fs.rs",
+          "language": "rust",
+          "start_line": "1325",
+          "end_line": "1332",
+          "outgoing_call_count": 221,
+          "summary": "该函数是 ProcSysFile 结构体的构造函数，用于初始化一个表示合成文件系统（procfs/sysfs 风格）中文件条目的实例。它接收文件名路径、文件类型标识和状态标志位，并将 offset 字段默认设置为 0，返回一个新构建的 Self 对象。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\fd_ops.rs",
+          "language": "rust",
+          "start_line": "40",
+          "end_line": "42",
+          "outgoing_call_count": 221,
+          "summary": "该代码块定义了一个名为 `new` 的关联函数，用于创建一个结构体实例。它接受一个 `Arc<dyn FileLike>` 类型的参数 `file`，并将其赋值给结构体的 `file` 字段，同时将 `fd_flags` 字段初始化为 0。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\fs\\axfs\\src\\fs\\ext4fs.rs",
+          "language": "rust",
+          "start_line": "300",
+          "end_line": "309",
+          "outgoing_call_count": 221,
+          "summary": "初始化并返回一个结构体实例，该实例包含用于管理缓存条目的多个集合和计数器，包括一个BTreeMap存储条目、一个VecDeque实现LRU、两个BTreeMap分别记录已观察读取和保留填充、以及总字节数和保留字节数计数器。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\fs\\axfs\\src\\fs\\fatfs.rs",
+          "language": "rust",
+          "start_line": "32",
+          "end_line": "41",
+          "outgoing_call_count": 221,
+          "summary": "这个函数是FAT文件系统包装结构体的构造函数。它接收一个Disk对象，先对其进行格式化（创建FAT16文件系统），然后使用格式化后的磁盘初始化一个FAT文件系统实例，并返回包含该实例和空根目录字段的结构体。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "ulib/axstd/src/fs/dir.rs",
+          "language": "rust",
+          "start_line": "35",
+          "end_line": "50",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的 ReadDir 迭代器，用于读取指定目录的内容。它通过调用 ax_open_dir 系统接口打开目录，并初始化迭代器状态，包括一个空的 dirent_buf（最多容纳 31 个目录项）。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel/fs/axfs/src/fs/ext4fs.rs",
+          "language": "rust",
+          "start_line": "567",
+          "end_line": "569",
+          "outgoing_call_count": 221,
+          "summary": "这个函数用于创建结构体实例，它接受一个指向已加锁Ext4文件系统的原子引用计数指针（Arc<LockedExt4>）和一个路径字符串，然后直接存储这两个字段到自身并返回。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\fs\\axfs\\src\\api\\dir.rs",
+          "language": "rust",
+          "start_line": "32",
+          "end_line": "46",
+          "outgoing_call_count": 221,
+          "summary": "此代码块定义了一个`new`函数，该函数根据给定的路径创建一个`ReadDir`结构体实例，用于读取目录内容。它通过打开目录、初始化一个空目录项缓冲区来准备迭代目录条目。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\fs\\axfs\\src\\root.rs",
+          "language": "rust",
+          "start_line": "60",
+          "end_line": "66",
+          "outgoing_call_count": 221,
+          "summary": "该函数是某个结构体（推测为与文件系统根目录相关的结构体）的构造函数，用于创建一个新的实例，并将所有字段初始化为默认值或None。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "ulib\\axstd\\src\\fs\\file.rs",
+          "language": "rust",
+          "start_line": "27",
+          "end_line": "29",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的 OpenOptions 实例，通过调用底层 API 的 AxOpenOptions::new() 进行初始化。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 30,
+      "outgoing_edge_count": 125,
+      "internal_edge_count": 71,
+      "external_edge_count": 54,
+      "internal_call_ratio": 0.568,
+      "external_call_ratio": 0.432,
+      "module_weight": 0.0083,
+      "files": [
+        "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+        "kernel\\arch\\axhal\\src\\dummy.rs",
+        "kernel\\arch\\axhal\\src\\irq.rs",
+        "kernel\\arch\\axhal\\src\\paging.rs",
+        "kernel\\drivers\\axdriver\\src\\structs\\dyn.rs",
+        "kernel\\drivers\\axdriver\\src\\structs\\static.rs",
+        "kernel\\fs\\axfs\\src\\api\\file.rs",
+        "kernel\\fs\\axfs\\src\\fops.rs",
+        "kernel\\memory\\axmm\\src\\backend\\alloc.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\bench.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\smp\\axipi\\src\\event.rs",
+        "kernel\\smp\\axipi\\src\\lib.rs",
+        "kernel\\smp\\axipi\\src\\queue.rs",
+        "kernel\\sync\\axsync\\src\\mutex.rs",
+        "tools\\bwbench_client\\src\\main.rs",
+        "tools\\raspi4\\chainloader\\src\\bsp\\raspberrypi\\memory.rs",
+        "user\\shell\\src\\uspace\\memory_policy.rs",
+        "user\\shell\\src\\uspace\\process_lifecycle.rs",
+        "user\\shell\\src\\uspace\\resource_sched.rs",
+        "user\\shell\\src\\uspace\\task_context.rs"
+      ],
+      "file_count": 22,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\smp\\axipi\\src\\event.rs",
+          "language": "rust",
+          "start_line": "8",
+          "end_line": "10",
+          "outgoing_call_count": 221,
+          "summary": "构造一个事件回调处理器，将传入的闭包回调包装到Box<dyn FnOnce>中并存储为新实例"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\smp\\axipi\\src\\event.rs",
+          "language": "rust",
+          "start_line": "30",
+          "end_line": "32",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的 Event 实例，该实例包装一个静态生命周期的回调函数在 Arc 智能指针中。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\smp\\axipi\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "24",
+          "end_line": "28",
+          "outgoing_call_count": 149,
+          "summary": "该代码块用于初始化IPI事件队列，通过访问每个CPU的局部存储，将IPI事件队列初始化一次。"
+        },
+        {
+          "name": "handle_cow_fault",
+          "normalized_name": "handle_cow_fault",
+          "file_path": "kernel\\memory\\axmm\\src\\backend\\alloc.rs",
+          "language": "rust",
+          "start_line": "262",
+          "end_line": "318",
+          "outgoing_call_count": 30,
+          "summary": "处理写时复制（Copy-on-Write, COW）缺页异常的函数：当发生对共享页面的写操作时，根据共享帧计数决定是直接修改权限还是复制物理页面再映射，最终恢复写权限或分配新帧并更新页表。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "591",
+          "end_line": "597",
+          "outgoing_call_count": 26,
+          "summary": "该函数实现了Default trait的default方法，通过将自身类型的内存区域全部清零（填充0字节）来生成一个默认实例，用于初始化通常为C结构体的类型。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "405",
+          "end_line": "411",
+          "outgoing_call_count": 26,
+          "summary": "为某个结构体实现Default trait，创建全零初始化的实例（通过MaybeUninit和write_bytes将内存置零后假设初始化）。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "kernel\\drivers\\axdriver\\src\\structs\\static.rs",
+          "language": "rust",
+          "start_line": "72",
+          "end_line": "74",
+          "outgoing_call_count": 26,
+          "summary": "为某个结构体实现 Default trait 的 default 方法，通过委托内部字段的 Default 实现来生成默认实例"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "kernel\\fs\\axfs\\src\\fops.rs",
+          "language": "rust",
+          "start_line": "76",
+          "end_line": "78",
+          "outgoing_call_count": 26,
+          "summary": "为某个类型实现 Default trait 的 default 方法，该方法委托调用 Self::new() 来返回默认实例。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "521",
+          "end_line": "527",
+          "outgoing_call_count": 26,
+          "summary": "为结构体实现Default trait，通过写零字节创建全零初始化实例，适用于C类型结构体（如ctypes）的默认值生成。"
+        },
+        {
+          "name": "default",
+          "normalized_name": "default",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "472",
+          "end_line": "478",
+          "outgoing_call_count": 26,
+          "summary": "为某个类型实现Default trait的default方法，通过将所有字节置零来初始化结构体，返回一个全零的实例。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "io": {
+      "module_name": "io",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "api\\arceos_posix_api\\src\\imp\\pipe.rs",
+        "api\\arceos_posix_api\\src\\imp\\pthread\\mutex.rs",
+        "api\\arceos_posix_api\\src\\signal.rs",
+        "kernel/sync/axsync/src/mutex.rs",
+        "kernel\\fs\\axfs\\src\\fs\\ext4fs.rs",
+        "kernel\\sync\\axsync\\src\\mutex.rs",
+        "tools\\raspi4\\chainloader\\src\\synchronization.rs",
+        "ulib/axlibc/src/time.rs",
+        "ulib\\axstd\\src\\io\\stdio.rs",
+        "user\\shell\\src\\uspace\\memory_map.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs"
+      ],
+      "file_count": 11,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\sync\\axsync\\src\\mutex.rs",
+          "language": "rust",
+          "start_line": "20",
+          "end_line": "25",
+          "outgoing_call_count": 221,
+          "summary": "此代码块定义了 Mutex 结构体的构造函数 `new`，它创建一个新的互斥锁实例，初始化等待队列和持有者 ID。"
+        },
+        {
+          "name": "impl LockedExt4 {",
+          "normalized_name": "impl LockedExt4 {",
+          "file_path": "kernel\\fs\\axfs\\src\\fs\\ext4fs.rs",
+          "language": "rust",
+          "start_line": "93",
+          "end_line": "243",
+          "outgoing_call_count": 97,
+          "summary": "LockedExt4 结构体的实现，提供对 Ext4 文件系统的线程安全访问，包括元数据读取、文件读取（支持缓存）、目录读取（支持缓存）等功能。通过内部锁 Mutex 和多个缓存层（metadata_cache, read_cache, dir_cache）来优化性能。"
+        },
+        {
+          "name": "lock",
+          "normalized_name": "lock",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\pthread\\mutex.rs",
+          "language": "rust",
+          "start_line": "69",
+          "end_line": "94",
+          "outgoing_call_count": 38,
+          "summary": "这是POSIX pthread互斥锁的lock操作实现，尝试用原子操作获取锁的所有权，如果锁已被当前线程持有则根据锁类型（普通、错误检查、递归）处理死锁或递归加锁，否则让出CPU等待。"
+        },
+        {
+          "name": "lock",
+          "normalized_name": "lock",
+          "file_path": "ulib\\axstd\\src\\io\\stdio.rs",
+          "language": "rust",
+          "start_line": 126,
+          "end_line": 130,
+          "outgoing_call_count": 38,
+          "summary": "该函数返回一个 StdoutLock 实例，通过调用 self.inner.lock() 获取内部互斥锁的所有权，实现对标准输出写入的同步访问。"
+        },
+        {
+          "name": "lock",
+          "normalized_name": "lock",
+          "file_path": "tools\\raspi4\\chainloader\\src\\synchronization.rs",
+          "language": "rust",
+          "start_line": "70",
+          "end_line": "76",
+          "outgoing_call_count": 38,
+          "summary": "该函数通过不安全代码获取内部可变引用，并执行用户提供的闭包。它模拟了锁的获取过程，但注释说明实际没有多线程保护，因此不是真正的锁。"
+        },
+        {
+          "name": "lock",
+          "normalized_name": "lock",
+          "file_path": "ulib\\axstd\\src\\io\\stdio.rs",
+          "language": "rust",
+          "start_line": "51",
+          "end_line": "57",
+          "outgoing_call_count": 38,
+          "summary": "获取标准输入句柄的锁，返回一个具有'static生命周期的StdinLock，依赖于底层Mutex是静态的实现细节。"
+        },
+        {
+          "name": "lock",
+          "normalized_name": "lock",
+          "file_path": "kernel\\sync\\axsync\\src\\mutex.rs",
+          "language": "rust",
+          "start_line": "39",
+          "end_line": "63",
+          "outgoing_call_count": 38,
+          "summary": "实现互斥锁的锁定操作：通过原子比较交换尝试获取锁，若失败则等待锁释放后重试，并检测死锁（同一线程重复加锁）。"
+        },
+        {
+          "name": "unsafe impl lock_api::RawMutex for RawMutex {",
+          "normalized_name": "RawMutex for RawMutex {",
+          "file_path": "kernel\\sync\\axsync\\src\\mutex.rs",
+          "language": "rust",
+          "start_line": "28",
+          "end_line": "91",
+          "outgoing_call_count": 36,
+          "summary": "为自定义的RawMutex类型实现lock_api库中的RawMutex trait，提供互斥锁的底层操作（加锁、尝试加锁、解锁、检查锁定状态），基于原子变量和等待队列实现，并支持递归检测和死锁避免。"
+        },
+        {
+          "name": "set_nonblocking",
+          "normalized_name": "set_nonblocking",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\pipe.rs",
+          "language": "rust",
+          "start_line": "369",
+          "end_line": "376",
+          "outgoing_call_count": 27,
+          "summary": "设置管道或类似文件描述符的非阻塞模式，并在设置为非阻塞时通知可读和可写事件。"
+        },
+        {
+          "name": "unlock",
+          "normalized_name": "unlock",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\pthread\\mutex.rs",
+          "language": "rust",
+          "start_line": "115",
+          "end_line": "142",
+          "outgoing_call_count": 24,
+          "summary": "实现 POSIX 递归互斥锁的解锁操作，处理递归锁的递减和非递归锁的原子释放，并验证调用者是否为锁的拥有者。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 261,
+      "outgoing_edge_count": 2614,
+      "internal_edge_count": 1489,
+      "external_edge_count": 1125,
+      "internal_call_ratio": 0.5696,
+      "external_call_ratio": 0.4304,
+      "module_weight": 0.0998,
+      "files": [
+        "api\\arceos_api\\src\\imp\\mem.rs",
+        "api\\arceos_api\\src\\lib.rs",
+        "api\\arceos_api\\src\\macros.rs",
+        "api\\arceos_posix_api\\src\\imp\\net.rs",
+        "kernel/memory/axalloc/src/lib.rs",
+        "kernel\\arch\\axhal\\src\\dummy.rs",
+        "kernel\\arch\\axhal\\src\\mem.rs",
+        "kernel\\arch\\axhal\\src\\paging.rs",
+        "kernel\\arch\\axhal\\src\\tls.rs",
+        "kernel\\drivers\\axdma\\src\\dma.rs",
+        "kernel\\drivers\\axdma\\src\\lib.rs",
+        "kernel\\drivers\\axdriver\\src\\dummy.rs",
+        "kernel\\drivers\\axdriver\\src\\ixgbe.rs",
+        "kernel\\drivers\\axdriver\\src\\virtio.rs",
+        "kernel\\fs\\axfs\\src\\mounts.rs",
+        "kernel\\memory\\axalloc\\Cargo.toml",
+        "kernel\\memory\\axalloc\\src\\lib.rs",
+        "kernel\\memory\\axalloc\\src\\page.rs",
+        "kernel\\memory\\axmm\\Cargo.toml",
+        "kernel\\memory\\axmm\\src\\aspace.rs",
+        "kernel\\memory\\axmm\\src\\backend\\alloc.rs",
+        "kernel\\memory\\axmm\\src\\backend\\linear.rs",
+        "kernel\\memory\\axmm\\src\\backend\\mod.rs",
+        "kernel\\memory\\axmm\\src\\lib.rs",
+        "kernel\\namespace\\axns\\src\\lib.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\task\\axtask\\src\\task.rs",
+        "scripts/ltp_summary.py",
+        "scripts\\ltp_summary.py",
+        "scripts\\test_ltp_summary.py",
+        "ulib\\axlibc\\c\\mmap.c",
+        "ulib\\axlibc\\src\\malloc.rs",
+        "ulib\\axlibc\\src\\net.rs",
+        "user/shell/src/uspace/memory_map.rs",
+        "user\\shell\\src\\uspace\\memory_map.rs",
+        "user\\shell\\src\\uspace\\memory_policy.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs",
+        "user\\shell\\src\\uspace\\process_lifecycle.rs",
+        "user\\shell\\src\\uspace\\synthetic_fs.rs",
+        "user\\shell\\src\\uspace\\user_memory.rs"
+      ],
+      "file_count": 41,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\memory\\axalloc\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "176",
+          "end_line": "181",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的分配器实例，包含一个字节分配器和一个位图页分配器，均使用自旋锁且禁止中断保护。"
+        },
+        {
+          "name": "impl AddrSpace {",
+          "normalized_name": "impl AddrSpace {",
+          "file_path": "kernel\\memory\\axmm\\src\\aspace.rs",
+          "language": "rust",
+          "start_line": "41",
+          "end_line": "627",
+          "outgoing_call_count": 193,
+          "summary": "该代码块实现了一个地址空间（AddrSpace）结构体的方法集合，提供了虚拟地址空间管理功能，包括创建、映射、取消映射、保护、复制映射、克隆用户映射、处理页错误、读取写入数据、查询地址信息等。该地址空间包含一个虚拟地址范围、一个内存区域集合（MemorySet）和一个页表（PageTable），支持线性映射、分配映射、共享帧映射等多种后端。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\memory\\axalloc\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "201",
+          "end_line": "209",
+          "outgoing_call_count": 149,
+          "summary": "初始化内存分配器的内部组件：先初始化物理页分配器，然后从物理页分配器中分配一个初始堆（大小为MIN_HEAP_SIZE），再用该堆初始化块分配器（balloc）。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\arch\\axhal\\src\\mem.rs",
+          "language": "rust",
+          "start_line": "39",
+          "end_line": "111",
+          "outgoing_call_count": 149,
+          "summary": "初始化物理内存区域管理系统，收集内核镜像段、MMIO、保留区域和空闲RAM区域，并进行排序和重叠检查，最终全局初始化所有内存区域列表。"
+        },
+        {
+          "name": "impl Backend {",
+          "normalized_name": "impl Backend {",
+          "file_path": "kernel\\memory\\axmm\\src\\backend\\alloc.rs",
+          "language": "rust",
+          "start_line": "96",
+          "end_line": "391",
+          "outgoing_call_count": 108,
+          "summary": "实现了内存分配后端（Backend），支持两种映射模式：Alloc（直接映射并可能预分配物理帧）和 Shared（共享页映射，用于进程间共享内存）。核心功能包括 map_alloc、unmap_alloc、map_shared、unmap_shared，以及处理缺页异常时涉及的写时复制（COW）和新鲜帧分配。"
+        },
+        {
+          "name": "impl Backend {",
+          "normalized_name": "impl Backend {",
+          "file_path": "kernel\\memory\\axmm\\src\\backend\\mod.rs",
+          "language": "rust",
+          "start_line": "108",
+          "end_line": "150",
+          "outgoing_call_count": 108,
+          "summary": "这个代码块是Backend枚举类型的实现，定义了四个方法：kind_name返回映射类型名称；alloc_missing_on_fault判断缺页时是否需要分配物理页面；shared_page查询共享页面的物理地址和映射标志；handle_page_fault根据不同的后端分支处理缺页异常。"
+        },
+        {
+          "name": "impl Backend {",
+          "normalized_name": "impl Backend {",
+          "file_path": "kernel\\memory\\axmm\\src\\backend\\linear.rs",
+          "language": "rust",
+          "start_line": "6",
+          "end_line": "44",
+          "outgoing_call_count": 108,
+          "summary": "实现了一个线性映射后端，支持根据固定的物理地址偏移量将虚拟地址映射到物理地址，以及解除映射。"
+        },
+        {
+          "name": "sys_mmap",
+          "normalized_name": "sys_mmap",
+          "file_path": "user\\shell\\src\\uspace\\memory_map.rs",
+          "language": "rust",
+          "start_line": "154",
+          "end_line": "449",
+          "outgoing_call_count": 100,
+          "summary": "实现用户进程的 mmap 系统调用，根据传入的地址、长度、保护位、标志、文件描述符和偏移量，在用户进程的地址空间中分配或映射内存区域，支持匿名映射、文件映射、固定地址映射、共享写控制、进程数限制检查、缓存加速和部分文件读取时的 SIGBUS 保护。"
+        },
+        {
+          "name": "drop",
+          "normalized_name": "drop",
+          "file_path": "kernel\\memory\\axalloc\\src\\page.rs",
+          "language": "rust",
+          "start_line": "96",
+          "end_line": "98",
+          "outgoing_call_count": 95,
+          "summary": "该代码块实现了 Drop trait 的 drop 方法，用于在对象销毁时释放之前分配的物理页框。它通过调用全局分配器的 dealloc_pages 函数，将起始虚拟地址和页框数量传递给它，以归还内存页。"
+        },
+        {
+          "name": "drop",
+          "normalized_name": "drop",
+          "file_path": "kernel\\arch\\axhal\\src\\tls.rs",
+          "language": "rust",
+          "start_line": "90",
+          "end_line": "94",
+          "outgoing_call_count": 95,
+          "summary": "此代码块实现了 Drop trait 的 drop 方法，用于在 TLS（线程局部存储）相关对象被销毁时释放之前通过 alloc::alloc 分配的内存。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "namespace": {
+      "module_name": "namespace",
+      "function_count": 6,
+      "outgoing_edge_count": 24,
+      "internal_edge_count": 13,
+      "external_edge_count": 11,
+      "internal_call_ratio": 0.5417,
+      "external_call_ratio": 0.4583,
+      "module_weight": 0.0016,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "net": {
+      "module_name": "net",
+      "function_count": 22,
+      "outgoing_edge_count": 115,
+      "internal_edge_count": 76,
+      "external_edge_count": 39,
+      "internal_call_ratio": 0.6609,
+      "external_call_ratio": 0.3391,
+      "module_weight": 0.0065,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 24,
+      "outgoing_edge_count": 333,
+      "internal_edge_count": 227,
+      "external_edge_count": 106,
+      "internal_call_ratio": 0.6817,
+      "external_call_ratio": 0.3183,
+      "module_weight": 0.0108,
+      "files": [
+        "api\\arceos_api\\src\\imp\\net.rs",
+        "api\\arceos_api\\src\\lib.rs",
+        "api\\arceos_api\\src\\macros.rs",
+        "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+        "api\\arceos_posix_api\\src\\imp\\net.rs",
+        "api\\arceos_posix_api\\src\\imp\\pipe.rs",
+        "api\\arceos_posix_api\\src\\imp\\pthread\\mod.rs",
+        "kernel/net/axnet/src/smoltcp_impl/tcp.rs",
+        "kernel\\arch\\axhal\\src\\dummy.rs",
+        "kernel\\drivers\\axdriver\\src\\dummy.rs",
+        "kernel\\drivers\\axdriver\\src\\structs\\dyn.rs",
+        "kernel\\drivers\\axdriver\\src\\structs\\static.rs",
+        "kernel\\net\\axnet\\src\\lib.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\dns.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\listen_table.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\loopback.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\udp.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\udp_loopback.rs",
+        "kernel\\smp\\axipi\\Cargo.toml",
+        "kernel\\smp\\axipi\\src\\event.rs",
+        "kernel\\smp\\axipi\\src\\lib.rs",
+        "kernel\\smp\\axipi\\src\\queue.rs",
+        "scripts/test_g010_real_kernel_semantics.py",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "scripts\\ltp_summary.py",
+        "scripts\\test_g010_real_kernel_semantics.py",
+        "scripts\\test_g012_syscall_review_hotspots.py",
+        "scripts\\test_ltp_summary.py",
+        "tools\\bwbench_client\\src\\main.rs",
+        "tools\\deptool\\src\\d2_generator.rs",
+        "tools\\deptool\\src\\mermaid_generator.rs",
+        "tools\\raspi4\\chainloader\\src\\driver.rs",
+        "ulib/axstd/src/net/tcp.rs",
+        "ulib\\axlibc\\src\\net.rs",
+        "ulib\\axlibc\\src\\pipe.rs",
+        "ulib\\axstd\\src\\net\\mod.rs",
+        "ulib\\axstd\\src\\net\\socket_addr.rs",
+        "ulib\\axstd\\src\\net\\tcp.rs",
+        "ulib\\axstd\\src\\net\\udp.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs"
+      ],
+      "file_count": 42,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs",
+          "language": "rust",
+          "start_line": 64,
+          "end_line": 81,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1194\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"64\",\n  \"end_line\": \"81\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"构造并返回一个TCP控制块（TcpSocket或类似结构）的初始实例，所有字段均初始化为默认值或安全初值。\",\n  \"logic_steps\": [\n    \"1. 创建结构体实例，初始化state字段为STATE_CLOSED（表示初始关闭状态）。\",\n    \"2. 初始化handle字段为None，表示无底层套接字句柄。\",\n    \"3. 初始化local_addr和peer_addr为UNSPECIFIED_ENDPOINT（未指定的端点地址）。\",\n    \"4. 初始化loopback字段为None。\",\n    \"5. 设置所有布尔标志（nonblock, reuse_addr, nodelay, recv_shutdown, send_shutdown）为false。\",\n    \"6. 初始化recv_timeout和send_timeout为Mutex包装的None（无超时设置）。\",\n    \"7. 初始化recv_buffer_size和send_buffer_size为Mutex包装的常量TCP_RX_BUF_LEN和TCP_TX_BUF_LEN（默认缓冲区大小）。\"\n  ],\n  \"called_functions\": [\n    \"AtomicU8::new\",\n    \"UnsafeCell::new\",\n    \"AtomicBool::new\",\n    \"Mutex::new\"\n  ],\n  \"related_os_module\": \"network\",\n  \"evidence\": \"函数名为new，返回Self，内部使用AtomicU8、UnsafeCell、AtomicBool、Mutex等同步原语初始化字段；字段名state、handle、local_addr、peer_addr等表明是TCP控制块；常量STATE_CLOSED、UNSPECIFIED_ENDPOINT、TCP_RX_BUF_LEN、TCP_TX_BUF_LEN提供了明确语义。\",\n  \"uncertainty\": \"无法确认具体结构体类型名（可能是TcpSocket或自定义类型），但功能清晰。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\udp_loopback.rs",
+          "language": "rust",
+          "start_line": 27,
+          "end_line": 36,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1285\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\udp_loopback.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"27\",\n  \"end_line\": \"36\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"构造一个UdpLoopback实例，初始化内部状态，包括接收缓冲区大小、已排队字节计数器、包数量限制和空的队列。\",\n  \"logic_steps\": [\n    \"创建一个Arc<Mutex<UdpLoopbackState>>，其中UdpLoopbackState的queue初始化为空的VecDeque。\",\n    \"queued_bytes初始化为0。\",\n    \"byte_limit设置为传入的recv_buffer_size。\",\n    \"packet_limit通过调用udp_packet_metadata_len(recv_buffer_size)计算得出。\",\n    \"返回Self实例，其state字段为上述Arc<Mutex<...>>。\"\n  ],\n  \"called_functions\": [\n    \"Arc::new\",\n    \"Mutex::new\",\n    \"VecDeque::new\",\n    \"udp_packet_metadata_len\"\n  ],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"函数new创建了一个包含UdpLoopbackState结构体的Arc<Mutex<...>>，其中queue为VecDeque::new()，queued_bytes为0，byte_limit为recv_buffer_size，packet_limit为udp_packet_metadata_len(recv_buffer_size)的返回值。这是典型的初始化模式。\",\n  \"uncertainty\": \"无法确定udp_packet_metadata_len的具体实现，但不影响对new函数逻辑的分析。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs",
+          "language": "rust",
+          "start_line": 172,
+          "end_line": 184,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1165\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"172\",\n  \"end_line\": \"184\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"构造一个网络接口实例，配置硬件地址和随机种子，并初始化 smoltcp 的 Interface 对象。\",\n  \"logic_steps\": [\n    \"从参数 ether_addr 创建 Config 对象，设置硬件地址为 Ethernet 类型。\",\n    \"将常量 RANDOM_SEED 赋值给 config.random_seed。\",\n    \"用传入的 dev 构造一个 DeviceWrapper 包装器。\",\n    \"调用 Interface::new 创建网络接口，传入 config、可变设备引用和当前时间回调函数 Self::current_time()，并用 Mutex 封装。\",\n    \"返回 SmoltcpInterface 结构体，包含 name、ether_addr、dev（Mutex<DeviceWrapper> ）、iface（Mutex<Interface>）。\"\n  ],\n  \"called_functions\": [\n    \"Config::new\",\n    \"DeviceWrapper::new\",\n    \"Mutex::new\",\n    \"Interface::new\",\n    \"Self::current_time\"\n  ],\n  \"related_os_module\": \"driver\",\n  \"evidence\": \"该函数属于 smoltcp_impl 模块，用于初始化网络接口设备驱动层，涉及设备包装和 smoltcp 协议栈的接口构造。\",\n  \"uncertainty\": \"不确定 RANDOM_SEED 的具体值及定义位置；不确定 SmoltcpInterface 结构体的其他字段；不确定 current_time 的具体实现。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\udp.rs",
+          "language": "rust",
+          "start_line": 40,
+          "end_line": 55,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1246\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\udp.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"40\",\n  \"end_line\": \"55\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"创建一个UDP套接字包装器实例，初始化内部字段并添加新套接字到全局套接字集合中。\",\n  \"logic_steps\": [\n    \"通过SocketSetWrapper::new_udp_socket()创建底层UDP套接字。\",\n    \"将创建的套接字添加到全局SOCKET_SET中，获取句柄handle。\",\n    \"构造并返回UdpSocket结构体实例，包含handle、本地地址、对端地址、环回队列、非阻塞标志、地址复用标志、接收超时、发送超时、接收缓冲区大小、发送缓冲区大小等字段。\"\n  ],\n  \"called_functions\": [\n    \"SocketSetWrapper::new_udp_socket\",\n    \"SOCKET_SET.add\",\n    \"UdpLoopbackQueue::new\",\n    \"RwLock::new\",\n    \"AtomicBool::new\",\n    \"Mutex::new\"\n  ],\n  \"related_os_module\": \"driver\",\n  \"evidence\": \"该代码位于axnet的smoltcp_impl/udp.rs中，实现了UDP套接字的new方法，直接使用smoltcp协议栈的SocketSetWrapper创建套接字，属于网络驱动层。\",\n  \"uncertainty\": \"无法确定全局SOCKET_SET的具体定义和初始化方式，但根据常见模式推测其为全局单例套接字集合。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\listen_table.rs",
+          "language": "rust",
+          "start_line": 21,
+          "end_line": 33,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1114\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\listen_table.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"21\",\n  \"end_line\": \"33\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"构造并返回一个包含监听端点、接收/发送缓冲区大小以及两个初始容量为 LISTEN_QUEUE_SIZE 的双端队列的 ListenTable 结构体实例。\",\n  \"logic_steps\": [\n    \"将传入的 listen_endpoint 参数赋值给结构体的 listen_endpoint 字段。\",\n    \"将传入的 recv_buffer_size 和 send_buffer_size 参数分别赋值给结构体的对应字段。\",\n    \"使用 VecDeque::with_capacity(LISTEN_QUEUE_SIZE) 创建两个空的双端队列 syn_queue 和 loopback_queue，并赋值给结构体。\"\n  ],\n  \"called_functions\": [\n    \"VecDeque::with_capacity\"\n  ],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"代码直接构造了结构体，没有涉及任何操作系统模块的具体逻辑，仅用于初始化数据结构。\",\n  \"uncertainty\": \"由于 LISTEN_QUEUE_SIZE 未在片段中定义，其具体值未知；另外无法确定 ListenTable 和 IpListenEndpoint 等类型的具体定义，因此模块归属难以断定。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\listen_table.rs",
+          "language": "rust",
+          "start_line": 60,
+          "end_line": 64,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1120\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\listen_table.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"60\",\n  \"end_line\": \"64\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"构造并返回一个空的 ListenTable 实例，其中包含一个用 Mutex 包裹的空 BTreeMap，用于存储 TCP 监听表项。\",\n  \"logic_steps\": [\n    \"创建一个 ListenTable 结构体实例，其 tcp 字段初始化为 Mutex::new(BTreeMap::new())，即一个受互斥锁保护的空有序映射。\",\n    \"返回该实例。\"\n  ],\n  \"called_functions\": [\n    \"Mutex::new\",\n    \"BTreeMap::new\"\n  ],\n  \"related_os_module\": \"driver\",\n  \"evidence\": \"函数名 new 是 Rust 中常用的构造函数模式；代码内部创建了 Mutex<BTreeMap<...>> 类型，BTreeMap::new() 返回空映射，这是典型的数据结构初始化；文件路径和上下文（listen_table.rs、axnet、smoltcp_impl）表明这是一个网络协议栈中的 TCP 监听表实现，属于网络驱动模块。\",\n  \"uncertainty\": \"由于未提供 ListenTable 结构定义，无法确定 map 的键值类型，但根据文件名和上下文，很可能映射端口到监听器或其他连接信息。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs",
+          "language": "rust",
+          "start_line": 100,
+          "end_line": 102,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1154\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"100\",\n  \"end_line\": \"102\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"创建一个新的包装类型实例，内部包含一个使用空向量初始化的互斥锁保护的SocketSet。\",\n  \"logic_steps\": [\n    \"使用vec![]创建一个空的向量作为SocketSet的初始存储。\",\n    \"调用SocketSet::new(空向量)创建一个新的SocketSet实例。\",\n    \"将SocketSet实例包装在Mutex中，实现互斥访问。\",\n    \"将Mutex包装在Self中，返回包装类型的新实例。\"\n  ],\n  \"called_functions\": [\n    \"Mutex::new\",\n    \"SocketSet::new\",\n    \"vec!\"\n  ],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"代码直接调用了Mutex::new和SocketSet::new，并使用了vec!宏，没有涉及特定操作系统模块的接口。\",\n  \"uncertainty\": \"无法确定Self的具体类型，但可以推断它可能是一个包含Mutex<SocketSet>的元组结构体或新类型包装。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\dns.rs",
+          "language": "rust",
+          "start_line": "19",
+          "end_line": "23",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的DNS解析器实例，包括初始化一个DNS socket并注册到全局Socket集合中。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\smp\\axipi\\src\\queue.rs",
+          "language": "rust",
+          "start_line": 15,
+          "end_line": 19,
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的队列实例，初始化其 events 字段为一个空的 VecDeque。"
+        },
+        {
+          "name": "impl TcpSocket {",
+          "normalized_name": "impl TcpSocket {",
+          "file_path": "kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs",
+          "language": "rust",
+          "start_line": 62,
+          "end_line": 651,
+          "outgoing_call_count": 214,
+          "summary": "{\n  \"block_id\": \"block_1193\",\n  \"file_path\": \"kernel\\net\\axnet\\src\\smoltcp_impl\\tcp.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"62\",\n  \"end_line\": \"651\",\n  \"name\": \"impl TcpSocket {\",\n  \"type\": \"impl\",\n  \"summary\": \"定义TcpSocket结构体的方法实现，包括创建、连接、绑定、监听、接受连接、关闭、读写操作以及选项设置等核心TCP套接字功能，内部通过smoltcp库和回环端点支持网络通信。\",\n  \"logic_steps\": [\n    \"提供了多个构造函数：new（创建CLOSED状态套接字）、new_connected（创建已连接套接字）、new_loopback_connected（创建回环连接套接字），初始化各字段。\",\n    \"local_addr和peer_addr方法根据状态返回本地或对端地址，非连接/监听状态返回NotConnected错误。\",\n    \"is_nonblocking和set_nonblocking读写非阻塞标志。\",\n    \"set_reuse_addr和reuse_addr操作复用地址选项。\",\n    \"set_recv_timeout/recv_timeout和set_send_timeout/send_timeout管理收发超时。\",\n    \"set_recv_buffer_size/set_send_buffer_size在CLOSED状态下调整缓冲区大小，激活后拒绝修改。\",\n    \"connect方法：检查回环地址，通过update_state确保从CLOSED转为CONNECTING，创建smoltcp套接字并调用connect，设置端点，非阻塞模式返回WouldBlock，否则轮询等待连接完成。\",\n    \"bind方法：在CLOSED状态下绑定本地地址，若端口为0则分配临时端口，检查地址可用性。\",\n    \"listen方法：从CLOSED转为LISTENING，设置缓冲区，注册到LISTEN_TABLE。\",\n    \"accept方法：从LISTENING状态下通过LISTEN_TABLE接受回环或smoltcp连接，返回新TcpSocket。\",\n    \"shutdown方法：分别处理流套接字（关闭并移除smoltcp套接字或回环端点）和监听套接字（解除监听），重置状态。\",\n    \"shutdown_read和shutdown_write分别关闭读半部和写半部，调用对应回环或smoltcp操作。\",\n    \"recv方法：检查状态和接收关闭标志，从回环端点或smoltcp套接字读取数据，支持超时阻塞。\",\n    \"send方法：检查状态和发送关闭标志，向回环端点或smoltcp套接字写入数据，支持超时阻塞。\",\n    \"poll方法：根据状态返回读写就绪状态，处理连接中、已连接、监听等不同情况。\",\n    \"nodelay/set_nodelay读写Nagle算法禁用标志，实时应用到smoltcp套接字。\",\n    \"max_segment_size返回IPv4 TCP最大分段大小。\",\n    \"recv_capacity/send_capacity返回当前接收/发送缓冲区容量，回环端点返回固定值。\",\n    \"clear_backing_allocation关闭回环端点或移除smoltcp套接字，用于清理底层资源。\"\n  ],\n  \"called_functions\": [\n    \"SocketAddr::from\",\n    \"IpEndpoint::from\",\n    \"SOCKET_SET.add\",\n    \"SOCKET_SET.with_socket_mut\",\n    \"SOCKET_SET.with_socket\",\n    \"SOCKET_SET.remove\",\n    \"SOCKET_SET.poll_interfaces\",\n    \"ETH0.iface\",\n    \"socket.set_nagle_enabled\",\n    \"socket.connect\",\n    \"socket.close\",\n    \"socket.is_active\",\n    \"socket.may_recv\",\n    \"socket.may_send\",\n    \"socket.recv_queue\",\n    \"socket.can_send\",\n    \"socket.recv_slice\",\n    \"socket.send_slice\",\n    \"socket.recv_capacity\",\n    \"socket.send_capacity\",\n    \"socket.nagle_enabled\",\n    \"socket.local_endpoint\",\n    \"socket.remote_endpoint\",\n    \"LISTEN_TABLE.listen\",\n    \"LISTEN_TABLE.accept\",\n    \"LISTEN_TABLE.accept_loopback\",\n    \"LISTEN_TABLE.unlisten\",\n    \"normalize_socket_buffer_len\",\n    \"get_ephemeral_port\",\n    \"super::is_local_addr\",\n    \"super::tcp_ipv4_max_segment_size\",\n    \"self.update_state\",\n    \"self.bound_endpoint\",\n    \"self.block_on_timeout\",\n    \"self.poll_connect\",\n    \"self.poll_stream\",\n    \"self.poll_listener\",\n    \"self.is_listening\",\n    \"self.is_connected\",\n    \"self.is_connecting\",\n    \"self.loopback_endpoint\",\n    \"self.clear_backing_allocation\",\n    \"endpoint.shutdown\",\n    \"endpoint.shutdown_read\",\n    \"endpoint.shutdown_write\",\n    \"endpoint.recv\",\n    \"endpoint.send\",\n    \"endpoint.local_addr\",\n    \"endpoint.peer_addr\"\n  ],\n  \"related_os_module\": \"network\",\n  \"evidence\": \"代码位于kernel/net/axnet目录，使用smoltcp库实现TCP协议栈，涉及网络套接字的基本操作（bind/connect/listen/accept/recv/send/shutdown/poll），是操作系统网络栈的核心部分。\",\n  \"uncertainty\": \"函数调用链中的某些方法（如update_state、bound_endpoint、block_on_timeout、poll_connect等）在此代码块中未完整展示，其具体实现依赖于同一文件的其他部分或外部模块，但基于调用方式可合理推断其功能。\"\n}"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "networking": {
+      "module_name": "networking",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 268,
+      "outgoing_edge_count": 2890,
+      "internal_edge_count": 1571,
+      "external_edge_count": 1319,
+      "internal_call_ratio": 0.5436,
+      "external_call_ratio": 0.4564,
+      "module_weight": 0.1062,
+      "files": [
+        "api\\arceos_api\\src\\imp\\task.rs",
+        "api\\arceos_api\\src\\lib.rs",
+        "api\\arceos_api\\src\\macros.rs",
+        "api\\arceos_posix_api\\build.rs",
+        "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\epoll.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\mod.rs",
+        "api\\arceos_posix_api\\src\\imp\\pipe.rs",
+        "api\\arceos_posix_api\\src\\imp\\pthread\\mod.rs",
+        "api\\arceos_posix_api\\src\\imp\\pthread\\mutex.rs",
+        "api\\arceos_posix_api\\src\\imp\\task.rs",
+        "kernel\task\taxtask\tsrc\task.rs",
+        "kernel\namespace\\axns\\tests\\test_thread_local.rs",
+        "kernel\\arch\\axhal\\src\\percpu.rs",
+        "kernel\\arch\\axhal\\src\\tls.rs",
+        "kernel\\drivers\\axdriver\\src\\ixgbe.rs",
+        "kernel\\fs\\axfs\\src\\fops.rs",
+        "kernel\\fs\\axfs\\src\\mounts.rs",
+        "kernel\\memory\\axmm\\src\\aspace.rs",
+        "kernel\\namespace\\axns\\src\\lib.rs",
+        "kernel\\namespace\\axns\\tests\\test_global.rs",
+        "kernel\\namespace\\axns\\tests\\test_thread_local.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\task\\axtask\\Cargo.toml",
+        "kernel\\task\\axtask\\src\\api.rs",
+        "kernel\\task\\axtask\\src\\run_queue.rs",
+        "kernel\\task\\axtask\\src\\task.rs",
+        "kernel\\task\\axtask\\src\\task_ext.rs",
+        "kernel\\task\\axtask\\src\\tests.rs",
+        "kernel\\task\\axtask\\src\\timers.rs",
+        "kernel\\task\\axtask\\src\\wait_queue.rs",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "tools\\raspi4\\chainloader\\src\\_arch\\aarch64\\cpu.rs",
+        "tools\\raspi4\\chainloader\\src\\main.rs",
+        "ulib/axlibc/src/io_mpx.rs",
+        "ulib/axlibc/src/pthread.rs",
+        "ulib\\axlibc\\c\\pthread.c",
+        "ulib\\axlibc\\include\\pthread.h",
+        "ulib\\axlibc\\src\\pthread.rs",
+        "ulib\\axlibc\\src\\unistd.rs",
+        "ulib\\axstd\\src\\process.rs",
+        "user/shell/src/uspace/task_registry.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs",
+        "user\\shell\\src\\uspace\\process_abi.rs",
+        "user\\shell\\src\\uspace\\process_lifecycle.rs",
+        "user\\shell\\src\\uspace\\resource_sched.rs",
+        "user\\shell\\src\\uspace\\synthetic_fs.rs",
+        "user\\shell\\src\\uspace\\syscall_dispatch.rs",
+        "user\\shell\\src\\uspace\\task_context.rs",
+        "user\\shell\\src\\uspace\\task_registry.rs",
+        "user\\shell\\src\\uspace\\user_memory.rs"
+      ],
+      "file_count": 52,
+      "core_functions": [
+        {
+          "name": "impl UserProcess {",
+          "normalized_name": "impl UserProcess {",
+          "file_path": "user\\shell\\src\\uspace\\process_abi.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "22",
+          "outgoing_call_count": 547,
+          "summary": "为UserProcess实现了两个方法：personality用于原子加载personality字段（使用Acquire内存顺序），set_personality用于原子存储personality字段（使用Release内存顺序）。这些方法提供了对进程personality属性的线程安全访问。"
+        },
+        {
+          "name": "impl UserProcess {",
+          "normalized_name": "impl UserProcess {",
+          "file_path": "user\\shell\\src\\uspace\\process_lifecycle.rs",
+          "language": "rust",
+          "start_line": "777",
+          "end_line": "2211",
+          "outgoing_call_count": 547,
+          "summary": "UserProcess 结构体的方法实现，涵盖进程生命周期管理、内存映射操作、信号处理、等待子进程、fork等核心功能。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "user\\shell\\src\\uspace\\process_lifecycle.rs",
+          "language": "rust",
+          "start_line": "328",
+          "end_line": "332",
+          "outgoing_call_count": 221,
+          "summary": "这个代码块定义了一个名为 new 的公共函数，用于创建一个包含名为 done 的 AtomicBool 字段的结构体实例，并初始化为 false。该函数返回 Self 类型，可能用于表示进程生命周期中的某个状态标记。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "user\\shell\\src\\uspace\\task_context.rs",
+          "language": "rust",
+          "start_line": "72",
+          "end_line": "117",
+          "outgoing_call_count": 221,
+          "summary": "该函数是 `TaskContext` 的构造函数，用于创建新的任务上下文结构体实例。它接收一个用户进程的引用、初始上下文、清除子线程 ID、信号掩码等参数，初始化所有字段，并在特定编译特性下更新全局任务扩展计数器。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\task\\axtask\\src\\task.rs",
+          "language": "rust",
+          "start_line": "118",
+          "end_line": "138",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的任务（Task），包括分配任务ID、初始化内核栈和任务上下文，并设置入口函数。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\task\\axtask\\src\\task.rs",
+          "language": "rust",
+          "start_line": "89",
+          "end_line": "92",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的唯一标识符，通过全局原子计数器递增生成。"
+        },
+        {
+          "name": "impl TaskInner {",
+          "normalized_name": "impl TaskInner {",
+          "file_path": "kernel\\task\\axtask\\src\\task.rs",
+          "language": "rust",
+          "start_line": "116",
+          "end_line": "264",
+          "outgoing_call_count": 181,
+          "summary": "这个代码块实现了 TaskInner 结构体的多个方法，包括任务创建、状态查询、任务退出等待、CPU亲和性设置、运行时统计等。"
+        },
+        {
+          "name": "impl TaskInner {",
+          "normalized_name": "impl TaskInner {",
+          "file_path": "kernel\\task\\axtask\\src\\task.rs",
+          "language": "rust",
+          "start_line": "267",
+          "end_line": "496",
+          "outgoing_call_count": 181,
+          "summary": "为TaskInner结构体实现方法和功能，包括任务初始化、状态管理、运行时间统计、抢占控制、SMP支持以及退出通知等核心操作。"
+        },
+        {
+          "name": "fork_with_fd_sharing",
+          "normalized_name": "fork_with_fd_sharing",
+          "file_path": "user\\shell\\src\\uspace\\process_lifecycle.rs",
+          "language": "rust",
+          "start_line": "1672",
+          "end_line": "1898",
+          "outgoing_call_count": 156,
+          "summary": "该函数创建并返回一个新的子进程（Arc<UserProcess>），支持按需共享地址空间、文件描述符、可写映射等，并处理 fork 相关的内存区域（如 share_vm、dont_fork、wipe_on_fork）和信号、权限等进程属性的复制。"
+        },
+        {
+          "name": "impl WaitQueue {",
+          "normalized_name": "impl WaitQueue {",
+          "file_path": "kernel\\task\\axtask\\src\\wait_queue.rs",
+          "language": "rust",
+          "start_line": "61",
+          "end_line": "486",
+          "outgoing_call_count": 111,
+          "summary": "该代码块实现了 WaitQueue 结构体的所有方法，包括创建队列、等待（支持条件等待和超时等待）、通知单个/多个/全部任务（支持条件通知）、任务迁移、清理等，是操作系统任务同步机制的核心实现。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "report_generation": {
+      "module_name": "report_generation",
+      "function_count": 41,
+      "outgoing_edge_count": 327,
+      "internal_edge_count": 162,
+      "external_edge_count": 165,
+      "internal_call_ratio": 0.4954,
+      "external_call_ratio": 0.5046,
+      "module_weight": 0.0142,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 229,
+      "outgoing_edge_count": 2167,
+      "internal_edge_count": 1217,
+      "external_edge_count": 950,
+      "internal_call_ratio": 0.5616,
+      "external_call_ratio": 0.4384,
+      "module_weight": 0.0854,
+      "files": [
+        "api\\arceos_api\\src\\imp\\task.rs",
+        "api\\arceos_api\\src\\lib.rs",
+        "api\\arceos_posix_api\\src\\imp\\task.rs",
+        "kernel\task\taxtask\tsrc\task.rs",
+        "kernel\\arch\\axhal\\src\\dummy.rs",
+        "kernel\\arch\\axhal\\src\\lib.rs",
+        "kernel\\arch\\axhal\\src\\percpu.rs",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\sync\\axsync\\src\\mutex.rs",
+        "kernel\\task\\axtask\\src\\api.rs",
+        "kernel\\task\\axtask\\src\\api_s.rs",
+        "kernel\\task\\axtask\\src\\run_queue.rs",
+        "kernel\\task\\axtask\\src\\task.rs",
+        "kernel\\task\\axtask\\src\\task_ext.rs",
+        "kernel\\task\\axtask\\src\\tests.rs",
+        "kernel\\task\\axtask\\src\\timers.rs",
+        "kernel\\task\\axtask\\src\\wait_queue.rs",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "ulib\\axlibc\\c\\sched.c",
+        "ulib\\axlibc\\include\\sched.h",
+        "user\\shell\\src\\uspace\\process_lifecycle.rs",
+        "user\\shell\\src\\uspace\\resource_sched.rs"
+      ],
+      "file_count": 22,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\task\\axtask\\src\\run_queue.rs",
+          "language": "rust",
+          "start_line": "478",
+          "end_line": "489",
+          "outgoing_call_count": 221,
+          "summary": "为运行队列（RunQueue）结构体创建一个新实例，初始化垃圾回收（GC）任务并将其绑定到指定CPU的调度器中。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\task\\axtask\\src\\wait_queue.rs",
+          "language": "rust",
+          "start_line": "63",
+          "end_line": "67",
+          "outgoing_call_count": 221,
+          "summary": "构造一个空的 WaitQueue 实例，内部初始化一个由自旋锁（无中断）保护的 VecDeque 队列。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\task\\axtask\\src\\timers.rs",
+          "language": "rust",
+          "start_line": "110",
+          "end_line": "114",
+          "outgoing_call_count": 149,
+          "summary": "初始化全局定时器列表，通过当前上下文获取或创建 TIMER_LIST，并执行一次性的初始化操作，设置一个新的 TimerList 实例。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\task\\axtask\\src\\run_queue.rs",
+          "language": "rust",
+          "start_line": "709",
+          "end_line": "732",
+          "outgoing_call_count": 149,
+          "summary": "初始化当前CPU的Idle任务和Main任务，并建立运行队列的局部存储关联。"
+        },
+        {
+          "name": "impl AxRunQueue {",
+          "normalized_name": "impl AxRunQueue {",
+          "file_path": "kernel\\task\\axtask\\src\\run_queue.rs",
+          "language": "rust",
+          "start_line": "475",
+          "end_line": "635",
+          "outgoing_call_count": 101,
+          "summary": "该代码块实现了 AxRunQueue 结构体的核心方法，包括：创建带 gc 任务的运行队列 (new)；将任务放入就绪队列并处理状态转换 (put_task_with_state, put_task_with_state_and)；执行核心调度循环，选择下一个任务并切换上下文 (resched, switch_to)。它管理任务的状态转换、调度器交互、上下文切换以及 SMP 下的同步机制。"
+        },
+        {
+          "name": "drop",
+          "normalized_name": "drop",
+          "file_path": "kernel\\task\\axtask\\src\\run_queue.rs",
+          "language": "rust",
+          "start_line": "231",
+          "end_line": "233",
+          "outgoing_call_count": 95,
+          "summary": "实现了`drop`方法，在任务控制块或运行队列相关对象被析构时调用`G::release`来释放当前持有的状态锁或资源"
+        },
+        {
+          "name": "drop",
+          "normalized_name": "drop",
+          "file_path": "kernel\\task\\axtask\\src\\run_queue.rs",
+          "language": "rust",
+          "start_line": "207",
+          "end_line": "209",
+          "outgoing_call_count": 95,
+          "summary": "实现`drop`方法，在对象销毁时调用`G::release(self.state)`释放与状态相关的资源。"
+        },
+        {
+          "name": "impl<G: BaseGuard> CurrentRunQueueRef<'_, G> {",
+          "normalized_name": "impl<G: BaseGuard> CurrentRunQueueRef<'_, G> {",
+          "file_path": "kernel\\task\\axtask\\src\\run_queue.rs",
+          "language": "rust",
+          "start_line": "292",
+          "end_line": "473",
+          "outgoing_call_count": 79,
+          "summary": "This impl block provides methods on CurrentRunQueueRef that manipulate the current task: handling scheduler timer ticks, yielding, migrating, preempting, exiting, blocking, sleeping, and setting priority. These methods typically change the task state and then call resched() to switch to the next ready task."
+        },
+        {
+          "name": "switch_to",
+          "normalized_name": "switch_to",
+          "file_path": "kernel\\task\\axtask\\src\\run_queue.rs",
+          "language": "rust",
+          "start_line": "573",
+          "end_line": "634",
+          "outgoing_call_count": 44,
+          "summary": "该函数是操作系统任务调度器中的核心上下文切换函数，负责从当前任务切换到下一个任务。它在执行前确保中断已禁用，更新任务状态和运行时统计信息，处理多核环境下的任务绑定，最后通过底层汇编或架构相关代码保存当前任务上下文并恢复下一个任务上下文。"
+        },
+        {
+          "name": "notify_and_requeue_where",
+          "normalized_name": "notify_and_requeue_where",
+          "file_path": "kernel\\task\\axtask\\src\\wait_queue.rs",
+          "language": "rust",
+          "start_line": "301",
+          "end_line": "383",
+          "outgoing_call_count": 44,
+          "summary": "从当前等待队列中唤醒指定数量的符合条件的任务，同时将指定数量的剩余任务重新排队到另一个等待队列中，支持自定义谓词和操作回调，并处理自队列和锁顺序以避免死锁。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "signal": {
+      "module_name": "signal",
+      "function_count": 6,
+      "outgoing_edge_count": 18,
+      "internal_edge_count": 10,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.5556,
+      "external_call_ratio": 0.4444,
+      "module_weight": 0.0015,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "smp": {
+      "module_name": "smp",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "startup": {
+      "module_name": "startup",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 3,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "stdio": {
+      "module_name": "stdio",
+      "function_count": 1,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 5,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.8333,
+      "external_call_ratio": 0.1667,
+      "module_weight": 0.0003,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "sync": {
+      "module_name": "sync",
+      "function_count": 3,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 5,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.8333,
+      "external_call_ratio": 0.1667,
+      "module_weight": 0.0007,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "synchronization": {
+      "module_name": "synchronization",
+      "function_count": 10,
+      "outgoing_edge_count": 63,
+      "internal_edge_count": 32,
+      "external_edge_count": 31,
+      "internal_call_ratio": 0.5079,
+      "external_call_ratio": 0.4921,
+      "module_weight": 0.0032,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 354,
+      "outgoing_edge_count": 3144,
+      "internal_edge_count": 1681,
+      "external_edge_count": 1463,
+      "internal_call_ratio": 0.5347,
+      "external_call_ratio": 0.4653,
+      "module_weight": 0.1283,
+      "files": [
+        "api/arceos_posix_api/src/imp/fd_ops.rs",
+        "api\\arceos_posix_api\\Cargo.toml",
+        "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+        "api\\arceos_posix_api\\src\\imp\\fd_ops.rs",
+        "api\\arceos_posix_api\\src\\imp\\fs.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\epoll.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\select.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mux\\epoll.rs",
+        "api\\arceos_posix_api\\src\\imp\\net.rs",
+        "api\\arceos_posix_api\\src\\imp\\pipe.rs",
+        "api\\arceos_posix_api\\src\\imp\\pthread\\mod.rs",
+        "api\\arceos_posix_api\\src\\imp\\pthread\\mutex.rs",
+        "api\\arceos_posix_api\\src\\imp\\resources.rs",
+        "api\\arceos_posix_api\\src\\imp\\stdio.rs",
+        "api\\arceos_posix_api\\src\\imp\\sys.rs",
+        "api\\arceos_posix_api\\src\\imp\\task.rs",
+        "api\\arceos_posix_api\\src\\imp\\time.rs",
+        "api\\arceos_posix_api\\src\\utils.rs",
+        "scripts/check_g012_syscall_review_hotspots.py",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "scripts\\check_g012_syscall_review_hotspots.py",
+        "scripts\\test_g012_syscall_review_hotspots.py",
+        "tools\\bwbench_client\\src\\device.rs",
+        "ulib/axlibc/src/errno.rs",
+        "ulib/axlibc/src/fs.rs",
+        "ulib/axlibc/src/io_mpx.rs",
+        "ulib/axlibc/src/net.rs",
+        "ulib/axlibc/src/resource.rs",
+        "ulib/axstd/src/io/stdio.rs",
+        "ulib\\axlibc\\c\\mmap.c",
+        "ulib\\axlibc\\src\\fd_ops.rs",
+        "ulib\\axlibc\\src\\fs.rs",
+        "ulib\\axlibc\\src\\io_mpx.rs",
+        "ulib\\axlibc\\src\\net.rs",
+        "ulib\\axlibc\\src\\resource.rs",
+        "ulib\\axlibc\\src\\sys.rs",
+        "ulib\\axlibc\\src\\time.rs",
+        "ulib\\axlibc\\src\\utils.rs",
+        "ulib\\axstd\\src\\net\\udp.rs",
+        "user/shell/src/uspace/task_context.rs",
+        "user\\shell\\src\\uspace\\memory_map.rs",
+        "user\\shell\\src\\uspace\\memory_policy.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs",
+        "user\\shell\\src\\uspace\\process_abi.rs",
+        "user\\shell\\src\\uspace\\resource_sched.rs",
+        "user\\shell\\src\\uspace\\syscall_dispatch.rs",
+        "user\\shell\\src\\uspace\\task_context.rs",
+        "user\\shell\\src\\uspace\\user_memory.rs"
+      ],
+      "file_count": 48,
+      "core_functions": [
+        {
+          "name": "user_syscall",
+          "normalized_name": "user_syscall",
+          "file_path": "user\\shell\\src\\uspace\\syscall_dispatch.rs",
+          "language": "rust",
+          "start_line": "174",
+          "end_line": "829",
+          "outgoing_call_count": 277,
+          "summary": "该函数是系统调用分发的核心入口，根据系统调用号执行对应的处理函数，并处理退出组、性能记录、系统调用运行时统计以及系统调用重启候选等逻辑。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "user\\shell\\src\\uspace\\posix_mq.rs",
+          "language": "rust",
+          "start_line": "201",
+          "end_line": "207",
+          "outgoing_call_count": 221,
+          "summary": "构造一个 POSIX 消息队列描述符结构体，接收一个已存在的消息队列 Arc 和标志，初始化访问模式与状态标志。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\io_mpx\\epoll.rs",
+          "language": "rust",
+          "start_line": "66",
+          "end_line": "70",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的 Epoll 实例，初始化一个空的 BTreeMap 用于存储事件，并使用互斥锁保护。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\pthread\\mutex.rs",
+          "language": "rust",
+          "start_line": "30",
+          "end_line": "37",
+          "outgoing_call_count": 221,
+          "summary": "初始化一个互斥锁实例，设置其所有者、锁定计数、类型和保留字段的初始值。"
+        },
+        {
+          "name": "G012SyscallReviewHotspotGuardTest",
+          "normalized_name": "G012SyscallReviewHotspotGuardTest",
+          "file_path": "scripts\\test_g012_syscall_review_hotspots.py",
+          "language": "python",
+          "start_line": "35",
+          "end_line": "423",
+          "outgoing_call_count": 103,
+          "summary": "该类用于自动化测试一组关于系统调用实现细节的监护检查（guard），确保代码仓库中的关键安全/正确性模式未被破坏。每个测试方法通过修改特定源文件引入已知缺陷，然后运行监护脚本并验证其检测失败，从而验证监护规则的有效性。"
+        },
+        {
+          "name": "recv",
+          "normalized_name": "recv",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\net.rs",
+          "language": "rust",
+          "start_line": "195",
+          "end_line": "200",
+          "outgoing_call_count": 85,
+          "summary": "这个代码块实现了从套接字接收数据的功能。它根据套接字类型（UDP或TCP）调用不同的底层接收方法，并返回接收到的字节数。"
+        },
+        {
+          "name": "recv",
+          "normalized_name": "recv",
+          "file_path": "ulib\\axlibc\\src\\net.rs",
+          "language": "rust",
+          "start_line": "95",
+          "end_line": "102",
+          "outgoing_call_count": 85,
+          "summary": "实现 recv 系统调用的 C ABI 封装，接收 socket 数据"
+        },
+        {
+          "name": "connect",
+          "normalized_name": "connect",
+          "file_path": "ulib\\axlibc\\src\\net.rs",
+          "language": "rust",
+          "start_line": "34",
+          "end_line": "40",
+          "outgoing_call_count": 81,
+          "summary": "这个函数通过调用系统调用 sys_connect 来执行网络连接操作，并对返回结果进行错误处理封装。"
+        },
+        {
+          "name": "connect",
+          "normalized_name": "connect",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\net.rs",
+          "language": "rust",
+          "start_line": "230",
+          "end_line": "235",
+          "outgoing_call_count": 81,
+          "summary": "对UDP或TCP套接字执行connect操作，将其连接到指定的远程地址。"
+        },
+        {
+          "name": "send",
+          "normalized_name": "send",
+          "file_path": "ulib/axlibc/src/net.rs",
+          "language": "rust",
+          "start_line": "64",
+          "end_line": "71",
+          "outgoing_call_count": 78,
+          "summary": "实现了一个安全的`send`系统调用封装，该函数接受socket文件描述符、缓冲区指针、长度和标志，调用底层系统调用`sys_send`进行数据发送，并处理可能的错误。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall / network": {
+      "module_name": "syscall / network",
+      "function_count": 1,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 6,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0003,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "task": {
+      "module_name": "task",
+      "function_count": 4,
+      "outgoing_edge_count": 18,
+      "internal_edge_count": 8,
+      "external_edge_count": 10,
+      "internal_call_ratio": 0.4444,
+      "external_call_ratio": 0.5556,
+      "module_weight": 0.0012,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "task management": {
+      "module_name": "task management",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0002,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\namespace\\axns\\tests\\test_thread_local.rs",
+        "kernel\\fs\\axfs\\resources\\create_test_img.sh",
+        "kernel\\fs\\axfs\\tests\\test_common\\mod.rs",
+        "kernel\\fs\\axfs\\tests\\test_fatfs.rs",
+        "kernel\\fs\\axfs\\tests\\test_ramfs.rs",
+        "kernel\\namespace\\axns\\tests\\test_global.rs",
+        "kernel\\net\\axnet\\src\\smoltcp_impl\\mod.rs",
+        "kernel\\task\\axtask\\src\\tests.rs",
+        "scripts/test_g012_syscall_review_hotspots.py",
+        "scripts\\test_g010_real_kernel_semantics.py",
+        "scripts\\test_g012_syscall_review_hotspots.py",
+        "scripts\\test_ltp_summary.py",
+        "tools\\bwbench_client\\src\\main.rs"
+      ],
+      "file_count": 13,
+      "core_functions": [
+        {
+          "name": "G010RealKernelSemanticsGuardTest",
+          "normalized_name": "G010RealKernelSemanticsGuardTest",
+          "file_path": "scripts\\test_g010_real_kernel_semantics.py",
+          "language": "python",
+          "start_line": "46",
+          "end_line": "568",
+          "outgoing_call_count": 138,
+          "summary": "操作系统语义回归测试套件，通过程序化注入bug（替换关键代码片段）并运行守卫脚本，验证守卫能检测出各种内核/用户态语义缺陷，如固定inode、伪造pipe权限、忽略文件状态标志、错误实现fcntl、pipe写失败缺少SIGPIPE、轮询隐藏EOF、方向无关管道引用计数、pipe2忽略fcntl错误、stdio/调度/环境等stub或空实现。"
+        },
+        {
+          "name": "LtpSummarySemanticsTest",
+          "normalized_name": "LtpSummarySemanticsTest",
+          "file_path": "scripts\\test_ltp_summary.py",
+          "language": "python",
+          "start_line": "17",
+          "end_line": "325",
+          "outgoing_call_count": 63,
+          "summary": "定义 LtpSummarySemanticsTest 测试类，用于验证 LTP 测试日志解析、汇总和晋升候选逻辑的语义正确性"
+        },
+        {
+          "name": "test_namespace",
+          "normalized_name": "test_namespace",
+          "file_path": "kernel\\namespace\\axns\\tests\\test_global.rs",
+          "language": "rust",
+          "start_line": 30,
+          "end_line": 47,
+          "outgoing_call_count": 38,
+          "summary": "{\n  \"block_id\": \"block_2594\",\n  \"file_path\": \"kernel\\namespace\\axns\\tests\\test_global.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"30\",\n  \"end_line\": \"47\",\n  \"name\": \"test_namespace\",\n  \"type\": \"function\",\n  \"summary\": \"测试命名空间的全局变量隔离功能，在主线程和两个子线程中分别初始化命名空间，设置全局变量，并调用线程函数，验证每个线程拥有独立的变量副本。\",\n  \"logic_steps\": [\n    \"主线程调用 thread_init_namespace() 初始化自身命名空间。\",\n    \"主线程通过 FOO.init_new(100.into()) 和 BAR.init_new(Mutex::new(String::from(\"one\"))) 为当前命名空间设置初始值。\",\n    \"创建两个子线程 t1 和 t2，每个子线程先调用 thread_init_namespace() 初始化其命名空间，再执行 thread_fn()。\",\n    \"主线程自身也调用 thread_fn()，然后等待两个子线程结束。\"\n  ],\n  \"called_functions\": [\n    \"thread_init_namespace\",\n    \"FOO.init_new\",\n    \"BAR.init_new\",\n    \"thread::spawn\",\n    \"thread_fn\",\n    \"t1.join\",\n    \"t2.join\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"函数使用了 thread::spawn 创建线程，并调用了 init_new 初始化命名空间变量，目的是测试线程间命名空间隔离，这涉及进程/线程管理及命名空间机制。\",\n  \"uncertainty\": \"不确定 thread_fn 的具体实现，但根据上下文它很可能访问或操作命名空间内的全局变量来验证隔离性。\"\n}"
+        },
+        {
+          "name": "test_namespace",
+          "normalized_name": "test_namespace",
+          "file_path": "kernel\namespace\\axns\\tests\\test_thread_local.rs",
+          "language": "rust",
+          "start_line": "37",
+          "end_line": "61",
+          "outgoing_call_count": 38,
+          "summary": "这个函数是一个测试用例，用于验证线程局部变量在命名空间中的隔离与共享行为。它初始化两个线程局部变量（FOO和BAR），然后创建两个线程：一个使用init_new进行隔离初始化，另一个使用init_shared进行共享初始化，最后在主线程和两个线程中调用thread_fn以验证各线程中的变量值符合预期。"
+        },
+        {
+          "name": "test_detects_times_half_split",
+          "normalized_name": "test_detects_times_half_split",
+          "file_path": "scripts\\test_g012_syscall_review_hotspots.py",
+          "language": "python",
+          "start_line": "222",
+          "end_line": "246",
+          "outgoing_call_count": 22,
+          "summary": "该测试函数模拟了在 time_abi.rs 中将 process_times 函数替换为仅将 elapsed 时间一分为二的简化实现（伪造 half-split），然后运行代码审查守卫（guard），验证守卫能否检测到这种修改并报告 process_times 相关的问题。"
+        },
+        {
+          "name": "test_fp_state_switch",
+          "normalized_name": "test_fp_state_switch",
+          "file_path": "kernel\\task\\axtask\\src\\tests.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "64",
+          "outgoing_call_count": 22,
+          "summary": "该函数用于测试浮点状态（FP state）在任务切换时的正确性。它创建多个任务，每个任务执行浮点数运算并验证结果不变，以此确保上下文切换能保存和恢复浮点寄存器。"
+        },
+        {
+          "name": "test_detects_personality_mask_acceptance",
+          "normalized_name": "test_detects_personality_mask_acceptance",
+          "file_path": "scripts\\test_g012_syscall_review_hotspots.py",
+          "language": "python",
+          "start_line": "391",
+          "end_line": "413",
+          "outgoing_call_count": 21,
+          "summary": "测试当内核错误地接受 personality mask（如0xffff_ffff）而不进行合法性校验时，守护程序能够检测并报错退出。该测试通过篡改两个源码文件来模拟一个不安全的实现。"
+        },
+        {
+          "name": "test_detects_regular_file_append_write_without_seek_end",
+          "normalized_name": "test_detects_regular_file_append_write_without_seek_end",
+          "file_path": "scripts\\test_g010_real_kernel_semantics.py",
+          "language": "python",
+          "start_line": "133",
+          "end_line": "147",
+          "outgoing_call_count": 21,
+          "summary": "测试检测：当删除文件中的O_APPEND seek到末尾的代码后，守卫检查应报错并输出'O_APPEND'。"
+        },
+        {
+          "name": "test_detects_sched_deadline_normal_priority_backend",
+          "normalized_name": "test_detects_sched_deadline_normal_priority_backend",
+          "file_path": "scripts\\test_g012_syscall_review_hotspots.py",
+          "language": "python",
+          "start_line": "360",
+          "end_line": "375",
+          "outgoing_call_count": 20,
+          "summary": "该测试函数通过修改源代码（删除 deadline_scheduler_backend_priority 函数定义，并替换其调用为 process.nice() 的内联实现），验证守护进程在检测到 SCHED_DEADLINE 调度策略使用了普通优先级回调（而非正确的 deadline 优先级回调）时能正确报告错误。"
+        },
+        {
+          "name": "test_detects_stdio_fflush_clearing_partial_write",
+          "normalized_name": "test_detects_stdio_fflush_clearing_partial_write",
+          "file_path": "scripts\\test_g010_real_kernel_semantics.py",
+          "language": "python",
+          "start_line": "328",
+          "end_line": "344",
+          "outgoing_call_count": 19,
+          "summary": "该测试函数通过修改ulib/axlibc/c/stdio.c中的__write_buffer函数实现，模拟一次短写（partial write）场景，验证Guard库（make_tree、run_guard）能否检测并报告“short writes”错误。函数先定位并替换原代码中__write_buffer的定义，使其在write调用后立即将buffer_len置零，造成未完全写入的假象，然后执行Guard工具，检查返回值非零且输出中包含“short writes”。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "time": {
+      "module_name": "time",
+      "function_count": 3,
+      "outgoing_edge_count": 6,
+      "internal_edge_count": 4,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.0007,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 584,
+      "outgoing_edge_count": 3228,
+      "internal_edge_count": 1867,
+      "external_edge_count": 1361,
+      "internal_call_ratio": 0.5784,
+      "external_call_ratio": 0.4216,
+      "module_weight": 0.177,
+      "files": [
+        "api/arceos_api/src/macros.rs",
+        "api\\arceos_api\\src\\lib.rs",
+        "api\\arceos_api\\src\\macros.rs",
+        "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+        "api\\arceos_posix_api\\src\\imp\\io_mpx\\epoll.rs",
+        "api\\arceos_posix_api\\src\\imp\\stdio.rs",
+        "kernel\namespace\\axns\\src\\lib.rs",
+        "kernel\namespace\\axns\\src\\link.rs",
+        "kernel\\arch\\axhal\\src\\lib.rs",
+        "kernel\\arch\\axhal\\src\\percpu.rs",
+        "kernel\\arch\\axhal\\src\\tls.rs",
+        "kernel\\diagnostics\\axlog\\src\\lib.rs",
+        "kernel\\namespace\\axns\\src\\lib.rs",
+        "kernel\\namespace\\axns\\src\\link.rs",
+        "kernel\\runtime\\axruntime\\src\\lang_items.rs",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\runtime\\axruntime\\src\\mp.rs",
+        "tools\\bwbench_client\\src\\main.rs",
+        "tools\\deptool\\src\\cmd_parser.rs",
+        "tools\\deptool\\src\\lib.rs",
+        "tools\\raspi4\\chainloader\\src\\_arch\\aarch64\\cpu\\boot.rs",
+        "tools\\raspi4\\chainloader\\src\\_arch\\aarch64\\cpu\\boot.s",
+        "tools\\raspi4\\chainloader\\src\\panic_wait.rs",
+        "tools\\raspi4\\chainloader\\src\\print.rs",
+        "tools\\raspi4\\chainloader\\src\\synchronization.rs",
+        "ulib/axlibc/src/rand.rs",
+        "ulib/axstd/src/time.rs",
+        "ulib\\axlibc\\src\\errno.rs",
+        "ulib\\axlibc\\src\\fd_ops.rs",
+        "ulib\\axlibc\\src\\mktime.rs",
+        "ulib\\axlibc\\src\\rand.rs",
+        "ulib\\axlibc\\src\\setjmp.rs",
+        "ulib\\axlibc\\src\\strftime.rs",
+        "ulib\\axlibc\\src\\strtod.rs",
+        "ulib\\axlibc\\src\\unistd.rs",
+        "ulib\\axstd\\src\\io\\stdio.rs",
+        "ulib\\axstd\\src\\macros.rs",
+        "ulib\\axstd\\src\\time.rs"
+      ],
+      "file_count": 38,
+      "core_functions": [
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\namespace\\axns\\src\\lib.rs",
+          "language": "rust",
+          "start_line": 120,
+          "end_line": 122,
+          "outgoing_call_count": 221,
+          "summary": "{\n  \"block_id\": \"block_1082\",\n  \"file_path\": \"kernel\\namespace\\axns\\src\\lib.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"120\",\n  \"end_line\": \"122\",\n  \"name\": \"new\",\n  \"type\": \"function\",\n  \"summary\": \"这是一个常量构造函数，创建一个包含LazyInit实例的新类型包装器（Self）。\",\n  \"logic_steps\": [\n    \"调用LazyInit::new()创建一个新的LazyInit实例。\",\n    \"将LazyInit实例包装进Self结构体中并返回。\"\n  ],\n  \"called_functions\": [\n    \"LazyInit::new\"\n  ],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"代码中直接调用了LazyInit::new()，并返回Self(LazyInit实例)。函数标记为const fn，说明是编译时可计算的常量构造。\",\n  \"uncertainty\": \"无法确定Self具体是什么类型，仅知它包含一个LazyInit字段。缺少命名空间相关上下文，无法判断属于哪个OS模块。\"\n}"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "tools\\raspi4\\chainloader\\src\\synchronization.rs",
+          "language": "rust",
+          "start_line": "56",
+          "end_line": "60",
+          "outgoing_call_count": 221,
+          "summary": "定义一个公共常量构造函数，用于创建包含不可变引用包装的UnsafeCell的同步结构实例。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "ulib\\axlibc\\src\\strftime.rs",
+          "language": "rust",
+          "start_line": "55",
+          "end_line": "60",
+          "outgoing_call_count": 221,
+          "summary": "创建一个新的写入器包装结构体实例，初始化内部写入器和已写入字节计数器为0。"
+        },
+        {
+          "name": "init",
+          "normalized_name": "init",
+          "file_path": "kernel\\diagnostics\\axlog\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "253",
+          "end_line": "256",
+          "outgoing_call_count": 149,
+          "summary": "初始化日志系统：注册全局日志记录器并设置日志级别为Warn"
+        },
+        {
+          "name": "drop",
+          "normalized_name": "drop",
+          "file_path": "kernel\\namespace\\axns\\src\\lib.rs",
+          "language": "rust",
+          "start_line": 100,
+          "end_line": 109,
+          "outgoing_call_count": 95,
+          "summary": "{\n  \"block_id\": \"block_1079\",\n  \"file_path\": \"kernel\\namespace\\axns\\src\\lib.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": 100,\n  \"end_line\": 109,\n  \"name\": \"drop\",\n  \"type\": \"function\",\n  \"summary\": \"该函数是 Drop trait 的实现，用于释放动态分配的连续内存块。当 self.alloc 为 true 时，根据预先计算的段大小（section_size）和基地址，构建布局并进行内存释放。\",\n  \"logic_steps\": [\n    \"检查 self.alloc 是否为 true，只有为 true 才执行释放逻辑。\",\n    \"调用 Self::section_size() 获取需要释放的内存大小。\",\n    \"获取 self.base() 得到内存块基地址。\",\n    \"检查大小不为零且基地址不为空，避免无效释放。\",\n    \"通过 Layout::from_size_align(size, 64) 构造对齐为 64 字节的内存布局，如果构造失败则 unwrap 直接 panic。\",\n    \"调用 unsafe { alloc::alloc::dealloc(base, layout) } 释放该段内存。\"\n  ],\n  \"called_functions\": [\n    \"Self::section_size()\",\n    \"self.base()\",\n    \"Layout::from_size_align\",\n    \"alloc::alloc::dealloc\"\n  ],\n  \"related_os_module\": \"memory\",\n  \"evidence\": \"函数体内通过 alloc::alloc::dealloc 释放内存，且使用了 layout 进行对齐内存释放，这属于内存管理模块的典型内存释放行为。\",\n  \"uncertainty\": \"无法确定 section_size 和 base 的具体来源，以及 self.alloc 字段的确切含义，但基于代码直接使用标准 alloc 进行手动内存释放，可以推断与动态内存管理有关。\"\n}"
+        },
+        {
+          "name": "fmt",
+          "normalized_name": "fmt",
+          "file_path": "tools\\bwbench_client\\src\\main.rs",
+          "language": "rust",
+          "start_line": "23",
+          "end_line": "30",
+          "outgoing_call_count": 78,
+          "summary": "为包含6字节MAC地址的结构体实现std::fmt::Display trait，将字节数组格式化为形如\"xx:xx:xx:xx:xx:xx\"的十六进制字符串。"
+        },
+        {
+          "name": "fmt",
+          "normalized_name": "fmt",
+          "file_path": "kernel\\namespace\\axns\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "154",
+          "end_line": "156",
+          "outgoing_call_count": 78,
+          "summary": "为结构体实现Display trait的fmt方法，通过委托内部字段self.0的fmt实现来格式化输出。"
+        },
+        {
+          "name": "poll",
+          "normalized_name": "poll",
+          "file_path": "api\\arceos_posix_api\\src\\imp\\io_mpx\\epoll.rs",
+          "language": "rust",
+          "start_line": "214",
+          "end_line": "216",
+          "outgoing_call_count": 64,
+          "summary": "尝试执行poll操作，但直接返回未实现错误（ENOSYS），表示该函数在当前实现中不可用。"
+        },
+        {
+          "name": "impl Log for Logger {",
+          "normalized_name": "impl Log for Logger {",
+          "file_path": "kernel\\diagnostics\\axlog\\src\\lib.rs",
+          "language": "rust",
+          "start_line": "157",
+          "end_line": "233",
+          "outgoing_call_count": 40,
+          "summary": "为 Logger 结构体实现 log crate 的 Log trait，提供条件过滤和格式化日志输出的功能，支持带颜色和上下文信息的日志打印，根据是否启用 std 特性选择不同的日志格式。"
+        },
+        {
+          "name": "_",
+          "normalized_name": "_",
+          "file_path": "api\\arceos_posix_api\\src\\ctypes_gen.rs",
+          "language": "rust",
+          "start_line": "652",
+          "end_line": "657",
+          "outgoing_call_count": 38,
+          "summary": "这段代码是一个编译期断言，用于检查 `pthread_mutex_t` 结构体的大小、对齐以及字段 `__l` 的偏移是否符合预期值。它使用数组索引越界的方式在编译时进行验证：如果表达式的结果（例如 `size_of - 40`）不为 0，则数组访问越界，导致编译错误。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unkown": {
+      "module_name": "unkown",
+      "function_count": 1,
+      "outgoing_edge_count": 10,
+      "internal_edge_count": 6,
+      "external_edge_count": 4,
+      "internal_call_ratio": 0.6,
+      "external_call_ratio": 0.4,
+      "module_weight": 0.0003,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "api\\arceos_posix_api\\build.rs",
+        "api\\arceos_posix_api\\src\\imp\\pthread\\mutex.rs",
+        "api\\arceos_posix_api\\src\\utils.rs",
+        "kernel\\arch\\axhal\\build.rs",
+        "kernel\\config\\axconfig\\build.rs",
+        "kernel\\drivers\\axdma\\src\\lib.rs",
+        "kernel\\drivers\\axdriver\\build.rs",
+        "kernel\\fs\\axfs\\src\\root.rs",
+        "kernel\\memory\\axmm\\src\\lib.rs",
+        "kernel\\runtime\\axruntime\\src\\lib.rs",
+        "kernel\\runtime\\axruntime\\src\\mp.rs",
+        "scripts\\check_g010_real_kernel_semantics.py",
+        "scripts\\check_g012_syscall_review_hotspots.py",
+        "scripts\\ltp_summary.py",
+        "tools\\bwbench_client\\src\\main.rs",
+        "tools\\deptool\\src\\main.rs",
+        "tools\\raspi4\\chainloader\\src\\main.rs",
+        "user\\shell\\src\\main.rs",
+        "user\\shell\\src\\uspace\\memory_map.rs",
+        "user\\shell\\src\\uspace\\posix_mq.rs",
+        "user\\shell\\src\\uspace\\process_lifecycle.rs",
+        "user\\shell\\src\\uspace\\resource_sched.rs",
+        "user\\shell\\src\\uspace\\synthetic_fs.rs",
+        "user\\shell\\src\\uspace\\syscall_dispatch.rs",
+        "user\\shell\\src\\uspace\\task_context.rs",
+        "user\\shell\\src\\uspace\\user_memory.rs"
+      ],
+      "file_count": 26,
+      "core_functions": [
+        {
+          "name": "impl UserProcess {",
+          "normalized_name": "impl UserProcess {",
+          "file_path": "user\\shell\\src\\uspace\\resource_sched.rs",
+          "language": "rust",
+          "start_line": "87",
+          "end_line": "99",
+          "outgoing_call_count": 547,
+          "summary": "这个代码块为 UserProcess 结构体实现了两个方法：get_rlimit 和 set_rlimit，用于获取和设置用户进程的资源限制（rlimit）。"
+        },
+        {
+          "name": "impl UserProcess {",
+          "normalized_name": "impl UserProcess {",
+          "file_path": "user\\shell\\src\\uspace\\resource_sched.rs",
+          "language": "rust",
+          "start_line": 136,
+          "end_line": 161,
+          "outgoing_call_count": 547,
+          "summary": "为UserProcess结构体实现一组获取和设置调度状态、nice值、I/O优先级的公共方法，用于用户态进程的调度属性管理。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "user\\shell\\src\\main.rs",
+          "language": "rust",
+          "start_line": 89,
+          "end_line": 94,
+          "outgoing_call_count": 153,
+          "summary": "{\n  \"block_id\": \"block_1955\",\n  \"file_path\": \"user\\\\shell\\\\src\\\\main.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"89\",\n  \"end_line\": \"94\",\n  \"name\": \"main\",\n  \"type\": \"function\",\n  \"summary\": \"这个代码块是 shell 程序的入口点，根据编译特性选择性地运行官方测试，然后启动交互式 shell。\",\n  \"logic_steps\": [\n    \"当编译时启用了 'auto-run-tests' 特性时，调用 cmd::maybe_run_official_tests() 函数执行官方测试。\",\n    \"随后调用 run_interactive_shell() 函数启动交互式 shell。\"\n  ],\n  \"called_functions\": [\n    \"cmd::maybe_run_official_tests\",\n    \"run_interactive_shell\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"函数名为 main，是 Rust 二进制程序的入口；使用了条件编译 #[cfg(feature = \"auto-run-tests\")] 控制可能运行的测试；调用了 run_interactive_shell()，表明该程序主要提供交互式 shell 功能。\",\n  \"uncertainty\": \"由于未提供 'auto-run-tests' 特性的具体定义以及 cmd::maybe_run_official_tests 和 run_interactive_shell 的具体实现，无法确定测试的具体内容和交互式 shell 的内部机制。\"\n}"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "api\\arceos_posix_api\\build.rs",
+          "language": "rust",
+          "start_line": "1",
+          "end_line": "123",
+          "outgoing_call_count": 153,
+          "summary": "构建脚本的主要功能是生成两个文件：一个C头文件`ax_pthread_mutex.h`，定义了`pthread_mutex_t`类型和初始化宏；另一个是Rust绑定文件`ctypes_gen.rs`，通过bindgen从C头文件`ctypes.h`生成Rust FFI声明，以便在Rust中调用POSIX相关C函数和访问常量。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kernel\\drivers\\axdriver\\build.rs",
+          "language": "rust",
+          "start_line": "25",
+          "end_line": "75",
+          "outgoing_call_count": 153,
+          "summary": "这个 build.rs 脚本根据 Cargo features 动态生成编译时 cfg 配置，用于选择总线类型（MMIO 或 PCI）以及各类设备驱动（网络、块存储、显示）的具体实现（在动态模式下允许多设备，否则只选第一个并回退到 dummy）。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kernel\\arch\\axhal\\build.rs",
+          "language": "rust",
+          "start_line": "4",
+          "end_line": "15",
+          "outgoing_call_count": 153,
+          "summary": "该代码块是构建脚本的主函数，用于处理环境变量和生成链接脚本。它首先监视AX_CONFIG_PATH环境变量和配置文件路径的变化，然后根据目标架构和平台信息，调用gen_linker_script生成链接脚本（除非平台为dummy）。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kernel\\config\\axconfig\\build.rs",
+          "language": "rust",
+          "start_line": "1",
+          "end_line": "6",
+          "outgoing_call_count": 153,
+          "summary": "这个代码块是 Rust 的构建脚本（build.rs）中的 main 函数，用于在编译时根据环境变量 AX_CONFIG_PATH 的值动态指定配置文件的路径，并通知 Cargo 在相关环境变量或文件变化时重新运行构建脚本。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "scripts\\ltp_summary.py",
+          "language": "python",
+          "start_line": "656",
+          "end_line": "711",
+          "outgoing_call_count": 153,
+          "summary": "这是LTP测试日志汇总脚本的入口函数，负责解析传入的日志文件，生成Markdown或JSON格式的摘要报告，并支持生成晋级候选报告（promotion-candidates）以评估跨架构/libc矩阵的通过情况。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "scripts\\check_g010_real_kernel_semantics.py",
+          "language": "python",
+          "start_line": "529",
+          "end_line": "550",
+          "outgoing_call_count": 153,
+          "summary": "这个代码块是一个静态检查工具的主函数，用于扫描项目文件，检查内核语义的正确性（例如文件描述符元数据、非阻塞管道语义、标准IO等），并输出检查结果。如果发现任何问题，返回非零退出码。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "tools\\bwbench_client\\src\\main.rs",
+          "language": "rust",
+          "start_line": "116",
+          "end_line": "133",
+          "outgoing_call_count": 153,
+          "summary": "解析命令行参数，根据参数确定客户端模式（发送或接收）和网络接口，然后调用带宽基准测试函数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 68.0,
+    "score_level": "medium",
+    "scores": {
+      "originality": 10.0,
+      "novelty": 10.0,
+      "practicality": 14.0,
+      "difficulty": 18.0,
+      "completion": 16.0
+    },
+    "summary": "",
+    "strengths": [
+      "核心模块（filesystem、memory、process、syscall、scheduler）实现完整，完成度均为1.0",
+      "代码规模较大（2928个函数），模块划分细致（32个模块），内聚性较好（内部边占比56.6%）",
+      "使用 Rust 语言开发，内存安全性较好"
+    ],
+    "weaknesses": [
+      "部分子模块完成度极低：io（0.08）、ipc（0.15）、smp（0.08）、task management（0.08）",
+      "unknown 模块权重较高（0.177），可能存在部分功能分类不明确",
+      "与历史项目结构相似度高（如 UltraOS），缺乏明显原创性"
+    ],
+    "suggestions": []
+  },
+  "hybrid_top_results": [
+    {
+      "repo_name": "UltraOS",
+      "hybrid_score": 0.6376,
+      "structured_score": 0.7656,
+      "semantic_score": 0.4,
+      "rank": null,
+      "source": [
+        "structured",
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 7,
+          "doc_id": "UltraOS__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.35442107915878296,
+          "semantic_score": 0.4,
+          "content_preview": "历史项目 UltraOS 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 rust、python、c、assembly。系统识别到该项目包含 1044 个函数节点、8166 条调用边、21 个模块。核心模块包括 filesystem、memory、syscall、process、driver。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "unknown_repo",
+      "hybrid_score": 0.4903,
+      "structured_score": 0.7543,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "0x80200000",
+      "hybrid_score": 0.4808,
+      "structured_score": 0.7397,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OS",
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 1,
+          "doc_id": "OS__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.24099256098270416,
+          "semantic_score": 1.0,
+          "content_preview": "历史项目 OS 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 rust、c、linker_script、cargo。系统识别到该项目包含 1000 个函数节点、3991 条调用边、13 个模块。核心模块包括 unknown、build、driver、filesystem、interrupt。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OSakura",
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 2,
+          "doc_id": "OSakura__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.32451915740966797,
+          "semantic_score": 0.9,
+          "content_preview": "历史项目 OSakura 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 c、assembly、linker_script。系统识别到该项目包含 621 个函数节点、1633 条调用边、13 个模块。核心模块包括 unknown、driver、filesystem、interrupt、ipc。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    }
+  ],
+  "comparison": {
+    "retrieval_mode": "hybrid",
+    "comparison_count": 5,
+    "comparisons": [
+      {
+        "history_repo_name": "UltraOS",
+        "similarity_score": 0.6376,
+        "hybrid_score": 0.6376,
+        "structured_score": 0.7656,
+        "semantic_score": 0.4,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "二者都是teaching_os_or_general_kernel类型的操作系统项目，核心模块高度重合（filesystem、memory、process、syscall），模块完成度分布接近，结构复杂度均为1.0，且主要语言都包含Rust和Python，因此结构和功能上高度相似。",
+        "main_similarities": [
+          "项目类型相同，均为teaching_os_or_general_kernel。",
+          "核心模块高度重合：filesystem、memory、process、syscall。",
+          "模块完成度分布接近，共同模块的完成度得分相似。",
+          "结构复杂度均为1.0。",
+          "主要开发语言均包含Rust和Python。"
+        ],
+        "main_differences": [
+          "目标仓库函数数量（2928）远多于历史仓库（1044），规模更大。",
+          "目标仓库模块数量（32）多于历史仓库（21），模块划分更细。",
+          "目标仓库核心模块包括'unknown'，而历史仓库核心模块包括'driver'。",
+          "历史仓库使用C和汇编语言，目标仓库未涉及。",
+          "目标仓库在io、ipc、smp、networking等子模块完成度显著高于历史仓库。"
+        ],
+        "target_advantages": [
+          "函数数量和调用边数量更大，系统规模和复杂度更高。",
+          "模块数量更多，功能模块划分更细，覆盖更全面。",
+          "在io、ipc、smp、networking、signal等子模块的完成度明显更高，功能更成熟。",
+          "整体模块完成度分布更广，如boot、diagnostics、namespace等模块完成度更高。"
+        ],
+        "target_weaknesses": [
+          "核心模块中'unknown'模块权重较高，可能反映部分功能分类不明确或缺乏细化。",
+          "在arch、startup、task management等子模块的完成度相对较低。",
+          "未使用C和汇编语言，可能在底层硬件交互方面缺乏直接支持。"
+        ],
+        "borrowable_designs": [
+          "可以借鉴历史仓库在driver模块的成熟设计，因为历史仓库的driver是其核心模块之一。",
+          "可以学习历史仓库对'scheduler'和'interrupt'模块的高完成度实现细节。",
+          "可以考虑历史仓库在'resource'、'timer'、'trap'等子模块的补充，以完善自身在arch、startup、task management等子模块的不足。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "unknown_repo",
+        "similarity_score": 0.4903,
+        "hybrid_score": 0.4903,
+        "structured_score": 0.7543,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库都是教学目标或通用操作系统的内核实现，核心模块都包括文件系统、内存管理、系统调用等基本组件，且模块完成度分布较为接近，结构复杂度评分相同。",
+        "main_similarities": [
+          "核心模块均包含filesystem、memory、syscall、unknown，模块权重和完成度有一定重叠。",
+          "模块完成度评分在多个共同模块上非常接近，例如memory、syscall、filesystem等均达到1.0。",
+          "项目类型相同，均为teaching_os_or_general_kernel。",
+          "结构复杂度评分均为1.0，说明体系结构复杂性水平相当。"
+        ],
+        "main_differences": [
+          "目标仓库使用Rust和Python，历史仓库使用C、Assembly和C++。",
+          "目标仓库功能数量为2928，历史仓库为7268，规模差异显著。",
+          "目标仓库内部边占比（12754/22548≈56.6%）高于历史仓库（3429/9287≈36.9%），模块内聚性更强。",
+          "目标仓库模块数量为32，历史仓库为25，且目标仓库在driver、network、scheduler等模块上完成度更高。"
+        ],
+        "target_advantages": [
+          "使用Rust语言编写，内存安全特性可能带来更少的bug。",
+          "内部边比例更高，模块内聚性更好，模块化设计可能更清晰。",
+          "模块数量更多且覆盖更多功能（如networking、smp、signal等），功能更全面。",
+          "driver和network模块完成度达到1.0，远高于历史仓库的相应模块。"
+        ],
+        "target_weaknesses": [
+          "函数数量和历史仓库相比明显较少，功能实现可能不够丰富。",
+          "某些模块如io、smp、task management等完成度较低（均低于0.1），存在明显的功能缺失。",
+          "目标仓库在ipc、signal等模块的完成度低于历史仓库。"
+        ],
+        "borrowable_designs": [
+          "可以参考历史仓库中C语言实现的系统调用机制和调度器设计，用于扩展目标仓库相似模块。",
+          "历史仓库在socket和网络方面有基础实现，可借鉴其网络栈架构设计。",
+          "历史仓库的ipc和signal模块完成度更高，设计思路可被目标仓库参考。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "0x80200000",
+        "similarity_score": 0.4808,
+        "hybrid_score": 0.4808,
+        "structured_score": 0.7397,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为 teaching_os_or_general_kernel 项目类型，都属于操作系统内核范畴，核心模块（如 filesystem、syscall、memory）高度重合，且模块完成度分布接近，因此整体结构相似度较高。",
+        "main_similarities": [
+          "项目类型相同，均为 teaching_os_or_general_kernel。",
+          "核心模块存在重合：filesystem, memory, syscall, unknown。",
+          "结构复杂度相似，均为 1.0。",
+          "filesystem 模块在两边都是完成度最高、权重较大的核心模块。",
+          "syscall 和 memory 模块的完成度均为 1.0。"
+        ],
+        "main_differences": [
+          "主要编程语言不同：目标仓库以 Rust 和 Python 为主，历史仓库以 C、C++、Python、Assembly 为主。",
+          "模块数量差异：目标仓库有 32 个模块，历史仓库有 22 个模块。",
+          "函数规模差距大：目标仓库函数数 2928，历史仓库为 1000。",
+          "目标仓库的 filesystem 模块权重较低（0.223 vs 0.3275），而 driver 模块在历史仓库中权重较高（0.222）但在目标仓库中不是核心。",
+          "目标仓库覆盖更多子模块（如 diagnostics、io、smp、networking 等），而历史仓库未显式包含这些模块。"
+        ],
+        "target_advantages": [
+          "函数数量和模块数量更多，代码规模更大，可能功能更全面。",
+          "使用较新的语言 Rust，更有内存安全性保障。",
+          "模块覆盖更广，包括 diagnostics、io、smp、networking 等，显示更广泛的内核功能。",
+          "filesystem 和 syscall 等核心模块的权重分布更均衡，避免单一模块过重。"
+        ],
+        "target_weaknesses": [
+          "driver 模块在目标仓库中权重较低，可能驱动支持不足。",
+          "io、ipc、networking 等模块完成度极低（0.08~0.15），这些方面可能明显弱于历史仓库（历史仓库虽未列出但 driver 权重较高）。",
+          "smp 模块完成度仅 0.08，多核支持可能薄弱。",
+          "目标仓库的 unknown 模块权重较高（0.177），可能包含未归类代码，结构清晰度略逊。"
+        ],
+        "borrowable_designs": [
+          "历史仓库的 driver 模块实现经验（权重 0.222，完成度 1.0）可供目标仓库借鉴以加强驱动部分。",
+          "历史仓库的 scheduler 模块完成度 0.95，高于目标仓库的普通 scheduler 完成度（未单独列出，但从模块列表看目标仓库 scheduler 为 1.0 但可能简化），可以学习其调度设计。",
+          "历史仓库在 boot 和 loader 模块上有一定设计（boot 0.68, loader 0.44），可为目标仓库完善启动流程提供参考。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "OS",
+        "similarity_score": 0.35,
+        "hybrid_score": 0.35,
+        "structured_score": 0.0,
+        "semantic_score": 1.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为 teaching_os_or_general_kernel 类型的操作系统项目，且都以 Rust 语言为主，在功能模块上均涉及 filesystem、interrupt、process、syscall 等核心操作系统组件。历史仓库 OS 的语义分数为 1.0，表明在概览描述上与目标仓库高度语义一致，但结构相似度为 0，说明实际代码结构差异较大。",
+        "main_similarities": [
+          "项目类型均为 teaching_os_or_general_kernel，属于操作系统教学或通用内核范畴",
+          "主要语言包含 Rust，均使用 Rust 进行内核开发",
+          "均包含 filesystem、interrupt、process、syscall 等核心模块，覆盖操作系统基本功能",
+          "结构复杂度均为 1.0，表明模块间依赖关系较为复杂"
+        ],
+        "main_differences": [
+          "目标仓库函数数量（2928）和调用边数量（22548）远大于历史仓库（1000 和 3991），代码规模显著更大",
+          "目标仓库模块数量为 32，历史仓库仅 13 个，目标仓库模块划分更细致",
+          "目标仓库核心模块明确包含 memory、syscall、process，而历史仓库核心模块以 unknown 为主，其他模块权重为 0，表明模块识别质量差异大",
+          "目标仓库的模块完整性普遍较高（如 filesystem、memory、process 均为 1.0），而历史仓库多数模块完整性仅为 0.15，除 unknown 外均较低",
+          "目标仓库的架构复杂度（internal_edge_count 12754）高于历史仓库（1960），架构内聚性更强"
+        ],
+        "target_advantages": [
+          "代码规模更大，功能更全面，覆盖更多操作系统模块（如 net、smp、synchronization 等）",
+          "模块完整性更高，几乎所有核心模块（filesystem、memory、process、syscall等）都达到 1.0，表明功能实现较完善",
+          "模块划分更细致（32 个模块 vs 13 个），有助于模块化设计和维护",
+          "内部调用边占比更高（12754/22548 ≈ 56.6%），说明模块内聚性较好，依赖关系更合理"
+        ],
+        "target_weaknesses": [
+          "部分模块完整性较低：arch（0.23）、io（0.08）、ipc（0.15）、smp（0.08）、startup（0.23）等，表明这些领域功能实现较薄弱或未完成",
+          "未知模块（unknown）权重较高（0.177），可能有部分代码未被正确分类或存在大量未被识别的功能",
+          "结构复杂度与历史仓库相同（均为 1.0），但历史仓库因模块数量少可能复杂度被高估；目标仓库在代码组织上仍有优化空间"
+        ],
+        "borrowable_designs": [
+          "历史仓库使用了 Linker Script 管理内存布局，目标仓库可借鉴其链接器脚本设计以优化启动和内存管理",
+          "历史仓库使用了 C 语言进行底层硬件操作，目标仓库可参考其混合语言编程方式处理 Rust 无法直接操作的硬件细节",
+          "历史仓库的模块划分较精简（13 个模块），目标仓库可参考其命名和边界定义，优化自身模块划分避免模块过多导致的碎片化"
+        ],
+        "comparison_confidence": "low"
+      },
+      {
+        "history_repo_name": "OSakura",
+        "similarity_score": 0.315,
+        "hybrid_score": 0.315,
+        "structured_score": 0.0,
+        "semantic_score": 0.9,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "T202610336999888 和 OSakura 在教学型操作系统内核赛道中具有语义相似性，均为 teaching_os_or_general_kernel 类型项目，均包含 filesystem、syscall、driver、interrupt 等核心模块，且都具备模块化结构安排，但在规模、语言、模块完整度上存在显著差异。",
+        "main_similarities": [
+          "两个仓库都属于 teaching_os_or_general_kernel 类型，面向教学或通用内核设计。",
+          "核心模块均包含 filesystem、driver、interrupt 等模块，关注文件系统、驱动和中断处理。",
+          "模块完整性评分中，两个仓库在 syscall、memory、process、scheduler 等基础内核模块上均有较高（或中等以上）覆盖。",
+          "项目结构均采用模块化组织方式，内部各模块之间通过函数调用边形成依赖关系。"
+        ],
+        "main_differences": [
+          "目标仓库主要语言是 Rust 和 Python，历史仓库是 C、Assembly、Linker_Script。",
+          "目标仓库规模更大（2928 个函数、22548 条边、32 个模块），历史仓库较小（621 个函数、1633 条边、13 个模块）。",
+          "目标仓库模块完整性覆盖更多领域（如 io、ipc、signal、smp、network 等），历史仓库仅覆盖 13 个基础模块且部分模块（如 driver、filesystem）完整性低。",
+          "目标仓库中 filesystem 模块权重最高（0.223）且完整性为 1.0，历史仓库 filesystem 完整性仅有 0.15。"
+        ],
+        "target_advantages": [
+          "目标仓库使用 Rust 实现，内存安全性更强，且支持 Python 生态便于扩展。",
+          "目标仓库函数量和调用边规模远超历史仓库，表明其功能更丰富、系统更复杂。",
+          "目标仓库在 filesystem、memory、syscall、process、scheduler 等核心模块完整性均达到 1.0，重要模块实现程度高。",
+          "目标仓库覆盖更多模块（如 ipc、networking、signal、smp），功能全面性优于历史仓库。"
+        ],
+        "target_weaknesses": [
+          "目标仓库中 io、ipc、networking、smp、task management 等模块完整性较低（0.08~0.15），表明这些部分可能尚不成熟或缺失。",
+          "目标仓库未明确列出 technical_features 和 weaknesses，而历史仓库虽弱项多但能揭示常见不足。",
+          "目标仓库结构复杂度为 1.0，但模块间耦合度偏高，可能影响可维护性（需要根据实际调用边分析才能确定）。"
+        ],
+        "borrowable_designs": [
+          "历史仓库 OSakura 使用 C 语言实现，在驱动和硬件交互方面有简洁设计，目标仓库可参考其轻量级驱动框架。",
+          "历史仓库模块数量少且边界清晰（13 个模块），目标仓库可借鉴其模块划分策略，降低高权重模块的耦合度。",
+          "历史仓库在 ipc 模块完整性为 0.15，目标仓库 ipc 完整性也较低（0.15），可参考其现有 IPC 设计思路进行增强。"
+        ],
+        "comparison_confidence": "medium"
+      }
+    ]
+  },
+  "urls": {
+    "report_markdown": "/reports/T202610336999888_final_report.md",
+    "work_detail_data": "/data/works/T202610336999888.json",
+    "comparison_data": "/data/comparisons/T202610336999888.json"
+  },
+  "generated_at": "2026-07-03 07:21:34"
+}
