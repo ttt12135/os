@@ -1,5 +1,188 @@
 {
-  "retrieval_mode": "structured",
-  "comparison_count": 0,
-  "comparisons": []
+  "retrieval_mode": "hybrid",
+  "comparison_count": 5,
+  "comparisons": [
+    {
+      "history_repo_name": "0x80200000",
+      "similarity_score": 0.5782,
+      "hybrid_score": 0.5782,
+      "structured_score": 0.8896,
+      "semantic_score": 0.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库均为教学型操作系统内核，核心模块高度重合（driver、filesystem、memory、syscall），且均具备较高的模块完成度，结构复杂度相似，因而是高度可比的。",
+      "main_similarities": [
+        "项目类型相同，均为 teaching_os_or_general_kernel，核心模块均包括 driver、filesystem、memory、syscall 和 unknown。",
+        "函数数量和调用边数量较为接近，结构复杂度均达到 1.0。",
+        "driver、filesystem、memory、syscall、process 等模块的完成度均为 1.0，表明关键模块实现完整。"
+      ],
+      "main_differences": [
+        "目标仓库使用 C、汇编、Makefile、链接脚本，而历史仓库还使用了 C++ 和 Python。",
+        "目标仓库的模块数量较少（17 vs 22），主要集中在 driver 模块（权重 0.6044），历史仓库的 filesystem 权重最高（0.3275），分布更均衡。",
+        "历史仓库提供了 boot 0.68、build 0.46、scheduler 0.95 等模块的较高完成度，目标仓库缺乏 scheduler（0.13）、loader（0.08）、ipc（0.15）等模块的详细实现。"
+      ],
+      "target_advantages": [
+        "目标仓库的 driver 模块权重高达 0.6044，表明在驱动程序方面投入了大量实现，完成度高且权重突出。",
+        "目标仓库的 boot 完成度（0.75）高于历史仓库（0.68），启动相关实现可能更完善。",
+        "目标仓库的 build 完成度（0.75）高于历史仓库（0.46），构建和编译支持更好。"
+      ],
+      "target_weaknesses": [
+        "目标仓库在 scheduler（0.13）、loader（0.08）、ipc（0.15）等模块完成度远低于历史仓库（scheduler 0.95、loader 0.44、ipc 0.15与历史相近但缺乏细节），调度器和加载器实现薄弱。",
+        "目标仓库缺乏 network（0.38 vs 0.15 但历史仓库更低）、security、posix、timer 等历史仓库已涉及的功能模块。",
+        "历史仓库整体模块分布更均衡，目标仓库过度依赖 driver 模块，可能在其他核心功能方面存在隐患。"
+      ],
+      "borrowable_designs": [
+        "可借鉴历史仓库的 scheduler 模块设计，其完成度高达 0.95，能帮助改进目标仓库的调度器实现。",
+        "可参考历史仓库的 loader（0.44）和 filesystem 实现细节，后者在历史仓库中权重最高且完成度为 1.0，可能包含更完善的文件系统架构。",
+        "历史仓库的 build 模块虽然完成度较低，但可能提供与 C++、Python 相关的构建脚本，目标仓库可考虑扩展构建支持。"
+      ],
+      "comparison_confidence": "high"
+    },
+    {
+      "history_repo_name": "pagefault",
+      "similarity_score": 0.5557,
+      "hybrid_score": 0.5557,
+      "structured_score": 0.8549,
+      "semantic_score": 0.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库 T2026100669911340 与历史仓库 pagefault 均属于 teaching_os_or_general_kernel 类型，使用 C、汇编、Makefile 和链接脚本，核心模块高度重合（driver、filesystem、memory、unknown），结构复杂度相同，函数数量和模块规模接近，整体结构相似度较高。",
+      "main_similarities": [
+        "项目类型均为 teaching_os_or_general_kernel。",
+        "核心模块均包含 driver、filesystem、memory、unknown 模块。",
+        "结构复杂度均为 1.0，表明模块间连接结构复杂度相当。",
+        "函数数量、调用边数量和模块数量相近：目标仓库有 855 个函数、2279 个边、17 个模块；历史仓库有 800 个函数、2313 个边、20 个模块。",
+        "共同模块的完成度分布接近，例如 boot 模块完成度均为 0.75，process、syscall 模块完成度均为 1.0。"
+      ],
+      "main_differences": [
+        "主要语言不同：目标仓库仅使用 C 和汇编，历史仓库还使用 C++ 和 Rust。",
+        "核心模块的模块权重和最终得分有差异：目标仓库 driver 模块权重 0.6044，历史仓库为 0.4349；目标仓库 filesystem 权重 0.0474，历史仓库为 0.1826。",
+        "模块完成度分布不同：目标仓库 scheduler 完成度仅 0.13，而历史仓库为 0.73；目标仓库 elf_loader 完成度为 0.18，历史仓库没有该模块；历史仓库有 sync 和 synchronization 模块，目标仓库没有。",
+        "内部边和外部边的比例不同：目标仓库内部边 693，外部边 1586；历史仓库内部边 1123，外部边 1190。",
+        "目标仓库缺少 debug、report_generation、synchronization、sync、trap 等模块，历史仓库缺少 elf_loader、loader、network、security 等模块。"
+      ],
+      "target_advantages": [
+        "目标仓库在 scheduler、elf_loader、loader、network、security 等模块的完成度高于历史仓库或拥有这些模块。",
+        "目标仓库 driver 模块权重更大，可能驱动支持更丰富。",
+        "目标仓库结构上拥有更多外部调用边，可能接口更开放或库依赖更多。"
+      ],
+      "target_weaknesses": [
+        "目标仓库 scheduler 模块完成度仅 0.13，远低于历史仓库的 0.73，调度器实现不完善。",
+        "目标仓库缺少 sync/synchronization 模块，历史仓库有此模块且完成度较高（0.28 和 0.51）。",
+        "目标仓库 ipc 模块完成度 0.15，历史仓库为 0.15，但历史仓库有 debug、report_generation 等辅助模块。",
+        "目标仓库在模块数量上略少（17 vs 20），部分功能模块缺失。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可以借鉴历史仓库的 scheduler 模块设计（完成度 0.73），完善自身的调度逻辑。",
+        "目标仓库可以学习历史仓库的 sync/synchronization 模块实现，增强同步机制。",
+        "目标仓库可以参考历史仓库的 debug 模块方案（完成度 0.28），增加调试支持。"
+      ],
+      "comparison_confidence": "high"
+    },
+    {
+      "history_repo_name": "no_stay_up_late",
+      "similarity_score": 0.555,
+      "hybrid_score": 0.555,
+      "structured_score": 0.8539,
+      "semantic_score": 0.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库均为教学操作系统或通用内核项目，核心模块存在显著重合（如driver、filesystem、memory、syscall），函数数量、调用边规模和模块数量接近，结构复杂度均为1.0，且共同模块的完成度分布相似，因此从结构和规模上具有较高的相似性。",
+      "main_similarities": [
+        "项目类型相同（均为teaching_os_or_general_kernel），共享4个核心模块（driver, filesystem, memory, syscall）。",
+        "函数数量相近（目标855 vs 历史800），调用边总数相近（2279 vs 2451），模块数量接近（17 vs 19）。",
+        "结构复杂度均为1.0，表示整体架构复杂程度相当。",
+        "基本模块（如boot、build、driver、filesystem、memory、process、syscall、user等）的完成度分布较为接近。"
+      ],
+      "main_differences": [
+        "目标仓库使用纯C/Assembly等传统语言，历史仓库兼具C和Rust，语言多样性更高。",
+        "目标仓库核心模块中驱动模块权重极高（0.6044），远高于历史仓库（0.3741），显示对驱动的侧重不同。",
+        "历史仓库拥有interrupt和scheduler等模块的较高完成度（1.0和0.75），而目标仓库interrupt为0.93、scheduler仅0.13。",
+        "历史仓库包含synchronization（0.43）、ipc（0.15）等功能模块，目标仓库缺少类似模块或完成度较低。"
+      ],
+      "target_advantages": [
+        "驱动模块权重和完成度最高，表明在驱动层实现更为全面。",
+        "目标仓库的驱动模块权重占比远高于历史仓库，可能在硬件适配或设备管理方面更侧重。",
+        "elf_loader和network模块的完成度（0.18和0.38）略高于历史仓库的对应模块（历史中无elf_loader，network为0.15）。"
+      ],
+      "target_weaknesses": [
+        "调度器模块完成度极低（0.13），远低于历史仓库（0.75），在进程调度设计上存在明显不足。",
+        "中断模块完成度（0.93）略低于历史仓库（1.0），可能缺少部分中断处理细节。",
+        "目标仓库缺少同步机制（synchronization）和IPC模块（未出现或完成度低），历史仓库有相关设计。",
+        "项目整体语言单一（仅C/Assembly），相比历史仓库的Rust+C多语言组合可能缺乏现代语言特性。"
+      ],
+      "borrowable_designs": [
+        "历史仓库中interrupt模块的完整实现（完成度1.0）可为目标中断模块改进提供参考。",
+        "历史仓库的scheduler模块（完成度0.75）可借鉴以提升目标调度器的功能。",
+        "历史仓库的synchronization模块设计（完成度0.43）可帮助目标仓库构建同步原语。",
+        "历史仓库的ipc模块（完成度0.15）虽低，但可提供基础进程通信架构思路。"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "OS",
+      "similarity_score": 0.35,
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库都属于 teaching_os_or_general_kernel 类型，且核心模块高度重叠（driver、filesystem、interrupt 等），都涉及操作系统基本组件（内存、进程、系统调用等）。虽然在具体实现语言和结构细节上有差异，但整体功能方向和模块构成相似。",
+      "main_similarities": [
+        "项目类型一致，均为教学操作系统或通用内核项目",
+        "核心模块均包含 driver、filesystem、interrupt 等基本 OS 模块",
+        "模块完整性覆盖了 boot、memory、process、syscall 等常用内核功能"
+      ],
+      "main_differences": [
+        "目标仓库主要使用 C/Assembly/Makefile，历史仓库主要使用 Rust/C/Cargo",
+        "目标仓库模块数量为 17，历史仓库为 13，模块划分更细",
+        "目标仓库功能函数数（855）和历史仓库（1000）接近但略少，但目标仓库边数（2279）远少于历史仓库（3991）"
+      ],
+      "target_advantages": [
+        "驱动模块（driver）完整性为 1.0，权重 0.6044，明显高于历史仓库 driver 的 0.15",
+        "文件系统、内存、系统调用等核心模块完整性均为 1.0，而历史仓库这些模块完整性仅为 0.15",
+        "模块更多且核心模块分布均匀，整体内核功能更完整"
+      ],
+      "target_weaknesses": [
+        "部分模块（如 elf_loader、ipc、loader、scheduler、security、test、user）完整性较低（<0.2），可能是薄弱环节",
+        "函数数量和调用边数少于历史仓库，可能反映代码复杂度或功能覆盖不如历史仓库全面",
+        "结构相似度分数为 0.0，说明模块间调用结构差异较大"
+      ],
+      "borrowable_designs": [
+        "历史仓库在 build、scheduler、user 等模块有 0.15 的完整性，可参考其构建和调度设计",
+        "历史仓库比目标仓库多出 cargo 工具链和更多边数（3991 vs 2279），其模块间通信和调用设计可能值得借鉴"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "OSakura",
+      "similarity_score": 0.315,
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库 T2026100669911340 与历史仓库 OSakura 在整体框架和系统模块设计上存在语义相似性，两者均为教学型操作系统内核，主要使用 C 语言和汇编开发，并包含驱动、文件系统、进程管理等基础模块，但结构特征差异较大。",
+      "main_similarities": [
+        "两者均为 teaching_os_or_general_kernel 类型项目，主要使用 C 语言和汇编语言。",
+        "均包含 driver、filesystem、interrupt、process、memory 等核心模块。",
+        "项目结构均包括 linker_script 文件，用于链接配置。"
+      ],
+      "main_differences": [
+        "目标仓库功能规模更大：函数节点 855 个 vs 621 个，调用边 2279 条 vs 1633 条，模块数 17 个 vs 13 个。",
+        "目标仓库模块完整性更高：driver、filesystem、memory、process 等模块 completeness 达到 1.0，而历史仓库这些模块仅 0.15。",
+        "历史仓库结构内部耦合度更高（internal_edge_count 1352 vs 693），目标仓库外部依赖更多（external_edge_count 1586 vs 281）。",
+        "历史仓库核心模块权重异常集中（unknown 权重 1.0），目标仓库核心模块分布更均衡（driver 权重 0.6044 最高）。"
+      ],
+      "target_advantages": [
+        "目标仓库在 driver、filesystem、syscall、memory、process 等模块的完成度更高，均达到 1.0，远超历史仓库的 0.15。",
+        "目标仓库具备 boot、interrupt、process、syscall 等模块的高完成度（大部分 >0.75），整体功能更完善。",
+        "目标仓库模块划分更细（17 个模块 vs 13 个模块），结构更清晰。"
+      ],
+      "target_weaknesses": [
+        "目标仓库外部调用边占比过高（69.5%），表明对外部库依赖较强，可能影响可移植性或简化内部实现。",
+        "历史仓库内部调用边占比高（82.8%），结构内聚性更强，目标仓库在某些模块的封装性上可能不如历史仓库。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可借鉴历史仓库更高的内部调用边比例，优化模块内聚性，减少不必要的外部依赖。",
+        "历史仓库的 interrupt 模块 completeness 为 0.15，而目标仓库为 0.93，差异较大，可参考历史仓库的访存或 IPC 设计思路来完善目标仓库的相应模块。"
+      ],
+      "comparison_confidence": "medium"
+    }
+  ]
 }

@@ -1,0 +1,1893 @@
+{
+  "repo_name": "T2026101269910295",
+  "team_name": "T2026101269910295",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026101269910295-1482",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026101269910295-1482",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "assembly"
+  ],
+  "core_modules": [
+    "filesystem",
+    "syscall",
+    "memory",
+    "process",
+    "interrupt"
+  ],
+  "function_count": 1000,
+  "node_count": 1000,
+  "edge_count": 3937,
+  "internal_edge_count": 2527,
+  "external_edge_count": 1410,
+  "module_count": 15,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.51,
+    "build": 0.1,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 1.0,
+    "ipc": 0.15,
+    "lock": 0.08,
+    "memory": 1.0,
+    "network": 0.46,
+    "process": 1.0,
+    "scheduler": 0.61,
+    "synchronization": 0.35,
+    "syscall": 1.0,
+    "unknown": 1.0,
+    "user": 0.1
+  },
+  "core_module_details": [
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.6365,
+      "completeness": 1.0,
+      "final_score": 0.7819
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.1638,
+      "completeness": 1.0,
+      "final_score": 0.4983
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0598,
+      "completeness": 1.0,
+      "final_score": 0.4359
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.0533,
+      "completeness": 1.0,
+      "final_score": 0.432
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.0245,
+      "completeness": 1.0,
+      "final_score": 0.4147
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 9,
+      "outgoing_edge_count": 28,
+      "internal_edge_count": 14,
+      "external_edge_count": 14,
+      "internal_call_ratio": 0.5,
+      "external_call_ratio": 0.5,
+      "module_weight": 0.0082,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\lwext4\\src\\ext4.c",
+        "kernel\\lwext4\\src\\ext4_journal.c",
+        "kernel\\sysfile.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "ext4_link",
+          "normalized_name": "ext4_link",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "217",
+          "end_line": "308",
+          "outgoing_call_count": 16,
+          "summary": "该函数用于在ext4文件系统中创建硬链接或目录链接。它首先向父目录添加目录项，然后根据目标是否为目录且是否为重命名操作进行不同处理：如果是新目录则初始化'.'和'..'项，如果是重命名目录则更新'..'指向，最后调整链接计数。"
+        },
+        {
+          "name": "ext4_fsymlink_set",
+          "normalized_name": "ext4_fsymlink_set",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "2440",
+          "end_line": "2506",
+          "outgoing_call_count": 13,
+          "summary": "设置符号链接的目标内容，根据大小决定使用内联存储（inode blocks）还是外部数据块。"
+        },
+        {
+          "name": "ext4_create_hardlink",
+          "normalized_name": "ext4_create_hardlink",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "1133",
+          "end_line": "1234",
+          "outgoing_call_count": 12,
+          "summary": "该函数用于在ext4文件系统中创建一个硬链接。它通过解析路径，逐级查找目录项，直到目标路径不存在且位于最后一个路径组件时，调用ext4_link函数将child_ref指向的inode链接到目标父目录中。如果路径中间组件缺失或目标已存在，则返回相应错误。"
+        },
+        {
+          "name": "ext4_flink",
+          "normalized_name": "ext4_flink",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "1267",
+          "end_line": "1328",
+          "outgoing_call_count": 12,
+          "summary": "创建硬链接的核心函数。它通过打开目标文件获取其inode，检查是否为目录（硬链接不允许对目录操作），然后调用ext4_create_hardlink创建硬链接，并处理事务的开始、提交或回滚。"
+        },
+        {
+          "name": "ext4_fsymlink",
+          "normalized_name": "ext4_fsymlink",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "2508",
+          "end_line": "2544",
+          "outgoing_call_count": 11,
+          "summary": "创建一个符号链接文件。函数根据给定的目标路径和符号链接路径，首先获取挂载点并检查只读状态，然后在挂载点上加锁，开启块缓存回写和事务，通过ext4_generic_open2创建或打开一个类型为符号链接的文件，再调用ext4_fsymlink_set设置符号链接的目标，最后根据操作结果提交或中止事务，解锁并返回状态码。"
+        },
+        {
+          "name": "jbd_build_revoke_tree",
+          "normalized_name": "jbd_build_revoke_tree",
+          "file_path": "kernel\\lwext4\\src\\ext4_journal.c",
+          "language": "c",
+          "start_line": "998",
+          "end_line": "1030",
+          "outgoing_call_count": 5,
+          "summary": "读取JBD日志的撤销块头部，计算撤销条目数量，并根据是否支持64位特性，按4或8字节大小解析每个撤销块编号，调用jbd_add_revoke_block_tags将这些块编号添加到恢复信息中。"
+        },
+        {
+          "name": "build_abs_path",
+          "normalized_name": "build_abs_path",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": 257,
+          "end_line": 287,
+          "outgoing_call_count": 1,
+          "summary": "{\n  \"block_id\": \"block_890\",\n  \"file_path\": \"kernel\\\\sysfile.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"257\",\n  \"end_line\": \"287\",\n  \"name\": \"build_abs_path\",\n  \"type\": \"function\",\n  \"summary\": \"根据给定路径和当前工作目录（cwd），构建并规范化绝对路径。优先使用路径本身（如果以'/'开头），否则将cwd与路径拼接，最后统一归一化。\",\n  \"logic_steps\": [\n    \"检查path是否以'/'开头：如果是，直接调用normalize_abs_path(out, outsz, path)并返回；否则进入后续步。\",\n    \"若cwd为空或空字符串，则在raw缓冲区以'/'开头，否则将cwd内容复制到raw中。\",\n    \"如果raw末尾不是'/'，则添加一个'/'作为分隔符。\",\n    \"将path内容追加到raw末尾（受缓冲区大小限制）。\",\n    \"以'\\0'终止raw字符串，然后调用normalize_abs_path(out, outsz, raw)对拼接结果进行归一化。\"\n  ],\n  \"called_functions\": [\n    \"normalize_abs_path\"\n  ],\n  \"related_os_module\": \"filesystem\",\n  \"evidence\": \"该函数构建绝对路径，使用了路径归一化函数，属于文件系统相关操作。代码中引用了常量MAXPATH，函数名暗示路径处理。\",\n  \"uncertainty\": \"无\"\n}"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 21,
+      "outgoing_edge_count": 54,
+      "internal_edge_count": 35,
+      "external_edge_count": 19,
+      "internal_call_ratio": 0.6481,
+      "external_call_ratio": 0.3519,
+      "module_weight": 0.0181,
+      "files": [
+        "kernel/lwext4/src/ext4_extent.c",
+        "kernel\\console.c",
+        "kernel\\include\\file.h",
+        "kernel\\lwext4\\include\\ext4_block_group.h",
+        "kernel\\lwext4\\include\\ext4_blockdev.h",
+        "kernel\\lwext4\\include\\ext4_fs.h",
+        "kernel\\lwext4\\src\\ext4.c",
+        "kernel\\lwext4\\src\\ext4_blockdev.c",
+        "kernel\\lwext4\\src\\ext4_extent.c",
+        "kernel\\lwext4\\src\\ext4_fs.c",
+        "kernel\\lwext4\\src\\ext4_journal.c",
+        "kernel\\lwext4\\src\\ext4_mkfs.c",
+        "kernel\\lwext4\\src\\ext4_super.c",
+        "kernel\\lwext4\\src\\ext4_trans.c",
+        "kernel\\lwext4\\src\\ext4_xattr.c",
+        "kernel\\main_la.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c",
+        "kernel\\sysproc.c",
+        "kernel\\uart.c"
+      ],
+      "file_count": 20,
+      "core_functions": [
+        {
+          "name": "ext4_extent_get_blocks",
+          "normalized_name": "ext4_extent_get_blocks",
+          "file_path": "kernel\\lwext4\\src\\ext4_extent.c",
+          "language": "c",
+          "start_line": "2013",
+          "end_line": "2139",
+          "outgoing_call_count": 19,
+          "summary": "该函数用于获取或分配ext4文件系统中指定逻辑块对应的物理块，支持处理已分配、未初始化以及新建分配三种情况，并返回分配的块数和物理块地址。"
+        },
+        {
+          "name": "ext4_xattr_block_set",
+          "normalized_name": "ext4_xattr_block_set",
+          "file_path": "kernel\\lwext4\\src\\ext4_xattr.c",
+          "language": "c",
+          "start_line": "1282",
+          "end_line": "1407",
+          "outgoing_call_count": 17,
+          "summary": "该函数用于设置或更新一个扩展属性（xattr）条目，该条目存储在inode的外部属性块中。它处理两种主要情况：当inode当前没有外部队块时，分配并初始化一个新块；当已有外部队块时，根据引用计数和no_insert标志决定是否复制块并更新或返回错误。"
+        },
+        {
+          "name": "jbd_replay_block_tags",
+          "normalized_name": "jbd_replay_block_tags",
+          "file_path": "kernel\\lwext4\\src\\ext4_journal.c",
+          "language": "c",
+          "start_line": "879",
+          "end_line": "949",
+          "outgoing_call_count": 15,
+          "summary": "该函数用于重放日志中的块标签，将日志块中的数据写回对应的文件系统块，处理回滚撤销和超级块特殊逻辑。"
+        },
+        {
+          "name": "ext4_fs_get_block_group_ref",
+          "normalized_name": "ext4_fs_get_block_group_ref",
+          "file_path": "kernel\\lwext4\\src\\ext4_fs.c",
+          "language": "c",
+          "start_line": "570",
+          "end_line": "633",
+          "outgoing_call_count": 13,
+          "summary": "获取指定块组ID的块组描述符引用，包括计算块组描述符表的位置、读取包含描述符的块、初始化未初始化的块位图和inode位图（以及可能的inode表）。"
+        },
+        {
+          "name": "ext4_xattr_block_remove",
+          "normalized_name": "ext4_xattr_block_remove",
+          "file_path": "kernel\\lwext4\\src\\ext4_xattr.c",
+          "language": "c",
+          "start_line": "1417",
+          "end_line": "1470",
+          "outgoing_call_count": 11,
+          "summary": "从扩展属性块中移除一个指定的扩展属性条目。它通过复制或替换块来避免并发访问问题，然后查找并删除对应的条目，最后更新校验和。"
+        },
+        {
+          "name": "ext4_xattr_copy_new_block",
+          "normalized_name": "ext4_xattr_copy_new_block",
+          "file_path": "kernel\\lwext4\\src\\ext4_xattr.c",
+          "language": "c",
+          "start_line": "1096",
+          "end_line": "1158",
+          "outgoing_call_count": 10,
+          "summary": "当原始扩展属性块被多个inode引用时，为该inode分配一个新的扩展属性块，复制内容并更新引用计数，然后修改inode的扩展属性指针指向新块。"
+        },
+        {
+          "name": "consoleintr",
+          "normalized_name": "consoleintr",
+          "file_path": "kernel\\console.c",
+          "language": "c",
+          "start_line": "130",
+          "end_line": "178",
+          "outgoing_call_count": 9,
+          "summary": "处理控制台输入字符，实现特殊键（如Ctrl+P、Ctrl+U、退格）的响应，以及普通字符的回显、缓冲存储和行结束唤醒读进程。"
+        },
+        {
+          "name": "ext4_block_cache_shake",
+          "normalized_name": "ext4_block_cache_shake",
+          "file_path": "kernel\\lwext4\\src\\ext4_blockdev.c",
+          "language": "c",
+          "start_line": "186",
+          "end_line": "211",
+          "outgoing_call_count": 7,
+          "summary": "清除块缓存中的低优先级（LRU）脏缓冲区，以释放缓存空间。函数通过检查是否允许抖动（dont_shake标志）来避免重入，然后循环选择LRU链表中最旧的缓冲区，若为脏则刷新到磁盘，最后丢弃该缓冲区，直到缓存不满或抖动结束。"
+        },
+        {
+          "name": "ext4_xattr_is_block_valid",
+          "normalized_name": "ext4_xattr_is_block_valid",
+          "file_path": "kernel\\lwext4\\src\\ext4_xattr.c",
+          "language": "c",
+          "start_line": "506",
+          "end_line": "565",
+          "outgoing_call_count": 7,
+          "summary": "验证给定的ext4扩展属性（xattr）块是否有效，通过检查魔数、块数量、条目结构完整性以及条目和数据区域是否重叠。"
+        },
+        {
+          "name": "consoleread",
+          "normalized_name": "consoleread",
+          "file_path": "kernel\\console.c",
+          "language": "c",
+          "start_line": "74",
+          "end_line": "122",
+          "outgoing_call_count": 7,
+          "summary": "从控制台读取输入，支持逐字节拷贝到用户空间，处理EOF和换行符，返回实际读取的字节数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 603,
+      "outgoing_edge_count": 2704,
+      "internal_edge_count": 1585,
+      "external_edge_count": 1119,
+      "internal_call_ratio": 0.5862,
+      "external_call_ratio": 0.4138,
+      "module_weight": 0.6365,
+      "files": [
+        "kernel/lwext4/src/ext4.c",
+        "kernel/lwext4/src/ext4_extent.c",
+        "kernel/lwext4/src/ext4_fs.c",
+        "kernel/lwext4/src/ext4_inode.c",
+        "kernel/lwext4/src/ext4_journal.c",
+        "kernel/lwext4/src/ext4_mkfs.c",
+        "kernel/lwext4/src/ext4_xattr.c",
+        "kernel\\file.c",
+        "kernel\\include\\buf.h",
+        "kernel\\include\\fat32.h",
+        "kernel\\include\\file.h",
+        "kernel\\lwext4\\include\\ext4_block_group.h",
+        "kernel\\lwext4\\include\\ext4_fs.h",
+        "kernel\\lwext4\\include\\ext4_mkfs.h",
+        "kernel\\lwext4\\src\\ext4.c",
+        "kernel\\lwext4\\src\\ext4_bcache.c",
+        "kernel\\lwext4\\src\\ext4_block_group.c",
+        "kernel\\lwext4\\src\\ext4_blockdev.c",
+        "kernel\\lwext4\\src\\ext4_crc32.c",
+        "kernel\\lwext4\\src\\ext4_debug.c",
+        "kernel\\lwext4\\src\\ext4_dir.c",
+        "kernel\\lwext4\\src\\ext4_dir_idx.c",
+        "kernel\\lwext4\\src\\ext4_extent.c",
+        "kernel\\lwext4\\src\\ext4_fs.c",
+        "kernel\\lwext4\\src\\ext4_hash.c",
+        "kernel\\lwext4\\src\\ext4_inode.c",
+        "kernel\\lwext4\\src\\ext4_journal.c",
+        "kernel\\lwext4\\src\\ext4_mbr.c",
+        "kernel\\lwext4\\src\\ext4_mkfs.c",
+        "kernel\\lwext4\\src\\ext4_super.c",
+        "kernel\\lwext4\\src\\ext4_trans.c",
+        "kernel\\lwext4\\src\\ext4_xattr.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c"
+      ],
+      "file_count": 34,
+      "core_functions": [
+        {
+          "name": "ext4_extent_remove_space",
+          "normalized_name": "ext4_extent_remove_space",
+          "file_path": "kernel\\lwext4\\src\\ext4_extent.c",
+          "language": "c",
+          "start_line": "1704",
+          "end_line": "1844",
+          "outgoing_call_count": 28,
+          "summary": "该函数用于从ext4文件的 extent 树中删除指定逻辑块范围 [from, to] 的映射关系，处理多种情况（完全在某 extent 内、跨多个 extent、空树等），并维护树的完整性。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "1545",
+          "end_line": "1669",
+          "outgoing_call_count": 27,
+          "summary": "实现 openat 系统调用，打开或创建文件/目录，支持绝对路径和相对路径解析、符号链接处理、特殊文件（proc、memtmp）及 ext4 文件系统操作。"
+        },
+        {
+          "name": "sys_open",
+          "normalized_name": "sys_open",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "1671",
+          "end_line": "1791",
+          "outgoing_call_count": 27,
+          "summary": "实现系统调用 sys_open：根据路径、打开模式和权限打开文件（包括普通文件、特殊文件、进程虚拟文件、内存文件或目录），并分配文件描述符。"
+        },
+        {
+          "name": "ext4_dir_dx_init",
+          "normalized_name": "ext4_dir_dx_init",
+          "file_path": "kernel\\lwext4\\src\\ext4_dir_idx.c",
+          "language": "c",
+          "start_line": "349",
+          "end_line": "464",
+          "outgoing_call_count": 26,
+          "summary": "初始化一个目录的索引树（dx tree）的根节点。该函数负责分配或定位第一个数据块，设置点条目（. 和 ..），初始化根节点的索引头部信息，创建第一个叶子块并用空条目填充，最后将叶子块通过索引条目连接到根节点。"
+        },
+        {
+          "name": "int",
+          "normalized_name": "int",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "615",
+          "end_line": "632",
+          "outgoing_call_count": 25,
+          "summary": "该函数在一个ext4挂载点中，如果日志系统（jbd_journal）存在且当前没有事务（curr_trans为空），则创建一个新的事务并赋值给挂载点的当前事务指针。如果创建事务失败（内存不足），则返回ENOMEM错误码。"
+        },
+        {
+          "name": "ext4_dir_rm",
+          "normalized_name": "ext4_dir_rm",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "2886",
+          "end_line": "3126",
+          "outgoing_call_count": 25,
+          "summary": "递归删除指定路径的目录或文件。函数会遍历目录条目，对于子目录递归进入删除其内容，最后删除自身。处理过程中会更新事务、释放inode、截断文件/目录内容，并支持只读挂载检查。"
+        },
+        {
+          "name": "int",
+          "normalized_name": "int",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "489",
+          "end_line": "518",
+          "outgoing_call_count": 25,
+          "summary": "该函数尝试为一个指定挂载点的EXT4文件系统启动日志（Journal）功能。如果文件系统只读或没有日志特性，则跳过，否则获取日志文件系统并启动日志。"
+        },
+        {
+          "name": "int",
+          "normalized_name": "int",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "557",
+          "end_line": "613",
+          "outgoing_call_count": 25,
+          "summary": "尝试对指定挂载点的 ext4 文件系统进行恢复操作：如果文件系统有日志，则通过日志恢复；否则只更新超级块中空闲块和索引节点的统计信息（非只读时）。"
+        },
+        {
+          "name": "int",
+          "normalized_name": "int",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "634",
+          "end_line": "646",
+          "outgoing_call_count": 25,
+          "summary": "停止当前事务，如果存在事务且日志系统已初始化，则提交当前事务并清空当前事务指针。"
+        },
+        {
+          "name": "int",
+          "normalized_name": "int",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": "520",
+          "end_line": "555",
+          "outgoing_call_count": 25,
+          "summary": "停止与给定挂载点关联的ext4文件系统的日志记录。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 29,
+      "outgoing_edge_count": 70,
+      "internal_edge_count": 27,
+      "external_edge_count": 43,
+      "internal_call_ratio": 0.3857,
+      "external_call_ratio": 0.6143,
+      "module_weight": 0.0245,
+      "files": [
+        "kernel\trap.c",
+        "kernel\\include\\la_user.h",
+        "kernel\\include\\riscv.h",
+        "kernel\\include\\trap.h",
+        "kernel\\kernelvec.S",
+        "kernel\\la_trap_user.S",
+        "kernel\\main_la.c",
+        "kernel\\proc.c",
+        "kernel\\timer.c",
+        "kernel\\trap.c"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "usertrap",
+          "normalized_name": "usertrap",
+          "file_path": "kernel\trap.c",
+          "language": "c",
+          "start_line": "51",
+          "end_line": "123",
+          "outgoing_call_count": 18,
+          "summary": "处理用户态发生的陷阱（trap），包括系统调用、设备中断、以及特定的异常（如缺页、非法指令等），并进行对应的进程状态管理和调度。"
+        },
+        {
+          "name": "usertrapret",
+          "normalized_name": "usertrapret",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "128",
+          "end_line": "169",
+          "outgoing_call_count": 14,
+          "summary": "该函数用于在从内核返回用户空间之前，设置陷阱处理相关的寄存器、保存内核上下文到trapframe，并跳转到trampoline代码以完成用户页表切换和权限切换。"
+        },
+        {
+          "name": "kerneltrap",
+          "normalized_name": "kerneltrap",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "173",
+          "end_line": "206",
+          "outgoing_call_count": 13,
+          "summary": "该函数处理内核态发生的异常或中断，检查是否来自 supervisor 模式且中断禁用，并分类处理设备中断（包括时钟中断导致的时间统计和进程切换）。"
+        },
+        {
+          "name": "reg_info",
+          "normalized_name": "reg_info",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "48",
+          "end_line": "62",
+          "outgoing_call_count": 12,
+          "summary": "该函数用于打印当前处理器的关键控制和状态寄存器的值，主要用于调试或诊断目的，帮助开发者了解异常发生时的CPU状态。"
+        },
+        {
+          "name": "trapinithart",
+          "normalized_name": "trapinithart",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "34",
+          "end_line": "45",
+          "outgoing_call_count": 7,
+          "summary": "该函数用于在每个CPU核上初始化陷阱处理（trap）相关的硬件状态，包括设置中断向量、启用全局中断、选择性启用外部、软件和定时器中断，并设置下一次定时器超时。"
+        },
+        {
+          "name": "timer_tick",
+          "normalized_name": "timer_tick",
+          "file_path": "kernel\\timer.c",
+          "language": "c",
+          "start_line": "36",
+          "end_line": "44",
+          "outgoing_call_count": 6,
+          "summary": "定时器中断处理函数，负责更新系统滴答计数、唤醒等待进程、触发进程定时器、检查看门狗并设置下一次超时。"
+        },
+        {
+          "name": "set_next_timeout",
+          "normalized_name": "set_next_timeout",
+          "file_path": "kernel\\timer.c",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "32",
+          "outgoing_call_count": 3,
+          "summary": "设置下一个定时器超时事件，通过 SBI 调用指定一个未来时间点（当前时间加上固定间隔）触发时钟中断。"
+        },
+        {
+          "name": "la_user_trap_entry",
+          "normalized_name": "la_user_trap_entry",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": "107",
+          "end_line": "163",
+          "outgoing_call_count": 2,
+          "summary": "保存用户态陷入（trap）时的上下文至当前任务控制块（Task Frame），然后切换到内核栈，并调用用户态陷入处理函数 la_handle_user_trap，若返回值非零则转到 la_resume_kernel_from_user"
+        },
+        {
+          "name": "timerinit",
+          "normalized_name": "timerinit",
+          "file_path": "kernel\\timer.c",
+          "language": "c",
+          "start_line": "16",
+          "end_line": "21",
+          "outgoing_call_count": 2,
+          "summary": "初始化用于保护 ticks 变量的锁，并在 DEBUG 模式下打印初始化信息。"
+        },
+        {
+          "name": "kernelvec",
+          "normalized_name": "kernelvec",
+          "file_path": "kernel\\kernelvec.S",
+          "language": "assembly",
+          "start_line": "10",
+          "end_line": "87",
+          "outgoing_call_count": 1,
+          "summary": "这是RISC-V架构下内核态中断/异常向量表入口代码。它先保存所有被调用者保存寄存器（以及调用者保存的部分关键寄存器）到当前栈上，然后调用C函数kerneltrap处理陷阱，处理返回后恢复寄存器，最后通过sret指令返回到被中断的内核代码继续执行。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\console.c",
+        "kernel\\file.c",
+        "kernel\\include\\sleeplock.h",
+        "kernel\\include\\spinlock.h",
+        "kernel\\kalloc.c",
+        "kernel\\lwext4\\src\\ext4.c",
+        "kernel\\lwext4\\src\\ext4_blockdev.c",
+        "kernel\\proc.c",
+        "kernel\\sleeplock.c",
+        "kernel\\spinlock.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c"
+      ],
+      "file_count": 12,
+      "core_functions": [
+        {
+          "name": "ext4_ftruncate_no_lock",
+          "normalized_name": "ext4_ftruncate_no_lock",
+          "file_path": "kernel\\lwext4\\src\\ext4.c",
+          "language": "c",
+          "start_line": 1604,
+          "end_line": 1646,
+          "outgoing_call_count": 6,
+          "summary": "该函数用于在无锁（假设外部已加文件系统锁）的情况下截断一个ext4文件到指定大小。它首先获取inode引用，如果当前文件大小已小于或等于目标大小则直接返回；否则开启块缓存写回模式，执行inode截断操作，更新文件大小和位置指针，最后关闭写回模式并释放inode引用。"
+        },
+        {
+          "name": "busybox_applet_target_locked",
+          "normalized_name": "busybox_applet_target_locked",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "441",
+          "end_line": "462",
+          "outgoing_call_count": 4,
+          "summary": "在锁定状态下查找并设置busybox的applet目标路径。该函数解析给定的路径，检查其是否存在，然后遍历可能的abi候选路径，找到第一个存在的常规文件或目录，并将该路径复制到输出参数中。"
+        },
+        {
+          "name": "signal_send",
+          "normalized_name": "signal_send",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "1053",
+          "end_line": "1081",
+          "outgoing_call_count": 3,
+          "summary": "向指定pid的进程发送信号，根据信号类型和信号动作设置进程信号待处理位或杀死进程，并尝试唤醒睡眠的进程。"
+        },
+        {
+          "name": "ext4_bdif_unlock",
+          "normalized_name": "ext4_bdif_unlock",
+          "file_path": "kernel\\lwext4\\src\\ext4_blockdev.c",
+          "language": "c",
+          "start_line": "59",
+          "end_line": "66",
+          "outgoing_call_count": 3,
+          "summary": "释放块设备描述符的锁定，通过调用块设备接口中的解锁函数，并断言操作成功。"
+        },
+        {
+          "name": "ext4_bdif_lock",
+          "normalized_name": "ext4_bdif_lock",
+          "file_path": "kernel\\lwext4\\src\\ext4_blockdev.c",
+          "language": "c",
+          "start_line": "50",
+          "end_line": "57",
+          "outgoing_call_count": 2,
+          "summary": "该函数用于锁定一个ext4块设备，如果设备接口中定义了锁函数，则调用它并断言返回成功。"
+        },
+        {
+          "name": "current_clock_timespec",
+          "normalized_name": "current_clock_timespec",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "1203",
+          "end_line": "1223",
+          "outgoing_call_count": 2,
+          "summary": "根据时钟ID，从当前CPU周期数计算并返回秒和纳秒格式的时间。"
+        },
+        {
+          "name": "futex_lock_init_once",
+          "normalized_name": "futex_lock_init_once",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "209",
+          "end_line": "216",
+          "outgoing_call_count": 1,
+          "summary": "这个函数用于确保进程间通信相关的futex锁只被初始化一次。它检查一个静态标志变量，如果未初始化，则调用initlock进行初始化，并设置标志为已初始化。"
+        },
+        {
+          "name": "ext4_lock_init",
+          "normalized_name": "ext4_lock_init",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "199",
+          "end_line": "206",
+          "outgoing_call_count": 1,
+          "summary": "初始化一个用于 ext4 文件系统的全局互斥锁，确保该锁只被初始化一次。"
+        },
+        {
+          "name": "initsleeplock",
+          "normalized_name": "initsleeplock",
+          "file_path": "kernel\\sleeplock.c",
+          "language": "c",
+          "start_line": "12",
+          "end_line": "19",
+          "outgoing_call_count": 1,
+          "summary": "初始化一个睡眠锁结构体，设置其名称、锁定状态和拥有者进程ID为初始值。"
+        },
+        {
+          "name": "spinlock",
+          "normalized_name": "spinlock",
+          "file_path": "kernel\\file.c",
+          "language": "c",
+          "start_line": "35",
+          "end_line": "38",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个匿名结构体，包含一个自旋锁（spinlock）和一个 memfile_ref 结构体数组，数组大小由宏 NMEMFILES 决定。该结构体很可能用于管理内存映射文件（memfile）的引用，并通过锁保护并发访问。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "lock": {
+      "module_name": "lock",
+      "function_count": 1,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0006,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 65,
+      "outgoing_edge_count": 205,
+      "internal_edge_count": 130,
+      "external_edge_count": 75,
+      "internal_call_ratio": 0.6341,
+      "external_call_ratio": 0.3659,
+      "module_weight": 0.0598,
+      "files": [
+        "kernel/lwext4/src/ext4_ialloc.c",
+        "kernel\\\\lwext4\\\\src\\\\ext4_balloc.c",
+        "kernel\\kalloc.c",
+        "kernel\\lwext4\\src\\ext4_balloc.c",
+        "kernel\\lwext4\\src\\ext4_bcache.c",
+        "kernel\\lwext4\\src\\ext4_bitmap.c",
+        "kernel\\lwext4\\src\\ext4_extent.c",
+        "kernel\\lwext4\\src\\ext4_fs.c",
+        "kernel\\lwext4\\src\\ext4_ialloc.c",
+        "kernel\\lwext4\\src\\ext4_journal.c",
+        "kernel\\lwext4\\src\\ext4_xattr.c",
+        "kernel\\proc.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c",
+        "kernel\\sysproc.c",
+        "kernel\\vm.c"
+      ],
+      "file_count": 16,
+      "core_functions": [
+        {
+          "name": "ext4_balloc_alloc_block",
+          "normalized_name": "ext4_balloc_alloc_block",
+          "file_path": "kernel\\lwext4\\src\\ext4_balloc.c",
+          "language": "c",
+          "start_line": "352",
+          "end_line": "583",
+          "outgoing_call_count": 26,
+          "summary": "在ext4文件系统中分配一个空闲块。该函数优先尝试在给定的goal附近分配，如果goal所在的块组没有空闲块，则依次在其他块组中查找。分配成功后会更新超级块、块组描述符和inode的块计数。"
+        },
+        {
+          "name": "ext4_balloc_free_blocks",
+          "normalized_name": "ext4_balloc_free_blocks",
+          "file_path": "kernel\\lwext4\\src\\ext4_balloc.c",
+          "language": "c",
+          "start_line": "233",
+          "end_line": "350",
+          "outgoing_call_count": 23,
+          "summary": "释放连续的一系列数据块，更新位图、超级块和块组描述符中的空闲计数，并更新 inode 的块计数。支持跨越多个块组的情况，但不要求 flex_bg 特性。最后尝试撤销已释放块的交易记录并清除缓存。"
+        },
+        {
+          "name": "ext4_ialloc_alloc_inode",
+          "normalized_name": "ext4_ialloc_alloc_inode",
+          "file_path": "kernel\\lwext4\\src\\ext4_ialloc.c",
+          "language": "c",
+          "start_line": "229",
+          "end_line": "366",
+          "outgoing_call_count": 22,
+          "summary": "该函数用于在EXT4文件系统中分配一个空闲的inode（索引节点）。它遍历块组，检查每组空闲inode数量，在满足条件的块组中通过位图分配inode，并更新块组描述符和超级块中的相关计数器。"
+        },
+        {
+          "name": "ext4_fs_init_block_bitmap",
+          "normalized_name": "ext4_fs_init_block_bitmap",
+          "file_path": "kernel\\lwext4\\src\\ext4_fs.c",
+          "language": "c",
+          "start_line": "290",
+          "end_line": "380",
+          "outgoing_call_count": 22,
+          "summary": "初始化指定块组的块位图，将所有属于该块组的元数据块（如超级块、GDT、块位图自身、inode位图、inode表）以及超出实际块数的位标记为已使用，并更新校验和。"
+        },
+        {
+          "name": "ext4_balloc_free_block",
+          "normalized_name": "ext4_balloc_free_block",
+          "file_path": "kernel\\lwext4\\src\\ext4_balloc.c",
+          "language": "c",
+          "start_line": "152",
+          "end_line": "231",
+          "outgoing_call_count": 21,
+          "summary": "释放一个指定的块（由块地址baddr标识）在ext4文件系统中。函数更新块位图、超级块和块组统计信息，并处理事务撤销和缓存失效。"
+        },
+        {
+          "name": "ext4_balloc_try_alloc_block",
+          "normalized_name": "ext4_balloc_try_alloc_block",
+          "file_path": "kernel\\lwext4\\src\\ext4_balloc.c",
+          "language": "c",
+          "start_line": "585",
+          "end_line": "665",
+          "outgoing_call_count": 20,
+          "summary": "该函数尝试分配一个指定的块号（baddr）的块，检查块位图中该块是否空闲，如果空闲则标记为已分配，并更新超级块、inode和块组的空闲块计数。"
+        },
+        {
+          "name": "ext4_ialloc_free_inode",
+          "normalized_name": "ext4_ialloc_free_inode",
+          "file_path": "kernel\\lwext4\\src\\ext4_ialloc.c",
+          "language": "c",
+          "start_line": "158",
+          "end_line": "227",
+          "outgoing_call_count": 18,
+          "summary": "释放一个inode，包括在位图中清除对应位、更新块组和超级块的空闲统计信息，以及如果inode是目录则递减已用目录计数。"
+        },
+        {
+          "name": "jbd_journal_free_trans",
+          "normalized_name": "jbd_journal_free_trans",
+          "file_path": "kernel\\lwext4\\src\\ext4_journal.c",
+          "language": "c",
+          "start_line": "1724",
+          "end_line": "1764",
+          "outgoing_call_count": 10,
+          "summary": "释放事务及其关联的所有缓冲区、撤销记录和块记录，根据abort标志执行清理操作（如清除脏标志、重置回调）"
+        },
+        {
+          "name": "uvmcopy",
+          "normalized_name": "uvmcopy",
+          "file_path": "kernel\\vm.c",
+          "language": "c",
+          "start_line": "435",
+          "end_line": "476",
+          "outgoing_call_count": 9,
+          "summary": "将页表 old 的部分映射（从 0 到 sz）复制到新页表 new 和 knew 中。对于标记为 PTE_SHARED 的页，直接共享物理页；对于非共享页，分配新物理页并拷贝内容。遇到错误时回滚已映射的部分。"
+        },
+        {
+          "name": "ext4_bcache_free",
+          "normalized_name": "ext4_bcache_free",
+          "file_path": "kernel\\lwext4\\src\\ext4_bcache.c",
+          "language": "c",
+          "start_line": "270",
+          "end_line": "315",
+          "outgoing_call_count": 8,
+          "summary": "释放一个ext4块缓存引用，减少其引用计数，当引用计数归零时，将缓冲区插入LRU列表，处理脏缓冲区的回写或刷新，并可能丢弃无效或临时缓冲区，最后清空块描述符。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 3,
+      "outgoing_edge_count": 13,
+      "internal_edge_count": 12,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.9231,
+      "external_call_ratio": 0.0769,
+      "module_weight": 0.0031,
+      "files": [
+        "kernel\\include\\pipe.h",
+        "kernel\\include\\riscv.h",
+        "kernel\\lwext4\\src\\ext4_journal.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "jbd_journal_skip_pure_revoke",
+          "normalized_name": "jbd_journal_skip_pure_revoke",
+          "file_path": "kernel\\lwext4\\src\\ext4_journal.c",
+          "language": "c",
+          "start_line": "1354",
+          "end_line": "1365",
+          "outgoing_call_count": 3,
+          "summary": "跳过纯撤销事务，在日志中直接前进到下一个事务，释放当前事务并更新超级块。"
+        },
+        {
+          "name": "jbd_trans_change_ownership",
+          "normalized_name": "jbd_trans_change_ownership",
+          "file_path": "kernel\\lwext4\\src\\ext4_journal.c",
+          "language": "c",
+          "start_line": "1487",
+          "end_line": "1497",
+          "outgoing_call_count": 2,
+          "summary": "将指定的块记录从当前所属的事务中移除，并重新插入到新的事务的块记录列表中，同时更新块记录所属事务指针，实现块记录在事务间的所有权转移。"
+        },
+        {
+          "name": "r_sip",
+          "normalized_name": "r_sip",
+          "file_path": "kernel\\include\\riscv.h",
+          "language": "c",
+          "start_line": "67",
+          "end_line": "73",
+          "outgoing_call_count": 1,
+          "summary": "通过内联汇编读取RISC-V特权架构中的sip（Supervisor Interrupt Pending）寄存器，返回其64位值。该寄存器用于指示当前等待处理的超级模式中断类型。"
+        },
+        {
+          "name": "pipe",
+          "normalized_name": "pipe",
+          "file_path": "kernel\\include\\pipe.h",
+          "language": "c",
+          "start_line": "10",
+          "end_line": "17",
+          "outgoing_call_count": 0,
+          "summary": "定义了管道（pipe）结构体，用于进程间通信，包含自旋锁、环形缓冲区、读写字节计数以及读写端是否打开的标志。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 57,
+      "outgoing_edge_count": 188,
+      "internal_edge_count": 134,
+      "external_edge_count": 54,
+      "internal_call_ratio": 0.7128,
+      "external_call_ratio": 0.2872,
+      "module_weight": 0.0533,
+      "files": [
+        "kernel\\include\\proc.h",
+        "kernel\\include\\riscv.h",
+        "kernel\\proc.c",
+        "kernel\\sleeplock.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c",
+        "kernel\\sysproc.c"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "exit",
+          "normalized_name": "exit",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "540",
+          "end_line": "630",
+          "outgoing_call_count": 14,
+          "summary": "这个函数实现了进程退出操作。它获取当前进程，处理清理工作（关闭文件、释放当前目录、清理子进程的线程标记等），将子进程交给init进程，更新父进程的时间统计，设置进程状态为ZOMBIE，并唤醒父进程处理信号，最后切换到调度器不再返回。"
+        },
+        {
+          "name": "clone",
+          "normalized_name": "clone",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "761",
+          "end_line": "850",
+          "outgoing_call_count": 13,
+          "summary": "实现Linux风格的clone系统调用，创建一个新进程或线程，复制父进程的资源并根据标志位设置共享或独立的数据结构。"
+        },
+        {
+          "name": "sys_rt_sigtimedwait",
+          "normalized_name": "sys_rt_sigtimedwait",
+          "file_path": "kernel\\sysproc.c",
+          "language": "c",
+          "start_line": "402",
+          "end_line": "467",
+          "outgoing_call_count": 11,
+          "summary": "实现 rt_sigtimedwait 系统调用，等待 SIGCHLD 信号，带超时功能。该实现仅关注 SIGCHLD，通过轮询方式检查信号或僵尸子进程并返回，超时则返回 EAGAIN，被杀死则返回 EINTR。"
+        },
+        {
+          "name": "sys_exec",
+          "normalized_name": "sys_exec",
+          "file_path": "kernel\\sysproc.c",
+          "language": "c",
+          "start_line": "61",
+          "end_line": "96",
+          "outgoing_call_count": 10,
+          "summary": "系统调用 exec 的实现，负责从用户空间获取路径、参数和环境变量，构造绝对路径，处理 busybox 路径重映射，然后调用 exec_elf_ext4 执行 ELF 文件，并清理已关闭的 cloexec 文件描述符。"
+        },
+        {
+          "name": "fork",
+          "normalized_name": "fork",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "437",
+          "end_line": "509",
+          "outgoing_call_count": 10,
+          "summary": "实现进程的 fork 系统调用，创建一个子进程，复制父进程的大部分状态，包括内存、寄存器、文件描述符、信号处理等，并设置子进程为可运行状态。"
+        },
+        {
+          "name": "allocproc",
+          "normalized_name": "allocproc",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": 140,
+          "end_line": 227,
+          "outgoing_call_count": 8,
+          "summary": "{\n  \"block_id\": \"block_93\",\n  \"file_path\": \"kernel\\\\proc.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"140\",\n  \"end_line\": \"227\",\n  \"name\": \"allocproc\",\n  \"type\": \"function\",\n  \"summary\": \"分配并初始化一个新的进程控制块（struct proc）。函数首先遍历所有进程，清理处于ZOMBIE状态的线程（释放其资源），然后寻找一个UNUSED状态的槽位，若找到则分配PID并初始化进程的各个字段（包括时间、信号、内存管理、文件描述符、用户ID、线程标识、线程组领导、工作目录、信号掩码、打开文件等），接着分配trapframe页、用户页表和内核页表，设置内核栈地址和启动上下文（上下文入口为forkret），最后返回该进程结构体指针。\",\n  \"logic_steps\": [\n    \"遍历所有进程（proc数组），如果进程状态为ZOMBIE且是线程（is_thread），则调用freeproc释放其资源（用于清理已死亡线程）。\",\n    \"再次遍历所有进程，找到状态为UNUSED的空闲进程槽位，若找到则跳转到found标签继续执行；若未找到则返回NULL。\",\n    \"分配新的PID（通过allocpid函数）。\",\n    \"初始化进程的时间统计字段：utime、stime、cutime、cstime为0。\",\n    \"初始化进程的内存管理字段：brk（数据段边界）为0、clear_child_tid（线程清理标志）为0。\",\n    \"初始化信号相关字段：termsig为0、sigmask为0、itimers和itimer_deadline数组清零、sigpending为0、sigactions数组清零、sigactive为0、sigsavedmask为0、sigtf结构体清零。\",\n    \"初始化mmap映射区域（mmap_areas数组清零）。\",\n    \"初始化文件描述符限制：nofile_limit设置为NOFILE（常值）；栈大小限制stack_limit设置为256*1024。\",\n    \"初始化用户和组ID：uid、euid、suid、gid、egid、sgid为0；ngroups设为1、groups数组第一个为0，其余清零；umask设为022。\",\n    \"设置线程相关字段：is_thread设为0（非线程）、vm_leader设为自己。\",\n    \"初始化工作目录指针cwd为0、进程信号掩码tmask为0。\",\n    \"将打开文件描述符数组ofile清零，并清零cloexec标志数组。\",\n    \"分配trapframe页（通过kalloc），若失败则释放锁并返回NULL。\",\n    \"分配用户页表pagetable（通过proc_pagetable）和内核页表kpagetable（通过proc_kpagetable），若任一失败则调用freeproc释放已分配资源、释放锁并返回NULL。\",\n    \"设置内核栈地址kstack为VKSTACK常量；设置当前工作目录路径cwd_path为根目录\"/\"。\",\n    \"初始化进程上下文context：清零，设置返回地址ra为forkret函数地址，设置栈指针sp为kstack加上页大小（KSTACK_PAGES * PGSIZE）。\",\n    \"返回初始化后的进程结构体指针p。\"\n  ],\n  \"called_functions\": [\n    \"acquire\",\n    \"release\",\n    \"freeproc\",\n    \"allocpid\",\n    \"memset\",\n    \"kalloc\",\n    \"proc_pagetable\",\n    \"proc_kpagetable\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"代码位于kernel/proc.c，函数名为allocproc，主要功能是分配进程控制块并初始化其所有字段；调用allocpid分配PID，调用kalloc分配trapframe页，调用proc_pagetable和proc_kpagetable分配页表，初始化上下文并设置入口为forkret，这是典型的xv6风格进程创建过程。\",\n  \"uncertainty\": \"无显著不确定性；所有逻辑均基于代码字段和函数调用明确推断。\"\n}"
+        },
+        {
+          "name": "forkret",
+          "normalized_name": "forkret",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "940",
+          "end_line": "963",
+          "outgoing_call_count": 8,
+          "summary": "该函数是进程第一次从内核态返回用户态时执行的入口，负责释放锁、初始化文件系统（仅首次）并启动用户态测试，然后通过 usertrapret 切换到用户态。"
+        },
+        {
+          "name": "procinit",
+          "normalized_name": "procinit",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "65",
+          "end_line": "92",
+          "outgoing_call_count": 8,
+          "summary": "初始化进程相关的数据结构，包括进程锁、进程数组（但内核栈分配和映射被注释掉），并清零CPU状态数组。"
+        },
+        {
+          "name": "proc_itimer_tick",
+          "normalized_name": "proc_itimer_tick",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "1106",
+          "end_line": "1133",
+          "outgoing_call_count": 6,
+          "summary": "该函数在每个时钟嘀嗒时被调用，遍历所有进程，检查进程的ITIMER_REAL定时器是否到期（基于当前时间戳），若到期则更新定时器（若it_interval非零则重置为当前时间加上间隔，否则清零），并发送SIGALRM信号（14号信号）：如果用户自定义了信号处理函数且非忽略，则设置挂起信号；否则标记进程为被杀死并记录终止信号。最后如果进程处于睡眠状态，将其唤醒为RUNNABLE。"
+        },
+        {
+          "name": "freeproc",
+          "normalized_name": "freeproc",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "232",
+          "end_line": "287",
+          "outgoing_call_count": 6,
+          "summary": "释放一个进程控制块(struct proc)占用的所有内核资源，并将进程状态重置为UNUSED。该函数负责释放与进程关联的内核栈页表、用户页表（根据是否为线程或是否存在其他使用者选择不同的释放方式），以及复位所有进程属性（包括信号、定时器、内存映射、文件描述符、权限、进程关系等）。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 6,
+      "outgoing_edge_count": 25,
+      "internal_edge_count": 13,
+      "external_edge_count": 12,
+      "internal_call_ratio": 0.52,
+      "external_call_ratio": 0.48,
+      "module_weight": 0.0062,
+      "files": [
+        "kernel\\include\\proc.h",
+        "kernel\\proc.c",
+        "kernel\\sysproc.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "scheduler",
+          "normalized_name": "scheduler",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "858",
+          "end_line": "898",
+          "outgoing_call_count": 11,
+          "summary": "这是操作系统的调度器函数，负责在无限循环中扫描所有进程，选择状态为RUNNABLE的进程切换执行。若没有可运行进程，则开启中断并执行WFI指令等待中断。"
+        },
+        {
+          "name": "sleep_until_cycle",
+          "normalized_name": "sleep_until_cycle",
+          "file_path": "kernel\\sysproc.c",
+          "language": "c",
+          "start_line": "339",
+          "end_line": "358",
+          "outgoing_call_count": 5,
+          "summary": "该函数使当前进程睡眠，直到硬件定时器循环计数器达到指定的截止周期（deadline）。它基于循环计数器实现壁钟时间睡眠，不依赖于内核滴答率，但以定时器滴答作为唤醒源。若进程在等待期间被杀死则提前返回错误。"
+        },
+        {
+          "name": "yield",
+          "normalized_name": "yield",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "928",
+          "end_line": "936",
+          "outgoing_call_count": 4,
+          "summary": "当前进程主动让出CPU，将自己状态置为RUNNABLE并调用调度函数，以便其他进程运行。"
+        },
+        {
+          "name": "cpu",
+          "normalized_name": "cpu",
+          "file_path": "kernel\\include\\proc.h",
+          "language": "c",
+          "start_line": "33",
+          "end_line": "38",
+          "outgoing_call_count": 3,
+          "summary": "定义 CPU 结构体，用于记录每个 CPU 核心的当前运行进程、上下文切换点、中断嵌套深度以及中断使能状态，是调度器和中断管理的基础数据结构。"
+        },
+        {
+          "name": "cpuid",
+          "normalized_name": "cpuid",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "97",
+          "end_line": "102",
+          "outgoing_call_count": 1,
+          "summary": "获取当前CPU的ID，通过读取tp寄存器（通常存储hart ID或CPU核心编号）来实现。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "synchronization": {
+      "module_name": "synchronization",
+      "function_count": 5,
+      "outgoing_edge_count": 13,
+      "internal_edge_count": 5,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.3846,
+      "external_call_ratio": 0.6154,
+      "module_weight": 0.0043,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 176,
+      "outgoing_edge_count": 573,
+      "internal_edge_count": 525,
+      "external_edge_count": 48,
+      "internal_call_ratio": 0.9162,
+      "external_call_ratio": 0.0838,
+      "module_weight": 0.1638,
+      "files": [
+        "kernel/syscall.c",
+        "kernel\\proc.c",
+        "kernel\\syscall.c",
+        "kernel\\sysfile.c",
+        "kernel\\sysproc.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "sys_getdents64",
+          "normalized_name": "sys_getdents64",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "1984",
+          "end_line": "2105",
+          "outgoing_call_count": 16,
+          "summary": "实现系统调用 getdents64，用于读取目录条目。根据文件对象类型（FD_MEM、FD_EXT4、FD_ENTRY）分别使用不同的底层接口遍历目录，将每个条目格式化为 linux_dirent64 结构并复制到用户缓冲区。"
+        },
+        {
+          "name": "do_accept",
+          "normalized_name": "do_accept",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "1056",
+          "end_line": "1131",
+          "outgoing_call_count": 15,
+          "summary": "实现 accept 系统调用的核心功能，用于从监听 socket 中接受一个新的连接并返回对应的文件描述符。"
+        },
+        {
+          "name": "sys_pselect6",
+          "normalized_name": "sys_pselect6",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "2048",
+          "end_line": "2099",
+          "outgoing_call_count": 12,
+          "summary": "实现 pselect6 系统调用，检查文件描述符是否有 I/O 事件就绪，并支持超时等待。"
+        },
+        {
+          "name": "sys_mmap",
+          "normalized_name": "sys_mmap",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "2681",
+          "end_line": "2753",
+          "outgoing_call_count": 11,
+          "summary": "实现 mmap 系统调用：根据参数（地址、长度、保护标志、映射标志、文件描述符、偏移量）分配或映射虚拟内存区域，支持匿名映射和文件映射，处理固定地址映射、地址对齐、释放旧映射、扩展进程堆、读取文件内容等操作。"
+        },
+        {
+          "name": "sys_remove",
+          "normalized_name": "sys_remove",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "2828",
+          "end_line": "2857",
+          "outgoing_call_count": 11,
+          "summary": "实现系统调用remove，用于删除文件或目录。首先获取路径并解析为绝对路径，然后尝试以文件方式删除，失败后尝试以目录方式删除，最后对tmpfs中的路径做额外处理和返回修正。"
+        },
+        {
+          "name": "sys_linkat",
+          "normalized_name": "sys_linkat",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "2234",
+          "end_line": "2276",
+          "outgoing_call_count": 11,
+          "summary": "实现linkat系统调用，创建指向已有文件的硬链接，支持处理/proc/self/fd/路径（内存文件链接）和普通文件链接，并考虑符号链接跟随和memtmp路径限制。"
+        },
+        {
+          "name": "sys_sendto",
+          "normalized_name": "sys_sendto",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": 935,
+          "end_line": 972,
+          "outgoing_call_count": 10,
+          "summary": "{\n  \"block_id\": \"block_917\",\n  \"file_path\": \"kernel\\\\sysfile.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"935\",\n  \"end_line\": \"972\",\n  \"name\": \"sys_sendto\",\n  \"type\": \"function\",\n  \"summary\": \"实现UDP数据报的发送功能，从用户空间获取数据并通过内核socket结构传递到目标socket。\",\n  \"logic_steps\": [\n    \"通过argsock、argaddr、argint等宏从系统调用参数中解析出socket指针、用户缓冲区地址、数据长度、标志、目标地址和地址长度，若解析失败返回-9。\",\n    \"检查socket类型是否为SOCK_DGRAM，若不是返回-95表示操作不支持。\",\n    \"检查数据长度是否为负，若是返回-22。\",\n    \"通过copyin_sockaddr从用户空间复制目标地址到内核的sockaddr_in_min结构，若失败返回-14。\",\n    \"初始化socket查找表并获取锁，通过sock_find_bound根据目标端口查找已绑定的目标socket，若未找到则释放锁并返回-111表示连接被拒绝。\",\n    \"若数据长度大于目标socket的dgram缓冲区大小，则截断该长度，然后通过copyin将用户缓冲区数据复制到目标socket的dgram缓冲区，若复制失败释放锁并返回-14。\",\n    \"设置目标socket的dgram_len和has_dgram标志，释放锁，最后返回实际发送的数据长度。\"\n  ],\n  \"called_functions\": [\n    \"argsock\",\n    \"argaddr\",\n    \"argint\",\n    \"copyin_sockaddr\",\n    \"socktable_init_once\",\n    \"acquire\",\n    \"sock_find_bound\",\n    \"release\",\n    \"copyin\",\n    \"myproc\"\n  ],\n  \"related_os_module\": \"syscall\",\n  \"evidence\": \"函数名为sys_sendto，属于系统调用；操作涉及socket结构、udp数据报、用户态地址复制、socket查找表等网络协议栈相关逻辑，但整体通过syscall层提供服务，无明显依赖文件系统或驱动。\",\n  \"uncertainty\": \"无法确定目标socket的dgram缓冲区大小（sizeof成员）具体数值，以及sock_find_bound的查找逻辑细节；未体现实际网络设备发送，仅在内核内部拷贝数据。”\n}"
+        },
+        {
+          "name": "sys_mknodat",
+          "normalized_name": "sys_mknodat",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": 2189,
+          "end_line": 2212,
+          "outgoing_call_count": 10,
+          "summary": "实现 mknodat 系统调用，用于创建特殊文件（设备节点或命名管道），根据路径是否位于 memtmp 特殊目录分别调用 memfile_fifo_named 或 ext4 文件系统的 mknod 函数。"
+        },
+        {
+          "name": "sys_utimensat",
+          "normalized_name": "sys_utimensat",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "2716",
+          "end_line": "2806",
+          "outgoing_call_count": 10,
+          "summary": "实现utimensat系统调用的内核部分，用于修改文件或目录的访问时间和修改时间。支持通过文件描述符（fd）或路径操作，处理UTIME_NOW和UTIME_OMIT特殊标志，并能跟随或忽略符号链接。"
+        },
+        {
+          "name": "sys_truncate",
+          "normalized_name": "sys_truncate",
+          "file_path": "kernel\\sysfile.c",
+          "language": "c",
+          "start_line": "2411",
+          "end_line": "2431",
+          "outgoing_call_count": 10,
+          "summary": "实现系统调用sys_truncate，用于将文件截断到指定长度。该函数从用户态获取文件路径和长度参数，构建绝对路径，解析符号链接，然后通过ext4文件系统接口打开文件并执行截断操作，最后返回结果。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 25,
+      "outgoing_edge_count": 64,
+      "internal_edge_count": 47,
+      "external_edge_count": 17,
+      "internal_call_ratio": 0.7344,
+      "external_call_ratio": 0.2656,
+      "module_weight": 0.0215,
+      "files": [
+        "kernel\\entry_la.S",
+        "kernel\\entry_qemu.S",
+        "kernel\\include\\elf.h",
+        "kernel\\include\\riscv.h",
+        "kernel\\main.c",
+        "kernel\\main_la.c",
+        "kernel\\spinlock.c"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "acquire",
+          "normalized_name": "acquire",
+          "file_path": "kernel\\spinlock.c",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "45",
+          "outgoing_call_count": 6,
+          "summary": "获取自旋锁的实现。该函数首先关闭中断以避免死锁，检查是否已经持有该锁（若持有则触发panic），然后通过原子测试并设置操作等待锁释放，最后执行内存屏障确保临界区操作的顺序，并记录持有锁的CPU信息。"
+        },
+        {
+          "name": "release",
+          "normalized_name": "release",
+          "file_path": "kernel\\spinlock.c",
+          "language": "c",
+          "start_line": "48",
+          "end_line": "74",
+          "outgoing_call_count": 5,
+          "summary": "释放自旋锁，确保临界区操作的顺序一致性，并恢复中断状态。"
+        },
+        {
+          "name": "la_puts",
+          "normalized_name": "la_puts",
+          "file_path": "kernel\\main_la.c",
+          "language": "c",
+          "start_line": 49,
+          "end_line": 54,
+          "outgoing_call_count": 1,
+          "summary": "{\n  \"block_id\": \"block_382\",\n  \"file_path\": \"kernel\\\\main_la.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"49\",\n  \"end_line\": \"54\",\n  \"name\": \"la_puts\",\n  \"type\": \"function\",\n  \"summary\": \"该函数实现了一个字符串的输出功能，通过循环逐个字符调用 la_putc 来输出字符串。它本质上是一个简单的 put string 操作，相当于标准库中的 puts 或 write 的循环版本。\",\n  \"logic_steps\": [\n    \"第1步：进入函数 la_puts，接收一个指向字符串的指针 s。\",\n    \"第2步：使用 while 循环判断当前字符 *s 是否为字符串结束符 '\\0'。\",\n    \"第3步：如果不是结束符，则调用 la_putc(*s++)，即输出当前字符并将指针后移一位。\",\n    \"第4步：重复第2步和第3步，直到遇到字符串结束符，循环结束，函数返回。\"\n  ],\n  \"called_functions\": [\n    \"la_putc\"\n  ],\n  \"related_os_module\": \"unknown\",\n  \"evidence\": \"代码中明确使用了 while 循环迭代字符串 s，并调用了 la_putc 函数逐个字符输出。这是典型的 put string 实现模式。\",\n  \"uncertainty\": \"由于没有提供 la_putc 的实现，无法确定 la_putc 的具体行为（如输出到串口、屏幕或其他设备），因此无法准确判定该函数所属模块。同时，文件路径 kernel/main_la.c 暗示可能是内核的入口或初始化代码，但 la_puts 可能用于调试输出，模块归属存在不确定性。\"\n}"
+        },
+        {
+          "name": "w_sstatus",
+          "normalized_name": "w_sstatus",
+          "file_path": "kernel\\include\\riscv.h",
+          "language": "c",
+          "start_line": "60",
+          "end_line": "64",
+          "outgoing_call_count": 1,
+          "summary": "该函数是一个内联函数，用于将给定的64位值写入RISC-V的sstatus（Supervisor Status）寄存器。通过内嵌汇编指令'csrw sstatus, %0'实现，参数x作为源操作数。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "kernel\\entry_la.S",
+          "language": "assembly",
+          "start_line": "11",
+          "end_line": "21",
+          "outgoing_call_count": 1,
+          "summary": "内核入口点，设置栈指针指向保留的栈顶（虚拟地址0x300000下方16 KiB），然后跳转到la_main函数执行。如果la_main意外返回，则进入无限空闲循环。"
+        },
+        {
+          "name": "_entry",
+          "normalized_name": "_entry",
+          "file_path": "kernel\\entry_qemu.S",
+          "language": "assembly",
+          "start_line": "3",
+          "end_line": "10",
+          "outgoing_call_count": 1,
+          "summary": "这是RISC-V架构下操作系统内核的入口点，根据hart ID（a0）计算每个核心的栈顶偏移，设置栈指针后跳转到main函数，实现多核启动时的栈隔离。"
+        },
+        {
+          "name": "inithartid",
+          "normalized_name": "inithartid",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "25",
+          "end_line": "27",
+          "outgoing_call_count": 1,
+          "summary": "该函数将传入的hartid与0x1按位与后，通过内联汇编存入tp寄存器，可能用于标记当前CPU核心的ID（仅取最低位）。"
+        },
+        {
+          "name": "r_mhartid",
+          "normalized_name": "r_mhartid",
+          "file_path": "kernel\\include\\riscv.h",
+          "language": "c",
+          "start_line": "5",
+          "end_line": "11",
+          "outgoing_call_count": 1,
+          "summary": "通过内联汇编读取RISC-V架构的机器级hart ID寄存器mhartid，返回当前硬件线程（hart）的唯一标识符。"
+        },
+        {
+          "name": "holding",
+          "normalized_name": "holding",
+          "file_path": "kernel\\spinlock.c",
+          "language": "c",
+          "start_line": "78",
+          "end_line": "84",
+          "outgoing_call_count": 1,
+          "summary": "检查当前CPU是否持有指定的自旋锁。该函数返回1（真）当且仅当锁被锁定且当前CPU与锁记录的CPU一致。"
+        },
+        {
+          "name": "loop",
+          "normalized_name": "loop",
+          "file_path": "kernel\\entry_qemu.S",
+          "language": "assembly",
+          "start_line": "10",
+          "end_line": "16",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个简单的无限循环标签`loop`，该循环仅包含一条跳转到自身的指令，用于陷入无限等待状态；随后定义了`.bss.stack`节，并声明了一个名为`boot_stack`的全局标签，但未定义其大小或内容。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\la_trap_user.S",
+        "kernel\\main.c",
+        "kernel\\main_la.c",
+        "kernel\\proc.c"
+      ],
+      "file_count": 4,
+      "core_functions": [
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "31",
+          "end_line": "84",
+          "outgoing_call_count": 24,
+          "summary": "内核多核启动入口，hart 0 执行完整初始化，其他 hart 等待启动信号后完成局部初始化，最后所有 hart 进入调度器。"
+        },
+        {
+          "name": "userinit",
+          "normalized_name": "userinit",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "386",
+          "end_line": "413",
+          "outgoing_call_count": 5,
+          "summary": "初始化第一个用户进程，分配进程控制块，加载初始用户代码，设置初始上下文，使进程处于可运行状态"
+        },
+        {
+          "name": "la_main",
+          "normalized_name": "la_main",
+          "file_path": "kernel\\main_la.c",
+          "language": "c",
+          "start_line": "74",
+          "end_line": "83",
+          "outgoing_call_count": 3,
+          "summary": "打印启动信息和启动信息，调用核心初始化函数 la_basic_main，然后打印结束信息并关闭系统。"
+        },
+        {
+          "name": "la_enter_user",
+          "normalized_name": "la_enter_user",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": "41",
+          "end_line": "78",
+          "outgoing_call_count": 1,
+          "summary": "保存内核上下文（sp、ra、fp、s0-s8）到全局变量，将当前用户态参数 a0 保存到 la_current_tf，配置 CSR 寄存器以设置用户态中断入口和 TI 模式，然后跳转到 la_restore_user 继续用户态恢复流程。"
+        },
+        {
+          "name": "la_user_kernel_s0",
+          "normalized_name": "la_user_kernel_s0",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": 227,
+          "end_line": 230,
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为 la_user_kernel_s0 的全局标签，并分配一个 8 字节的空间初始化为 0，同时声明了下一个标签 la_user_kernel_s1 为全局可见。该代码可能用于存储用户态到内核态切换时需要保存或读取的某个值（例如 S0 寄存器的内容）。"
+        },
+        {
+          "name": "la_user_kernel_fp",
+          "normalized_name": "la_user_kernel_fp",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": "224",
+          "end_line": "227",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个标签 la_user_kernel_fp，该标签处分配了一个 8 字节（.dword 0）的存储空间，用于保存（可能是内核态浮点上下文相关的）地址或指针；下一行声明全局符号 la_user_kernel_s0，但未在此块内定义具体内容。"
+        },
+        {
+          "name": "la_user_kernel_s2",
+          "normalized_name": "la_user_kernel_s2",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": "233",
+          "end_line": "236",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个8字节的全局标签`la_user_kernel_s2`，初始化为0，并声明下一个标签`la_user_kernel_s3`为全局可见。此代码块很可能用于存储一个地址或状态变量，作为用户态与内核态切换过程中的一个中间存储点或链接标记。"
+        },
+        {
+          "name": "la_user_kernel_s6",
+          "normalized_name": "la_user_kernel_s6",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": "245",
+          "end_line": "248",
+          "outgoing_call_count": 0,
+          "summary": "定义一个标签 la_user_kernel_s6 并初始化为 0，随后开始定义全局标签 la_user_kernel_s7。这是内核启动或 trap 处理过程中用于保存或表示用户内核状态（可能是 S6 寄存器相关）的变量声明。"
+        },
+        {
+          "name": "la_user_kernel_s1",
+          "normalized_name": "la_user_kernel_s1",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": "230",
+          "end_line": "233",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个名为 la_user_kernel_s1 的标签，该标签处存储一个 8 字节的 0 值，用于保留空间或作为变量占位。随后声明全局符号 la_user_kernel_s2，但未定义其具体内容。"
+        },
+        {
+          "name": "la_user_kernel_s7",
+          "normalized_name": "la_user_kernel_s7",
+          "file_path": "kernel\\la_trap_user.S",
+          "language": "assembly",
+          "start_line": "248",
+          "end_line": "251",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个符号 la_user_kernel_s7，该符号被初始化为一个 8 字节的零值，并声明了下一个全局符号 la_user_kernel_s8。主要作用是为后续的加载地址或指针分配一个占位空间。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 77.0,
+    "score_level": "good",
+    "scores": {
+      "originality": 13.0,
+      "novelty": 13.0,
+      "practicality": 14.0,
+      "difficulty": 18.0,
+      "completion": 19.0
+    },
+    "summary": "",
+    "strengths": [
+      "核心模块（文件系统、系统调用、内存管理、进程管理、中断）实现完整，完成度均为1.0。",
+      "代码规模较大，函数数量1000，调用边数3937，结构复杂度高。",
+      "与相似历史项目相比，文件系统模块得分更高（0.7819 vs 0.7193），实现更优。"
+    ],
+    "weaknesses": [
+      "引导、调度、同步、锁定、IPC、网络、用户模块完成度较低（大部分低于0.6），存在明显短板。",
+      "构建系统完成度极低（0.1），可能影响项目可复现性和开发效率。"
+    ],
+    "suggestions": []
+  },
+  "hybrid_top_results": [
+    {
+      "repo_name": "DROP_DATABASE_teams",
+      "hybrid_score": 0.5321,
+      "structured_score": 0.8186,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "no_stay_up_late",
+      "hybrid_score": 0.5229,
+      "structured_score": 0.8044,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "HDACP",
+      "hybrid_score": 0.5209,
+      "structured_score": 0.8014,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OS",
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 1,
+          "doc_id": "OS__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.2654770612716675,
+          "semantic_score": 1.0,
+          "content_preview": "历史项目 OS 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 rust、c、linker_script、cargo。系统识别到该项目包含 1000 个函数节点、3991 条调用边、13 个模块。核心模块包括 unknown、build、driver、filesystem、interrupt。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OSakura",
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 2,
+          "doc_id": "OSakura__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.33646610379219055,
+          "semantic_score": 0.9,
+          "content_preview": "历史项目 OSakura 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 c、assembly、linker_script。系统识别到该项目包含 621 个函数节点、1633 条调用边、13 个模块。核心模块包括 unknown、driver、filesystem、interrupt、ipc。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    }
+  ],
+  "comparison": {
+    "retrieval_mode": "hybrid",
+    "comparison_count": 5,
+    "comparisons": [
+      {
+        "history_repo_name": "DROP_DATABASE_teams",
+        "similarity_score": 0.5321,
+        "hybrid_score": 0.5321,
+        "structured_score": 0.8186,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库同属教学操作系统或通用内核项目，核心模块(文件系统、内存、进程、系统调用)高度重合，且模块完成度分布较为接近，整体结构复杂度相似。",
+        "main_similarities": [
+          "核心模块均包含filesystem、memory、process、syscall，且这些模块的完成度均为1.0。",
+          "项目类型相同，均为teaching_os_or_general_kernel。",
+          "结构复杂度相同，均为1.0。",
+          "模块数量接近(15 vs 14)，函数规模和调用边数量相近。"
+        ],
+        "main_differences": [
+          "目标仓库使用C和汇编作为主要语言，历史仓库使用Rust和汇编。",
+          "目标仓库的syscall模块权重(0.1638)远高于历史仓库(0.0383)，表明其系统调用部分更为核心。",
+          "历史仓库的driver模块为核心模块之一，而目标仓库的driver模块非核心模块。",
+          "目标仓库的interrupt模块完成度为1.0，历史仓库为0.9；目标仓库的boot模块完成度(0.51)高于历史仓库(0.18)。"
+        ],
+        "target_advantages": [
+          "目标仓库的filesystem模块最终得分(0.7819)高于历史仓库(0.7193)，文件系统设计更优。",
+          "目标仓库的syscall模块得分(0.4983)高于历史仓库(0.423)，系统调用处理更完善。",
+          "目标仓库的boot、interrupt等模块完成度更高，启动和中断处理更成熟。"
+        ],
+        "target_weaknesses": [
+          "目标仓库的memory模块得分(0.4359)低于历史仓库(0.5349)，内存管理可能不够完善。",
+          "目标仓库缺乏driver核心模块，可能驱动支持不足。",
+          "目标仓库的scheduler完成度(0.61)高于历史仓库(0.54)，但结合整体权重可能并非优势；而IPCL, lock等模块完成度较低(0.15/0.08)，历史仓库缺乏对应数据无法直接比较。"
+        ],
+        "borrowable_designs": [
+          "历史仓库memory模块得分更高，目标仓库可借鉴其内存管理设计与实现。",
+          "历史仓库driver模块为核心模块且完成度为1.0，目标仓库可参考其驱动框架。",
+          "历史仓库使用Rust语言，目标仓库可考虑在关键模块中迁移或混合使用Rust以提升安全性。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "no_stay_up_late",
+        "similarity_score": 0.5229,
+        "hybrid_score": 0.5229,
+        "structured_score": 0.8044,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个项目均为教学型操作系统内核，核心模块重叠较多（filesystem、interrupt、memory、syscall），且模块完成度分布接近，整体结构与规模较相似。",
+        "main_similarities": [
+          "项目类型相同，均为teaching_os_or_general_kernel。",
+          "核心模块高度重叠，共同模块包括filesystem、interrupt、memory、syscall。",
+          "模块完成度在共同模块上分布接近：filesystem、memory、syscall等模块均为1.0。",
+          "结构复杂度分数均为1.0。"
+        ],
+        "main_differences": [
+          "目标仓库主要使用C和汇编，历史仓库还包含Rust、Linker Script、Cargo、Makefile等多种语言/工具。",
+          "目标仓库核心模块权重偏向filesystem（0.6365），历史仓库核心模块权重偏向driver（0.3741）。",
+          "目标仓库模块数较少（15个），历史仓库模块数较多（19个）。",
+          "历史仓库在boot（0.85）、build（0.83）、scheduler（0.75）等模块完成度较高，而目标仓库这些模块完成度较低或为0。",
+          "目标仓库网络模块完成度0.46高于历史仓库的0.15。"
+        ],
+        "target_advantages": [
+          "目标仓库filesystem模块权重（0.6365）和final_score（0.7819）均高于历史仓库（权重0.1359，分数0.4815），表明在文件系统方面更专注或实现更丰富。",
+          "目标仓库网络模块完成度更高（0.46对0.15）。",
+          "目标仓库内部调用边比例更高（2527/3937≈64.2%）vs 历史仓库（1254/2451≈51.2%），可能表明内部模块耦合更紧密。"
+        ],
+        "target_weaknesses": [
+          "目标仓库boot模块完成度（0.51）低于历史仓库（0.85）。",
+          "目标仓库build模块完成度几乎为0（0.1），而历史仓库较高（0.83）。",
+          "目标仓库scheduler完成度（0.61）低于历史仓库（0.75）。",
+          "目标仓库synchronization完成度（0.35）低于历史仓库（0.43）。",
+          "目标仓库user模块完成度（0.1）低于历史仓库（0.15）。"
+        ],
+        "borrowable_designs": [
+          "历史仓库在boot、build、scheduler模块有更高的完成度，目标仓库可借鉴其实现。",
+          "历史仓库在synchronization模块完成度稍高，可参考其同步机制设计。",
+          "历史仓库使用Rust等语言可能带来安全特性，目标仓库可考虑混合语言设计。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "HDACP",
+        "similarity_score": 0.5209,
+        "hybrid_score": 0.5209,
+        "structured_score": 0.8014,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库都是教学操作系统或通用内核项目，核心模块高度重合（filesystem, interrupt, memory, syscall），且模块完成度分布较为接近，特别是关键模块（如文件系统、内存）均已完成。",
+        "main_similarities": [
+          "项目类型相同，均为teaching_os_or_general_kernel。",
+          "核心模块中filesystem、interrupt、memory、syscall均存在，且完成度均为1.0。",
+          "结构复杂度均为1.0，说明模块间耦合程度相当。",
+          "两个仓库在驱动模块上均有较高的完成度（目标1.0，历史1.0）。"
+        ],
+        "main_differences": [
+          "目标仓库使用C和Assembly，历史仓库额外使用了Rust、Cargo和Linker Script。",
+          "历史仓库的模块数量更多（19个 vs 15个），包含debug、test等额外模块。",
+          "目标仓库在文件系统模块的权重更高（0.6365 vs 0.1180），而历史仓库在驱动模块的权重更高（0.3872 vs 0.0245）。",
+          "历史仓库在引导、构建、调度器、同步等模块的完成度更高（如boot:0.85 vs 0.51, scheduler:0.9 vs 0.61）。"
+        ],
+        "target_advantages": [
+          "目标仓库函数总数更多（1000 vs 800），代码规模更大。",
+          "目标仓库内部调用边数更多（2527 vs 1183），可能表明更复杂的内部逻辑。",
+          "目标仓库文件系统模块权重和完成度极高，可能是其核心竞争力。"
+        ],
+        "target_weaknesses": [
+          "目标仓库在引导（boot: 0.51 vs 0.85）、构建（build: 0.1 vs 0.65）、调度器（scheduler: 0.61 vs 0.9）等模块完成度明显低于历史仓库。",
+          "目标仓库缺少调试或测试相关模块（历史仓库有debug、test）。",
+          "目标仓库缺少同步（synchronization: 0.35 vs 0.58）和IPC（ipc: 0.15 vs 0.15）的支持，历史仓库虽低但相同。"
+        ],
+        "borrowable_designs": [
+          "历史仓库在引导和调度器模块的完成度较高（0.85和0.9），目标仓库可以借鉴其实现设计。",
+          "历史仓库使用了Rust语言，可能带来了更高的安全性，目标仓库可考虑引入Rust模块。",
+          "历史仓库包含了测试和调试模块，目标仓库可以学习其测试框架设计。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "OS",
+        "similarity_score": 0.35,
+        "hybrid_score": 0.35,
+        "structured_score": 0.0,
+        "semantic_score": 1.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库都是 teaching_os_or_general_kernel 类型的操作系统项目，均包含 1000 个函数节点、filesystem 和 interrupt 等核心模块，且结构复杂度均为 1.0，因此在整体规模和功能划分上存在一定相似性。",
+        "main_similarities": [
+          "两个仓库均被归类为 teaching_os_or_general_kernel 类型，项目类型相同。",
+          "两个仓库均包含 filesystem、interrupt 等核心模块，且功能实现完整或部分覆盖。",
+          "两个仓库的 function_count 均为 1000，edge_count 相近（目标 3937，历史 3991）。"
+        ],
+        "main_differences": [
+          "目标仓库使用 C 和汇编语言，历史仓库主要使用 Rust、C、linker_script 和 cargo，技术栈差异明显。",
+          "目标仓库的 filesystem 模块权重极高（0.6365）且完整度满分，历史仓库的 filesystem 模块权重为 0 且完整度仅 0.15，文件系统实现深度完全不同。",
+          "目标仓库的 memory、process、syscall 模块完整度均为 1.0，而历史仓库相关模块完整度均仅为 0.15，目标仓库在关键内核模块上实现更全面。"
+        ],
+        "target_advantages": [
+          "目标仓库在 filesystem 模块上具有极高完整度（1.0）和高权重（0.6365），实现了完整的文件系统。",
+          "目标仓库的 memory、process、syscall、interrupt、driver 等模块完整度均为 1.0，内核功能实现充分。",
+          "目标仓库的模块数量更多（15 vs 13），涵盖更广泛的内核子系统（如 scheduler、synchronization、ipc）。"
+        ],
+        "target_weaknesses": [
+          "目标仓库的 boot、build、scheduler、ipc、synchronization 等模块完整度较低，部分模块未充分实现。",
+          "目标仓库使用 C 和汇编，相较于历史仓库的 Rust 语言，在内存安全性和开发生态上可能存在不足。",
+          "历史仓库的 build 模块权重为 0 且完整度仅 0.15，目标仓库的 build 模块完整度也仅为 0.1，构建系统方面双方均较弱。"
+        ],
+        "borrowable_designs": [
+          "历史仓库使用 Rust 语言实现，目标仓库可以考虑引入 Rust 来提升内存安全性。",
+          "历史仓库的 unknown 模块权重极高（1.0），可能包含一些通用基础设施或扩展机制，目标仓库可以考察并借鉴其设计思路。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "OSakura",
+        "similarity_score": 0.315,
+        "hybrid_score": 0.315,
+        "structured_score": 0.0,
+        "semantic_score": 0.9,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库同属教学/通用内核类型，主要语言均为C和汇编，在模块构成上有重叠（如filesystem、interrupt、driver），语义评分高达0.9，表明它们在整体设计概念上具有高度语义相似性。",
+        "main_similarities": [
+          "均为teaching_os_or_general_kernel类型的操作系统项目",
+          "主要编程语言均包括C和汇编",
+          "都包含filesystem、interrupt等核心模块"
+        ],
+        "main_differences": [
+          "目标仓库函数数量（1000）和代码复杂度（边数3937）显著高于历史仓库（621函数，1633边），规模更大",
+          "目标仓库模块数（15）多于历史仓库（13），且核心模块覆盖更全面（包括syscall、memory、process等）",
+          "目标仓库各模块完备性普遍为1.0（例如filesystem、memory、process），历史仓库大部分核心模块完备性仅为0.15，表明目标仓库功能实现更完整"
+        ],
+        "target_advantages": [
+          "功能模块覆盖更全面且完备性更高，尤其是filesystem、memory、process、syscall、interrupt均实现完整",
+          "系统规模更大，函数和调用边数量更多，结构更复杂",
+          "技术特征和弱点信息明确，便于后续优化"
+        ],
+        "target_weaknesses": [
+          "网络模块和用户模块完备性较低（分别为0.46和0.1），可能未完全实现",
+          "同步、锁、IPC、调度等模块完备性均在0.15以下，存在明显短板"
+        ],
+        "borrowable_designs": [
+          "历史仓库的driver模块实现设计可能对目标仓库提升driver完备性有参考价值",
+          "历史仓库的IPC模块实现（虽然完备性低）可供目标仓库借鉴其基础框架"
+        ],
+        "comparison_confidence": "high"
+      }
+    ]
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026101269910295_final_report.md",
+    "work_detail_data": "/data/works/T2026101269910295.json",
+    "comparison_data": "/data/comparisons/T2026101269910295.json"
+  },
+  "generated_at": "2026-07-03 00:08:59"
+}

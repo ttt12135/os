@@ -1,0 +1,1362 @@
+{
+  "repo_name": "T2026102479910691",
+  "team_name": "T2026102479910691",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026102479910691-2751",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026102479910691-2751",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "c",
+    "assembly",
+    "linker_script",
+    "makefile"
+  ],
+  "core_modules": [
+    "syscall",
+    "filesystem",
+    "process",
+    "memory",
+    "interrupt"
+  ],
+  "function_count": 110,
+  "node_count": 110,
+  "edge_count": 181,
+  "internal_edge_count": 120,
+  "external_edge_count": 61,
+  "module_count": 11,
+  "structure_complexity": 0.72,
+  "module_completeness": {
+    "boot": 0.23,
+    "build": 0.23,
+    "driver": 0.55,
+    "filesystem": 1.0,
+    "interrupt": 0.61,
+    "memory": 0.68,
+    "process": 0.78,
+    "syscall": 0.9,
+    "test": 0.1,
+    "unknown": 0.53,
+    "user": 0.05
+  },
+  "core_module_details": [
+    {
+      "module_name": "syscall",
+      "module_weight": 0.2807,
+      "completeness": 0.9,
+      "final_score": 0.5284
+    },
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1864,
+      "completeness": 1.0,
+      "final_score": 0.5118
+    },
+    {
+      "module_name": "process",
+      "module_weight": 0.113,
+      "completeness": 0.78,
+      "final_score": 0.3798
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.0974,
+      "completeness": 0.68,
+      "final_score": 0.3304
+    },
+    {
+      "module_name": "interrupt",
+      "module_weight": 0.0888,
+      "completeness": 0.61,
+      "final_score": 0.2973
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 4,
+      "outgoing_edge_count": 10,
+      "internal_edge_count": 1,
+      "external_edge_count": 9,
+      "internal_call_ratio": 0.1,
+      "external_call_ratio": 0.9,
+      "module_weight": 0.0439,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 3,
+      "outgoing_edge_count": 8,
+      "internal_edge_count": 0,
+      "external_edge_count": 8,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 1.0,
+      "module_weight": 0.0341,
+      "files": [
+        "la_linker.ld",
+        "linker.ld"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "linker.ld",
+          "normalized_name": "ld",
+          "file_path": "linker.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "28",
+          "outgoing_call_count": 5,
+          "summary": "这个代码块是RISC-V架构下操作系统的链接脚本，定义了内核的链接布局和内存映射。它设置入口点为_start，将代码加载到起始地址0x80200000，并依次排列.text、.rodata、.data和.bss段，最后分配堆栈空间并定义stack_top标记堆栈顶部。"
+        },
+        {
+          "name": "la_linker.ld",
+          "normalized_name": "ld",
+          "file_path": "la_linker.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "15",
+          "outgoing_call_count": 5,
+          "summary": "这个代码块是链接器脚本，用于将目标文件链接为LoongArch架构的可执行文件，指定入口点为_start，并将各节（.text, .rodata, .data, .bss）布局在从0x90000000开始的内存地址上。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 14,
+      "outgoing_edge_count": 10,
+      "internal_edge_count": 6,
+      "external_edge_count": 4,
+      "internal_call_ratio": 0.6,
+      "external_call_ratio": 0.4,
+      "module_weight": 0.0985,
+      "files": [
+        "kernel\\ext4.c",
+        "kernel\\uart.c",
+        "kernel\\virtio.c"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "virtio_read",
+          "normalized_name": "virtio_read",
+          "file_path": "kernel\\virtio.c",
+          "language": "c",
+          "start_line": "222",
+          "end_line": "281",
+          "outgoing_call_count": 5,
+          "summary": "该函数通过Virtio块设备协议实现读取磁盘扇区数据的功能。它循环处理每个扇区，分配描述符链，构造读请求头、数据缓冲区和状态字节描述符，提交请求到设备的可用环，等待设备完成处理，并检查状态字节以确认操作成功，最后释放描述符。"
+        },
+        {
+          "name": "virtio_init",
+          "normalized_name": "virtio_init",
+          "file_path": "kernel\\virtio.c",
+          "language": "c",
+          "start_line": "90",
+          "end_line": "195",
+          "outgoing_call_count": 4,
+          "summary": "初始化VirtIO块设备驱动，通过遍历多个MMIO基地址查找匹配的设备，进行设备复位、特性协商、队列初始化等操作，最终使驱动就绪。"
+        },
+        {
+          "name": "ext4_superblock",
+          "normalized_name": "ext4_superblock",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "8",
+          "end_line": "20",
+          "outgoing_call_count": 1,
+          "summary": "定义了 ext4 文件系统超级块的结构体，用于存储文件系统的全局元数据，包括 inode 数量、块数量、块组配置、挂载信息等。"
+        },
+        {
+          "name": "uart_puts",
+          "normalized_name": "uart_puts",
+          "file_path": "kernel\\uart.c",
+          "language": "c",
+          "start_line": "28",
+          "end_line": "33",
+          "outgoing_call_count": 1,
+          "summary": "该函数遍历输入的字符串，并通过调用 uart_putc 逐个字符地输出，从而实现向 UART 串口发送字符串的功能。"
+        },
+        {
+          "name": "uart_init",
+          "normalized_name": "uart_init",
+          "file_path": "kernel\\uart.c",
+          "language": "c",
+          "start_line": "15",
+          "end_line": "18",
+          "outgoing_call_count": 0,
+          "summary": "该函数是一个空函数，不执行任何初始化操作。注释说明QEMU模拟的UART已经处于可用状态，因此无需额外的初始化步骤。"
+        },
+        {
+          "name": "uart_putc",
+          "normalized_name": "uart_putc",
+          "file_path": "kernel\\uart.c",
+          "language": "c",
+          "start_line": 20,
+          "end_line": 26,
+          "outgoing_call_count": 0,
+          "summary": "该函数用于通过UART发送一个字符。它会等待发送FIFO为空（即上一个字符已发出），然后将字符写入发送保持寄存器。"
+        },
+        {
+          "name": "virtq_avail",
+          "normalized_name": "virtq_avail",
+          "file_path": "kernel\\virtio.c",
+          "language": "c",
+          "start_line": "55",
+          "end_line": "60",
+          "outgoing_call_count": 0,
+          "summary": "定义VirtIO虚拟队列的可用环（avail ring）结构体，用于描述驱动向设备提交可用描述符的环形缓冲区。"
+        },
+        {
+          "name": "virtq_used_elem",
+          "normalized_name": "virtq_used_elem",
+          "file_path": "kernel\\virtio.c",
+          "language": "c",
+          "start_line": "62",
+          "end_line": "65",
+          "outgoing_call_count": 0,
+          "summary": "定义VirtIO虚拟队列的used ring中每个元素的结构体，包含描述符索引id和已用数据长度len。"
+        },
+        {
+          "name": "virtq_desc",
+          "normalized_name": "virtq_desc",
+          "file_path": "kernel\\virtio.c",
+          "language": "c",
+          "start_line": "48",
+          "end_line": "53",
+          "outgoing_call_count": 0,
+          "summary": "定义了 VirtIO 虚拟队列的描述符结构，用于描述一个分散/聚集缓冲区的位置、长度、属性以及链接信息。"
+        },
+        {
+          "name": "virtq_used",
+          "normalized_name": "virtq_used",
+          "file_path": "kernel\\virtio.c",
+          "language": "c",
+          "start_line": "67",
+          "end_line": "71",
+          "outgoing_call_count": 0,
+          "summary": "定义 virtio 设备使用的 ‘used ring’ 数据结构，用于描述已处理请求的描述符索引。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 20,
+      "outgoing_edge_count": 35,
+      "internal_edge_count": 21,
+      "external_edge_count": 14,
+      "internal_call_ratio": 0.6,
+      "external_call_ratio": 0.4,
+      "module_weight": 0.1864,
+      "files": [
+        "Makefile",
+        "kernel\\ext4.c",
+        "kernel\\proc.c",
+        "kernel\\proc.h",
+        "kernel\\virtio.c"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "ext4_list_root",
+          "normalized_name": "ext4_list_root",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "168",
+          "end_line": "189",
+          "outgoing_call_count": 6,
+          "summary": "该函数用于列出 ext4 文件系统根目录下的所有文件或目录项，并将名称通过 uart 串口打印出来。"
+        },
+        {
+          "name": "ext4_open",
+          "normalized_name": "ext4_open",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "130",
+          "end_line": "166",
+          "outgoing_call_count": 5,
+          "summary": "该函数根据给定的路径名，在EXT4文件系统的根目录中查找文件，若找到则分配一页内存读取文件内容，并通过输出参数返回数据指针和大小，否则返回-1。"
+        },
+        {
+          "name": "ext4_init",
+          "normalized_name": "ext4_init",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": 108,
+          "end_line": 128,
+          "outgoing_call_count": 5,
+          "summary": "初始化ext4文件系统，通过读取超级块验证磁盘格式，提取关键参数并设置全局变量。"
+        },
+        {
+          "name": "Makefile",
+          "normalized_name": "Makefile",
+          "file_path": "Makefile",
+          "language": "makefile",
+          "start_line": "1",
+          "end_line": "53",
+          "outgoing_call_count": 3,
+          "summary": "这个代码块定义了一个构建系统，用于编译和链接一个同时支持RISC-V和LoongArch架构的操作系统内核。它包含交叉编译工具链、编译选项、源文件列表、构建目标、运行QEMU模拟器的命令以及清理规则。"
+        },
+        {
+          "name": "aligned",
+          "normalized_name": "aligned",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "59",
+          "end_line": "66",
+          "outgoing_call_count": 3,
+          "summary": "该代码块定义了一个名为 aligned 的函数，但实际函数体是 read_block，用于从块设备中读取一个块的数据。"
+        },
+        {
+          "name": "ext4_bgd",
+          "normalized_name": "ext4_bgd",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": 22,
+          "end_line": 26,
+          "outgoing_call_count": 1,
+          "summary": "定义了 ext4 文件系统的块组描述符（Block Group Descriptor）结构体，用于存储每个块组的元数据，包括块位图、inode 位图、inode 表的起始块号（低32位），以及空闲块/空闲 inode 数量、已用目录数和标志等字段。"
+        },
+        {
+          "name": "ext4_dir_entry",
+          "normalized_name": "ext4_dir_entry",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "48",
+          "end_line": "53",
+          "outgoing_call_count": 1,
+          "summary": "定义了 ext4 文件系统中目录条目的结构体，用于存储目录项的基本信息，包括 inode 号、记录长度、文件名长度、文件类型以及文件名（柔性数组）。"
+        },
+        {
+          "name": "read_extent",
+          "normalized_name": "read_extent",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "86",
+          "end_line": "106",
+          "outgoing_call_count": 1,
+          "summary": "从 ext4 索引节点的 extent 树中读取数据到指定缓冲区，支持大文件的高位起始块地址，并限制读取大小不超过文件大小或参数最大长度。"
+        },
+        {
+          "name": "ext4_extent_header",
+          "normalized_name": "ext4_extent_header",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "37",
+          "end_line": "40",
+          "outgoing_call_count": 1,
+          "summary": "定义ext4文件系统的extent树头部结构体，用于管理文件数据块的物理映射，包含魔数、条目数、最大条目数、深度和生成号字段。"
+        },
+        {
+          "name": "ext4_extent",
+          "normalized_name": "ext4_extent",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "42",
+          "end_line": "46",
+          "outgoing_call_count": 1,
+          "summary": "定义了ext4文件系统中extent结构体的布局，用于描述文件数据块的物理位置和逻辑块号映射。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 9,
+      "outgoing_edge_count": 18,
+      "internal_edge_count": 8,
+      "external_edge_count": 10,
+      "internal_call_ratio": 0.4444,
+      "external_call_ratio": 0.5556,
+      "module_weight": 0.0888,
+      "files": [
+        "kernel\\trap.c",
+        "kernel\\trap.h",
+        "kernel\\trap_entry.S"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "trap_handler",
+          "normalized_name": "trap_handler",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "50",
+          "end_line": "93",
+          "outgoing_call_count": 6,
+          "summary": "处理RISC-V架构下的陷阱（中断和异常）分发函数，根据scause判断中断或异常类型，处理定时器中断和系统调用，未知陷阱则打印信息并死循环停机。"
+        },
+        {
+          "name": "trap_vector",
+          "normalized_name": "trap_vector",
+          "file_path": "kernel\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "9",
+          "end_line": "62",
+          "outgoing_call_count": 4,
+          "summary": "这是RISC-V架构中从用户态进入内核态的中断/异常入口点。它先交换栈指针（sp和sscratch），在栈上分配trapframe，保存所有通用寄存器和控制状态寄存器（sepc, sstatus），然后调用C语言的中断处理函数trap_handler。"
+        },
+        {
+          "name": "trap_init",
+          "normalized_name": "trap_init",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "42",
+          "end_line": "48",
+          "outgoing_call_count": 3,
+          "summary": "初始化陷阱处理机制，将陷阱向量地址设置为自定义的处理函数，并输出初始化成功的日志信息。"
+        },
+        {
+          "name": "w_stvec",
+          "normalized_name": "w_stvec",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "20",
+          "end_line": "23",
+          "outgoing_call_count": 1,
+          "summary": "通过内联汇编写入RISC-V的stvec寄存器（Supervisor Trap Vector Base Address Register），设置当前CPU的中断/异常处理入口地址。"
+        },
+        {
+          "name": "w_sstatus",
+          "normalized_name": "w_sstatus",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "37",
+          "end_line": "40",
+          "outgoing_call_count": 1,
+          "summary": "这个函数通过内联汇编执行 csrw 指令，将参数 v 写入 RISC-V 的 sstatus 控制状态寄存器，用于设置处理器的状态（如中断使能位）。"
+        },
+        {
+          "name": "r_sstatus",
+          "normalized_name": "r_sstatus",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "30",
+          "end_line": "35",
+          "outgoing_call_count": 1,
+          "summary": "该函数通过内联汇编读取RISC-V处理器的sstatus（ supervisor status）寄存器，并返回其值。"
+        },
+        {
+          "name": "r_scause",
+          "normalized_name": "r_scause",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "13",
+          "end_line": "18",
+          "outgoing_call_count": 1,
+          "summary": "读取RISC-V特权级架构中scause（异常原因）寄存器的值并返回。"
+        },
+        {
+          "name": "w_sie",
+          "normalized_name": "w_sie",
+          "file_path": "kernel\\trap.c",
+          "language": "c",
+          "start_line": "25",
+          "end_line": "28",
+          "outgoing_call_count": 1,
+          "summary": "通过内联汇编写入RISC-V的sie寄存器，用于设置或修改中断使能位。"
+        },
+        {
+          "name": "user_trap_ret",
+          "normalized_name": "user_trap_ret",
+          "file_path": "kernel\\trap_entry.S",
+          "language": "assembly",
+          "start_line": "62",
+          "end_line": "112",
+          "outgoing_call_count": 0,
+          "summary": "从用户态陷阱返回（恢复用户态上下文）的例程。从当前栈（应为陷阱帧 trapframe）中恢复 sepc、sstatus 以及所有通用寄存器，然后切换到用户栈并执行 sret 回到用户态。同时设置 sscratch 为内核栈顶，以便下一次用户态陷阱时使用。"
+        },
+        {
+          "name": "trapframe",
+          "normalized_name": "trapframe",
+          "file_path": "kernel\\trap.h",
+          "language": "c",
+          "start_line": "7",
+          "end_line": "20",
+          "outgoing_call_count": 0,
+          "summary": "定义了RISC-V架构下保存CPU寄存器状态和必要控制状态寄存器（CSR）的数据结构，用于在陷阱（Trap）时保存和恢复上下文。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 13,
+      "outgoing_edge_count": 12,
+      "internal_edge_count": 11,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.9167,
+      "external_call_ratio": 0.0833,
+      "module_weight": 0.0974,
+      "files": [
+        "kernel/virtio.c",
+        "kernel\\mm.c",
+        "kernel\\proc.c",
+        "kernel\\start.S",
+        "kernel\\syscall.c",
+        "kernel\\virtio.c"
+      ],
+      "file_count": 6,
+      "core_functions": [
+        {
+          "name": "uvm_alloc",
+          "normalized_name": "uvm_alloc",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "86",
+          "end_line": "99",
+          "outgoing_call_count": 2,
+          "summary": "以页为单位分配物理内存，并将新分配的页映射到用户页表中，用于扩展用户进程的虚拟地址空间。"
+        },
+        {
+          "name": "mm_init",
+          "normalized_name": "mm_init",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "9",
+          "end_line": "25",
+          "outgoing_call_count": 2,
+          "summary": "初始化物理内存管理的基本范围，并打印物理内存起始和结束地址的十六进制表示。"
+        },
+        {
+          "name": "walk_pgtbl",
+          "normalized_name": "walk_pgtbl",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "53",
+          "end_line": "74",
+          "outgoing_call_count": 1,
+          "summary": "遍历三级页表（根页表为LV2，然后LV1，最后LV0），根据虚拟地址逐级查找或分配页表项，并返回包含物理页号的末级页表项指针。"
+        },
+        {
+          "name": "uvm_free",
+          "normalized_name": "uvm_free",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "109",
+          "end_line": "113",
+          "outgoing_call_count": 1,
+          "summary": "该函数目前是一个空实现，仅将参数pgtbl转换为void以避免未使用变量警告，并未执行任何实际的页表释放操作。"
+        },
+        {
+          "name": "uvm_create",
+          "normalized_name": "uvm_create",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "101",
+          "end_line": "107",
+          "outgoing_call_count": 1,
+          "summary": "该函数负责创建一个新的用户页表，通过分配一个清零的内存页作为页表基址，并在分配失败时返回NULL。"
+        },
+        {
+          "name": "uvm_map",
+          "normalized_name": "uvm_map",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "76",
+          "end_line": "84",
+          "outgoing_call_count": 1,
+          "summary": "将物理地址映射到虚拟地址的页表中，按页大小映射多页，并设置页表项权限。"
+        },
+        {
+          "name": "kalloc_zero",
+          "normalized_name": "kalloc_zero",
+          "file_path": "kernel\\mm.c",
+          "language": "c",
+          "start_line": "42",
+          "end_line": "50",
+          "outgoing_call_count": 1,
+          "summary": "分配一页物理内存并初始化为零。如果分配失败则返回NULL。"
+        },
+        {
+          "name": "alloc_desc",
+          "normalized_name": "alloc_desc",
+          "file_path": "kernel/virtio.c",
+          "language": "c",
+          "start_line": "197",
+          "end_line": "203",
+          "outgoing_call_count": 0,
+          "summary": "该函数遍历一个名为free_desc的数组（元素数量为NUM），查找第一个值为真的元素，将其置为0并返回该元素的索引；如果未找到则返回-1。函数名暗示分配一个描述符，逻辑是返回一个空闲描述符的索引，并将其标记为已分配。"
+        },
+        {
+          "name": "fd_alloc",
+          "normalized_name": "fd_alloc",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "104",
+          "end_line": "114",
+          "outgoing_call_count": 0,
+          "summary": "为进程分配一个空闲的文件描述符，并将指定文件结构体关联到该描述符上。具体做法是遍历进程的文件描述符数组，找到第一个空槽位，将其指向传入的文件结构体并递增其引用计数，最后返回该描述符索引；如果没有空闲槽则返回-1。"
+        },
+        {
+          "name": "get_kern_l1",
+          "normalized_name": "get_kern_l1",
+          "file_path": "kernel\\start.S",
+          "language": "assembly",
+          "start_line": "79",
+          "end_line": "84",
+          "outgoing_call_count": 0,
+          "summary": "该代码块定义了一个函数 get_kern_l1，用于获取 kern_l1 标签的地址并返回。该函数通过 la 伪指令将 kern_l1 的地址加载到寄存器 a0 中，然后返回。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 11,
+      "outgoing_edge_count": 24,
+      "internal_edge_count": 17,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.7083,
+      "external_call_ratio": 0.2917,
+      "module_weight": 0.113,
+      "files": [
+        "kernel\\elf.c",
+        "kernel\\proc.c",
+        "kernel\\proc.h"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "elf_load",
+          "normalized_name": "elf_load",
+          "file_path": "kernel\\elf.c",
+          "language": "c",
+          "start_line": "9",
+          "end_line": "99",
+          "outgoing_call_count": 4,
+          "summary": "加载并解析ELF文件，将可加载段映射到进程地址空间，并设置入口点。"
+        },
+        {
+          "name": "proc_switch_to_user",
+          "normalized_name": "proc_switch_to_user",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "87",
+          "end_line": "102",
+          "outgoing_call_count": 3,
+          "summary": "该函数将当前CPU执行的进程切换为指定的用户进程，包括设置内核栈指针、页表，并最终通过user_trap_ret进入用户模式。"
+        },
+        {
+          "name": "proc_ready",
+          "normalized_name": "proc_ready",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "51",
+          "end_line": "83",
+          "outgoing_call_count": 3,
+          "summary": "初始化一个进程结构体，包括创建用户页表、映射用户栈、设置陷阱帧（trapframe），并将进程状态设为可运行。"
+        },
+        {
+          "name": "proc_free",
+          "normalized_name": "proc_free",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "41",
+          "end_line": "47",
+          "outgoing_call_count": 1,
+          "summary": "释放进程控制块（proc）的资源，包括释放页表对应的物理内存，并将进程状态和PID重置为初始值。"
+        },
+        {
+          "name": "proc_init",
+          "normalized_name": "proc_init",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "14",
+          "end_line": "21",
+          "outgoing_call_count": 1,
+          "summary": "初始化进程控制块数组，将所有进程槽位标记为未使用，并打印初始化完成信息。"
+        },
+        {
+          "name": "proc",
+          "normalized_name": "proc",
+          "file_path": "kernel\\proc.h",
+          "language": "c",
+          "start_line": "25",
+          "end_line": "36",
+          "outgoing_call_count": 0,
+          "summary": "定义操作系统进程控制块（PCB）结构体，用于存储进程的状态、标识、内存映射、内核栈、陷阱帧、文件描述符、父进程指针以及用户栈底地址等信息。"
+        },
+        {
+          "name": "proc_alloc",
+          "normalized_name": "proc_alloc",
+          "file_path": "kernel\\proc.c",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "39",
+          "outgoing_call_count": 0,
+          "summary": "从进程表中分配一个未使用的进程控制块，返回指向该进程块的指针，若没有空闲则返回NULL。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 30,
+      "outgoing_edge_count": 53,
+      "internal_edge_count": 46,
+      "external_edge_count": 7,
+      "internal_call_ratio": 0.8679,
+      "external_call_ratio": 0.1321,
+      "module_weight": 0.2807,
+      "files": [
+        "kernel\\syscall.c",
+        "kernel\\test_user.S"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "syscall_init_table",
+          "normalized_name": "syscall_init_table",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "424",
+          "end_line": "459",
+          "outgoing_call_count": 30,
+          "summary": "初始化系统调用表，将所有表项置为 NULL，然后注册一系列系统调用处理函数。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "kernel\\test_user.S",
+          "language": "assembly",
+          "start_line": "4",
+          "end_line": "20",
+          "outgoing_call_count": 12,
+          "summary": "这是一个用户态测试程序的入口点，通过系统调用向标准输出打印一条消息，然后正常退出。"
+        },
+        {
+          "name": "sys_dup3_impl",
+          "normalized_name": "sys_dup3_impl",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "347",
+          "end_line": "367",
+          "outgoing_call_count": 4,
+          "summary": "实现文件描述符复制（dup/dup2/dup3）的核心逻辑：根据传入的 oldfd 获取文件结构，若 newfd 为负数则自动分配最低可用 fd，增加文件引用计数并替换目标 fd 槽位，返回新 fd"
+        },
+        {
+          "name": "sys_exit",
+          "normalized_name": "sys_exit",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "71",
+          "end_line": "99",
+          "outgoing_call_count": 4,
+          "summary": "处理进程退出系统调用：记录退出码、设置进程为僵尸状态，然后输出测试框架的结束标记，并通过内联汇编触发关机或退出操作。"
+        },
+        {
+          "name": "sys_openat",
+          "normalized_name": "sys_openat",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "133",
+          "end_line": "172",
+          "outgoing_call_count": 3,
+          "summary": "实现 openat 系统调用，先在内置文件列表中查找匹配文件并分配文件描述符，若未找到则委托给 virtio_open 处理磁盘文件打开。"
+        },
+        {
+          "name": "syscall_handle",
+          "normalized_name": "syscall_handle",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "463",
+          "end_line": "484",
+          "outgoing_call_count": 3,
+          "summary": "处理系统调用的入口函数，根据系统调用号分发到对应处理函数，并处理无效系统调用。"
+        },
+        {
+          "name": "sys_uname",
+          "normalized_name": "sys_uname",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "239",
+          "end_line": "257",
+          "outgoing_call_count": 2,
+          "summary": "实现系统调用sys_uname，将固定填写的系统信息（操作系统名称、节点名、发行版、版本、机器架构、域名）按结构体utsname布局（6个65字节字符串）拷贝到用户提供的缓冲区中。"
+        },
+        {
+          "name": "sys_write",
+          "normalized_name": "sys_write",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "51",
+          "end_line": "69",
+          "outgoing_call_count": 2,
+          "summary": "实现了系统调用 sys_write，用于向文件描述符写入数据；仅支持 stdout/stderr（fd=1或2）通过 UART 逐字符输出，其他文件描述符返回 -1 表示未实现。"
+        },
+        {
+          "name": "sys_close",
+          "normalized_name": "sys_close",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "198",
+          "end_line": "209",
+          "outgoing_call_count": 2,
+          "summary": "实现系统调用 close，关闭当前进程的文件描述符 fd，并释放对应的 file 结构资源（仅限于 FD_FILE 类型）。"
+        },
+        {
+          "name": "sys_getcwd",
+          "normalized_name": "sys_getcwd",
+          "file_path": "kernel\\syscall.c",
+          "language": "c",
+          "start_line": "211",
+          "end_line": "220",
+          "outgoing_call_count": 2,
+          "summary": "实现一个系统调用，将当前工作目录（固定为根目录\"/\"）复制到用户提供的缓冲区中，如果缓冲区大小不足则返回NULL。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel/main.c",
+        "kernel\\ext4.c",
+        "kernel\\test_user.S"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "run_test",
+          "normalized_name": "run_test",
+          "file_path": "kernel/main.c",
+          "language": "c",
+          "start_line": "44",
+          "end_line": "90",
+          "outgoing_call_count": 7,
+          "summary": "该函数用于运行一个用户态测试程序。它分配进程结构并创建页表，将测试二进制代码映射到虚拟地址0x1000，分配用户栈，初始化陷阱帧，最后通过修改satp、sepc等寄存器并执行sret指令切换到用户态执行测试程序。"
+        },
+        {
+          "name": "ext4_scan_testcode",
+          "normalized_name": "ext4_scan_testcode",
+          "file_path": "kernel\\ext4.c",
+          "language": "c",
+          "start_line": "192",
+          "end_line": "232",
+          "outgoing_call_count": 5,
+          "summary": "扫描 ext4 文件系统根目录，提取文件名以 \"_testcode.sh\" 结尾的测试脚本的组名（即去掉后缀的部分），最多返回 max_names 个名称到 names 数组中。"
+        },
+        {
+          "name": "msg",
+          "normalized_name": "msg",
+          "file_path": "kernel\\test_user.S",
+          "language": "assembly",
+          "start_line": "20",
+          "end_line": "22",
+          "outgoing_call_count": 0,
+          "summary": "定义一个标签 msg，用于存储一个字符串常量，字符串内容为 'Hello from user mode!\\n'。该字符串可能用于用户态程序的输出测试。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 6,
+      "outgoing_edge_count": 11,
+      "internal_edge_count": 10,
+      "external_edge_count": 1,
+      "internal_call_ratio": 0.9091,
+      "external_call_ratio": 0.0909,
+      "module_weight": 0.057,
+      "files": [
+        "kernel\\elf.h",
+        "kernel\\la_entry.S",
+        "kernel\\start.S"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "kernel\\start.S",
+          "language": "assembly",
+          "start_line": "4",
+          "end_line": "74",
+          "outgoing_call_count": 12,
+          "summary": "该代码块是RISC-V操作系统的启动入口，负责初始化栈、清零BSS段、手动构建Sv39分页页表（包括内核身份映射和UART MMIO映射），然后启用分页并跳转到C语言的kmain函数。"
+        },
+        {
+          "name": "_start",
+          "normalized_name": "_start",
+          "file_path": "kernel\\la_entry.S",
+          "language": "assembly",
+          "start_line": "4",
+          "end_line": "28",
+          "outgoing_call_count": 12,
+          "summary": "系统启动入口，通过UART输出字符并尝试通过ACPI关机，最后循环等待。"
+        },
+        {
+          "name": "get_kern_l1_lo",
+          "normalized_name": "get_kern_l1_lo",
+          "file_path": "kernel\\start.S",
+          "language": "assembly",
+          "start_line": "84",
+          "end_line": "97",
+          "outgoing_call_count": 1,
+          "summary": "该代码块定义了一个名为 get_kern_l1_lo 的函数，其功能是将 kern_l1_lo 页表的基地址加载到寄存器 a0 中并返回，以及后续的无限等待循环（wfi）和 BSS 段中页表空间的声明。"
+        },
+        {
+          "name": "elf64_phdr",
+          "normalized_name": "elf64_phdr",
+          "file_path": "kernel\\elf.h",
+          "language": "c",
+          "start_line": "27",
+          "end_line": "36",
+          "outgoing_call_count": 0,
+          "summary": "定义了一个用于描述 ELF64 文件程序头的结构体，包含段类型、标志、偏移量、虚拟地址、物理地址、文件大小、内存大小和对齐方式等字段。"
+        },
+        {
+          "name": "elf64_hdr",
+          "normalized_name": "elf64_hdr",
+          "file_path": "kernel\\elf.h",
+          "language": "c",
+          "start_line": "9",
+          "end_line": "24",
+          "outgoing_call_count": 0,
+          "summary": "定义了64位ELF文件头结构体，用于描述ELF文件的基本布局和元数据。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\main.c"
+      ],
+      "file_count": 1,
+      "core_functions": [
+        {
+          "name": "kmain",
+          "normalized_name": "kmain",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "92",
+          "end_line": "131",
+          "outgoing_call_count": 11,
+          "summary": "内核初始化函数，负责初始化串口、内存、陷阱、进程、virtio设备和文件系统，扫描磁盘获取测试组名称列表，并在控制台输出测试组开始和结束信息，最后调用一个系统调用并进入死循环。"
+        },
+        {
+          "name": "launch_user",
+          "normalized_name": "launch_user",
+          "file_path": "kernel\\main.c",
+          "language": "c",
+          "start_line": "31",
+          "end_line": "42",
+          "outgoing_call_count": 1,
+          "summary": "通过内联汇编设置sepc和sstatus寄存器，然后执行sret指令，从监督者模式（S模式）切换到用户模式（U模式），并跳转到指定的用户程序入口地址。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 64.0,
+    "score_level": "medium",
+    "scores": {
+      "originality": 10.0,
+      "novelty": 11.0,
+      "practicality": 12.0,
+      "difficulty": 17.0,
+      "completion": 14.0
+    },
+    "summary": "",
+    "strengths": [
+      "syscall模块完成度极高（0.9），且为核心模块权重第一，系统调用实现完善",
+      "filesystem模块完美完成（1.0），文件系统功能完整",
+      "模块划分清晰，核心模块权重分布合理，无异常高权重模块"
+    ],
+    "weaknesses": [
+      "driver模块完成度低（0.55），硬件驱动支持不足",
+      "boot、build、user、test等模块完成度极低（≤0.23），启动、用户态和测试支持薄弱",
+      "代码规模小（110函数），功能丰富度有限，缺少ipc、scheduler、network等模块"
+    ],
+    "suggestions": []
+  },
+  "hybrid_top_results": [
+    {
+      "repo_name": "TeamNameNotFound",
+      "hybrid_score": 0.7093,
+      "structured_score": 0.6604,
+      "semantic_score": 0.8,
+      "rank": null,
+      "source": [
+        "structured",
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 3,
+          "doc_id": "TeamNameNotFound__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.33573853969573975,
+          "semantic_score": 0.8,
+          "content_preview": "历史项目 TeamNameNotFound 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 c、python、assembly、linker_script、makefile。系统识别到该项目包含 186 个函数节点、1557 条调用边、14 个模块。核心模块包括 driver、unknown、filesystem、process、memory。结构复杂度为 0.92。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "404notfound",
+      "hybrid_score": 0.4467,
+      "structured_score": 0.6873,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "TOO_LOW",
+      "hybrid_score": 0.4339,
+      "structured_score": 0.6675,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OS",
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 1,
+          "doc_id": "OS__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.25113341212272644,
+          "semantic_score": 1.0,
+          "content_preview": "历史项目 OS 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 rust、c、linker_script、cargo。系统识别到该项目包含 1000 个函数节点、3991 条调用边、13 个模块。核心模块包括 unknown、build、driver、filesystem、interrupt。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OSakura",
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 2,
+          "doc_id": "OSakura__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.318683385848999,
+          "semantic_score": 0.9,
+          "content_preview": "历史项目 OSakura 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 c、assembly、linker_script。系统识别到该项目包含 621 个函数节点、1633 条调用边、13 个模块。核心模块包括 unknown、driver、filesystem、interrupt、ipc。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    }
+  ],
+  "comparison": {
+    "retrieval_mode": "hybrid",
+    "comparison_count": 5,
+    "comparisons": [
+      {
+        "history_repo_name": "TeamNameNotFound",
+        "similarity_score": 0.7093,
+        "hybrid_score": 0.7093,
+        "structured_score": 0.6604,
+        "semantic_score": 0.8,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均属于教学OS或通用内核类型，核心模块都有filesystem、memory和process，结构复杂度接近（0.72 vs 0.92），且主要使用C和汇编语言。语义相似度达到0.8，表明在高层次设计和理念上有较多共同点。",
+        "main_similarities": [
+          "核心模块在filesystem、memory、process三个模块上完全重合，均作为关键部分。",
+          "项目类型均为teaching_os_or_general_kernel，属于同一类操作系统内核。",
+          "主要编程语言都包括C、assembly、linker_script、makefile，技术栈基础一致。",
+          "模块完整性方面，filesystem和memory模块的完成度都较高（目标1.0/0.68，历史1.0/1.0）。"
+        ],
+        "main_differences": [
+          "目标仓库的syscall模块权重最高（0.28）且完成度0.9，而历史的syscall完成度仅0.41且不是核心模块，表明目标更侧重系统调用。",
+          "历史仓库的driver模块权重极高（0.39）且完成度1.0，而目标driver完成度仅0.55，历史在驱动方面更完善。",
+          "历史仓库的函数数量（186）和调用边数（1557）远多于目标（110函数，181边），规模更大、更复杂。",
+          "历史仓库的module_completeness包含ipc、kernel_core、scheduler等额外模块，目标缺少这些。"
+        ],
+        "target_advantages": [
+          "目标仓库在syscall模块的完成度（0.9）和权重（0.28）远超历史（0.41/未入核心），系统调用实现更完整。",
+          "目标仓库的结构复杂度（0.72）低于历史（0.92），可能意味着设计更简单、更易于理解和修改。"
+        ],
+        "target_weaknesses": [
+          "目标仓库的driver模块完成度（0.55）远低于历史（1.0），硬件驱动支持不足。",
+          "目标仓库缺少ipc、scheduler、kernel_core等模块，功能覆盖不如历史全面。",
+          "目标仓库的规模（110函数）远小于历史（186函数），整体功能和模块丰富度不足。",
+          "目标仓库的user、test模块完成度极低（0.05），用户态和测试支持薄弱。"
+        ],
+        "borrowable_designs": [
+          "历史仓库的driver模块设计（完成度1.0）可供目标参考，以提升硬件驱动支持。",
+          "历史仓库在process和memory模块的完全完成（1.0）可作为目标改进的范本。",
+          "历史仓库的构建系统（build模块完成度0.85）比目标（0.23）更完善，可借鉴其构建流程。",
+          "历史仓库包含ipc和scheduler模块，如果目标未来需要这些功能，可以参考其设计。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "404notfound",
+        "similarity_score": 0.4467,
+        "hybrid_score": 0.4467,
+        "structured_score": 0.6873,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "目标仓库T2026102479910691与历史仓库404notfound在项目类型、主要语言、结构复杂度上高度相似，且均在核心模块（如filesystem、memory、process）上有实现，但目标仓库的模块完整性更高，尤其是filesystem和syscall模块，而历史仓库大量功能聚集在unknown模块，结构不够清晰。",
+        "main_similarities": [
+          "项目类型均为teaching_os_or_general_kernel，主要语言完全一致（C、汇编、链接脚本、Makefile）。",
+          "函数总数相近（目标110 vs 历史114），模块数量接近（11 vs 12）。",
+          "核心模块存在重合：filesystem、memory、process。",
+          "结构复杂度相同（均为0.72）。"
+        ],
+        "main_differences": [
+          "目标仓库的模块完整性远高于历史仓库，例如filesystem完整性1.0 vs 0.1，memory完整性0.68 vs 0.15，process完整性0.78 vs 0.1。",
+          "目标仓库有明确的syscall模块（完整性0.9），而历史仓库syscall模块完整性仅0.05。",
+          "历史仓库unknown模块完整性高达0.95，说明大量功能未归类，而目标仓库unknown模块完整性仅0.53。",
+          "目标仓库核心模块权重分布均匀（0.08~0.28），历史仓库核心模块权重集中于unknown（1.0），其他核心模块权重为0.0。"
+        ],
+        "target_advantages": [
+          "模块划分更清晰，各核心模块（syscall、filesystem、process、memory、interrupt）均独立且有较高完整性。",
+          "filesystem模块达到完美完整性（1.0），syscall模块接近完整（0.9），整体功能设计更完整。",
+          "结构复杂度相同但模块更细化，内部调用边更多（120 vs 106），表明模块间交互更丰富。"
+        ],
+        "target_weaknesses": [
+          "user模块完整性极低（0.05），boot和build模块完整性也较低（0.23），可能是未实现或未分析。",
+          "test模块完整性仅0.1，说明测试代码不足。",
+          "driver模块完整性0.55，相比历史仓库的0.05虽高，但仍有提升空间。"
+        ],
+        "borrowable_designs": [
+          "历史仓库unknown模块完整性高达0.95，可能包含大量实用函数或基础设施，目标仓库可分析其内部实现，以补充自身弱模块如boot、build、user。",
+          "历史仓库在network模块有少量实现（完整性0.05），若目标仓库未来需要网络功能，可参考其设计思路。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "TOO_LOW",
+        "similarity_score": 0.4339,
+        "hybrid_score": 0.4339,
+        "structured_score": 0.6675,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为 teaching_os_or_general_kernel 类型，主要使用 C/汇编/链接脚本和 Makefile（目标仓库）或混合 Rust（历史仓库）；核心模块高度重合，均包含 filesystem、syscall、interrupt 和 memory，且模块完整性分数接近，结构复杂度也较为接近（0.72 vs 1.0）。",
+        "main_similarities": [
+          "项目类型相同，均为 teaching_os_or_general_kernel。",
+          "核心模块存在重合：filesystem、syscall、interrupt、memory。",
+          "模块完整性在 filesystem、syscall、interrupt 等模块上分数较高（目标 1.0/0.9/0.61，历史 1.0/1.0/1.0）。",
+          "结构复杂度较接近（0.72 vs 1.0）。"
+        ],
+        "main_differences": [
+          "目标仓库函数数量（110）远少于历史仓库（800），模块数量也较少（11 vs 15）。",
+          "历史仓库包含 Rust 语言，目标仓库无 Rust。",
+          "历史仓库 driver 模块权重极高（0.4207）且完整性 1.0，目标仓库 driver 完整性仅 0.55。",
+          "历史仓库具有多个目标仓库未有的模块，如 exec、ipc、network、scheduler、signal。",
+          "历史仓库所有核心模块完整性均为 1.0，目标仓库部分模块（如 memory、interrupt）完整性不足 0.7。"
+        ],
+        "target_advantages": [
+          "无明确优势，syscall 模块完整性较高（0.9），接近历史仓库的 1.0。"
+        ],
+        "target_weaknesses": [
+          "整体规模小，函数和模块数量仅为历史仓库的 13.75% 和 73%。",
+          "driver 模块完整性较低（0.55），远低于历史仓库的 1.0。",
+          "缺乏 exec、ipc、network、scheduler、signal 等模块。",
+          "核心模块中 memory（0.68）和 interrupt（0.61）完整性未达 0.7。",
+          "结构复杂度较低（0.72），说明整体实现深度或粒度不如历史仓库。"
+        ],
+        "borrowable_designs": [
+          "参考历史仓库的 driver 实现，提升自身 driver 模块完成度（从 0.55 开始）。",
+          "借鉴历史仓库的 memory（1.0）和 interrupt（1.0）的完整设计，补齐自身短板。",
+          "学习历史仓库如何组织多个模块（如 scheduler、signal、exec）以扩展功能。",
+          "考虑使用 Rust 语言实现特定模块以提高安全性和模块性（若环境允许）。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "OS",
+        "similarity_score": 0.35,
+        "hybrid_score": 0.35,
+        "structured_score": 0.0,
+        "semantic_score": 1.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "目标仓库T2026102479910691和历史仓库OS在项目类型上均为教学OS或通用内核，都实现了内核的核心模块如文件系统、中断、内存、进程和系统调用，且均支持汇编和链接脚本，但在语言选型、代码规模和模块完成度上存在明显差异。",
+        "main_similarities": [
+          "两者都属于teaching_os_or_general_kernel类型，面向操作系统内核教学或通用场景。",
+          "均包含文件系统、中断、内存、进程和系统调用等核心内核模块。",
+          "都使用linker_script和汇编语言进行底层开发。",
+          "在文件系统和中断模块上有一定的功能重叠。"
+        ],
+        "main_differences": [
+          "目标仓库主要使用C语言，而历史仓库主要使用Rust语言，开发语言范式不同。",
+          "历史仓库函数数量（1000）和边的数量（3991）远超目标仓库（110函数、181边），代码规模差异巨大。",
+          "历史仓库的模块完整性（unknown模块打分1.0）显著高于目标仓库，但其具体模块完成度较低（多数模块仅0.15），目标仓库在文件系统（1.0）、系统调用（0.9）等关键模块上完成度更高。",
+          "历史仓库结构复杂度为1.0，高于目标仓库的0.72。"
+        ],
+        "target_advantages": [
+          "目标仓库在文件系统、系统调用、进程管理等关键模块的完成度较高（如文件系统1.0、系统调用0.9），相对历史仓库这些模块的0.15完成度更具优势。",
+          "目标仓库模块结构更清晰，核心模块权重分布合理，便于开发和维护。"
+        ],
+        "target_weaknesses": [
+          "目标仓库代码规模较小，功能函数和调用边数量较少，整体功能丰富度不及历史仓库。",
+          "目标仓库在启动、构建、用户态等模块的完成度较低（如boot 0.23、user 0.05），而历史仓库这些模块至少为0.15。",
+          "目标仓库缺少网络、IPC、调度器等模块，历史仓库则包含了这些模块。"
+        ],
+        "borrowable_designs": [
+          "历史仓库使用的Rust语言可提供更强的内存安全保证，目标仓库可参考其安全抽象设计。",
+          "历史仓库在unknown模块中实现了大量基础设施，目标仓库可借鉴其架构分层或接口设计。",
+          "历史仓库的模块完整性得分高，目标仓库可以学习其如何组织模块以提升整体完成度。"
+        ],
+        "comparison_confidence": "low"
+      },
+      {
+        "history_repo_name": "OSakura",
+        "similarity_score": 0.315,
+        "hybrid_score": 0.315,
+        "structured_score": 0.0,
+        "semantic_score": 0.9,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为操作系统教学或通用内核项目，在技术特征（如无特殊技术亮点）和项目类型上相似，且语义嵌入检索显示高度相关（语义相似度0.9），表明它们在整体设计理念或基础架构思路有共通之处。但结构特征差异显著，导致结构化相似度为零。",
+        "main_similarities": [
+          "均为教学或通用类型操作系统内核项目",
+          "编程语言均以 C 和汇编为主，包含链接脚本",
+          "核心模块都包含 filesystem 和 interrupt",
+          "未在技术特征中记录特殊功能亮点"
+        ],
+        "main_differences": [
+          "目标仓库函数规模和调用边规模远小于历史仓库（110函数 vs 621函数；181边 vs 1633边），结构复杂度较低（0.72 vs 1.0）",
+          "目标仓库模块粒度更聚焦，核心模块为 syscall、filesystem、process、memory、interrupt；历史仓库核心模块包含 unknown、driver、ipc，且 unknown 权重异常高",
+          "目标仓库在 filesystem、syscall 模块完成度很高（1.0和0.9），而历史仓库各模块完成度普遍偏低（多数0.15），但 unknown 模块完成度为1.0",
+          "目标仓库无明显 weakness，而历史仓库 weakness 为空但结构复杂度和模块权重分布异常",
+          "目标仓库内部调用比例（120/181≈66%）低于历史仓库（1352/1633≈83%），显示内部耦合相对较低"
+        ],
+        "target_advantages": [
+          "目标仓库核心模块完成度明确且高，如 filesystem（1.0）、syscall（0.9），说明这些关键子系统实现较为完善",
+          "目标仓库结构更清晰，模块权重分布合理，无异常高权重模块（如历史仓库的 unknown 模块权重1.0）",
+          "目标仓库内部调用比例更低，可能意味着模块间耦合度更小、设计更整洁",
+          "目标仓库有 test 和 user 等用户态相关模块（虽完成度低），表明已开始构建测试和用户环境"
+        ],
+        "target_weaknesses": [
+          "目标仓库整体规模过小，函数数仅为历史仓库的1/6左右，功能覆盖可能不足",
+          "目标仓库未体现 driver、ipc、network 等模块，外设驱动和进程间通信能力缺失或未识别",
+          "目标仓库 boot 模块完成度仅0.23，启动流程可能不完善",
+          "目标仓库结构复杂度较低，可能缺乏复杂调度或高级内存管理机制"
+        ],
+        "borrowable_designs": [
+          "目标仓库可参考历史仓库在 driver、ipc 模块的设计，尽管其完成度低，但结构分类有助于扩展外设支持和进程通信",
+          "历史仓库函数规模大、边数多，可提供复杂调用的实现范例，有助于目标仓库增加功能深度"
+        ],
+        "comparison_confidence": "medium"
+      }
+    ]
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026102479910691_final_report.md",
+    "work_detail_data": "/data/works/T2026102479910691.json",
+    "comparison_data": "/data/comparisons/T2026102479910691.json"
+  },
+  "generated_at": "2026-07-03 00:08:59"
+}

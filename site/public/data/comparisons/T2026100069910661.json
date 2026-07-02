@@ -1,5 +1,192 @@
 {
-  "retrieval_mode": "structured",
-  "comparison_count": 0,
-  "comparisons": []
+  "retrieval_mode": "hybrid",
+  "comparison_count": 5,
+  "comparisons": [
+    {
+      "history_repo_name": "w",
+      "similarity_score": 0.494,
+      "hybrid_score": 0.494,
+      "structured_score": 0.383,
+      "semantic_score": 0.7,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库T2026100069910661与历史仓库w在项目类型上完全不同（分别是filesystem-focused和teaching_os_or_general_kernel），但两者在核心模块上存在重合，都包含build、driver、filesystem和unknown模块。此外，两者都使用C、assembly和linker_script语言，且结构相似度得分为0.383，语义相似度得分为0.7，表明在模块构成和代码层面有一定相似性。",
+      "main_similarities": [
+        "核心模块有四个重合：build、driver、filesystem、unknown。",
+        "主要语言都包含C、assembly和linker_script。",
+        "两者都包含模块化结构，且driver和filesystem模块的模块完整性得分相近（均接近0.15或0.18）。"
+      ],
+      "main_differences": [
+        "项目类型不同：目标仓库为filesystem_focused_project，历史仓库为teaching_os_or_general_kernel，表明目标仓库专注于文件系统，而历史仓库为通用教学操作系统。",
+        "项目规模差异巨大：目标仓库有8个函数、6个模块，而历史仓库有858个函数、13个模块，历史仓库的规模和复杂度远超目标仓库。",
+        "技术栈不同：目标仓库使用Makefile作为主要构建语言，历史仓库则使用C++作为主要语言之一。",
+        "结构复杂度不同：目标仓库结构复杂度为0.36，历史仓库为1.0，表明历史仓库的模块间依赖和调用关系更为复杂。",
+        "模块完整性分布不同：目标仓库的unknown模块完整性为0.28，build模块完整性为0.31，而历史仓库的unknown模块完整性为1.0（可能是默认高值），其他模块完整性大多为0.15。",
+        "目标仓库的filesystem模块完整性仅为0.05，远低于其自身其他模块和历史仓库的filesystem模块（0.15）。"
+      ],
+      "target_advantages": [
+        "目标仓库专注于文件系统，可能具有更轻量、更精简的设计，适合特定场景。",
+        "目标仓库的build模块完整性较高（0.31），表明构建系统相对完善。"
+      ],
+      "target_weaknesses": [
+        "目标仓库整体规模极小（8个函数），缺乏核心操作系统模块如进程管理、内存管理、中断、系统调用等，功能非常有限。",
+        "目标仓库的filesystem模块完整性极低（0.05），作为文件系统聚焦项目，文件系统实现严重不足。",
+        "目标仓库结构复杂度低（0.36），模块间依赖和耦合度低，可能缺乏良好抽象和功能交互。",
+        "目标仓库缺乏技术特征描述和弱点描述，可能尚未记录或分析过缺陷。"
+      ],
+      "borrowable_designs": [
+        "历史仓库w具有更完整的文件系统模块（完整性0.15），目标仓库可借鉴其文件系统架构设计。",
+        "历史仓库包含驱动（driver）、中断（interrupt）、进程（process）等模块的完整实现，这些模块在目标仓库中缺失或极弱，可作为未来扩展的参考。",
+        "历史仓库结构复杂度高，模块间调用关系丰富，目标仓库可参考其模块设计模式，增强模块内聚性和交互性。"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "OS",
+      "similarity_score": 0.35,
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库 T2026100069910661 和历史仓库 OS 都属于操作系统内核项目，在项目类型上存在一定关联（filesystem_focused_project 与 teaching_os_or_general_kernel），都涉及引导、驱动、文件系统等核心模块，且通过语义检索获得了较高的语义相似度（1.0），表明两者在功能描述或设计意图上具有较高的语义一致性。",
+      "main_similarities": [
+        "两者都包含 boot、driver、filesystem、build 等核心模块，体现了操作系统的基本组件结构。",
+        "在模块构成上，两者均出现了“unknown”模块，表明代码中存在未被明确归类的部分。",
+        "根据语义证据，两者的项目概览和核心模块描述在语义上高度一致（语义分数 1.0）。"
+      ],
+      "main_differences": [
+        "目标仓库规模远小于历史仓库：目标仓库仅 8 个函数、27 条调用边，而历史仓库有 1000 个函数、3991 条调用边。",
+        "目标仓库主要语言为 C、Makefile、汇编，而历史仓库主要使用 Rust、C、Cargo，技术栈不同。",
+        "目标仓库结构复杂度仅为 0.36，历史仓库为 1.0，表明历史仓库的结构更为复杂和完整。",
+        "目标仓库的文件系统模块权重为 0.0、完成度 0.05，明显弱于历史仓库中文件系统模块的完成度 0.15。",
+        "历史仓库包含 interrupt、ipc、memory、process、scheduler、syscall、user、test 等多个模块，目标仓库缺乏这些模块。"
+      ],
+      "target_advantages": [
+        "目标仓库作为 filesystem_focused_project，可能更专注于文件系统实现，但画像中文件系统模块完成度极低（0.05），目前无明显优势。",
+        "目标仓库代码结构更简单，易于理解和修改，适合作为教学或实验基础（如果项目目标如此）。",
+        "目标仓库使用 C 语言，在低硬件抽象层兼容性上可能优于 Rust（取决于应用场景）。"
+      ],
+      "target_weaknesses": [
+        "目标仓库功能数量极少（8 个函数），远不足以支撑一个完整内核，缺乏进程管理、内存管理、系统调用、中断处理等核心功能。",
+        "目标仓库文件系统模块完成度极低（0.05），网络模块同样薄弱（0.05），与项目类型不符。",
+        "目标仓库模块划分不够完善，存在大量未归类代码（unknown 模块权重 0.28），设计结构不清晰。",
+        "目标仓库缺乏技术特性描述和弱点记录，表明代码可能处于早期或未被充分分析的状态。"
+      ],
+      "borrowable_designs": [
+        "可以参考历史仓库的模块划分方式，特别是 interrupt、process、memory 等模块的设计，以完善目标仓库的内核功能。",
+        "可以借鉴历史仓库在文件系统模块的完成度（0.15）及其实现思路，尽管其完整度也不高，但相对目标仓库更成熟。",
+        "可以学习历史仓库中 Rust 语言在安全性和模块化方面的设计理念，但目标仓库若坚持 C 语言，则可参考结构设计。"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "TeamNameNotFound",
+      "similarity_score": 0.315,
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库都属于操作系统内核比赛项目，在项目类型上分别偏向文件系统（T2026100069910661）和通用教学内核（TeamNameNotFound），但语义分析显示它们具有较高的相似性（语义分数0.9），可能共享相似的架构理念或目标场景。然而，结构层面的差异非常显著，目标仓库的函数、模块、边数等规模远小于历史仓库，结构复杂度也较低。",
+      "main_similarities": [
+        "两者均为操作系统内核开发项目，涉及boot、driver、filesystem等核心模块。",
+        "主要编程语言都包含C、汇编、链接脚本和Makefile，技术栈高度重叠。",
+        "在语义层面，项目描述和目标可能相近，导致语义检索分数高达0.9。"
+      ],
+      "main_differences": [
+        "项目规模差距极大：目标仓库仅有8个函数，而历史仓库有186个函数，目标仓库的模块数（6）也远少于历史仓库（14）。",
+        "目标仓库的结构复杂度仅为0.36，远低于历史仓库的0.92，表明目标仓库的模块间依赖关系和内部连通性较弱。",
+        "目标仓库的核心模块集中在build和unknown，而历史仓库的核心模块是driver、unknown、filesystem、process、memory，覆盖了更多内核子系统。",
+        "目标仓库的filesystem模块权重为0且完整性极低（0.05），而历史仓库的filesystem模块完整度达到1.0，表明目标仓库的文件系统实现尚处于非常初步的阶段。",
+        "历史仓库包含完整的进程、内存、调度、中断等模块，目标仓库缺少这些关键模块。"
+      ],
+      "target_advantages": [
+        "目标仓库作为一个尚处于早期阶段的项目，其build模块已有一定基础，框架搭建可能更加灵活。",
+        "目标仓库轻量级的特点使其在快速迭代和调试方面可能有优势。"
+      ],
+      "target_weaknesses": [
+        "目标仓库的模块完整性普遍较低（如filesystem仅0.05，boot和driver仅0.18），远落后于历史仓库的几乎全绿状态。",
+        "目标仓库缺乏进程管理、内存管理、调度等关键内核模块，而历史仓库已完整实现这些部分。",
+        "目标仓库的函数数量和调用边数过少，表明代码实现尚不充分，可能需要大量补充工作。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可以借鉴历史仓库的driver模块实现，该模块在历史仓库中权重高且完整度为1.0，可能包含了成熟的设备驱动框架。",
+        "可以借鉴历史仓库的filesystem模块设计，该模块同样完整度为1.0，可能提供了可复用的文件系统架构或接口。",
+        "历史仓库的build模块完整度为0.85，目标仓库可参考其构建脚本和链接脚本的组织方式。"
+      ],
+      "comparison_confidence": "low"
+    },
+    {
+      "history_repo_name": "FIVE",
+      "similarity_score": 0.2857,
+      "hybrid_score": 0.2857,
+      "structured_score": 0.4396,
+      "semantic_score": 0.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库T2026100069910661与历史仓库FIVE在项目类型上虽不同（目标为文件系统聚焦项目，历史为教学通用内核），但核心模块存在明显重合，包括build、driver、filesystem和unknown模块，且主要语言均为C与汇编，结构上具有一定相似性，因此混合检索得分为0.2857，主要来自结构相似度0.4396。",
+      "main_similarities": [
+        "核心模块均包含build、driver、filesystem、unknown，模块构成有重叠",
+        "主要编程语言均为C、Assembly、Makefile、Linker Script",
+        "filesystem模块在两者中完整度均较低（目标0.05，历史0.05），均为薄弱环节"
+      ],
+      "main_differences": [
+        "目标仓库为文件系统聚焦项目，历史仓库为教学通用内核，项目类型不同",
+        "目标仓库规模较小（函数8个，边27条），历史仓库规模较大（函数76个，边165条）",
+        "目标仓库结构复杂度较低（0.36），历史仓库结构复杂度较高（0.65）",
+        "历史仓库拥有目标仓库未显示的模块：interrupt、ipc、memory、network、process、scheduler、syscall、user",
+        "目标仓库存在独立的boot模块（完整度0.18），历史仓库无boot模块",
+        "历史仓库的unknown模块完整度极高（1.0），目标仓库的unknown模块完整度较低（0.28）"
+      ],
+      "target_advantages": [
+        "目标仓库boot模块独立且有一定完整度（0.18），表明引导启动部分已有基础，历史仓库缺乏此模块",
+        "目标仓库文件系统模块的权重（0.0）与历史相同，但目标整体更聚焦，可能在文件系统实现上更为深入",
+        "目标仓库结构更简单（复杂度0.36），可能更易于针对文件系统进行专注开发与优化"
+      ],
+      "target_weaknesses": [
+        "目标仓库整体规模过小（8个函数），功能覆盖远不如历史仓库（76个函数）",
+        "目标仓库缺少中断、进程、调度、系统调用、内存管理、IPC等模块，历史仓库具备这些模块（虽完整度低）",
+        "目标仓库filesystem模块完整度仅为0.05，处于非常初级的阶段，可能还没有具体的文件系统实现",
+        "目标仓库driver模块完整度0.18，但仍低于历史仓库的unknown模块全面性"
+      ],
+      "borrowable_designs": [
+        "可借鉴历史仓库的interrupt模块设计（完整度0.1）来增强中断处理能力",
+        "可借鉴历史仓库在多模块（如memory、process、scheduler）上的基本框架，以扩展功能",
+        "历史仓库虽模块完整度普遍较低，但模块划分较完整，目标仓库可参考其模块划分思路来补充缺失模块",
+        "可参考历史仓库的syscall模块设计（完整度0.05），为文件系统增加系统调用接口"
+      ],
+      "comparison_confidence": "medium"
+    },
+    {
+      "history_repo_name": "OSakura",
+      "similarity_score": 0.28,
+      "hybrid_score": 0.28,
+      "structured_score": 0.0,
+      "semantic_score": 0.8,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库在语义上具有相似性（语义相似度0.8），且历史仓库OSakura明确包含filesystem和driver模块，与目标仓库的filesystem_focused_project类型主题相关，但结构特征差异显著，导致结构化相似度为0。",
+      "main_similarities": [
+        "两者都使用C、汇编和链接脚本作为主要语言",
+        "历史仓库包含filesystem和driver模块，与目标仓库的文件系统核心主题一致"
+      ],
+      "main_differences": [
+        "目标仓库项目类型为filesystem_focused_project，历史仓库为teaching_os_or_general_kernel",
+        "目标仓库仅有8个函数和6个模块，远少于历史仓库的621个函数和13个模块",
+        "目标仓库结构复杂度0.36较低，历史仓库结构复杂度1.0较高",
+        "目标仓库外部调用边比例更高（24/27 vs 281/1633，即88.9% vs 17.2%），模块间耦合较弱"
+      ],
+      "target_advantages": [
+        "目标仓库代码规模小，可能更聚焦于文件系统核心功能实现",
+        "目标仓库外部依赖占比高，可能更注重接口标准化和可扩展性"
+      ],
+      "target_weaknesses": [
+        "目标仓库filesystem模块完善度极低（0.05），历史仓库为0.15，表明目标文件系统功能严重不足",
+        "目标仓库driver模块完善度（0.18）略高于历史仓库（0.15），但整体模块覆盖率低",
+        "目标仓库缺少历史仓库具有的interrupt、ipc、memory、process等关键内核模块"
+      ],
+      "borrowable_designs": [
+        "历史仓库的filesystem模块设计（完善度0.15）可为目标仓库提供结构参考",
+        "历史仓库的driver模块架构可帮助目标仓库完善驱动支持",
+        "历史仓库较高的结构复杂度（1.0）暗示其模块化设计较成熟，可借鉴其模块划分和接口定义"
+      ],
+      "comparison_confidence": "medium"
+    }
+  ]
 }

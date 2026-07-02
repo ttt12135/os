@@ -326,6 +326,19 @@ def build_chroma_vector_store(rag_docs_path=DEFAULT_RAG_DOCS_PATH,persist_direct
     - 会保存 embedding_config.json，供 rag_retrieve 自动读取
     """
 
+    if os.environ.get("KERNELINSIGHT_SKIP_HISTORY_CHROMA_REBUILD") == "1":
+        print("[SKIP] target 批量入库模式：跳过 history Chroma 向量库重建。")
+        print("[SKIP] target 将继续读取已有 vector_store/chroma_history 进行历史检索。")
+
+        return {
+            "success": True,
+            "skipped": True,
+            "reason": "target_batch_skip_history_chroma_rebuild",
+            "vector_store_dir": "vector_store/chroma_history",
+            "persist_directory": "vector_store/chroma_history",
+            "message": "target 批量入库模式已跳过 history Chroma 重建"
+        }
+
     embedding_backend = (embedding_backend or "hash").strip().lower()
 
     if embedding_backend == "hash":

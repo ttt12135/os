@@ -1,0 +1,2301 @@
+{
+  "repo_name": "T2026101269910482",
+  "team_name": "T2026101269910482",
+  "school": "unknown_school",
+  "repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/T2026101269910482-2169",
+  "normalized_repo_url": "https://gitlab.eduxiji.net/educg-group-43501-3132633/t2026101269910482-2169",
+  "year": "2026",
+  "track": "kernel",
+  "status": "analyzed",
+  "project_type": "teaching_os_or_general_kernel",
+  "main_languages": [
+    "rust",
+    "python",
+    "c",
+    "linker_script",
+    "assembly",
+    "toml",
+    "cargo"
+  ],
+  "core_modules": [
+    "filesystem",
+    "syscall",
+    "unknown",
+    "driver",
+    "memory"
+  ],
+  "function_count": 800,
+  "node_count": 800,
+  "edge_count": 5611,
+  "internal_edge_count": 3117,
+  "external_edge_count": 2494,
+  "module_count": 20,
+  "structure_complexity": 1.0,
+  "module_completeness": {
+    "boot": 0.75,
+    "build": 0.76,
+    "console": 0.23,
+    "driver": 1.0,
+    "filesystem": 1.0,
+    "interrupt": 0.8,
+    "interrupt/trap": 0.36,
+    "ipc": 0.05,
+    "memory": 1.0,
+    "network": 0.15,
+    "process": 1.0,
+    "report_generation": 0.85,
+    "runner": 0.18,
+    "scheduler": 0.85,
+    "sync": 0.35,
+    "synchronization": 0.18,
+    "syscall": 1.0,
+    "test": 0.15,
+    "unknown": 1.0,
+    "user": 0.15
+  },
+  "core_module_details": [
+    {
+      "module_name": "filesystem",
+      "module_weight": 0.1861,
+      "completeness": 1.0,
+      "final_score": 0.5117
+    },
+    {
+      "module_name": "syscall",
+      "module_weight": 0.1798,
+      "completeness": 1.0,
+      "final_score": 0.5079
+    },
+    {
+      "module_name": "unknown",
+      "module_weight": 0.1613,
+      "completeness": 1.0,
+      "final_score": 0.4968
+    },
+    {
+      "module_name": "driver",
+      "module_weight": 0.1447,
+      "completeness": 1.0,
+      "final_score": 0.4868
+    },
+    {
+      "module_name": "memory",
+      "module_weight": 0.1209,
+      "completeness": 1.0,
+      "final_score": 0.4725
+    }
+  ],
+  "module_profiles": {
+    "boot": {
+      "module_name": "boot",
+      "function_count": 11,
+      "outgoing_edge_count": 110,
+      "internal_edge_count": 58,
+      "external_edge_count": 52,
+      "internal_call_ratio": 0.5273,
+      "external_call_ratio": 0.4727,
+      "module_weight": 0.0161,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "build": {
+      "module_name": "build",
+      "function_count": 17,
+      "outgoing_edge_count": 27,
+      "internal_edge_count": 8,
+      "external_edge_count": 19,
+      "internal_call_ratio": 0.2963,
+      "external_call_ratio": 0.7037,
+      "module_weight": 0.0147,
+      "files": [
+        "Cargo.toml",
+        "cargo_home\\config.toml",
+        "kernel\\Cargo.toml",
+        "kernel\\src\\runner.rs",
+        "kernel\\user\\hello.S",
+        "kernel\\user\\linker.lds",
+        "linker\\loongarch64.ld",
+        "linker\\riscv64.ld"
+      ],
+      "file_count": 8,
+      "core_functions": [
+        {
+          "name": "loongarch_uses_compat_data",
+          "normalized_name": "loongarch_uses_compat_data",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "1122",
+          "end_line": "1137",
+          "outgoing_call_count": 6,
+          "summary": "判断在LoongArch架构下是否应该使用兼容数据，根据标签前缀和运行策略决定。"
+        },
+        {
+          "name": "riscv64.ld",
+          "normalized_name": "ld",
+          "file_path": "linker\\riscv64.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "38",
+          "outgoing_call_count": 5,
+          "summary": "这是一个用于RISC-V 64位架构操作系统的链接脚本，定义了内核的布局和内存映射。它指定了输出架构为RISC-V，入口点为_start，并将内核基址设为0x80200000。脚本将各个输入段（.text, .rodata, .data, .bss）按顺序放置，并定义了内核结束符号_end，同时丢弃了调试和异常处理相关的段。"
+        },
+        {
+          "name": "loongarch64.ld",
+          "normalized_name": "ld",
+          "file_path": "linker\\loongarch64.ld",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "35",
+          "outgoing_call_count": 5,
+          "summary": "这个链接脚本定义了LoongArch架构内核的链接布局，将内核映像从基地址0x200000开始，按.text、.rodata、.data、.bss顺序组织，并丢弃.eh_frame和调试等无用段。"
+        },
+        {
+          "name": "linker.lds",
+          "normalized_name": "lds",
+          "file_path": "kernel\\user\\linker.lds",
+          "language": "linker_script",
+          "start_line": "1",
+          "end_line": "21",
+          "outgoing_call_count": 4,
+          "summary": "该链接脚本用于RISC-V架构的用户态程序，定义了输出文件架构、入口点以及各个段的布局。程序从地址0x10000开始，依次将.text、.rodata、.data、.bss段放入对应的节区，并丢弃.eh_frame、.debug*和.comment等调试与异常处理段。"
+        },
+        {
+          "name": "loongarch_basic_should_run_real",
+          "normalized_name": "loongarch_basic_should_run_real",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "1229",
+          "end_line": "1236",
+          "outgoing_call_count": 3,
+          "summary": "该函数用于判断指定的测试用例是否应该在实际硬件/实环境下运行，基于强制兼容标志、基本启用状态和默认规则进行决策。"
+        },
+        {
+          "name": "SCORE_COMPAT_MODE",
+          "normalized_name": "SCORE_COMPAT_MODE",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "36",
+          "end_line": "37",
+          "outgoing_call_count": 3,
+          "summary": "定义一个编译时常量，用于确定是否启用分数兼容模式。"
+        },
+        {
+          "name": "LA_FORCE_BASIC_COMPAT",
+          "normalized_name": "LA_FORCE_BASIC_COMPAT",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "54",
+          "end_line": "55",
+          "outgoing_call_count": 2,
+          "summary": "定义了一个编译时常量，用于指示是否强制启用基本兼容模式。该常量通过检查环境变量是否存在来决定其值。"
+        },
+        {
+          "name": "msg",
+          "normalized_name": "msg",
+          "file_path": "kernel\\user\\hello.S",
+          "language": "assembly",
+          "start_line": "14",
+          "end_line": "16",
+          "outgoing_call_count": 0,
+          "summary": "定义一个汇编标签 'msg'，并在其后声明一个以 null 结尾的 ASCII 字符串常量，内容是 'Hello from ELF user program!\\n'，用于在 ELF 用户程序中存储待打印的输出信息。"
+        },
+        {
+          "name": "config.toml",
+          "normalized_name": "toml",
+          "file_path": "cargo_home\\config.toml",
+          "language": "toml",
+          "start_line": "1",
+          "end_line": "10",
+          "outgoing_call_count": 0,
+          "summary": "这个代码块是Cargo的配置文件，用于指定构建输出目录以及为RISC-V 64位和LoongArch 64位裸机目标设置链接器和链接参数，包括自定义链接脚本和重定位模型。"
+        },
+        {
+          "name": "Cargo.toml",
+          "normalized_name": "toml",
+          "file_path": "Cargo.toml",
+          "language": "cargo",
+          "start_line": "1",
+          "end_line": "13",
+          "outgoing_call_count": 0,
+          "summary": "定义 Rust 工作空间配置，包含内核子项目、版本、作者、许可证和仓库信息，并说明这是一个支持 RISC-V64 和 LoongArch64 双架构的操作系统内核项目。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "console": {
+      "module_name": "console",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 3,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.001,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "driver": {
+      "module_name": "driver",
+      "function_count": 75,
+      "outgoing_edge_count": 1240,
+      "internal_edge_count": 535,
+      "external_edge_count": 705,
+      "internal_call_ratio": 0.4315,
+      "external_call_ratio": 0.5685,
+      "module_weight": 0.1447,
+      "files": [
+        "basic_tests/ktool.py",
+        "basic_tests\\ktool.py",
+        "basic_tests\\ssh_run.py",
+        "kernel\\src\\arch\\loongarch64.rs",
+        "kernel\\src\\console.rs",
+        "kernel\\src\\driver\\virtio_mmio.rs",
+        "kernel\\src\\fs\\ext4.rs",
+        "kernel\\src\\fs\\vfs.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\runner.rs"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "KTool",
+          "normalized_name": "KTool",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "21",
+          "end_line": "1798",
+          "outgoing_call_count": 276,
+          "summary": "KTool 是一个用于给 K210 芯片烧录固件的工具类。它封装了与芯片通信的串口协议、ISP 协议、Flash 操作等，提供烧录、擦除、读取 Flash、加载 ELF/二进制文件到 SRAM 等功能。"
+        },
+        {
+          "name": "MAIXLoader",
+          "normalized_name": "MAIXLoader",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "662",
+          "end_line": "1350",
+          "outgoing_call_count": 132,
+          "summary": "该类封装了与K210芯片（Maix系列开发板）的串口通信协议，用于通过第一阶段的ROM_ISP和第二阶段的ISP固件，实现对K210的固件烧录、擦除、读取、SRAM加载以及ELF执行等操作。它管理串口连接、SLIP协议编解码、波特率切换、复位进入ISP模式、握手应答、Flash初始化、数据发送与确认等底层逻辑。"
+        },
+        {
+          "name": "impl VirtIoBlk {",
+          "normalized_name": "impl VirtIoBlk {",
+          "file_path": "kernel\\src\\driver\\virtio_mmio.rs",
+          "language": "rust",
+          "start_line": "111",
+          "end_line": "443",
+          "outgoing_call_count": 57,
+          "summary": "实现了VirtIoBlk结构体的方法，包括设备探测、初始化、读扇区操作以及队列重置，支持MMIO和PCI Legacy I/O两种传输方式。"
+        },
+        {
+          "name": "impl VirtIoBlk {",
+          "normalized_name": "impl VirtIoBlk {",
+          "file_path": "kernel\\src\\driver\\virtio_mmio.rs",
+          "language": "rust",
+          "start_line": "452",
+          "end_line": "506",
+          "outgoing_call_count": 57,
+          "summary": "通过PCI枚举发现并初始化VirtIO块设备，支持现代（MMIO）和传统（I/O端口）接口。"
+        },
+        {
+          "name": "run_disk_elf",
+          "normalized_name": "run_disk_elf",
+          "file_path": "kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": "181",
+          "end_line": "256",
+          "outgoing_call_count": 56,
+          "summary": "从 ext4 文件系统中读取一个 ELF 文件，解析其头部并加载段，为用户程序创建页表（包括内核恒等映射和用户空间映射），分配用户栈，设置陷阱帧，最后通过 trap_return 切换到用户态执行该 ELF 程序。"
+        },
+        {
+          "name": "flash_firmware",
+          "normalized_name": "flash_firmware",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "1148",
+          "end_line": "1227",
+          "outgoing_call_count": 40,
+          "summary": "该函数用于将固件二进制数据通过数据帧分块发送到ISP目标（如SPI Flash或SRAM），支持AES加密、SHA256校验、可选的端序交换和启动控制。"
+        },
+        {
+          "name": "ssh_run",
+          "normalized_name": "ssh_run",
+          "file_path": "basic_tests\\ssh_run.py",
+          "language": "python",
+          "start_line": "77",
+          "end_line": "143",
+          "outgoing_call_count": 39,
+          "summary": "该函数通过USB端口向K210开发板烧写固件，然后打开串口读取并保存设备输出的日志信息。"
+        },
+        {
+          "name": "prepare_sdcard",
+          "normalized_name": "prepare_sdcard",
+          "file_path": "basic_tests\\ssh_run.py",
+          "language": "python",
+          "start_line": "10",
+          "end_line": "74",
+          "outgoing_call_count": 35,
+          "summary": "该函数通过烧录工具将镜像文件写入SD卡，并通过串口监控烧录过程，等待'finish'信号或超时（180秒）后返回。"
+        },
+        {
+          "name": "flash_greeting",
+          "normalized_name": "flash_greeting",
+          "file_path": "basic_tests/ktool.py",
+          "language": "python",
+          "start_line": "926",
+          "end_line": "972",
+          "outgoing_call_count": 26,
+          "summary": "该函数通过发送NO_OP命令并等待响应，尝试与K210芯片的ISP stub建立连接，并在多次重试后成功则退出循环，否则抛出异常。"
+        },
+        {
+          "name": "init_flash",
+          "normalized_name": "init_flash",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "1017",
+          "end_line": "1066",
+          "outgoing_call_count": 25,
+          "summary": "该函数用于初始化K210的SPI Flash，通过发送特定数据包并接收响应，在遇到错误时重试，直到成功或超过最大重试次数。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "filesystem": {
+      "module_name": "filesystem",
+      "function_count": 151,
+      "outgoing_edge_count": 1022,
+      "internal_edge_count": 612,
+      "external_edge_count": 410,
+      "internal_call_ratio": 0.5988,
+      "external_call_ratio": 0.4012,
+      "module_weight": 0.1861,
+      "files": [
+        "Makefile",
+        "basic_tests\\chdir.c",
+        "basic_tests\\chdir_test.py",
+        "basic_tests\\ktool.py",
+        "basic_tests\\mkdir_.c",
+        "basic_tests\\mkdir_test.py",
+        "basic_tests\\mount_test.py",
+        "basic_tests\\umount_test.py",
+        "kernel\\src\\arch\\loongarch64.rs",
+        "kernel\\src\\console.rs",
+        "kernel\\src\\driver\\virtio_mmio.rs",
+        "kernel\\src\\fs\\devfs.rs",
+        "kernel\\src\\fs\\ext4.rs",
+        "kernel\\src\\fs\\ramfs.rs",
+        "kernel\\src\\fs\\vfs.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\syscall\\context.rs",
+        "kernel\\src\\syscall\\mod.rs"
+      ],
+      "file_count": 19,
+      "core_functions": [
+        {
+          "name": "enter_user_elf_direct",
+          "normalized_name": "enter_user_elf_direct",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "2901",
+          "end_line": "3141",
+          "outgoing_call_count": 115,
+          "summary": "该函数是进程启动的核心路径之一，负责将用户ELF程序直接加载到内存中，设置页表、栈、辅助向量（auxv）、参数和环境变量，并最终进入用户模式执行。它支持直映射（direct_map）、无分页（nopaging）和标准化直映射等优化模式。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\umount_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "构造函数，初始化 umount 测试实例，调用父类构造函数，设置测试名称为 umount 和超时时间为 5 秒。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\mount_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "构造函数，用于初始化 mount 测试实例，设置测试名称和测试优先级。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\mkdir_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "初始化测试用例，设置测试名称为\"mkdir\"，并关联3个测试点"
+        },
+        {
+          "name": "impl Ext4Fs {",
+          "normalized_name": "impl Ext4Fs {",
+          "file_path": "kernel\\src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "91",
+          "end_line": "301",
+          "outgoing_call_count": 57,
+          "summary": "实现了Ext4文件系统的核心操作，包括文件系统的打开、块读取、inode读取、extent树查询、文件读取、目录读取、路径查找等功能。"
+        },
+        {
+          "name": "impl FdTable {",
+          "normalized_name": "impl FdTable {",
+          "file_path": "kernel\\src\\fs\\vfs.rs",
+          "language": "rust",
+          "start_line": "96",
+          "end_line": "184",
+          "outgoing_call_count": 39,
+          "summary": "实现文件描述符表（FdTable）的数据结构和操作，管理文件句柄的分配、回收和克隆，支持自旋锁保证并发安全。"
+        },
+        {
+          "name": "impl INode for RamDir {",
+          "normalized_name": "impl INode for RamDir {",
+          "file_path": "kernel\\src\\fs\\ramfs.rs",
+          "language": "rust",
+          "start_line": "64",
+          "end_line": "113",
+          "outgoing_call_count": 34,
+          "summary": "为 RamDir 类型实现 INode trait，提供目录节点操作，包括创建子目录、添加/查找/列出/删除/重命名子节点。"
+        },
+        {
+          "name": "read_flash",
+          "normalized_name": "read_flash",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "1294",
+          "end_line": "1339",
+          "outgoing_call_count": 33,
+          "summary": "从Flash地址读取指定长度的数据，并写入firmware_bin文件对象，同时显示进度条和传输速度。"
+        },
+        {
+          "name": "read_dir",
+          "normalized_name": "read_dir",
+          "file_path": "kernel\\src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "245",
+          "end_line": "276",
+          "outgoing_call_count": 28,
+          "summary": "从给定的inode中读取目录内容，返回目录条目向量。该函数首先检查目录文件大小是否有效，然后读取文件数据到缓冲区，再逐个解析目录项，跳过已删除的条目，最后返回所有有效条目。"
+        },
+        {
+          "name": "read_dir",
+          "normalized_name": "read_dir",
+          "file_path": "kernel\\src\\fs\\vfs.rs",
+          "language": "rust",
+          "start_line": "48",
+          "end_line": "48",
+          "outgoing_call_count": 28,
+          "summary": "该函数是一个读取目录的方法，当前实现返回一个空的 Vec<String>，没有实际读取目录的逻辑。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt": {
+      "module_name": "interrupt",
+      "function_count": 7,
+      "outgoing_edge_count": 55,
+      "internal_edge_count": 39,
+      "external_edge_count": 16,
+      "internal_call_ratio": 0.7091,
+      "external_call_ratio": 0.2909,
+      "module_weight": 0.0092,
+      "files": [
+        "basic_tests\\ktool.py",
+        "kernel\\src\\arch\\loongarch64.rs",
+        "kernel\\src\\arch\\riscv64.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\syscall\\mod.rs",
+        "kernel\\src\\trap\\context.rs",
+        "kernel\\src\\trap\\mod.rs"
+      ],
+      "file_count": 7,
+      "core_functions": [
+        {
+          "name": "handle_trap",
+          "normalized_name": "handle_trap",
+          "file_path": "kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": "28",
+          "end_line": "92",
+          "outgoing_call_count": 20,
+          "summary": "RISC-V 64 下的异常/中断处理入口函数，根据异常原因（scause）进行分发，处理系统调用、缺页异常等，异常无法恢复时打印信息并关机。LoongArch64 下直接转发给专用处理函数。"
+        },
+        {
+          "name": "handle_loongarch_trap",
+          "normalized_name": "handle_loongarch_trap",
+          "file_path": "kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": "95",
+          "end_line": "127",
+          "outgoing_call_count": 15,
+          "summary": "LoongArch架构的陷阱处理函数，根据异常码分发处理系统调用、缺页异常、地址对齐错误等，并支持实模式ELF跟踪日志。"
+        },
+        {
+          "name": "la_trap_panic",
+          "normalized_name": "la_trap_panic",
+          "file_path": "kernel\\src\\arch\\loongarch64.rs",
+          "language": "rust",
+          "start_line": "732",
+          "end_line": "850",
+          "outgoing_call_count": 12,
+          "summary": "这个代码块实现了一个异常/中断的panic处理函数，在没有标准输出库（避免堆依赖）的情况下，通过直接读取保存的CSR寄存器（用于调试信息的寄存器）来获取异常信息，并以十六进制格式打印出来。如果页表相关寄存器（PGDL和BADV）非零，还会进一步打印页表的相关信息（页目录、页中间目录、页表项）以辅助调试。最后调用架构级关机函数。"
+        },
+        {
+          "name": "recover_loongarch_user_exception",
+          "normalized_name": "recover_loongarch_user_exception",
+          "file_path": "kernel\\src\\trap\\mod.rs",
+          "language": "rust",
+          "start_line": "130",
+          "end_line": "141",
+          "outgoing_call_count": 10,
+          "summary": "这个函数用于处理龙芯架构的用户态异常，尝试恢复或恢复失败后打印异常信息并关闭系统。"
+        },
+        {
+          "name": "impl TrapFrame {",
+          "normalized_name": "impl TrapFrame {",
+          "file_path": "kernel\\src\\trap\\context.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "59",
+          "outgoing_call_count": 9,
+          "summary": "这个代码块为 TrapFrame 结构体实现了与系统调用相关的辅助方法，包括获取系统调用号、设置返回值以及获取前6个参数，且通过条件编译支持 riscv64 和 loongarch64 两种架构。"
+        },
+        {
+          "name": "init_trap",
+          "normalized_name": "init_trap",
+          "file_path": "kernel\\src\\arch\\riscv64.rs",
+          "language": "rust",
+          "start_line": "174",
+          "end_line": "183",
+          "outgoing_call_count": 7,
+          "summary": "初始化RISC-V架构的陷阱处理：将stvec寄存器设置为trap_vector标签对应的地址，完成中断/异常入口点的注册，并打印初始化成功信息。"
+        },
+        {
+          "name": "init_trap",
+          "normalized_name": "init_trap",
+          "file_path": "kernel\\src\\arch\\loongarch64.rs",
+          "language": "rust",
+          "start_line": "653",
+          "end_line": "674",
+          "outgoing_call_count": 7,
+          "summary": "初始化LoongArch架构的异常和陷阱处理入口，包括设置通用异常向量EENTRY和TLB缺失重填处理向量TLBRENTRY。"
+        },
+        {
+          "name": "recover_user_fault_to_runner",
+          "normalized_name": "recover_user_fault_to_runner",
+          "file_path": "kernel\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": "1241",
+          "end_line": "1244",
+          "outgoing_call_count": 4,
+          "summary": "标记一次 runner 案例故障，并立即跳转到 runner 函数执行恢复，其中传入参数 128，此函数不会返回。"
+        },
+        {
+          "name": "loongarch_basic_real_by_default",
+          "normalized_name": "loongarch_basic_real_by_default",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "1219",
+          "end_line": "1226",
+          "outgoing_call_count": 3,
+          "summary": "该函数判断给定的测试用例名称是否属于LA_BASIC_REAL_DEFAULT_CASES列表且不在LA_BASIC_COMPAT_RISK_CASES列表中，用于确定某个基础测试用例是否默认应被当作‘真实’（非兼容风险）用例执行。"
+        },
+        {
+          "name": "raise_exception",
+          "normalized_name": "raise_exception",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "62",
+          "end_line": "68",
+          "outgoing_call_count": 3,
+          "summary": "该函数用于在抛出异常前尝试关闭加载器（self.loader）的端口（_port），如果关闭失败则忽略异常，然后抛出传入的异常。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "interrupt/trap": {
+      "module_name": "interrupt/trap",
+      "function_count": 1,
+      "outgoing_edge_count": 10,
+      "internal_edge_count": 10,
+      "external_edge_count": 0,
+      "internal_call_ratio": 1.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0015,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "ipc": {
+      "module_name": "ipc",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "kernel\\src\\memory\\heap.rs",
+        "kernel\\src\\sync.rs"
+      ],
+      "file_count": 2,
+      "core_functions": [
+        {
+          "name": "impl<T> SpinMutex<T> {",
+          "normalized_name": "impl<T> SpinMutex<T> {",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "13",
+          "end_line": "35",
+          "outgoing_call_count": 11,
+          "summary": "实现一个自旋锁（SpinMutex），提供自旋等待的互斥访问能力，并支持 try_lock 操作。"
+        },
+        {
+          "name": "lock",
+          "normalized_name": "lock",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "21",
+          "end_line": "26",
+          "outgoing_call_count": 6,
+          "summary": "SpinMutex的lock方法，通过原子swap操作自旋获取锁，并返回一个守卫（SpinMutexGuard）。"
+        },
+        {
+          "name": "impl LockedHeap {",
+          "normalized_name": "impl LockedHeap {",
+          "file_path": "kernel\\src\\memory\\heap.rs",
+          "language": "rust",
+          "start_line": "48",
+          "end_line": "52",
+          "outgoing_call_count": 5,
+          "summary": "定义了LockedHeap结构体的一个关联函数empty，用于创建一个空的、线程安全的堆实例。"
+        },
+        {
+          "name": "impl<T> Deref for SpinMutexGuard<'_, T> {",
+          "normalized_name": "impl<T> Deref for SpinMutexGuard<'_, T> {",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": 41,
+          "end_line": 46,
+          "outgoing_call_count": 4,
+          "summary": "为 SpinMutexGuard 实现 Deref trait，允许通过解引用获取受保护数据的不可变引用。"
+        },
+        {
+          "name": "impl<T> Drop for SpinMutexGuard<'_, T>",
+          "normalized_name": "impl<T> Drop for SpinMutexGuard<'_, T>",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "54",
+          "end_line": "58",
+          "outgoing_call_count": 3,
+          "summary": "实现SpinMutexGuard的Drop trait，在释放锁时通过原子存储操作将锁状态设为未锁定（false），使用Release内存序确保之前操作的可见性。"
+        },
+        {
+          "name": "impl<T> DerefMut for SpinMutexGuard<'_, T> {",
+          "normalized_name": "impl<T> DerefMut for SpinMutexGuard<'_, T> {",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "48",
+          "end_line": "52",
+          "outgoing_call_count": 3,
+          "summary": "为 SpinMutexGuard 实现 DerefMut trait，允许通过可变引用访问受保护的数据。"
+        },
+        {
+          "name": "try_lock",
+          "normalized_name": "try_lock",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "28",
+          "end_line": "34",
+          "outgoing_call_count": 2,
+          "summary": "尝试获取自旋锁，如果锁已被其他线程持有则立即返回 None，否则获取锁并返回包含锁保护的守卫对象。"
+        },
+        {
+          "name": "LockedHeap",
+          "normalized_name": "LockedHeap",
+          "file_path": "kernel\\src\\memory\\heap.rs",
+          "language": "rust",
+          "start_line": "46",
+          "end_line": "46",
+          "outgoing_call_count": 1,
+          "summary": "定义了一个名为 LockedHeap 的结构体，其内部封装了一个自旋锁保护的 SimpleHeap 堆分配器，用于在多线程或中断环境中安全地管理堆内存。"
+        },
+        {
+          "name": "SpinMutexGuard",
+          "normalized_name": "SpinMutexGuard",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "37",
+          "end_line": "39",
+          "outgoing_call_count": 1,
+          "summary": "定义了一个名为 SpinMutexGuard 的结构体，用于表示自旋锁的守护（RAII 守卫），用于在持有锁时进行自动释放。"
+        },
+        {
+          "name": "unsafe impl<T: Send> Send for SpinMutex<T> {}",
+          "normalized_name": "unsafe impl<T: Send> Send for SpinMutex<T> {}",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "11",
+          "end_line": "11",
+          "outgoing_call_count": 0,
+          "summary": "为自旋锁类型 SpinMutex 实现 Send trait 的 unsafe 实现，表明该类型可以安全地在线程间转移所有权，前提是其内部类型 T 实现了 Send。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "memory": {
+      "module_name": "memory",
+      "function_count": 115,
+      "outgoing_edge_count": 486,
+      "internal_edge_count": 324,
+      "external_edge_count": 162,
+      "internal_call_ratio": 0.6667,
+      "external_call_ratio": 0.3333,
+      "module_weight": 0.1209,
+      "files": [
+        "basic_tests\\mmap.c",
+        "basic_tests\\mmap_test.py",
+        "kernel/src/fs/vfs.rs",
+        "kernel\\src\\arch\\loongarch64.rs",
+        "kernel\\src\\arch\\riscv64.rs",
+        "kernel\\src\\fs\\ext4.rs",
+        "kernel\\src\\fs\\vfs.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\memory\\address.rs",
+        "kernel\\src\\memory\\frame.rs",
+        "kernel\\src\\memory\\heap.rs",
+        "kernel\\src\\memory\\pagetable.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\syscall\\mod.rs",
+        "kernel\\src\\task\\mod.rs",
+        "kernel\\src\\task\\scheduler.rs"
+      ],
+      "file_count": 16,
+      "core_functions": [
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\mmap_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "这是 mmap_test 类的构造函数，调用父类构造函数并传递测试名称 'mmap' 和超时时间 3（秒）。"
+        },
+        {
+          "name": "handle_user_page_fault",
+          "normalized_name": "handle_user_page_fault",
+          "file_path": "kernel\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": "977",
+          "end_line": "1071",
+          "outgoing_call_count": 31,
+          "summary": "处理用户态的缺页异常。根据缺页地址是否属于堆、匿名mmap区域或栈保护区，若是则分配物理页、清零、建立页表映射，并可能更新BRK_END指针。"
+        },
+        {
+          "name": "impl Sv39PageTable {",
+          "normalized_name": "impl Sv39PageTable {",
+          "file_path": "kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": "85",
+          "end_line": "194",
+          "outgoing_call_count": 30,
+          "summary": "实现 Sv39PageTable 结构体的方法，包括页表创建、页分配、取消映射叶子页、复制用户页表以及根据虚拟地址遍历/创建页表项。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\memory\\frame.rs",
+          "language": "rust",
+          "start_line": "10",
+          "end_line": "18",
+          "outgoing_call_count": 27,
+          "summary": "该函数是BumpFrameAllocator的构造函数，用于初始化一个简单的一分配器（bump allocator），该分配器从给定的物理地址mem_start开始，分配大小不超过mem_size的物理页帧。函数首先将起始地址向上对齐到页大小边界，然后计算对齐后的结束地址，最后返回一个包含起始地址、结束地址和已分配计数初始化为0的BumpFrameAllocator实例。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\memory\\address.rs",
+          "language": "rust",
+          "start_line": "34",
+          "end_line": "36",
+          "outgoing_call_count": 27,
+          "summary": "该函数是一个构造函数，用于从给定的usize地址值创建一个VirtAddr实例。它将传入的地址封装到VirtAddr结构体中，返回一个新的VirtAddr对象。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\main.rs",
+          "language": "rust",
+          "start_line": "46",
+          "end_line": "51",
+          "outgoing_call_count": 27,
+          "summary": "这个代码块是 RecycledUserPagePool 结构体的构造函数 new，用于初始化一个包含空页面数组和零长度计数器的实例。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\memory\\address.rs",
+          "language": "rust",
+          "start_line": "12",
+          "end_line": "14",
+          "outgoing_call_count": 27,
+          "summary": "该函数是一个构造函数，用于根据给定的usize地址值创建一个PhysAddr实例。它直接返回包装了该地址的PhysAddr结构体。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\memory\\pagetable.rs",
+          "language": "rust",
+          "start_line": "86",
+          "end_line": "88",
+          "outgoing_call_count": 27,
+          "summary": "创建一个新的 Sv39PageTable 实例，存储根物理地址和 bump 帧分配器。"
+        },
+        {
+          "name": "alloc",
+          "normalized_name": "alloc",
+          "file_path": "kernel\\src\\fs\\vfs.rs",
+          "language": "rust",
+          "start_line": "101",
+          "end_line": "105",
+          "outgoing_call_count": 26,
+          "summary": "分配一个新的文件句柄并返回其索引。该方法获取自旋锁保护的文件描述符表，将传入的 FileHandle 包装成 Arc<SpinMutex<FileHandle>>，然后调用内部函数 alloc_locked 将其插入表中，并返回分配的索引。"
+        },
+        {
+          "name": "alloc",
+          "normalized_name": "alloc",
+          "file_path": "kernel\\src\\memory\\heap.rs",
+          "language": "rust",
+          "start_line": "55",
+          "end_line": "75",
+          "outgoing_call_count": 26,
+          "summary": "该代码块实现了一个简单的内存分配器，通过`alloc`方法从预分配的堆区域中分配指定布局（Layout）的内存块，返回分配起始地址的裸指针。如果剩余空间不足则返回空指针。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "network": {
+      "module_name": "network",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "basic_tests/pipe_test.py",
+        "basic_tests\\pipe.c",
+        "basic_tests\\pipe_test.py",
+        "kernel\\src\\fs\\ext4.rs",
+        "kernel\\src\\runner.rs"
+      ],
+      "file_count": 5,
+      "core_functions": [
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests/pipe_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "构造函数，调用父类初始化方法，传入测试名称 'pipe' 和超时时间 4（秒）。"
+        },
+        {
+          "name": "pipe_test",
+          "normalized_name": "pipe_test",
+          "file_path": "basic_tests\\pipe_test.py",
+          "language": "python",
+          "start_line": "5",
+          "end_line": "23",
+          "outgoing_call_count": 12,
+          "summary": "这是一个名为 pipe_test 的测试类，继承自 TestBase，用于验证管道（pipe）通信功能的正确性。测试逻辑检查通过管道传输的数据中是否包含预期的进程 ID 信息和写入成功的消息。"
+        },
+        {
+          "name": "test_pipe",
+          "normalized_name": "test_pipe",
+          "file_path": "basic_tests\\pipe.c",
+          "language": "c",
+          "start_line": "11",
+          "end_line": "34",
+          "outgoing_call_count": 12,
+          "summary": "测试管道通信功能：创建一个管道，然后通过 fork 创建子进程，父进程从管道读取数据并输出到标准输出，子进程向管道写入数据后退出，验证管道的基本读写和进程间通信机制。"
+        },
+        {
+          "name": "staged_script_label",
+          "normalized_name": "staged_script_label",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "923",
+          "end_line": "931",
+          "outgoing_call_count": 6,
+          "summary": "这个函数的作用是根据案例名称是否以 'lua ' 开头，决定返回的标签字符串。如果 case_name 以 'lua ' 开头，则返回去除该前缀后的剩余部分；否则直接返回传入的 script 参数（如果存在）。它主要用于为测试脚本生成标签，可能是在报告或日志中标识脚本来源。"
+        },
+        {
+          "name": "la_real_lua_script_enabled",
+          "normalized_name": "la_real_lua_script_enabled",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "1281",
+          "end_line": "1289",
+          "outgoing_call_count": 1,
+          "summary": "该函数用于判断指定的Lua脚本是否被启用。首先检查全局Lua功能是否启用，如果未启用则直接返回false。如果存在全局配置LA_REAL_LUA_CASE，则只允许该配置指定的脚本通过，否则仅允许脚本名为\"date.lua\"时返回true。"
+        },
+        {
+          "name": "print_compat_netperf",
+          "normalized_name": "print_compat_netperf",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "1648",
+          "end_line": "1670",
+          "outgoing_call_count": 1,
+          "summary": "这个函数用于打印一组硬编码的 netperf 性能测试结果（包括 UDP_STREAM、TCP_STREAM、UDP_RR、TCP_RR、TCP_CRR）的兼容性输出，模拟测试通过的成功消息。实际并未运行任何网络测试，仅打印预设的字符串。"
+        },
+        {
+          "name": "print_compat_iperf",
+          "normalized_name": "print_compat_iperf",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "1626",
+          "end_line": "1646",
+          "outgoing_call_count": 1,
+          "summary": "该函数用于打印一组预定义的 iperf 测试结果，包括 UDP/TCP 在不同模式下的带宽值，以特定格式输出到控制台，模拟兼容性测试报告的输出。"
+        },
+        {
+          "name": "BgDescriptor",
+          "normalized_name": "BgDescriptor",
+          "file_path": "kernel\\src\\fs\\ext4.rs",
+          "language": "rust",
+          "start_line": "20",
+          "end_line": "26",
+          "outgoing_call_count": 0,
+          "summary": "定义EXT4文件系统中的块组描述符（Block Group Descriptor）数据结构，用于描述块组的元信息，其中关键字段为inode_table_lo和inode_table_high，分别表示inode表地址的低32位和高32位，共同构成完整的inode表物理地址。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "process": {
+      "module_name": "process",
+      "function_count": 55,
+      "outgoing_edge_count": 622,
+      "internal_edge_count": 358,
+      "external_edge_count": 264,
+      "internal_call_ratio": 0.5756,
+      "external_call_ratio": 0.4244,
+      "module_weight": 0.0856,
+      "files": [
+        "basic_tests\\clone.c",
+        "basic_tests\\execve.c",
+        "basic_tests\\execve_test.py",
+        "basic_tests\\fork.c",
+        "basic_tests\\fork_test.py",
+        "basic_tests\\ktool.py",
+        "kernel\\src\\elf.rs",
+        "kernel\\src\\fs\\vfs.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\runner\\policy.rs",
+        "kernel\\src\\syscall\\context.rs",
+        "kernel\\src\\syscall\\mod.rs",
+        "kernel\\src\\task\\process.rs",
+        "kernel\\src\\task\\scheduler.rs"
+      ],
+      "file_count": 14,
+      "core_functions": [
+        {
+          "name": "process",
+          "normalized_name": "process",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "36",
+          "end_line": "1785",
+          "outgoing_call_count": 289,
+          "summary": "这个代码块是KTool类的process方法，用于处理K210开发板的固件烧录、读取、擦除等操作，包括串口通信、ISP协议实现、AES加密、进度显示等功能。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\fork_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "调用父类构造函数，初始化测试用例，设置名称和超时时间"
+        },
+        {
+          "name": "impl ProcessContext {",
+          "normalized_name": "impl ProcessContext {",
+          "file_path": "kernel\\src\\syscall\\context.rs",
+          "language": "rust",
+          "start_line": "16",
+          "end_line": "145",
+          "outgoing_call_count": 61,
+          "summary": "定义了进程上下文（ProcessContext）结构体，包含文件描述符表、当前工作目录和根文件系统（基于 RamFS 和 procfs），并提供了文件系统操作接口（如查找、创建、删除、重命名文件/目录等）的实现。该结构体用于为每个进程维护独立的文件系统视图。"
+        },
+        {
+          "name": "run_elf",
+          "normalized_name": "run_elf",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "3302",
+          "end_line": "3304",
+          "outgoing_call_count": 29,
+          "summary": "该函数是一个桩实现，仅仅打印一条信息，表明在当前架构下不支持运行 ELF 文件。它接收 ELF 数据、参数和组名，但没有执行任何实际加载或运行操作。"
+        },
+        {
+          "name": "run_elf",
+          "normalized_name": "run_elf",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "2691",
+          "end_line": "2737",
+          "outgoing_call_count": 29,
+          "summary": "根据测试组类型和程序名决定是否运行指定的ELF程序，并在运行前设置跳转环境和相关标志，运行后根据组类型调用后续用例处理函数。"
+        },
+        {
+          "name": "run_elf",
+          "normalized_name": "run_elf",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "2453",
+          "end_line": "2472",
+          "outgoing_call_count": 29,
+          "summary": "运行一个ELF可执行文件，设置跳转缓冲以处理返回，并准备环境变量后进入用户态执行。"
+        },
+        {
+          "name": "fork_process",
+          "normalized_name": "fork_process",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "52",
+          "end_line": "143",
+          "outgoing_call_count": 27,
+          "summary": "根据给定的父进程和陷印帧，创建一个新子进程。该函数支持 loongarch64 和 riscv64 两种架构，通过条件编译分别实现。主要工作包括：复制或共享页表、分配 PID、复制文件描述符表、构建子进程的 TrapFrame，并将子进程加入全局进程列表和待处理队列。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\task\\process.rs",
+          "language": "rust",
+          "start_line": "25",
+          "end_line": "35",
+          "outgoing_call_count": 27,
+          "summary": "创建一个新的 Process 结构体实例，包含进程标识符、父进程、文件描述符表、状态、工作目录、子进程列表和页表根地址。"
+        },
+        {
+          "name": "exit_process",
+          "normalized_name": "exit_process",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "222",
+          "end_line": "266",
+          "outgoing_call_count": 25,
+          "summary": "该函数用于让当前进程退出，将自身状态设为僵尸，记录退出码，然后尝试切换回父进程并更新父进程的上下文（如子进程列表、等待状态），如果无法切换则关闭系统。"
+        },
+        {
+          "name": "wait_for_child",
+          "normalized_name": "wait_for_child",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "366",
+          "end_line": "383",
+          "outgoing_call_count": 19,
+          "summary": "等待子进程退出，返回已退出子进程的PID和退出码。该函数遍历当前进程的子进程列表，查找状态为Zombie（僵尸）且匹配指定PID（-1表示任意子进程）的子进程，找到后将其从子进程列表中移除并返回其信息。如果未找到符合条件的子进程则返回None。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "report_generation": {
+      "module_name": "report_generation",
+      "function_count": 49,
+      "outgoing_edge_count": 311,
+      "internal_edge_count": 187,
+      "external_edge_count": 124,
+      "internal_call_ratio": 0.6013,
+      "external_call_ratio": 0.3987,
+      "module_weight": 0.0589,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "runner": {
+      "module_name": "runner",
+      "function_count": 1,
+      "outgoing_edge_count": 4,
+      "internal_edge_count": 2,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.5,
+      "external_call_ratio": 0.5,
+      "module_weight": 0.0011,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "scheduler": {
+      "module_name": "scheduler",
+      "function_count": 10,
+      "outgoing_edge_count": 78,
+      "internal_edge_count": 46,
+      "external_edge_count": 32,
+      "internal_call_ratio": 0.5897,
+      "external_call_ratio": 0.4103,
+      "module_weight": 0.0131,
+      "files": [
+        "kernel\\src\\arch\\loongarch64.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\task\\scheduler.rs"
+      ],
+      "file_count": 3,
+      "core_functions": [
+        {
+          "name": "try_run_child",
+          "normalized_name": "try_run_child",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "296",
+          "end_line": "362",
+          "outgoing_call_count": 31,
+          "summary": "尝试从全局等待队列PENDING_CHILDREN中取出一个子进程并运行它。如果队列非空，则保存当前父进程的陷阱帧和进程对象，然后将全局当前进程切换为子进程，并通过内联汇编跳转到trap_return来启动子进程。如果队列为空，则返回false。"
+        },
+        {
+          "name": "switch_to_parent",
+          "normalized_name": "switch_to_parent",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "269",
+          "end_line": "275",
+          "outgoing_call_count": 8,
+          "summary": "这个函数通过修改栈指针（sp）和 sscratch CSR 寄存器为陷阱帧（TrapFrame）的地址，并跳转到 trap_return 函数，实现从当前任务上下文切换到父任务（通常是 idle 或调度器）的上下文，且不会返回。"
+        },
+        {
+          "name": "switch_to_parent",
+          "normalized_name": "switch_to_parent",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "277",
+          "end_line": "293",
+          "outgoing_call_count": 8,
+          "summary": "该函数用于强制切换到父进程或关闭系统。在 loongarch64 架构上将传入的 TrapFrame 指针存入栈指针寄存器，然后跳转到 trap_return 以返回当前进程的父进程；在其他架构上直接调用关机函数。"
+        },
+        {
+          "name": "reset_init",
+          "normalized_name": "reset_init",
+          "file_path": "kernel\\src\\task\\scheduler.rs",
+          "language": "rust",
+          "start_line": "31",
+          "end_line": "35",
+          "outgoing_call_count": 5,
+          "summary": "这个函数用于重置进程调度器的状态，清空所有进程并重新初始化初始进程。它首先锁定全局进程列表并清空，然后调用 reset_case_process_state 重置特定调度状态，最后通过 spawn_init 创建并返回一个新的初始进程。"
+        },
+        {
+          "name": "switch_to_user",
+          "normalized_name": "switch_to_user",
+          "file_path": "kernel\\src\\arch\\loongarch64.rs",
+          "language": "rust",
+          "start_line": "583",
+          "end_line": "600",
+          "outgoing_call_count": 3,
+          "summary": "该函数通过内联汇编将CPU从内核态切换到用户态，设置异常返回地址（ERA）、权限模式（PRMD）、浮点单元使能（EUEN），并设置用户栈指针后执行ERTN指令返回用户空间。"
+        },
+        {
+          "name": "JumpBuf",
+          "normalized_name": "JumpBuf",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "299",
+          "end_line": "314",
+          "outgoing_call_count": 0,
+          "summary": "定义一个结构体 JumpBuf，用于保存任务切换时被调用者保存的寄存器（callee-saved registers），以便后续恢复执行上下文。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "sync": {
+      "module_name": "sync",
+      "function_count": 6,
+      "outgoing_edge_count": 11,
+      "internal_edge_count": 5,
+      "external_edge_count": 6,
+      "internal_call_ratio": 0.4545,
+      "external_call_ratio": 0.5455,
+      "module_weight": 0.0053,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "synchronization": {
+      "module_name": "synchronization",
+      "function_count": 1,
+      "outgoing_edge_count": 3,
+      "internal_edge_count": 1,
+      "external_edge_count": 2,
+      "internal_call_ratio": 0.3333,
+      "external_call_ratio": 0.6667,
+      "module_weight": 0.001,
+      "files": [],
+      "file_count": 0,
+      "core_functions": [],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "syscall": {
+      "module_name": "syscall",
+      "function_count": 151,
+      "outgoing_edge_count": 933,
+      "internal_edge_count": 593,
+      "external_edge_count": 340,
+      "internal_call_ratio": 0.6356,
+      "external_call_ratio": 0.3644,
+      "module_weight": 0.1798,
+      "files": [
+        "basic_tests\\brk_test.py",
+        "basic_tests\\chdir_test.py",
+        "basic_tests\\dup2_test.py",
+        "basic_tests\\execve_test.py",
+        "basic_tests\\fstat_test.py",
+        "basic_tests\\getcwd_test.py",
+        "basic_tests\\getpid_test.py",
+        "basic_tests\\getppid_test.py",
+        "basic_tests\\times.c",
+        "basic_tests\\uname.c",
+        "kernel/src/syscall/mod.rs",
+        "kernel/src/trap/context.rs",
+        "kernel\\src\\arch\\riscv64.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\syscall\\context.rs",
+        "kernel\\src\\syscall\\mod.rs",
+        "kernel\\src\\trap\\context.rs",
+        "kernel\\user\\hello.S",
+        "kernel\\user\\hello.c",
+        "kernel\\user\\smoke.rs"
+      ],
+      "file_count": 20,
+      "core_functions": [
+        {
+          "name": "syscall",
+          "normalized_name": "syscall",
+          "file_path": "kernel\\src\\syscall\\mod.rs",
+          "language": "rust",
+          "start_line": "123",
+          "end_line": "251",
+          "outgoing_call_count": 83,
+          "summary": "系统调用分发函数，根据系统调用号匹配并执行相应的处理函数，支持多种架构（riscv64和loongarch64）下的跟踪调试，处理退出、进程管理等操作，最后设置返回值。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\getcwd_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "这个代码块是 getcwd_test 类的初始化方法，调用父类的初始化函数，传入测试名称 \"getcwd\" 和测试编号 2。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\getppid_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "这个代码块是测试类的构造函数，用于初始化测试用例，设置测试名称为'getppid'，并指定测试ID为2。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\fstat_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "这是一个测试类的构造函数，用于初始化父类，传入测试名称 'fstat' 和测试编号 3。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\dup2_test.py",
+          "language": "python",
+          "start_line": 6,
+          "end_line": 7,
+          "outgoing_call_count": 74,
+          "summary": "这个代码块是dup2_test类的构造函数，调用父类构造函数并传递测试名称和参数个数。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\execve_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "初始化测试用例对象，调用父类构造函数，设置测试名称为'execve'，测试编号为3。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\brk_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "初始化测试用例，设置测试名称为'brk'，参数为3，并调用父类构造函数。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\chdir_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "初始化测试实例，调用父类构造函数并传入测试名称\"chdir\"和参数3。"
+        },
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tests\\getpid_test.py",
+          "language": "python",
+          "start_line": "6",
+          "end_line": "7",
+          "outgoing_call_count": 74,
+          "summary": "构造函数，初始化测试用例，设置名称为'getpid'，超时时间为3秒。"
+        },
+        {
+          "name": "enter_loongarch_bare_syscall_probe",
+          "normalized_name": "enter_loongarch_bare_syscall_probe",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "2740",
+          "end_line": "2845",
+          "outgoing_call_count": 57,
+          "summary": "该函数实现了一个用于测试LoongArch裸机系统调用的核心功能：根据测试用例名称（write、exit或其他）选择对应的裸机代码段，分配物理内存页作为代码和数据区域，设置用户态页表，配置TLB或直接映射窗口，最后切换到用户态执行指定的裸机代码。主要用于验证系统调用接口的正确性。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "test": {
+      "module_name": "test",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "basic_tests\times.c",
+        "basic_tests/brk.c",
+        "basic_tests/clone_test.py",
+        "basic_tests/dup_test.py",
+        "basic_tests/ktool.py",
+        "basic_tests/openat_test.py",
+        "basic_tests/read_test.py",
+        "basic_tests/test_base.py",
+        "basic_tests/times_test.py",
+        "basic_tests\\brk_test.py",
+        "basic_tests\\chdir_test.py",
+        "basic_tests\\clone.c",
+        "basic_tests\\clone_test.py",
+        "basic_tests\\close.c",
+        "basic_tests\\close_test.py",
+        "basic_tests\\dup.c",
+        "basic_tests\\dup2.c",
+        "basic_tests\\dup2_test.py",
+        "basic_tests\\dup_test.py",
+        "basic_tests\\execve_test.py",
+        "basic_tests\\exit.c",
+        "basic_tests\\exit_test.py",
+        "basic_tests\\fork_test.py",
+        "basic_tests\\fstat.c",
+        "basic_tests\\fstat_test.py",
+        "basic_tests\\getcwd.c",
+        "basic_tests\\getcwd_test.py",
+        "basic_tests\\getdents.c",
+        "basic_tests\\getdents_test.py",
+        "basic_tests\\getpid.c",
+        "basic_tests\\getpid_test.py",
+        "basic_tests\\getppid.c",
+        "basic_tests\\getppid_test.py",
+        "basic_tests\\gettimeofday.c",
+        "basic_tests\\gettimeofday_test.py",
+        "basic_tests\\ktool.py",
+        "basic_tests\\mkdir_test.py",
+        "basic_tests\\mmap_test.py",
+        "basic_tests\\mount.c",
+        "basic_tests\\mount_test.py",
+        "basic_tests\\munmap.c",
+        "basic_tests\\munmap_test.py",
+        "basic_tests\\open.c",
+        "basic_tests\\open_test.py",
+        "basic_tests\\openat.c",
+        "basic_tests\\openat_test.py",
+        "basic_tests\\pipe_test.py",
+        "basic_tests\\read.c",
+        "basic_tests\\read_test.py",
+        "basic_tests\\sleep.c",
+        "basic_tests\\sleep_test.py",
+        "basic_tests\\test_base.py",
+        "basic_tests\\test_runner.py",
+        "basic_tests\\times_test.py",
+        "basic_tests\\umount.c",
+        "basic_tests\\umount_test.py",
+        "basic_tests\\uname.c",
+        "basic_tests\\unlink.c",
+        "basic_tests\\wait.c",
+        "basic_tests\\waitpid.c",
+        "basic_tests\\write.c",
+        "basic_tests\\yield.c",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\runner\\case.rs",
+        "test_framework.h"
+      ],
+      "file_count": 66,
+      "core_functions": [
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\mmap_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "14",
+          "outgoing_call_count": 179,
+          "summary": "这个代码块定义了一个测试函数test，它接收一个列表类型的数据data，对数据的前两项进行断言检查：第一项应匹配file len:正则模式且提取的数字至少为27，第二项应等于特定字符串“mmap content:   Hello, mmap successfully!”。这是对mmap（内存映射文件）功能正确性的验证。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests/dup_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "14",
+          "outgoing_call_count": 179,
+          "summary": "这个代码块是 dup 测试中一个测试函数，它检查测试数据中的第一行是否包含 'new fd is <数字>' 模式的字符串，如果找到则提取该数字，并断言该数字（新文件描述符）不等于 1，以确保 dup 操作不会将标准输出（fd 1）复制为新的文件描述符。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\chdir_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "15",
+          "outgoing_call_count": 179,
+          "summary": "该函数验证chdir系统调用的返回结果和当前工作目录的变更。它检查data数组长度至少为2，然后解析第一行数据中的chdir返回值是否为0，并确认第二行数据包含字符串\"test_chdir\"，以此测试chdir是否成功切换目录。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\brk_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "23",
+          "outgoing_call_count": 179,
+          "summary": "该函数测试 brk 系统调用 (或类似内存分配机制) 的堆地址分配是否连续。它解析程序输出的三行内容，提取每个操作后的堆指针位置，并验证每次调用后堆指针增加 64 字节，从而检查堆分配是否按预期增长。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\openat_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "17",
+          "outgoing_call_count": 179,
+          "summary": "该函数验证openat测试的输出数据，检查open dir fd是否大于1，openat fd是否大于open dir fd，并确认最后一行输出为'openat success.'。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\dup2_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "11",
+          "outgoing_call_count": 179,
+          "summary": "这个代码块是一个测试函数，用于验证 dup2 系统调用后的预期输出。它检查获取的数据长度至少为 1，并断言第一个数据项等于字符串 '  from fd 100'。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\execve_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "12",
+          "outgoing_call_count": 179,
+          "summary": "该函数用于测试 execve 系统调用返回的数据。它首先检查数据长度至少为2，然后验证第一行数据为指定的测试回显字符串，第二行数据为 execve 成功信息。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\mount_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "15",
+          "outgoing_call_count": 179,
+          "summary": "该函数用于验证挂载测试输出数据的正确性。它检查至少4行数据，并断言第一行匹配挂载设备信息，第二行为挂载返回0，第三行为挂载成功消息，第四行为卸载返回0。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\munmap_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "15",
+          "outgoing_call_count": 179,
+          "summary": "这个代码块定义了一个测试函数，用于验证 munmap 系统调用的正确性，包括检查输出中文件长度符合预期、munmap 返回值为0以及成功输出特定字符串。"
+        },
+        {
+          "name": "test",
+          "normalized_name": "test",
+          "file_path": "basic_tests\\fork_test.py",
+          "language": "python",
+          "start_line": "9",
+          "end_line": "12",
+          "outgoing_call_count": 179,
+          "summary": "这是一个测试方法，用于验证fork相关输出的正确性。它首先断言输入数据长度至少为2，然后检查数据中是否包含特定模式，以确认父进程和子进程的输出都存在。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "unknown": {
+      "module_name": "unknown",
+      "function_count": 149,
+      "outgoing_edge_count": 696,
+      "internal_edge_count": 336,
+      "external_edge_count": 360,
+      "internal_call_ratio": 0.4828,
+      "external_call_ratio": 0.5172,
+      "module_weight": 0.1613,
+      "files": [
+        "basic_tools\\ktool.py",
+        "kernel/src/runner.rs",
+        "kernel\\src\\arch\\loongarch64.rs",
+        "kernel\\src\\arch\\riscv64.rs",
+        "kernel\\src\\elf.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\panic.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\runner\\policy.rs",
+        "kernel\\src\\sync.rs"
+      ],
+      "file_count": 10,
+      "core_functions": [
+        {
+          "name": "__init__",
+          "normalized_name": "__init__",
+          "file_path": "basic_tools\\ktool.py",
+          "language": "python",
+          "start_line": "128",
+          "end_line": "198",
+          "outgoing_call_count": 74,
+          "summary": "这是ktool类构造方法，初始化AES加密/解密轮密钥。根据给定密钥长度（16/24/32字节）计算轮数，生成加密轮密钥数组_Ke和解密轮密钥数组_Kd，并完成密钥扩展以及逆混合列变换（用于解密轮密钥）。"
+        },
+        {
+          "name": "run_group",
+          "normalized_name": "run_group",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "796",
+          "end_line": "921",
+          "outgoing_call_count": 56,
+          "summary": "运行一个测试组中的所有测试用例，包括解析命令、收集用例、安装文件、依次执行用例（支持兼容模式、基本用例、libcbench用例）并输出结果。"
+        },
+        {
+          "name": "collect_cases",
+          "normalized_name": "collect_cases",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "590",
+          "end_line": "720",
+          "outgoing_call_count": 51,
+          "summary": "该函数负责从文件系统（ext4）的指定路径中收集测试用例文件（ELF 可执行文件），并根据可选参数（wanted、scripts、commands）生成对应的 TestCase 结构体列表。它支持不同架构（loongarch64、riscv64）的不同数据加载和处理策略，最终可能合成兼容性用例。"
+        },
+        {
+          "name": "run_all",
+          "normalized_name": "run_all",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "403",
+          "end_line": "457",
+          "outgoing_call_count": 38,
+          "summary": "该函数负责从Ext4文件系统中扫描并加载测试组，对它们进行排序、去重、过滤，然后依次执行每个测试组，最后输出完成信号并关机。"
+        },
+        {
+          "name": "new",
+          "normalized_name": "new",
+          "file_path": "kernel\\src\\sync.rs",
+          "language": "rust",
+          "start_line": "14",
+          "end_line": "19",
+          "outgoing_call_count": 27,
+          "summary": "创建一个新的 SpinMutex 实例，初始化锁状态为未锁定，并存储传入的数据。"
+        },
+        {
+          "name": "synthesize_compat_cases",
+          "normalized_name": "synthesize_compat_cases",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "722",
+          "end_line": "794",
+          "outgoing_call_count": 25,
+          "summary": "根据标签和可选参数，为特定架构（loongarch64）生成兼容性测试用例，并添加到测试用例列表中。不同标签（basic、lua、busybox、libcbench）对应不同的生成逻辑，包括过滤、脚本和命令行处理。对于 riscv64 架构，该函数为空操作。"
+        },
+        {
+          "name": "split_command_words",
+          "normalized_name": "split_command_words",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "2359",
+          "end_line": "2390",
+          "outgoing_call_count": 17,
+          "summary": "该函数解析一个命令行字符串，将其按空白字符（空格、制表符）分割成单词列表，同时支持单引号（'）和双引号（\"）内的内容作为一个整体（即引号内的空白不会被分割），返回生成的单词向量。"
+        },
+        {
+          "name": "staged_command_eq",
+          "normalized_name": "staged_command_eq",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "2176",
+          "end_line": "2190",
+          "outgoing_call_count": 13,
+          "summary": "该函数比较一个给定的字符串是否与一个预存的“成功命令”相等，该预存命令通过三个全局变量（RUNNER_SUCCESS_COMMAND_PRESENT、RUNNER_SUCCESS_COMMAND_LEN、RUNNER_SUCCESS_COMMAND_BUF）以 volatile 方式存储，用于检查命令是否已设置、长度匹配以及内容逐字节一致。"
+        },
+        {
+          "name": "stage_success_text",
+          "normalized_name": "stage_success_text",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": "2153",
+          "end_line": "2168",
+          "outgoing_call_count": 12,
+          "summary": "将字符串切片复制到指定的目标内存地址中，并更新长度的槽位和存在标志，用于记录某个阶段成功的文本信息。"
+        },
+        {
+          "name": "panic",
+          "normalized_name": "panic",
+          "file_path": "kernel\\src\\panic.rs",
+          "language": "rust",
+          "start_line": "4",
+          "end_line": "10",
+          "outgoing_call_count": 12,
+          "summary": "定义内核恐慌处理函数，当系统发生不可恢复错误时输出错误位置并关闭系统。"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    },
+    "user": {
+      "module_name": "user",
+      "function_count": 0,
+      "outgoing_edge_count": 0,
+      "internal_edge_count": 0,
+      "external_edge_count": 0,
+      "internal_call_ratio": 0.0,
+      "external_call_ratio": 0.0,
+      "module_weight": 0.0,
+      "files": [
+        "basic_tests/unlink.c",
+        "basic_tests\\brk.c",
+        "basic_tests\\chdir.c",
+        "basic_tests\\clone.c",
+        "basic_tests\\close.c",
+        "basic_tests\\dup.c",
+        "basic_tests\\dup2.c",
+        "basic_tests\\execve.c",
+        "basic_tests\\exit.c",
+        "basic_tests\\fork.c",
+        "basic_tests\\fstat.c",
+        "basic_tests\\getcwd.c",
+        "basic_tests\\getdents.c",
+        "basic_tests\\getpid.c",
+        "basic_tests\\getppid.c",
+        "basic_tests\\gettimeofday.c",
+        "basic_tests\\ktool.py",
+        "basic_tests\\mkdir_.c",
+        "basic_tests\\mmap.c",
+        "basic_tests\\mount.c",
+        "basic_tests\\munmap.c",
+        "basic_tests\\open.c",
+        "basic_tests\\openat.c",
+        "basic_tests\\pipe.c",
+        "basic_tests\\read.c",
+        "basic_tests\\sleep.c",
+        "basic_tests\\test_echo.c",
+        "basic_tests\\times.c",
+        "basic_tests\\umount.c",
+        "basic_tests\\uname.c",
+        "basic_tests\\wait.c",
+        "basic_tests\\waitpid.c",
+        "basic_tests\\write.c",
+        "basic_tests\\yield.c",
+        "kernel/src/runner.rs",
+        "kernel\\build.rs",
+        "kernel\\src\\arch\\loongarch64.rs",
+        "kernel\\src\\main.rs",
+        "kernel\\src\\runner.rs",
+        "kernel\\src\\syscall\\mod.rs",
+        "kernel\\src\\syscall\\user.rs",
+        "kernel\\user\\smoke.rs",
+        "kernel\\user\\user.lds"
+      ],
+      "file_count": 43,
+      "core_functions": [
+        {
+          "name": "enter_user_elf",
+          "normalized_name": "enter_user_elf",
+          "file_path": "kernel\\src\\runner.rs",
+          "language": "rust",
+          "start_line": 2488,
+          "end_line": 2687,
+          "outgoing_call_count": 87,
+          "summary": "{\n  \"block_id\": \"block_524\",\n  \"file_path\": \"kernel\\\\src\\\\runner.rs\",\n  \"language\": \"rust\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"2488\",\n  \"end_line\": \"2687\",\n  \"name\": \"enter_user_elf\",\n  \"type\": \"function\",\n  \"summary\": \"解析 ELF 文件，创建用户进程的页表，加载 ELF 段，设置用户栈（包括 argv、envp、auxv 等程序初始状态），并切换到用户态执行用户程序。\",\n  \"logic_steps\": [\n    \"解析 ELF 文件头部，若失败则打印提示并关机。\",\n    \"如果是 PIE 可执行文件，设置基址为 0x10000，否则为 0。\",\n    \"重置用户 brk、mmap 和 reclaim 范围，为后续内存管理做准备。\",\n    \"分配一页作为用户页表根页，清零后通过 inherit_kernel_mapping 继承内核映射。\",\n    \"在用户页表中映射 MMIO 区域（0x10000000 起始，大小 1MB，可读可写）。\",\n    \"遍历 ELF 的每一段，根据段标志计算权限，分配页面并拷贝段数据到物理页，然后映射到用户页表；同时记录可回收范围。\",\n    \"分配连续的用户栈物理页（栈大小由 USER_STACK_PAGES 决定），映射到 USER_STACK_TOP 下方的虚拟地址区域。\",\n    \"在栈上压入 argv 字符串、envp 字符串以及随机数，并记录它们的指针位置。\",\n    \"按 auxv 规范在栈上压入辅助向量（AT_PAGESZ、AT_PHDR、AT_PHENT、AT_PHNUM、AT_ENTRY、AT_RANDOM、AT_BASE），最后是结束标记 (AT_NULL)。\",\n    \"在栈上压入 envp 指针数组和 argv 指针数组，最后压入 argc。\",\n    \"计算用户 satp 值（根页物理地址 +8 表示 Sv39 模式）。\",\n    \"更新当前进程的 page_table_root 为 user_satp，以便系统调用（如 mmap）能正确使用用户页表。\",\n    \"执行 fence.i 和 sfence.vma 刷新指令缓存和 TLB。\",\n    \"保存内核栈指针 (kernel_sp)，构建 TrapFrame，设置 sepc 为 ELF 入口地址，sstatus 打开 SPIE 和 FS_DIRTY，user_satp 为刚计算的值，并设置用户栈指针 x2。\",\n    \"将 TrapFrame 地址写入 sp 和 sscratch，然后跳转到 trap_return 进入用户态。\",\n  ],\n  \"called_functions\": [\n    \"elf::parse_elf\",\n    \"crate::arch::arch_shutdown\",\n    \"crate::syscall::reset_user_brk\",\n    \"crate::syscall::reset_user_mmap\",\n    \"crate::syscall::reset_user_reclaim_ranges\",\n    \"crate::alloc_page\",\n    \"inherit_kernel_mapping\",\n    \"Sv39PageTable::new\",\n    \"upt.map\",\n    \"elf::load_elf_segments\",\n    \"crate::syscall::remember_user_reclaim_range\",\n    \"crate::alloc_contiguous_pages\",\n    \"elf::program_header_vaddr\",\n    \"crate::task::scheduler::current_process\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"函数功能为创建用户进程的页表、加载 ELF、布置用户栈、进入用户态，是典型的用户进程创建和加载逻辑。\",\n  \"uncertainty\": \"函数内部调用了模块外的函数如 elf::parse_elf、crate::syscall::reset_user_brk 等，但具体实现未提供，仅能根据名字推测其作用。另外，user_stack_pages 等常量未在该代码块中定义。\"\n}"
+        },
+        {
+          "name": "enter_user_elf",
+          "normalized_name": "enter_user_elf",
+          "file_path": "kernel/src/runner.rs",
+          "language": "rust",
+          "start_line": "2848",
+          "end_line": "2860",
+          "outgoing_call_count": 87,
+          "summary": "解析ELF文件头，并根据是否位置无关可执行文件(PIE)决定加载基址，然后跳转到直接进入用户态ELF的函数。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "basic_tests\\test_echo.c",
+          "language": "c",
+          "start_line": 7,
+          "end_line": 11,
+          "outgoing_call_count": 46,
+          "summary": "{\n  \"block_id\": \"block_628\",\n  \"file_path\": \"basic_tests/test_echo.c\",\n  \"language\": \"c\",\n  \"parser\": \"tree_sitter\",\n  \"start_line\": \"7\",\n  \"end_line\": \"11\",\n  \"name\": \"main\",\n  \"type\": \"function\",\n  \"summary\": \"这个 `main` 函数首先打印一条成功信息 `\"  I am test_echo.\\nexecve success.\\n\"`，然后调用 `TEST_END` 宏（可能用于标记测试结束）并返回 0。\",\n  \"logic_steps\": [\n    \"调用 printf 打印固定字符串，表示当前测试程序已通过 execve 执行成功\",\n    \"调用 TEST_END(__func__)，用于记录或输出测试结束信息\",\n    \"返回 0，表示程序正常退出\"\n  ],\n  \"called_functions\": [\n    \"printf\",\n    \"TEST_END\"\n  ],\n  \"related_os_module\": \"process\",\n  \"evidence\": \"打印信息中包含 'execve success'，暗示该测试程序是作为 execve 系统调用的目标被执行，属于进程创建与加载的测试场景。\",\n  \"uncertainty\": \"TEST_END 的具体实现未在此代码块中给出，只能推测其用于测试结束标记；整体属于操作系统进程模块的功能验证测试代码。\"\n}"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "basic_tests\\execve.c",
+          "language": "c",
+          "start_line": "20",
+          "end_line": "23",
+          "outgoing_call_count": 46,
+          "summary": "这个代码块是程序的入口函数 main，它直接调用 test_execve() 函数，并返回 0 表示正常结束。test_execve 的功能未知，但从文件名和函数名推断可能与 execve 系统调用测试相关。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "basic_tests\\mount.c",
+          "language": "c",
+          "start_line": "29",
+          "end_line": "40",
+          "outgoing_call_count": 46,
+          "summary": "该 main 函数解析命令行参数，将第一个参数作为设备名保存到全局变量 device，将第二个参数作为挂载点保存到全局变量 mntpoint，然后调用 test_mount 函数执行挂载测试。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "basic_tests\\ktool.py",
+          "language": "python",
+          "start_line": "1802",
+          "end_line": "1810",
+          "outgoing_call_count": 46,
+          "summary": "这个函数是程序的入口点，创建 KTool 实例并调用其 process 方法；如果捕获到异常且异常信息为 'Kflash done'，则正常退出（状态码0），否则记录错误并退出（状态码1）。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "basic_tests\\openat.c",
+          "language": "c",
+          "start_line": "27",
+          "end_line": "30",
+          "outgoing_call_count": 46,
+          "summary": "该 main 函数是程序的入口点，唯一的功能是调用 test_openat() 函数执行 openat 系统调用相关的测试，然后返回 0 表示程序正常结束。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "basic_tests\\getpid.c",
+          "language": "c",
+          "start_line": "18",
+          "end_line": "21",
+          "outgoing_call_count": 46,
+          "summary": "这个代码块是程序的入口函数 main，它调用了 test_getpid 函数来测试获取进程 ID 的功能，然后返回 0 表示程序正常结束。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "basic_tests\\wait.c",
+          "language": "c",
+          "start_line": "23",
+          "end_line": "26",
+          "outgoing_call_count": 46,
+          "summary": "该代码块定义了程序的入口函数 main，主要作用是调用 test_wait 函数执行等待相关的测试，然后返回 0 表示程序正常结束。"
+        },
+        {
+          "name": "main",
+          "normalized_name": "main",
+          "file_path": "kernel\\build.rs",
+          "language": "rust",
+          "start_line": "1",
+          "end_line": "34",
+          "outgoing_call_count": 46,
+          "summary": "构建脚本的入口函数，主要作用是声明构建脚本自身以及一系列环境变量的变更监视，以便在环境变量改变时触发Cargo自动重新构建"
+        }
+      ],
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "uncertainty": [
+        "该模块画像主要基于静态函数理解结果和调用图统计生成。",
+        "模块名称来自 AI 函数理解中的 related_os_module 字段，可能存在分类不完全准确的情况。"
+      ]
+    }
+  },
+  "technical_features": [],
+  "weaknesses": [],
+  "data_quality": {
+    "data_sources": [
+      "function_analysis",
+      "call_graph",
+      "module_summary_full"
+    ],
+    "note": "当前画像基于静态代码切片、AI 函数理解和调用图统计生成，模块分类可能受到 AI 输出质量影响。"
+  },
+  "score": {
+    "overall_score": 72.0,
+    "score_level": "good",
+    "scores": {
+      "originality": 10.0,
+      "novelty": 11.0,
+      "practicality": 15.0,
+      "difficulty": 20.0,
+      "completion": 16.0
+    },
+    "summary": "",
+    "strengths": [
+      "核心模块完成度高：filesystem、memory、process、syscall 等关键子系统完成度均达到 1.0。",
+      "模块覆盖广泛：包含 20 个模块，涵盖 boot、build、中断、同步、网络、IPC 等多个领域。",
+      "使用 Rust 语言开发，具有现代语言的内存安全优势。",
+      "结构复杂度高（1.0），内部调用边数多，体现良好的模块集成度。"
+    ],
+    "weaknesses": [
+      "外围模块完成度低：console、IPC、network、同步等模块完成度低于 0.4，处于早期开发阶段。",
+      "与历史项目相似度高，缺乏显著创新或差异化设计。",
+      "部分模块完成度数据可能受工具误分类影响，如 'unknown' 模块权重较高（0.1613）。"
+    ],
+    "suggestions": []
+  },
+  "hybrid_top_results": [
+    {
+      "repo_name": "ATOM",
+      "hybrid_score": 0.7346,
+      "structured_score": 0.8609,
+      "semantic_score": 0.5,
+      "rank": null,
+      "source": [
+        "structured",
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 6,
+          "doc_id": "ATOM__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.35125643014907837,
+          "semantic_score": 0.5,
+          "content_preview": "历史项目 ATOM 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 rust、assembly、linker_script、cargo。系统识别到该项目包含 800 个函数节点、6167 条调用边、17 个模块。核心模块包括 filesystem、memory、process、driver、syscall。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "0x80200000",
+      "hybrid_score": 0.5827,
+      "structured_score": 0.8965,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "SOS",
+      "hybrid_score": 0.5494,
+      "structured_score": 0.8452,
+      "semantic_score": 0.0,
+      "rank": null,
+      "source": [
+        "structured"
+      ],
+      "semantic_evidence": [],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OS",
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 1,
+          "doc_id": "OS__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.2316742241382599,
+          "semantic_score": 1.0,
+          "content_preview": "历史项目 OS 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 rust、c、linker_script、cargo。系统识别到该项目包含 1000 个函数节点、3991 条调用边、13 个模块。核心模块包括 unknown、build、driver、filesystem、interrupt。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    },
+    {
+      "repo_name": "OSakura",
+      "hybrid_score": 0.315,
+      "structured_score": 0.0,
+      "semantic_score": 0.9,
+      "rank": null,
+      "source": [
+        "rag"
+      ],
+      "semantic_evidence": [
+        {
+          "rank": 2,
+          "doc_id": "OSakura__repo_overview",
+          "doc_type": "repo_overview",
+          "raw_score": 0.3192961513996124,
+          "semantic_score": 0.9,
+          "content_preview": "历史项目 OSakura 是一个 teaching_os_or_general_kernel 类型的 OS 项目。该项目主要语言包括 c、assembly、linker_script。系统识别到该项目包含 621 个函数节点、1633 条调用边、13 个模块。核心模块包括 unknown、driver、filesystem、interrupt、ipc。结构复杂度为 1.0。"
+        }
+      ],
+      "matched_reasons": []
+    }
+  ],
+  "comparison": {
+    "retrieval_mode": "hybrid",
+    "comparison_count": 5,
+    "comparisons": [
+      {
+        "history_repo_name": "ATOM",
+        "similarity_score": 0.7346,
+        "hybrid_score": 0.7346,
+        "structured_score": 0.8609,
+        "semantic_score": 0.5,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为 teaching_os_or_general_kernel 类型的操作系统内核项目，使用 Rust 作为主要语言，具有相似的项目规模和结构复杂度。核心模块（如 filesystem、memory、driver、syscall）重合度较高，且模块完成度分布接近，共同模块的完成度得分均在 0.44-0.67 之间，结构相似度高达 0.8609。",
+        "main_similarities": [
+          "项目类型相同，均为 teaching_os_or_general_kernel。",
+          "核心模块重合度高，共同包含 filesystem、memory、driver、syscall 模块。",
+          "函数数量相同（均为 800 个），模块数量接近（目标 20，历史 17）。",
+          "结构复杂度均为 1.0，项目整体架构复杂度相近。"
+        ],
+        "main_differences": [
+          "目标仓库使用的编程语言更多样，包括 rust、python、c、toml 等，而历史仓库仅使用 rust、assembly、linker_script、cargo。",
+          "目标仓库的模块数量更多（20 vs 17），且额外包含 console、interrupt/trap、ipc、network、sync、synchronization 等模块。",
+          "目标仓库的调用边总数（5611）少于历史仓库（6167），但外部调用边比例更高（内部 3117 vs 3856，外部 2494 vs 2311）。",
+          "历史仓库的 filesystem 模块权重显著较高（0.4471 vs 0.1861），而目标仓库的 syscall 和 driver 模块权重更高。"
+        ],
+        "target_advantages": [
+          "目标仓库模块种类更丰富，覆盖了更多操作系统组件（如 network、ipc、console 等），可能体现更全面的功能设计。",
+          "目标仓库的外部调用边比例更高，可能意味着更良好的模块化设计和对外接口的清晰划分。",
+          "目标仓库的 syscall 模块权重较高（0.1798 vs 0.0735），可能表示在系统调用处理方面更加重视。"
+        ],
+        "target_weaknesses": [
+          "目标仓库的 filesystem 模块权重较低（0.1861），相对历史仓库（0.4471）可能功能或集成度不足。",
+          "历史仓库的 process 模块完成度为 1.0，且权重较高（0.0894），目标仓库虽也有 process 模块但综合得分不如历史仓库。",
+          "目标仓库的某些模块（如 console、network、ipc）完成度较低（均低于 0.25），可能处于早期开发阶段。"
+        ],
+        "borrowable_designs": [
+          "目标仓库可借鉴历史仓库在 filesystem 模块的高权重设计，提升文件系统的功能比重或内部集成。",
+          "历史仓库的 memory 和 process 模块权重较高，目标仓库可参照其模块划分和接口设计来优化自身内存管理与进程管理。",
+          "历史仓库的 interrupt 和 scheduler 模块完成度较高（分别为 0.9 和 0.9），目标仓库可参考其实现以改进自身的中断与调度子系统。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "0x80200000",
+        "similarity_score": 0.5827,
+        "hybrid_score": 0.5827,
+        "structured_score": 0.8965,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为教学用或通用操作系统内核项目，核心模块（文件系统、驱动、系统调用、内存等）高度重合，且各模块完成度分布较为接近，结构复杂度相当，项目规模和调用边数也相近，因此整体结构相似度较高。",
+        "main_similarities": [
+          "项目类型均为 teaching_os_or_general_kernel。",
+          "核心模块高度重合：均包含 filesystem, driver, syscall, memory, unknown。",
+          "模块完成度分布接近，如 filesystem 和 syscall 完成度均为 1.0。",
+          "结构复杂度均为 1.0。",
+          "函数数量、调用边数量、模块数量规模相近。"
+        ],
+        "main_differences": [
+          "目标仓库主要语言为 Rust，历史仓库主要为 C/C++。",
+          "目标仓库有 interrupt、ipc 等模块的完成度较低，而历史仓库有 ipc、network 等模块完成度也更低。",
+          "目标仓库整合了同步（sync, synchronization 等）模块，历史仓库则包含 loader、posix、timer 等独立模块。",
+          "目标仓库增加了对构建（build）、控制台（console）、用户（user）等模块的支持。",
+          "历史仓库的 external_edge_count 比例更高（约 47.2%），目标仓库external_edge_count 占比更低（约 44.5%），表明依赖更多外部库或函数。"
+        ],
+        "target_advantages": [
+          "目标仓库使用 Rust 编写，具有更强的内存安全和并发安全性。",
+          "目标仓库在 boot、build、scheduler 等模块的完成度指标略高于历史仓库（0.75 vs 0.68, 0.76 vs 0.46, 0.85 vs 0.95 基本相当）。",
+          "目标仓库展示了更详细的模块划分，增加了 sync、synchronization 等模块，可能对同步原语有更深入的支持。"
+        ],
+        "target_weaknesses": [
+          "目标仓库的 console 模块完成度极低（0.23），远低于历史仓库中可能缺失的此模块。",
+          "目标仓库的 interrupt、ipc、network、synchronization 等模块完成度显著低于历史仓库（如 interrupt 0.8 vs 1.0，ipc 0.05 vs 0.15，部分模块甚至缺失或极低）。",
+          "目标仓库的 test 和 user 模块完成度也较低（均为 0.15），历史仓库的 test 完成度为 0.33。",
+          "历史仓库的 language_score 更高（0.375 vs 目标仓库根据画像未提供 language_score），但差异主要来自语言多样性。"
+        ],
+        "borrowable_designs": [
+          "历史仓库在 interrupt 模块的完整实现（1.0）可为目标仓库的中断处理设计提供参考。",
+          "历史仓库在 scheduler 模块（0.95）的高完成度可为目标仓库的调度算法改进提供借鉴。",
+          "历史仓库在 ipc 和 network 模块的部分实现可能对目标仓库的增强有启发。"
+        ],
+        "comparison_confidence": "high"
+      },
+      {
+        "history_repo_name": "SOS",
+        "similarity_score": 0.5494,
+        "hybrid_score": 0.5494,
+        "structured_score": 0.8452,
+        "semantic_score": 0.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为通用或教学用操作系统内核，主要使用 C 和 Rust 语言，模块数、函数规模接近，且在 filesystem、syscall、driver 等核心模块上完成度较高、结构复杂度相同，因此在结构上具有显著相似性。",
+        "main_similarities": [
+          "项目类型均为 teaching_os_or_general_kernel。",
+          "核心模块存在高度重合：driver、filesystem、syscall、unknown。",
+          "函数数量、模块数量基本一致（均为 800 个函数、20 个模块）。",
+          "结构复杂度相同（均为 1.0）。"
+        ],
+        "main_differences": [
+          "目标仓库的核心模块权重分布更均匀（filesystem 0.1861、syscall 0.1798），历史仓库则更偏重 driver（0.2918）。",
+          "目标仓库在 console、network、ipc、synchronization 等模块的完成度较低（<0.4），而历史仓库在 interrupt、synchronization、shell 等模块完成度更高。",
+          "目标仓库结构复杂度虽同为 1.0，但其内部调用边数（3117）与外部边数（2494）比例与历史仓库（2197/1685）不同，说明模块间耦合关系有差异。"
+        ],
+        "target_advantages": [
+          "目标仓库的 syscall 模块权重更高（0.1798 vs 0.0841），且完成度为 1.0，可能在系统调用实现方面更完善。",
+          "目标仓库的 filesystem 模块权重更高（0.1861 vs 0.1194），且完成度均为 1.0，暗示文件系统在整体架构中占比更大。",
+          "目标仓库在 memory 模块的权重（0.1209）略高于历史仓库（该模块未在前五 core_modules 中出现），表明内存管理可能更受重视。"
+        ],
+        "target_weaknesses": [
+          "目标仓库在 interrupt/trap（0.36）、synchronization（0.18）、ipc（0.05）等关键子系统上的完成度远低于历史仓库（interrupt:1.0、synchronization:0.58、ipc:0.15）。",
+          "目标仓库缺少 shell 或用户交互模块的相关记录（历史仓库有 shell 0.75）。",
+          "目标仓库的 console、network、test 模块完成度均较低（≤0.23），而历史仓库在同类模块上有更高完成度。"
+        ],
+        "borrowable_designs": [
+          "可以借鉴历史仓库在 interrupt 和 synchronization 模块上的成熟实现，以补全目标仓库的不足。",
+          "历史仓库的 shell 模块（完成度 0.75）提供了用户交互的参考设计，目标仓库可考虑增加类似功能。",
+          "历史仓库在 driver 模块的高权重和完整度（1.0）表明其驱动框架设计较为均衡，目标仓库可参照其模块划分和接口设计。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "OS",
+        "similarity_score": 0.35,
+        "hybrid_score": 0.35,
+        "structured_score": 0.0,
+        "semantic_score": 1.0,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "目标仓库 T2026101269910482 与历史仓库 OS 同属于 teaching_os_or_general_kernel 类型，均以 Rust 为主要开发语言，核心模块均涵盖 filesystem、driver、memory 等操作系统关键组件，语义相似度高达 1.0，表明二者在抽象设计层面上高度一致。",
+        "main_similarities": [
+          "两项目均为 teaching_os_or_general_kernel 类型，均以 Rust 为主要开发语言，并混合使用 C 和 linker_script。",
+          "核心模块重叠较多，目标仓库的 core_modules 包含 filesystem、driver、memory，历史仓库同样包含 filesystem、driver、interrupt 等模块。",
+          "两项目均具备完整的 filesystem、memory 和 syscall 模块（目标仓库 completeness 为 1.0，历史仓库 completeness 为 0.15）。"
+        ],
+        "main_differences": [
+          "目标仓库具有更丰富的模块数量（20 个 vs 13 个），且模块涵盖面更全，包括 console、network、ipc、synchronization 等多类子系统。",
+          "目标仓库模块完整性普遍较高（如 driver、memory、process 均达到 1.0），历史仓库除 unknown 外大部分模块完整性仅为 0.15。",
+          "目标仓库结构更复杂，内部边数（3117）明显高于历史仓库（1960），表明模块间调用关系更紧密。",
+          "目标仓库使用了更多语言种类（如 python、toml），历史仓库仅使用 rust、c、linker_script、cargo。"
+        ],
+        "target_advantages": [
+          "模块覆盖更全面，在 console、network、ipc、synchronization 等模块上具备非零的完整性，而历史仓库这些模块的 completeness 普遍为 0.15 且无明确实现。",
+          "大部分核心模块（filesystem、syscall、memory、driver）完整性达到 1.0，而历史仓库对应模块仅 0.15。",
+          "架构复杂度更高，内部边数更多，说明模块间集成度与协同工作能力更强。"
+        ],
+        "target_weaknesses": [
+          "目标仓库部分模块（如 console、ipc、network、synchronization）的 completeness 较低（0.05~0.23），在模块多样性上尚有提升空间。",
+          "历史仓库的结构复杂度评分为 1.0，目标仓库同样为 1.0，但历史仓库的 unknown 模块权重极高（1.0），可能意味着其未完全识别的部分较少，而目标仓库 unknown 模块仍占据一定权重（0.1613）。",
+          "历史仓库函数数量（1000）多于目标仓库（800），可能在功能单元数量上更丰富（但完整性较低，可能分布不均）。"
+        ],
+        "borrowable_designs": [
+          "目标仓库可以学习历史仓库在减少 unknown 模块比重方面的设计，提高模块识别的确定性。",
+          "历史仓库的 interrupt 模块虽然 completeness 仅为 0.15，但其作为核心模块之一，目标仓库可参考其基础框架设计以提升自身 interrupt/trap 子模块的完整性。",
+          "历史仓库在高外连边比例（2031 外连边）下的模块组织方式，可为目标仓库优化外部依赖和接口提供参考。"
+        ],
+        "comparison_confidence": "medium"
+      },
+      {
+        "history_repo_name": "OSakura",
+        "similarity_score": 0.315,
+        "hybrid_score": 0.315,
+        "structured_score": 0.0,
+        "semantic_score": 0.9,
+        "retrieval_mode": "hybrid",
+        "similarity_summary": "两个仓库均为 teaching_os_or_general_kernel 类型的 OS 项目，在功能结构上涉及驱动、文件系统、中断、IP等模块，且结构复杂度均为 1.0。然而，目标仓库采用多语言（Rust、Python 等）且模块更丰富（20 个 vs 13 个），而历史仓库以 C 和汇编为主；二者功能覆盖率差异明显，语义相似度高达 0.9 主要源于项目类型和模块名称的匹配，但结构相似度仅为 0.0，说明实际代码结构和实现细节差异较大。",
+        "main_similarities": [
+          "都是 teaching_os_or_general_kernel 类型的 OS 内核项目。",
+          "都包含驱动、文件系统、中断、进程、调度、系统调用等核心模块。",
+          "结构复杂度均为 1.0。"
+        ],
+        "main_differences": [
+          "目标仓库以 Rust、Python 为主要语言，历史仓库以 C、汇编为主要语言。",
+          "目标仓库模块数量（20）多于历史仓库（13），功能覆盖更广（如 boot、console、runner、同步等模块）。",
+          "历史仓库核心模块 unknown 权重极高（1.0），目标仓库核心模块分布更均衡（filesystem 0.186、syscall 0.180 等）。",
+          "历史仓库多数模块完成度较低（大多 0.15），目标仓库多个模块完成度为 1.0（driver、filesystem、memory、process、syscall 等）。"
+        ],
+        "target_advantages": [
+          "功能完成度远高于历史仓库，多个模块（如文件系统、驱动、内存、进程、系统调用）达到 1.0 完成度。",
+          "采用更现代的语言（Rust）编写，具有更好的内存安全性和生态系统支持。",
+          "模块划分更细（20 个模块），覆盖启动、构建、控制台、网络、同步等历史仓库未充分实现的领域。",
+          "函数数量更多（800 vs 621）、内部调用边更多（3117 vs 1352），反映更复杂的实现和更丰富的功能。"
+        ],
+        "target_weaknesses": [
+          "某些模块完成度较低（如 console: 0.23, interrupt/trap: 0.36, ipc: 0.05, network: 0.15, sync: 0.35, synchronization: 0.18），仍有完善空间。",
+          "历史仓库在 interrupt 模块有 0.15 完成度，目标仓库 interrupt 模块完成度为 0.8 但子模块 interrupt/trap 仅 0.36，可能需要参考历史仓库的中断处理设计。",
+          "历史仓库至少具有基本的 IPC（0.15）和网络（0.15）实现，目标仓库的 IPC 和网络模块完成度也较低（0.05 和 0.15），差异不大，但可互相参考。"
+        ],
+        "borrowable_designs": [
+          "历史仓库在 interrupt、ipc、network 等模块虽然完成度不高，但其 C 语言实现可能提供了简单的可借鉴接口或机制设计。",
+          "历史仓库在 user 模块有 0.15 完成度，目标仓库 user 模块仅 0.15，二者均处于早期阶段，可对比 API 设计。",
+          "历史仓库的 test 模块完成度为 0.05，目标仓库 test 模块为 0.15，均可参考以提升测试覆盖。"
+        ],
+        "comparison_confidence": "low"
+      }
+    ]
+  },
+  "urls": {
+    "report_markdown": "/reports/T2026101269910482_final_report.md",
+    "work_detail_data": "/data/works/T2026101269910482.json",
+    "comparison_data": "/data/comparisons/T2026101269910482.json"
+  },
+  "generated_at": "2026-07-03 00:08:59"
+}

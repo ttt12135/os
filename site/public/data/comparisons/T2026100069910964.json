@@ -1,5 +1,157 @@
 {
-  "retrieval_mode": "structured",
-  "comparison_count": 0,
-  "comparisons": []
+  "retrieval_mode": "hybrid",
+  "comparison_count": 5,
+  "comparisons": [
+    {
+      "history_repo_name": "OS",
+      "similarity_score": 0.35,
+      "hybrid_score": 0.35,
+      "structured_score": 0.0,
+      "semantic_score": 1.0,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库与历史仓库在语义上高度相似（语义相似分数为1.0），可能具有类似的OS项目目标和结构。但由于目标仓库缺乏完整的结构化画像（项目类型、主要语言、功能和模块信息均缺失），无法确定结构层面的具体相似点。",
+      "main_similarities": [
+        "两个仓库在语义层面被评估为高度相似，可能指向类似的操作系统内核教学或通用内核项目",
+        "目标仓库的路径名和项目命名风格与历史仓库的常见OS项目模式一致"
+      ],
+      "main_differences": [
+        "历史仓库拥有完整的结构化信息（1000个函数、13个模块），而目标仓库缺乏任何结构化数据（函数数、模块数均为0）",
+        "历史仓库明确使用Rust、C、Linker Script和Cargo作为主要语言，目标仓库的主要语言列表为空",
+        "历史仓库包含driver、filesystem、interrupt、process、memory等核心模块，目标仓库未识别到任何模块",
+        "历史仓库结构复杂度为1.0，目标仓库为0.0，表明目标仓库可能处于早期开发阶段或数据分析不完全"
+      ],
+      "target_advantages": [
+        "信息不足，无法明确判断目标仓库相对于历史仓库的优势"
+      ],
+      "target_weaknesses": [
+        "目标仓库缺少模块化结构信息，可能表明其未形成完整的内核模块划分",
+        "目标仓库核心技术特征列表为空，可能缺乏成熟的技术实现或可复用组件",
+        "目标仓库没有识别到任何函数或调用边，暗示代码规模较小或分析工具无法处理"
+      ],
+      "borrowable_designs": [
+        "目标仓库可以借鉴历史仓库的模块划分方案（如driver、filesystem、interrupt等独立模块设计）",
+        "目标仓库可以学习历史仓库使用Rust和C混合编程的结构组织方式，提升模块完整度",
+        "目标仓库可以参考历史仓库对关键系统组件（如进程管理、内存管理、调度器）的分层实现设计"
+      ],
+      "comparison_confidence": "low"
+    },
+    {
+      "history_repo_name": "FTL_OS",
+      "similarity_score": 0.28,
+      "hybrid_score": 0.28,
+      "structured_score": 0.0,
+      "semantic_score": 0.8,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库在同类型OS项目上具有一定相似性，但目标仓库缺少详细刻画信息，相似主要基于语义匹配而非结构匹配，可能都包含操作系统内核的常见模块（如构建、驱动、文件系统等）且都使用Rust语言。",
+      "main_similarities": [
+        "均属于操作系统内核类型项目，都涉及构建、驱动、文件系统、中断等核心模块",
+        "可能均使用Rust作为主要开发语言（基于语义检索证据）"
+      ],
+      "main_differences": [
+        "目标仓库的功能数量、模块数量、边信息均为0，无法与FTL_OS（3920函数、13模块）进行结构对比",
+        "FTL_OS有清晰的teaching_os/general_kernel分类，目标仓库项目类型未知"
+      ],
+      "target_advantages": [
+        "信息缺失，无法判断优势"
+      ],
+      "target_weaknesses": [
+        "信息缺失严重，无法提取特征、函数数、模块数等基本画像，对比基础薄弱",
+        "可能缺乏足够的模块完成度或结构复杂度（与FTL_OS的0.15~1.0完成度相比）"
+      ],
+      "borrowable_designs": [
+        "如果目标OS需要完善模块识别，可借鉴FTL_OS对核心模块（build、driver、filesystem、interrupt等）的划分和权重赋值"
+      ],
+      "comparison_confidence": "low"
+    },
+    {
+      "history_repo_name": "bug",
+      "similarity_score": 0.245,
+      "hybrid_score": 0.245,
+      "structured_score": 0.0,
+      "semantic_score": 0.7,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "目标仓库T2026100069910964的画像信息缺失严重（无语言、函数、模块等），无法与历史仓库bug进行有意义的相似性对比。历史仓库bug是一个teaching_os_or_general_kernel项目，包含1000个函数、13个模块，主要语言为C和Rust。语义相似度0.7表明两者可能在宏观OS概念上相关，但结构化信息无法验证。",
+      "main_similarities": [
+        "两者均为操作系统类项目，属于OS内核范畴",
+        "在语义层面（repo概述）有0.7的较高相似度"
+      ],
+      "main_differences": [
+        "目标仓库缺乏任何结构化信息（语言、函数、模块、特征均未知），而历史仓库有完整的函数、模块、复杂度数据",
+        "历史仓库使用C、Rust等多种语言，目标仓库语言未知",
+        "历史仓库明确为teaching_os_or_general_kernel类型，目标仓库类型未知"
+      ],
+      "target_advantages": [
+        "无法确定目标仓库的相对优势，因为目标仓库缺乏可比较信息"
+      ],
+      "target_weaknesses": [
+        "目标仓库画像信息极度不完整，缺乏技术特征和模块完成度数据，表明项目可能处于早期阶段或分析工具无法提取信息",
+        "无法评估目标仓库的能力和成熟度"
+      ],
+      "borrowable_designs": [
+        "可借鉴历史仓库bug的模块化设计（13个模块，包括driver、filesystem、interrupt、ipc等）",
+        "可学习历史仓库的多语言（C+Rust）混编架构",
+        "可参考历史仓库的函数调用结构（2827条边）来优化自身代码组织"
+      ],
+      "comparison_confidence": "low"
+    },
+    {
+      "history_repo_name": "OSakura",
+      "similarity_score": 0.21,
+      "hybrid_score": 0.21,
+      "structured_score": 0.0,
+      "semantic_score": 0.6,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "由于目标仓库画像中主要语言、函数数量、模块信息均为空或零值，无法从结构化指标上与历史仓库OSakura进行有效对比。但基于语义检索的相似度得分为0.6，表明两者在项目概述语义层面存在一定相似性，可能同为操作系统内核类型项目。",
+      "main_similarities": [
+        "两者均被识别为操作系统类项目（目标类型为unknown_os_project，历史类型为teaching_os_or_general_kernel），在项目类型上可能存在语义关联。",
+        "语义检索得分0.6显示，目标仓库的某些文本或描述与OSakura仓库概述有较高语义匹配度"
+      ],
+      "main_differences": [
+        "结构化信息缺失：目标仓库无函数、模块、调用边等数据，而历史仓库包含621个函数、13个模块及详细调用关系，结构复杂度差异巨大。",
+        "目标仓库主要语言列表为空，历史仓库主要语言为C、汇编和链接脚本，语言组成不明确。",
+        "目标仓库全量模块和核心模块信息均为空，历史仓库则明确列出driver、filesystem、interrupt、ipc等核心模块并具有完善度评分。"
+      ],
+      "target_advantages": [
+        "由于目标仓库信息严重不足，无法确定其相对于历史仓库的优势。"
+      ],
+      "target_weaknesses": [
+        "目标仓库缺乏代码结构分析数据（函数数、模块数、调用图），可能表明项目尚处于初期或不完整的阶段，实施深度不如历史仓库。",
+        "缺少核心模块定义和完整度数据，无法评估其内核关键组件（如文件系统、进程管理）的实现水平。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可以借鉴OSakura的模块划分方法（如driver、filesystem、interrupt、ipc等核心模块），并参考其模块完整度评分体系。",
+        "目标仓库可以学习OSakura的调用图构建方式，通过分析函数边关系来优化自身代码结构。"
+      ],
+      "comparison_confidence": "low"
+    },
+    {
+      "history_repo_name": "w",
+      "similarity_score": 0.14,
+      "hybrid_score": 0.14,
+      "structured_score": 0.0,
+      "semantic_score": 0.4,
+      "retrieval_mode": "hybrid",
+      "similarity_summary": "两个仓库之间相似度较低，混合检索得分为0.14。结构相似度为0.0，语义相似度为0.4，仅语义上微弱暗示可能同属OS项目范畴，但缺乏具体模块、语言或技术特征上的共同点。",
+      "main_similarities": [
+        "两个仓库均被归类为操作系统项目（目标为unknown_os_project，历史为teaching_os_or_general_kernel），在广义OS项目类别上存在语义关联。",
+        "两个仓库的检索证据中均未体现任何具体的技术特征或弱点描述，使得在抽象层面无直接冲突。"
+      ],
+      "main_differences": [
+        "历史仓库包含858个函数、2170条调用边、13个模块，且核心模块包括build、driver、filesystem等；目标仓库函数、边、模块数量均为0，且无核心模块信息。",
+        "历史仓库主要语言包括cpp、c、linker_script、assembly，而目标仓库主语言列表为空。",
+        "历史仓库模块完整性覆盖了build、driver、filesystem等12个模块（部分完整性较低），目标仓库模块完整性数据完全缺失。"
+      ],
+      "target_advantages": [
+        "由于目标仓库画像中无可用信息，无法可靠判断其对历史仓库的任何优势。"
+      ],
+      "target_weaknesses": [
+        "目标仓库缺乏任何函数、模块、语言信息，表明代码结构分析未产出有效数据，这可能意味着项目规模极小、分析失败或数据缺失，相比历史仓库858个函数的规模存在明显不足。"
+      ],
+      "borrowable_designs": [
+        "目标仓库可借鉴历史仓库的模块划分方式，如将代码组织为build、driver、filesystem、interrupt等核心模块，以提高可维护性。",
+        "目标仓库可参考历史仓库的多语言混合编程策略（c、cpp、linker_script、assembly），以应对底层开发需求。"
+      ],
+      "comparison_confidence": "low"
+    }
+  ]
 }
